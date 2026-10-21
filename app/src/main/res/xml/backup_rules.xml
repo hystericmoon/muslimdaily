@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings and personal sets are backed up; the content database is rebuilt from assets. -->
+<full-backup-content>
+    <include domain="file" path="datastore/settings.preferences_pb" />
+    <include domain="database" path="user.db" />
+</full-backup-content>
