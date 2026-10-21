@@ -416,5 +416,41 @@
     <string name="settings_haptics_summary">Getar halus setiap hitungan, berbeda saat selesai.</string>
     <string name="settings_memorize">Hafalan</string>
 
+    <!-- Reminders -->
+    <string name="reminders_intro">Semua pengingat mati secara bawaan. Aktifkan yang Anda perlukan.</string>
+    <string name="reminders_notif_permission">Notifikasi belum diizinkan, jadi pengingat tidak akan tampil.</string>
+    <string name="reminders_allow">Izinkan notifikasi</string>
+    <string name="reminders_exact_permission">Tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit.</string>
+    <string name="reminders_allow_exact">Izinkan alarm tepat waktu</string>
+    <string name="reminders_adhan">Adzan</string>
+    <string name="reminders_need_location">Atur lokasi agar pengingat waktu shalat bisa dijadwalkan.</string>
+    <string name="reminders_sound">Suara</string>
+    <string name="reminders_silent">Senyap</string>
+    <string name="reminders_adhan_note">Suara memakai nada notifikasi perangkat. Pada hari Jumat, pengingat Dzuhur bertuliskan Jumat.</string>
+    <string name="reminders_adhkar">Dzikir</string>
+    <string name="reminders_after_fajr">%d menit setelah Subuh</string>
+    <string name="reminders_after_asr">%d menit setelah Ashar</string>
+    <string name="reminders_offset">Jarak setelah waktu shalat</string>
+    <string name="reminders_other">Lainnya</string>
+    <string name="reminders_review_summary">Hanya bila ada hafalan yang perlu diulang.</string>
+    <string name="reminders_time">Waktu</string>
+
+    <!-- Notifications -->
+    <string name="channel_adhan">Waktu shalat</string>
+    <string name="channel_adhan_desc">Pemberitahuan masuk waktu shalat dengan suara.</string>
+    <string name="channel_adhan_silent">Waktu shalat (senyap)</string>
+    <string name="channel_adhan_silent_desc">Pemberitahuan masuk waktu shalat tanpa suara.</string>
+    <string name="channel_reminders">Pengingat</string>
+    <string name="channel_reminders_desc">Dzikir, sebelum tidur, Jumat, dan ulangan hafalan. Tanpa suara.</string>
+    <string name="notif_adhan_title">Waktu %s</string>
+    <string name="notif_adhan_text">%1$s pukul %2$s · %3$s</string>
+    <string name="notif_morning_text">Waktu dzikir pagi telah masuk.</string>
+    <string name="notif_evening_text">Waktu dzikir petang telah masuk.</string>
+    <string name="notif_sleep_title">Sebelum tidur</string>
+    <string name="notif_sleep_text">Dzikir dan doa sebelum tidur.</string>
+    <string name="notif_friday_title">Hari Jumat</string>
+    <string name="notif_friday_text">Membaca surat Al-Kahfi dan memperbanyak shalawat.</string>
+    <string name="notif_review_title">Ulangan hafalan</string>
+
     <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
 </resources>

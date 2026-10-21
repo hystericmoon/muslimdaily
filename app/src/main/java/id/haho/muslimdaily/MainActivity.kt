@@ -1,5 +1,6 @@
 package id.haho.muslimdaily
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,9 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.navigation.AppRoot
+import id.haho.muslimdaily.notifications.Destination
+import id.haho.muslimdaily.notifications.Notifier
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.Clock
 import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,10 +36,24 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    /** Screen requested by a notification tap; consumed by [AppRoot]. */
+    private val destination = MutableStateFlow<Destination?>(null)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        destination.value = intent.destination()
+    }
+
+    private fun Intent.destination(): Destination? =
+        getStringExtra(Notifier.EXTRA_DESTINATION)?.let { runCatching { Destination.valueOf(it) }.getOrNull() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) destination.value = intent.destination()
         setContent {
+            val pending by destination.collectAsStateWithLifecycle()
             val settings by viewModel.settings.collectAsStateWithLifecycle()
             val reviewDue by viewModel.reviewDue.collectAsStateWithLifecycle()
             MuslimDailyTheme(
@@ -45,7 +63,11 @@ class MainActivity : ComponentActivity() {
                 translationScale = settings.translationScale,
             ) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
-                    AppRoot(reviewDueCount = reviewDue)
+                    AppRoot(
+                        reviewDueCount = reviewDue,
+                        pendingDestination = pending,
+                        onDestinationHandled = { destination.value = null },
+                    )
                 }
             }
         }

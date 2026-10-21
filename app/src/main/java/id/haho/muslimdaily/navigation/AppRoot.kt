@@ -20,6 +20,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,6 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.notifications.Destination
 
 /** Routes that take the whole screen (focus modes) and hide the navigation bar. */
 private val immersiveRoutes = listOf(RunRoute::class, MemorizeSessionRoute::class, ListenOnlyRoute::class)
@@ -42,8 +44,21 @@ private val immersiveRoutes = listOf(RunRoute::class, MemorizeSessionRoute::clas
 @Composable
 fun AppRoot(
     reviewDueCount: Int,
+    pendingDestination: Destination? = null,
+    onDestinationHandled: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
 ) {
+    LaunchedEffect(pendingDestination) {
+        val target: Any = when (pendingDestination ?: return@LaunchedEffect) {
+            Destination.TODAY -> TodayGraph
+            Destination.MORNING_RUN -> RunRoute("morning")
+            Destination.EVENING_RUN -> RunRoute("evening")
+            Destination.SLEEP_EVENT -> EventRoute("sleeping")
+            Destination.MEMORIZE -> MemorizeGraph
+        }
+        navController.navigate(target) { launchSingleTop = true }
+        onDestinationHandled()
+    }
     val backStack by navController.currentBackStackEntryAsState()
     val destination = backStack?.destination
     val immersive = immersiveRoutes.any { destination?.hasRoute(it) == true }

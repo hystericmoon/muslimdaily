@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification glyph: the launcher's mihrab arch, monochrome. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="@android:color/white"
+        android:fillType="evenOdd"
+        android:pathData="M11,41 L11,21 C11,13 17.5,7.5 24,4 C30.5,7.5 37,13 37,21 L37,41 Z M16,41 L16,22 C16,16.5 19.5,13 24,10 C28.5,13 32,16.5 32,22 L32,41 Z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M7,41 L41,41 L41,44 L7,44 Z" />
+</vector>

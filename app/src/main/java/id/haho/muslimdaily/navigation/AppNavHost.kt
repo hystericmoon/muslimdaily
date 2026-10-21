@@ -14,6 +14,7 @@ import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
+import id.haho.muslimdaily.feature.settings.RemindersRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
 import id.haho.muslimdaily.feature.memorize.ListenOnlyRoute
 import id.haho.muslimdaily.feature.memorize.MemorizeHomeRoute
@@ -93,6 +94,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onLocation = { navController.navigate(LocationRoute) },
                         onMySets = { navController.navigate(MySetsDataRoute) },
                         onAudio = { navController.navigate(AudioSettingsRoute) },
+                        onReminders = { navController.navigate(RemindersRoute) },
                     ),
                 )
             }
@@ -100,6 +102,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<LocationRoute> { LocationRoute(onBack = back) }
             composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
             composable<AudioSettingsRoute> { AudioSettingsRoute(onBack = back) }
+            composable<RemindersRoute> { RemindersRoute(onBack = back) }
         }
     }
 }

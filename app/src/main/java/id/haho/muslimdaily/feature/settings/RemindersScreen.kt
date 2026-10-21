@@ -1,0 +1,298 @@
+package id.haho.muslimdaily.feature.settings
+
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.InfoNote
+import id.haho.muslimdaily.core.designsystem.component.NavigationRow
+import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
+import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
+import id.haho.muslimdaily.core.designsystem.component.StepperRow
+import id.haho.muslimdaily.core.designsystem.component.SwitchRow
+import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.model.FIVE_PRAYERS
+import id.haho.muslimdaily.core.ui.AppLocale
+import id.haho.muslimdaily.core.ui.labelRes
+import id.haho.muslimdaily.data.settings.AdhanMode
+import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.SettingsEditor
+import id.haho.muslimdaily.data.settings.SettingsRepository
+import id.haho.muslimdaily.notifications.Notifier
+import id.haho.muslimdaily.notifications.ReminderScheduler
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+
+@HiltViewModel
+class RemindersViewModel @Inject constructor(
+    private val repository: SettingsRepository,
+    private val scheduler: ReminderScheduler,
+    private val notifier: Notifier,
+) : ViewModel() {
+    val settings: StateFlow<AppSettings?> = repository.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    fun exactAllowed() = scheduler.canScheduleExact()
+    fun notificationsAllowed() = notifier.canPost()
+
+    fun update(block: SettingsEditor.() -> Unit) {
+        viewModelScope.launch { repository.update(block) }
+    }
+
+    fun reschedule() {
+        viewModelScope.launch { scheduler.rescheduleAll() }
+    }
+}
+
+data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean)
+
+@Composable
+fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewModel()) {
+    val settings by viewModel.settings.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    var permissions by remember { mutableStateOf(PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())
+        viewModel.reschedule()
+    }
+    val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+        permissions = permissions.copy(notifications = viewModel.notificationsAllowed())
+    }
+    val askNotifications = {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName))
+        }
+    }
+    val askExact = {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
+        }
+    }
+    AppScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
+        settings?.let { s ->
+            RemindersContent(
+                settings = s,
+                permissions = permissions,
+                onAskNotifications = askNotifications,
+                onAskExact = askExact,
+                update = { block ->
+                    viewModel.update(block)
+                    if (!permissions.notifications) askNotifications()
+                },
+            )
+        }
+    }
+}
+
+private val TimeFormat = DateTimeFormatter.ofPattern("HH.mm", AppLocale)
+
+@Composable
+fun RemindersContent(
+    settings: AppSettings,
+    permissions: PermissionState,
+    onAskNotifications: () -> Unit,
+    onAskExact: () -> Unit,
+    update: (SettingsEditor.() -> Unit) -> Unit,
+) {
+    val r = settings.reminders
+    var timeDialog by remember { mutableStateOf<TimeTarget?>(null) }
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+        item {
+            InfoNote(
+                stringResource(R.string.reminders_intro),
+                Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+            )
+        }
+        if (!permissions.notifications) {
+            item { PermissionCard(stringResource(R.string.reminders_notif_permission), stringResource(R.string.reminders_allow), onAskNotifications) }
+        }
+        if (!permissions.exactAlarms) {
+            item { PermissionCard(stringResource(R.string.reminders_exact_permission), stringResource(R.string.reminders_allow_exact), onAskExact) }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.reminders_adhan)) {
+                if (settings.location == null) {
+                    InfoNote(stringResource(R.string.reminders_need_location), Modifier.padding(AppTheme.dimens.screenGutter))
+                }
+                FIVE_PRAYERS.forEach { prayer ->
+                    SegmentedRow(
+                        title = stringResource(prayer.labelRes()),
+                        options = AdhanMode.entries,
+                        selected = r.adhan[prayer] ?: AdhanMode.OFF,
+                        onSelect = { mode -> update { setAdhan(prayer, mode) } },
+                        label = {
+                            stringResource(
+                                when (it) {
+                                    AdhanMode.OFF -> R.string.settings_off
+                                    AdhanMode.SOUND -> R.string.reminders_sound
+                                    AdhanMode.SILENT -> R.string.reminders_silent
+                                },
+                            )
+                        },
+                    )
+                }
+                InfoNote(stringResource(R.string.reminders_adhan_note), Modifier.padding(AppTheme.dimens.screenGutter))
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.reminders_adhkar)) {
+                SwitchRow(
+                    title = stringResource(R.string.adhkar_morning),
+                    summary = stringResource(R.string.reminders_after_fajr, r.morningOffsetMinutes),
+                    checked = r.morningAdhkar,
+                    onCheckedChange = { v -> update { remMorning = v } },
+                    icon = R.drawable.ic_wb_sunny,
+                )
+                if (r.morningAdhkar) OffsetStepper(r.morningOffsetMinutes) { v -> update { remMorningOffset = v } }
+                SwitchRow(
+                    title = stringResource(R.string.adhkar_evening),
+                    summary = stringResource(R.string.reminders_after_asr, r.eveningOffsetMinutes),
+                    checked = r.eveningAdhkar,
+                    onCheckedChange = { v -> update { remEvening = v } },
+                    icon = R.drawable.ic_wb_twilight,
+                )
+                if (r.eveningAdhkar) OffsetStepper(r.eveningOffsetMinutes) { v -> update { remEveningOffset = v } }
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.reminders_other)) {
+                SwitchRow(
+                    title = stringResource(R.string.notif_sleep_title),
+                    checked = r.beforeSleep,
+                    onCheckedChange = { v -> update { remSleep = v } },
+                    icon = R.drawable.ic_bedtime,
+                )
+                if (r.beforeSleep) TimeRow(r.beforeSleepTime) { timeDialog = TimeTarget.SLEEP }
+                SwitchRow(
+                    title = stringResource(R.string.notif_friday_title),
+                    summary = stringResource(R.string.notif_friday_text),
+                    checked = r.friday,
+                    onCheckedChange = { v -> update { remFriday = v } },
+                    icon = R.drawable.ic_mosque,
+                )
+                if (r.friday) TimeRow(r.fridayTime) { timeDialog = TimeTarget.FRIDAY }
+                SwitchRow(
+                    title = stringResource(R.string.notif_review_title),
+                    summary = stringResource(R.string.reminders_review_summary),
+                    checked = r.reviewQueue,
+                    onCheckedChange = { v -> update { remReview = v } },
+                    icon = R.drawable.ic_record_voice_over,
+                )
+                if (r.reviewQueue) TimeRow(r.reviewTime) { timeDialog = TimeTarget.REVIEW }
+            }
+        }
+    }
+    timeDialog?.let { target ->
+        val initial = when (target) {
+            TimeTarget.SLEEP -> r.beforeSleepTime
+            TimeTarget.FRIDAY -> r.fridayTime
+            TimeTarget.REVIEW -> r.reviewTime
+        }
+        TimeDialog(initial, onDismiss = { timeDialog = null }) { time ->
+            update {
+                when (target) {
+                    TimeTarget.SLEEP -> setSleepTime(time)
+                    TimeTarget.FRIDAY -> setFridayTime(time)
+                    TimeTarget.REVIEW -> setReviewTime(time)
+                }
+            }
+            timeDialog = null
+        }
+    }
+}
+
+private enum class TimeTarget { SLEEP, FRIDAY, REVIEW }
+
+@Composable
+private fun PermissionCard(text: String, action: String, onClick: () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        ),
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xs),
+    ) {
+        Column(Modifier.padding(AppTheme.spacing.lg)) {
+            Text(text, style = MaterialTheme.typography.bodyMedium)
+            Button(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action, maxLines = 1) }
+        }
+    }
+}
+
+@Composable
+private fun OffsetStepper(value: Int, onChange: (Int) -> Unit) {
+    val title = stringResource(R.string.reminders_offset)
+    StepperRow(
+        title = title,
+        valueText = stringResource(R.string.settings_minutes, value),
+        onDecrement = { onChange((value - 5).coerceIn(0, 120)) },
+        onIncrement = { onChange((value + 5).coerceIn(0, 120)) },
+        decrementDescription = stringResource(R.string.settings_decrease, title),
+        incrementDescription = stringResource(R.string.settings_increase, title),
+        canDecrement = value > 0,
+        canIncrement = value < 120,
+    )
+}
+
+@Composable
+private fun TimeRow(time: LocalTime, onClick: () -> Unit) {
+    NavigationRow(
+        title = stringResource(R.string.reminders_time),
+        summary = TimeFormat.format(time),
+        onClick = onClick,
+        icon = R.drawable.ic_schedule,
+    )
+}
+
+@Composable
+private fun TimeDialog(initial: LocalTime, onDismiss: () -> Unit, onConfirm: (LocalTime) -> Unit) {
+    val state = rememberTimePickerState(initial.hour, initial.minute, is24Hour = true)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = { TextButton(onClick = { onConfirm(LocalTime.of(state.hour, state.minute)) }) { Text(stringResource(R.string.action_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+        text = { TimePicker(state) },
+    )
+}
