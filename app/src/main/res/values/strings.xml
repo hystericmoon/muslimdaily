@@ -333,5 +333,88 @@
     <string name="data_imported">%d acara diimpor.</string>
     <string name="data_import_failed">File tidak dapat dibaca.</string>
 
+    <!-- Memorize -->
+    <string name="memorize_session_title">Hafalan</string>
+    <string name="memorize_settings">Pengaturan hafalan</string>
+    <string name="memorize_listen_only">Dengar saja</string>
+    <string name="memorize_step_n">%1$d. %2$s</string>
+    <string name="memorize_step_listen">Dengar</string>
+    <string name="memorize_step_build">Bangun</string>
+    <string name="memorize_step_recall">Ingat</string>
+    <string name="memorize_step_check">Cek</string>
+    <string name="memorize_hint_listen">Dengarkan doa lengkap dua kali sambil membaca teksnya.</string>
+    <string name="memorize_hint_build">Potongan bertambah satu frasa setiap kali. Setelah tiap putaran, ulangi dengan suara pada jeda.</string>
+    <string name="memorize_hint_recall">Sebagian kata disembunyikan. Bacalah dari ingatan, lalu naikkan tingkatnya.</string>
+    <string name="memorize_hint_check">Buka teks lengkap dan nilai hafalan Anda dengan jujur.</string>
+    <string name="memorize_listen_twice">Dengar 2×</string>
+    <string name="memorize_restart">Dari awal</string>
+    <string name="memorize_not_segmented">Audio doa ini belum dipotong per frasa, jadi latihan memakai doa utuh.</string>
+    <string name="memorize_build_start">Mulai bangun hafalan</string>
+    <string name="memorize_your_turn">Giliran Anda: ulangi dengan suara</string>
+    <string name="memorize_listen_now">Dengarkan</string>
+    <string name="memorize_build_progress">Potongan %1$d dari %2$d · putaran %3$d dari %4$d</string>
+    <string name="memorize_ab_title">Ulangi bagian A–B</string>
+    <string name="memorize_ab_body">Pilih frasa awal dan akhir untuk diulang dengan jeda.</string>
+    <string name="memorize_ab_from">Dari (A)</string>
+    <string name="memorize_ab_to">Sampai (B)</string>
+    <string name="memorize_ab_play">Ulangi frasa %1$d–%2$d</string>
+    <string name="memorize_phrase_n">Frasa %d</string>
+    <string name="memorize_fade_level">Tingkat sembunyi</string>
+    <string name="memorize_fade_percent">%d%%</string>
+    <plurals name="memorize_hidden_words">
+        <item quantity="other">Teks dengan %d kata disembunyikan. Gunakan Putar dengan jeda untuk berlatih dengan mendengar.</item>
+    </plurals>
+    <string name="memorize_talkback_recall">TalkBack aktif: frasa yang disembunyikan akan dibisukan saat diputar, isi jedanya dari ingatan.</string>
+    <string name="memorize_play_with_gaps">Putar dengan jeda</string>
+    <string name="memorize_rate_prompt">Seberapa lancar hafalan Anda?</string>
+    <string name="memorize_rate_again">Ulangi lagi</string>
+    <string name="memorize_rate_hard">Sulit</string>
+    <string name="memorize_rate_easy">Mudah</string>
+    <plurals name="memorize_next_in_days">
+        <item quantity="other">Muncul lagi %d hari lagi</item>
+    </plurals>
+    <string name="memorize_scheduled">Diulang pada %s</string>
+    <string name="memorize_memorized">Hafal</string>
+    <string name="memorize_box_n">Kotak %d</string>
+    <string name="memorize_next_review">Doa berikutnya</string>
+    <string name="memorize_next_step">Lanjut ke %s</string>
+    <string name="memorize_loops">Putaran per potongan</string>
+    <string name="memorize_pause">Jeda untuk mengulang</string>
+    <string name="memorize_pause_summary">Otomatis: sekitar 1,2× panjang potongan.</string>
+    <string name="memorize_pause_auto">Otomatis</string>
+    <string name="memorize_pause_manual">Manual</string>
+    <string name="memorize_pause_seconds">Lama jeda</string>
+    <string name="memorize_seconds">%d dtk</string>
+    <string name="memorize_speed">Kecepatan hafalan</string>
+    <string name="memorize_add">Hafalkan doa</string>
+    <string name="memorize_empty_title">Belum ada hafalan</string>
+    <string name="memorize_empty_body">Pilih doa untuk dihafal. Setelah Anda menilainya, doa masuk ke jadwal ulang.</string>
+    <string name="memorize_my_hifz">Hafalan saya</string>
+    <string name="memorize_no_streaks">Jadwal ulang 1, 3, 7, 14, dan 30 hari. Tidak ada runtunan atau skor.</string>
+    <string name="memorize_review_title">Ulangan hari ini</string>
+    <string name="memorize_review_none">Tidak ada yang perlu diulang hari ini.</string>
+    <plurals name="memorize_review_due">
+        <item quantity="other">%d doa perlu diulang</item>
+    </plurals>
+    <string name="memorize_review_start">Mulai mengulang</string>
+    <string name="memorize_open">Buka hafalan</string>
+    <string name="memorize_due_badge">Perlu diulang</string>
+    <string name="memorize_next_on">Berikutnya %s</string>
+    <string name="memorize_pick_title">Pilih doa untuk dihafal</string>
+    <string name="memorize_listen_done">Selesai</string>
+    <string name="memorize_listen_only_start">Ketuk untuk mulai</string>
+    <string name="memorize_listen_only_note">Layar boleh dimatikan. Kontrol tersedia di layar kunci dan tombol headset.</string>
+
+    <!-- Audio settings -->
+    <string name="settings_audio_playback">Pemutaran</string>
+    <string name="settings_audio_speed">Kecepatan bawaan</string>
+    <string name="settings_reciter">Qari</string>
+    <string name="settings_reciter_default">Bawaan (satu qari tersedia)</string>
+    <string name="settings_run_mode">Mode baca</string>
+    <string name="settings_auto_advance_summary">Pindah ke doa berikutnya setelah hitungan selesai.</string>
+    <string name="settings_haptics">Getaran</string>
+    <string name="settings_haptics_summary">Getar halus setiap hitungan, berbeda saat selesai.</string>
+    <string name="settings_memorize">Hafalan</string>
+
     <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
 </resources>

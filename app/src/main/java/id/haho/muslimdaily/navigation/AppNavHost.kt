@@ -15,7 +15,12 @@ import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
+import id.haho.muslimdaily.feature.memorize.ListenOnlyRoute
+import id.haho.muslimdaily.feature.memorize.MemorizeHomeRoute
+import id.haho.muslimdaily.feature.memorize.MemorizePickerRoute
+import id.haho.muslimdaily.feature.memorize.session.MemorizeSessionRoute
 import id.haho.muslimdaily.feature.run.RunRoute
+import id.haho.muslimdaily.feature.settings.AudioSettingsRoute
 import id.haho.muslimdaily.feature.settings.SettingsHomeRoute
 import id.haho.muslimdaily.feature.settings.data.MySetsDataRoute
 import id.haho.muslimdaily.feature.settings.location.LocationRoute
@@ -60,7 +65,25 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<RunRoute> { RunRoute(onClose = back) }
         }
         navigation<MemorizeGraph>(startDestination = MemorizeHomeRoute) {
-            composable<MemorizeHomeRoute> { PlaceholderScreen(R.string.nav_memorize) }
+            composable<MemorizeHomeRoute> {
+                MemorizeHomeRoute(
+                    onOpen = { id, fromReview -> navController.navigate(MemorizeSessionRoute(id, fromReview)) },
+                    onPick = { navController.navigate(MemorizePickerRoute) },
+                )
+            }
+            composable<MemorizePickerRoute> {
+                MemorizePickerRoute(onBack = back, onPick = {
+                    navController.navigate(MemorizeSessionRoute(it)) { popUpTo<MemorizeHomeRoute>() }
+                })
+            }
+            composable<MemorizeSessionRoute> {
+                MemorizeSessionRoute(
+                    onClose = back,
+                    onListenOnly = { navController.navigate(ListenOnlyRoute(it)) },
+                    onNext = { navController.navigate(MemorizeSessionRoute(it, fromReview = true)) { popUpTo<MemorizeHomeRoute>() } },
+                )
+            }
+            composable<ListenOnlyRoute> { ListenOnlyRoute(onClose = back) }
         }
         navigation<SettingsGraph>(startDestination = SettingsHomeRoute) {
             composable<SettingsHomeRoute> {
@@ -69,12 +92,14 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onPrayer = { navController.navigate(PrayerSettingsRoute) },
                         onLocation = { navController.navigate(LocationRoute) },
                         onMySets = { navController.navigate(MySetsDataRoute) },
+                        onAudio = { navController.navigate(AudioSettingsRoute) },
                     ),
                 )
             }
             composable<PrayerSettingsRoute> { PrayerSettingsRoute(onBack = back) }
             composable<LocationRoute> { LocationRoute(onBack = back) }
             composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
+            composable<AudioSettingsRoute> { AudioSettingsRoute(onBack = back) }
         }
     }
 }

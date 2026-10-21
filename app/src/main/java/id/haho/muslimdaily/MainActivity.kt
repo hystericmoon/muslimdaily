@@ -18,7 +18,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
+import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.navigation.AppRoot
+import java.time.Clock
+import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -34,6 +37,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val settings by viewModel.settings.collectAsStateWithLifecycle()
+            val reviewDue by viewModel.reviewDue.collectAsStateWithLifecycle()
             MuslimDailyTheme(
                 themeMode = settings.themeMode,
                 dynamicColor = settings.dynamicColor,
@@ -41,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 translationScale = settings.translationScale,
             ) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
-                    AppRoot(reviewDueCount = 0)
+                    AppRoot(reviewDueCount = reviewDue)
                 }
             }
         }
@@ -49,7 +53,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @HiltViewModel
-class MainViewModel @Inject constructor(settingsRepository: SettingsRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    settingsRepository: SettingsRepository,
+    reviews: ReviewRepository,
+    clock: Clock,
+) : ViewModel() {
     val settings: StateFlow<AppSettings> = settingsRepository.settings
         .stateIn(viewModelScope, SharingStarted.Eagerly, AppSettings())
+
+    /** Badge on the Memorize tab. Re-evaluated on each launch; no streaks or history. */
+    val reviewDue: StateFlow<Int> = reviews.dueCount(LocalDate.now(clock))
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 }
