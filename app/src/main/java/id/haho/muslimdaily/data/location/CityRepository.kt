@@ -79,6 +79,11 @@ class CityRepository @Inject constructor(
         return db.cityDao().search(fts, preferredCountry).map { it.toCity() }
     }
 
+    suspend fun popular(country: String = "ID", limit: Int = 30): List<City> {
+        ensureLoaded()
+        return db.cityDao().topInCountry(country, limit).map { it.toCity() }
+    }
+
     /** The populated place closest to a coordinate, used to name a GPS fix. */
     suspend fun nearest(latitude: Double, longitude: Double): City? {
         ensureLoaded()

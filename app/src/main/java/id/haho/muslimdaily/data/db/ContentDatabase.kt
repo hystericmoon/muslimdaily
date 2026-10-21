@@ -229,6 +229,9 @@ interface CityDao {
     )
     suspend fun search(query: String, preferredCountry: String): List<CityEntity>
 
+    @Query("SELECT * FROM cities WHERE country = :country ORDER BY population DESC LIMIT :limit")
+    suspend fun topInCountry(country: String, limit: Int): List<CityEntity>
+
     @Query(
         """SELECT * FROM cities WHERE latitude BETWEEN :minLat AND :maxLat
            AND longitude BETWEEN :minLon AND :maxLon ORDER BY population DESC LIMIT 200""",

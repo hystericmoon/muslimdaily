@@ -24,5 +24,197 @@
     <string name="action_resume">Lanjutkan</string>
     <string name="action_more">Lainnya</string>
 
+
+    <!-- Prayers -->
+    <string name="prayer_fajr">Subuh</string>
+    <string name="prayer_sunrise">Terbit</string>
+    <string name="prayer_dhuhr">Dzuhur</string>
+    <string name="prayer_asr">Ashar</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isya</string>
+    <string name="prayer_jumuah">Jumat</string>
+
+    <!-- Durations -->
+    <string name="duration_hours_minutes">%1$d jam %2$d menit</string>
+    <plurals name="duration_minutes">
+        <item quantity="other">%d menit</item>
+    </plurals>
+    <string name="duration_under_minute">kurang dari 1 menit</string>
+    <string name="countdown_in">dalam %s</string>
+
+    <!-- Hijri months -->
+    <string-array name="hijri_months">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabiulawal</item>
+        <item>Rabiulakhir</item>
+        <item>Jumadilawal</item>
+        <item>Jumadilakhir</item>
+        <item>Rajab</item>
+        <item>Syakban</item>
+        <item>Ramadan</item>
+        <item>Syawal</item>
+        <item>Zulkaidah</item>
+        <item>Zulhijah</item>
+    </string-array>
+    <string name="hijri_date">%1$d %2$s %3$d H</string>
+
+    <!-- Today -->
+    <string name="today_next">Berikutnya</string>
+    <string name="today_next_prayer">%1$s pukul %2$s</string>
+    <string name="today_tomorrow">besok</string>
+    <string name="today_now_badge">Sekarang</string>
+    <string name="today_iqamah">Iqamah %s</string>
+    <string name="today_schedule">Jadwal shalat</string>
+    <string name="today_other_sunnah">Shalat sunnah lainnya</string>
+    <string name="today_prohibited_title">Waktu terlarang</string>
+    <string name="today_method_footer">%1$s · Ashar %2$s</string>
+    <string name="today_change_method">Ubah perhitungan</string>
+    <string name="today_location_chip">Lokasi: %s</string>
+    <string name="today_travel_chip">Mode safar</string>
+    <string name="today_no_location_title">Lokasi belum diatur</string>
+    <string name="today_no_location_body">Atur lokasi untuk menampilkan jadwal shalat. Lokasi hanya disimpan di perangkat ini.</string>
+    <string name="today_use_gps">Gunakan lokasi saat ini</string>
+    <string name="today_pick_city">Pilih kota</string>
+    <string name="today_travel_suggestion">Perangkat Anda sekitar %1$d km dari %2$s. Perbarui lokasi atau aktifkan mode safar?</string>
+    <string name="today_update_location">Perbarui lokasi</string>
+    <string name="today_enable_travel">Mode safar</string>
+    <string name="today_dismiss">Abaikan</string>
+    <string name="today_expand_rawatib">Tampilkan sunnah rawatib</string>
+    <string name="today_collapse_rawatib">Sembunyikan sunnah rawatib</string>
+    <string name="state_expanded">terbuka</string>
+    <string name="state_collapsed">tertutup</string>
+    <string name="today_private_note">Ceklis ini pribadi, hanya tersimpan di perangkat, dan diulang setiap hari.</string>
+
+    <!-- Windows -->
+    <string name="window_morning_adhkar">Waktu dzikir pagi</string>
+    <string name="window_evening_adhkar">Waktu dzikir petang</string>
+    <string name="window_prohibited_after_fajr">Waktu terlarang setelah shalat Subuh hingga matahari naik</string>
+    <string name="window_prohibited_zawal">Waktu terlarang saat matahari tepat di atas (zawal)</string>
+    <string name="window_prohibited_after_asr">Waktu terlarang setelah shalat Ashar hingga Maghrib</string>
+    <string name="window_duha">Waktu Dhuha</string>
+    <string name="window_witr">Waktu Witir</string>
+    <string name="window_until">hingga %s</string>
+    <string name="window_range">%1$s – %2$s</string>
+    <string name="note_adhkar_window">Sebagian ulama membolehkan rentang waktu yang lebih luas.</string>
+    <string name="note_prohibited_cause">Ulama berbeda pendapat tentang shalat yang memiliki sebab, seperti tahiyatul masjid.</string>
+    <string name="note_duha_best">Waktu terbaik ketika panas matahari mulai terasa.</string>
+    <string name="note_jumuah">Yang tidak menghadiri shalat Jumat menunaikan shalat Dzuhur.</string>
+    <string name="prohibited_after_fajr_short">Setelah shalat Subuh</string>
+    <string name="prohibited_zawal_short">Zawal</string>
+    <string name="prohibited_after_asr_short">Setelah shalat Ashar</string>
+
+    <!-- Rawatib -->
+    <string name="rawatib_before">Qabliyah</string>
+    <string name="rawatib_after">Ba\'diyah</string>
+    <string name="rawatib_fard">Fardhu</string>
+    <string name="rawatib_between_adhan">Di antara adzan dan iqamah</string>
+    <plurals name="rakah_count">
+        <item quantity="other">%d rakaat</item>
+    </plurals>
+    <string name="rakah_or">%1$s atau %2$s</string>
+    <string name="rakah_with_label">%1$s %2$s</string>
+    <string name="tier_muakkadah">Muakkadah</string>
+    <string name="tier_ghairu">Ghairu muakkadah</string>
+    <string name="rawatib_evidence">Dalil</string>
+    <string name="rawatib_evidence_missing">Dalil belum ditinjau.</string>
+    <string name="mark_done">Tandai selesai: %s</string>
+    <string name="duha_title">Shalat Dhuha</string>
+    <string name="witr_title">Shalat Witir</string>
+
+    <!-- Adhkar card -->
+    <string name="adhkar_morning">Dzikir pagi</string>
+    <string name="adhkar_evening">Dzikir petang</string>
+    <string name="adhkar_active">Sekarang waktunya · hingga %s</string>
+    <string name="adhkar_upcoming">Mulai pukul %s</string>
+    <string name="adhkar_progress">%1$d dari %2$d</string>
+    <string name="adhkar_done_today">Sudah dibaca hari ini</string>
+    <string name="adhkar_open_list">Lihat daftar</string>
+
+    <!-- Content status (debug builds) -->
+    <string name="status_draft">Draf</string>
+    <string name="status_review">Ditinjau</string>
+    <string name="draft_banner">Konten draf. Hanya tampil di build debug.</string>
+
+    <!-- Calculation -->
+    <string name="method_kemenag">Kemenag RI</string>
+    <string name="method_mwl">Liga Muslim Dunia (MWL)</string>
+    <string name="method_umm_al_qura">Umm al-Qura</string>
+    <string name="method_custom">Kustom</string>
+    <string name="method_kemenag_desc">Subuh 20°, Isya 18°, dengan ihtiyat. Bawaan untuk Indonesia.</string>
+    <string name="method_mwl_desc">Subuh 18°, Isya 17°.</string>
+    <string name="method_umm_al_qura_desc">Subuh 18,5°, Isya 90 menit setelah Maghrib.</string>
+    <string name="method_custom_desc">Atur sudut Subuh dan Isya sendiri.</string>
+    <string name="asr_standard">standar</string>
+    <string name="asr_hanafi">Hanafi</string>
+
+    <!-- Location -->
+    <string name="location_permission_denied">Izin lokasi tidak diberikan. Anda tetap bisa memilih kota secara manual.</string>
+    <string name="location_unavailable">Lokasi belum bisa didapatkan. Coba lagi atau pilih kota.</string>
+
+    <!-- Settings -->
+    <string name="settings_group_prayer">Shalat</string>
+    <string name="settings_group_reading">Bacaan</string>
+    <string name="settings_group_trust">Kepercayaan</string>
+    <string name="settings_prayer">Perhitungan waktu shalat</string>
+    <string name="settings_location">Lokasi</string>
+    <string name="settings_reminders">Pengingat</string>
+    <string name="settings_reminders_summary">Adzan, dzikir pagi dan petang, sebelum tidur, Jumat</string>
+    <string name="settings_display">Tampilan dan teks</string>
+    <string name="settings_display_summary">Terjemahan, transliterasi, ukuran teks, tema</string>
+    <string name="settings_audio">Audio dan hafalan</string>
+    <string name="settings_audio_summary">Kecepatan, pengulangan, jeda</string>
+    <string name="settings_my_sets">Set saya</string>
+    <string name="settings_my_sets_summary">Ekspor atau impor pilihan doa</string>
+    <string name="settings_methodology">Metodologi</string>
+    <string name="settings_methodology_summary">Sumber, kebijakan derajat hadits, peninjau</string>
+    <string name="settings_report">Laporkan kesalahan</string>
+    <string name="settings_report_summary">Kirim email kepada pengelola konten</string>
+    <string name="settings_about">Tentang aplikasi</string>
+    <string name="settings_about_summary">Versi, lisensi, atribusi</string>
+    <string name="settings_no_ads">Tanpa iklan, tanpa akun, tanpa pelacakan. Semua data tersimpan di perangkat ini.</string>
+    <string name="settings_method">Metode perhitungan</string>
+    <string name="settings_fajr_angle">Sudut Subuh</string>
+    <string name="settings_isha_angle">Sudut Isya</string>
+    <string name="settings_asr">Waktu Ashar</string>
+    <string name="settings_asr_shadow">Panjang bayangan</string>
+    <string name="settings_asr_standard">Standar (1×)</string>
+    <string name="settings_asr_hanafi">Hanafi (2×)</string>
+    <string name="settings_offsets">Penyesuaian menit</string>
+    <string name="settings_offsets_note">Geser waktu bila jadwal masjid setempat berbeda.</string>
+    <string name="settings_iqamah">Jarak iqamah</string>
+    <string name="settings_iqamah_note">Menit setelah adzan, sesuaikan dengan masjid Anda.</string>
+    <string name="settings_off">Mati</string>
+    <string name="settings_minutes">%d mnt</string>
+    <string name="settings_minutes_plus">+%d mnt</string>
+    <string name="settings_decrease">Kurangi %s</string>
+    <string name="settings_increase">Tambah %s</string>
+    <string name="settings_sunnah">Sunnah rawatib</string>
+    <string name="settings_travel_mode">Mode safar</string>
+    <string name="settings_travel_mode_summary">Sembunyikan rawatib kecuali sunnah Subuh. Witir tetap tampil.</string>
+    <string name="settings_dhuhr_qabliyah">Qabliyah Dzuhur</string>
+    <string name="settings_dhuhr_qabliyah_summary">Kedua riwayat sahih; pilih yang Anda amalkan.</string>
+    <string name="settings_checklist_history">Simpan riwayat ceklis</string>
+    <string name="settings_checklist_history_summary">Mati: ceklis dihapus setiap hari. Tidak pernah dibagikan.</string>
+    <string name="settings_hijri">Kalender Hijriah</string>
+    <string name="settings_hijri_adjust">Penyesuaian tanggal</string>
+    <string name="settings_hijri_adjust_summary">Geser satu hari bila berbeda dengan rukyat setempat.</string>
+    <string name="settings_windows">Waktu terlarang dan Dhuha</string>
+    <string name="settings_windows_note">Nilai bawaan perlu dikonfirmasi ustadz peninjau.</string>
+    <string name="settings_sunrise_rise">Matahari naik setelah terbit</string>
+    <string name="settings_zawal">Lama waktu zawal sebelum Dzuhur</string>
+
+    <!-- Location screen -->
+    <string name="location_current">Lokasi saat ini</string>
+    <string name="location_source_gps">Dari GPS</string>
+    <string name="location_source_manual">Dipilih manual</string>
+    <string name="location_locating">Mencari lokasi…</string>
+    <string name="location_privacy">Lokasi hanya diambil sekali saat Anda meminta dan tidak dikirim ke mana pun.</string>
+    <string name="location_search">Cari kota</string>
+    <string name="location_popular">Kota di Indonesia</string>
+    <string name="location_results">Hasil pencarian</string>
+    <string name="location_no_results">Kota tidak ditemukan. Coba ejaan lain.</string>
+    <string name="location_attribution">Data kota: GeoNames (CC BY 4.0)</string>
+
     <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
 </resources>

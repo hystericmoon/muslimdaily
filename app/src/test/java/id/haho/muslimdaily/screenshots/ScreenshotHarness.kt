@@ -1,6 +1,8 @@
 package id.haho.muslimdaily.screenshots
 
+import android.provider.Settings
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.test.core.app.ApplicationProvider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -20,6 +22,9 @@ enum class Variant(val suffix: String, val mode: ThemeMode, val fontScale: Float
 }
 
 fun captureVariants(name: String, content: @Composable () -> Unit) {
+    // Indonesian phones default to 24-hour time.
+    val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+    Settings.System.putString(context.contentResolver, Settings.System.TIME_12_24, "24")
     Variant.entries.forEach { variant ->
         captureRoboImage("$name-${variant.suffix}.png") {
             val density = LocalDensity.current
