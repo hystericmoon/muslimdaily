@@ -216,5 +216,69 @@
     <string name="location_no_results">Kota tidak ditemukan. Coba ejaan lain.</string>
     <string name="location_attribution">Data kota: GeoNames (CC BY 4.0)</string>
 
+    <!-- Duas -->
+    <string name="duas_title">Doa dan dzikir</string>
+    <plurals name="duas_in_event">
+        <item quantity="other">%d doa</item>
+    </plurals>
+    <string name="dua_open">Buka doa</string>
+    <string name="dua_ungraded">Belum dinilai</string>
+    <string name="dua_grade_by">%1$s · %2$s</string>
+    <string name="dua_source_chip_description">Sumber dan derajat: %s. Ketuk untuk rincian.</string>
+    <string name="dua_sources_title">Sumber dan derajat</string>
+    <string name="dua_sources">Rujukan</string>
+    <string name="dua_grading">Derajat</string>
+    <string name="dua_alt_gradings">Penilaian lain</string>
+    <string name="dua_not_reviewed">Rujukan belum diisi dan ditinjau.</string>
+    <string name="dua_grading_policy">Hanya hadits sahih dan hasan. Rujukan utama Hisnul Muslim, diperiksa dengan penilaian al-Albani. Lihat Pengaturan → Metodologi.</string>
+    <plurals name="dua_count">
+        <item quantity="other">%d×</item>
+    </plurals>
+    <string name="dua_virtue">Keutamaan</string>
+    <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
+    <string name="dua_memorize">Hafalkan</string>
+    <string name="dua_add_to_set">Tambah ke set saya</string>
+    <string name="dua_remove_from_set">Hapus dari set saya</string>
+    <string name="dua_in_set_note">Doa ini termasuk dalam set Anda untuk acara ini.</string>
+    <string name="dua_not_in_set_note">Doa ini disembunyikan dari set Anda. Set lengkap tetap memuatnya.</string>
+    <string name="player_play">Putar</string>
+    <string name="player_pause">Jeda</string>
+    <string name="player_repeat">Ulangi</string>
+    <string name="player_speed">Kecepatan</string>
+    <string name="state_on">aktif</string>
+    <string name="state_off">mati</string>
+
+    <!-- Event -->
+    <string name="event_full_set">Set lengkap</string>
+    <string name="event_my_set">Set saya</string>
+    <string name="event_full_set_hint">Semua doa dalam urutan bawaan.</string>
+    <string name="event_my_set_empty_hint">Set saya belum diatur, jadi masih sama dengan set lengkap. Ketuk ikon atur untuk memilih.</string>
+    <plurals name="event_hidden">
+        <item quantity="other">%d disembunyikan</item>
+    </plurals>
+    <string name="event_customize">Sesuaikan set</string>
+    <string name="event_start">Mulai baca</string>
+    <string name="event_item_position">%1$d dari %2$d</string>
+    <string name="event_variants_hint">Beberapa bentuk yang sahih. Pilih yang dibaca.</string>
+    <string name="event_form_n">Bentuk %d</string>
+    <string name="event_empty_title">Belum ada doa</string>
+    <string name="event_empty_body">Konten untuk bagian ini sedang ditinjau.</string>
+
+    <!-- Search -->
+    <string name="search_title">Cari doa</string>
+    <string name="search_hint">Kata dalam Arab, Indonesia, atau Inggris</string>
+    <string name="search_supporting">Harakat tidak perlu diketik.</string>
+    <string name="search_empty_title">Tidak ditemukan</string>
+    <string name="search_empty_body">Coba kata lain atau ejaan yang berbeda.</string>
+    <plurals name="search_count">
+        <item quantity="other">%d hasil</item>
+    </plurals>
+
+    <!-- Report -->
+    <string name="report_subject_dua">Laporan kesalahan: %s</string>
+    <string name="report_subject_general">Laporan kesalahan</string>
+    <string name="report_body">Jelaskan kesalahannya di sini:\n\n\n---\nID doa: %1$s\nVersi aplikasi: %2$s\nVersi konten: %3$s\nPerangkat: %4$s</string>
+    <string name="report_no_email_app">Tidak ada aplikasi email.</string>
+
     <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
 </resources>

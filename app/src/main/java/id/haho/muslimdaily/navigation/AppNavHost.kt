@@ -8,6 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.PlaceholderScreen
+import id.haho.muslimdaily.feature.duas.detail.DuaDetailRoute
+import id.haho.muslimdaily.feature.duas.event.EventRoute
+import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
+import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
 import id.haho.muslimdaily.feature.settings.SettingsHomeRoute
@@ -29,8 +33,26 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             }
         }
         navigation<DuasGraph>(startDestination = DuaLibraryRoute) {
-            composable<DuaLibraryRoute> { PlaceholderScreen(R.string.nav_duas) }
-            composable<EventRoute> { PlaceholderScreen(R.string.nav_duas) }
+            composable<DuaLibraryRoute> {
+                DuaLibraryRoute(
+                    onOpenEvent = { navController.navigate(EventRoute(it)) },
+                    onSearch = { navController.navigate(SearchRoute) },
+                )
+            }
+            composable<SearchRoute> {
+                SearchRoute(onBack = back, onOpenDua = { navController.navigate(DuaDetailRoute(it)) })
+            }
+            composable<EventRoute> {
+                EventRoute(
+                    onBack = back,
+                    onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
+                    onCustomize = { navController.navigate(CustomizeRoute(it)) },
+                    onStart = { navController.navigate(RunRoute(it)) },
+                )
+            }
+            composable<DuaDetailRoute> {
+                DuaDetailRoute(onBack = back, onMemorize = { navController.navigate(MemorizeSessionRoute(it)) })
+            }
             composable<RunRoute> { PlaceholderScreen(R.string.nav_duas) }
         }
         navigation<MemorizeGraph>(startDestination = MemorizeHomeRoute) {
