@@ -78,7 +78,7 @@ fun CustomizeRoute(onBack: () -> Unit, viewModel: CustomizeViewModel = hiltViewM
         onBack = onBack,
         actions = {
             TextButton(onClick = { confirmReset = true }, enabled = state?.isCustomized == true) {
-                Text(stringResource(R.string.customize_reset), maxLines = 1)
+                Text(stringResource(R.string.customize_reset))
             }
         },
     ) {
@@ -352,6 +352,6 @@ private fun HiddenRow(resolved: ResolvedItem, onRestore: () -> Unit) {
         Column(Modifier.weight(1f)) {
             ArabicText(resolved.form.phrases.firstOrNull()?.text ?: resolved.form.arabic, style = AppTheme.arabic.arabicSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        TextButton(onClick = onRestore) { Text(stringResource(R.string.customize_restore), maxLines = 1) }
+        TextButton(onClick = onRestore) { Text(stringResource(R.string.customize_restore)) }
     }
 }

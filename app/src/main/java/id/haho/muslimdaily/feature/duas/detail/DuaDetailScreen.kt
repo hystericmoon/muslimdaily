@@ -151,7 +151,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
             OutlinedButton(onClick = actions.onMemorize) {
                 Icon(painterResource(R.drawable.ic_record_voice_over), null, Modifier.size(AppTheme.dimens.smallIcon))
                 Spacer(Modifier.width(AppTheme.spacing.sm))
-                Text(stringResource(R.string.dua_memorize), maxLines = 1)
+                Text(stringResource(R.string.dua_memorize))
             }
             OutlinedButton(onClick = { actions.onSetInMySet(!state.inMySet) }) {
                 Icon(
@@ -160,7 +160,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
                     Modifier.size(AppTheme.dimens.smallIcon),
                 )
                 Spacer(Modifier.width(AppTheme.spacing.sm))
-                Text(stringResource(if (state.inMySet) R.string.dua_remove_from_set else R.string.dua_add_to_set), maxLines = 1)
+                Text(stringResource(if (state.inMySet) R.string.dua_remove_from_set else R.string.dua_add_to_set))
             }
         }
         InfoNote(

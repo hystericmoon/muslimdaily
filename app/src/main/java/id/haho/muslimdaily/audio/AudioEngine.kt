@@ -3,6 +3,7 @@ package id.haho.muslimdaily.audio
 import android.content.ComponentName
 import android.content.Context
 import androidx.annotation.MainThread
+import androidx.core.content.ContextCompat
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -111,7 +112,7 @@ class AudioEngine @Inject constructor(
         if (controller != null) return
         val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
         val future = MediaController.Builder(context, token).buildAsync()
-        future.addListener({ controller = runCatching { future.get() }.getOrNull() }, context.mainExecutor)
+        future.addListener({ controller = runCatching { future.get() }.getOrNull() }, ContextCompat.getMainExecutor(context))
     }
 
     /** Plays the whole recitation of [dua], optionally starting at a phrase. */

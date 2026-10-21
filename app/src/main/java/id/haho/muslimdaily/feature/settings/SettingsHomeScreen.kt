@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,6 +19,7 @@ import id.haho.muslimdaily.core.designsystem.component.NavigationRow
 import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.ui.labelRes
+import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.data.settings.AppSettings
 
 data class SettingsDestinations(
@@ -35,8 +37,12 @@ data class SettingsDestinations(
 @Composable
 fun SettingsHomeRoute(destinations: SettingsDestinations, viewModel: SettingsViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
+    val version by viewModel.contentVersion.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     AppScreen(title = stringResource(R.string.nav_settings)) {
-        settings?.let { SettingsHomeContent(it, destinations) }
+        settings?.let {
+            SettingsHomeContent(it, destinations.copy(onReportError = { reportError(context, null, version) }))
+        }
     }
 }
 

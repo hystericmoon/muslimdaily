@@ -3,7 +3,7 @@ package id.haho.muslimdaily.core.ui
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import android.os.Build
 import android.widget.Toast
 import id.haho.muslimdaily.BuildConfig
@@ -27,7 +27,7 @@ fun reportError(context: Context, duaId: String?, contentVersion: Int?) {
         contentVersion?.toString() ?: "-",
         "${Build.MANUFACTURER} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}",
     )
-    val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).apply {
+    val intent = Intent(Intent.ACTION_SENDTO, "mailto:".toUri()).apply {
         if (BuildConfig.REPORT_EMAIL.isNotBlank()) putExtra(Intent.EXTRA_EMAIL, arrayOf(BuildConfig.REPORT_EMAIL))
         putExtra(Intent.EXTRA_SUBJECT, subject)
         putExtra(Intent.EXTRA_TEXT, body)

@@ -81,6 +81,19 @@ fun MemorizePickerRoute(onBack: () -> Unit, onPick: (String) -> Unit, viewModel:
     val groups by viewModel.groups.collectAsStateWithLifecycle()
     val prefs by viewModel.prefs.collectAsStateWithLifecycle()
     AppScreen(title = stringResource(R.string.memorize_pick_title), onBack = onBack) {
+        MemorizePickerContent(query, groups, prefs, viewModel::setQuery, onPick)
+    }
+}
+
+@Composable
+fun MemorizePickerContent(
+    query: String,
+    groups: List<PickerGroup>?,
+    prefs: ReadingPrefs,
+    onQuery: (String) -> Unit,
+    onPick: (String) -> Unit,
+) {
+    run {
         LazyColumn(
             Modifier.fillMaxSize().imePadding(),
             contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxl),
@@ -89,7 +102,7 @@ fun MemorizePickerRoute(onBack: () -> Unit, onPick: (String) -> Unit, viewModel:
             item {
                 OutlinedTextField(
                     value = query,
-                    onValueChange = viewModel::setQuery,
+                    onValueChange = onQuery,
                     label = { Text(stringResource(R.string.search_hint)) },
                     leadingIcon = { Icon(painterResource(R.drawable.ic_search), null) },
                     singleLine = true,

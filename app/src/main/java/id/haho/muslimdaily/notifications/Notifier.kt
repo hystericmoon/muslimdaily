@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -47,9 +48,11 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
         )
     }
 
-    fun canPost(): Boolean =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
-            NotificationManagerCompat.from(context).areNotificationsEnabled()
+    fun canPost(): Boolean {
+        val granted = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        return granted && NotificationManagerCompat.from(context).areNotificationsEnabled()
+    }
 
     fun adhan(prayer: Prayer, at: Instant, zone: ZoneId, place: String, silent: Boolean, is24Hour: Boolean) {
         val name = context.getString(prayer.labelRes())

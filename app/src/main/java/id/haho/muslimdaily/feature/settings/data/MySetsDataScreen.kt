@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
@@ -49,9 +50,10 @@ private const val FILE_NAME = "muslimdaily-set-saya.json"
 @Composable
 fun MySetsDataRoute(onBack: () -> Unit, viewModel: MySetsDataViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val scope = rememberCoroutineScope()
     val snackbar = remember { SnackbarHostState() }
-    fun say(res: Int, vararg args: Any) = scope.launch { snackbar.showSnackbar(context.getString(res, *args)) }
+    fun say(res: Int, vararg args: Any) = scope.launch { snackbar.showSnackbar(resources.getString(res, *args)) }
 
     val save = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri != null) scope.launch {
@@ -68,22 +70,33 @@ fun MySetsDataRoute(onBack: () -> Unit, viewModel: MySetsDataViewModel = hiltVie
     }
 
     AppScreen(title = stringResource(R.string.settings_my_sets), onBack = onBack, snackbarHostState = snackbar) {
+        MySetsDataContent(
+            onShare = { scope.launch { share(context, viewModel.exportJson()) } },
+            onSave = { save.launch(FILE_NAME) },
+            onImport = { open.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) },
+        )
+    }
+}
+
+@Composable
+fun MySetsDataContent(onShare: () -> Unit, onSave: () -> Unit, onImport: () -> Unit) {
+    run {
         Column(
             Modifier.fillMaxSize().padding(AppTheme.dimens.screenGutter),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
             InfoNote(stringResource(R.string.data_intro))
-            Button(onClick = { scope.launch { share(context, viewModel.exportJson()) } }, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = onShare, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_ios_share), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_share))
             }
-            OutlinedButton(onClick = { save.launch(FILE_NAME) }, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_download), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_save))
             }
-            OutlinedButton(onClick = { open.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(onClick = onImport, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_upload), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_import))
@@ -94,7 +107,7 @@ fun MySetsDataRoute(onBack: () -> Unit, viewModel: MySetsDataViewModel = hiltVie
 }
 
 @Composable
-private fun Text(text: String) = androidx.compose.material3.Text(text, maxLines = 1)
+private fun Text(text: String) = androidx.compose.material3.Text(text)
 
 private suspend fun write(context: Context, uri: Uri, text: String) = withContext(Dispatchers.IO) {
     context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(text.toByteArray()) }

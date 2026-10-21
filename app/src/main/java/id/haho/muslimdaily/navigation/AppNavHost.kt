@@ -6,13 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.PlaceholderScreen
 import id.haho.muslimdaily.feature.duas.customize.CustomizeRoute
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailRoute
 import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
+import id.haho.muslimdaily.feature.settings.AboutRoute
+import id.haho.muslimdaily.feature.settings.DisplaySettingsRoute
+import id.haho.muslimdaily.feature.settings.MethodologyRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
 import id.haho.muslimdaily.feature.settings.RemindersRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
@@ -95,6 +96,9 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onMySets = { navController.navigate(MySetsDataRoute) },
                         onAudio = { navController.navigate(AudioSettingsRoute) },
                         onReminders = { navController.navigate(RemindersRoute) },
+                        onDisplay = { navController.navigate(DisplaySettingsRoute) },
+                        onMethodology = { navController.navigate(MethodologyRoute) },
+                        onAbout = { navController.navigate(AboutRoute) },
                     ),
                 )
             }
@@ -103,6 +107,9 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
             composable<AudioSettingsRoute> { AudioSettingsRoute(onBack = back) }
             composable<RemindersRoute> { RemindersRoute(onBack = back) }
+            composable<DisplaySettingsRoute> { DisplaySettingsRoute(onBack = back) }
+            composable<MethodologyRoute> { MethodologyRoute(onBack = back) }
+            composable<AboutRoute> { AboutRoute(onBack = back) }
         }
     }
 }

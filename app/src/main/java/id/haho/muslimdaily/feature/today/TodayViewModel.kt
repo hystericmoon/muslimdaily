@@ -35,7 +35,7 @@ class TodayViewModel @Inject constructor(
     content: ContentRepository,
     private val checklist: ChecklistRepository,
     private val locations: LocationRepository,
-    runSessions: RunSessionRepository,
+    private val runSessions: RunSessionRepository,
     private val calculator: PrayerCalculator,
     private val clock: Clock,
 ) : ViewModel() {
@@ -54,7 +54,7 @@ class TodayViewModel @Inject constructor(
 
     private val day: Flow<LocalDate> = combine(settings, now) { s, t ->
         val zone = s.location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
-        LocalDate.ofInstant(t, zone)
+        t.atZone(zone).toLocalDate()
     }.distinctUntilChanged()
 
     private val checked: Flow<Set<String>> = day.flatMapLatest { checklist.checked(it) }
@@ -81,7 +81,10 @@ class TodayViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            day.collect { checklist.pruneBefore(it) }
+            day.collect {
+                checklist.pruneBefore(it)
+                runSessions.pruneBefore(it)
+            }
         }
     }
 

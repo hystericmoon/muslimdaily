@@ -24,6 +24,10 @@ import java.util.Locale
 
 val AppLocale: Locale = Locale.forLanguageTag("id-ID")
 
+/** True at 150% system font and above, where side-by-side controls switch to stacked layouts. */
+@Composable
+fun isLargeFontScale(): Boolean = androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.5f
+
 /** Formats clock times following the device's 12/24-hour preference, Indonesian style (04.32). */
 class TimeFormatter(is24Hour: Boolean) {
     private val formatter = DateTimeFormatter.ofPattern(if (is24Hour) "HH.mm" else "h.mm a", AppLocale)

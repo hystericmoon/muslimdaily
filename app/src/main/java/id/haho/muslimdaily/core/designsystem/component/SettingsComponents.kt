@@ -38,6 +38,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.ui.isLargeFontScale
 
 /** A titled group of settings rows on a rounded container. */
 @Composable
@@ -133,17 +134,45 @@ fun StepperRow(
     canDecrement: Boolean = true,
     canIncrement: Boolean = true,
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = AppTheme.dimens.largeTouchTarget)
-            .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xs),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}) {
+    val labels: @Composable (Modifier) -> Unit = { m ->
+        Column(m.semantics(mergeDescendants = true) {}) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
             summary?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         }
+    }
+    val controls: @Composable () -> Unit = {
+        StepperControls(title, valueText, onDecrement, onIncrement, decrementDescription, incrementDescription, canDecrement, canIncrement)
+    }
+    val padded = modifier
+        .fillMaxWidth()
+        .heightIn(min = AppTheme.dimens.largeTouchTarget)
+        .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xs)
+    // At large font scales the label gets the full width and the controls move below it.
+    if (isLargeFontScale()) {
+        Column(padded, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+            labels(Modifier.fillMaxWidth())
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) { controls() }
+        }
+    } else {
+        Row(padded, verticalAlignment = Alignment.CenterVertically) {
+            labels(Modifier.weight(1f))
+            controls()
+        }
+    }
+}
+
+@Composable
+private fun StepperControls(
+    title: String,
+    valueText: String,
+    onDecrement: () -> Unit,
+    onIncrement: () -> Unit,
+    decrementDescription: String,
+    incrementDescription: String,
+    canDecrement: Boolean,
+    canIncrement: Boolean,
+) {
+    run {
         FilledTonalIconButton(onClick = onDecrement, enabled = canDecrement, modifier = Modifier.size(AppTheme.dimens.minTouchTarget)) {
             Icon(painterResource(R.drawable.ic_remove), decrementDescription)
         }
@@ -181,6 +210,26 @@ fun <T> SegmentedRow(
     ) {
         Text(title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.clearAndSetSemantics { })
         summary?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        if (isLargeFontScale()) {
+            // Segments would truncate their labels at large font scales; a radio list never does.
+            Column(Modifier.selectableGroup()) {
+                options.forEach { option ->
+                    val text = label(option)
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = AppTheme.dimens.minTouchTarget)
+                            .selectable(selected = option == selected, role = Role.RadioButton, onClick = { onSelect(option) })
+                            .semantics { contentDescription = "$title: $text" },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = option == selected, onClick = null)
+                        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = AppTheme.spacing.sm))
+                    }
+                }
+            }
+            return@Column
+        }
         SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
             options.forEachIndexed { i, option ->
                 val text = label(option)

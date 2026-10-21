@@ -43,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -57,6 +58,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.EmptyState
+import id.haho.muslimdaily.core.designsystem.component.bidiIsolate
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.component.SectionHeader
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
@@ -96,12 +98,13 @@ fun TodayRoute(
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     fun handle(result: LocationRepository.FixResult) {
         val message = when (result) {
             is LocationRepository.FixResult.Success -> null
-            LocationRepository.FixResult.NoPermission -> context.getString(R.string.location_permission_denied)
-            LocationRepository.FixResult.Unavailable -> context.getString(R.string.location_unavailable)
+            LocationRepository.FixResult.NoPermission -> resources.getString(R.string.location_permission_denied)
+            LocationRepository.FixResult.Unavailable -> resources.getString(R.string.location_unavailable)
         }
         if (message != null) scope.launch { snackbar.showSnackbar(message) }
     }
@@ -365,17 +368,17 @@ private fun TravelSuggestion(km: Int, locationName: String, actions: TodayAction
         Column(Modifier.padding(AppTheme.spacing.lg)) {
             Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
                 Icon(painterResource(R.drawable.ic_travel_explore), null)
-                Text(stringResource(R.string.today_travel_suggestion, km, locationName), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(R.string.today_travel_suggestion, km, bidiIsolate(locationName)), style = MaterialTheme.typography.bodyMedium)
             }
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
                 modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.sm),
             ) {
-                TextButton(onClick = actions.onDismissTravel) { Text(stringResource(R.string.today_dismiss), maxLines = 1) }
+                TextButton(onClick = actions.onDismissTravel) { Text(stringResource(R.string.today_dismiss)) }
                 TextButton(onClick = actions.onEnableTravelFromSuggestion) {
-                    Text(stringResource(R.string.today_enable_travel), maxLines = 1)
+                    Text(stringResource(R.string.today_enable_travel))
                 }
-                FilledTonalButton(onClick = actions.onUseGps) { Text(stringResource(R.string.today_update_location), maxLines = 1) }
+                FilledTonalButton(onClick = actions.onUseGps) { Text(stringResource(R.string.today_update_location)) }
             }
         }
     }
@@ -432,14 +435,14 @@ private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Mod
                 verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
             ) {
                 TextButton(onClick = { actions.onOpenEvent(card.eventId) }) {
-                    Text(stringResource(R.string.adhkar_open_list), maxLines = 1)
+                    Text(stringResource(R.string.adhkar_open_list))
                 }
                 val resume = card.progress?.let { !it.completed && it.done > 0 } == true
                 val label = stringResource(if (resume) R.string.action_resume else R.string.action_start)
                 if (card.active) {
-                    Button(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label, maxLines = 1) }
+                    Button(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
                 } else {
-                    FilledTonalButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label, maxLines = 1) }
+                    FilledTonalButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
                 }
             }
         }

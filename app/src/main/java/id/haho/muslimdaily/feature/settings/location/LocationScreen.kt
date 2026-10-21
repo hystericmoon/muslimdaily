@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -110,14 +111,15 @@ fun LocationRoute(onBack: () -> Unit, viewModel: LocationViewModel = hiltViewMod
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     val onFix: (LocationRepository.FixResult) -> Unit = { result ->
         when (result) {
             is LocationRepository.FixResult.Success -> onBack()
             LocationRepository.FixResult.NoPermission ->
-                scope.launch { snackbar.showSnackbar(context.getString(R.string.location_permission_denied)) }
+                scope.launch { snackbar.showSnackbar(resources.getString(R.string.location_permission_denied)) }
             LocationRepository.FixResult.Unavailable ->
-                scope.launch { snackbar.showSnackbar(context.getString(R.string.location_unavailable)) }
+                scope.launch { snackbar.showSnackbar(resources.getString(R.string.location_unavailable)) }
         }
     }
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->

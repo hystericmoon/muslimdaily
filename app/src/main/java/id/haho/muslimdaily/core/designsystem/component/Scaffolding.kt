@@ -1,7 +1,6 @@
 package id.haho.muslimdaily.core.designsystem.component
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -155,17 +153,6 @@ fun SectionHeader(text: String, modifier: Modifier = Modifier, trailing: @Compos
         )
         trailing()
     }
-}
-
-@Composable
-fun PlaceholderScreen(@StringRes title: Int) {
-    CenterAlignedTopAppBar(title = { Text(stringResource(title)) })
-    EmptyState(
-        icon = R.drawable.ic_auto_stories,
-        title = stringResource(title),
-        body = stringResource(R.string.placeholder_body),
-        modifier = Modifier.padding(top = AppTheme.spacing.xxxl * 2),
-    )
 }
 
 @ThemePreviews

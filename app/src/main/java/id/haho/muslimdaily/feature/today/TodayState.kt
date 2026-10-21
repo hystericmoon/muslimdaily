@@ -95,7 +95,7 @@ object TodayStateBuilder {
     ): TodayUiState {
         val location = settings.location ?: return TodayUiState.NoLocation
         val zone = runCatching { ZoneId.of(location.timeZoneId) }.getOrDefault(ZoneId.systemDefault())
-        val date = LocalDate.ofInstant(now, zone)
+        val date = now.atZone(zone).toLocalDate()
         val calc = settings.calculation
         fun day(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, calc)
         val yesterday = day(date.minusDays(1))

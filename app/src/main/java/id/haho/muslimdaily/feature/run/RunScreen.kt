@@ -297,7 +297,7 @@ private fun RunBottomBar(state: RunUiState, pager: PagerState, actions: RunActio
             if (onCard && state.counts.getOrElse(pager.currentPage) { 0 } > 0) {
                 TextButton(onClick = actions.onUndo) {
                     Icon(painterResource(R.drawable.ic_remove), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Text(stringResource(R.string.run_undo), Modifier.padding(start = AppTheme.spacing.xs), maxLines = 1)
+                    Text(stringResource(R.string.run_undo), Modifier.padding(start = AppTheme.spacing.xs))
                 }
             }
         }

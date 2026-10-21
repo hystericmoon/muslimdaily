@@ -17,7 +17,6 @@
     <string name="action_cancel">Batal</string>
     <string name="action_save">Simpan</string>
     <string name="action_done">Selesai</string>
-    <string name="action_retry">Coba lagi</string>
     <string name="action_search">Cari</string>
     <string name="action_clear">Hapus</string>
     <string name="action_start">Mulai</string>
@@ -61,7 +60,6 @@
 
     <!-- Today -->
     <string name="today_next">Berikutnya</string>
-    <string name="today_next_prayer">%1$s pukul %2$s</string>
     <string name="today_tomorrow">besok</string>
     <string name="today_now_badge">Sekarang</string>
     <string name="today_iqamah">Iqamah %s</string>
@@ -118,7 +116,6 @@
     <string name="tier_ghairu">Ghairu muakkadah</string>
     <string name="rawatib_evidence">Dalil</string>
     <string name="rawatib_evidence_missing">Dalil belum ditinjau.</string>
-    <string name="mark_done">Tandai selesai: %s</string>
     <string name="duha_title">Shalat Dhuha</string>
     <string name="witr_title">Shalat Witir</string>
 
@@ -244,9 +241,9 @@
     <string name="player_play">Putar</string>
     <string name="player_pause">Jeda</string>
     <string name="player_repeat">Ulangi</string>
-    <string name="player_speed">Kecepatan</string>
-    <string name="state_on">aktif</string>
-    <string name="state_off">mati</string>
+    <string name="player_speed">Kecepatan %s</string>
+    <string name="state_enabled">aktif</string>
+    <string name="state_disabled">mati</string>
 
     <!-- Event -->
     <string name="event_full_set">Set lengkap</string>
@@ -452,5 +449,47 @@
     <string name="notif_friday_text">Membaca surat Al-Kahfi dan memperbanyak shalawat.</string>
     <string name="notif_review_title">Ulangan hafalan</string>
 
-    <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
+    <!-- Display -->
+    <string name="display_translation">Terjemahan</string>
+    <string name="display_translation_id">Bahasa Indonesia</string>
+    <string name="display_translation_en">Bahasa Inggris</string>
+    <string name="display_translation_both">Keduanya</string>
+    <string name="display_transliteration">Transliterasi Latin</string>
+    <string name="display_transliteration_summary">Mati secara bawaan. Bantu membaca, bukan pengganti teks Arab.</string>
+    <string name="display_text_size">Ukuran teks</string>
+    <string name="display_arabic_size">Teks Arab</string>
+    <string name="display_translation_size">Terjemahan</string>
+    <string name="display_size_note">Terpisah dari ukuran huruf sistem; keduanya digabungkan.</string>
+    <string name="display_sample_arabic">هٰذَا نَصٌّ تَجْرِيبِيٌّ</string>
+    <string name="display_sample_translation">Contoh teks untuk ukuran (bukan doa).</string>
+    <string name="display_theme">Tema</string>
+    <string name="display_theme_mode">Mode</string>
+    <string name="display_theme_system">Sistem</string>
+    <string name="display_theme_light">Terang</string>
+    <string name="display_theme_dark">Gelap</string>
+    <string name="display_dynamic_color">Warna dinamis</string>
+    <string name="display_dynamic_color_summary">Ikuti warna wallpaper (Android 12+). Mati secara bawaan agar kontras teks tetap terjaga.</string>
+
+    <!-- Methodology -->
+    <string name="methodology_scope_title">Cakupan</string>
+    <string name="methodology_scope_body">Hanya Al-Qur\'an dan Sunnah yang sahih atau hasan, di atas manhaj salaf. Tidak ada doa atau amalan tanpa dalil.</string>
+    <string name="methodology_sources_title">Sumber</string>
+    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim. Setiap doa mencantumkan kitab dan nomor haditsnya, dapat dilihat dengan mengetuk label sumber.</string>
+    <string name="methodology_grading_title">Kebijakan derajat</string>
+    <string name="methodology_grading_body">Derajat diperiksa silang dengan penilaian Syaikh al-Albani. Setiap doa menyebutkan siapa yang menilai, beserta penilaian lain bila ada.</string>
+    <string name="methodology_counts_title">Jumlah bacaan</string>
+    <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
+    <string name="methodology_audio_title">Audio</string>
+    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara.</string>
+    <string name="methodology_review_title">Peninjauan</string>
+    <string name="methodology_reviewer">Ditinjau oleh: [nama ustadz peninjau]. Hanya konten yang telah disetujui yang tampil di aplikasi.</string>
+    <string name="methodology_prayer_title">Waktu shalat</string>
+    <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI dan dapat disesuaikan. Tidak menampilkan waktu imsak.</string>
+    <string name="methodology_version_title">Versi</string>
+    <string name="methodology_content_version">Versi konten: %s</string>
+    <string name="methodology_app_version">Versi aplikasi: %s</string>
+
+    <!-- About -->
+    <string name="about_body">Panduan harian: waktu shalat, sunnah rawatib, dzikir pagi dan petang, dan doa sehari-hari dari bangun hingga tidur. Bekerja sepenuhnya tanpa internet.</string>
+    <string name="about_licenses">Lisensi dan atribusi</string>
 </resources>

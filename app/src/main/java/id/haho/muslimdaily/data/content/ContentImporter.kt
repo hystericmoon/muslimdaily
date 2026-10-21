@@ -1,7 +1,5 @@
 package id.haho.muslimdaily.data.content
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.core.arabic.ArabicNormalizer
 import id.haho.muslimdaily.core.model.SourceRef
@@ -30,7 +28,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class ContentImporter @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val source: ContentSource,
     private val db: ContentDatabase,
 ) {
     private val mutex = Mutex()
@@ -47,9 +45,7 @@ class ContentImporter @Inject constructor(
     }
 
     private suspend fun importIfChanged() {
-        val files = CONTENT_FILES.associateWith { name ->
-            context.assets.open("content/$name").use { it.readBytes() }
-        }
+        val files = CONTENT_FILES.associateWith(source::read)
         val hash = sha256(files.values.toList(), BuildConfig.INCLUDE_DRAFT_CONTENT)
         val dao = db.contentDao()
         if (dao.meta(META_HASH) == hash) return

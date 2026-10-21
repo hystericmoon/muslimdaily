@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import id.haho.muslimdaily.data.content.AssetContentSource
+import id.haho.muslimdaily.data.content.ContentSource
 import id.haho.muslimdaily.data.db.ContentDatabase
 import id.haho.muslimdaily.data.db.UserDatabase
 import java.time.Clock
@@ -32,4 +34,7 @@ object DataModule {
 
     @Provides
     fun clock(): Clock = Clock.systemDefaultZone()
+
+    @Provides
+    fun contentSource(assets: AssetContentSource): ContentSource = assets
 }

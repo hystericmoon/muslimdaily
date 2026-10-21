@@ -11,6 +11,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.AndroidEntryPoint
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.designsystem.component.bidiIsolate
 import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -58,7 +59,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val location = s.location
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
         val now = Instant.now(clock)
-        val today = LocalDate.ofInstant(now, zone)
+        val today = now.atZone(zone).toLocalDate()
         val prayer = type.prayer
         if (prayer != null && location != null) {
             val schedule = calculator.schedule(today, location.latitude, location.longitude, zone, s.calculation)
@@ -67,7 +68,7 @@ class ReminderReceiver : BroadcastReceiver() {
             } else {
                 prayer
             }
-            notifier.adhan(shown, schedule.time(prayer), zone, location.name, silent, DateFormat.is24HourFormat(context))
+            notifier.adhan(shown, schedule.time(prayer), zone, bidiIsolate(location.name), silent, DateFormat.is24HourFormat(context))
             return
         }
         val text = when (type) {
@@ -92,6 +93,7 @@ class SystemEventsReceiver : BroadcastReceiver() {
     @Inject lateinit var scheduler: ReminderScheduler
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action !in HANDLED) return
         val pending = goAsync()
         receiverScope.launch {
             try {
@@ -102,6 +104,14 @@ class SystemEventsReceiver : BroadcastReceiver() {
         }
     }
 }
+
+private val HANDLED = setOf(
+    Intent.ACTION_BOOT_COMPLETED,
+    Intent.ACTION_TIME_CHANGED,
+    Intent.ACTION_TIMEZONE_CHANGED,
+    Intent.ACTION_MY_PACKAGE_REPLACED,
+    "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED",
+)
 
 @HiltWorker
 class RescheduleWorker @AssistedInject constructor(

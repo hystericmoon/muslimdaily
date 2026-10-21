@@ -220,7 +220,7 @@ private fun PlayRow(isPlaying: Boolean, enabled: Boolean, startLabel: String, on
             Button(onClick = onStart, enabled = enabled, modifier = Modifier.padding(vertical = AppTheme.spacing.xs)) {
                 Icon(painterResource(R.drawable.ic_play_arrow), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
-                Text(startLabel, maxLines = 1)
+                Text(startLabel)
             }
         }
         Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -302,7 +302,6 @@ private fun AbLoop(state: MemorizeUiState, actions: MemorizeActions) {
                 Text(
                     stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
                     Modifier.padding(start = AppTheme.spacing.sm),
-                    maxLines = 1,
                 )
             }
         }
@@ -350,7 +349,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
     if (talkBack) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
     FilledTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.segmented && state.hiddenWords.isNotEmpty()) {
         Icon(painterResource(R.drawable.ic_graphic_eq), null, Modifier.size(AppTheme.dimens.smallIcon))
-        Text(stringResource(R.string.memorize_play_with_gaps), Modifier.padding(start = AppTheme.spacing.sm), maxLines = 1)
+        Text(stringResource(R.string.memorize_play_with_gaps), Modifier.padding(start = AppTheme.spacing.sm))
     }
     if (state.playing == Playing.RECALL && state.playback.isPlaying) {
         Text(
@@ -410,7 +409,7 @@ private fun Rating.labelRes() = when (this) {
 @Composable
 private fun NextStepButton(next: Step, actions: MemorizeActions) {
     TextButton(onClick = { actions.onStep(next) }) {
-        Text(stringResource(R.string.memorize_next_step, stringResource(next.labelRes())), maxLines = 1)
+        Text(stringResource(R.string.memorize_next_step, stringResource(next.labelRes())))
         Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.padding(start = AppTheme.spacing.xs))
     }
 }

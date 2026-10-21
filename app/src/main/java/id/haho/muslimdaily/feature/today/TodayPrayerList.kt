@@ -91,8 +91,9 @@ private fun PrayerRowView(
     onShowEvidence: (RawatibLine) -> Unit,
 ) {
     val time = rememberTimeFormatter()
-    val plan = row.plan
-    val name = stringResource(plan?.prayer?.labelRes() ?: row.slot.labelRes())
+    // Nothing to expand when no reviewed rawatib or fard data has shipped yet.
+    val plan = row.plan?.takeIf { it.before.isNotEmpty() || it.after.isNotEmpty() || it.fard != null }
+    val name = stringResource(row.plan?.prayer?.labelRes() ?: row.slot.labelRes())
     val isSunrise = row.slot == PrayerTimeSlot.SUNRISE
     val expandLabel = stringResource(if (expanded) R.string.today_collapse_rawatib else R.string.today_expand_rawatib)
     val stateLabel = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)

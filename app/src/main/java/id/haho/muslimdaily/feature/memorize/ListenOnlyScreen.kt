@@ -91,6 +91,11 @@ class ListenOnlyViewModel @Inject constructor(
 fun ListenOnlyRoute(onClose: () -> Unit, viewModel: ListenOnlyViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val s = state ?: return
+    ListenOnlyContent(s, onStart = viewModel::start, onToggle = viewModel::toggle, onClose = onClose)
+}
+
+@Composable
+fun ListenOnlyContent(s: ListenOnlyState, onStart: () -> Unit, onToggle: () -> Unit, onClose: () -> Unit) {
     Column(
         Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(AppTheme.dimens.screenGutter),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xl),
@@ -103,7 +108,7 @@ fun ListenOnlyRoute(onClose: () -> Unit, viewModel: ListenOnlyViewModel = hiltVi
         Column(Modifier.fillMaxWidth().weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
             FilledIconButton(
-                onClick = { if (loaded) viewModel.toggle() else viewModel.start() },
+                onClick = { if (loaded) onToggle() else onStart() },
                 enabled = s.dua.audio != null,
                 modifier = Modifier.size(AppTheme.dimens.playerMainButton * 1.5f),
             ) {

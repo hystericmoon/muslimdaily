@@ -69,4 +69,7 @@ fun arabicAnnotated(text: String): AnnotatedString = buildAnnotatedString {
  * Isolates a run of opposite-direction text (e.g. an Arabic word inside an Indonesian sentence) with
  * Unicode FSI/PDI so neighbouring punctuation and numbers keep their order.
  */
-fun bidiIsolate(text: String): String = "⁨$text⁩"
+fun bidiIsolate(text: String): String = FSI + text + PDI
+
+private const val FSI = "\u2068"
+private const val PDI = "\u2069"

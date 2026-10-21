@@ -73,8 +73,13 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEn.isNotBlank()
         if (showId) Text(dua.translationId, style = reading.bodyLarge)
         if (showEn) {
+            // Tagged as English so TalkBack switches voice inside the Indonesian UI.
             Text(
-                dua.translationEn,
+                androidx.compose.ui.text.buildAnnotatedString {
+                    pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("en")))
+                    append(dua.translationEn)
+                    pop()
+                },
                 style = reading.bodyLarge,
                 color = if (showId) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
             )
@@ -205,7 +210,7 @@ fun PlayerBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            val repeatState = stringResource(if (repeat) R.string.state_on else R.string.state_off)
+            val repeatState = stringResource(if (repeat) R.string.state_enabled else R.string.state_disabled)
             IconToggleButton(
                 checked = repeat,
                 onCheckedChange = onRepeat,
@@ -233,10 +238,11 @@ fun PlayerBar(
                 )
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                val speedDescription = stringResource(R.string.player_speed, speedLabel(speed))
                 TextButton(
                     onClick = { speedMenu = true },
                     enabled = enabled,
-                    modifier = Modifier.size(width = AppTheme.dimens.largeTouchTarget * 1.25f, height = AppTheme.dimens.largeTouchTarget),
+                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = AppTheme.dimens.largeTouchTarget * 1.25f, height = AppTheme.dimens.largeTouchTarget),
                 ) {
                     Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
                 }

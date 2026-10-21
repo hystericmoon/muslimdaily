@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,6 +11,11 @@ plugins {
 }
 
 val reportEmail = providers.gradleProperty("muslimdaily.reportEmail").getOrElse("")
+
+// Release signing comes from keystore.properties (never committed); see docs/release.md.
+val keystoreProps = rootProject.file("keystore.properties").takeIf { it.exists() }?.let { file ->
+    Properties().apply { file.inputStream().use { load(it) } }
+}
 val robolectricRepoUrl: String? = providers.gradleProperty("muslimdaily.robolectricRepoUrl").orNull
 
 android {
@@ -26,6 +32,17 @@ android {
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
     }
 
+    signingConfigs {
+        if (keystoreProps != null) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -36,7 +53,6 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("boolean", "INCLUDE_DRAFT_CONTENT", "false")
-            // Signing is configured on the release machine; see docs/RELEASE.md.
             signingConfig = signingConfigs.findByName("release")
         }
     }

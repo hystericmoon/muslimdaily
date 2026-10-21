@@ -52,7 +52,7 @@ object ReminderPlanner {
         val r = settings.reminders
         val location = settings.location
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
-        val today = LocalDate.ofInstant(now, zone)
+        val today = now.atZone(zone).toLocalDate()
         val schedules: List<PrayerSchedule> = location?.let { loc ->
             (0L..7L).map { calculator.schedule(today.plusDays(it), loc.latitude, loc.longitude, zone, settings.calculation) }
         }.orEmpty()
@@ -83,12 +83,12 @@ object ReminderPlanner {
     }
 
     fun nextDaily(now: Instant, zone: ZoneId, time: LocalTime): Instant {
-        val today = LocalDate.ofInstant(now, zone).atTime(time).atZone(zone).toInstant()
-        return if (today.isAfter(now)) today else LocalDate.ofInstant(now, zone).plusDays(1).atTime(time).atZone(zone).toInstant()
+        val today = now.atZone(zone).toLocalDate().atTime(time).atZone(zone).toInstant()
+        return if (today.isAfter(now)) today else now.atZone(zone).toLocalDate().plusDays(1).atTime(time).atZone(zone).toInstant()
     }
 
     fun nextFriday(now: Instant, zone: ZoneId, time: LocalTime): Instant {
-        val date = LocalDate.ofInstant(now, zone)
+        val date = now.atZone(zone).toLocalDate()
         val thisFriday = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY)).atTime(time).atZone(zone).toInstant()
         return if (thisFriday.isAfter(now)) {
             thisFriday

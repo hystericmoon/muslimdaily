@@ -2,7 +2,7 @@ package id.haho.muslimdaily.feature.settings
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -106,7 +106,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
     }
     val askExact = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
+            context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
         }
     }
     AppScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
@@ -256,7 +256,7 @@ private fun PermissionCard(text: String, action: String, onClick: () -> Unit) {
     ) {
         Column(Modifier.padding(AppTheme.spacing.lg)) {
             Text(text, style = MaterialTheme.typography.bodyMedium)
-            Button(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action, maxLines = 1) }
+            Button(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action) }
         }
     }
 }

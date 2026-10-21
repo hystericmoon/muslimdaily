@@ -61,7 +61,7 @@ fun EventRoute(
                 ExtendedFloatingActionButton(
                     onClick = { onStart(viewModel.eventId) },
                     icon = { Icon(painterResource(R.drawable.ic_play_arrow), null) },
-                    text = { Text(stringResource(R.string.event_start), maxLines = 1) },
+                    text = { Text(stringResource(R.string.event_start)) },
                 )
             }
         },

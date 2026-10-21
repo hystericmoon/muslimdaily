@@ -95,7 +95,7 @@ fun MemorizeHomeRoute(
             ExtendedFloatingActionButton(
                 onClick = onPick,
                 icon = { Icon(painterResource(R.drawable.ic_add), null) },
-                text = { Text(stringResource(R.string.memorize_add), maxLines = 1) },
+                text = { Text(stringResource(R.string.memorize_add)) },
             )
         },
     ) {
@@ -151,7 +151,7 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
             } else {
                 Text(pluralStringResource(R.plurals.memorize_review_due, due.size, due.size), style = MaterialTheme.typography.titleLarge)
-                Button(onClick = { onOpen(due.first().dua.id, true) }) { Text(stringResource(R.string.memorize_review_start), maxLines = 1) }
+                Button(onClick = { onOpen(due.first().dua.id, true) }) { Text(stringResource(R.string.memorize_review_start)) }
             }
         }
     }
