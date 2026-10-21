@@ -1,1 +1,1281 @@
-{"content_version":0,"duas":[]}
+{
+  "content_version": 2,
+  "duas": [
+    {
+      "id": "wake_01",
+      "category": "daily",
+      "event": "waking_up",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "wake_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "toilet_01",
+      "category": "daily",
+      "event": "toilet",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "toilet_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "eating_01",
+      "category": "daily",
+      "event": "eating",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "eating_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "sleep_01",
+      "category": "daily",
+      "event": "sleeping",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "sleep_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "sleep_02",
+      "category": "daily",
+      "event": "sleeping",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "sleep_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "istiftah_01",
+      "category": "prayer",
+      "event": "istiftah",
+      "order": 1,
+      "variant_group": "istiftah_forms",
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "istiftah_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "istiftah_02",
+      "category": "prayer",
+      "event": "istiftah",
+      "order": 2,
+      "variant_group": "istiftah_forms",
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "istiftah_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "after_salah_01",
+      "category": "prayer",
+      "event": "after_salah",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "after_salah_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "after_salah_02",
+      "category": "prayer",
+      "event": "after_salah",
+      "order": 2,
+      "variant_group": "tasbih_forms",
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": 3,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "after_salah_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "after_salah_03",
+      "category": "prayer",
+      "event": "after_salah",
+      "order": 3,
+      "variant_group": "tasbih_forms",
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": 3,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "after_salah_03.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_01",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_02",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": 3,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_03",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_03.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_04",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_04.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_05",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": 3,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_05.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_06",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_06.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_07",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_07.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "morning_08",
+      "category": "adhkar",
+      "event": "morning",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "morning_08.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_01",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_02",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_03",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": 3,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_03.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_04",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_04.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_05",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_05.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "evening_06",
+      "category": "adhkar",
+      "event": "evening",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "evening_06.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "travel_01",
+      "category": "situational",
+      "event": "travel",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "travel_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "rain_01",
+      "category": "situational",
+      "event": "rain",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "rain_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "distress_01",
+      "category": "situational",
+      "event": "distress",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": false,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "distress_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "quran_01",
+      "category": "quran",
+      "event": "quranic_duas",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": true,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "quran_01.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "quran_02",
+      "category": "quran",
+      "event": "quranic_duas",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "[PLACEHOLDER 1] [PLACEHOLDER 2] [PLACEHOLDER 3]",
+      "is_quran": true,
+      "translations": {
+        "id": "[PLACEHOLDER]",
+        "en": "[PLACEHOLDER]"
+      },
+      "transliteration": "[PLACEHOLDER]",
+      "count": null,
+      "sources": [],
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "quran_02.opus",
+        "segments": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            1.6,
+            3.4
+          ],
+          [
+            3.4,
+            5.0
+          ]
+        ]
+      },
+      "phrase_breaks": [
+        16,
+        32
+      ],
+      "status": "draft"
+    }
+  ]
+}

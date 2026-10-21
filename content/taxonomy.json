@@ -1,1 +1,71 @@
-{"categories":[]}
+{
+  "categories": [
+    {
+      "id": "daily",
+      "label": "Rutinitas harian",
+      "label_en": "Daily timeline",
+      "order": 1,
+      "events": [
+        { "id": "waking_up", "label": "Bangun tidur", "label_en": "Waking up", "order": 1 },
+        { "id": "toilet", "label": "Kamar kecil", "label_en": "Toilet", "order": 2 },
+        { "id": "wudu", "label": "Wudhu", "label_en": "Wudu", "order": 3 },
+        { "id": "dressing", "label": "Berpakaian", "label_en": "Dressing", "order": 4 },
+        { "id": "leaving_home", "label": "Keluar rumah", "label_en": "Leaving home", "order": 5 },
+        { "id": "entering_home", "label": "Masuk rumah", "label_en": "Entering home", "order": 6 },
+        { "id": "going_to_masjid", "label": "Berangkat ke masjid", "label_en": "Going to the masjid", "order": 7 },
+        { "id": "entering_masjid", "label": "Masuk masjid", "label_en": "Entering the masjid", "order": 8 },
+        { "id": "leaving_masjid", "label": "Keluar masjid", "label_en": "Leaving the masjid", "order": 9 },
+        { "id": "adhan", "label": "Mendengar adzan", "label_en": "Hearing the adhan", "order": 10 },
+        { "id": "eating", "label": "Makan", "label_en": "Eating", "order": 11 },
+        { "id": "drinking", "label": "Minum", "label_en": "Drinking", "order": 12 },
+        { "id": "sleeping", "label": "Sebelum tidur", "label_en": "Before sleeping", "order": 13 }
+      ]
+    },
+    {
+      "id": "prayer",
+      "label": "Shalat",
+      "label_en": "Prayer",
+      "order": 2,
+      "events": [
+        { "id": "istiftah", "label": "Doa istiftah", "label_en": "Opening supplication", "order": 1 },
+        { "id": "ruku", "label": "Rukuk", "label_en": "Ruku", "order": 2 },
+        { "id": "sujud", "label": "Sujud", "label_en": "Sujud", "order": 3 },
+        { "id": "tashahhud", "label": "Tasyahud", "label_en": "Tashahhud", "order": 4 },
+        { "id": "after_salah", "label": "Dzikir setelah shalat", "label_en": "After salah", "order": 5 }
+      ]
+    },
+    {
+      "id": "adhkar",
+      "label": "Dzikir pagi & petang",
+      "label_en": "Morning & evening adhkar",
+      "order": 3,
+      "events": [
+        { "id": "morning", "label": "Dzikir pagi", "label_en": "Morning adhkar", "order": 1 },
+        { "id": "evening", "label": "Dzikir petang", "label_en": "Evening adhkar", "order": 2 }
+      ]
+    },
+    {
+      "id": "situational",
+      "label": "Situasional",
+      "label_en": "Situational",
+      "order": 4,
+      "events": [
+        { "id": "travel", "label": "Safar", "label_en": "Travel", "order": 1 },
+        { "id": "rain", "label": "Hujan", "label_en": "Rain", "order": 2 },
+        { "id": "thunder", "label": "Petir", "label_en": "Thunder", "order": 3 },
+        { "id": "illness", "label": "Sakit", "label_en": "Illness", "order": 4 },
+        { "id": "distress", "label": "Kesusahan", "label_en": "Distress", "order": 5 },
+        { "id": "istikharah", "label": "Istikharah", "label_en": "Istikharah", "order": 6 }
+      ]
+    },
+    {
+      "id": "quran",
+      "label": "Doa dari Al-Qur'an",
+      "label_en": "Qur'anic duas",
+      "order": 5,
+      "events": [
+        { "id": "quranic_duas", "label": "Doa-doa Al-Qur'an", "label_en": "Duas from the Qur'an", "order": 1 }
+      ]
+    }
+  ]
+}
