@@ -280,5 +280,58 @@
     <string name="report_body">Jelaskan kesalahannya di sini:\n\n\n---\nID doa: %1$s\nVersi aplikasi: %2$s\nVersi konten: %3$s\nPerangkat: %4$s</string>
     <string name="report_no_email_app">Tidak ada aplikasi email.</string>
 
+    <!-- Customize -->
+    <string name="customize_title">Sesuaikan: %s</string>
+    <string name="customize_reset">Atur ulang</string>
+    <string name="customize_reset_title">Kembali ke set lengkap?</string>
+    <string name="customize_reset_body">Urutan, doa yang disembunyikan, dan pilihan bentuk akan dihapus.</string>
+    <string name="customize_intro">Matikan doa untuk menyembunyikannya, seret pegangan untuk mengubah urutan. Set lengkap tetap tersedia.</string>
+    <string name="customize_item_n">Doa %d</string>
+    <plurals name="customize_forms">
+        <item quantity="other">%d bentuk</item>
+    </plurals>
+    <plurals name="customize_hidden">
+        <item quantity="other">Tersembunyi (%d)</item>
+    </plurals>
+    <string name="customize_restore">Tampilkan</string>
+    <string name="customize_rotate">Bergantian tiap sesi</string>
+    <string name="customize_rotate_note">Setiap kali sesi selesai, bentuk berikutnya yang dipakai.</string>
+    <string name="customize_move_up">Pindah ke atas</string>
+    <string name="customize_move_down">Pindah ke bawah</string>
+
+    <!-- Run mode -->
+    <string name="run_count">%1$d dari %2$d</string>
+    <string name="run_position">Doa %1$d dari %2$d</string>
+    <string name="run_summary">Ringkasan</string>
+    <string name="run_done">Selesai</string>
+    <string name="run_not_read">Belum dibaca</string>
+    <string name="run_tap_count">Hitung</string>
+    <string name="run_tap_read">Tandai sudah dibaca</string>
+    <string name="run_tap_hint">Ketuk kartu untuk menghitung</string>
+    <string name="run_tap_read_hint">Ketuk kartu setelah membaca</string>
+    <string name="run_undo">Kurangi</string>
+    <string name="run_previous">Sebelumnya</string>
+    <string name="run_next">Berikutnya</string>
+    <string name="run_auto_advance">Lanjut otomatis</string>
+    <string name="run_restart">Mulai ulang</string>
+    <string name="run_summary_done">%s selesai</string>
+    <string name="run_summary_partial">Belum semua dibaca</string>
+    <plurals name="run_summary_count">
+        <item quantity="other">%1$d dari %2$d dibaca</item>
+    </plurals>
+    <string name="run_go_to_open">Ke doa yang belum dibaca</string>
+    <string name="run_private_note">Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik.</string>
+
+    <!-- My sets data -->
+    <string name="data_intro">Simpan pilihan set saya ke file untuk cadangan atau untuk dipakai di perangkat lain.</string>
+    <string name="data_share">Bagikan file</string>
+    <string name="data_save">Simpan ke file</string>
+    <string name="data_import">Impor dari file</string>
+    <string name="data_import_note">Impor menggantikan pengaturan set pada acara yang ada di dalam file.</string>
+    <string name="data_saved">File tersimpan.</string>
+    <string name="data_failed">Gagal menyimpan file.</string>
+    <string name="data_imported">%d acara diimpor.</string>
+    <string name="data_import_failed">File tidak dapat dibaca.</string>
+
     <string name="placeholder_body">Halaman ini sedang disiapkan.</string>
 </resources>

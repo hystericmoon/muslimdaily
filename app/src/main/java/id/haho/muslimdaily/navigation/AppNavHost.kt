@@ -8,13 +8,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.PlaceholderScreen
+import id.haho.muslimdaily.feature.duas.customize.CustomizeRoute
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailRoute
 import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
+import id.haho.muslimdaily.feature.run.RunRoute
 import id.haho.muslimdaily.feature.settings.SettingsHomeRoute
+import id.haho.muslimdaily.feature.settings.data.MySetsDataRoute
 import id.haho.muslimdaily.feature.settings.location.LocationRoute
 import id.haho.muslimdaily.feature.today.TodayRoute
 
@@ -53,7 +56,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<DuaDetailRoute> {
                 DuaDetailRoute(onBack = back, onMemorize = { navController.navigate(MemorizeSessionRoute(it)) })
             }
-            composable<RunRoute> { PlaceholderScreen(R.string.nav_duas) }
+            composable<CustomizeRoute> { CustomizeRoute(onBack = back) }
+            composable<RunRoute> { RunRoute(onClose = back) }
         }
         navigation<MemorizeGraph>(startDestination = MemorizeHomeRoute) {
             composable<MemorizeHomeRoute> { PlaceholderScreen(R.string.nav_memorize) }
@@ -64,11 +68,13 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     SettingsDestinations(
                         onPrayer = { navController.navigate(PrayerSettingsRoute) },
                         onLocation = { navController.navigate(LocationRoute) },
+                        onMySets = { navController.navigate(MySetsDataRoute) },
                     ),
                 )
             }
             composable<PrayerSettingsRoute> { PrayerSettingsRoute(onBack = back) }
             composable<LocationRoute> { LocationRoute(onBack = back) }
+            composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
         }
     }
 }
