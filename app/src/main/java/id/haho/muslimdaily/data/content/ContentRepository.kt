@@ -27,6 +27,7 @@ class ContentRepository @Inject constructor(
         block().collect { emit(it) }
     }
 
+    /** Library categories. Events without any dua (and categories left empty) are not listed. */
     fun categories(): Flow<List<DuaCategory>> = afterImport {
         combine(dao.categories(), dao.eventsWithCounts()) { cats, events ->
             cats.map { c ->
@@ -34,10 +35,10 @@ class ContentRepository @Inject constructor(
                     id = c.id,
                     label = c.label,
                     order = c.sortOrder,
-                    events = events.filter { it.categoryId == c.id }
+                    events = events.filter { it.categoryId == c.id && it.duaCount > 0 }
                         .map { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, it.duaCount) },
                 )
-            }
+            }.filter { it.events.isNotEmpty() }
         }
     }
 

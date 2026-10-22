@@ -16,6 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
@@ -34,9 +35,10 @@ fun ArabicText(
     style: TextStyle = AppTheme.arabic.arabicBody,
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     val annotated = remember(text) { arabicAnnotated(text) }
-    ArabicText(annotated, modifier, style, color, textAlign)
+    ArabicText(annotated, modifier, style, color, textAlign, maxLines = maxLines)
 }
 
 @Composable
@@ -46,6 +48,7 @@ fun ArabicText(
     style: TextStyle = AppTheme.arabic.arabicBody,
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
+    maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -55,6 +58,8 @@ fun ArabicText(
             style = style,
             color = color,
             textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = TextOverflow.Ellipsis,
             onTextLayout = onTextLayout,
         )
     }

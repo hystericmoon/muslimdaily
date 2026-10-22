@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -69,7 +70,7 @@ fun gradeLabel(dua: Dua): String {
 
 /** Translations and transliteration below the Arabic, per the reader's settings. */
 @Composable
-fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier) {
+fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier, maxLines: Int = Int.MAX_VALUE) {
     val reading = AppTheme.reading
     Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
         if (prefs.transliteration && dua.transliteration.isNotBlank()) {
@@ -81,7 +82,7 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         }
         val showId = prefs.translation != TranslationMode.ENGLISH && dua.translationId.isNotBlank()
         val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEn.isNotBlank()
-        if (showId) Text(dua.translationId, style = reading.bodyLarge)
+        if (showId) Text(dua.translationId, style = reading.bodyLarge, maxLines = maxLines, overflow = TextOverflow.Ellipsis)
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
             Text(
@@ -92,6 +93,8 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 },
                 style = reading.bodyLarge,
                 color = if (showId) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+                maxLines = maxLines,
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -106,7 +109,13 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     AssistChip(
         onClick = { open = true },
         label = { Text(label, maxLines = 1) },
-        leadingIcon = { Icon(painterResource(R.drawable.ic_verified), null, Modifier.size(AppTheme.dimens.smallIcon)) },
+        leadingIcon = {
+            Icon(
+                painterResource(if (dua.grading != null) R.drawable.ic_verified else R.drawable.ic_menu_book),
+                null,
+                Modifier.size(AppTheme.dimens.smallIcon),
+            )
+        },
         modifier = modifier.semantics { contentDescription = description },
     )
     if (open) SourceSheet(dua) { open = false }
@@ -115,37 +124,43 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
 @Composable
 fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
     GlassBottomSheet(onDismissRequest = onDismiss) {
-        Column(
-            Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
-        ) {
-            Text(stringResource(R.string.dua_sources_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
-            SheetSection(stringResource(R.string.dua_sources)) {
-                dua.sources.forEach { Text(sourceLabel(it), style = MaterialTheme.typography.bodyLarge) }
-            }
-            if (dua.reference.isNotBlank()) {
-                SheetSection(stringResource(R.string.dua_reference)) {
-                    Text(dua.reference, style = AppTheme.reading.bodyMedium)
-                }
-            }
-            if (dua.grading != null) {
-                SheetSection(stringResource(R.string.dua_grading)) {
-                    Text(gradeLabel(dua), style = MaterialTheme.typography.bodyLarge)
-                }
-            }
-            if (dua.altGradings.isNotEmpty()) {
-                SheetSection(stringResource(R.string.dua_alt_gradings)) {
-                    dua.altGradings.forEach {
-                        Text(stringResource(R.string.dua_grade_by, it.grade.replaceFirstChar { c -> c.titlecase(Locale.ROOT) }, it.grader))
-                    }
-                }
-            }
-            Text(
-                stringResource(R.string.dua_grading_policy),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        SourceDetails(dua, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl))
+    }
+}
+
+/** Sources, takhrij and grading of a dua: the body of [SourceSheet]. */
+@Composable
+fun SourceDetails(dua: Dua, modifier: Modifier = Modifier) {
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+    ) {
+        Text(stringResource(R.string.dua_sources_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
+        SheetSection(stringResource(R.string.dua_sources)) {
+            dua.sources.forEach { Text(sourceLabel(it), style = MaterialTheme.typography.bodyLarge) }
         }
+        if (dua.reference.isNotBlank()) {
+            SheetSection(stringResource(R.string.dua_reference)) {
+                Text(dua.reference, style = AppTheme.reading.bodyMedium)
+            }
+        }
+        if (dua.grading != null) {
+            SheetSection(stringResource(R.string.dua_grading)) {
+                Text(gradeLabel(dua), style = MaterialTheme.typography.bodyLarge)
+            }
+        }
+        if (dua.altGradings.isNotEmpty()) {
+            SheetSection(stringResource(R.string.dua_alt_gradings)) {
+                dua.altGradings.forEach {
+                    Text(stringResource(R.string.dua_grade_by, it.grade.replaceFirstChar { c -> c.titlecase(Locale.ROOT) }, it.grader))
+                }
+            }
+        }
+        Text(
+            stringResource(R.string.dua_grading_policy),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
@@ -195,8 +210,9 @@ fun DuaCard(
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
             header?.invoke()
-            ArabicText(dua.arabic, style = AppTheme.arabic.body(dua.isQuran))
-            DuaTranslations(dua, prefs)
+            // A preview: long texts (e.g. Ayat al-Kursi) are clamped; the detail shows them in full.
+            ArabicText(dua.arabic, style = AppTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
+            DuaTranslations(dua, prefs, maxLines = CARD_TRANSLATION_LINES)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
                 verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
@@ -282,3 +298,6 @@ fun PlayerBar(
 private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 
 fun speedLabel(speed: Float): String = String.format(Locale.forLanguageTag("id"), "%.2f×", speed).replace(",00", "").replace(Regex("(,\\d)0×"), "$1×")
+
+private const val CARD_ARABIC_LINES = 4
+private const val CARD_TRANSLATION_LINES = 3
