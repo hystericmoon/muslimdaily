@@ -11,14 +11,17 @@
         { "id": "wudu", "label": "Wudhu", "label_en": "Wudu", "order": 3 },
         { "id": "dressing", "label": "Berpakaian", "label_en": "Dressing", "order": 4 },
         { "id": "leaving_home", "label": "Keluar rumah", "label_en": "Leaving home", "order": 5 },
-        { "id": "entering_home", "label": "Masuk rumah", "label_en": "Entering home", "order": 6 },
-        { "id": "going_to_masjid", "label": "Berangkat ke masjid", "label_en": "Going to the masjid", "order": 7 },
-        { "id": "entering_masjid", "label": "Masuk masjid", "label_en": "Entering the masjid", "order": 8 },
-        { "id": "leaving_masjid", "label": "Keluar masjid", "label_en": "Leaving the masjid", "order": 9 },
-        { "id": "adhan", "label": "Mendengar adzan", "label_en": "Hearing the adhan", "order": 10 },
-        { "id": "eating", "label": "Makan", "label_en": "Eating", "order": 11 },
-        { "id": "drinking", "label": "Minum", "label_en": "Drinking", "order": 12 },
-        { "id": "sleeping", "label": "Sebelum tidur", "label_en": "Before sleeping", "order": 13 }
+        { "id": "market", "label": "Masuk pasar", "label_en": "Entering the market", "order": 6 },
+        { "id": "entering_home", "label": "Masuk rumah", "label_en": "Entering home", "order": 7 },
+        { "id": "going_to_masjid", "label": "Berangkat ke masjid", "label_en": "Going to the masjid", "order": 8 },
+        { "id": "entering_masjid", "label": "Masuk masjid", "label_en": "Entering the masjid", "order": 9 },
+        { "id": "leaving_masjid", "label": "Keluar masjid", "label_en": "Leaving the masjid", "order": 10 },
+        { "id": "adhan", "label": "Mendengar adzan", "label_en": "Hearing the adhan", "order": 11 },
+        { "id": "eating", "label": "Makan", "label_en": "Eating", "order": 12 },
+        { "id": "drinking", "label": "Minum", "label_en": "Drinking", "order": 13 },
+        { "id": "sneezing", "label": "Bersin", "label_en": "Sneezing", "order": 14 },
+        { "id": "sleeping", "label": "Sebelum tidur", "label_en": "Before sleeping", "order": 15 },
+        { "id": "night", "label": "Terbangun malam dan mimpi", "label_en": "Waking at night and dreams", "order": 16 }
       ]
     },
     {
@@ -29,9 +32,13 @@
       "events": [
         { "id": "istiftah", "label": "Doa istiftah", "label_en": "Opening supplication", "order": 1 },
         { "id": "ruku", "label": "Rukuk", "label_en": "Ruku", "order": 2 },
-        { "id": "sujud", "label": "Sujud", "label_en": "Sujud", "order": 3 },
-        { "id": "tashahhud", "label": "Tasyahud", "label_en": "Tashahhud", "order": 4 },
-        { "id": "after_salah", "label": "Dzikir setelah shalat", "label_en": "After salah", "order": 5 }
+        { "id": "itidal", "label": "Bangun dari rukuk", "label_en": "Rising from ruku", "order": 3 },
+        { "id": "sujud", "label": "Sujud", "label_en": "Sujud", "order": 4 },
+        { "id": "between_sujud", "label": "Duduk di antara dua sujud", "label_en": "Sitting between prostrations", "order": 5 },
+        { "id": "tashahhud", "label": "Tasyahud", "label_en": "Tashahhud", "order": 6 },
+        { "id": "after_salah", "label": "Dzikir setelah shalat", "label_en": "After salah", "order": 7 },
+        { "id": "witr", "label": "Qunut dan setelah witir", "label_en": "Qunut and after witr", "order": 8 },
+        { "id": "tilawah", "label": "Sujud tilawah", "label_en": "Prostration of recitation", "order": 9 }
       ]
     },
     {
@@ -45,24 +52,96 @@
       ]
     },
     {
+      "id": "dhikr",
+      "label": "Dzikir umum",
+      "label_en": "General dhikr",
+      "order": 4,
+      "events": [
+        { "id": "shalawat", "label": "Shalawat", "label_en": "Salawat upon the Prophet", "order": 1 },
+        { "id": "istighfar", "label": "Istighfar dan taubat", "label_en": "Seeking forgiveness", "order": 2 },
+        { "id": "tasbih", "label": "Tasbih, tahmid, tahlil, takbir", "label_en": "Glorification", "order": 3 },
+        { "id": "protection", "label": "Perlindungan", "label_en": "Protection", "order": 4 }
+      ]
+    },
+    {
       "id": "situational",
       "label": "Situasional",
       "label_en": "Situational",
-      "order": 4,
+      "order": 5,
       "events": [
         { "id": "travel", "label": "Safar", "label_en": "Travel", "order": 1 },
         { "id": "rain", "label": "Hujan", "label_en": "Rain", "order": 2 },
         { "id": "thunder", "label": "Petir", "label_en": "Thunder", "order": 3 },
-        { "id": "illness", "label": "Sakit", "label_en": "Illness", "order": 4 },
-        { "id": "distress", "label": "Kesusahan", "label_en": "Distress", "order": 5 },
-        { "id": "istikharah", "label": "Istikharah", "label_en": "Istikharah", "order": 6 }
+        { "id": "wind", "label": "Angin kencang", "label_en": "Strong wind", "order": 4 },
+        { "id": "new_moon", "label": "Melihat hilal", "label_en": "Seeing the new moon", "order": 5 },
+        { "id": "illness", "label": "Sakit", "label_en": "Illness", "order": 6 },
+        { "id": "distress", "label": "Kesusahan", "label_en": "Distress", "order": 7 },
+        { "id": "anger", "label": "Marah", "label_en": "Anger", "order": 8 },
+        { "id": "fear", "label": "Rasa takut", "label_en": "Fear", "order": 9 },
+        { "id": "waswas", "label": "Was-was dan gangguan setan", "label_en": "Doubts and Satan's whispers", "order": 10 },
+        { "id": "debt", "label": "Utang", "label_en": "Debt", "order": 11 },
+        { "id": "news", "label": "Kabar gembira dan musibah", "label_en": "Good news and hardship", "order": 12 },
+        { "id": "animals", "label": "Suara hewan", "label_en": "Hearing animals", "order": 13 },
+        { "id": "istikharah", "label": "Istikharah", "label_en": "Istikharah", "order": 14 }
+      ]
+    },
+    {
+      "id": "fasting",
+      "label": "Puasa",
+      "label_en": "Fasting",
+      "order": 6,
+      "events": [
+        { "id": "iftar", "label": "Berbuka puasa", "label_en": "Breaking the fast", "order": 1 },
+        { "id": "fasting_manners", "label": "Saat berpuasa", "label_en": "While fasting", "order": 2 }
+      ]
+    },
+    {
+      "id": "family",
+      "label": "Keluarga",
+      "label_en": "Family",
+      "order": 7,
+      "events": [
+        { "id": "marriage", "label": "Pernikahan", "label_en": "Marriage", "order": 1 },
+        { "id": "children", "label": "Anak", "label_en": "Children", "order": 2 }
+      ]
+    },
+    {
+      "id": "social",
+      "label": "Pergaulan",
+      "label_en": "Social life",
+      "order": 8,
+      "events": [
+        { "id": "salam", "label": "Salam", "label_en": "Greeting", "order": 1 },
+        { "id": "gathering", "label": "Majelis", "label_en": "Gatherings", "order": 2 },
+        { "id": "manners", "label": "Membalas kebaikan dan ucapan", "label_en": "Returning kindness", "order": 3 }
+      ]
+    },
+    {
+      "id": "death",
+      "label": "Sakit berat, jenazah, dan ziarah",
+      "label_en": "Death, funerals and graves",
+      "order": 9,
+      "events": [
+        { "id": "funeral", "label": "Jenazah", "label_en": "Funerals", "order": 1 },
+        { "id": "condolence", "label": "Takziah", "label_en": "Condolence", "order": 2 },
+        { "id": "grave", "label": "Pemakaman dan ziarah", "label_en": "Burial and visiting graves", "order": 3 }
+      ]
+    },
+    {
+      "id": "hajj",
+      "label": "Haji, umrah, dan kurban",
+      "label_en": "Hajj, umrah and sacrifice",
+      "order": 10,
+      "events": [
+        { "id": "hajj", "label": "Haji dan umrah", "label_en": "Hajj and umrah", "order": 1 },
+        { "id": "qurban", "label": "Kurban", "label_en": "Sacrifice", "order": 2 }
       ]
     },
     {
       "id": "quran",
       "label": "Doa dari Al-Qur'an",
       "label_en": "Qur'anic duas",
-      "order": 5,
+      "order": 11,
       "events": [
         { "id": "quran_forgiveness", "label": "Ampunan dan rahmat", "label_en": "Forgiveness and mercy", "order": 1 },
         { "id": "quran_goodness", "label": "Kebaikan dunia dan akhirat", "label_en": "Good in this life and the next", "order": 2 },
