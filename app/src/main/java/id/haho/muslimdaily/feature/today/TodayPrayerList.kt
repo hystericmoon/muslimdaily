@@ -74,7 +74,7 @@ internal fun PrayerListCard(
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column {
             data.rows.forEachIndexed { i, row ->
-                if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = DIVIDER_ALPHA))
                 PrayerRowView(
                     row = row,
                     data = data,
@@ -198,16 +198,14 @@ private fun Timeline(
         plan.fard?.let { add(TimelineStep.Obligatory(it.rakah)) }
         plan.after.forEach { add(TimelineStep.Sunnah(it, isBefore = false)) }
     }
-    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.padding(
-        start = AppTheme.spacing.md, end = AppTheme.spacing.md, bottom = AppTheme.spacing.md,
-    )) {
-        Column(Modifier.padding(vertical = AppTheme.spacing.sm)) {
-            steps.forEachIndexed { i, step ->
-                TimelineStepRow(step, plan, data, isFirst = i == 0, isLast = i == steps.lastIndex, onToggle, onShowEvidence)
-            }
-            if (plan.showJumuahNote) {
-                InfoNote(stringResource(R.string.note_jumuah), Modifier.padding(AppTheme.spacing.md))
-            }
+    // Sits directly under the prayer row (no inner card): the rail groups the steps, and the
+    // checkboxes line up with every other checklist on the screen.
+    Column(Modifier.padding(start = AppTheme.spacing.sm, bottom = AppTheme.spacing.sm)) {
+        steps.forEachIndexed { i, step ->
+            TimelineStepRow(step, plan, data, isFirst = i == 0, isLast = i == steps.lastIndex, onToggle, onShowEvidence)
+        }
+        if (plan.showJumuahNote) {
+            InfoNote(stringResource(R.string.note_jumuah), Modifier.padding(AppTheme.spacing.md))
         }
     }
 }
@@ -232,9 +230,15 @@ private fun TimelineStepRow(
         is TimelineStep.Sunnah -> ChecklistRepository.rawatibKey(step.line.primary.id)
     }
     val checked = key in data.checked
-    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(start = AppTheme.spacing.md)) {
-        Rail(isFirst, isLast, emphasised = step is TimelineStep.Obligatory)
-        Column(Modifier.weight(1f)) {
+    val sunnah = step as? TimelineStep.Sunnah
+    val notes = sunnah?.line?.primary?.notes
+    // "Dalil" only when there is evidence to show; an empty sheet is a dead end.
+    val hasEvidence = sunnah?.line?.entries?.any { e -> e.evidence.any { it.book.isNotBlank() } } == true
+    val hasExtras = notes != null || hasEvidence
+    Column(Modifier.fillMaxWidth().padding(start = AppTheme.spacing.md)) {
+        // The dot is centred on the checklist row itself, level with its checkbox.
+        Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+            Rail(isFirst, isLast && !hasExtras, emphasised = step is TimelineStep.Obligatory)
             CheckRow(
                 checked = checked,
                 onCheckedChange = { onToggle(key, it) },
@@ -255,18 +259,26 @@ private fun TimelineStepRow(
                     }
                 }
             }
-            if (step is TimelineStep.Sunnah) {
-                step.line.primary.notes?.let {
-                    Text(
-                        it,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(start = AppTheme.spacing.md, end = AppTheme.spacing.md),
-                    )
-                }
-                TextButton(onClick = { onShowEvidence(step.line) }, modifier = Modifier.padding(start = AppTheme.spacing.xs)) {
-                    Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Text(stringResource(R.string.rawatib_evidence), Modifier.padding(start = AppTheme.spacing.xs))
+        }
+        if (sunnah != null && hasExtras) {
+            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+                RailLine(visible = !isLast)
+                // Notes line up with the step title; the text button's own inset does the same for "Dalil".
+                Column(Modifier.weight(1f).padding(start = AppTheme.spacing.xs)) {
+                    notes?.let {
+                        Text(
+                            it,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(start = AppTheme.spacing.md - AppTheme.spacing.xs, end = AppTheme.spacing.md),
+                        )
+                    }
+                    if (hasEvidence) {
+                        TextButton(onClick = { onShowEvidence(sunnah.line) }) {
+                            Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(AppTheme.dimens.smallIcon))
+                            Text(stringResource(R.string.rawatib_evidence), Modifier.padding(start = AppTheme.spacing.xs))
+                        }
+                    }
                 }
             }
         }
@@ -305,6 +317,15 @@ private fun rakahText(line: RawatibLine): String? {
     }
     if (parts.isEmpty()) return null
     return parts.reduce { acc, s -> stringResource(R.string.rakah_or, acc, s) }
+}
+
+/** The rail continuing past a step's notes and evidence link, without a dot. */
+@Composable
+private fun RailLine(visible: Boolean) {
+    val lineColor = MaterialTheme.colorScheme.outlineVariant
+    Box(Modifier.fillMaxHeight().width(AppTheme.dimens.timelineDot), contentAlignment = Alignment.Center) {
+        if (visible) Box(Modifier.fillMaxHeight().width(AppTheme.dimens.divider * 2).background(lineColor))
+    }
 }
 
 @Composable
@@ -367,7 +388,7 @@ internal fun OtherSunnahCard(data: TodayData, onToggle: (String, Boolean) -> Uni
                     onCheckedChange = { onToggle(ChecklistRepository.DUHA, it) },
                 )
             }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter))
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = DIVIDER_ALPHA), modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter))
             data.witr?.let { w ->
                 SunnahWindowRow(
                     title = stringResource(R.string.witr_title),
@@ -464,3 +485,6 @@ private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, en
         }
     }
 }
+
+/** Dividers inside glass cards are hairlines; a solid line reads as heavy on translucent fills. */
+private const val DIVIDER_ALPHA = 0.5f
