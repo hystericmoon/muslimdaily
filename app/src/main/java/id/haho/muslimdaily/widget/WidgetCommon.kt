@@ -42,6 +42,7 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshot
+import id.haho.muslimdaily.domain.prayer.HijriCalendar
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.notifications.Destination
 import id.haho.muslimdaily.notifications.Notifier
@@ -59,6 +60,8 @@ interface WidgetEntryPoint {
 /** Everything a widget draws, read once per update. */
 class WidgetData(
     val snapshot: PrayerSnapshot?,
+    /** Today's Hijri date, e.g. "10 Jumadilawal 1448 H". */
+    val hijri: String,
     val colors: WidgetColors,
     val time: TimeFormatter,
     val now: Instant,
@@ -68,8 +71,12 @@ suspend fun loadWidgetData(context: Context): WidgetData {
     val deps = EntryPointAccessors.fromApplication(context.applicationContext, WidgetEntryPoint::class.java)
     val settings = deps.settings().current()
     val now = Instant.now(deps.clock())
+    val snapshot = PrayerSnapshots.at(now, settings, deps.calculator())
+    val h = HijriCalendar.of(snapshot?.date ?: java.time.LocalDate.now(), settings.hijriAdjustment)
+    val months = context.resources.getStringArray(R.array.hijri_months)
     return WidgetData(
-        snapshot = PrayerSnapshots.at(now, settings, deps.calculator()),
+        snapshot = snapshot,
+        hijri = context.getString(R.string.hijri_date, h.day, months[(h.month - 1).coerceIn(0, 11)], h.year),
         colors = WidgetColors.of(settings),
         time = TimeFormatter(DateFormat.is24HourFormat(context)),
         now = now,
@@ -131,28 +138,6 @@ class WidgetColors(
     }
 }
 
-/** Translucent rounded panel with a light rim: the glass look within what widgets can draw. */
-@Composable
-fun GlassPanel(colors: WidgetColors, modifier: GlanceModifier = GlanceModifier, content: @Composable () -> Unit) {
-    Box(modifier) {
-        Image(
-            ImageProvider(R.drawable.widget_panel),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(colors.glass),
-            contentScale = ContentScale.FillBounds,
-            modifier = GlanceModifier.fillMaxSize(),
-        )
-        Image(
-            ImageProvider(R.drawable.widget_rim),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(colors.rim),
-            contentScale = ContentScale.FillBounds,
-            modifier = GlanceModifier.fillMaxSize(),
-        )
-        content()
-    }
-}
-
 /** Taps open the Today screen. */
 fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
     actionStartActivity(
@@ -175,13 +160,17 @@ fun Countdown(
     size: TextUnit,
     format: String = context.getString(R.string.widget_countdown_format),
     modifier: GlanceModifier = GlanceModifier,
+    /** Over the sky the countdown is white, whatever the palette. */
+    white: Boolean = false,
 ) {
     val views = RemoteViews(context.packageName, R.layout.widget_countdown).apply {
         val base = SystemClock.elapsedRealtime() + (target.toEpochMilli() - now.toEpochMilli())
         setChronometer(R.id.countdown, base, format, true)
         setChronometerCountDown(R.id.countdown, true)
         setTextViewTextSize(R.id.countdown, android.util.TypedValue.COMPLEX_UNIT_SP, size.value)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (white) {
+            setTextColor(R.id.countdown, android.graphics.Color.argb(230, 255, 255, 255))
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setColorInt(R.id.countdown, "setTextColor", colors.countdownDay.toArgb(), colors.countdownNight.toArgb())
         } else {
             val night = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK ==

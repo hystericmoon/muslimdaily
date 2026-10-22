@@ -529,13 +529,10 @@
     <string name="widget_countdown_format">dalam %s</string>
     <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
     <string name="widget_next_label">Berikutnya · %s</string>
+    <string name="widget_next_label_tomorrow">Besok · %s</string>
     <string name="widget_day_header">%1$s · %2$s</string>
-    <string name="widget_countdown_named">%1$s dalam %%s</string>
+    <string name="widget_countdown_place">dalam %%s · %1$s</string>
     <string name="widget_next_description">Shalat berikutnya %1$s pukul %2$s, %3$s</string>
-    <string name="widget_preview_label">Berikutnya · Jakarta</string>
-    <string name="widget_preview_countdown">dalam 1:23:45</string>
-    <string name="widget_preview_time" translatable="false">11.41</string>
-    <string name="widget_preview_times" translatable="false">04.13   05.26   11.41   14.50   17.49   18.59</string>
 
     <!-- Pre-prayer and lock-screen notifications -->
     <string name="channel_pre_prayer">Menjelang shalat</string>

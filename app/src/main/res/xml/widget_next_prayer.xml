@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Updates are driven by the app (an alarm at each prayer time and on settings changes); the hourly
-  period is only a safety net. "keyguard" lets hosts that support lock-screen widgets offer it.
+  Updates are driven by the app (an alarm at each prayer time and on settings changes); the 30-minute
+  period moves the sun along its path between them. "keyguard" lets hosts that support lock-screen widgets offer it.
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +14,8 @@
     android:minResizeHeight="50dp"
     android:targetCellWidth="2"
     android:targetCellHeight="2"
+    android:previewImage="@drawable/widget_preview_next"
     android:previewLayout="@layout/widget_preview_next"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="3600000"
+    android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen|keyguard" />
