@@ -495,8 +495,8 @@ private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, en
         if (active) {
             Badge(
                 stringResource(R.string.today_now_badge),
-                container = MaterialTheme.colorScheme.errorContainer,
-                content = MaterialTheme.colorScheme.onErrorContainer,
+                container = Glass.colors.alert,
+                content = Glass.colors.onAlert,
             )
         }
     }

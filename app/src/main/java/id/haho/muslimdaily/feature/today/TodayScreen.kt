@@ -329,8 +329,8 @@ private fun WindowLine(window: TimeWindow, data: TodayData) {
     val label = stringResource(window.type.labelRes())
     if (window.type.isProhibited) {
         Surface(
-            color = MaterialTheme.colorScheme.errorContainer,
-            contentColor = MaterialTheme.colorScheme.onErrorContainer,
+            color = Glass.colors.alert,
+            contentColor = Glass.colors.onAlert,
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
         ) {

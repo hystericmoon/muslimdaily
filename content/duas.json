@@ -1,5 +1,5 @@
 {
-  "content_version": 7,
+  "content_version": 8,
   "duas": [
     {
       "id": "wake_01",
@@ -704,7 +704,7 @@
           "no": "no. 21"
         }
       ],
-      "reference": "Tambahan: Allaahumma’shimni minasy syai-thaanir rajim, adalah riwayat Ibnu Majah. Lihat Shahih Ibnu Majah 129. (Hisnul Muslim no. 21)",
+      "reference": "Tambahan: Allaahumma’shimni minasy syai-thaanir rajim, adalah riwayat Ibnu Majah. Lihat Shahih Ibnu Majah 129.",
       "grading": {
         "grade": "",
         "grader": ""
@@ -1095,7 +1095,7 @@
           "no": "no. 100"
         }
       ],
-      "reference": "Hisnul Muslim no. 100",
+      "reference": "",
       "grading": {
         "grade": "",
         "grader": ""

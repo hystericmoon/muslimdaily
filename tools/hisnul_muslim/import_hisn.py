@@ -192,9 +192,11 @@ def build_rows(entries, footnotes, arabic, weak, fields, pdf_name: str) -> list[
         arabic_text = tidy_arabic(a["arabic"], int(count) if count else None) if a else ""
         if re.match(r"\s*(?:قَالَ|قال|كان|كَانَ)", arabic_text):
             flags.append("Teks Arab diawali konteks riwayat (bukan lafazh doa); rapikan.")
-        # Footnote verbatim, then where it sits in the book, so every row cites something.
-        reference = f"{joined} (Hisnul Muslim no. {n})" if joined else f"Hisnul Muslim no. {n}"
-        sources = split_takhrij(joined) or [("Hisnul Muslim", f"no. {n}")]
+        # Footnote verbatim, then where it sits in the book. When the footnote names no book, the
+        # book position is already the source, so the takhrij doesn't repeat it.
+        cited = split_takhrij(joined)
+        sources = cited or [("Hisnul Muslim", f"no. {n}")]
+        reference = f"{joined} (Hisnul Muslim no. {n})" if joined and cited else joined
         grade = albani_grade(joined)
         chapter_id = a["chapter_id"] if a else None
         r = row_template(fields)

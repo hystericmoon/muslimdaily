@@ -47,6 +47,9 @@ class GlassContrastTest {
         }
         check("$mode tinted/onTinted", g.onTinted, g.tinted, g, g.sheen)
         check("$mode current row", scheme.onSurface, g.card, g, g.tinted)
+        // The forbidden-time banner sits inside the tinted hero card; the badge sits on a plain card.
+        check("$mode alert in hero", g.onAlert, g.tinted, g, g.alert)
+        check("$mode alert badge", g.onAlert, g.card, g, g.alert)
         check("$mode tertiary note", scheme.onTertiaryContainer, scheme.tertiaryContainer.copy(alpha = g.tinted.alpha), g, g.sheen)
         check("$mode primary button", g.onPrimary, g.primary, g, sheenAtText(g.sheen.copy(alpha = g.sheen.alpha * 0.6f)))
         check("$mode tonal button", g.onTonal, g.tonal, g, sheenAtText(g.sheen))

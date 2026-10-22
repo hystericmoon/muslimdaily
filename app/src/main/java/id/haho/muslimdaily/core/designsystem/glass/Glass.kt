@@ -58,6 +58,9 @@ data class GlassColors(
     /** Tinted hero glass (next prayer, review queue). */
     val tinted: Color,
     val onTinted: Color,
+    /** Warnings (forbidden prayer times): soft in light, a translucent red wash in dark. */
+    val alert: Color,
+    val onAlert: Color,
     /** Primary actions: teal glass. */
     val primary: Color,
     val onPrimary: Color,
