@@ -13,3 +13,6 @@ __pycache__/
 *.keystore
 *.jks
 keystore.properties
+
+# Imported third-party content awaiting licence confirmation (see tools/hisnul_muslim)
+content/source/import/
