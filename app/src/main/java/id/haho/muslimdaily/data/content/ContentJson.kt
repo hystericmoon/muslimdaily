@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.data.content
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.core.model.SourceRef
 import kotlinx.serialization.SerialName
@@ -33,12 +32,12 @@ internal data class DuaJson(
     val transliteration: String = "",
     val count: Int? = null,
     val sources: List<SourceRef> = emptyList(),
+    val reference: String = "",
     val grading: GradingJson? = null,
     @SerialName("alt_gradings") val altGradings: List<GradingJson> = emptyList(),
     val virtue: VirtueJson? = null,
     val audio: AudioJson? = null,
     @SerialName("phrase_breaks") val phraseBreaks: List<Int> = emptyList(),
-    val status: ContentStatus = ContentStatus.DRAFT,
 )
 
 @Serializable
@@ -62,7 +61,6 @@ internal data class FardJson(
     val id: String,
     val prayer: Prayer,
     val rakah: Int,
-    val status: ContentStatus = ContentStatus.DRAFT,
 )
 
 @Serializable
@@ -78,7 +76,6 @@ internal data class RawatibJson(
     @SerialName("variant_group") val variantGroup: String? = null,
     @SerialName("variant_label") val variantLabel: String? = null,
     @SerialName("default_variant") val defaultVariant: Boolean = false,
-    val status: ContentStatus = ContentStatus.DRAFT,
 )
 
 @Serializable

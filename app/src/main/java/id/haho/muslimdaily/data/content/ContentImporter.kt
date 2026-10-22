@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.data.content
 
-import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.core.arabic.ArabicNormalizer
 import id.haho.muslimdaily.core.model.SourceRef
 import id.haho.muslimdaily.data.db.CategoryEntity
@@ -23,8 +22,7 @@ import javax.inject.Singleton
 
 /**
  * Imports the bundled content (assets/content/…) into Room on first launch and whenever the
- * files change (content version bump or new build). Release builds only ever see published
- * entries: the build strips drafts, and this importer rejects them again.
+ * files change (content version bump or new build). Malformed entries are rejected.
  */
 @Singleton
 class ContentImporter @Inject constructor(
@@ -46,7 +44,7 @@ class ContentImporter @Inject constructor(
 
     private suspend fun importIfChanged() {
         val files = CONTENT_FILES.associateWith(source::read)
-        val hash = sha256(files.values.toList(), BuildConfig.INCLUDE_DRAFT_CONTENT)
+        val hash = sha256(files.values.toList())
         val dao = db.contentDao()
         if (dao.meta(META_HASH) == hash) return
 
@@ -54,7 +52,6 @@ class ContentImporter @Inject constructor(
             duas = ContentJsonFormat.decodeFromString(DuasFile.serializer(), files.getValue("duas.json").decodeToString()),
             rawatib = ContentJsonFormat.decodeFromString(RawatibFile.serializer(), files.getValue("rawatib.json").decodeToString()),
             taxonomy = ContentJsonFormat.decodeFromString(TaxonomyFile.serializer(), files.getValue("taxonomy.json").decodeToString()),
-            includeDrafts = BuildConfig.INCLUDE_DRAFT_CONTENT,
         )
         dao.replaceAll(
             bundle.categories, bundle.events, bundle.duas, bundle.fts, bundle.rawatib, bundle.fard,
@@ -68,10 +65,9 @@ class ContentImporter @Inject constructor(
         return db.contentDao().meta(META_VERSION)?.toIntOrNull() ?: 0
     }
 
-    private fun sha256(parts: List<ByteArray>, drafts: Boolean): String {
+    private fun sha256(parts: List<ByteArray>): String {
         val md = MessageDigest.getInstance("SHA-256")
         parts.forEach { md.update(it) }
-        md.update(if (drafts) 1 else 0)
         return md.digest().joinToString("") { "%02x".format(it) }
     }
 
@@ -100,7 +96,7 @@ internal object ContentMapper {
     private val segmentsSerializer = ListSerializer(ListSerializer(Double.serializer()))
     private val intsSerializer = ListSerializer(Int.serializer())
 
-    fun map(duas: DuasFile, rawatib: RawatibFile, taxonomy: TaxonomyFile, includeDrafts: Boolean): ContentBundle {
+    fun map(duas: DuasFile, rawatib: RawatibFile, taxonomy: TaxonomyFile): ContentBundle {
         val categories = taxonomy.categories.map { CategoryEntity(it.id, it.label, it.labelEn, it.order) }
         val events = taxonomy.categories.flatMap { c ->
             c.events.map { e -> EventEntity(e.id, c.id, e.label, e.labelEn, c.order * 1000 + e.order) }
@@ -108,7 +104,7 @@ internal object ContentMapper {
         val eventLabels = events.associate { it.id to it.label }
         val rejected = mutableMapOf<String, String>()
         val accepted = duas.duas.filter { d ->
-            when (val r = ContentValidator.validate(d, includeDrafts)) {
+            when (val r = ContentValidator.validate(d)) {
                 ContentValidator.Result.Ok -> d.event in eventLabels || run { rejected[d.id] = "unknown event"; false }
                 is ContentValidator.Result.Rejected -> { rejected[d.id] = r.reason; false }
             }
@@ -128,6 +124,7 @@ internal object ContentMapper {
                 transliteration = d.transliteration,
                 count = d.count,
                 sourcesJson = ContentJsonFormat.encodeToString(sourcesSerializer, d.sources.filter { it.book.isNotBlank() || it.no.isNotBlank() }),
+                reference = d.reference.trim(),
                 gradingGrade = d.grading?.grade?.takeIf { it.isNotBlank() },
                 gradingGrader = d.grading?.grader?.takeIf { it.isNotBlank() },
                 altGradingsJson = ContentJsonFormat.encodeToString(gradingsSerializer, d.altGradings),
@@ -136,7 +133,6 @@ internal object ContentMapper {
                 audioFile = d.audio?.file?.takeIf { it.isNotBlank() },
                 segmentsJson = ContentJsonFormat.encodeToString(segmentsSerializer, segments),
                 phraseBreaksJson = ContentJsonFormat.encodeToString(intsSerializer, d.phraseBreaks),
-                status = d.status.name,
             )
         }
         val fts = accepted.map { d ->
@@ -149,10 +145,7 @@ internal object ContentMapper {
                 eventLabel = ArabicNormalizer.normalize(eventLabels[d.event].orEmpty()),
             )
         }
-        val shipped = { status: id.haho.muslimdaily.core.model.ContentStatus ->
-            includeDrafts || status == id.haho.muslimdaily.core.model.ContentStatus.PUBLISHED
-        }
-        val rawatibRows = rawatib.rawatib.filter { shipped(it.status) }.mapIndexed { i, r ->
+        val rawatibRows = rawatib.rawatib.mapIndexed { i, r ->
             RawatibEntity(
                 id = r.id,
                 prayer = r.prayer?.name,
@@ -166,10 +159,9 @@ internal object ContentMapper {
                 variantLabel = r.variantLabel,
                 defaultVariant = r.defaultVariant,
                 sortOrder = i,
-                status = r.status.name,
             )
         }
-        val fardRows = rawatib.fard.filter { shipped(it.status) }.map { FardEntity(it.prayer.name, it.rakah, it.status.name) }
+        val fardRows = rawatib.fard.map { FardEntity(it.prayer.name, it.rakah) }
         return ContentBundle(
             contentVersion = duas.contentVersion,
             categories = categories,

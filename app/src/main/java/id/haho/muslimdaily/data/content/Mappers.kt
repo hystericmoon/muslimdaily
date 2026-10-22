@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.data.content
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.DuaAudio
 import id.haho.muslimdaily.core.model.Fard
@@ -38,12 +37,12 @@ internal fun DuaEntity.toModel(): Dua {
         transliteration = transliteration,
         count = count,
         sources = ContentJsonFormat.decodeFromString(sources, sourcesJson),
+        reference = reference,
         grading = if (gradingGrade != null && gradingGrader != null) Grading(gradingGrade, gradingGrader) else null,
         altGradings = ContentJsonFormat.decodeFromString(gradings, altGradingsJson).map { Grading(it.grade, it.grader) },
         virtue = virtueText?.let { Virtue(it, virtueSource.orEmpty()) },
         audio = audioFile?.let { DuaAudio(it, segs) },
         phraseBreaks = ContentJsonFormat.decodeFromString(ints, phraseBreaksJson),
-        status = ContentStatus.valueOf(status),
     )
 }
 
@@ -59,7 +58,6 @@ internal fun RawatibEntity.toModel() = Rawatib(
     variantGroup = variantGroup,
     variantLabel = variantLabel,
     defaultVariant = defaultVariant,
-    status = ContentStatus.valueOf(status),
 )
 
-internal fun FardEntity.toModel() = Fard(Prayer.valueOf(prayer), rakah, ContentStatus.valueOf(status))
+internal fun FardEntity.toModel() = Fard(Prayer.valueOf(prayer), rakah)

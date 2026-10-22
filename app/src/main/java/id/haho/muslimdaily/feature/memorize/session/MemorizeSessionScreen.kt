@@ -52,7 +52,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.StatusBadge
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.PauseMode
@@ -160,7 +159,6 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
                 .padding(AppTheme.dimens.screenGutter),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
         ) {
-            StatusBadge(state.dua.status)
             InfoNote(stringResource(state.step.hintRes()))
             when (state.step) {
                 Step.LISTEN -> ListenStep(state, actions)

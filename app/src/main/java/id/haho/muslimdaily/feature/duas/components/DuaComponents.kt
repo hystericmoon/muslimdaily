@@ -40,9 +40,9 @@ import androidx.compose.ui.semantics.stateDescription
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.muslimdaily.core.designsystem.component.Badge
-import id.haho.muslimdaily.core.designsystem.component.StatusBadge
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.Dua
+import id.haho.muslimdaily.core.model.SourceRef
 import id.haho.muslimdaily.data.settings.TranslationMode
 import java.util.Locale
 
@@ -52,9 +52,17 @@ data class ReadingPrefs(
     val transliteration: Boolean = false,
 )
 
+/** "Al-Bukhari 7/162", "Hisnul Muslim no. 100": book and number as the source prints them. */
+fun sourceLabel(ref: SourceRef): String = listOf(ref.book, ref.no).filter(String::isNotBlank).joinToString(" ")
+
+/** The chip shows the grading when the source states one, otherwise the first source. */
+@Composable
+fun sourceChipLabel(dua: Dua): String =
+    if (dua.grading != null) gradeLabel(dua) else dua.sources.firstOrNull()?.let(::sourceLabel).orEmpty()
+
 @Composable
 fun gradeLabel(dua: Dua): String {
-    val g = dua.grading ?: return stringResource(R.string.dua_ungraded)
+    val g = dua.grading ?: return ""
     val grade = g.grade.replaceFirstChar { it.titlecase(Locale.ROOT) }
     return stringResource(R.string.dua_grade_by, grade, g.grader)
 }
@@ -93,7 +101,7 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
 @Composable
 fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     var open by remember { mutableStateOf(false) }
-    val label = gradeLabel(dua)
+    val label = sourceChipLabel(dua)
     val description = stringResource(R.string.dua_source_chip_description, label)
     AssistChip(
         onClick = { open = true },
@@ -112,16 +120,18 @@ fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
             Text(stringResource(R.string.dua_sources_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
-            StatusBadge(dua.status)
             SheetSection(stringResource(R.string.dua_sources)) {
-                if (dua.sources.isEmpty()) {
-                    Text(stringResource(R.string.dua_not_reviewed), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                } else {
-                    dua.sources.forEach { Text(listOf(it.book, it.no).filter(String::isNotBlank).joinToString(" no. "), style = MaterialTheme.typography.bodyLarge) }
+                dua.sources.forEach { Text(sourceLabel(it), style = MaterialTheme.typography.bodyLarge) }
+            }
+            if (dua.reference.isNotBlank()) {
+                SheetSection(stringResource(R.string.dua_reference)) {
+                    Text(dua.reference, style = AppTheme.reading.bodyMedium)
                 }
             }
-            SheetSection(stringResource(R.string.dua_grading)) {
-                Text(gradeLabel(dua), style = MaterialTheme.typography.bodyLarge)
+            if (dua.grading != null) {
+                SheetSection(stringResource(R.string.dua_grading)) {
+                    Text(gradeLabel(dua), style = MaterialTheme.typography.bodyLarge)
+                }
             }
             if (dua.altGradings.isNotEmpty()) {
                 SheetSection(stringResource(R.string.dua_alt_gradings)) {
@@ -193,7 +203,6 @@ fun DuaCard(
             ) {
                 dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
                 SourceChip(dua)
-                StatusBadge(dua.status, Modifier.align(Alignment.CenterVertically))
             }
         }
     }

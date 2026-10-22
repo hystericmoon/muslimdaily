@@ -135,7 +135,7 @@
     <string name="tier_muakkadah">Muakkadah</string>
     <string name="tier_ghairu">Ghairu muakkadah</string>
     <string name="rawatib_evidence">Dalil</string>
-    <string name="rawatib_evidence_missing">Dalil belum ditinjau.</string>
+    <string name="rawatib_evidence_missing">Dalil belum dicantumkan.</string>
     <string name="duha_title">Shalat Dhuha</string>
     <string name="witr_title">Shalat Witir</string>
 
@@ -149,9 +149,6 @@
     <string name="adhkar_open_list">Lihat daftar</string>
 
     <!-- Content status (debug builds) -->
-    <string name="status_draft">Draf</string>
-    <string name="status_review">Ditinjau</string>
-    <string name="draft_banner">Konten draf. Hanya tampil di build debug.</string>
 
     <!-- Calculation -->
     <string name="method_kemenag">Kemenag RI</string>
@@ -184,7 +181,7 @@
     <string name="settings_my_sets">Set saya</string>
     <string name="settings_my_sets_summary">Ekspor atau impor pilihan doa</string>
     <string name="settings_methodology">Metodologi</string>
-    <string name="settings_methodology_summary">Sumber, kebijakan derajat hadits, peninjau</string>
+    <string name="settings_methodology_summary">Sumber dan kebijakan derajat hadits</string>
     <string name="settings_report">Laporkan kesalahan</string>
     <string name="settings_report_summary">Kirim email kepada pengelola konten</string>
     <string name="settings_about">Tentang aplikasi</string>
@@ -217,7 +214,7 @@
     <string name="settings_hijri_adjust">Penyesuaian tanggal</string>
     <string name="settings_hijri_adjust_summary">Geser satu hari bila berbeda dengan rukyat setempat.</string>
     <string name="settings_windows">Waktu terlarang dan Dhuha</string>
-    <string name="settings_windows_note">Nilai bawaan perlu dikonfirmasi ustadz peninjau.</string>
+    <string name="settings_windows_note">Nilai bawaan. Sesuaikan bila perlu.</string>
     <string name="settings_sunrise_rise">Matahari naik setelah terbit</string>
     <string name="settings_zawal">Lama waktu zawal sebelum Dzuhur</string>
 
@@ -239,15 +236,14 @@
         <item quantity="other">%d doa</item>
     </plurals>
     <string name="dua_open">Buka doa</string>
-    <string name="dua_ungraded">Belum dinilai</string>
     <string name="dua_grade_by">%1$s · %2$s</string>
     <string name="dua_source_chip_description">Sumber dan derajat: %s. Ketuk untuk rincian.</string>
     <string name="dua_sources_title">Sumber dan derajat</string>
     <string name="dua_sources">Rujukan</string>
     <string name="dua_grading">Derajat</string>
     <string name="dua_alt_gradings">Penilaian lain</string>
-    <string name="dua_not_reviewed">Rujukan belum diisi dan ditinjau.</string>
-    <string name="dua_grading_policy">Hanya hadits sahih dan hasan. Rujukan utama Hisnul Muslim, diperiksa dengan penilaian al-Albani. Lihat Pengaturan → Metodologi.</string>
+    <string name="dua_grading_policy">Doa diambil dari Hisnul Muslim (Sa\'id al-Qahthani). Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Lihat Pengaturan → Metodologi.</string>
+    <string name="dua_reference">Takhrij</string>
     <plurals name="dua_count">
         <item quantity="other">%d×</item>
     </plurals>
@@ -279,7 +275,7 @@
     <string name="event_variants_hint">Beberapa bentuk yang sahih. Pilih yang dibaca.</string>
     <string name="event_form_n">Bentuk %d</string>
     <string name="event_empty_title">Belum ada doa</string>
-    <string name="event_empty_body">Konten untuk bagian ini sedang ditinjau.</string>
+    <string name="event_empty_body">Belum ada doa untuk bagian ini.</string>
 
     <!-- Search -->
     <string name="search_title">Cari doa</string>
@@ -498,13 +494,13 @@
     <string name="methodology_sources_title">Sumber</string>
     <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim. Setiap doa mencantumkan kitab dan nomor haditsnya, dapat dilihat dengan mengetuk label sumber.</string>
     <string name="methodology_grading_title">Kebijakan derajat</string>
-    <string name="methodology_grading_body">Derajat diperiksa silang dengan penilaian Syaikh al-Albani. Setiap doa menyebutkan siapa yang menilai, beserta penilaian lain bila ada.</string>
+    <string name="methodology_grading_body">Derajat ditampilkan bila disebutkan dalam takhrij kitab sumber, beserta siapa yang menilai. Riwayat yang dinilai lemah oleh Syaikh al-Albani tidak dimuat.</string>
     <string name="methodology_counts_title">Jumlah bacaan</string>
     <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara.</string>
-    <string name="methodology_review_title">Peninjauan</string>
-    <string name="methodology_reviewer">Ditinjau oleh: [nama ustadz peninjau]. Hanya konten yang telah disetujui yang tampil di aplikasi.</string>
+    <string name="methodology_review_title">Sumber konten</string>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
     <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI dan dapat disesuaikan. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>

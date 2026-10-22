@@ -1,41 +1,35 @@
 {
-  "content_version": 1,
+  "content_version": 2,
   "fard": [
     {
       "id": "fard_fajr",
       "prayer": "FAJR",
-      "rakah": 2,
-      "status": "draft"
+      "rakah": 2
     },
     {
       "id": "fard_dhuhr",
       "prayer": "DHUHR",
-      "rakah": 4,
-      "status": "draft"
+      "rakah": 4
     },
     {
       "id": "fard_asr",
       "prayer": "ASR",
-      "rakah": 4,
-      "status": "draft"
+      "rakah": 4
     },
     {
       "id": "fard_maghrib",
       "prayer": "MAGHRIB",
-      "rakah": 3,
-      "status": "draft"
+      "rakah": 3
     },
     {
       "id": "fard_isha",
       "prayer": "ISHA",
-      "rakah": 4,
-      "status": "draft"
+      "rakah": 4
     },
     {
       "id": "fard_jumuah",
       "prayer": "JUMUAH",
-      "rakah": 2,
-      "status": "draft"
+      "rakah": 2
     }
   ],
   "rawatib": [
@@ -50,8 +44,7 @@
       "hidden_when_travelling": false,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "dhuhr_before_4",
@@ -60,12 +53,11 @@
       "rakah": 4,
       "tier": "MUAKKADAH",
       "evidence": [],
-      "notes": "[PLACEHOLDER] catatan cara pelaksanaan",
+      "notes": null,
       "hidden_when_travelling": true,
       "variant_group": "dhuhr_qabliyah",
       "variant_label": "4 rakaat",
-      "default_variant": true,
-      "status": "draft"
+      "default_variant": true
     },
     {
       "id": "dhuhr_before_2",
@@ -78,8 +70,7 @@
       "hidden_when_travelling": true,
       "variant_group": "dhuhr_qabliyah",
       "variant_label": "2 rakaat",
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "dhuhr_after",
@@ -92,8 +83,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "maghrib_after",
@@ -106,8 +96,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "isha_after",
@@ -120,8 +109,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "asr_before",
@@ -134,8 +122,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "maghrib_before",
@@ -148,8 +135,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "between_adhan_iqamah",
@@ -162,8 +148,7 @@
       "hidden_when_travelling": true,
       "variant_group": null,
       "variant_label": null,
-      "default_variant": false,
-      "status": "draft"
+      "default_variant": false
     },
     {
       "id": "jumuah_after_home",
@@ -176,8 +161,7 @@
       "hidden_when_travelling": true,
       "variant_group": "jumuah_badiyah",
       "variant_label": "di rumah",
-      "default_variant": true,
-      "status": "draft"
+      "default_variant": true
     },
     {
       "id": "jumuah_after_masjid",
@@ -190,8 +174,7 @@
       "hidden_when_travelling": true,
       "variant_group": "jumuah_badiyah",
       "variant_label": "di masjid",
-      "default_variant": true,
-      "status": "draft"
+      "default_variant": true
     }
   ]
 }

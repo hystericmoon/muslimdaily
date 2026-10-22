@@ -27,8 +27,8 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 26
         targetSdk = 37
-        versionCode = 5
-        versionName = "0.2.2"
+        versionCode = 6
+        versionName = "0.2.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
         // GitHub repository whose releases the sideload updater reads (debug builds only).
@@ -56,14 +56,12 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            buildConfigField("boolean", "INCLUDE_DRAFT_CONTENT", "true")
             buildConfigField("boolean", "SELF_UPDATE", "true")
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("boolean", "INCLUDE_DRAFT_CONTENT", "false")
             // Store builds stay fully offline: no updater, no INTERNET permission.
             buildConfigField("boolean", "SELF_UPDATE", "false")
             signingConfig = signingConfigs.findByName("release")
@@ -118,7 +116,6 @@ androidComponents {
         val taskName = "generate${variant.name.replaceFirstChar { it.uppercase() }}ContentAssets"
         val task = tasks.register<ContentAssetsTask>(taskName) {
             contentDir.set(rootProject.layout.projectDirectory.dir("content"))
-            includeDrafts.set(variant.buildType == "debug")
         }
         variant.sources.assets?.addGeneratedSourceDirectory(task, ContentAssetsTask::outputDir)
     }

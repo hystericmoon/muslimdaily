@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.Dp
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Tier
 
 /** A small text label on a tinted pill. Always text, so it never relies on colour alone. */
@@ -66,19 +65,6 @@ fun TierBadge(tier: Tier, modifier: Modifier = Modifier) {
             modifier = modifier,
         )
     }
-}
-
-/** Marks unpublished content. Only debug builds can contain it. */
-@Composable
-fun StatusBadge(status: ContentStatus, modifier: Modifier = Modifier) {
-    if (status == ContentStatus.PUBLISHED || !BuildConfig.INCLUDE_DRAFT_CONTENT) return
-    Badge(
-        text = stringResource(if (status == ContentStatus.REVIEW) R.string.status_review else R.string.status_draft),
-        container = MaterialTheme.colorScheme.errorContainer,
-        content = MaterialTheme.colorScheme.onErrorContainer,
-        icon = R.drawable.ic_edit,
-        modifier = modifier,
-    )
 }
 
 /**

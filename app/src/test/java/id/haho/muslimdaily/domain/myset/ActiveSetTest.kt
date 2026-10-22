@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.domain.myset
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Dua
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -8,7 +7,7 @@ import kotlin.test.assertEquals
 class ActiveSetTest {
     private fun dua(id: String, order: Int, group: String? = null) = Dua(
         id, "adhkar", "morning", order, group, "[PLACEHOLDER]", false, "", "", "", null,
-        emptyList(), null, emptyList(), null, null, emptyList(), ContentStatus.DRAFT,
+        emptyList(), "", null, emptyList(), null, null, emptyList(),
     )
 
     private val duas = listOf(dua("a", 1), dua("v1", 2, "g"), dua("v2", 3, "g"), dua("b", 4), dua("c", 5))

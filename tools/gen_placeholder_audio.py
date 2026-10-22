@@ -1,23 +1,17 @@
 #!/usr/bin/env python3
-"""Generates silent Opus placeholder clips so audio, phrase highlighting and memorize mode can be
-built and tested before real recitations exist.
+"""Generates content/audio/silence.opus (60 s), which memorize mode uses for repeat-aloud pauses.
 
     python3 tools/gen_placeholder_audio.py
 
-For every row in content/source/duas.csv that is not published and whose audio file is missing,
-writes a silent clip as long as its last segment. Also writes content/audio/silence.opus (60 s),
-which memorize mode uses for repeat-aloud pauses. Requires ffmpeg with libopus.
-
-Silence, not tones: the audio rule is clear recitation only, with no sound effects.
+Requires ffmpeg with libopus. Recitations themselves are never generated: every dua ships, so
+a placeholder clip would reach users. Duas without a recording simply have no player.
 """
-import csv
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 AUDIO = ROOT / "content/audio"
-CSV = ROOT / "content/source/duas.csv"
 
 
 def silent(path: Path, seconds: float) -> None:
@@ -33,19 +27,7 @@ def main() -> int:
     silence = AUDIO / "silence.opus"
     if not silence.exists():
         silent(silence, 60)
-    made = 0
-    with CSV.open(encoding="utf-8-sig", newline="") as f:
-        for row in csv.DictReader(f):
-            name = (row.get("audio_file") or "").strip()
-            if not name or row.get("status", "").strip().lower() == "published":
-                continue
-            target = AUDIO / name
-            if target.exists():
-                continue
-            ends = [float(c.split("-")[1]) for c in row.get("audio_segments", "").split(";") if c.strip()]
-            silent(target, max(ends) if ends else 3.0)
-            made += 1
-    print(f"Generated {made} placeholder clip(s) in {AUDIO}")
+    print(f"{silence} ready")
     return 0
 
 

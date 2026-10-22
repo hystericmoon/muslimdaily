@@ -1,18 +1,18 @@
-id,prayer,position,rakah,tier,variant_group,variant_label,default_variant,evidence_1_book,evidence_1_no,evidence_2_book,evidence_2_no,notes,hidden_when_travelling,status,reviewer_notes
-fard_fajr,FAJR,FARD,2,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fard_dhuhr,DHUHR,FARD,4,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fard_asr,ASR,FARD,4,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fard_maghrib,MAGHRIB,FARD,3,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fard_isha,ISHA,FARD,4,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fard_jumuah,JUMUAH,FARD,2,,,,,,,,,,tidak,draft,"Jumlah rakaat fardhu, mohon dikonfirmasi."
-fajr_before,FAJR,BEFORE,2,MUAKKADAH,,,,,,,,,tidak,draft,Tetap tampil saat safar (sesuai spesifikasi). Dalil belum diisi.
-dhuhr_before_4,DHUHR,BEFORE,4,MUAKKADAH,dhuhr_qabliyah,4 rakaat,ya,,,,,[PLACEHOLDER] catatan cara pelaksanaan,ya,draft,Dalil belum diisi.
-dhuhr_before_2,DHUHR,BEFORE,2,MUAKKADAH,dhuhr_qabliyah,2 rakaat,tidak,,,,,,ya,draft,Riwayat 2 rakaat sebagai alternatif. Dalil belum diisi.
-dhuhr_after,DHUHR,AFTER,2,MUAKKADAH,,,,,,,,,ya,draft,Dalil belum diisi.
-maghrib_after,MAGHRIB,AFTER,2,MUAKKADAH,,,,,,,,,ya,draft,Dalil belum diisi.
-isha_after,ISHA,AFTER,2,MUAKKADAH,,,,,,,,,ya,draft,Dalil belum diisi.
-asr_before,ASR,BEFORE,4,GHAIRU_MUAKKADAH,,,,,,,,,ya,draft,Dalil belum diisi.
-maghrib_before,MAGHRIB,BEFORE,2,GHAIRU_MUAKKADAH,,,,,,,,,ya,draft,Dalil belum diisi.
-between_adhan_iqamah,ANY,BEFORE,,GHAIRU_MUAKKADAH,,,,,,,,,ya,draft,Shalat di antara adzan dan iqamah. Jumlah rakaat sengaja dikosongkan; isi bila ada ketentuan. Tampil pada shalat yang tidak punya qabliyah khusus.
-jumuah_after_home,JUMUAH,AFTER,2,MUAKKADAH,jumuah_badiyah,di rumah,ya,,,,,,ya,draft,Dalil belum diisi.
-jumuah_after_masjid,JUMUAH,AFTER,4,MUAKKADAH,jumuah_badiyah,di masjid,ya,,,,,,ya,draft,Dalil belum diisi.
+id,prayer,position,rakah,tier,variant_group,variant_label,default_variant,evidence_1_book,evidence_1_no,evidence_2_book,evidence_2_no,notes,hidden_when_travelling
+fard_fajr,FAJR,FARD,2,,,,,,,,,,tidak
+fard_dhuhr,DHUHR,FARD,4,,,,,,,,,,tidak
+fard_asr,ASR,FARD,4,,,,,,,,,,tidak
+fard_maghrib,MAGHRIB,FARD,3,,,,,,,,,,tidak
+fard_isha,ISHA,FARD,4,,,,,,,,,,tidak
+fard_jumuah,JUMUAH,FARD,2,,,,,,,,,,tidak
+fajr_before,FAJR,BEFORE,2,MUAKKADAH,,,,,,,,,tidak
+dhuhr_before_4,DHUHR,BEFORE,4,MUAKKADAH,dhuhr_qabliyah,4 rakaat,ya,,,,,,ya
+dhuhr_before_2,DHUHR,BEFORE,2,MUAKKADAH,dhuhr_qabliyah,2 rakaat,tidak,,,,,,ya
+dhuhr_after,DHUHR,AFTER,2,MUAKKADAH,,,,,,,,,ya
+maghrib_after,MAGHRIB,AFTER,2,MUAKKADAH,,,,,,,,,ya
+isha_after,ISHA,AFTER,2,MUAKKADAH,,,,,,,,,ya
+asr_before,ASR,BEFORE,4,GHAIRU_MUAKKADAH,,,,,,,,,ya
+maghrib_before,MAGHRIB,BEFORE,2,GHAIRU_MUAKKADAH,,,,,,,,,ya
+between_adhan_iqamah,ANY,BEFORE,,GHAIRU_MUAKKADAH,,,,,,,,,ya
+jumuah_after_home,JUMUAH,AFTER,2,MUAKKADAH,jumuah_badiyah,di rumah,ya,,,,,,ya
+jumuah_after_masjid,JUMUAH,AFTER,4,MUAKKADAH,jumuah_badiyah,di masjid,ya,,,,,,ya

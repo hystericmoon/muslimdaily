@@ -24,6 +24,17 @@ class TakhrijTest(unittest.TestCase):
             [("Abu Dawud", "1/303")],
         )
 
+    def test_variants_without_dot_or_hr(self):
+        self.assertEqual(import_hisn.split_takhrij("HR Imam Al-Bukhari 8/237 dan Muslim 1/530."),
+                         [("Al-Bukhari", "8/237"), ("Muslim", "1/530")])
+        self.assertEqual(import_hisn.split_takhrij("HR. Al-Bukhari dalam Fathul Baari 11/113, Muslim 4/2083."),
+                         [("Al-Bukhari", "11/113"), ("Muslim", "4/2083")])
+        self.assertEqual(import_hisn.split_takhrij("Al-Muwaththa’ 2/992. Al-Albani berkata ..."), [("Al-Muwaththa’", "2/992")])
+
+    def test_commentary_edition_is_dropped_from_book(self):
+        self.assertEqual(import_hisn.split_takhrij("HR. Al-Bukhari 7/71 dengan Fathul Baari dan Muslim 4/2091."),
+                         [("Al-Bukhari", "7/71"), ("Muslim", "4/2091")])
+
     def test_no_takhrij(self):
         self.assertEqual(import_hisn.split_takhrij("Lihat Zadul Ma'ad."), [])
 

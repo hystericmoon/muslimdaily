@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.feature.today
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Fard
 import id.haho.muslimdaily.core.model.Position
 import id.haho.muslimdaily.core.model.Prayer
@@ -28,7 +27,7 @@ object TodayPreviewData {
     private fun r(
         id: String, prayer: Prayer?, position: Position, rakah: Int?, tier: Tier = Tier.MUAKKADAH,
         hidden: Boolean = true, group: String? = null, label: String? = null, default: Boolean = false,
-    ) = Rawatib(id, prayer, position, rakah, tier, emptyList(), null, hidden, group, label, default, ContentStatus.DRAFT)
+    ) = Rawatib(id, prayer, position, rakah, tier, emptyList(), null, hidden, group, label, default)
 
     val rawatib = listOf(
         r("fajr_before", Prayer.FAJR, Position.BEFORE, 2, hidden = false),
@@ -45,9 +44,9 @@ object TodayPreviewData {
     )
 
     val fard = listOf(
-        Fard(Prayer.FAJR, 2, ContentStatus.DRAFT), Fard(Prayer.DHUHR, 4, ContentStatus.DRAFT),
-        Fard(Prayer.ASR, 4, ContentStatus.DRAFT), Fard(Prayer.MAGHRIB, 3, ContentStatus.DRAFT),
-        Fard(Prayer.ISHA, 4, ContentStatus.DRAFT), Fard(Prayer.JUMUAH, 2, ContentStatus.DRAFT),
+        Fard(Prayer.FAJR, 2), Fard(Prayer.DHUHR, 4),
+        Fard(Prayer.ASR, 4), Fard(Prayer.MAGHRIB, 3),
+        Fard(Prayer.ISHA, 4), Fard(Prayer.JUMUAH, 2),
     )
 
     /** Wednesday 21 Oct 2026, 04:40 in Jakarta: morning adhkar window, after-Fajr prohibition. */

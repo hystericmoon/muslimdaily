@@ -50,7 +50,6 @@ import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.Badge
 import id.haho.muslimdaily.core.designsystem.component.CheckRow
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.StatusBadge
 import id.haho.muslimdaily.core.designsystem.component.TierBadge
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
@@ -292,7 +291,6 @@ private fun SunnahLabel(step: TimelineStep.Sunnah) {
         modifier = Modifier.padding(top = AppTheme.spacing.xs),
     ) {
         TierBadge(entry.tier)
-        StatusBadge(entry.status)
     }
 }
 
@@ -339,7 +337,6 @@ private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
             rakahText(line)?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
             Row(Modifier.padding(vertical = AppTheme.spacing.sm), horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
                 TierBadge(entry.tier)
-                StatusBadge(entry.status)
             }
             val evidence = line.entries.flatMap { it.evidence }.filter { it.book.isNotBlank() }
             Text(stringResource(R.string.rawatib_evidence), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = AppTheme.spacing.md))

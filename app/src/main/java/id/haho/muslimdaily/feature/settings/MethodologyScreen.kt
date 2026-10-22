@@ -19,7 +19,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 
 @Composable
@@ -48,7 +47,6 @@ fun MethodologyContent(contentVersion: Int?) {
             Text(stringResource(R.string.methodology_content_version, contentVersion?.toString() ?: "–"), style = MaterialTheme.typography.bodyLarge)
             Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.bodyLarge)
         }
-        if (BuildConfig.INCLUDE_DRAFT_CONTENT) InfoNote(stringResource(R.string.draft_banner), icon = R.drawable.ic_edit)
     }
 }
 

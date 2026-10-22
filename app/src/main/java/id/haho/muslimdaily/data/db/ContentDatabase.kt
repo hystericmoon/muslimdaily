@@ -21,7 +21,9 @@ import kotlinx.coroutines.flow.Flow
         CategoryEntity::class, EventEntity::class, DuaEntity::class, DuaFtsEntity::class,
         RawatibEntity::class, FardEntity::class, CityEntity::class, CityFtsEntity::class, MetaEntity::class,
     ],
-    version = 1,
+    // 2: removed draft/review status, added the takhrij reference. Content is re-imported
+    // from the bundled assets, so a destructive migration loses nothing.
+    version = 2,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -55,6 +57,7 @@ data class DuaEntity(
     val transliteration: String,
     val count: Int?,
     val sourcesJson: String,
+    val reference: String,
     val gradingGrade: String?,
     val gradingGrader: String?,
     val altGradingsJson: String,
@@ -63,7 +66,6 @@ data class DuaEntity(
     val audioFile: String?,
     val segmentsJson: String,
     val phraseBreaksJson: String,
-    val status: String,
 )
 
 /** Search index. Text columns hold normalised text (see ArabicNormalizer). */
@@ -92,11 +94,10 @@ data class RawatibEntity(
     val variantLabel: String?,
     val defaultVariant: Boolean,
     val sortOrder: Int,
-    val status: String,
 )
 
 @Entity(tableName = "fard")
-data class FardEntity(@PrimaryKey val prayer: String, val rakah: Int, val status: String)
+data class FardEntity(@PrimaryKey val prayer: String, val rakah: Int)
 
 @Entity(tableName = "cities")
 data class CityEntity(

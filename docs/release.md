@@ -26,11 +26,9 @@ Set the address that "Report an error" pre-fills in `gradle.properties`:
 
 ## Release gate
 
-* Only `status: published` entries reach the release APK (`ContentAssetsTask`). With today's
-  placeholder content the release build contains no duas and no rawatib timeline: that is
-  expected.
-* The build fails if a published entry lacks Arabic text, source, grade, grader, audio file or
-  segments, naming each entry and field.
+* Every entry in `content/*.json` ships (there is no draft state). `ContentAssetsTask` fails
+  the build if an entry has placeholder Arabic, no source, a grade without its grader, or
+  names an audio file that does not exist, naming each entry and field.
 * Before tagging: `python3 tools/build_content.py`, `./gradlew lintDebug testDebugUnitTest
   assembleRelease`, then a TalkBack pass on a device (see accessibility.md, "Known gaps").
 

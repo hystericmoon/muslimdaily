@@ -33,7 +33,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.StatusBadge
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.feature.duas.components.CountBadge
@@ -110,7 +109,6 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
             .padding(bottom = AppTheme.spacing.xxl),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
     ) {
-        StatusBadge(dua.status)
         GlassCard(shape = MaterialTheme.shapes.extraLarge) {
             Column(Modifier.padding(AppTheme.spacing.xl)) {
                 HighlightedArabic(

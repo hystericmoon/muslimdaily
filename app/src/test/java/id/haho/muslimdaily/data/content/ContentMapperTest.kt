@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.data.content
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Segment
 import id.haho.muslimdaily.core.model.SourceRef
 import id.haho.muslimdaily.core.model.splitPhrases
@@ -16,66 +15,71 @@ class ContentMapperTest {
     )
 
     // Neutral test strings only; no religious text is generated in tests.
-    private fun dua(id: String, status: ContentStatus, block: DuaJson.() -> DuaJson = { this }) = DuaJson(
+    private fun dua(id: String, block: DuaJson.() -> DuaJson = { this }) = DuaJson(
         id = id, category = "daily", event = "waking_up", arabic = "aaa bbb", phraseBreaks = listOf(4),
         translations = mapOf("id" to "uji"),
-        sources = listOf(SourceRef("Buku", "1")), grading = GradingJson("sahih", "Penguji"),
-        audio = AudioJson("$id.opus", listOf(listOf(0.0, 1.0), listOf(1.0, 2.0))), status = status,
+        sources = listOf(SourceRef("Buku", "1")), reference = "Catatan uji.", grading = GradingJson("sahih", "Penguji"),
+        audio = AudioJson("$id.opus", listOf(listOf(0.0, 1.0), listOf(1.0, 2.0))),
     ).block()
 
-    private fun map(duas: List<DuaJson>, drafts: Boolean) =
-        ContentMapper.map(DuasFile(3, duas), RawatibFile(), taxonomy, includeDrafts = drafts)
+    private fun map(duas: List<DuaJson>) = ContentMapper.map(DuasFile(3, duas), RawatibFile(), taxonomy)
 
     @Test
-    fun `release import keeps only published entries`() {
-        val bundle = map(listOf(dua("a", ContentStatus.PUBLISHED), dua("b", ContentStatus.DRAFT)), drafts = false)
-        assertEquals(listOf("a"), bundle.duas.map { it.id })
-        assertEquals("not published", bundle.rejected["b"])
-    }
-
-    @Test
-    fun `debug import keeps drafts`() {
-        val bundle = map(listOf(dua("a", ContentStatus.PUBLISHED), dua("b", ContentStatus.DRAFT)), drafts = true)
+    fun `every valid entry is imported with its reference`() {
+        val bundle = map(listOf(dua("a"), dua("b")))
         assertEquals(setOf("a", "b"), bundle.duas.map { it.id }.toSet())
+        assertEquals("Catatan uji.", bundle.duas.first().reference)
     }
 
     @Test
-    fun `published entry without grader is rejected`() {
-        val bundle = map(listOf(dua("a", ContentStatus.PUBLISHED) { copy(grading = GradingJson("sahih", "")) }), drafts = true)
+    fun `grading and audio are optional`() {
+        val bundle = map(listOf(dua("a") { copy(grading = null, audio = null) }))
+        assertEquals(listOf("a"), bundle.duas.map { it.id })
+        assertNull(bundle.duas.single().gradingGrade)
+    }
+
+    @Test
+    fun `placeholder text is rejected`() {
+        val bundle = map(listOf(dua("a") { copy(arabic = "[PLACEHOLDER]", phraseBreaks = emptyList()) }))
+        assertEquals("empty Arabic", bundle.rejected["a"])
+    }
+
+    @Test
+    fun `grade without grader is rejected`() {
+        val bundle = map(listOf(dua("a") { copy(grading = GradingJson("sahih", "")) }))
         assertTrue(bundle.duas.isEmpty())
-        assertEquals("missing grading", bundle.rejected["a"])
+        assertEquals("grade without grader", bundle.rejected["a"])
     }
 
     @Test
     fun `grade outside sahih or hasan is rejected`() {
-        val bundle = map(listOf(dua("a", ContentStatus.PUBLISHED) { copy(grading = GradingJson("dhaif", "X")) }), drafts = true)
+        val bundle = map(listOf(dua("a") { copy(grading = GradingJson("dhaif", "X")) }))
         assertEquals("grade out of scope", bundle.rejected["a"])
     }
 
     @Test
-    fun `published entry without source is rejected`() {
-        val bundle = map(listOf(dua("a", ContentStatus.PUBLISHED) { copy(sources = emptyList()) }), drafts = true)
+    fun `entry without source is rejected`() {
+        val bundle = map(listOf(dua("a") { copy(sources = emptyList()) }))
         assertEquals("missing source", bundle.rejected["a"])
     }
 
     @Test
     fun `segments that do not match phrases are dropped, entry kept`() {
         val bundle = map(
-            listOf(dua("a", ContentStatus.DRAFT) { copy(audio = AudioJson("a.opus", listOf(listOf(0.0, 2.0)))) }),
-            drafts = true,
+            listOf(dua("a") { copy(audio = AudioJson("a.opus", listOf(listOf(0.0, 2.0)))) }),
         )
         assertEquals("[]", bundle.duas.single().segmentsJson)
     }
 
     @Test
     fun `unknown event is rejected`() {
-        val bundle = map(listOf(dua("a", ContentStatus.DRAFT) { copy(event = "nope") }), drafts = true)
+        val bundle = map(listOf(dua("a") { copy(event = "nope") }))
         assertEquals("unknown event", bundle.rejected["a"])
     }
 
     @Test
     fun `fts row holds normalised text`() {
-        val bundle = map(listOf(dua("a", ContentStatus.DRAFT) { copy(translations = mapOf("id" to "Dôa PAGI")) }), drafts = true)
+        val bundle = map(listOf(dua("a") { copy(translations = mapOf("id" to "Dôa PAGI")) }))
         assertEquals("doa pagi", bundle.fts.single().translationId)
         assertEquals("bangun tidur", bundle.fts.single().eventLabel)
     }

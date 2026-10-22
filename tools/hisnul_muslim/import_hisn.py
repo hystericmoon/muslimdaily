@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Imports Hisnul Muslim into the content spreadsheet as draft rows for the reviewer.
+"""Imports Hisnul Muslim into the content spreadsheet (rows ship as imported).
 
     python3 tools/hisnul_muslim/import_hisn.py --pdf PATH/TO/hisnul-muslim.pdf [--merge]
 
@@ -9,15 +9,15 @@ Sources, joined by the book's standard entry number (1-267):
   * Arabic text and repetition counts: hisnmuslim.com, the book's official site.
 
 Always writes content/source/import/hisnul_muslim.csv: every entry, same columns as duas.csv
-plus hisn_no / hisn_chapter, all with status "draft". It is the review sheet for chapters
-that have no app event yet.
+plus hisn_no / hisn_chapter, including chapters that have no app event yet.
 
-With --merge, also replaces the placeholder rows in content/source/duas.csv for each app
-event that has a matching Hisnul Muslim chapter, skipping entries the appendix marks weak.
+With --merge, also replaces the previously imported rows (and any placeholders) in
+content/source/duas.csv for each app event that has a matching Hisnul Muslim chapter,
+skipping entries the appendix says al-Albani graded weak. Imported rows ship as they are.
 
-Nothing here writes religious text: it copies the two sources verbatim, keeps the footnote
-in reviewer_notes, and only pre-fills grade/grader where the footnote states al-Albani's
-verdict. Every row stays a draft until the ustadz reviews it.
+Nothing here writes religious text: it copies the two sources verbatim. The footnote goes
+into `reference` (shown in the app), the suggested books into source_N, and grade/grader
+only where the footnote states al-Albani's verdict. Parser warnings go into `notes`.
 """
 from __future__ import annotations
 
@@ -82,22 +82,27 @@ CHAPTER_EVENTS: dict[int, list[tuple[str, str, str]]] = {
     105: [("situational", "travel", "travel")],
 }
 
-TAKHRIJ = re.compile(r"\bHR\.\s*([^.]*(?:\.\s*\d[^.]*)*)")
+TAKHRIJ = re.compile(r"\bHR\.?\s+(?:Imam\s+)?([^.]*(?:\.\s*\d[^.]*)*)")
+# Footnotes that cite a book directly, e.g. "Al-Muwaththa' 2/992."
+BOOK_FIRST = re.compile(r"^([A-Z][\w’'\- ]{2,40}?)\s+(\d+(?:/\d+)?)\.")
 REF_NO = re.compile(r"\s*((?:no\.\s*)?\d+(?:\s*/\s*\d+)?(?:-\d+)?)\s*$", re.I)
 
 
 def split_takhrij(footnote: str) -> list[tuple[str, str]]:
     """'HR. Al-Bukhari 7/162, Muslim 4/2083.' -> [('Al-Bukhari', '7/162'), ('Muslim', '4/2083')].
 
-    A suggestion only; the full footnote is kept in reviewer_notes.
+    The full footnote is kept in `reference`.
     """
     m = TAKHRIJ.search(footnote)
     if not m:
-        return []
+        b = BOOK_FIRST.match(footnote.strip())
+        return [(b.group(1).strip(), b.group(2))] if b else []
     # Stop at grading or cross-reference remarks ("dinyatakan shahih oleh Al-Albani ...").
     body = re.split(r"\b(?:dinyatakan|dishahihkan|menshahihkan|dihasankan|lihat|Al-?\s?Albani)\b", m.group(1), flags=re.I)[0]
     out: list[tuple[str, str]] = []
-    for part in re.split(r",|\bdan\b", body):
+    for part in re.split(r"[,;]|\bdan\b", body):
+        # "Al-Bukhari dengan Fathul Baari 7/71" names the commentary edition; keep the collection.
+        part = re.sub(r"\s*\b(?:dengan|dalam)\s+Fathul\s+Baa?ri\b", "", part, flags=re.I)
         part = part.strip(" .;")
         if not part:
             continue
@@ -160,7 +165,9 @@ def build_rows(entries, footnotes, arabic, weak, fields, pdf_name: str) -> list[
         arabic_text = a["arabic"] if a else ""
         if re.match(r"\s*(?:قَالَ|قال|كان|كَانَ)", arabic_text):
             flags.append("Teks Arab diawali konteks riwayat (bukan lafazh doa); rapikan.")
-        sources = split_takhrij(joined)
+        # Footnote verbatim, then where it sits in the book, so every row cites something.
+        reference = f"{joined} (Hisnul Muslim no. {n})" if joined else f"Hisnul Muslim no. {n}"
+        sources = split_takhrij(joined) or [("Hisnul Muslim", f"no. {n}")]
         grade = albani_grade(joined)
         chapter_id = a["chapter_id"] if a else None
         r = row_template(fields)
@@ -173,10 +180,9 @@ def build_rows(entries, footnotes, arabic, weak, fields, pdf_name: str) -> list[
             "count": count,
             "grade": grade,
             "grader": "al-Albani" if grade else "",
-            "status": "draft",
-            "reviewer_notes": " | ".join(filter(None, [
+            "reference": reference,
+            "notes": " | ".join(filter(None, [
                 f"Hisnul Muslim no. {n}",
-                f"Catatan kaki PDF: {joined}" if joined else "Catatan kaki PDF: (tidak ada)",
                 *flags,
                 f"Terjemah & takhrij: {pdf_name}; teks Arab: hisnmuslim.com",
             ])),
@@ -202,10 +208,11 @@ def merge(rows: list[dict], weak: dict[int, dict], arabic: dict[int, dict]) -> t
             out.update({"category": category, "event": event})
             by_event.setdefault((category, event, prefix), []).append(out)
     replaced = {(c, e) for c, e, _ in by_event}
-    kept = [
-        r for r in existing
-        if (r["category"], r["event"]) not in replaced or "[PLACEHOLDER" not in r.get("arabic", "")
-    ]
+
+    def imported(r: dict) -> bool:
+        return "[PLACEHOLDER" in r.get("arabic", "") or r.get("notes", "").startswith("Hisnul Muslim no.")
+
+    kept = [r for r in existing if (r["category"], r["event"]) not in replaced or not imported(r)]
     taken = {r["id"] for r in kept}
     added = []
     for (category, event, prefix), items in by_event.items():
@@ -260,7 +267,7 @@ def main() -> int:
     print(f"  source suggested: {sourced}, al-Albani grade stated: {graded}, weak per appendix: {weak_n}")
     if args.merge:
         added, stats = merge(rows, weak, arabic)
-        print(f"duas.csv: {stats['added']} draft rows added across {stats['events']} events, {stats['kept']} rows kept")
+        print(f"duas.csv: {stats['added']} rows added across {stats['events']} events, {stats['kept']} rows kept")
     return 0
 
 

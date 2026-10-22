@@ -4,9 +4,10 @@ A native Android daily Muslim guide upon the manhaj salaf: prayer times, sunnah 
 morning and evening adhkar, and authentic duas from waking to sleeping, with Arabic text,
 translation, audio and a memorisation mode. Fully offline. No account, no ads, no analytics.
 
-> **Content status:** every dua, translation, source, grading and rawatib evidence is a
-> `[PLACEHOLDER]` with status `draft`. Release builds ship only `published` entries, so a
-> release build today contains no duas. Fill the spreadsheets as described in
+> **Content:** duas and dzikir come from Hisnul Muslim (Indonesian translation and takhrij
+> from the owner's edition, Arabic from hisnmuslim.com), imported by
+> `tools/hisnul_muslim/import_hisn.py`. Every dua shows its source and takhrij. Narrations
+> the edition's appendix reports al-Albani graded weak are left out. See
 > [docs/content-guide.md](docs/content-guide.md).
 
 | Today | Dua detail | Run mode | Memorize |
@@ -43,11 +44,11 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
 Requirements: JDK 21, Android SDK with platform 37 and build-tools 37.0.0, Python 3.10+.
 
 ```bash
-./gradlew :app:assembleDebug          # debug APK with draft content
+./gradlew :app:assembleDebug          # debug (sideload) APK with the in-app updater
 ./gradlew :app:testDebugUnitTest      # unit, Robolectric UI and screenshot tests
 ./gradlew :app:recordRoborazziDebug   # regenerate docs/screenshots
 ./gradlew :app:lintDebug
-./gradlew :app:assembleRelease        # minified; ships published content only
+./gradlew :app:assembleRelease        # minified store build, fully offline
 python3 -m unittest discover -s tools # content validator tests
 ```
 
@@ -61,8 +62,7 @@ Stack: Kotlin 2.3, Jetpack Compose (BOM 2026.09), Material 3, Hilt, Navigation C
 
 | Document | For |
 |---|---|
-| [content-guide.md](docs/content-guide.md) | Owner and ustadz: how to fill the spreadsheets |
-| [review-checklist.md](docs/review-checklist.md) | Ustadz: fiqh-related defaults and wording to confirm |
+| [content-guide.md](docs/content-guide.md) | Where the content comes from and how to edit the spreadsheets |
 | [design-tokens.md](docs/design-tokens.md) | Colour roles and measured contrast |
 | [accessibility.md](docs/accessibility.md) | WCAG 2.2 AA audit and how each rule is met |
 | [architecture.md](docs/architecture.md) | Code structure, data flow, content packs |

@@ -8,16 +8,16 @@ Input (CSV export of the spreadsheet, UTF-8):
     content/source/duas.csv      one row per dua / dhikr
     content/source/rawatib.csv   one row per fard or sunnah rawatib entry
 
-Rules enforced (see docs/content-guide.md):
-  * Every row: unique id, known category/event, integer order, valid status, grade (if given)
-    limited to sahih or hasan, count (if given) a positive whole number.
-  * Rows with status "published": real Arabic text, Indonesian translation, at least one source,
-    grade and grader, an audio file that exists in content/audio, and one audio segment per phrase.
+Every row ships. Rules enforced (see docs/content-guide.md):
+  * Unique id, known category/event, integer order, count (if given) a positive whole number.
+  * Real Arabic text, Indonesian translation and at least one source. No placeholders.
+  * Grade is optional; if given it must be sahih or hasan and name its grader.
+  * Audio is optional; if a file is named it must exist in content/audio, and segments (if
+    given) must match the phrases.
   * Phrase boundaries are marked in the Arabic column with "|". They become `phrase_breaks`
-    (character offsets into the stored Arabic) and must match the number of audio segments.
+    (character offsets into the stored Arabic).
 
-Exits with status 1 if any published entry fails, so CI and release builds stop. Problems in
-draft or review rows are printed as warnings only.
+Exits with status 1 on any error, so CI and release builds stop.
 
 The content version increments automatically whenever the generated JSON changes.
 """
@@ -33,7 +33,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
 
-STATUSES = {"draft", "review", "published"}
 GRADES = {"sahih", "hasan"}  # Scope: authentic Sunnah only.
 PRAYERS = {"FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA", "JUMUAH", "ANY"}
 POSITIONS = {"BEFORE", "AFTER", "FARD"}
@@ -49,8 +48,8 @@ class Report:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
 
-    def problem(self, published: bool, message: str) -> None:
-        (self.errors if published else self.warnings).append(message)
+    def problem(self, message: str) -> None:
+        self.errors.append(message)
 
     @property
     def ok(self) -> bool:
@@ -63,7 +62,7 @@ def parse_bool(value: str, where: str, report: Report, strict: bool) -> bool:
         return True
     if v in NO:
         return False
-    report.problem(strict, f"{where}: '{value}' is not ya/tidak")
+    (report.errors if strict else report.warnings).append(f"{where}: '{value}' is not ya/tidak")
     return False
 
 
@@ -109,11 +108,8 @@ def is_blank_or_placeholder(value: str | None) -> bool:
 def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, report: Report) -> None:
     """Validates one dua entry in its JSON shape. Shared by CSV build and --check."""
     did = d.get("id") or "?"
-    published = d.get("status") == "published"
-    p = lambda msg: report.problem(published, f"{did}: {msg}")  # noqa: E731
+    p = lambda msg: report.problem(f"{did}: {msg}")  # noqa: E731
 
-    if d.get("status") not in STATUSES:
-        report.errors.append(f"{did}: status must be one of {sorted(STATUSES)}")
     if d.get("category") not in taxonomy:
         report.errors.append(f"{did}: unknown category '{d.get('category')}'")
     elif d.get("event") not in taxonomy[d["category"]]:
@@ -134,20 +130,20 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         p("Indonesian translation is missing or a placeholder")
     if not any((s.get("book") or "").strip() for s in d.get("sources", [])):
         p("at least one source (book) is required")
-    if not grade or not (d.get("grading") or {}).get("grader"):
-        p("grade and grader are required")
+    if grade and not (d.get("grading") or {}).get("grader"):
+        p("a grade needs its grader")
+    if not grade and (d.get("grading") or {}).get("grader"):
+        p("grader given without a grade")
     virtue = d.get("virtue") or {}
     if virtue.get("text") and not virtue.get("source"):
         p("virtue text needs its source")
 
     audio = d.get("audio") or {}
     segments = audio.get("segments") or []
-    if not audio.get("file"):
-        p("audio file is required")
-    elif not (audio_dir / audio["file"]).exists():
+    if audio.get("file") and not (audio_dir / audio["file"]).exists():
         p(f"audio file content/audio/{audio['file']} not found")
-    if not segments:
-        p("audio segments are required")
+    if segments and not audio.get("file"):
+        p("audio segments given without an audio file")
     last_end = 0.0
     for i, (start, end) in enumerate(segments):
         if start < last_end - 1e-6 or end <= start:
@@ -166,8 +162,6 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
     if not rid:
         report.errors.append(f"duas.csv line {line}: id is empty")
         return None
-    status = (row.get("status") or "").strip().lower()
-    published = status == "published"
     try:
         order = int(row.get("order") or 0)
     except ValueError:
@@ -205,7 +199,7 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "order": order,
         "variant_group": (row.get("variant_group") or "").strip() or None,
         "arabic": arabic,
-        "is_quran": parse_bool(row.get("is_quran", ""), f"{rid}: is_quran", report, published),
+        "is_quran": parse_bool(row.get("is_quran", ""), f"{rid}: is_quran", report, True),
         "translations": {
             "id": (row.get("translation_id") or "").strip(),
             "en": (row.get("translation_en") or "").strip(),
@@ -213,12 +207,12 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "transliteration": (row.get("transliteration") or "").strip(),
         "count": count,
         "sources": sources,
+        "reference": (row.get("reference") or "").strip(),
         "grading": {"grade": (row.get("grade") or "").strip().lower(), "grader": (row.get("grader") or "").strip()},
         "alt_gradings": alt,
         "virtue": {"text": virtue_text, "source": (row.get("virtue_source") or "").strip()} if virtue_text else None,
         "audio": {"file": (row.get("audio_file") or "").strip(), "segments": segments},
         "phrase_breaks": breaks,
-        "status": status,
     }
 
 
@@ -227,10 +221,6 @@ def rawatib_from_row(row: dict, line: int, report: Report) -> tuple[str, dict] |
     if not rid:
         report.errors.append(f"rawatib.csv line {line}: id is empty")
         return None
-    status = (row.get("status") or "").strip().lower()
-    published = status == "published"
-    if status not in STATUSES:
-        report.errors.append(f"{rid}: status must be one of {sorted(STATUSES)}")
     prayer = (row.get("prayer") or "").strip().upper()
     position = (row.get("position") or "").strip().upper()
     if prayer not in PRAYERS:
@@ -244,7 +234,7 @@ def rawatib_from_row(row: dict, line: int, report: Report) -> tuple[str, dict] |
     if position == "FARD":
         if rakah is None:
             report.errors.append(f"{rid}: fard entries need a rak'ah count")
-        return "fard", {"id": rid, "prayer": prayer, "rakah": rakah, "status": status}
+        return "fard", {"id": rid, "prayer": prayer, "rakah": rakah}
     tier = (row.get("tier") or "").strip().upper()
     if tier not in TIERS:
         report.errors.append(f"{rid}: tier must be MUAKKADAH or GHAIRU_MUAKKADAH")
@@ -254,10 +244,8 @@ def rawatib_from_row(row: dict, line: int, report: Report) -> tuple[str, dict] |
         no = (row.get(f"evidence_{n}_no") or "").strip()
         if book or no:
             evidence.append({"book": book, "no": no})
-    if published and not any(e["book"] for e in evidence):
-        report.errors.append(f"{rid}: published rawatib needs evidence")
     notes = (row.get("notes") or "").strip() or None
-    if published and notes and PLACEHOLDER in notes:
+    if notes and PLACEHOLDER in notes:
         report.errors.append(f"{rid}: notes still contain a placeholder")
     return "rawatib", {
         "id": rid,
@@ -271,7 +259,6 @@ def rawatib_from_row(row: dict, line: int, report: Report) -> tuple[str, dict] |
         "variant_group": (row.get("variant_group") or "").strip() or None,
         "variant_label": (row.get("variant_label") or "").strip() or None,
         "default_variant": parse_bool(row.get("default_variant", ""), f"{rid}: default_variant", report, False),
-        "status": status,
     }
 
 
@@ -360,7 +347,7 @@ def main(argv: list[str] | None = None) -> int:
     if not report.ok:
         print(f"\n{len(report.errors)} error(s). Nothing was written." if not args.check else "", file=sys.stderr)
         return 1
-    print(f"OK ({len(report.warnings)} warning(s) in unpublished rows)")
+    print(f"OK ({len(report.warnings)} warning(s))")
     return 0
 
 

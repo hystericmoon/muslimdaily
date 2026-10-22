@@ -1,10 +1,8 @@
 package id.haho.muslimdaily.data.content
 
-import id.haho.muslimdaily.core.model.ContentStatus
-
 /**
- * Last line of defence at import time. The build already refuses incomplete published content;
- * this guards against a malformed asset reaching users.
+ * Last line of defence at import time. The build already refuses incomplete content; this
+ * guards against a malformed asset reaching users.
  */
 internal object ContentValidator {
 
@@ -13,20 +11,18 @@ internal object ContentValidator {
         data class Rejected(val reason: String) : Result
     }
 
-    fun validate(dua: DuaJson, includeDrafts: Boolean): Result {
-        if (!includeDrafts && dua.status != ContentStatus.PUBLISHED) return Result.Rejected("not published")
-        if (dua.arabic.isBlank()) return Result.Rejected("empty Arabic")
+    fun validate(dua: DuaJson): Result {
+        if (dua.arabic.isBlank() || dua.arabic.contains("[PLACEHOLDER")) return Result.Rejected("empty Arabic")
         if (dua.count != null && dua.count < 1) return Result.Rejected("invalid count")
         val breaks = dua.phraseBreaks
         if (breaks != breaks.sorted().distinct() || breaks.any { it <= 0 || it >= dua.arabic.length }) {
             return Result.Rejected("invalid phrase breaks")
         }
-        if (dua.status == ContentStatus.PUBLISHED) {
-            if (dua.sources.none { it.book.isNotBlank() }) return Result.Rejected("missing source")
-            val g = dua.grading
-            if (g == null || g.grade.isBlank() || g.grader.isBlank()) return Result.Rejected("missing grading")
+        if (dua.sources.none { it.book.isNotBlank() }) return Result.Rejected("missing source")
+        val g = dua.grading
+        if (g != null && g.grade.isNotBlank()) {
+            if (g.grader.isBlank()) return Result.Rejected("grade without grader")
             if (g.grade.lowercase() !in AllowedGrades) return Result.Rejected("grade out of scope")
-            if (dua.audio == null || dua.audio.file.isBlank()) return Result.Rejected("missing audio")
         }
         return Result.Ok
     }

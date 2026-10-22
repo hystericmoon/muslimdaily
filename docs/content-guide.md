@@ -1,8 +1,8 @@
-# Content guide: filling the spreadsheet
+# Content guide
 
 All religious content (Arabic, translations, sources, gradings, counts, virtues, audio) comes
-from **two spreadsheets** that the owner fills and an ustadz reviews. The app never contains
-text written by a developer or an AI. Every row starts as `[PLACEHOLDER]`.
+from **two spreadsheets**. It is taken from published sources (see "Imported content" below);
+the app never contains text written by a developer or an AI.
 
 ```
 content/source/duas.csv      one row per dua or dhikr
@@ -18,24 +18,14 @@ python3 tools/build_content.py
 ```
 
 It converts the sheets to `content/duas.json` / `content/rawatib.json`, checks every row, and
-bumps the content version when anything changed. If a published row is incomplete it prints
-the problem and writes nothing. Release builds run the same gate again.
-
-## Workflow per row
-
-| `status` | Meaning | Appears in |
-|---|---|---|
-| `draft` | Being prepared. Anything can be missing. | Debug builds only, with a "Draft" label |
-| `review` | Filled in; waiting for the ustadz. | Debug builds only |
-| `published` | Approved by the ustadz. Must be complete. | Debug and release builds |
-
-Only `published` rows ship to users.
+bumps the content version when anything changed. Every row ships to users, so if a row is
+incomplete it prints the problem and writes nothing. App builds run the same gate again.
 
 ## duas.csv columns
 
-| Column | Required for published | What to enter |
+| Column | Required | What to enter |
 |---|---|---|
-| `id` | yes | Short unique code, e.g. `wake_01`, `morning_07`. Never reuse or rename once published (users' sets and memorisation refer to it). |
+| `id` | yes | Short unique code, e.g. `wake_01`, `morning_07`. Never reuse or rename once shipped (users' sets and memorisation refer to it). |
 | `category` | yes | One of: `daily`, `prayer`, `adhkar`, `situational`, `quran` |
 | `event` | yes | Event code from the table below |
 | `order` | yes | Position within the event (1, 2, 3 …). Canonical order of the full set. |
@@ -47,14 +37,14 @@ Only `published` rows ship to users.
 | `transliteration` | no | Latin transliteration (off by default in the app) |
 | `count` | no | Number of repetitions **only if the Sunnah specifies it**. Leave blank otherwise; the app then shows no count. |
 | `source_1_book`, `source_1_no` … `source_3_*` | at least one book | e.g. book `Sahih Muslim`, no `2723`. Up to three sources. |
-| `grade` | yes | `sahih` or `hasan` only. Anything else is rejected. |
-| `grader` | yes | Who graded it, e.g. `al-Albani` |
+| `grade` | no | `sahih` or `hasan` only, where the source states it. Anything else is rejected. |
+| `grader` | with `grade` | Who graded it, e.g. `al-Albani` |
 | `alt_gradings` | no | Other gradings: `grader: grade; grader: grade` |
 | `virtue_text`, `virtue_source` | no (source required if text given) | The virtue and where it is narrated |
-| `audio_file` | yes | File name in `content/audio/`, e.g. `wake_01.opus` |
-| `audio_segments` | yes | Start-end seconds per phrase, in order: `0.0-1.8; 1.8-3.9; 3.9-6.2`. Count must equal the number of `\|`-separated phrases. |
-| `status` | yes | `draft`, `review` or `published` |
-| `reviewer_notes` | no | Free notes for the team; not shipped |
+| `audio_file` | no | File name in `content/audio/`, e.g. `wake_01.opus`. Without it the dua has no player. |
+| `audio_segments` | no | Start-end seconds per phrase, in order: `0.0-1.8; 1.8-3.9; 3.9-6.2`. Count must equal the number of `\|`-separated phrases; otherwise highlighting is off. |
+| `reference` | no | Takhrij as printed in the source (e.g. the footnote), shown under the sources in the app |
+| `notes` | no | Free notes for the team (importer warnings); not shipped |
 
 ### Event codes
 
@@ -78,41 +68,35 @@ New events are added in `content/taxonomy.json` (ask the developer).
 | `rakah` | Number of rak'ahs. May be blank only for `ANY`. |
 | `tier` | `MUAKKADAH` or `GHAIRU_MUAKKADAH` (blank for `FARD`) |
 | `variant_group`, `variant_label`, `default_variant` | Alternative narrations. One default in a group = the user picks one form (e.g. 4 or 2 before Dhuhr). Several defaults = shown together (e.g. Jumu'ah ba'diyah "2 at home / 4 in the masjid"). |
-| `evidence_1_book`, `evidence_1_no`, `evidence_2_*` | Evidence. At least one book is required to publish. |
+| `evidence_1_book`, `evidence_1_no`, `evidence_2_*` | Evidence, shown with the entry when given |
 | `notes` | Short practical note shown in the app, e.g. how to pray it |
 | `hidden_when_travelling` | `ya` to hide in travel mode. Per spec only Fajr sunnah stays visible (witr is handled separately). |
-| `status`, `reviewer_notes` | As above |
 
 The structure (which rawatib exist, rak'ah counts, tiers, no ba'diyah after Fajr or Asr) came
-from the product spec and is pre-filled as `draft`. The reviewer confirms it and adds evidence.
+from the product spec. Evidence columns are still empty.
 
 ## Audio
 
 * Clear recitation only: no music, melodic intro or sound effects.
 * Opus (`.opus`) mono, 48 kHz, ~24–32 kbps is plenty for speech.
 * Segment times can be read off in Audacity: select each phrase, note start and end.
-* `tools/gen_placeholder_audio.py` creates silent placeholders for unpublished rows so the app
-  can be tested before recordings exist. Replace them with real files before publishing.
-
-## Other settings the reviewer should confirm
-
-These are app defaults, not content, but they touch fiqh. They are listed in
-[review-checklist.md](review-checklist.md).
+* No recitations are bundled yet; duas without `audio_file` simply have no player.
 
 ## Imported content: Hisnul Muslim
 
-The draft rows in `duas.csv` (24 events) and the full sheet `content/source/import/hisnul_muslim.csv`
-(all 267 entries) come from `tools/hisnul_muslim/import_hisn.py`:
+The rows in `duas.csv` (24 events) and the full sheet `content/source/import/hisnul_muslim.csv`
+(all 267 entries, including chapters without an app event yet) come from
+`tools/hisnul_muslim/import_hisn.py`:
 
 * **Indonesian translation and takhrij**: the Indonesian Hisnul Muslim PDF supplied by the owner
   ("Hisnul Muslim Kumpulan Doa dan Dzikir Shahih Dari AlQuran dan AsSunnah").
 * **Arabic text and repetition counts**: hisnmuslim.com, joined by the book's entry number.
-* Entries the PDF's appendix reports as graded weak by al-Albani are left out of `duas.csv`
-  and marked `LEMAH` in the full sheet.
+* `source_N` holds the books cited in the footnote (or "Hisnul Muslim no. N" when it cites
+  none), `reference` the footnote verbatim plus the entry number, and grade/grader only where
+  the footnote states al-Albani's verdict.
+* Entries the PDF's appendix reports al-Albani graded weak are left out of `duas.csv` and
+  marked `LEMAH` in the full sheet. A count he judged unauthentic is left blank.
 
-Every imported row is a `draft`. `reviewer_notes` holds the full footnote and any warning
-(misprinted number, merged entry, narration context in the Arabic, disputed count). The
-reviewer checks each row, fills grade/grader where blank, adds audio, and only then sets
-`published`. To re-run: `python3 tools/hisnul_muslim/import_hisn.py --pdf <file> --merge`
-(this replaces the imported draft rows' placeholders; review edits should be made after
-the final import, not before).
+Imported rows ship as they are; there is no review step. To re-run:
+`python3 tools/hisnul_muslim/import_hisn.py --pdf <file> --merge`. It replaces the previously
+imported rows of the mapped events, so make hand edits after the final import.

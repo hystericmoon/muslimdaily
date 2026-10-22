@@ -180,8 +180,23 @@ def parse(path: str) -> tuple[list[Entry], dict[int, str], str]:
         _, cut, printed, ch, title, pno = cands[0]
         new = Entry(missing, ch, title, text=prev.text[cut:], page=pno, printed_number=printed)
         prev.text = prev.text[:cut]
-        # Footnote markers cannot be split reliably; keep them on both and let the reviewer check.
+        # Footnote markers cannot be split reliably; keep them on both (rare; only when the split is ambiguous).
         new.notes = list(prev.notes)
+        entries.insert(entries.index(prev) + 1, new)
+    # An entry printed without any number (e.g. 106) ends up appended to the previous entry,
+    # which then has two quoted texts and two footnote markers: split at the quote boundary.
+    present = {e.number for e in entries}
+    for missing in sorted(set(range(1, entries[-1].number + 1)) - present):
+        prev = next((e for e in entries if e.number == missing - 1), None)
+        if prev is None or len(prev.notes) < 2:
+            continue
+        text = prev.translation
+        cut = max(text.rfind("” “"), text.rfind("”“"))
+        if cut <= 0:
+            continue
+        head, tail = text[: cut + 1], text[cut + 1 :].strip()
+        prev.text, prev.notes, notes_tail = [f"{prev.number}. {head}"], prev.notes[:-1], prev.notes[-1:]
+        new = Entry(missing, prev.chapter, prev.chapter_title, text=[tail], notes=notes_tail, page=prev.page)
         entries.insert(entries.index(prev) + 1, new)
     joined = {k: re.sub(r"\s+", " ", " ".join(v)).strip() for k, v in notes.items()}
     return entries, joined, re.sub(r"\s+", " ", " ".join(appendix)).strip()

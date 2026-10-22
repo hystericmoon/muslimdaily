@@ -2,7 +2,7 @@
 
 The appendix quotes each weak narration in translation followed by its takhrij and
 al-Albani's verdict. Quotes are matched to entry translations by text similarity; matches
-are suggestions for the reviewer, never decisions.
+are best-effort and restricted to the section's own chapter, so a quote cannot match elsewhere.
 """
 from __future__ import annotations
 

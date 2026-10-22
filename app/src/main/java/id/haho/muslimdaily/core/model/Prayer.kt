@@ -18,11 +18,4 @@ enum class Position { BEFORE, AFTER }
 enum class Tier { MUAKKADAH, GHAIRU_MUAKKADAH }
 
 @Serializable
-enum class ContentStatus {
-    @kotlinx.serialization.SerialName("draft") DRAFT,
-    @kotlinx.serialization.SerialName("review") REVIEW,
-    @kotlinx.serialization.SerialName("published") PUBLISHED,
-}
-
-@Serializable
 data class SourceRef(val book: String = "", val no: String = "")

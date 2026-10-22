@@ -33,9 +33,8 @@ id.haho.muslimdaily
 
 ```
 content/source/*.csv ──tools/build_content.py──▶ content/*.json ──ContentAssetsTask──▶ APK assets
-   (owner + ustadz)      validate, version bump        (in git)     drafts stripped in release,
-                                                                    build fails on incomplete
-                                                                    published entries
+                         validate, version bump        (in git)     build fails on incomplete
+                                                                    entries
 APK assets ──ContentImporter (checksum)──▶ Room content.db (+ FTS4) ──ContentRepository──▶ UI
 ```
 
@@ -55,7 +54,7 @@ APK assets ──ContentImporter (checksum)──▶ Room content.db (+ FTS4) �
    (content version, file SHA-256s) and an Ed25519 signature over the manifest.
 3. Verify the signature with a public key compiled into the app, then every file hash, before
    returning bytes. Reject packs whose version is not newer.
-4. The importer is unchanged; drafts are still rejected in release builds.
+4. The importer is unchanged; malformed entries are still rejected.
 
 ## Audio
 

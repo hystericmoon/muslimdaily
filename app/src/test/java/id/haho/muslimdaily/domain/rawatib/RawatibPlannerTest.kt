@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.domain.rawatib
 
-import id.haho.muslimdaily.core.model.ContentStatus
 import id.haho.muslimdaily.core.model.Fard
 import id.haho.muslimdaily.core.model.Position
 import id.haho.muslimdaily.core.model.Prayer
@@ -15,7 +14,7 @@ class RawatibPlannerTest {
     private fun r(
         id: String, prayer: Prayer?, position: Position, rakah: Int?, tier: Tier = Tier.MUAKKADAH,
         hidden: Boolean = true, group: String? = null, default: Boolean = false,
-    ) = Rawatib(id, prayer, position, rakah, tier, emptyList(), null, hidden, group, null, default, ContentStatus.DRAFT)
+    ) = Rawatib(id, prayer, position, rakah, tier, emptyList(), null, hidden, group, null, default)
 
     // Mirrors the structure in content/source/rawatib.csv (taken from the product spec).
     private val data = listOf(
@@ -32,8 +31,8 @@ class RawatibPlannerTest {
         r("jumuah_masjid", Prayer.JUMUAH, Position.AFTER, 4, group = "jumuah_badiyah", default = true),
     )
     private val fard = listOf(
-        Fard(Prayer.FAJR, 2, ContentStatus.DRAFT), Fard(Prayer.DHUHR, 4, ContentStatus.DRAFT),
-        Fard(Prayer.JUMUAH, 2, ContentStatus.DRAFT), Fard(Prayer.ISHA, 4, ContentStatus.DRAFT),
+        Fard(Prayer.FAJR, 2), Fard(Prayer.DHUHR, 4),
+        Fard(Prayer.JUMUAH, 2), Fard(Prayer.ISHA, 4),
     )
 
     private fun plan(prayer: Prayer, friday: Boolean = false, travel: Boolean = false, dhuhr: Int = 4) =

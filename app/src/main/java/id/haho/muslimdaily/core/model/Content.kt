@@ -30,12 +30,13 @@ data class Dua(
     /** Repetitions, only where the Sunnah specifies them. Null means no count is shown. */
     val count: Int?,
     val sources: List<SourceRef>,
+    /** Takhrij as printed in the source book (footnote text), shown with the sources. */
+    val reference: String,
     val grading: Grading?,
     val altGradings: List<Grading>,
     val virtue: Virtue?,
     val audio: DuaAudio?,
     val phraseBreaks: List<Int>,
-    val status: ContentStatus,
 ) {
     val phrases: List<Phrase> by lazy { splitPhrases(arabic, phraseBreaks, audio?.segments.orEmpty()) }
 
@@ -91,7 +92,6 @@ data class Rawatib(
     val variantGroup: String?,
     val variantLabel: String?,
     val defaultVariant: Boolean,
-    val status: ContentStatus,
 )
 
-data class Fard(val prayer: Prayer, val rakah: Int, val status: ContentStatus)
+data class Fard(val prayer: Prayer, val rakah: Int)
