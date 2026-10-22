@@ -178,8 +178,8 @@
     <string name="settings_display_summary">Terjemahan, transliterasi, ukuran teks, tema</string>
     <string name="settings_audio">Audio dan hafalan</string>
     <string name="settings_audio_summary">Kecepatan, pengulangan, jeda</string>
-    <string name="settings_my_sets">Set saya</string>
-    <string name="settings_my_sets_summary">Ekspor atau impor pilihan doa</string>
+    <string name="settings_my_sets">Cadangan dan set saya</string>
+    <string name="settings_my_sets_summary">Cadangkan semua data, ekspor atau impor set</string>
     <string name="settings_methodology">Metodologi</string>
     <string name="settings_methodology_summary">Sumber dan kebijakan derajat hadits</string>
     <string name="settings_report">Laporkan kesalahan</string>
@@ -652,4 +652,17 @@
     <!-- Share -->
     <string name="share_dua">Bagikan doa</string>
     <string name="share_footer">Muslim Daily</string>
+
+    <!-- Backup -->
+    <string name="backup_title">Cadangan lengkap</string>
+    <string name="backup_intro">Satu berkas berisi pengaturan, set saya, hafalan, dan ceklis. Simpan di Drive atau kirim ke ponsel baru, lalu pulihkan di sana.</string>
+    <string name="backup_create">Buat cadangan</string>
+    <string name="backup_restore">Pulihkan dari cadangan</string>
+    <string name="backup_saved">Cadangan tersimpan.</string>
+    <string name="backup_restored">Cadangan dipulihkan: %1$d set, %2$d doa hafalan.</string>
+    <string name="backup_restore_failed">Berkas ini bukan cadangan Muslim Daily.</string>
+    <string name="backup_restore_confirm_title">Pulihkan cadangan?</string>
+    <string name="backup_restore_confirm_body">Pengaturan, set saya, hafalan, dan ceklis di ponsel ini akan diganti dengan isi cadangan.</string>
+    <string name="backup_restore_choose">Pilih berkas</string>
+    <string name="data_my_sets_title">Set saya</string>
 </resources>

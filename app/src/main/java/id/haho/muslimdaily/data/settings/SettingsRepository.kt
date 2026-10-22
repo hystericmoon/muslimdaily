@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -38,6 +39,41 @@ class SettingsRepository @Inject constructor(
 
     suspend fun update(block: SettingsEditor.() -> Unit) {
         store.edit { SettingsEditor(it).block() }
+    }
+
+    /** Every stored setting as (type, value text), for backups. Unset keys use their defaults. */
+    suspend fun export(): Map<String, Pair<String, String>> = store.data.first().asMap().entries.associate { (key, value) ->
+        key.name to when (value) {
+            is Boolean -> "boolean" to value.toString()
+            is Int -> "int" to value.toString()
+            is Long -> "long" to value.toString()
+            is Float -> "float" to value.toString()
+            is Double -> "double" to value.toString()
+            is String -> "string" to value
+            is Set<*> -> "string_set" to value.joinToString("\u001F")
+            else -> "string" to value.toString()
+        }
+    }
+
+    /** Replaces all settings with a backup's. Unknown types are skipped. */
+    suspend fun restore(values: Map<String, Pair<String, String>>) {
+        store.edit { prefs ->
+            prefs.clear()
+            values.forEach { (name, typed) ->
+                val (type, v) = typed
+                runCatching {
+                    when (type) {
+                        "boolean" -> prefs[booleanPreferencesKey(name)] = v.toBooleanStrict()
+                        "int" -> prefs[intPreferencesKey(name)] = v.toInt()
+                        "long" -> prefs[longPreferencesKey(name)] = v.toLong()
+                        "float" -> prefs[floatPreferencesKey(name)] = v.toFloat()
+                        "double" -> prefs[doublePreferencesKey(name)] = v.toDouble()
+                        "string" -> prefs[stringPreferencesKey(name)] = v
+                        "string_set" -> prefs[stringSetPreferencesKey(name)] = if (v.isEmpty()) emptySet() else v.split("\u001F").toSet()
+                    }
+                }
+            }
+        }
     }
 
     private fun Preferences.toSettings(): AppSettings {
