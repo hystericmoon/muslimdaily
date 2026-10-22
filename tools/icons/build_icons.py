@@ -23,6 +23,7 @@ ICONS = [
     "keyboard_arrow_down", "wb_sunny", "bedtime", "done_all",
     "lock", "graphic_eq", "mobile_off", "nightlight", "sunny", "volume_off", "inbox",
     "event_repeat", "location_off", "travel_explore", "format_list_numbered",
+    "directions_walk", "near_me",
 ]
 FILLED = ["wb_twilight", "menu_book", "record_voice_over", "settings", "bookmark_added"]
 MIRRORED = {"arrow_back", "chevron_right", "skip_next", "skip_previous", "ios_share"}

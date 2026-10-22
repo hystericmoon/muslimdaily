@@ -59,6 +59,11 @@ data class ReminderSettings(
     val fridayTime: LocalTime = LocalTime.of(7, 0),
     val reviewQueue: Boolean = false,
     val reviewTime: LocalTime = LocalTime.of(20, 0),
+    /** Notify this many minutes before each prayer, with a way to find a nearby mosque. */
+    val mosqueBefore: Boolean = false,
+    val mosqueBeforeMinutes: Int = 10,
+    /** A quiet ongoing notification with the next prayer and a countdown, shown on the lock screen. */
+    val nextPrayerOngoing: Boolean = false,
 )
 
 data class MemorizeSettings(

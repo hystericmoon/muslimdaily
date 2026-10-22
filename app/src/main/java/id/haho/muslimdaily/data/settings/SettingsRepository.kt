@@ -81,6 +81,9 @@ class SettingsRepository @Inject constructor(
             fridayTime = this[K.remFridayTime]?.let { LocalTime.ofSecondOfDay(it.toLong()) } ?: r.fridayTime,
             reviewQueue = this[K.remReview] ?: r.reviewQueue,
             reviewTime = this[K.remReviewTime]?.let { LocalTime.ofSecondOfDay(it.toLong()) } ?: r.reviewTime,
+            mosqueBefore = this[K.remMosque] ?: r.mosqueBefore,
+            mosqueBeforeMinutes = this[K.remMosqueMinutes] ?: r.mosqueBeforeMinutes,
+            nextPrayerOngoing = this[K.remOngoing] ?: r.nextPrayerOngoing,
         )
         val m = d.memorize
         return AppSettings(
@@ -152,6 +155,9 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var remSleep: Boolean by key(K.remSleep, false)
     var remFriday: Boolean by key(K.remFriday, false)
     var remReview: Boolean by key(K.remReview, false)
+    var remMosque: Boolean by key(K.remMosque, false)
+    var remMosqueMinutes: Int by key(K.remMosqueMinutes, 10)
+    var remOngoing: Boolean by key(K.remOngoing, false)
 
     fun setOffset(slot: String, minutes: Int) { p[K.offset(slot)] = minutes }
     fun setIqamah(prayer: Prayer, minutes: Int?) {
@@ -231,4 +237,7 @@ internal object K {
     val remFridayTime = intPreferencesKey("rem_friday_time")
     val remReview = booleanPreferencesKey("rem_review")
     val remReviewTime = intPreferencesKey("rem_review_time")
+    val remMosque = booleanPreferencesKey("rem_mosque")
+    val remMosqueMinutes = intPreferencesKey("rem_mosque_minutes")
+    val remOngoing = booleanPreferencesKey("rem_next_prayer_ongoing")
 }

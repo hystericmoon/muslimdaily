@@ -36,6 +36,8 @@ private val Licenses = listOf(
     License("Noto Sans Arabic", "SIL Open Font License 1.1", "licenses/noto_sans_arabic_OFL.txt"),
     License("Material Symbols", "Apache License 2.0", null),
     License("GeoNames", "Creative Commons Attribution 4.0", null),
+    License("OpenStreetMap (data masjid)", "© kontributor OpenStreetMap, Open Database License 1.0", null),
+    License("Jetpack Glance", "Apache License 2.0", null),
     License("adhan-kotlin (Batoul Apps)", "MIT License", null),
     License("AndroidX, Media3, Hilt, kotlinx", "Apache License 2.0", null),
 )

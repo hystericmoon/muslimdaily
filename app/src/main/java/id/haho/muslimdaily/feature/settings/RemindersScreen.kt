@@ -196,6 +196,26 @@ fun RemindersContent(
             }
         }
         item {
+            SettingsGroup(stringResource(R.string.reminders_glance)) {
+                SwitchRow(
+                    title = stringResource(R.string.reminders_mosque_title),
+                    summary = stringResource(R.string.reminders_mosque_summary, r.mosqueBeforeMinutes),
+                    checked = r.mosqueBefore,
+                    onCheckedChange = { v -> update { remMosque = v } },
+                    icon = R.drawable.ic_mosque,
+                )
+                if (r.mosqueBefore) LeadStepper(r.mosqueBeforeMinutes) { v -> update { remMosqueMinutes = v } }
+                SwitchRow(
+                    title = stringResource(R.string.reminders_ongoing_title),
+                    summary = stringResource(R.string.reminders_ongoing_summary),
+                    checked = r.nextPrayerOngoing,
+                    onCheckedChange = { v -> update { remOngoing = v } },
+                    icon = R.drawable.ic_schedule,
+                )
+                InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(AppTheme.dimens.screenGutter))
+            }
+        }
+        item {
             SettingsGroup(stringResource(R.string.reminders_other)) {
                 SwitchRow(
                     title = stringResource(R.string.notif_sleep_title),
@@ -271,6 +291,21 @@ private fun OffsetStepper(value: Int, onChange: (Int) -> Unit) {
         incrementDescription = stringResource(R.string.settings_increase, title),
         canDecrement = value > 0,
         canIncrement = value < 120,
+    )
+}
+
+@Composable
+private fun LeadStepper(value: Int, onChange: (Int) -> Unit) {
+    val title = stringResource(R.string.reminders_lead)
+    StepperRow(
+        title = title,
+        valueText = stringResource(R.string.settings_minutes, value),
+        onDecrement = { onChange((value - 5).coerceIn(5, 30)) },
+        onIncrement = { onChange((value + 5).coerceIn(5, 30)) },
+        decrementDescription = stringResource(R.string.settings_decrease, title),
+        incrementDescription = stringResource(R.string.settings_increase, title),
+        canDecrement = value > 5,
+        canIncrement = value < 30,
     )
 }
 
