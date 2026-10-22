@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.settings
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.muslimdaily.core.designsystem.glass.Glass
 import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -129,6 +130,12 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
                     onCheckedChange = { v -> update { dynamicColor = v } },
                 )
+                SwitchRow(
+                    title = stringResource(R.string.display_glass),
+                    summary = stringResource(R.string.display_glass_summary),
+                    checked = settings.glassEffect,
+                    onCheckedChange = { v -> update { glassEffect = v } },
+                )
             }
         }
     }
@@ -137,9 +144,9 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
 /** Live sample using the current Arabic and reading scales (applied by the theme). */
 @Composable
 private fun SizePreview() {
-    Surface(
+    GlassCard(
         shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surface,
+        color = Glass.colors.clear,
         modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
     ) {
         Column(Modifier.padding(AppTheme.spacing.lg)) {

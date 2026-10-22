@@ -1,6 +1,20 @@
 package id.haho.muslimdaily.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.LocalContentColor
@@ -44,6 +58,7 @@ private val immersiveRoutes = listOf(RunRoute::class, MemorizeSessionRoute::clas
 @Composable
 fun AppRoot(
     reviewDueCount: Int,
+    modifier: Modifier = Modifier,
     pendingDestination: Destination? = null,
     onDestinationHandled: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
@@ -63,10 +78,17 @@ fun AppRoot(
     val destination = backStack?.destination
     val immersive = immersiveRoutes.any { destination?.hasRoute(it) == true }
 
+    val motion = AppTheme.motion
     Scaffold(
+        modifier = modifier,
         contentWindowInsets = WindowInsets(0),
+        containerColor = Color.Transparent,
         bottomBar = {
-            if (!immersive) {
+            AnimatedVisibility(
+                visible = !immersive,
+                enter = slideInVertically(motion.layout()) { it } + fadeIn(motion.fade()),
+                exit = slideOutVertically(motion.layout()) { it } + fadeOut(motion.fade()),
+            ) {
                 AppNavigationBar(destination, reviewDueCount) { target ->
                     navController.navigate(target.graph) {
                         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
@@ -90,7 +112,17 @@ private fun AppNavigationBar(
     reviewDueCount: Int,
     onSelect: (TopLevelDestination) -> Unit,
 ) {
-    NavigationBar {
+    val g = Glass.colors
+    NavigationBar(
+        containerColor = g.chrome,
+        tonalElevation = 0.dp,
+        modifier = Modifier.drawBehind {
+            if (g.enabled) {
+                drawRect(Brush.verticalGradient(0f to g.sheen, 0.6f to Color.Transparent))
+                drawLine(g.rimTop, Offset(0f, 0f), Offset(size.width, 0f), strokeWidth = 1.dp.toPx())
+            }
+        },
+    ) {
         TopLevelDestination.entries.forEach { item ->
             val selected = destination?.hierarchy?.any { it.hasRoute(item.graph::class) } == true
             val label = stringResource(item.label)
@@ -105,13 +137,16 @@ private fun AppNavigationBar(
                 onClick = { onSelect(item) },
                 icon = {
                     BadgedBox(badge = { if (badge) Badge { Text(reviewDueCount.toString()) } }) {
-                        Icon(
-                            painter = painterResource(if (selected) item.selectedIcon else item.icon),
-                            contentDescription = null,
-                        )
+                        Crossfade(selected, animationSpec = AppTheme.motion.fade(), label = "navIcon") { on ->
+                            Icon(
+                                painter = painterResource(if (on) item.selectedIcon else item.icon),
+                                contentDescription = null,
+                            )
+                        }
                     }
                 },
                 label = { NavLabel(label) },
+                colors = NavigationBarItemDefaults.colors(indicatorColor = g.tinted),
                 modifier = if (badgeDescription != null) {
                     Modifier.semantics { contentDescription = "$label, $badgeDescription" }
                 } else {

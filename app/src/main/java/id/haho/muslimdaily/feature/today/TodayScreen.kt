@@ -1,5 +1,17 @@
 package id.haho.muslimdaily.feature.today
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import id.haho.muslimdaily.core.designsystem.glass.enterReveal
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,22 +31,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -157,12 +163,12 @@ private fun NoLocation(actions: TodayActions) {
             title = stringResource(R.string.today_no_location_title),
             body = stringResource(R.string.today_no_location_body),
         ) {
-            Button(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
+            GlassButton(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_my_location), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.today_use_gps))
             }
-            OutlinedButton(onClick = actions.onOpenLocation, modifier = Modifier.fillMaxWidth()) {
+            GlassOutlinedButton(onClick = actions.onOpenLocation, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.today_pick_city))
             }
         }
@@ -178,12 +184,12 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl),
     ) {
         item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
-        item(key = "next") { NextPrayerCard(data, Modifier.padding(horizontal = gutter)) }
+        item(key = "next") { NextPrayerCard(data, Modifier.padding(horizontal = gutter).enterReveal(0)) }
         data.travelSuggestionKm?.let { km ->
             item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(gutter)) }
         }
         item(key = "adhkar") {
-            AdhkarCardView(data, actions, Modifier.padding(start = gutter, end = gutter, top = AppTheme.spacing.md))
+            AdhkarCardView(data, actions, Modifier.padding(start = gutter, end = gutter, top = AppTheme.spacing.md).enterReveal(1))
         }
         item(key = "schedule-header") { SectionHeader(stringResource(R.string.today_schedule)) }
         item(key = "schedule") {
@@ -192,7 +198,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
                 expanded = expanded,
                 onExpandToggle = { key -> expanded = if (key in expanded) expanded - key else expanded + key },
                 onToggle = actions.onToggle,
-                modifier = Modifier.padding(horizontal = gutter),
+                modifier = Modifier.padding(horizontal = gutter).enterReveal(2),
             )
         }
         item(key = "private-note") {
@@ -203,9 +209,9 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
             )
         }
         item(key = "other-header") { SectionHeader(stringResource(R.string.today_other_sunnah)) }
-        item(key = "other") { OtherSunnahCard(data, actions.onToggle, Modifier.padding(horizontal = gutter)) }
+        item(key = "other") { OtherSunnahCard(data, actions.onToggle, Modifier.padding(horizontal = gutter).enterReveal(3)) }
         item(key = "prohibited-header") { SectionHeader(stringResource(R.string.today_prohibited_title)) }
-        item(key = "prohibited") { ProhibitedCard(data, Modifier.padding(horizontal = gutter)) }
+        item(key = "prohibited") { ProhibitedCard(data, Modifier.padding(horizontal = gutter).enterReveal(4)) }
         item(key = "footer") { MethodFooter(data, actions.onOpenPrayerSettings) }
     }
 }
@@ -263,13 +269,11 @@ private fun NextPrayerCard(data: TodayData, modifier: Modifier = Modifier) {
     val next = data.next
     val name = stringResource(next.prayer.labelRes())
     val clock = time.format(next.time, data.zone)
-    Card(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.extraLarge,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
+        color = Glass.colors.tinted,
+        contentColor = Glass.colors.onTinted,
     ) {
         Column(Modifier.padding(AppTheme.dimens.cardPadding)) {
             Column(Modifier.semantics(mergeDescendants = true) {}) {
@@ -285,11 +289,19 @@ private fun NextPrayerCard(data: TodayData, modifier: Modifier = Modifier) {
                     }
                 }
                 Text(clock, style = MaterialTheme.typography.displayMedium)
-                Text(
-                    stringResource(R.string.countdown_in, durationLabel(next.remaining)),
-                    style = MaterialTheme.typography.titleMedium,
+                val countdown = stringResource(R.string.countdown_in, durationLabel(next.remaining))
+                val motion = AppTheme.motion
+                AnimatedContent(
+                    targetState = countdown,
+                    transitionSpec = {
+                        (slideInVertically(motion.layout()) { it / 2 } + fadeIn(motion.fade()))
+                            .togetherWith(slideOutVertically(motion.layout()) { -it / 2 } + fadeOut(motion.fade()))
+                    },
                     modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-                )
+                    label = "countdown",
+                ) { text ->
+                    Text(text, style = MaterialTheme.typography.titleMedium)
+                }
                 next.iqamah?.let {
                     Text(
                         stringResource(R.string.today_iqamah, time.format(it, data.zone)),
@@ -357,13 +369,11 @@ private fun windowIcon(window: TimeWindow): Int = when (window.type) {
 
 @Composable
 private fun TravelSuggestion(km: Int, locationName: String, actions: TodayActions, modifier: Modifier = Modifier) {
-    Card(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
+        color = Glass.colors.tinted,
+        contentColor = Glass.colors.onTinted,
     ) {
         Column(Modifier.padding(AppTheme.spacing.lg)) {
             Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
@@ -378,7 +388,7 @@ private fun TravelSuggestion(km: Int, locationName: String, actions: TodayAction
                 TextButton(onClick = actions.onEnableTravelFromSuggestion) {
                     Text(stringResource(R.string.today_enable_travel))
                 }
-                FilledTonalButton(onClick = actions.onUseGps) { Text(stringResource(R.string.today_update_location)) }
+                GlassTonalButton(onClick = actions.onUseGps) { Text(stringResource(R.string.today_update_location)) }
             }
         }
     }
@@ -395,10 +405,9 @@ private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Mod
         card.active -> stringResource(R.string.adhkar_active, time.format(card.end, data.zone))
         else -> stringResource(R.string.adhkar_upcoming, time.format(card.start, data.zone))
     }
-    Surface(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
         Column(Modifier.padding(AppTheme.spacing.lg)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
@@ -440,9 +449,9 @@ private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Mod
                 val resume = card.progress?.let { !it.completed && it.done > 0 } == true
                 val label = stringResource(if (resume) R.string.action_resume else R.string.action_start)
                 if (card.active) {
-                    Button(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
+                    GlassButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
                 } else {
-                    FilledTonalButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
+                    GlassTonalButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
                 }
             }
         }

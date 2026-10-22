@@ -22,6 +22,26 @@
     <string name="action_start">Mulai</string>
     <string name="action_resume">Lanjutkan</string>
     <string name="action_more">Lainnya</string>
+    <string name="action_retry">Coba lagi</string>
+    <string name="update_title">Pembaruan aplikasi</string>
+    <string name="update_summary">Periksa dan pasang versi terbaru</string>
+    <string name="update_check">Periksa pembaruan</string>
+    <string name="update_checking">Memeriksa…</string>
+    <string name="update_up_to_date">Aplikasi sudah versi terbaru.</string>
+    <string name="update_available">Versi %1$s tersedia</string>
+    <string name="update_prompt_body">Versi baru siap diunduh.</string>
+    <string name="update_download">Unduh pembaruan</string>
+    <string name="update_downloading">Mengunduh…</string>
+    <string name="update_downloading_percent">Mengunduh… %1$d%%</string>
+    <string name="update_ready">Versi %1$s siap dipasang.</string>
+    <string name="update_install">Pasang</string>
+    <string name="update_later">Nanti</string>
+    <string name="update_failed">Gagal. Periksa koneksi internet lalu coba lagi.</string>
+    <string name="update_never_checked">Belum pernah diperiksa</string>
+    <string name="update_last_checked">Terakhir diperiksa %1$s</string>
+    <string name="update_auto">Periksa otomatis</string>
+    <string name="update_auto_summary">Sekali sehari saat aplikasi dibuka</string>
+    <string name="update_privacy">Pemeriksaan hanya mengambil info rilis dari GitHub. Tidak ada data pribadi yang dikirim. Pemasangan selalu meminta konfirmasi Anda.</string>
 
 
     <!-- Prayers -->
@@ -468,6 +488,8 @@
     <string name="display_theme_light">Terang</string>
     <string name="display_theme_dark">Gelap</string>
     <string name="display_dynamic_color">Warna dinamis</string>
+    <string name="display_glass">Efek kaca</string>
+    <string name="display_glass_summary">Kartu, tombol dan panel tampil seperti kaca buram. Matikan untuk tampilan polos.</string>
     <string name="display_dynamic_color_summary">Ikuti warna wallpaper (Android 12+). Mati secara bawaan agar kontras teks tetap terjaga.</string>
 
     <!-- Methodology -->

@@ -1,5 +1,16 @@
 package id.haho.muslimdaily.feature.today
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.ui.graphics.Color
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +30,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -63,7 +72,7 @@ internal fun PrayerListCard(
     modifier: Modifier = Modifier,
 ) {
     var evidenceFor by remember { mutableStateOf<RawatibLine?>(null) }
-    Surface(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+    GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column {
             data.rows.forEachIndexed { i, row ->
                 if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -97,7 +106,11 @@ private fun PrayerRowView(
     val isSunrise = row.slot == PrayerTimeSlot.SUNRISE
     val expandLabel = stringResource(if (expanded) R.string.today_collapse_rawatib else R.string.today_expand_rawatib)
     val stateLabel = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)
-    val rowBackground = if (row.isCurrent) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.surfaceContainerLow
+    val rowBackground by animateColorAsState(
+        if (row.isCurrent) Glass.colors.tinted else Color.Transparent,
+        AppTheme.motion.fade(),
+        label = "rowBackground",
+    )
     val contentColor = MaterialTheme.colorScheme.onSurface
 
     Column(Modifier.background(rowBackground)) {
@@ -153,15 +166,22 @@ private fun PrayerRowView(
             Box(Modifier.size(AppTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
                 if (plan != null) {
                     Icon(
-                        painterResource(if (expanded) R.drawable.ic_keyboard_arrow_up else R.drawable.ic_keyboard_arrow_down),
+                        painterResource(R.drawable.ic_keyboard_arrow_down),
                         contentDescription = null,
                         tint = contentColor,
+                        modifier = Modifier.chevronRotation(expanded),
                     )
                 }
             }
         }
-        if (plan != null && expanded) {
-            Timeline(plan, data, onToggle, onShowEvidence)
+        if (plan != null) {
+            AnimatedVisibility(
+                visible = expanded,
+                enter = expandVertically(AppTheme.motion.layout()) + fadeIn(AppTheme.motion.fade()),
+                exit = shrinkVertically(AppTheme.motion.layout()) + fadeOut(AppTheme.motion.fade()),
+            ) {
+                Timeline(plan, data, onToggle, onShowEvidence)
+            }
         }
     }
 }
@@ -179,7 +199,7 @@ private fun Timeline(
         plan.fard?.let { add(TimelineStep.Obligatory(it.rakah)) }
         plan.after.forEach { add(TimelineStep.Sunnah(it, isBefore = false)) }
     }
-    Surface(color = MaterialTheme.colorScheme.surface, shape = MaterialTheme.shapes.large, modifier = Modifier.padding(
+    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.padding(
         start = AppTheme.spacing.md, end = AppTheme.spacing.md, bottom = AppTheme.spacing.md,
     )) {
         Column(Modifier.padding(vertical = AppTheme.spacing.sm)) {
@@ -302,7 +322,7 @@ private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean) {
 
 @Composable
 private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
-    ModalBottomSheet(onDismissRequest = onDismiss, shape = MaterialTheme.shapes.extraLarge) {
+    GlassBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl)) {
             val entry = line.primary
             Text(
@@ -338,7 +358,7 @@ private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
 @Composable
 internal fun OtherSunnahCard(data: TodayData, onToggle: (String, Boolean) -> Unit, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
-    Surface(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+    GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(vertical = AppTheme.spacing.sm)) {
             data.duha?.let { w ->
                 SunnahWindowRow(
@@ -401,7 +421,7 @@ private fun SunnahWindowRow(
 @Composable
 internal fun ProhibitedCard(data: TodayData, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
-    Surface(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+    GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
             data.prohibited.forEach { w -> ProhibitedRow(w, data, time.format(w.start, data.zone), time.format(w.end, data.zone)) }
             InfoNote(stringResource(R.string.note_prohibited_cause))

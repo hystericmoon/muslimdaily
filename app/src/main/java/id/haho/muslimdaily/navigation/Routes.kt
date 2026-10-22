@@ -39,6 +39,8 @@ import kotlinx.serialization.Serializable
 @Serializable data object MySetsDataRoute
 @Serializable data object AboutRoute
 
+@Serializable data object UpdatesRoute
+
 enum class TopLevelDestination(
     val graph: Any,
     @StringRes val label: Int,

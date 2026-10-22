@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.duas.library
 
+import id.haho.muslimdaily.core.designsystem.glass.enterReveal
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +24,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -78,13 +79,12 @@ fun DuaLibraryRoute(
 @Composable
 fun DuaLibraryContent(categories: List<DuaCategory>, onOpenEvent: (String) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
-        categories.forEach { category ->
+        categories.forEachIndexed { index, category ->
             item(key = category.id) {
                 SectionHeader(category.label)
-                Surface(
+                GlassCard(
                     shape = MaterialTheme.shapes.extraLarge,
-                    color = MaterialTheme.colorScheme.surfaceContainerLow,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(index),
                 ) {
                     Column {
                         val timeline = category.id == DAILY

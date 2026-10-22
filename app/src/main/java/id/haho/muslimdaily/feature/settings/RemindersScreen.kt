@@ -1,5 +1,9 @@
 package id.haho.muslimdaily.feature.settings
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import android.Manifest
 import android.content.Intent
 import androidx.core.net.toUri
@@ -13,10 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -246,17 +246,15 @@ private enum class TimeTarget { SLEEP, FRIDAY, REVIEW }
 
 @Composable
 private fun PermissionCard(text: String, action: String, onClick: () -> Unit) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        ),
+    GlassCard(
+        color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = Glass.colors.tinted.alpha),
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xs),
     ) {
         Column(Modifier.padding(AppTheme.spacing.lg)) {
             Text(text, style = MaterialTheme.typography.bodyMedium)
-            Button(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action) }
+            GlassButton(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action) }
         }
     }
 }
@@ -289,7 +287,7 @@ private fun TimeRow(time: LocalTime, onClick: () -> Unit) {
 @Composable
 private fun TimeDialog(initial: LocalTime, onDismiss: () -> Unit, onConfirm: (LocalTime) -> Unit) {
     val state = rememberTimePickerState(initial.hour, initial.minute, is24Hour = true)
-    AlertDialog(
+    GlassAlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = { TextButton(onClick = { onConfirm(LocalTime.of(state.hour, state.minute)) }) { Text(stringResource(R.string.action_save)) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },

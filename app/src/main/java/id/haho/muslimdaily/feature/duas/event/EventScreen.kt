@@ -1,15 +1,15 @@
 package id.haho.muslimdaily.feature.duas.event
 
+import id.haho.muslimdaily.core.designsystem.glass.enterReveal
+import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,7 +58,7 @@ fun EventRoute(
         },
         floatingActionButton = {
             if (s != null && s.items.isNotEmpty()) {
-                ExtendedFloatingActionButton(
+                GlassExtendedFab(
                     onClick = { onStart(viewModel.eventId) },
                     icon = { Icon(painterResource(R.drawable.ic_play_arrow), null) },
                     text = { Text(stringResource(R.string.event_start)) },
@@ -136,6 +136,7 @@ fun EventContent(
                 prefs = state.prefs,
                 onClick = { onOpenDua(resolved.form.id) },
                 header = { ItemHeader(index, state.items.size, resolved, onChooseForm) },
+                modifier = Modifier.animateItem().enterReveal(index),
             )
         }
     }

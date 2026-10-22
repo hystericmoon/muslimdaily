@@ -20,7 +20,7 @@ ICONS = [
     "chevron_right", "check", "drag_indicator", "tune", "restart_alt", "location_on", "my_location",
     "schedule", "notifications", "text_fields", "info", "flag", "bookmark_add", "ios_share",
     "upload", "download", "mosque", "luggage", "block", "add", "remove", "more_vert", "verified",
-    "keyboard_arrow_up", "keyboard_arrow_down", "wb_sunny", "bedtime", "done_all",
+    "keyboard_arrow_down", "wb_sunny", "bedtime", "done_all",
     "lock", "graphic_eq", "mobile_off", "nightlight", "edit", "sunny", "volume_off", "inbox",
     "event_repeat", "location_off", "travel_explore", "format_list_numbered",
 ]

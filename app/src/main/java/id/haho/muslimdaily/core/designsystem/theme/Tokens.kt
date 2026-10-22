@@ -1,9 +1,12 @@
 package id.haho.muslimdaily.core.designsystem.theme
 
-import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.EaseOutCubic
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Immutable
@@ -77,16 +80,32 @@ internal val DarkExtendedColors = ExtendedColors(
 )
 
 /**
- * Motion is spring-based and limited to the count tap and the card advance in run mode.
- * Everything else is static. When the system "remove animations" setting is on, every spec snaps.
+ * Motion is calm and short: springs without bounce for layout and state changes, a light bounce
+ * only for the count tap. Micro-interactions (press, toggle, expand) stay under ~250 ms. When the
+ * system "remove animations" setting is on, every spec snaps.
  */
 @Immutable
 data class Motion(val reduced: Boolean = false) {
-    fun <T> countTap(): AnimationSpec<T> =
+    fun <T> countTap(): FiniteAnimationSpec<T> =
         if (reduced) snap() else spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium)
 
-    fun <T> cardAdvance(): AnimationSpec<T> =
+    fun <T> cardAdvance(): FiniteAnimationSpec<T> =
         if (reduced) snap() else spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow)
+
+    /** Press feedback on buttons and cards. */
+    fun <T> press(): FiniteAnimationSpec<T> =
+        if (reduced) snap() else spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessMediumLow * 2)
+
+    /** Colour and opacity changes. */
+    fun <T> fade(): FiniteAnimationSpec<T> = if (reduced) snap() else tween(220, easing = FastOutSlowInEasing)
+
+    /** Size changes and item placement in lists. */
+    fun <T> layout(): FiniteAnimationSpec<T> =
+        if (reduced) snap() else spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow)
+
+    /** Elements entering the screen for the first time (staggered by [index]). */
+    fun <T> enter(index: Int = 0): FiniteAnimationSpec<T> =
+        if (reduced) snap() else tween(320, delayMillis = (index.coerceAtMost(8)) * 40, easing = EaseOutCubic)
 }
 
 val LocalSpacing = staticCompositionLocalOf { Spacing() }

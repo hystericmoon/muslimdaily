@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.memorize
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -107,7 +107,7 @@ fun ListenOnlyContent(s: ListenOnlyState, onStart: () -> Unit, onToggle: () -> U
         HighlightedArabic(s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AppTheme.arabic.large(s.dua.isQuran))
         Column(Modifier.fillMaxWidth().weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
-            FilledIconButton(
+            GlassIconButton(
                 onClick = { if (loaded) onToggle() else onStart() },
                 enabled = s.dua.audio != null,
                 modifier = Modifier.size(AppTheme.dimens.playerMainButton * 1.5f),

@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.settings.location
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -24,7 +25,6 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -152,9 +152,8 @@ fun LocationContent(
 ) {
     LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
         item {
-            Surface(
+            GlassCard(
                 shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
                 modifier = Modifier.fillMaxWidth().padding(AppTheme.dimens.screenGutter),
             ) {
                 Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
@@ -171,7 +170,7 @@ fun LocationContent(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    FilledTonalButton(onClick = onUseGps, enabled = !busy, modifier = Modifier.padding(top = AppTheme.spacing.sm)) {
+                    GlassTonalButton(onClick = onUseGps, enabled = !busy, modifier = Modifier.padding(top = AppTheme.spacing.sm)) {
                         Icon(painterResource(R.drawable.ic_my_location), null)
                         Spacer(Modifier.width(AppTheme.spacing.sm))
                         Text(stringResource(if (busy) R.string.location_locating else R.string.today_use_gps))

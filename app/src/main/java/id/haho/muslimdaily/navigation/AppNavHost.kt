@@ -1,5 +1,17 @@
 package id.haho.muslimdaily.navigation
 
+import id.haho.muslimdaily.feature.settings.UpdatesRoute
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -31,7 +43,17 @@ import id.haho.muslimdaily.feature.today.TodayRoute
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     val back: () -> Unit = { navController.popBackStack() }
-    NavHost(navController = navController, startDestination = TodayGraph, modifier = modifier) {
+    val reduced = AppTheme.motion.reduced
+    NavHost(
+        navController = navController,
+        startDestination = TodayGraph,
+        modifier = modifier,
+        // Material shared-axis (x): the new screen fades in while drifting a short distance.
+        enterTransition = { if (reduced) EnterTransition.None else sharedAxisIn(forward = true) },
+        exitTransition = { if (reduced) ExitTransition.None else sharedAxisOut(forward = true) },
+        popEnterTransition = { if (reduced) EnterTransition.None else sharedAxisIn(forward = false) },
+        popExitTransition = { if (reduced) ExitTransition.None else sharedAxisOut(forward = false) },
+    ) {
         navigation<TodayGraph>(startDestination = TodayRoute) {
             composable<TodayRoute> {
                 TodayRoute(
@@ -99,6 +121,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onDisplay = { navController.navigate(DisplaySettingsRoute) },
                         onMethodology = { navController.navigate(MethodologyRoute) },
                         onAbout = { navController.navigate(AboutRoute) },
+                        onUpdates = { navController.navigate(UpdatesRoute) },
                     ),
                 )
             }
@@ -110,6 +133,22 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<DisplaySettingsRoute> { DisplaySettingsRoute(onBack = back) }
             composable<MethodologyRoute> { MethodologyRoute(onBack = back) }
             composable<AboutRoute> { AboutRoute(onBack = back) }
+            composable<UpdatesRoute> { UpdatesRoute(onBack = back) }
         }
     }
 }
+
+private const val AXIS_IN_MS = 260
+private const val AXIS_OUT_MS = 120
+
+private fun sharedAxisIn(forward: Boolean): EnterTransition =
+    fadeIn(tween(AXIS_IN_MS, delayMillis = AXIS_OUT_MS / 2, easing = LinearOutSlowInEasing)) +
+        slideInHorizontally(tween(AXIS_IN_MS + AXIS_OUT_MS / 2, easing = FastOutSlowInEasing)) { w ->
+            (if (forward) w else -w) / 12
+        }
+
+private fun sharedAxisOut(forward: Boolean): ExitTransition =
+    fadeOut(tween(AXIS_OUT_MS, easing = FastOutLinearInEasing)) +
+        slideOutHorizontally(tween(AXIS_IN_MS + AXIS_OUT_MS / 2, easing = FastOutSlowInEasing)) { w ->
+            (if (forward) -w else w) / 12
+        }

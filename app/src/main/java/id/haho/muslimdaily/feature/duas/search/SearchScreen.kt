@@ -134,7 +134,7 @@ fun SearchContent(
                         modifier = Modifier.padding(top = AppTheme.spacing.xs).semantics { liveRegion = LiveRegionMode.Polite },
                     )
                 }
-                items(results, key = { it.id }) { dua -> DuaCard(dua, prefs, onClick = { onOpenDua(dua.id) }) }
+                items(results, key = { it.id }) { dua -> DuaCard(dua, prefs, onClick = { onOpenDua(dua.id) }, modifier = Modifier.animateItem()) }
             }
         }
     }

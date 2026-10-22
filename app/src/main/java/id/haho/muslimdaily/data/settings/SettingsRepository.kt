@@ -85,6 +85,7 @@ class SettingsRepository @Inject constructor(
         return AppSettings(
             themeMode = enumOr(K.theme, d.themeMode),
             dynamicColor = this[K.dynamicColor] ?: d.dynamicColor,
+            glassEffect = this[K.glassEffect] ?: d.glassEffect,
             translationMode = enumOr(K.translation, d.translationMode),
             showTransliteration = this[K.transliteration] ?: d.showTransliteration,
             arabicScale = this[K.arabicScale] ?: d.arabicScale,
@@ -118,6 +119,7 @@ class SettingsRepository @Inject constructor(
 class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var themeMode: ThemeMode by enumKey(K.theme, ThemeMode.SYSTEM)
     var dynamicColor: Boolean by key(K.dynamicColor, false)
+    var glassEffect: Boolean by key(K.glassEffect, true)
     var translationMode: TranslationMode by enumKey(K.translation, TranslationMode.INDONESIAN)
     var showTransliteration: Boolean by key(K.transliteration, false)
     var arabicScale: Float by key(K.arabicScale, 1f)
@@ -183,6 +185,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
 internal object K {
     val theme = stringPreferencesKey("theme")
     val dynamicColor = booleanPreferencesKey("dynamic_color")
+    val glassEffect = booleanPreferencesKey("glass_effect")
     val translation = stringPreferencesKey("translation_mode")
     val transliteration = booleanPreferencesKey("transliteration")
     val arabicScale = floatPreferencesKey("arabic_scale")

@@ -64,3 +64,31 @@ Raw gold #C9A227 vs surface: 2.28:1 (below 3:1, so gold is never the only indica
 | `onCompleteFill` #241a00 | `completeFill` #c9a227 | 7.10:1 pass | 3:1 | check glyph on count-complete fill |
 
 Raw gold #C9A227 vs surface: 7.65:1 
+
+## Glass and motion (0.2.0)
+
+Surfaces are frosted "liquid glass" over a static aurora backdrop (`core/designsystem/glass`).
+
+| Role | Light | Dark | Used by |
+|---|---|---|---|
+| Backdrop | surface + glows: primaryContainer 55%, tertiaryContainer 60%, gold 16% | surface + glows: primaryContainer 28%, tertiaryContainer 26%, gold 6% | every screen |
+| `card` | white 58% | white 7% | cards, settings groups |
+| `chrome` | white 62% | white 8% | nav bar, scrolled top bar |
+| `sheet` | surfaceContainerLow 92% | surfaceContainerLow 92% | bottom sheets, dialogs (the app behind blurs on Android 12+) |
+| `tinted` | secondaryContainer 72% | secondaryContainer 62% | next-prayer hero, current prayer row, nav indicator |
+| `primary` | primary 90% | primary 88% | primary buttons, play button, FAB |
+| `tonal` / `clear` | secondaryContainer 70% / white 34% | 66% / white 5% | tonal / outlined buttons |
+| Rim | white 95% → 30% (top → bottom) | white 24% → 5% | 1dp border on glass |
+| Sheen | white 32%, fades by mid-height (buttons: 60% strength, fades by 38%) | white 7% | specular highlight |
+
+`GlassContrastTest` composites every text role over the worst backdrop point (base, each glow,
+all glows stacked) and fails below 4.5:1. Settings → Tampilan → **Efek kaca** turns glass off
+(solid surfaces).
+
+Motion (`Motion` in `Tokens.kt`; everything snaps when system animations are off):
+
+* `press`: buttons scale to 97%, cards to 98.5%, spring.
+* `fade` 220 ms, `layout` no-bounce spring: expand/collapse, chevrons, list placement, bottom bar.
+* `enter(index)`: cards fade and rise 16dp on first open, staggered 40 ms.
+* Screens: Material shared-axis X (fade + 1/12-width drift).
+* Checkbox pop on check; countdown rolls when the minute changes.

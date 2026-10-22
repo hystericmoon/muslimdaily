@@ -1,5 +1,11 @@
 package id.haho.muslimdaily.feature.memorize
 
+import androidx.compose.foundation.layout.Box
+import id.haho.muslimdaily.core.designsystem.glass.enterReveal
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,13 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +93,7 @@ fun MemorizeHomeRoute(
     AppScreen(
         title = stringResource(R.string.nav_memorize),
         floatingActionButton = {
-            ExtendedFloatingActionButton(
+            GlassExtendedFab(
                 onClick = onPick,
                 icon = { Icon(painterResource(R.drawable.ic_add), null) },
                 text = { Text(stringResource(R.string.memorize_add)) },
@@ -110,7 +111,7 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onOpen: (String, Boolean) -> U
         contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxxl * 2),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
     ) {
-        item(key = "queue") { ReviewQueueCard(state, onOpen) }
+        item(key = "queue") { Box(Modifier.enterReveal(0)) { ReviewQueueCard(state, onOpen) } }
         if (state.entries.isEmpty()) {
             item(key = "empty") {
                 EmptyState(
@@ -128,7 +129,9 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onOpen: (String, Boolean) -> U
                     modifier = Modifier.padding(top = AppTheme.spacing.md).semantics { heading() },
                 )
             }
-            items(state.entries, key = { it.item.duaId }) { entry -> HifzRow(entry) { onOpen(entry.dua.id, entry.due) } }
+            items(state.entries, key = { it.item.duaId }) { entry ->
+                Box(Modifier.animateItem()) { HifzRow(entry) { onOpen(entry.dua.id, entry.due) } }
+            }
         }
         item(key = "note") { InfoNote(stringResource(R.string.memorize_no_streaks)) }
     }
@@ -137,12 +140,10 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onOpen: (String, Boolean) -> U
 @Composable
 private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> Unit) {
     val due = state.dueEntries
-    Card(
+    GlassCard(
         shape = MaterialTheme.shapes.extraLarge,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
+        color = Glass.colors.tinted,
+        contentColor = Glass.colors.onTinted,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
@@ -151,7 +152,7 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
             } else {
                 Text(pluralStringResource(R.plurals.memorize_review_due, due.size, due.size), style = MaterialTheme.typography.titleLarge)
-                Button(onClick = { onOpen(due.first().dua.id, true) }) { Text(stringResource(R.string.memorize_review_start)) }
+                GlassButton(onClick = { onOpen(due.first().dua.id, true) }) { Text(stringResource(R.string.memorize_review_start)) }
             }
         }
     }
@@ -159,7 +160,7 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
 
 @Composable
 private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
-    Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
+    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
         Column(
             Modifier
                 .clickable(role = Role.Button, onClickLabel = stringResource(R.string.memorize_open), onClick = onClick)

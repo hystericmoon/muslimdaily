@@ -1,5 +1,11 @@
 package id.haho.muslimdaily.feature.memorize.session
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import android.view.accessibility.AccessibilityManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,15 +21,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -165,7 +166,7 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
         }
     }
     if (settingsOpen) {
-        ModalBottomSheet(onDismissRequest = { settingsOpen = false }, shape = MaterialTheme.shapes.extraLarge) {
+        GlassBottomSheet(onDismissRequest = { settingsOpen = false }) {
             MemorizeSettingsControls(
                 settings = state.settings,
                 onLoops = actions.onLoops,
@@ -194,7 +195,7 @@ private fun Step.hintRes() = when (this) {
 
 @Composable
 private fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase) {
-    Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+    GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(AppTheme.spacing.xl)) {
             HighlightedArabic(state.dua.arabic, state.dua.phrases, active, AppTheme.arabic.large(state.dua.isQuran))
         }
@@ -205,7 +206,7 @@ private fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.acti
 private fun PlayRow(isPlaying: Boolean, enabled: Boolean, startLabel: String, onStart: () -> Unit, onToggle: () -> Unit, loaded: Boolean, speed: Float) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
         if (loaded) {
-            FilledIconButton(onClick = onToggle, modifier = Modifier.size(AppTheme.dimens.playerMainButton)) {
+            GlassIconButton(onClick = onToggle, modifier = Modifier.size(AppTheme.dimens.playerMainButton)) {
                 Icon(
                     painterResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
                     stringResource(if (isPlaying) R.string.player_pause else R.string.player_play),
@@ -217,7 +218,7 @@ private fun PlayRow(isPlaying: Boolean, enabled: Boolean, startLabel: String, on
                 Text(stringResource(R.string.memorize_restart), Modifier.padding(start = AppTheme.spacing.xs))
             }
         } else {
-            Button(onClick = onStart, enabled = enabled, modifier = Modifier.padding(vertical = AppTheme.spacing.xs)) {
+            GlassButton(onClick = onStart, enabled = enabled, modifier = Modifier.padding(vertical = AppTheme.spacing.xs)) {
                 Icon(painterResource(R.drawable.ic_play_arrow), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(startLabel)
@@ -290,14 +291,14 @@ private fun BuildProgress(state: MemorizeUiState) {
 
 @Composable
 private fun AbLoop(state: MemorizeUiState, actions: MemorizeActions) {
-    Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
+    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
             Text(stringResource(R.string.memorize_ab_title), style = MaterialTheme.typography.titleSmall)
             Text(stringResource(R.string.memorize_ab_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             val n = state.dua.phrases.size
             PhrasePicker(stringResource(R.string.memorize_ab_from), n, state.ab.first) { a -> actions.onSetAb(a..maxOf(a, state.ab.last)) }
             PhrasePicker(stringResource(R.string.memorize_ab_to), n, state.ab.last) { b -> actions.onSetAb(minOf(state.ab.first, b)..b) }
-            OutlinedButton(onClick = actions.onAb, enabled = state.hasAudio) {
+            GlassOutlinedButton(onClick = actions.onAb, enabled = state.hasAudio) {
                 Icon(painterResource(R.drawable.ic_repeat), null, Modifier.size(AppTheme.dimens.smallIcon))
                 Text(
                     stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
@@ -337,7 +338,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             )
         }
     }
-    Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+    GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         RecallText(
             words = state.words,
             hidden = state.hiddenWords,
@@ -347,7 +348,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
         )
     }
     if (talkBack) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
-    FilledTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.segmented && state.hiddenWords.isNotEmpty()) {
+    GlassTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.segmented && state.hiddenWords.isNotEmpty()) {
         Icon(painterResource(R.drawable.ic_graphic_eq), null, Modifier.size(AppTheme.dimens.smallIcon))
         Text(stringResource(R.string.memorize_play_with_gaps), Modifier.padding(start = AppTheme.spacing.sm))
     }
@@ -371,7 +372,7 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
         Rating.entries.forEach { rating ->
             val next = Leitner.rate(current, rating, java.time.LocalDate.now())
             val days = Leitner.INTERVALS[next.box - 1]
-            OutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) {
+            GlassOutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(vertical = AppTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(rating.labelRes()), style = MaterialTheme.typography.titleSmall)
                     Text(
@@ -394,9 +395,9 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
         }
         val next = state.nextDueId
         if (next != null) {
-            Button(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
+            GlassButton(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
         }
-        OutlinedButton(onClick = actions.onClose, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_done)) }
+        GlassOutlinedButton(onClick = actions.onClose, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_done)) }
     }
 }
 

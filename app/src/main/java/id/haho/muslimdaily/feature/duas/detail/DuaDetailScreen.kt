@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.duas.detail
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -15,8 +17,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -111,7 +111,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
     ) {
         StatusBadge(dua.status)
-        Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+        GlassCard(shape = MaterialTheme.shapes.extraLarge) {
             Column(Modifier.padding(AppTheme.spacing.xl)) {
                 HighlightedArabic(
                     text = dua.arabic,
@@ -148,12 +148,12 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
             horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
         ) {
-            OutlinedButton(onClick = actions.onMemorize) {
+            GlassOutlinedButton(onClick = actions.onMemorize) {
                 Icon(painterResource(R.drawable.ic_record_voice_over), null, Modifier.size(AppTheme.dimens.smallIcon))
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.dua_memorize))
             }
-            OutlinedButton(onClick = { actions.onSetInMySet(!state.inMySet) }) {
+            GlassOutlinedButton(onClick = { actions.onSetInMySet(!state.inMySet) }) {
                 Icon(
                     painterResource(if (state.inMySet) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
                     null,

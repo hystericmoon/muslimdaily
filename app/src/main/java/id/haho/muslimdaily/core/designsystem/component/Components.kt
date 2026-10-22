@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.core.designsystem.component
 
+import id.haho.muslimdaily.core.designsystem.glass.popOn
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -100,7 +101,7 @@ fun CheckRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         content()
-        Checkbox(checked = checked, onCheckedChange = null)
+        Checkbox(checked = checked, onCheckedChange = null, modifier = Modifier.popOn(checked))
     }
 }
 

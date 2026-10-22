@@ -22,12 +22,13 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -45,9 +46,7 @@ import id.haho.muslimdaily.core.ui.isLargeFontScale
 fun SettingsGroup(title: String?, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Column(modifier) {
         if (title != null) SectionHeader(title)
-        Surface(
-            shape = MaterialTheme.shapes.extraLarge,
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
+        GlassCard(
             modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter),
         ) {
             Column(Modifier.padding(vertical = AppTheme.spacing.xs), content = content)
@@ -55,7 +54,7 @@ fun SettingsGroup(title: String?, modifier: Modifier = Modifier, content: @Compo
     }
 }
 
-private val TransparentListColors @Composable get() = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+private val TransparentListColors @Composable get() = ListItemDefaults.colors(containerColor = Color.Transparent)
 
 @Composable
 fun NavigationRow(

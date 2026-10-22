@@ -70,6 +70,8 @@ data class MemorizeSettings(
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val dynamicColor: Boolean = false,
+    /** Frosted glass surfaces. Off gives solid surfaces (lighter on older phones). */
+    val glassEffect: Boolean = true,
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,
     val showTransliteration: Boolean = false,
     val arabicScale: Float = 1f,

@@ -1,5 +1,11 @@
 package id.haho.muslimdaily.feature.duas.components
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.ripple
+import id.haho.muslimdaily.core.designsystem.glass.pressScale
+import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,13 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -104,7 +106,7 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
 
 @Composable
 fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
-    ModalBottomSheet(onDismissRequest = onDismiss, shape = MaterialTheme.shapes.extraLarge) {
+    GlassBottomSheet(onDismissRequest = onDismiss) {
         Column(
             Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
@@ -165,14 +167,20 @@ fun DuaCard(
     modifier: Modifier = Modifier,
     header: (@Composable () -> Unit)? = null,
 ) {
-    Surface(
+    val press = remember { MutableInteractionSource() }
+    GlassCard(
         shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().pressScale(press, pressed = 0.985f),
     ) {
         Column(
             Modifier
-                .clickable(onClickLabel = stringResource(R.string.dua_open), role = Role.Button, onClick = onClick)
+                .clickable(
+                    interactionSource = press,
+                    indication = ripple(),
+                    onClickLabel = stringResource(R.string.dua_open),
+                    role = Role.Button,
+                    onClick = onClick,
+                )
                 .padding(AppTheme.dimens.cardPadding),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
@@ -204,7 +212,7 @@ fun PlayerBar(
     modifier: Modifier = Modifier,
 ) {
     var speedMenu by remember { mutableStateOf(false) }
-    Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = MaterialTheme.shapes.extraLarge, modifier = modifier.fillMaxWidth()) {
+    GlassCard(shape = MaterialTheme.shapes.extraLarge, modifier = modifier.fillMaxWidth()) {
         Row(
             Modifier.padding(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
@@ -225,11 +233,10 @@ fun PlayerBar(
                     tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            FilledIconButton(
+            GlassIconButton(
                 onClick = onToggle,
                 enabled = enabled,
                 modifier = Modifier.size(AppTheme.dimens.playerMainButton),
-                colors = IconButtonDefaults.filledIconButtonColors(),
             ) {
                 Icon(
                     painterResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),

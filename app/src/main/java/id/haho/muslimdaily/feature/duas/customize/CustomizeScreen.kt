@@ -1,5 +1,10 @@
 package id.haho.muslimdaily.feature.duas.customize
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.graphics.Color
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +21,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -47,7 +51,6 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,7 +58,6 @@ import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.domain.myset.FormChoice
 import id.haho.muslimdaily.domain.myset.ResolvedItem
@@ -95,7 +97,7 @@ fun CustomizeRoute(onBack: () -> Unit, viewModel: CustomizeViewModel = hiltViewM
         }
     }
     if (confirmReset) {
-        AlertDialog(
+        GlassAlertDialog(
             onDismissRequest = { confirmReset = false },
             title = { Text(stringResource(R.string.customize_reset_title)) },
             text = { Text(stringResource(R.string.customize_reset_body)) },
@@ -140,6 +142,7 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                 actions = actions,
                 dragging = dragging,
                 modifier = Modifier
+                    .animateItem(placementSpec = if (dragging) null else AppTheme.motion.layout())
                     .zIndex(if (dragging) 1f else 0f)
                     .graphicsLayer { translationY = if (dragging) dragOffset else 0f }
                     .onSizeChanged { heights[key] = it.height },
@@ -179,7 +182,7 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                     )
                 },
             )
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.animateItem())
         }
         if (state.hidden.isNotEmpty()) {
             item(key = "hidden-header") {
@@ -201,14 +204,17 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                         modifier = Modifier.weight(1f).semantics { heading() },
                     )
                     Icon(
-                        painterResource(if (showHidden) R.drawable.ic_keyboard_arrow_up else R.drawable.ic_keyboard_arrow_down),
+                        painterResource(R.drawable.ic_keyboard_arrow_down),
                         contentDescription = null,
+                        modifier = Modifier.chevronRotation(showHidden),
                     )
                 }
             }
             if (showHidden) {
                 itemsIndexed(state.hidden, key = { _, it -> "hidden:" + it.item.key }) { _, resolved ->
-                    HiddenRow(resolved) { actions.onToggle(resolved.item.key, true) }
+                    Box(Modifier.animateItem()) {
+                        HiddenRow(resolved) { actions.onToggle(resolved.item.key, true) }
+                    }
                 }
             }
         }
@@ -229,10 +235,14 @@ private fun CustomizeRow(
     val key = resolved.item.key
     val moveUp = stringResource(R.string.customize_move_up)
     val moveDown = stringResource(R.string.customize_move_down)
+    val lift by animateFloatAsState(if (dragging) 1f else 0f, AppTheme.motion.press(), label = "lift")
     Surface(
-        color = if (dragging) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.surface,
-        shadowElevation = if (dragging) AppTheme.spacing.sm else 0.dp,
-        modifier = modifier,
+        color = if (dragging) Glass.colors.sheet else Color.Transparent,
+        shadowElevation = AppTheme.spacing.sm * lift,
+        modifier = modifier.graphicsLayer {
+            scaleX = 1f + 0.02f * lift
+            scaleY = 1f + 0.02f * lift
+        },
     ) {
         Column {
             Row(

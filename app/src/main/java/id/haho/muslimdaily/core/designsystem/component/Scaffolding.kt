@@ -26,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.enterReveal
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,8 +79,8 @@ fun AppScreen(
                 actions = actions,
                 scrollBehavior = scrollBehavior,
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    containerColor = Color.Transparent,
+                    scrolledContainerColor = Glass.colors.chrome,
                 ),
             )
         },
@@ -85,7 +88,7 @@ fun AppScreen(
         floatingActionButton = floatingActionButton,
         bottomBar = bottomBar,
         contentWindowInsets = WindowInsets(0),
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = Color.Transparent,
     ) { padding ->
         Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.TopCenter) {
             Box(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize()) {
@@ -105,7 +108,7 @@ fun EmptyState(
     action: @Composable ColumnScope.() -> Unit = {},
 ) {
     Column(
-        modifier = modifier.fillMaxWidth().padding(AppTheme.spacing.xl),
+        modifier = modifier.fillMaxWidth().padding(AppTheme.spacing.xl).enterReveal(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
     ) {

@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.settings
 
+import id.haho.muslimdaily.BuildConfig
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,7 @@ data class SettingsDestinations(
     val onMethodology: () -> Unit = {},
     val onReportError: () -> Unit = {},
     val onAbout: () -> Unit = {},
+    val onUpdates: () -> Unit = {},
 )
 
 @Composable
@@ -114,6 +116,14 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
                     icon = R.drawable.ic_info,
                     onClick = d.onAbout,
                 )
+                if (BuildConfig.SELF_UPDATE) {
+                    NavigationRow(
+                        title = stringResource(R.string.update_title),
+                        summary = stringResource(R.string.update_summary),
+                        icon = R.drawable.ic_download,
+                        onClick = d.onUpdates,
+                    )
+                }
             }
         }
         item {

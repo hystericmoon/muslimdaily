@@ -1,8 +1,7 @@
 package id.haho.muslimdaily.core.ui
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
 import android.content.res.Configuration
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
@@ -22,6 +21,6 @@ annotation class ThemePreviews
 @Composable
 fun PreviewSurface(content: @Composable () -> Unit) {
     MuslimDailyTheme {
-        Surface(color = MaterialTheme.colorScheme.surface) { content() }
+        GlassBackdrop { content() }
     }
 }

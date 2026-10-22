@@ -16,10 +16,14 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import id.haho.muslimdaily.core.designsystem.glass.LocalGlass
+import id.haho.muslimdaily.core.designsystem.glass.LocalOverlayState
+import id.haho.muslimdaily.core.designsystem.glass.OverlayState
+import id.haho.muslimdaily.core.designsystem.glass.glassColors
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
-private val LightScheme = with(LightTokens) {
+internal val LightScheme = with(LightTokens) {
     lightColorScheme(
         primary = primary, onPrimary = onPrimary, primaryContainer = primaryContainer,
         onPrimaryContainer = onPrimaryContainer, inversePrimary = inversePrimary,
@@ -39,7 +43,7 @@ private val LightScheme = with(LightTokens) {
     )
 }
 
-private val DarkScheme = with(DarkTokens) {
+internal val DarkScheme = with(DarkTokens) {
     darkColorScheme(
         primary = primary, onPrimary = onPrimary, primaryContainer = primaryContainer,
         onPrimaryContainer = onPrimaryContainer, inversePrimary = inversePrimary,
@@ -65,6 +69,7 @@ fun MuslimDailyTheme(
     dynamicColor: Boolean = false,
     arabicScale: Float = 1f,
     translationScale: Float = 1f,
+    glass: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val dark = when (themeMode) {
@@ -88,7 +93,12 @@ fun MuslimDailyTheme(
     val arabic = remember(arabicScale) { ArabicTypography().scaled(arabicScale) }
     val readingTypography = remember(translationScale) { AppTypography.scaled(translationScale) }
 
+    val glassColors = remember(colorScheme, dark, glass) { glassColors(colorScheme, dark, glass) }
+    val overlays = remember { OverlayState() }
+
     CompositionLocalProvider(
+        LocalGlass provides glassColors,
+        LocalOverlayState provides overlays,
         LocalArabicTypography provides arabic,
         LocalReadingTypography provides readingTypography,
         LocalExtendedColors provides if (dark) DarkExtendedColors else LightExtendedColors,

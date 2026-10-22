@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.settings.data
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,9 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -86,17 +86,17 @@ fun MySetsDataContent(onShare: () -> Unit, onSave: () -> Unit, onImport: () -> U
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         ) {
             InfoNote(stringResource(R.string.data_intro))
-            Button(onClick = onShare, modifier = Modifier.fillMaxWidth()) {
+            GlassButton(onClick = onShare, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_ios_share), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_share))
             }
-            OutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
+            GlassOutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_download), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_save))
             }
-            OutlinedButton(onClick = onImport, modifier = Modifier.fillMaxWidth()) {
+            GlassOutlinedButton(onClick = onImport, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_upload), null)
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(R.string.data_import))

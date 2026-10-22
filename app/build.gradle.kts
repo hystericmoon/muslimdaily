@@ -11,6 +11,7 @@ plugins {
 }
 
 val reportEmail = providers.gradleProperty("muslimdaily.reportEmail").getOrElse("")
+val updateRepo = providers.gradleProperty("muslimdaily.updateRepo").getOrElse("hystericmoon/muslimdaily")
 
 // Release signing comes from keystore.properties (never committed); see docs/release.md.
 val keystoreProps = rootProject.file("keystore.properties").takeIf { it.exists() }?.let { file ->
@@ -26,13 +27,22 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 26
         targetSdk = 37
-        versionCode = 2
-        versionName = "0.1.1"
+        versionCode = 3
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
+        // GitHub repository whose releases the sideload updater reads (debug builds only).
+        buildConfigField("String", "UPDATE_REPO", "\"$updateRepo\"")
     }
 
     signingConfigs {
+        // Shared debug key (not secret) so sideload updates built on CI install over local builds.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
         if (keystoreProps != null) {
             create("release") {
                 storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
@@ -47,12 +57,15 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             buildConfigField("boolean", "INCLUDE_DRAFT_CONTENT", "true")
+            buildConfigField("boolean", "SELF_UPDATE", "true")
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("boolean", "INCLUDE_DRAFT_CONTENT", "false")
+            // Store builds stay fully offline: no updater, no INTERNET permission.
+            buildConfigField("boolean", "SELF_UPDATE", "false")
             signingConfig = signingConfigs.findByName("release")
         }
     }

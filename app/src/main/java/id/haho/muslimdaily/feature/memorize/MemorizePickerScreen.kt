@@ -120,7 +120,7 @@ fun MemorizePickerContent(
                         )
                     }
                 }
-                items(group.duas, key = { group.label + it.id }) { dua -> DuaCard(dua, prefs, onClick = { onPick(dua.id) }) }
+                items(group.duas, key = { group.label + it.id }) { dua -> DuaCard(dua, prefs, onClick = { onPick(dua.id) }, modifier = Modifier.animateItem()) }
             }
         }
     }

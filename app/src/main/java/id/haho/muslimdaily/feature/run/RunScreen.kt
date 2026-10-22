@@ -1,5 +1,8 @@
 package id.haho.muslimdaily.feature.run
 
+import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,14 +24,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -213,9 +214,8 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
     }
     val tapLabel = stringResource(if (item.target != null) R.string.run_tap_count else R.string.run_tap_read)
 
-    Surface(
+    GlassCard(
         shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
         modifier = Modifier
             .fillMaxSize()
             .padding(vertical = AppTheme.spacing.sm)
@@ -338,11 +338,11 @@ private fun SummaryPage(state: RunUiState, actions: RunActions) {
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Button(onClick = actions.onClose) { Text(stringResource(R.string.action_done)) }
+        GlassButton(onClick = actions.onClose) { Text(stringResource(R.string.action_done)) }
         if (!all) {
             val firstOpen = state.items.indices.firstOrNull { !state.isDone(it) }
             if (firstOpen != null) {
-                OutlinedButton(onClick = { actions.onPage(firstOpen) }) { Text(stringResource(R.string.run_go_to_open)) }
+                GlassOutlinedButton(onClick = { actions.onPage(firstOpen) }) { Text(stringResource(R.string.run_go_to_open)) }
             }
         }
         Text(
