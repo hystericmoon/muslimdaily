@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.data.settings
 
+import id.haho.muslimdaily.core.designsystem.theme.AppPalette
 import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 import id.haho.muslimdaily.core.model.Prayer
 import java.time.LocalTime
@@ -40,9 +41,9 @@ data class CalculationSettings(
     val customIshaAngle: Double = 18.0,
     val asr: AsrMethod = AsrMethod.STANDARD,
     val offsets: PrayerOffsets = PrayerOffsets(),
-    /** Minutes after sunrise until the sun is considered fully risen. Ustadz to confirm the default. */
+    /** Minutes after sunrise until the sun is considered fully risen. */
     val sunriseRiseMinutes: Int = 15,
-    /** Length of the prohibited window before Dhuhr at zawal. Ustadz to confirm the default. */
+    /** Length of the prohibited window before Dhuhr at zawal. */
     val zawalMinutes: Int = 10,
 )
 
@@ -58,6 +59,11 @@ data class ReminderSettings(
     val fridayTime: LocalTime = LocalTime.of(7, 0),
     val reviewQueue: Boolean = false,
     val reviewTime: LocalTime = LocalTime.of(20, 0),
+    /** Notify this many minutes before each prayer, with a way to find a nearby mosque. */
+    val mosqueBefore: Boolean = false,
+    val mosqueBeforeMinutes: Int = 10,
+    /** A quiet ongoing notification with the next prayer and a countdown, shown on the lock screen. */
+    val nextPrayerOngoing: Boolean = false,
 )
 
 data class MemorizeSettings(
@@ -70,6 +76,7 @@ data class MemorizeSettings(
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val dynamicColor: Boolean = false,
+    val palette: AppPalette = AppPalette.entries.first(),
     /** Frosted glass surfaces. Off gives solid surfaces (lighter on older phones). */
     val glassEffect: Boolean = true,
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,

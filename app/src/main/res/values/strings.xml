@@ -422,7 +422,7 @@
     <string name="settings_audio_playback">Pemutaran</string>
     <string name="settings_audio_speed">Kecepatan bawaan</string>
     <string name="settings_reciter">Qari</string>
-    <string name="settings_reciter_default">Bawaan (satu qari tersedia)</string>
+    <string name="settings_reciter_default">Hamad ad-Duraihim (Hisnul Muslim, IslamHouse.com)</string>
     <string name="settings_run_mode">Mode baca</string>
     <string name="settings_auto_advance_summary">Pindah ke doa berikutnya setelah hitungan selesai.</string>
     <string name="settings_haptics">Getaran</string>
@@ -484,6 +484,16 @@
     <string name="display_theme_light">Terang</string>
     <string name="display_theme_dark">Gelap</string>
     <string name="display_dynamic_color">Warna dinamis</string>
+    <string name="display_palette">Warna</string>
+    <string name="display_palette_dynamic_note">Matikan warna dinamis untuk memilih warna tema.</string>
+    <string name="palette_teal">Toska</string>
+    <string name="palette_navy">Biru tua</string>
+    <string name="palette_forest">Hijau hutan</string>
+    <string name="palette_slate">Batu</string>
+    <string name="palette_olive">Zaitun</string>
+    <string name="palette_rose">Mawar</string>
+    <string name="palette_lavender">Lavender</string>
+    <string name="palette_peach">Persik</string>
     <string name="display_glass">Efek kaca</string>
     <string name="display_glass_summary">Kartu, tombol dan panel tampil seperti kaca buram. Matikan untuk tampilan polos.</string>
     <string name="display_dynamic_color_summary">Ikuti warna wallpaper (Android 12+). Mati secara bawaan agar kontras teks tetap terjaga.</string>
@@ -492,15 +502,15 @@
     <string name="methodology_scope_title">Cakupan</string>
     <string name="methodology_scope_body">Hanya Al-Qur\'an dan Sunnah yang sahih atau hasan, di atas manhaj salaf. Tidak ada doa atau amalan tanpa dalil.</string>
     <string name="methodology_sources_title">Sumber</string>
-    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim. Setiap doa mencantumkan kitab dan nomor haditsnya, dapat dilihat dengan mengetuk label sumber.</string>
+    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim, ditambah doa-doa dari Al-Qur\'an. Setiap doa mencantumkan kitab dan nomor hadits atau surah dan ayatnya, dapat dilihat dengan mengetuk label sumber.</string>
     <string name="methodology_grading_title">Kebijakan derajat</string>
     <string name="methodology_grading_body">Derajat ditampilkan bila disebutkan dalam takhrij kitab sumber, beserta siapa yang menilai. Riwayat yang dinilai lemah oleh Syaikh al-Albani tidak dimuat.</string>
     <string name="methodology_counts_title">Jumlah bacaan</string>
     <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
     <string name="methodology_audio_title">Audio</string>
-    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara.</string>
+    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
-    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Setiap doa menampilkan sumber dan takhrijnya.</string>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI melalui QuranEnc.com. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
     <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI dan dapat disesuaikan. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>
@@ -510,4 +520,73 @@
     <!-- About -->
     <string name="about_body">Panduan harian: waktu shalat, sunnah rawatib, dzikir pagi dan petang, dan doa sehari-hari dari bangun hingga tidur. Bekerja sepenuhnya tanpa internet.</string>
     <string name="about_licenses">Lisensi dan atribusi</string>
+
+    <!-- Widgets -->
+    <string name="widget_next_name">Shalat berikutnya</string>
+    <string name="widget_day_name">Jadwal shalat hari ini</string>
+    <string name="widget_next_description_picker">Shalat berikutnya dengan hitung mundur.</string>
+    <string name="widget_day_description_picker">Enam waktu hari ini; yang berikutnya ditandai.</string>
+    <string name="widget_countdown_format">dalam %s</string>
+    <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
+    <string name="widget_next_label">Berikutnya · %s</string>
+    <string name="widget_day_header">%1$s · %2$s</string>
+    <string name="widget_countdown_named">%1$s dalam %%s</string>
+    <string name="widget_next_description">Shalat berikutnya %1$s pukul %2$s, %3$s</string>
+    <string name="widget_preview_label">Berikutnya · Jakarta</string>
+    <string name="widget_preview_countdown">dalam 1:23:45</string>
+    <string name="widget_preview_time" translatable="false">11.41</string>
+    <string name="widget_preview_times" translatable="false">04.13   05.26   11.41   14.50   17.49   18.59</string>
+
+    <!-- Pre-prayer and lock-screen notifications -->
+    <string name="channel_pre_prayer">Menjelang shalat</string>
+    <string name="channel_pre_prayer_desc">Beberapa menit sebelum waktu shalat, dengan daftar masjid terdekat.</string>
+    <string name="channel_next_prayer">Shalat berikutnya (layar kunci)</string>
+    <string name="channel_next_prayer_desc">Notifikasi senyap berisi shalat berikutnya dan hitung mundur.</string>
+    <plurals name="notif_pre_prayer_title">
+        <item quantity="one">%1$s %2$d menit lagi</item>
+        <item quantity="other">%1$s %2$d menit lagi</item>
+    </plurals>
+    <string name="notif_pre_prayer_text">Masuk pukul %s. Ketuk untuk melihat masjid terdekat.</string>
+    <string name="notif_next_prayer_title">%1$s %2$s</string>
+    <string name="reminders_glance">Layar kunci dan widget</string>
+    <string name="reminders_mosque_title">Ingatkan sebelum shalat</string>
+    <string name="reminders_mosque_summary">%d menit sebelum adzan, dengan masjid terdekat</string>
+    <string name="reminders_lead">Sebelum adzan</string>
+    <string name="reminders_ongoing_title">Shalat berikutnya di layar kunci</string>
+    <string name="reminders_ongoing_summary">Notifikasi senyap dengan hitung mundur. Di Android 16 tampil sebagai Live Update.</string>
+    <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Muslim Daily.</string>
+
+    <!-- Nearby mosques -->
+    <string name="mosque_title">Masjid terdekat</string>
+    <string name="mosque_open">Masjid terdekat</string>
+    <string name="mosque_locating">Mencari lokasi Anda…</string>
+    <string name="mosque_permission_title">Cari masjid di sekitar Anda</string>
+    <string name="mosque_permission_body">Lokasi dipakai sekali untuk mencari masjid di sekitar Anda. Tidak disimpan dan tidak dikirim ke mana pun.</string>
+    <string name="mosque_allow_location">Izinkan lokasi</string>
+    <string name="mosque_open_settings">Buka pengaturan aplikasi</string>
+    <string name="mosque_permission_blocked">Izin lokasi ditolak. Aktifkan di Pengaturan → Izin → Lokasi.</string>
+    <string name="mosque_use_saved">Pakai lokasi tersimpan (%s)</string>
+    <string name="mosque_unavailable_title">Lokasi tidak tersedia</string>
+    <string name="mosque_unavailable_body">Nyalakan lokasi di perangkat, lalu coba lagi.</string>
+    <string name="mosque_origin_precise">Dari lokasi Anda saat ini (akurasi ±%d m).</string>
+    <string name="mosque_origin_precise_unknown">Dari lokasi Anda saat ini.</string>
+    <string name="mosque_origin_approximate">Lokasi perkiraan: jarak bisa meleset hingga beberapa kilometer.</string>
+    <string name="mosque_allow_precise">Gunakan lokasi akurat</string>
+    <string name="mosque_origin_saved">Dari lokasi tersimpan, %s. Jarak hanya perkiraan.</string>
+    <string name="mosque_use_current">Gunakan lokasi saat ini</string>
+    <string name="mosque_none_title">Tidak ada data masjid dalam 5 km</string>
+    <string name="mosque_none_body">Data offline berasal dari OpenStreetMap dan belum lengkap. Coba cari di aplikasi peta.</string>
+    <string name="mosque_search_maps">Cari masjid di aplikasi peta</string>
+    <string name="mosque_map_query">masjid</string>
+    <string name="mosque_unnamed">Masjid atau mushala (tanpa nama)</string>
+    <string name="mosque_distance">%1$s · %2$s</string>
+    <plurals name="mosque_walk_minutes">
+        <item quantity="one">±%d menit jalan kaki</item>
+        <item quantity="other">±%d menit jalan kaki</item>
+    </plurals>
+    <string name="mosque_meters">%d m</string>
+    <string name="mosque_km">%s km</string>
+    <string name="mosque_route">Rute</string>
+    <string name="mosque_route_to">Rute ke %s</string>
+    <string name="mosque_attribution">Data masjid © kontributor OpenStreetMap (ODbL), disimpan di perangkat. Lokasi Anda tidak dikirim ke mana pun; rute dibuka di aplikasi peta pilihan Anda.</string>
 </resources>

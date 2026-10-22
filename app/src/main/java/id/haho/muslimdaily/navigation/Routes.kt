@@ -13,6 +13,7 @@ import kotlinx.serialization.Serializable
 
 // Today
 @Serializable data object TodayRoute
+@Serializable data object MosquesRoute
 
 // Duas
 @Serializable data object DuaLibraryRoute

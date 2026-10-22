@@ -61,6 +61,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import id.haho.muslimdaily.widget.GlanceRefresher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,6 +69,7 @@ class RemindersViewModel @Inject constructor(
     private val repository: SettingsRepository,
     private val scheduler: ReminderScheduler,
     private val notifier: Notifier,
+    private val glance: GlanceRefresher,
 ) : ViewModel() {
     val settings: StateFlow<AppSettings?> = repository.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -78,8 +80,12 @@ class RemindersViewModel @Inject constructor(
         viewModelScope.launch { repository.update(block) }
     }
 
+    /** After a permission change: re-plan alarms and post the lock-screen notification if it can now show. */
     fun reschedule() {
-        viewModelScope.launch { scheduler.rescheduleAll() }
+        viewModelScope.launch {
+            scheduler.rescheduleAll()
+            glance.refresh()
+        }
     }
 }
 
@@ -96,6 +102,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
     }
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         permissions = permissions.copy(notifications = viewModel.notificationsAllowed())
+        viewModel.reschedule()
     }
     val askNotifications = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -196,6 +203,26 @@ fun RemindersContent(
             }
         }
         item {
+            SettingsGroup(stringResource(R.string.reminders_glance)) {
+                SwitchRow(
+                    title = stringResource(R.string.reminders_mosque_title),
+                    summary = stringResource(R.string.reminders_mosque_summary, r.mosqueBeforeMinutes),
+                    checked = r.mosqueBefore,
+                    onCheckedChange = { v -> update { remMosque = v } },
+                    icon = R.drawable.ic_mosque,
+                )
+                if (r.mosqueBefore) LeadStepper(r.mosqueBeforeMinutes) { v -> update { remMosqueMinutes = v } }
+                SwitchRow(
+                    title = stringResource(R.string.reminders_ongoing_title),
+                    summary = stringResource(R.string.reminders_ongoing_summary),
+                    checked = r.nextPrayerOngoing,
+                    onCheckedChange = { v -> update { remOngoing = v } },
+                    icon = R.drawable.ic_schedule,
+                )
+                InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(AppTheme.dimens.screenGutter))
+            }
+        }
+        item {
             SettingsGroup(stringResource(R.string.reminders_other)) {
                 SwitchRow(
                     title = stringResource(R.string.notif_sleep_title),
@@ -271,6 +298,21 @@ private fun OffsetStepper(value: Int, onChange: (Int) -> Unit) {
         incrementDescription = stringResource(R.string.settings_increase, title),
         canDecrement = value > 0,
         canIncrement = value < 120,
+    )
+}
+
+@Composable
+private fun LeadStepper(value: Int, onChange: (Int) -> Unit) {
+    val title = stringResource(R.string.reminders_lead)
+    StepperRow(
+        title = title,
+        valueText = stringResource(R.string.settings_minutes, value),
+        onDecrement = { onChange((value - 5).coerceIn(5, 30)) },
+        onIncrement = { onChange((value + 5).coerceIn(5, 30)) },
+        decrementDescription = stringResource(R.string.settings_decrease, title),
+        incrementDescription = stringResource(R.string.settings_increase, title),
+        canDecrement = value > 5,
+        canIncrement = value < 30,
     )
 }
 

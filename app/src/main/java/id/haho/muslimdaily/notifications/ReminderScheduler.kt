@@ -55,7 +55,9 @@ class ReminderScheduler @Inject constructor(
         if (canScheduleExact()) {
             alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, atMillis, pending)
         } else {
-            alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, atMillis, pending)
+            // An inexact one-shot alarm may be deferred by up to 75% of the time until it is due
+            // (hours, for an alarm set in the morning); a window bounds that to a few minutes.
+            alarms.setWindow(AlarmManager.RTC_WAKEUP, atMillis, INEXACT_WINDOW_MS, pending)
         }
     }
 
@@ -85,6 +87,8 @@ class ReminderScheduler @Inject constructor(
     }
 
     companion object {
+        /** The shortest window apps without the exact-alarm permission may ask for. */
+        private const val INEXACT_WINDOW_MS = 10 * 60 * 1000L
         const val ACTION_REMINDER = "id.haho.muslimdaily.action.REMINDER"
         const val EXTRA_TYPE = "type"
         const val EXTRA_SILENT = "silent"

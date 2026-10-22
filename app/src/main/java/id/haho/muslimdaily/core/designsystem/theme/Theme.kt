@@ -23,50 +23,97 @@ import id.haho.muslimdaily.core.designsystem.glass.glassColors
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
-internal val LightScheme = with(LightTokens) {
-    lightColorScheme(
-        primary = primary, onPrimary = onPrimary, primaryContainer = primaryContainer,
-        onPrimaryContainer = onPrimaryContainer, inversePrimary = inversePrimary,
-        secondary = secondary, onSecondary = onSecondary, secondaryContainer = secondaryContainer,
-        onSecondaryContainer = onSecondaryContainer,
-        tertiary = tertiary, onTertiary = onTertiary, tertiaryContainer = tertiaryContainer,
-        onTertiaryContainer = onTertiaryContainer,
-        error = error, onError = onError, errorContainer = errorContainer, onErrorContainer = onErrorContainer,
-        background = background, onBackground = onBackground, surface = surface, onSurface = onSurface,
-        surfaceVariant = surfaceVariant, onSurfaceVariant = onSurfaceVariant, surfaceTint = surfaceTint,
-        inverseSurface = inverseSurface, inverseOnSurface = inverseOnSurface,
-        outline = outline, outlineVariant = outlineVariant, scrim = scrim,
-        surfaceBright = surfaceBright, surfaceDim = surfaceDim,
-        surfaceContainerLowest = surfaceContainerLowest, surfaceContainerLow = surfaceContainerLow,
-        surfaceContainer = surfaceContainer, surfaceContainerHigh = surfaceContainerHigh,
-        surfaceContainerHighest = surfaceContainerHighest,
-    )
+/** The Material colour scheme for [palette] in light or dark. */
+fun colorSchemeFor(palette: AppPalette, dark: Boolean): ColorScheme = with(paletteTokens(palette, dark)) {
+    if (dark) {
+        darkColorScheme(
+            primary = primary,
+            onPrimary = onPrimary,
+            primaryContainer = primaryContainer,
+            onPrimaryContainer = onPrimaryContainer,
+            inversePrimary = inversePrimary,
+            secondary = secondary,
+            onSecondary = onSecondary,
+            secondaryContainer = secondaryContainer,
+            onSecondaryContainer = onSecondaryContainer,
+            tertiary = tertiary,
+            onTertiary = onTertiary,
+            tertiaryContainer = tertiaryContainer,
+            onTertiaryContainer = onTertiaryContainer,
+            background = background,
+            onBackground = onBackground,
+            surface = surface,
+            onSurface = onSurface,
+            surfaceVariant = surfaceVariant,
+            onSurfaceVariant = onSurfaceVariant,
+            surfaceTint = surfaceTint,
+            inverseSurface = inverseSurface,
+            inverseOnSurface = inverseOnSurface,
+            error = error,
+            onError = onError,
+            errorContainer = errorContainer,
+            onErrorContainer = onErrorContainer,
+            outline = outline,
+            outlineVariant = outlineVariant,
+            scrim = scrim,
+            surfaceBright = surfaceBright,
+            surfaceContainer = surfaceContainer,
+            surfaceContainerHigh = surfaceContainerHigh,
+            surfaceContainerHighest = surfaceContainerHighest,
+            surfaceContainerLow = surfaceContainerLow,
+            surfaceContainerLowest = surfaceContainerLowest,
+            surfaceDim = surfaceDim,
+        )
+    } else {
+        lightColorScheme(
+            primary = primary,
+            onPrimary = onPrimary,
+            primaryContainer = primaryContainer,
+            onPrimaryContainer = onPrimaryContainer,
+            inversePrimary = inversePrimary,
+            secondary = secondary,
+            onSecondary = onSecondary,
+            secondaryContainer = secondaryContainer,
+            onSecondaryContainer = onSecondaryContainer,
+            tertiary = tertiary,
+            onTertiary = onTertiary,
+            tertiaryContainer = tertiaryContainer,
+            onTertiaryContainer = onTertiaryContainer,
+            background = background,
+            onBackground = onBackground,
+            surface = surface,
+            onSurface = onSurface,
+            surfaceVariant = surfaceVariant,
+            onSurfaceVariant = onSurfaceVariant,
+            surfaceTint = surfaceTint,
+            inverseSurface = inverseSurface,
+            inverseOnSurface = inverseOnSurface,
+            error = error,
+            onError = onError,
+            errorContainer = errorContainer,
+            onErrorContainer = onErrorContainer,
+            outline = outline,
+            outlineVariant = outlineVariant,
+            scrim = scrim,
+            surfaceBright = surfaceBright,
+            surfaceContainer = surfaceContainer,
+            surfaceContainerHigh = surfaceContainerHigh,
+            surfaceContainerHighest = surfaceContainerHighest,
+            surfaceContainerLow = surfaceContainerLow,
+            surfaceContainerLowest = surfaceContainerLowest,
+            surfaceDim = surfaceDim,
+        )
+    }
 }
 
-internal val DarkScheme = with(DarkTokens) {
-    darkColorScheme(
-        primary = primary, onPrimary = onPrimary, primaryContainer = primaryContainer,
-        onPrimaryContainer = onPrimaryContainer, inversePrimary = inversePrimary,
-        secondary = secondary, onSecondary = onSecondary, secondaryContainer = secondaryContainer,
-        onSecondaryContainer = onSecondaryContainer,
-        tertiary = tertiary, onTertiary = onTertiary, tertiaryContainer = tertiaryContainer,
-        onTertiaryContainer = onTertiaryContainer,
-        error = error, onError = onError, errorContainer = errorContainer, onErrorContainer = onErrorContainer,
-        background = background, onBackground = onBackground, surface = surface, onSurface = onSurface,
-        surfaceVariant = surfaceVariant, onSurfaceVariant = onSurfaceVariant, surfaceTint = surfaceTint,
-        inverseSurface = inverseSurface, inverseOnSurface = inverseOnSurface,
-        outline = outline, outlineVariant = outlineVariant, scrim = scrim,
-        surfaceBright = surfaceBright, surfaceDim = surfaceDim,
-        surfaceContainerLowest = surfaceContainerLowest, surfaceContainerLow = surfaceContainerLow,
-        surfaceContainer = surfaceContainer, surfaceContainerHigh = surfaceContainerHigh,
-        surfaceContainerHighest = surfaceContainerHighest,
-    )
-}
+internal val LightScheme = colorSchemeFor(AppPalette.entries.first(), dark = false)
+internal val DarkScheme = colorSchemeFor(AppPalette.entries.first(), dark = true)
 
 @Composable
 fun MuslimDailyTheme(
     themeMode: ThemeMode = ThemeMode.SYSTEM,
     dynamicColor: Boolean = false,
+    palette: AppPalette = AppPalette.entries.first(),
     arabicScale: Float = 1f,
     translationScale: Float = 1f,
     glass: Boolean = true,
@@ -81,8 +128,7 @@ fun MuslimDailyTheme(
     val colorScheme: ColorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
             if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        dark -> DarkScheme
-        else -> LightScheme
+        else -> colorSchemeFor(palette, dark)
     }
     val inspection = LocalInspectionMode.current
     val reduceMotion = remember(context, inspection) {
@@ -101,7 +147,7 @@ fun MuslimDailyTheme(
         LocalOverlayState provides overlays,
         LocalArabicTypography provides arabic,
         LocalReadingTypography provides readingTypography,
-        LocalExtendedColors provides if (dark) DarkExtendedColors else LightExtendedColors,
+        LocalExtendedColors provides remember(palette, dark) { extendedColors(paletteTokens(palette, dark)) },
         LocalMotion provides Motion(reduced = reduceMotion),
         LocalSpacing provides Spacing(),
         LocalDimens provides Dimens(),

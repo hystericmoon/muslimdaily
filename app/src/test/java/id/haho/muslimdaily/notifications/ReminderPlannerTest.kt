@@ -19,12 +19,36 @@ class ReminderPlannerTest {
     private val calculator = PrayerCalculator()
     private fun at(y: Int, mo: Int, d: Int, h: Int, mi: Int) = LocalDateTime.of(y, mo, d, h, mi).atZone(zone).toInstant()
 
-    private fun plan(reminders: ReminderSettings, now: java.time.Instant = at(2026, 10, 21, 12, 0)) =
+    private fun planAll(reminders: ReminderSettings, now: java.time.Instant = at(2026, 10, 21, 12, 0)) =
         ReminderPlanner.plan(now, TodayPreviewData.settings.copy(reminders = reminders), calculator)
 
+    /** Notifications only; the always-on glance refresh is tested on its own. */
+    private fun plan(reminders: ReminderSettings, now: java.time.Instant = at(2026, 10, 21, 12, 0)) =
+        planAll(reminders, now).filter { it.type != ReminderType.REFRESH }
+
     @Test
-    fun `nothing is scheduled by default`() {
-        assertTrue(plan(ReminderSettings()).isEmpty())
+    fun `no notification is scheduled by default, only the glance refresh`() {
+        assertEquals(listOf(ReminderType.REFRESH), planAll(ReminderSettings()).map { it.type })
+    }
+
+    @Test
+    fun `refresh fires at the next of the six times`() {
+        val refresh = planAll(ReminderSettings()).single { it.type == ReminderType.REFRESH }
+        val asr = calculator.schedule(java.time.LocalDate.of(2026, 10, 21), TodayPreviewData.settings.location!!.latitude, TodayPreviewData.settings.location!!.longitude, zone, TodayPreviewData.settings.calculation).asr
+        assertEquals(asr, refresh.at)
+    }
+
+    @Test
+    fun `no refresh without a location`() {
+        val p = ReminderPlanner.plan(at(2026, 10, 21, 12, 0), TodayPreviewData.settings.copy(location = null), calculator)
+        assertTrue(p.isEmpty())
+    }
+
+    @Test
+    fun `pre-prayer reminder comes the chosen minutes before the next prayer`() {
+        val pre = plan(ReminderSettings(mosqueBefore = true, mosqueBeforeMinutes = 10)).single { it.type == ReminderType.PRE_PRAYER }
+        val refresh = planAll(ReminderSettings()).single { it.type == ReminderType.REFRESH } // Asr at noon
+        assertEquals(Duration.ofMinutes(10), Duration.between(pre.at, refresh.at))
     }
 
     @Test

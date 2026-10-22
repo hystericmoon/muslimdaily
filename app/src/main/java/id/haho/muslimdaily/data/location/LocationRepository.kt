@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -36,6 +37,35 @@ class LocationRepository @Inject constructor(
     fun hasPermission(): Boolean =
         ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED
+
+    fun hasPrecisePermission(): Boolean =
+        ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+
+    /** Where the device is right now, for the nearby-mosque list. Not saved anywhere. */
+    data class Fix(val latitude: Double, val longitude: Double, val accuracyMeters: Float?, val precise: Boolean)
+
+    /**
+     * One current fix: high accuracy when precise location is granted, otherwise approximate.
+     * Null without permission or when no fix arrives in time.
+     */
+    @SuppressLint("MissingPermission")
+    suspend fun currentFix(): Fix? {
+        if (!hasPermission()) return null
+        val precise = hasPrecisePermission()
+        val source = CancellationTokenSource()
+        val priority = if (precise) Priority.PRIORITY_HIGH_ACCURACY else Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        val fix = withTimeoutOrNull(FIX_TIMEOUT_MS) {
+            client.getCurrentLocation(priority, source.token).awaitOrNull()
+        } ?: run {
+            source.cancel()
+            // A cached fix may be from somewhere else on a trip; only trust a recent one.
+            client.lastLocation.awaitOrNull()?.takeIf {
+                SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos < MAX_CACHED_AGE_NANOS
+            }
+        } ?: return null
+        return Fix(fix.latitude, fix.longitude, fix.accuracy.takeIf { fix.hasAccuracy() }, precise)
+    }
 
     sealed interface FixResult {
         data class Success(val location: SavedLocation) : FixResult
@@ -100,5 +130,6 @@ class LocationRepository @Inject constructor(
 
     private companion object {
         const val FIX_TIMEOUT_MS = 15_000L
+        const val MAX_CACHED_AGE_NANOS = 3 * 60 * 1_000_000_000L
     }
 }

@@ -21,7 +21,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.time.Clock
+import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
+import id.haho.muslimdaily.widget.GlanceRefresher
 import java.time.DayOfWeek
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -38,6 +41,7 @@ class ReminderReceiver : BroadcastReceiver() {
     @Inject lateinit var reviews: ReviewRepository
     @Inject lateinit var calculator: PrayerCalculator
     @Inject lateinit var clock: Clock
+    @Inject lateinit var glance: GlanceRefresher
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ReminderScheduler.ACTION_REMINDER) return
@@ -60,6 +64,18 @@ class ReminderReceiver : BroadcastReceiver() {
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
         val now = Instant.now(clock)
         val today = now.atZone(zone).toLocalDate()
+        if (type == ReminderType.REFRESH) {
+            glance.refresh()
+            return
+        }
+        if (type == ReminderType.PRE_PRAYER) {
+            val snapshot = PrayerSnapshots.at(now, s, calculator) ?: return
+            val minutes = Duration.between(now, snapshot.next.time).toMinutes().toInt() + 1
+            // A late alarm (Doze, inexact fallback) that lands after the prayer has nothing to say.
+            if (minutes > s.reminders.mosqueBeforeMinutes + 5) return
+            notifier.prePrayer(snapshot.next.prayer, snapshot.next.time, snapshot.zone, minutes.coerceAtMost(s.reminders.mosqueBeforeMinutes), DateFormat.is24HourFormat(context))
+            return
+        }
         val prayer = type.prayer
         if (prayer != null && location != null) {
             val schedule = calculator.schedule(today, location.latitude, location.longitude, zone, s.calculation)
@@ -91,6 +107,7 @@ class ReminderReceiver : BroadcastReceiver() {
 @AndroidEntryPoint
 class SystemEventsReceiver : BroadcastReceiver() {
     @Inject lateinit var scheduler: ReminderScheduler
+    @Inject lateinit var glance: GlanceRefresher
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action !in HANDLED) return
@@ -98,6 +115,7 @@ class SystemEventsReceiver : BroadcastReceiver() {
         receiverScope.launch {
             try {
                 scheduler.rescheduleAll()
+                glance.refresh()
             } finally {
                 pending.finish()
             }

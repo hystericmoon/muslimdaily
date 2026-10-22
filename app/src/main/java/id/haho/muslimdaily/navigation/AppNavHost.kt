@@ -39,6 +39,7 @@ import id.haho.muslimdaily.feature.settings.SettingsHomeRoute
 import id.haho.muslimdaily.feature.settings.data.MySetsDataRoute
 import id.haho.muslimdaily.feature.settings.location.LocationRoute
 import id.haho.muslimdaily.feature.today.TodayRoute
+import id.haho.muslimdaily.feature.mosque.NearbyMosqueRoute
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -61,8 +62,10 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenEvent = { navController.navigate(EventRoute(it)) },
                     onOpenLocation = { navController.navigate(LocationRoute) },
                     onOpenPrayerSettings = { navController.navigate(PrayerSettingsRoute) },
+                    onOpenMosques = { navController.navigate(MosquesRoute) },
                 )
             }
+            composable<MosquesRoute> { NearbyMosqueRoute(onBack = back) }
         }
         navigation<DuasGraph>(startDestination = DuaLibraryRoute) {
             composable<DuaLibraryRoute> {

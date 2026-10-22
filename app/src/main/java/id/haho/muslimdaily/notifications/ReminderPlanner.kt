@@ -2,6 +2,7 @@ package id.haho.muslimdaily.notifications
 
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.core.model.Prayer
+import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
@@ -17,6 +18,12 @@ import java.time.temporal.TemporalAdjusters
 enum class ReminderType(val requestCode: Int) {
     ADHAN_FAJR(1), ADHAN_DHUHR(2), ADHAN_ASR(3), ADHAN_MAGHRIB(4), ADHAN_ISHA(5),
     MORNING_ADHKAR(10), EVENING_ADHKAR(11), BEFORE_SLEEP(12), FRIDAY(13), REVIEW(14),
+
+    /** Minutes before each prayer: time to head to the mosque. */
+    PRE_PRAYER(20),
+
+    /** Not a notification: redraws widgets and the lock-screen countdown when the next prayer changes. */
+    REFRESH(21),
     ;
 
     val prayer: Prayer?
@@ -75,6 +82,17 @@ object ReminderPlanner {
                 firstAfter { it.asr.plus(Duration.ofMinutes(r.eveningOffsetMinutes.toLong())) }
                     ?.let { result += PlannedReminder(ReminderType.EVENING_ADHKAR, it) }
             }
+            if (r.mosqueBefore) {
+                val lead = Duration.ofMinutes(r.mosqueBeforeMinutes.toLong())
+                schedules.flatMap { s -> FIVE_PRAYERS.map { s.time(it).minus(lead) } }
+                    .filter { it.isAfter(now) }
+                    .minOrNull()
+                    ?.let { result += PlannedReminder(ReminderType.PRE_PRAYER, it) }
+            }
+            schedules.flatMap { s -> PrayerTimeSlot.entries.map { s.time(it) } + s.date.plusDays(1).atStartOfDay(zone).toInstant() }
+                .filter { it.isAfter(now) }
+                .minOrNull()
+                ?.let { result += PlannedReminder(ReminderType.REFRESH, it) }
         }
         if (r.beforeSleep) result += PlannedReminder(ReminderType.BEFORE_SLEEP, nextDaily(now, zone, r.beforeSleepTime))
         if (r.reviewQueue) result += PlannedReminder(ReminderType.REVIEW, nextDaily(now, zone, r.reviewTime))

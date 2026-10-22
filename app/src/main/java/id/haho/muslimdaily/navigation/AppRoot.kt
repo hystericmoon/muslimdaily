@@ -70,6 +70,7 @@ fun AppRoot(
             Destination.EVENING_RUN -> RunRoute("evening")
             Destination.SLEEP_EVENT -> EventRoute("sleeping")
             Destination.MEMORIZE -> MemorizeGraph
+            Destination.MOSQUES -> MosquesRoute
         }
         navController.navigate(target) { launchSingleTop = true }
         onDestinationHandled()

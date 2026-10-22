@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.semantics
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.InfoRow
 import id.haho.muslimdaily.core.designsystem.component.NavigationRow
 import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
@@ -36,6 +37,11 @@ private val Licenses = listOf(
     License("Noto Sans Arabic", "SIL Open Font License 1.1", "licenses/noto_sans_arabic_OFL.txt"),
     License("Material Symbols", "Apache License 2.0", null),
     License("GeoNames", "Creative Commons Attribution 4.0", null),
+    License("Audio Hisnul Muslim: Hamad ad-Duraihim", "IslamHouse.com. Boleh disebarkan dengan menyebut sumber, tanpa mengubah isi.", null),
+    License("Tanzil Quran Text (teks Al-Qur'an)", "Tanzil Project, tanzil.net. Boleh disalin tanpa diubah dengan menyebut sumber.", null),
+    License("QuranEnc.com (terjemah Al-Qur'an)", "Terjemah Kementerian Agama RI (indonesian_affairs v1.0.1) dan Saheeh International. Dimuat tanpa diubah dengan menyebut sumber.", null),
+    License("OpenStreetMap (data masjid)", "© kontributor OpenStreetMap, Open Database License 1.0", null),
+    License("Jetpack Glance", "Apache License 2.0", null),
     License("adhan-kotlin (Batoul Apps)", "MIT License", null),
     License("AndroidX, Media3, Hilt, kotlinx", "Apache License 2.0", null),
 )
@@ -61,7 +67,12 @@ fun AboutContent() {
         }
         SettingsGroup(stringResource(R.string.about_licenses)) {
             Licenses.forEach { license ->
-                NavigationRow(title = license.name, summary = license.detail, onClick = { shown = license })
+                // Only licences with a full text open one; the rest are complete as shown.
+                if (license.asset != null) {
+                    NavigationRow(title = license.name, summary = license.detail, onClick = { shown = license })
+                } else {
+                    InfoRow(title = license.name, summary = license.detail)
+                }
             }
         }
     }

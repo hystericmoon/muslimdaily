@@ -6,8 +6,8 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
 import id.haho.muslimdaily.core.designsystem.glass.GlassColors
 import id.haho.muslimdaily.core.designsystem.glass.glassColors
-import id.haho.muslimdaily.core.designsystem.theme.DarkScheme
-import id.haho.muslimdaily.core.designsystem.theme.LightScheme
+import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.math.max
@@ -37,9 +37,9 @@ class GlassContrastTest {
         }
     }
 
-    private fun verify(scheme: ColorScheme, dark: Boolean) {
+    private fun verify(scheme: ColorScheme, dark: Boolean, palette: AppPalette) {
         val g = glassColors(scheme, dark, enabled = true)
-        val mode = if (dark) "dark" else "light"
+        val mode = "$palette " + if (dark) "dark" else "light"
         for ((label, text) in listOf("onSurface" to scheme.onSurface, "onSurfaceVariant" to scheme.onSurfaceVariant, "primary" to scheme.primary)) {
             check("$mode card/$label", text, g.card, g, g.sheen)
             check("$mode chrome/$label", text, g.chrome, g, g.sheen)
@@ -64,7 +64,7 @@ class GlassContrastTest {
         }
     }
 
-    @Test fun lightGlassMeetsAa() = verify(LightScheme, dark = false)
+    @Test fun lightGlassMeetsAa() = AppPalette.entries.forEach { verify(colorSchemeFor(it, dark = false), dark = false, it) }
 
-    @Test fun darkGlassMeetsAa() = verify(DarkScheme, dark = true)
+    @Test fun darkGlassMeetsAa() = AppPalette.entries.forEach { verify(colorSchemeFor(it, dark = true), dark = true, it) }
 }
