@@ -94,6 +94,10 @@ The rows in `duas.csv` (24 events) and the full sheet `content/source/import/his
 * `source_N` holds the books cited in the footnote (or "Hisnul Muslim no. N" when it cites
   none), `reference` the footnote verbatim plus the entry number, and grade/grader only where
   the footnote states al-Albani's verdict.
+* The Arabic gets a narrow typographic cleanup (`tidy_arabic`): `*` between verses becomes
+  the end-of-ayah sign ۝, an inline repetition note such as «(ثلاث مرات)» is dropped when the
+  count badge shows the same number (notes with a condition, e.g. «إذا أصبح», stay), and
+  «﴾.» becomes «﴾». The words themselves are never changed.
 * Entries the PDF's appendix reports al-Albani graded weak are left out of `duas.csv` and
   marked `LEMAH` in the full sheet. A count he judged unauthentic is left blank.
 

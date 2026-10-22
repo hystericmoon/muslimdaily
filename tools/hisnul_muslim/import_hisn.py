@@ -128,6 +128,33 @@ def albani_grade(footnote: str) -> str:
     return ""
 
 
+HARAKAT = re.compile("[\u064B-\u065F\u0670\u0640]")
+# Inline repetition notes that only restate the count badge. Anything with a condition
+# ("إذا أصبح", "في اليوم", ...) is not listed and stays in the text.
+COUNT_PHRASES = {
+    "ثلاث مرات": 3, "ثلاثا": 3, "أربع مرات": 4, "سبع مرات": 7, "عشر مرات": 10, "مائة مرة": 100,
+}
+PARENTHETICAL = re.compile(r"\s*\(([^()]{1,30})\)")
+
+
+def tidy_arabic(text: str, count: int | None) -> str:
+    """Narrow typographic cleanup of hisnmuslim.com's Arabic; the words themselves are untouched.
+
+    * "*" between verses becomes the end-of-ayah sign ۝.
+    * An inline repetition note, e.g. «(ثلاث مرات)», is dropped when the count badge shows the
+      same number.
+    * A full stop right after a closing Qur'an bracket «﴾.» is dropped.
+    """
+    def drop_count(m: re.Match) -> str:
+        n = COUNT_PHRASES.get(HARAKAT.sub("", m.group(1)).strip())
+        return "" if n is not None and n == count else m.group(0)
+
+    text = PARENTHETICAL.sub(drop_count, text)
+    text = re.sub(r"\s*\*\s*", " ۝ ", text)
+    text = text.replace("﴾.", "﴾")
+    return re.sub(r"\s{2,}", " ", text).strip()
+
+
 def row_template(fields: list[str]) -> dict[str, str]:
     return {f: "" for f in fields}
 
@@ -162,7 +189,7 @@ def build_rows(entries, footnotes, arabic, weak, fields, pdf_name: str) -> list[
         if n in weak and not weak[n]["weak"] and weak[n].get("count"):
             flags.append(f"Jumlah '{weak[n]['count']}' dinilai tidak shahih oleh al-Albani; kolom count dikosongkan.")
             count = ""
-        arabic_text = a["arabic"] if a else ""
+        arabic_text = tidy_arabic(a["arabic"], int(count) if count else None) if a else ""
         if re.match(r"\s*(?:قَالَ|قال|كان|كَانَ)", arabic_text):
             flags.append("Teks Arab diawali konteks riwayat (bukan lafazh doa); rapikan.")
         # Footnote verbatim, then where it sits in the book, so every row cites something.

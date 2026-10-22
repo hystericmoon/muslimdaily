@@ -39,6 +39,23 @@ class TakhrijTest(unittest.TestCase):
         self.assertEqual(import_hisn.split_takhrij("Lihat Zadul Ma'ad."), [])
 
 
+class TidyArabicTest(unittest.TestCase):
+    # Neutral strings: only the markers under test are real; no dua text is used.
+    def test_verse_separator_becomes_ayah_sign(self):
+        self.assertEqual(import_hisn.tidy_arabic("ا* ب *ج", None), "ا ۝ ب ۝ ج")
+
+    def test_count_note_dropped_only_when_badge_matches(self):
+        self.assertEqual(import_hisn.tidy_arabic("ا (ثَلاَثَ مَرَّاتٍ)", 3), "ا")
+        self.assertEqual(import_hisn.tidy_arabic("ا (ثلاث مرات)", None), "ا (ثلاث مرات)")
+        self.assertEqual(import_hisn.tidy_arabic("ا (عشر مرات)", 3), "ا (عشر مرات)")
+
+    def test_conditional_note_is_kept(self):
+        self.assertEqual(import_hisn.tidy_arabic("ا (ثلاث مرات إذا أصبح)", 3), "ا (ثلاث مرات إذا أصبح)")
+
+    def test_full_stop_after_quran_bracket_dropped(self):
+        self.assertEqual(import_hisn.tidy_arabic("﴿ا﴾. ب", None), "﴿ا﴾ ب")
+
+
 class GradeTest(unittest.TestCase):
     def test_stated_verdicts(self):
         self.assertEqual(import_hisn.albani_grade("dinyatakan hasan oleh Al-Albani"), "hasan")
