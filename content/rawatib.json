@@ -1,0 +1,180 @@
+{
+  "content_version": 2,
+  "fard": [
+    {
+      "id": "fard_fajr",
+      "prayer": "FAJR",
+      "rakah": 2
+    },
+    {
+      "id": "fard_dhuhr",
+      "prayer": "DHUHR",
+      "rakah": 4
+    },
+    {
+      "id": "fard_asr",
+      "prayer": "ASR",
+      "rakah": 4
+    },
+    {
+      "id": "fard_maghrib",
+      "prayer": "MAGHRIB",
+      "rakah": 3
+    },
+    {
+      "id": "fard_isha",
+      "prayer": "ISHA",
+      "rakah": 4
+    },
+    {
+      "id": "fard_jumuah",
+      "prayer": "JUMUAH",
+      "rakah": 2
+    }
+  ],
+  "rawatib": [
+    {
+      "id": "fajr_before",
+      "prayer": "FAJR",
+      "position": "BEFORE",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": false,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "dhuhr_before_4",
+      "prayer": "DHUHR",
+      "position": "BEFORE",
+      "rakah": 4,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": "dhuhr_qabliyah",
+      "variant_label": "4 rakaat",
+      "default_variant": true
+    },
+    {
+      "id": "dhuhr_before_2",
+      "prayer": "DHUHR",
+      "position": "BEFORE",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": "dhuhr_qabliyah",
+      "variant_label": "2 rakaat",
+      "default_variant": false
+    },
+    {
+      "id": "dhuhr_after",
+      "prayer": "DHUHR",
+      "position": "AFTER",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "maghrib_after",
+      "prayer": "MAGHRIB",
+      "position": "AFTER",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "isha_after",
+      "prayer": "ISHA",
+      "position": "AFTER",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "asr_before",
+      "prayer": "ASR",
+      "position": "BEFORE",
+      "rakah": 4,
+      "tier": "GHAIRU_MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "maghrib_before",
+      "prayer": "MAGHRIB",
+      "position": "BEFORE",
+      "rakah": 2,
+      "tier": "GHAIRU_MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "between_adhan_iqamah",
+      "prayer": null,
+      "position": "BEFORE",
+      "rakah": null,
+      "tier": "GHAIRU_MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": null,
+      "variant_label": null,
+      "default_variant": false
+    },
+    {
+      "id": "jumuah_after_home",
+      "prayer": "JUMUAH",
+      "position": "AFTER",
+      "rakah": 2,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": "jumuah_badiyah",
+      "variant_label": "di rumah",
+      "default_variant": true
+    },
+    {
+      "id": "jumuah_after_masjid",
+      "prayer": "JUMUAH",
+      "position": "AFTER",
+      "rakah": 4,
+      "tier": "MUAKKADAH",
+      "evidence": [],
+      "notes": null,
+      "hidden_when_travelling": true,
+      "variant_group": "jumuah_badiyah",
+      "variant_label": "di masjid",
+      "default_variant": true
+    }
+  ]
+}

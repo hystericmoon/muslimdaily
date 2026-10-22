@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mihrab arch with an open centre, sized to the adaptive-icon safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="@color/launcher_foreground"
+        android:fillType="evenOdd"
+        android:pathData="M37,77 L37,52 C37,42 45,35.5 54,31 C63,35.5 71,42 71,52 L71,77 Z M43.5,77 L43.5,53 C43.5,46.5 48,42 54,38.5 C60,42 64.5,46.5 64.5,53 L64.5,77 Z" />
+    <path
+        android:fillColor="@color/launcher_foreground"
+        android:pathData="M33,77 L75,77 L75,81 L33,81 Z" />
+</vector>

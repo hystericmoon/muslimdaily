@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Indonesian has no grammatical plural; quantity strings are only used where English may follow. -->
+    <issue id="PluralsCandidate" severity="ignore" />
+    <!-- Versions are pinned deliberately and upgraded in reviewed batches. -->
+    <issue id="GradleDependency" severity="informational" />
+    <issue id="NewerVersionAvailable" severity="informational" />
+    <issue id="AndroidGradlePluginVersion" severity="informational" />
+</lint>

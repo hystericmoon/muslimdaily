@@ -1,0 +1,8 @@
+{
+  "name": "muslimdaily-icons",
+  "private": true,
+  "description": "Material Symbols source SVGs for tools/icons/build_icons.py",
+  "dependencies": {
+    "@material-symbols/svg-300": "0.48.1"
+  }
+}
