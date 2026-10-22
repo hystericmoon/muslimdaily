@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.core.designsystem.component
 
+import androidx.compose.foundation.layout.Box
 import id.haho.muslimdaily.core.designsystem.glass.popOn
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,6 +74,10 @@ fun TierBadge(tier: Tier, modifier: Modifier = Modifier) {
 /**
  * A whole-row toggle with a trailing checkbox. The row is the touch target (≥ 48dp) and TalkBack
  * reads it as one checkbox with [label].
+ *
+ * The checkbox sits at the top, so it stays level with the row's title however many lines
+ * (rak'ah count, badges, notes) follow. Pad the title with [checkRowTitleInset] to centre its
+ * first line on the checkbox.
  */
 @Composable
 fun CheckRow(
@@ -84,11 +92,25 @@ fun CheckRow(
             .fillMaxWidth()
             .heightIn(min = minHeight)
             .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.Top,
     ) {
         content()
-        Checkbox(checked = checked, onCheckedChange = null, modifier = Modifier.popOn(checked))
+        // A display-only Checkbox has no touch size of its own; the 48dp slot puts its centre on
+        // CheckRowAnchor, where titles (and timeline dots) are centred.
+        Box(Modifier.size(CheckRowAnchor * 2), contentAlignment = Alignment.Center) {
+            Checkbox(checked = checked, onCheckedChange = null, modifier = Modifier.popOn(checked))
+        }
     }
+}
+
+/** Centre of the checkbox's 48dp touch area, measured from the top of a [CheckRow]. */
+val CheckRowAnchor: Dp = 24.dp
+
+/** Top padding that centres the first line of [style] on the [CheckRow] checkbox. */
+@Composable
+fun checkRowTitleInset(style: TextStyle): Dp {
+    val lineHeight = with(LocalDensity.current) { style.lineHeight.toDp() }
+    return (CheckRowAnchor - lineHeight / 2).coerceAtLeast(0.dp)
 }
 
 /** A quiet explanatory note with a leading icon. */

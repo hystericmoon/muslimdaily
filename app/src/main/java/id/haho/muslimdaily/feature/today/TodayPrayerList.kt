@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.today
 
+import id.haho.muslimdaily.core.designsystem.component.checkRowTitleInset
+import id.haho.muslimdaily.core.designsystem.component.CheckRowAnchor
 import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -236,7 +238,7 @@ private fun TimelineStepRow(
     val hasEvidence = sunnah?.line?.entries?.any { e -> e.evidence.any { it.book.isNotBlank() } } == true
     val hasExtras = notes != null || hasEvidence
     Column(Modifier.fillMaxWidth().padding(start = AppTheme.spacing.md)) {
-        // The dot is centred on the checklist row itself, level with its checkbox.
+        // Dot, title and checkbox share one line: the step's first line.
         Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
             Rail(isFirst, isLast && !hasExtras, emphasised = step is TimelineStep.Obligatory)
             CheckRow(
@@ -245,7 +247,12 @@ private fun TimelineStepRow(
                 modifier = Modifier.padding(start = AppTheme.spacing.md, end = AppTheme.spacing.xs),
                 minHeight = AppTheme.dimens.largeTouchTarget,
             ) {
-                Column(Modifier.weight(1f).padding(vertical = AppTheme.spacing.sm)) {
+                Column(
+                    Modifier.weight(1f).padding(
+                        top = checkRowTitleInset(MaterialTheme.typography.titleSmall),
+                        bottom = AppTheme.spacing.sm,
+                    ),
+                ) {
                     when (step) {
                         is TimelineStep.Obligatory -> {
                             Text(stringResource(R.string.rawatib_fard), style = MaterialTheme.typography.titleSmall)
@@ -333,7 +340,11 @@ private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
     val dotColor = if (emphasised) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
     Column(Modifier.fillMaxHeight().width(AppTheme.dimens.timelineDot), horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(Modifier.weight(1f).width(AppTheme.dimens.divider * 2).background(if (isFirst) lineColor.copy(alpha = 0f) else lineColor))
+        // Dot centred on the checkbox anchor, i.e. level with the step's title.
+        Box(
+            Modifier.height(CheckRowAnchor - AppTheme.dimens.timelineDot / 2).width(AppTheme.dimens.divider * 2)
+                .background(if (isFirst) lineColor.copy(alpha = 0f) else lineColor),
+        )
         Box(Modifier.size(AppTheme.dimens.timelineDot).background(dotColor, CircleShape))
         Box(Modifier.weight(1f).width(AppTheme.dimens.divider * 2).background(if (isLast) lineColor.copy(alpha = 0f) else lineColor))
     }
@@ -418,7 +429,12 @@ private fun SunnahWindowRow(
         minHeight = AppTheme.dimens.largeTouchTarget,
         modifier = Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.xs),
     ) {
-        Column(Modifier.weight(1f).padding(vertical = AppTheme.spacing.sm)) {
+        Column(
+            Modifier.weight(1f).padding(
+                top = checkRowTitleInset(MaterialTheme.typography.titleMedium),
+                bottom = AppTheme.spacing.sm,
+            ),
+        ) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
                 Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.align(Alignment.CenterVertically))
                 if (active) {
