@@ -1,5 +1,8 @@
 package id.haho.muslimdaily.feature.duas.event
 
+import id.haho.muslimdaily.core.designsystem.glass.glassSegmentedColors
+import id.haho.muslimdaily.core.ui.isLargeFontScale
+import androidx.compose.ui.text.style.TextAlign
 import id.haho.muslimdaily.core.designsystem.glass.enterReveal
 import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
 import androidx.compose.foundation.layout.Arrangement
@@ -98,13 +101,18 @@ fun EventContent(
         item(key = "mode") {
             Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
                 val options = listOf(false to R.string.event_full_set, true to R.string.event_my_set)
+                // At large font sizes the check mark leaves too little room for the label.
+                val large = isLargeFontScale()
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
                     options.forEachIndexed { i, (value, label) ->
+                        val selected = state.useMySet == value
                         SegmentedButton(
-                            selected = state.useMySet == value,
+                            selected = selected,
                             onClick = { onUseMySet(value) },
                             shape = SegmentedButtonDefaults.itemShape(i, options.size),
-                            label = { Text(stringResource(label), maxLines = 1) },
+                            colors = glassSegmentedColors(),
+                            icon = { if (!large) SegmentedButtonDefaults.Icon(selected) },
+                            label = { Text(stringResource(label), maxLines = 2, textAlign = TextAlign.Center) },
                         )
                     }
                 }

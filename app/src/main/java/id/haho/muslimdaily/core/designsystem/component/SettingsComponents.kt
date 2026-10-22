@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.core.designsystem.component
 
+import id.haho.muslimdaily.core.designsystem.glass.glassSegmentedColors
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -237,6 +238,7 @@ fun <T> SegmentedRow(
                     onClick = { onSelect(option) },
                     shape = SegmentedButtonDefaults.itemShape(i, options.size),
                     label = { Text(text, maxLines = 1) },
+                    colors = glassSegmentedColors(),
                     modifier = Modifier.semantics { contentDescription = "$title: $text" },
                 )
             }

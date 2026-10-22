@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.core.designsystem.glass
 
+import androidx.compose.material3.SegmentedButtonColors
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
@@ -281,6 +283,7 @@ fun GlassBottomSheet(
         sheetState = sheetState,
         shape = shape,
         containerColor = g.sheet,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         content = content,
     )
 }
@@ -309,3 +312,11 @@ fun GlassAlertDialog(
         containerColor = g.sheet,
     )
 }
+
+/** Segmented buttons on glass: clear when unselected so the card shows through. */
+@Composable
+fun glassSegmentedColors(): SegmentedButtonColors = SegmentedButtonDefaults.colors(
+    activeContainerColor = Glass.colors.tinted,
+    activeContentColor = Glass.colors.onTinted,
+    inactiveContainerColor = Color.Transparent,
+)

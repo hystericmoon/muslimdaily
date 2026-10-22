@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.memorize.session
 
+import androidx.compose.ui.graphics.Color
 import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
 import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
 import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
@@ -139,7 +140,11 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
             }
         }
         val steps = Step.entries
-        PrimaryScrollableTabRow(selectedTabIndex = state.step.ordinal, edgePadding = AppTheme.dimens.screenGutter) {
+        PrimaryScrollableTabRow(
+            selectedTabIndex = state.step.ordinal,
+            edgePadding = AppTheme.dimens.screenGutter,
+            containerColor = Color.Transparent,
+        ) {
             steps.forEach { step ->
                 Tab(
                     selected = state.step == step,
