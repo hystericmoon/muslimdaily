@@ -56,6 +56,9 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
+import java.time.Duration
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -194,6 +197,9 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
     ) {
         item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
         item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = gutter).enterReveal(0)) }
+        data.ramadan?.let { r ->
+            item(key = "ramadan") { RamadanCardView(r, data, { actions.onOpenEvent("iftar") }, Modifier.padding(start = gutter, end = gutter, top = AppTheme.spacing.md).enterReveal(1)) }
+        }
         data.travelSuggestionKm?.let { km ->
             item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(gutter)) }
         }
@@ -511,3 +517,54 @@ private fun TodayPreview() = PreviewSurface {
 private fun TodayNoLocationPreview() = PreviewSurface {
     TodayScreen(TodayUiState.NoLocation, TodayActions())
 }
+
+private val CrescentGold = androidx.compose.ui.graphics.Color(0xFFC9A227)
+
+/** Ramadan: day N, when suhur ends and when to break the fast, with a countdown to the next. */
+@Composable
+private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> Unit, modifier: Modifier = Modifier) {
+    val time = rememberTimeFormatter()
+    val suhur = r.suhurNow(data.now)
+    GlassCard(modifier.fillMaxWidth()) {
+        Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(AppTheme.dimens.icon))
+                Text(
+                    stringResource(R.string.ramadan_day, r.day),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.semantics { heading() },
+                )
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+                RamadanTime(stringResource(R.string.ramadan_suhur), time.format(r.suhurEnds, data.zone), active = suhur, Modifier.weight(1f))
+                RamadanTime(stringResource(R.string.ramadan_iftar), time.format(r.iftar, data.zone), active = !suhur, Modifier.weight(1f))
+            }
+            val left = Duration.between(data.now, if (suhur) r.suhurEnds else r.iftar)
+            Text(
+                stringResource(if (suhur) R.string.ramadan_suhur_left else R.string.ramadan_iftar_left, durationLabel(left)),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+            )
+            GlassTonalButton(onClick = onIftarDua) {
+                Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(AppTheme.dimens.smallIcon))
+                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Text(stringResource(R.string.ramadan_iftar_dua))
+            }
+        }
+    }
+}
+
+@Composable
+private fun RamadanTime(label: String, clock: String, active: Boolean, modifier: Modifier = Modifier) {
+    Column(
+        modifier
+            .clip(MaterialTheme.shapes.large)
+            .background(if (active) Glass.colors.tinted else androidx.compose.ui.graphics.Color.Transparent)
+            .padding(AppTheme.spacing.md)
+            .semantics(mergeDescendants = true) {},
+    ) {
+        Text(label, style = MaterialTheme.typography.labelLarge, color = if (active) Glass.colors.onTinted else MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(clock, style = MaterialTheme.typography.headlineMedium, color = if (active) Glass.colors.onTinted else MaterialTheme.colorScheme.onSurface)
+    }
+}
+

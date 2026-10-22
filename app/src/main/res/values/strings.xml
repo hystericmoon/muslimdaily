@@ -640,4 +640,12 @@
     <string name="reminders_fasting_title">Pengingat puasa sunnah</string>
     <string name="reminders_fasting_summary">Malam sebelumnya, beserta waktu Subuh</string>
     <string name="reminders_fasting_weekly">Termasuk Senin dan Kamis</string>
+
+    <!-- Ramadan -->
+    <string name="ramadan_day">Ramadan hari ke-%d</string>
+    <string name="ramadan_suhur">Akhir sahur</string>
+    <string name="ramadan_iftar">Berbuka</string>
+    <string name="ramadan_suhur_left">Sahur berakhir %s lagi</string>
+    <string name="ramadan_iftar_left">Berbuka %s lagi</string>
+    <string name="ramadan_iftar_dua">Doa berbuka</string>
 </resources>

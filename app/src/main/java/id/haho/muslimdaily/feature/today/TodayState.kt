@@ -47,7 +47,17 @@ data class TodayData(
     val adhkar: AdhkarCard,
     val checked: Set<String>,
     val travelSuggestionKm: Int?,
+    /** Set during Ramadan, and on its eve after Maghrib. */
+    val ramadan: RamadanCard? = null,
 )
+
+/**
+ * The fasting day in Ramadan: today until Maghrib, then tomorrow. Suhur ends at Subuh (the app
+ * shows no imsak); the fast is broken at Maghrib.
+ */
+data class RamadanCard(val day: Int, val suhurEnds: Instant, val iftar: Instant) {
+    fun suhurNow(now: Instant): Boolean = now.isBefore(suhurEnds)
+}
 
 data class NextPrayer(
     val prayer: Prayer,
@@ -146,8 +156,16 @@ object TodayStateBuilder {
                 adhkar = adhkarCard(now, today, tomorrow, runProgress),
                 checked = checked,
                 travelSuggestionKm = travelSuggestionKm,
+                ramadan = ramadanCard(now, date, today, tomorrow, settings.hijriAdjustment),
             ),
         )
+    }
+
+    private fun ramadanCard(now: Instant, date: LocalDate, today: PrayerSchedule, tomorrow: PrayerSchedule, hijriAdjustment: Int): RamadanCard? {
+        val (day, schedule) = if (now.isBefore(today.maghrib)) date to today else date.plusDays(1) to tomorrow
+        val hijri = HijriCalendar.of(day, hijriAdjustment)
+        if (hijri.month != 9) return null
+        return RamadanCard(hijri.day, schedule.fajr, schedule.maghrib)
     }
 
     private fun PrayerTimeSlot.toPrayer(): Prayer? = when (this) {
