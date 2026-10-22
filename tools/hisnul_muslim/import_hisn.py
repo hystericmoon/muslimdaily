@@ -80,6 +80,97 @@ CHAPTER_EVENTS: dict[int, list[tuple[str, str, str]]] = {
     96: [("situational", "travel", "travel")],
     97: [("situational", "travel", "travel")],
     105: [("situational", "travel", "travel")],
+    # Added with the full import (chapters 131-132 describe how the Prophet counted tasbih and
+    # hold no dua, so they stay in the staging file).
+    18: [("prayer", "itidal", "itidal")],
+    20: [("prayer", "between_sujud", "between_sujud")],
+    21: [("prayer", "tilawah", "tilawah")],
+    32: [("prayer", "witr", "witr")],
+    33: [("prayer", "witr", "witr")],
+    29: [("daily", "night", "night")],
+    30: [("daily", "night", "night")],
+    31: [("daily", "night", "night")],
+    77: [("daily", "sneezing", "sneeze")],
+    78: [("daily", "sneezing", "sneeze")],
+    98: [("daily", "market", "market")],
+    71: [("daily", "eating", "eating")],
+    72: [("daily", "eating", "eating")],
+    76: [("daily", "eating", "eating")],
+    36: [("situational", "fear", "fear")],
+    37: [("situational", "fear", "fear")],
+    38: [("situational", "fear", "fear")],
+    39: [("situational", "fear", "fear")],
+    94: [("situational", "fear", "fear")],
+    125: [("situational", "fear", "fear")],
+    126: [("situational", "fear", "fear")],
+    40: [("situational", "waswas", "waswas")],
+    42: [("situational", "waswas", "waswas")],
+    44: [("situational", "waswas", "waswas")],
+    45: [("situational", "waswas", "waswas")],
+    41: [("situational", "debt", "debt")],
+    46: [("situational", "news", "news")],
+    53: [("situational", "news", "news")],
+    83: [("situational", "news", "news")],
+    123: [("situational", "news", "news")],
+    124: [("situational", "news", "news")],
+    50: [("situational", "illness", "illness")],
+    61: [("situational", "wind", "wind")],
+    67: [("situational", "new_moon", "new_moon")],
+    82: [("situational", "anger", "anger")],
+    110: [("situational", "animals", "animals")],
+    111: [("situational", "animals", "animals")],
+    99: [("situational", "travel", "travel")],
+    100: [("situational", "travel", "travel")],
+    101: [("situational", "travel", "travel")],
+    102: [("situational", "travel", "travel")],
+    103: [("situational", "travel", "travel")],
+    104: [("situational", "travel", "travel")],
+    106: [("situational", "travel", "travel")],
+    107: [("dhikr", "shalawat", "shalawat")],
+    129: [("dhikr", "istighfar", "istighfar")],
+    130: [("dhikr", "tasbih", "tasbih")],
+    88: [("dhikr", "protection", "protection")],
+    92: [("dhikr", "protection", "protection")],
+    68: [("fasting", "iftar", "iftar")],
+    73: [("fasting", "iftar", "iftar")],
+    74: [("fasting", "fasting_manners", "fasting")],
+    75: [("fasting", "fasting_manners", "fasting")],
+    79: [("family", "marriage", "marriage")],
+    80: [("family", "marriage", "marriage")],
+    81: [("family", "marriage", "marriage")],
+    47: [("family", "children", "children")],
+    48: [("family", "children", "children")],
+    108: [("social", "salam", "salam")],
+    109: [("social", "salam", "salam")],
+    84: [("social", "gathering", "gathering")],
+    85: [("social", "gathering", "gathering")],
+    86: [("social", "manners", "manners")],
+    87: [("social", "manners", "manners")],
+    89: [("social", "manners", "manners")],
+    90: [("social", "manners", "manners")],
+    91: [("social", "manners", "manners")],
+    93: [("social", "manners", "manners")],
+    112: [("social", "manners", "manners")],
+    113: [("social", "manners", "manners")],
+    114: [("social", "manners", "manners")],
+    52: [("death", "funeral", "funeral")],
+    54: [("death", "funeral", "funeral")],
+    55: [("death", "funeral", "funeral")],
+    56: [("death", "funeral", "funeral")],
+    57: [("death", "condolence", "condolence")],
+    58: [("death", "grave", "grave")],
+    59: [("death", "grave", "grave")],
+    60: [("death", "grave", "grave")],
+    115: [("hajj", "hajj", "hajj")],
+    116: [("hajj", "hajj", "hajj")],
+    117: [("hajj", "hajj", "hajj")],
+    118: [("hajj", "hajj", "hajj")],
+    119: [("hajj", "hajj", "hajj")],
+    120: [("hajj", "hajj", "hajj")],
+    121: [("hajj", "hajj", "hajj")],
+    122: [("hajj", "hajj", "hajj")],
+    127: [("hajj", "qurban", "qurban")],
+    128: [("hajj", "qurban", "qurban")],
 }
 
 TAKHRIJ = re.compile(r"\bHR\.?\s+(?:Imam\s+)?([^.]*(?:\.\s*\d[^.]*)*)")
@@ -242,17 +333,31 @@ def merge(rows: list[dict], weak: dict[int, dict], arabic: dict[int, dict]) -> t
         return "[PLACEHOLDER" in r.get("arabic", "") or r.get("notes", "").startswith("Hisnul Muslim no.")
 
     kept = [r for r in existing if (r["category"], r["event"]) not in replaced or not imported(r)]
-    taken = {r["id"] for r in kept}
+    # Ids must stay stable across re-imports: the app keys personal sets, hidden duas and
+    # memorisation progress by them. An entry already in an event keeps its id (and audio);
+    # only new entries get new ids. Order still follows the book.
+    previous = {
+        (r["event"], m.group(1)): r
+        for r in existing
+        if imported(r) and (m := re.match(r"Hisnul Muslim no\. (\d+)", r.get("notes", "")))
+    }
+    taken = {r["id"] for r in kept} | {r["id"] for r in previous.values()}
     added = []
     for (category, event, prefix), items in by_event.items():
         start = 1 + sum(1 for r in kept if r["event"] == event)
-        for i, r in enumerate(items, start=start):
-            rid = f"{prefix}_{i:02d}"
-            while rid in taken:
-                i += 1
+        for order, r in enumerate(items, start=start):
+            prev = previous.get((event, r.get("notes", "").split(" | ")[0].removeprefix("Hisnul Muslim no. ")))
+            if prev:
+                rid = prev["id"]
+                r["audio_file"] = r.get("audio_file") or prev.get("audio_file", "")
+            else:
+                i = order
                 rid = f"{prefix}_{i:02d}"
-            taken.add(rid)
-            r.update({"id": rid, "order": str(i)})
+                while rid in taken:
+                    i += 1
+                    rid = f"{prefix}_{i:02d}"
+                taken.add(rid)
+            r.update({"id": rid, "order": str(order)})
             added.append(r)
     with DUAS.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)

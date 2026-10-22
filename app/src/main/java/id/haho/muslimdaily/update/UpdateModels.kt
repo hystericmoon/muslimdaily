@@ -57,7 +57,10 @@ internal fun parseLatestRelease(json: String, currentVersion: String): Available
     val release = runCatching { ReleaseFormat.decodeFromString<ReleaseJson>(json) }.getOrNull() ?: return null
     if (release.draft || release.prerelease) return null
     if (!Versions.isNewer(release.tag, currentVersion)) return null
-    val apk = release.assets.firstOrNull { it.name.endsWith(".apk", ignoreCase = true) } ?: return null
+    // Releases also carry the Wear OS tile ("muslimdaily-wear-…apk"); the phone must never take it.
+    val apk = release.assets.firstOrNull {
+        it.name.endsWith(".apk", ignoreCase = true) && !it.name.contains("-wear-", ignoreCase = true)
+    } ?: return null
     if (!apk.url.startsWith("https://")) return null
     return AvailableUpdate(
         version = release.tag.removePrefix("v"),

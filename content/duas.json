@@ -1,5 +1,5 @@
 {
-  "content_version": 12,
+  "content_version": 14,
   "duas": [
     {
       "id": "wake_01",
@@ -619,6 +619,43 @@
       "phrase_breaks": []
     },
     {
+      "id": "market_01",
+      "category": "daily",
+      "event": "market",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لاِ يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, tiada sekutu bagiNya. BagiNya kerajaan, bagiNya segala pujian. Dia-lah Yang Menghidupkan dan Yang Mematikan. Dia-lah Yang Hidup, tidak akan mati. Di tanganNya kebaikan. Dia-lah Yang Maha kuasa atas segala sesuatu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/291"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": "1/538"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/291, Al-Hakim 1/538, dan Al-Albani menyatakan, hadits tersebut hasan dalam Shahih Ibnu Majah 2/21 dan Shahih At-Tirmidzi 2/152. (Hisnul Muslim no. 209)",
+      "grading": {
+        "grade": "hasan",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_209.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "to_masjid_01",
       "category": "daily",
       "event": "going_to_masjid",
@@ -1034,6 +1071,179 @@
       "virtue": null,
       "audio": {
         "file": "hisn_181.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "eating_05",
+      "category": "daily",
+      "event": "eating",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُم، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Berilah berkah apa yang Engkau rezekikan kepada mereka, ampunilah dan belas kasihanilah mereka.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "3/1615"
+        }
+      ],
+      "reference": "HR. Muslim 3/1615. (Hisnul Muslim no. 182)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_182.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "eating_06",
+      "category": "daily",
+      "event": "eating",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ أَطْعِمْ مَنْ أَطْعَمَنِي، وَاسْقِ مَنْ سَقَانِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Berilah ganti makanan kepada orang yang memberi makan kepadaku dan berilah minuman kepada orang yang memberi minuman kepadaku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "3/126"
+        }
+      ],
+      "reference": "HR. Muslim 3/126. (Hisnul Muslim no. 183)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_183.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "eating_07",
+      "category": "daily",
+      "event": "eating",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ بَارِكْ لَنَا فِي ثَمَرِنَا، وَبَارِكْ لَنَا فِي مَدِينَتِنَا، وَبَارِكْ لَنَا فِي صَاعِنَا، وَبَارِكْ لَنَا فِي مُدِّنَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Berilah berkah buah-buahan kami, berilah berkah kota kami, berilah berkah gantangan kami (sehingga di antara kami tidak sering mengurangi timbangan) dan berilah berkah mud kami.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/1000"
+        }
+      ],
+      "reference": "HR. Muslim 2/1000. (Hisnul Muslim no. 187)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_187.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "sneeze_01",
+      "category": "daily",
+      "event": "sneezing",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((إِذَا عَطَسَ أَحَدُكُم فَلْيَقُلِ الْحَمْدُ لِلَّهِ، وَلْيَقُلْ لَهُ أَخُوهُ أَوْ صَاحِبُهُ: يَرْحَمُكَ اللَّهُ، فَإِذَا قَالَ لَهُ: يَرحَمُكَ اللَّهُ، فَلْيَقُلْ: يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda : Apabila seseorang di antara kamu bersin, hendaklah mengucapkan: (Segala puji bagi Allah), lantas saudara atau temannya mengucapkan: (Semoga Allah memberi rahmat kepadaMu). Bila teman atau saudaranya mengucapkan demikian, bacalah: (Semoga Allah memberi petunjuk kepadamu dan memperbaiki keadaanmu.)",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/125"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/125. (Hisnul Muslim no. 188)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_188.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "sneeze_02",
+      "category": "daily",
+      "event": "sneezing",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "(Semoga Allah memberi hidayah kepadamu dan memperbaiki hatimu).",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/82"
+        },
+        {
+          "book": "Ahmad",
+          "no": "4/400"
+        },
+        {
+          "book": "Abu Daud",
+          "no": "4/308"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/82, Ahmad 4/400, Abu Daud 4/308. Lihat pula Shahih At- Tirmidzi 2/354.. (Hisnul Muslim no. 189)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_189.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1504,6 +1714,146 @@
       "phrase_breaks": []
     },
     {
+      "id": "night_01",
+      "category": "daily",
+      "event": "night",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ الْوَاحِدُ الْقَهّارُ، رَبُّ السَّمَوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا الْعَزيزُ الْغَفَّارُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Tiada Tuhan (yang berhak disembah) kecuali Allah Yang Maha Esa, Maha Perkasa, Tuhan yang menguasai langit dan bumi dan apa yang di antara keduanya, Yang Maha Mulia lagi Maha Pengampun.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        },
+        {
+          "book": "menurut pendapatnya",
+          "no": ""
+        },
+        {
+          "book": "hadits di atas adalah shahih",
+          "no": ""
+        }
+      ],
+      "reference": "Beliau membaca do’a ini ketika berbalik dari satu sisi ke sisi lain pada malam hari. HR. Al-Hakim, menurut pendapatnya, hadits di atas adalah shahih, Imam Adz- Dzahabi setuju pendapatnya 1/540 dan An-Nasai dalam ‘Amalul Yaum wal Lailah, serta Ibnus Sunni. Lihat juga Shahihul Jami’ 4/231. (Hisnul Muslim no. 112)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_112.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "night_02",
+      "category": "daily",
+      "event": "night",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ غَضَبِهِ وَعِقَابِهِ، وَشَرِّ عِبَادِهِ، وَمِنْ هَمَزَاتِ الشَّياطِينِ وَأَنْ يَحْضُرُونِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku berlindung dengan kalimat Allah yang sempurna dari kemarahan dan siksaanNya, serta kejahatan hamba-hambaNya, dan dari godaan setan (bisikannya) serta jangan sampai mereka hadir (kepadaku).”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/12"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/12. Dan lihat Shahih At-Tirmidzi 3/171. (Hisnul Muslim no. 113)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_113.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "night_03",
+      "category": "daily",
+      "event": "night",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "[ (يَنْفُثُ عَنْ يَسَارِهِ (ثلاثاً)) - (يَسْتَعِيذُ بِاللَّهِ مِنَ الشَّيطَانِ وَمِنْ شَرِّ مَا رَأَى (ثَلاَثَ مَرَّاتٍ)) - ((لاَ يُحَدِّثْ بِهَا أَحَداً)) - ((يَــتَحَوَّلُ عَنْ جَنْبِهِ الَّذِي كَانَ عَلَيْهِ)) ]",
+      "is_quran": false,
+      "translations": {
+        "id": "Lakukan hal-hal berikut :  Meniup (seperti meludah) ke kirinya tiga kali.  Minta perlindungan kepada Allah dari godaan syaitan dan kejelekan mimpinya, tiga kali.  Tidak membicarakan mimpinya kepada orang lain.  Membalikkan tubuhnya (mengubah posisi tidur).",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/1772"
+        }
+      ],
+      "reference": "HR. Muslim 4/1772. HR. Muslim 4/1772-1773. HR. Muslim 4/1772. HR. Muslim 4/1773. (Hisnul Muslim no. 114)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_114.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "night_04",
+      "category": "daily",
+      "event": "night",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((ويَقُومُ يُصَلِّي إِنْ أَرَادَ ذَلِكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Berdiri dan melakukan shalat, bila mau.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/1773"
+        }
+      ],
+      "reference": "HR. Muslim 4/1773. (Hisnul Muslim no. 115)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_115.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "istiftah_01",
       "category": "prayer",
       "event": "istiftah",
@@ -1870,6 +2220,105 @@
       "phrase_breaks": []
     },
     {
+      "id": "itidal_01",
+      "category": "prayer",
+      "event": "itidal",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah mendengar pujian orang yang memujiNya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "2/282"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dalam Fathul Baari 2/282. (Hisnul Muslim no. 38)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_038.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "itidal_02",
+      "category": "prayer",
+      "event": "itidal",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((رَبَّنَا وَلَكَ الْحَمْدُ، حَمْداً كَثيراً طَيِّباً مُبارَكاً فِيهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Wahai Tuhan kami, bagiMu segala puji, aku memujiMu dengan pujian yang banyak, yang baik dan penuh dengan berkah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "2/284"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dalam Fathul Baari 2/284. (Hisnul Muslim no. 39)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_039.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "itidal_03",
+      "category": "prayer",
+      "event": "itidal",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((مِلْءَ السَّمَوَاتِ وَمِلْءَ الأَرْضِ، وَمَا بَيْنَهُمَا، وَمِلْءَ مَا شِئْتَ مِنْ شَيءٍ بَعْدُ. أَهلَ الثَّناءِ وَالْمَجْدِ، أَحَقُّ مَا قَالَ الْعَبْدُ، وَكُلُّنَا لَكَ عَبْدٌ. اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الجَدِّ مِنْكَ الجَدُّ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "(Aku memujiMu dengan) pujian sepenuh langit dan sepenuh bumi, sepenuh apa yang di antara keduanya, sepenuh apa yang Engkau kehendaki setelah itu. Wahai Tuhan yang layak dipuji dan diagungkan, Yang paling berhak dikatakan oleh seorang hamba dan kami seluruhnya adalah hambaMu. Ya Allah tidak ada yang dapat menghalangi apa yang Engkau berikan dan tidak ada pula yang dapat memberi apa yang Engkau halangi, tidak bermanfaat kekayaan bagi orang yang memilikinya (kecuali iman dan amal shalihnya), hanya dariMu kekayaan itu.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/346"
+        }
+      ],
+      "reference": "HR. Muslim 1/346. (Hisnul Muslim no. 40)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_040.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "sujud_01",
       "category": "prayer",
       "event": "sujud",
@@ -2116,6 +2565,76 @@
       "virtue": null,
       "audio": {
         "file": "hisn_047.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "between_sujud_01",
+      "category": "prayer",
+      "event": "between_sujud",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Wahai Tuhanku, ampunilah dosaku, wahai Tuhanku, ampunilah dosaku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "1/231"
+        }
+      ],
+      "reference": "HR. Abu Dawud 1/231, lihat Shahih Ibnu Majah 1/148. (Hisnul Muslim no. 48)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_048.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "between_sujud_02",
+      "category": "prayer",
+      "event": "between_sujud",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَاجْبُرْنِي، وَعَافِنِي، وَارْزُقْنِي، وَارْفَعْنِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah, ampunilah dosaku, berilah rahmat kepadaku, tunjukkanlah aku (ke jalan yang benar), cukupkanlah aku, selamatkan aku (tubuh sehat dan keluarga terhindar dari musibah), berilah aku rezeki (yang halal) dan angkatlah derajatku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ashhabus Sunan",
+          "no": ""
+        },
+        {
+          "book": "kecuali An-Nasai",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ashhabus Sunan, kecuali An-Nasai. Lihat Shahih Tirmidzi 1/90 dan Shahih Ibnu Majah 1/148. (Hisnul Muslim no. 49)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_049.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2898,6 +3417,232 @@
       "virtue": null,
       "audio": {
         "file": "hisn_073.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "witr_01",
+      "category": "prayer",
+      "event": "witr",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ؛ فَإِنَّكَ تَقْضِي وَلاَ يُقْضَى عَلَيْكَ، إِنَّهُ لاَ يَذِلُّ مَنْ وَالَيْتَ، [وَلاَ يَعِزُّ مَنْ عَادَيْتَ]، تَبارَكْتَ رَبَّنا وَتَعَالَيْتَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Berilah aku petunjuk sebagaimana orang yang telah Engkau beri petunjuk, berilah aku perlindungan (dari penyakit dan apa yang tidak disukai) sebagaimana orang yang telah Engkau lindungi, sayangilah aku sebagaimana orang yang telah Engkau sayangi. Berilah berkah apa yang Engkau berikan kepadaku, jauhkan aku dari kejelekan apa yang Engkau takdirkan, sesungguhnya Engkau yang menjatuhkan qadha, dan tidak ada orang yang memberikan hukuman kepadaMu. Sesungguhnya orang yang Engkau bela tidak akan terhina, dan orang yang Engkau musuhi tidak akan mulia. Maha Suci Engkau, wahai Tuhan kami dan Maha Tinggi Engkau.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Empat penyusun kitab Sunan",
+          "no": ""
+        },
+        {
+          "book": "Ahmad",
+          "no": ""
+        },
+        {
+          "book": "Ad-Darimi",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Empat penyusun kitab Sunan, Ahmad, Ad-Darimi, Al-Hakim dan Al- Baihaqi. Sedang doa yang ada di antara dua kurung, menurut riwayat Al-Baihaqi. Lihat Shahih At-Tirmidzi 1/144, Shahih Ibnu Majah 1/194 dan Irwa’ul Ghalil, oleh Al- Albani 2/172. (Hisnul Muslim no. 116)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_116.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "witr_02",
+      "category": "prayer",
+      "event": "witr",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ، وَأَعُــــوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya, Allah, sesungguhnya aku berlindung dengan kerelaanMu dari kemarahanMu, dan dengan keselamatanMu dari siksaMu. Aku berlindung kepadaMu dari ancamanMu. Aku tidak mampu menghitung pujian dan sanjungan kepadaMu, Engkau adalah sebagaimana yang Engkau sanjungkan kepada diriMu sendiri.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Empat peenyusun kitab Sunan",
+          "no": ""
+        },
+        {
+          "book": "Imam Ahmad",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Empat peenyusun kitab Sunan dan Imam Ahmad. Lihat Shahih At-Tirmidzi 3/180 dan Shahih Ibnu Majah 1/194 serta kitab Irwa’ul Ghalil 2/175. (Hisnul Muslim no. 117)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_117.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "witr_03",
+      "category": "prayer",
+      "event": "witr",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِيَّاكَ نعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَى وَنَحْفِدُ، نَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ بِالكَافِرِينَ مُلْحَقٌ. اللَّهُمَّ إِنَّا نَسْتَعينُكَ، وَنَسْتَغْفِرُكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ، وَلاَ نَكْفُرُكَ، وَنُؤْمِنُ بِكَ، وَنَخْضَعُ لَكَ، وَنَخْلَعُ مَنْ يَكْفرُكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! KepadaMu kami menyembah. UntukMu kami melakukan shalat dan sujud. KepadaMu kami berusaha dan melayani. Kami mengharapkan rahmatMu, kami takut pada siksaanMu. Sesungguhnya siksaanMu akan menimpa pada orang- orang kafir. Ya, Allah! Kami minta pertolongan dan minta ampun kepadaMu, kami memuji kebaikanMu, kami tidak ingkar kepada-Mu, kami beriman kepadaMu, kami tunduk padaMu dan berpisah pada orang yang kufur kepadaMu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Baihaqi dalam As-Sunanul Kubra",
+          "no": ""
+        },
+        {
+          "book": "sanadnya menurut pendapat Al- Baihaqi adalah shahih",
+          "no": "2/211"
+        }
+      ],
+      "reference": "HR. Al-Baihaqi dalam As-Sunanul Kubra, sanadnya menurut pendapat Al- Baihaqi adalah shahih 2/211. Syaikh Al-Albani dalam Irwa’ul Ghalil 2/170 berkata: Sanadnya shahih dan mauquf pada Umar. (Hisnul Muslim no. 118)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_118.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "witr_04",
+      "category": "prayer",
+      "event": "witr",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((سُبْحَانَ المَلِكِ القُدُّوسِ)) ثلاثَ مرَّاتٍ والثَّالِثَةُ يَجْهَرُ بها ويَمُدُّ بها صَوتَهُ يقولُ: [رَبِّ الْمَلاَئِكَةِ وَالرُّوحِ])).",
+      "is_quran": false,
+      "translations": {
+        "id": "Subhaanal malikil qudduusi (rabbul malaaikati warruh) tiga kali, sedang yang ketiga, beliau membacanya dengan suara keras dan panjang.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "An-Nasai",
+          "no": "3/244"
+        },
+        {
+          "book": "Ad-Daruquthni",
+          "no": ""
+        },
+        {
+          "book": "beberapa imam hadis yang lain",
+          "no": ""
+        }
+      ],
+      "reference": "HR. An-Nasai 3/244, Ad-Daruquthni dan beberapa imam hadis yang lain. Sedang kalimat antara dua tanda kurung adalah tambahan menurut riwayatnya 2/31. Sanadnya shahih, lihat Zadul Ma’ad yang ditahqiq oleh Syu’aib Al-Arnauth dan Abdul Qadir Al-Arnauth 1/337. (Hisnul Muslim no. 119)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_119.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tilawah_01",
+      "category": "prayer",
+      "event": "tilawah",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ، ﴿فَتَبارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ﴾)).",
+      "is_quran": true,
+      "translations": {
+        "id": "Bersujud wajahku kepada Tuhan yang menciptakannya, yang membelah pendengaran dan penglihatannya dengan Daya dan KekuatanNya, Maha Suci Allah sebaik-baik Pencipta.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "2/474"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 2/474. Ahmad 6/30 dan Al-Hakim. Menurut Al-Hakim, hadits tersebut shahih. Imam Adz-Dzahabi menyetujui pendapatnya 1/220. Sedang tambahannya: Fatabaarakallahu menurut riwayat Adz-Dzahabi sendiri. (Hisnul Muslim no. 50)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_050.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tilawah_02",
+      "category": "prayer",
+      "event": "tilawah",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْراً، وَضَعْ عَنِّي بِهَا وِزْراً، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْراً، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, tulislah untukku dengan sujudku pahala di sisiMu dan ampunilah dengannya akan dosaku, serta jadikanlah simpanan untukku di sisiMu dan terimalah sujudku sebagaimana Engkau telah menerimanya dari hambaMu Dawud.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "2/473"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 2/473, dan Al-Hakim. Menurut Al-Hakim, hadits tersebut shahih. Dan Adz-Dzahabi sependapat dengannya 1/219. (Hisnul Muslim no. 51)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_051.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4293,6 +5038,911 @@
       "phrase_breaks": []
     },
     {
+      "id": "shalawat_01",
+      "category": "dhikr",
+      "event": "shalawat",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((مَنْ صَلَّى عَلَيَّ صَلاَةً صَلَّى اللَّهُ عَلَيْهِ بِهَا عَشْراً)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Barang siapa yang membaca shalawat kepadaku sekali, Allah akan memberikan balasan shalawat kepadanya sepuluh kali.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/288"
+        }
+      ],
+      "reference": "HR. Muslim 1/288. (Hisnul Muslim no. 219)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_219.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "shalawat_02",
+      "category": "dhikr",
+      "event": "shalawat",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((لاَ تَجْعَلُوا قَبْرِي عِيداً وَصَلُّوا عَلَيَّ؛ فَإِنَّ صَلاَتَكُم تَبْلُغُنِي حَيْثُ كُنْتُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Janganlah kamu menjadikan kuburanku sebagai hari raya, dan bacalah shalawatmu padaku, sesungguhnya bacaan shalawatmu akan sampai kepadaku, di mana saja kamu berada.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/218"
+        },
+        {
+          "book": "Ahmad",
+          "no": "2/367"
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/218, Ahmad 2/367, dan Al-Albani menyatakan, hadits tersebut shahih dalam Shahih Abi Dawud 2/383. (Hisnul Muslim no. 220)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_220.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "shalawat_03",
+      "category": "dhikr",
+      "event": "shalawat",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((الْبَخِيلُ مَنْ ذُكِرْتُ عِنْدَهُ فَلَمْ يُصَلِّ عَلَيَّ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Orang yang bakhil adalah orang yang apabila aku disebut, dia tidak membaca shalawat kepadaku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/551"
+        },
+        {
+          "book": "begitu juga imam hadis yang lain",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/551, begitu juga imam hadis yang lain, lihat Shahihul Jami’ 3/25 dan Shahih At-Tirmidzi 3/177. (Hisnul Muslim no. 221)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_221.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "shalawat_04",
+      "category": "dhikr",
+      "event": "shalawat",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم:((إِنَّ لِلَّهِ مَلاَئِكَةً سَيَّاحِينَ فِي الْأَرْضِ يُبَلِّغُونِي مِنْ أُمَّتِي السَّلاَمَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Sesungguhnya Allah mempunyai para malaikat yang senantiasa berkeliling di bumi yang akan menyampaikan salam kepadaku dari umatku”.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "An-Nasa’i",
+          "no": ""
+        },
+        {
+          "book": "Al-Hakim",
+          "no": "2/421"
+        }
+      ],
+      "reference": "HR. An-Nasa’i, Al-Hakim 2/421. Dishahihkan oleh Al-Albani dalam Shahih An- Nasa’i, 1/274. (Hisnul Muslim no. 222)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_222.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "shalawat_05",
+      "category": "dhikr",
+      "event": "shalawat",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((مَا مِنْ أَحَدٍ يُسَلِّمُ عَلَيَّ إِلاَّ رَدَّ اللَّهُ عَلَيَّ رُوحِيَ حَتَّى أَرُدَّ عَلَيْهِ السَّلاَمَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Tidaklah seseorang mengucapkan salam kepadaku kecuali Allah mengembalikan ruhku kepadaku sehingga aku membalas salam (nya).”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 223"
+        }
+      ],
+      "reference": "Abu Daud no. 2041, dihasankan oleh Al-Albani dalam Shahih Abi Daud 1/383.",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_223.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_01",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم: ((وَاللَّهِ إِنِّي لأَسْتَغفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ فِي الْيَوْمِ أَكْثَرَ مِنْ سَبْعِينَ مَرَّةٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Demi Allah! Sesungguhnya aku minta ampun kepada Allah dan bertaubat kepadaNya dalam sehari lebih dari tujuh puluh kali.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "11/101"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 11/101. (Hisnul Muslim no. 248)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_248.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_02",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((يَا أَيُّهَا النَّاسُ تُوبُوا إِلَى اللَّهِ فَإِنِّي أَتُوبُ فِي الْيَوْمِ إِلَيْهِ مِائَةَ مَرَّةٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Wahai manusia! Bertaubatlah kepada Allah, sesungguhnya aku bertaubat kepada-Nya seratus kali dalam sehari.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2076"
+        }
+      ],
+      "reference": "HR. Muslim 4/2076. (Hisnul Muslim no. 249)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_249.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_03",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((مَنْ قَالَ أَسْتَغْفِرُ اللَّهَ الْعَظيمَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ القَيّوُمُ وَأَتُوبُ إِلَيهِ، غَفَرَ اللَّهُ لَهُ وَإِنْ كَانَ فَرَّ مِنَ الزَّحْفِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Barangsiapa yang membaca: ‘Aku minta ampun kepada Allah, tiada Tuhan yang berhak disembah kecuali Dia, Yang Hidup dan terus-menerus mengurus makhlukNya.’ Maka Allah mengampuninya. Sekalipun dia pernah lari dari perang.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/85"
+        },
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/569"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/85, At-Tirmidzi 5/569, Al-Hakim, dan menurut pendapatnya hadits di atas adalah shahih. Imam Adz-Dzahabi menyetujuinya 1/511, Al-Albani menyatakan hadits tersebut adalah shahih. Lihat pula Shahih At-Tirmidzi 3/182, Jami’ul Ushul li ahaditsir Rasul 4/389-390 dengan tahqiq Al-Arnauth. (Hisnul Muslim no. 250)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_250.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_04",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((أَقْرَبُ مَا يَكُونُ الرَّبُّ مِنَ الْعَبْدِ فِي جَوْفِ اللَّيْلِ الآخِرِ فَإِنِ اسْتَطَعْتَ أَنْ تَكُونَ مِمَّنْ يَذْكُرُ اللَّهَ فِي تِلْكَ السَّاعَةِ فَكُنْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Keadaan yang paling dekat antara Tuhan dan hambaNya adalah di tengah malam yang terakhir. Apabila kamu mampu tergolong orang yang dzikir kepada Allah pada saat itu, lakukanlah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        },
+        {
+          "book": "An-Nasa’i",
+          "no": "1/279"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi dan An-Nasa’i 1/279 dan Al-Hakim, lihat Shahih At-Tirmidzi 3/183, Jami’ul Ushul dengan tahqiq Al-Arnauth 4/144. (Hisnul Muslim no. 251)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_251.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_05",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((أَقْرَبُ مَا يَكُونُ الْعَبْدُ مِنْ رَبِّهِ وَهُوَ سَاجِدٌ فَأَكثِرُوا الدُّعَاءَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Seorang hamba berada dalam keadaan yang paling dekat dengan Tuhannya adalah di saat sujud. Oleh karena itu, perbanyaklah doa.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/350"
+        }
+      ],
+      "reference": "HR. Muslim 1/350. (Hisnul Muslim no. 252)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_252.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "istighfar_06",
+      "category": "dhikr",
+      "event": "istighfar",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((إِنَّهُ لَيُغَانُ عَلَى قَلْبِي وَإِنِّي لأَسْتَغْفِرُ اللَّهَ فِي الْيَوْمِ مِائَةَ مَرَّةٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: ‘Sesungguhnya hatiku lupa (tidak ingat kepada Allah) padahal sesungguhnya aku minta ampun kepadaNya dalam sehari seratus kali.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2075"
+        },
+        {
+          "book": "Ibnul Atsir berkata: “Maksud Nabi n lupa”",
+          "no": ""
+        },
+        {
+          "book": "karena beliau senantiasa memperbanyak zikir",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Muslim 4/2075, Ibnul Atsir berkata: “Maksud Nabi n lupa”, karena beliau senantiasa memperbanyak zikir, selalu mendekatkan diri kepadaNya dan waspada. Jadi, apabila sebagian waktu yang lewat tidak melakukan dzikir, maka beliau menganggapnya dosa. Kemudian beliau cepat-cepat membaca istighfar. Lihat Jami’ul Ushul 4/386. (Hisnul Muslim no. 253)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_253.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_01",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَ صلى الله عليه وسلم مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ فِي يَوْمٍ مِائَةَ مَرَّةٍ حُطَّتْ خَطَايَاهُ وَلَوْ كَانَتْ مِثْلَ زَبَدِ الْبَحْر)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Nabi Shallallahu’alaihi wasallam bersabda: Barangsiapa yang membaca: “Maha Suci Allah dan aku memujiNya” dalam sehari seratus kali, maka kesalahannya dihapus sekalipun seperti buih air laut.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": 100,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/168"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2071"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/168, Muslim 4/2071. (Hisnul Muslim no. 254)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_254.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_02",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((مَنْ قَالَ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ عَشْرَ مِرَارٍ، كَانَ كَمَنْ أَعْتَقَ أَرْبَعَةَ أَنْفُسٍ مِنْ وَلَدِ إِسْمَاعِيلَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Barangsiapa yang membaca: Laailaaha illallaah wahdahu laa syariika lahu lahulmulku walahulhamdu wahuwa ‘alaa kulli syaiin qadiir, sepuluh kali, maka dia seperti orang yang memerdekakan empat orang dari keturunan Ismail.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": 10,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/167"
+        },
+        {
+          "book": "Muslim dengan lafazh yang sama",
+          "no": "4/2071"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/167, Muslim dengan lafazh yang sama 4/2071. (Hisnul Muslim no. 255)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_255.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_03",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي الْمِيزَانِ، حَبِيبَتَانِ إِلَى الرَّحْمَنِ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحانَ اللَّهِ الْعَظِيمِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Dua kalimat yang ringan di lidah, pahalanya berat di timbangan (hari Kiamat) dan disenangi oleh Tuhan Yang Maha Pengasih, adalah: Subhaanallaah wabi-hamdih, subhaanallaahil ‘azhiim.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/168"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2072"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/168, Muslim 4/2072. (Hisnul Muslim no. 256)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_256.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_04",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((لَأَنْ أَقُولَ سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، أَحَبُّ إِلَيَّ مِمَّا طَلَعَتْ عَلَيْهِ الشَّمسُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Sungguh, apabila aku membaca: ‘Subhaanallah walhamdulillaah walaa ilaaha illallaah wallaahu akbar’. Adalah lebih senang bagiku dari apa yang disinari oleh matahari terbit.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2072"
+        }
+      ],
+      "reference": "HR. Muslim 4/2072. (Hisnul Muslim no. 257)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_257.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_05",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((أَيَعْجِزُ أَحَدُكُم أَنْ يَكْسِبَ كُلَّ يَوْمٍ أَلْفَ حَسَنَةٍ)) فَسَأَلَهُ سَائِلٌ مِنْ جُلَسَائِهِ كَيْفَ يَكْسِبُ أَحَدُنَا أَلْفَ حَسَنَةٍ؟ قَالَ: ((يُسَبِّحُ مِائَةَ تَسْبِيحَةٍ، فَيُكتَبُ لَهُ أَلْفُ حَسَنَةٍ أَوْ يُحَطُّ عَنْهُ أَلْفُ خَطِيئَةٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Apakah seseorang di antara kamu tidak mampu mendapatkan seribu kebaikan tiap hari?” Salah seorang di antara yang duduk bertanya: “Bagaimana di antara kita bisa memperoleh seribu kebaikan (dalam sehari)?” Rasul bersabda: “Hendaklah dia membaca seratus tasbih, maka ditulis seribu kebaikan baginya atau seribu kejelekannya dihapus.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": 100,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2073"
+        }
+      ],
+      "reference": "HR. Muslim 4/2073. (Hisnul Muslim no. 258)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_258.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_06",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "((مَنْ قَالَ: سُبْحَانَ اللَّهِ الْعَظِيمِ وَبِحَمْدِهِ غُرِسَتْ لَهُ نَخْلَةٌ فِي الْجَنَّةِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Barangsiapa yang membaca: Subhaanallaahi ‘azhiim wabihamdih, maka ditanam untuknya sebatang pohon kurma di Surga.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/511"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": "1/501"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/511, Al-Hakim 1/501. Menurut pendapatnya, hadits tersebut shahih. Imam Adz-Dzahabi menyetujuinya. Lihat pula Shahihul Jami’ 5/531 dan Shahih At-Tirmidzi 3/160. (Hisnul Muslim no. 259)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_259.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_07",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((يَا عَبْدَ اللَّهِ بْنَ قَيْسٍ أَلاَ أَدُلُّكَ عَلَى كَنْزٍ مِنْ كُنُوزِ الْجَنَّةِ))؟ فَقُلْتُ: بَلَى يَا رَسُولَ اللَّهِ، قَالَ: ((قُلْ لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Wahai Abdullah bin Qais! Maukah kamu aku tunjukkan perbendaharaan Surga?” “Aku berkata: “Aku mau, wahai Rasulullah!” Rasul berkata: “Bacalah: Laa haula walaa quwwata illaa billaah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "11/213"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2076"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 11/213 dan Muslim 4/2076. (Hisnul Muslim no. 260)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_260.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_08",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "وَقَالَ صلى الله عليه وسلم: ((أَحَبُّ الْكَلاَمِ إِلَى اللَّهِ أَرْبَعٌ: سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، لاَ يَضُرُّكَ بِأَيِّهِنَّ بَدَأتَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Perkataan yang paling disenangi oleh Allah adalah empat: Subhaanallaah, Alhamdulillaah, Laa ilaaha illallaah dan Allaahu akbar. Tidak mengapa bagimu untuk memulai yang mana di antara kalimat tersebut.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "3/1685"
+        }
+      ],
+      "reference": "HR. Muslim 3/1685. (Hisnul Muslim no. 261)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_261.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_09",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 9,
+      "variant_group": null,
+      "arabic": "جَاءَ أَعْرَابِيٌّ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم فَقَالَ: عَلِّمْنِي كَلاماً أَقُولُهُ: قَالَ: ((قُلْ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، اللَّهُ أَكْبَرُ كَبِيراً، وَالْحَمْدُ لِلَّهِ كَثِيراً، سُبْحَانَ اللَّهِ رَبِّ العَالَمِينَ، لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَزِيزِ الْحَكِيمِ)) قَالَ: فَهَؤُلاَءِ لِرَبِّي، فَمَا لِي؟ قَالَ: ((قُلْ: اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَارْزُقْنِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Seorang Arab Badui datang kepada Rasulullah Shallallahu'alaihi wasallam, lalu berkata: ‘Ajari aku dzikir untuk aku baca!’ Rasul Shallallahu’alaihi wasallam bersabda: ‘Katakanlah: Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya. Allah Maha Besar. Segala puji bagi Allah yang banyak. Maha Suci Allah, Tuhan sekalian alam dan tiada kekuatan kecuali dengan pertolongan Allah Yang Maha Mulia lagi Maha Bijaksana.’ Orang Badui itu berkata: ‘Kalimat itu untuk Tuhanku, mana yang untukku?’ Rasul bersabda: ‘Katakanlah: Ya Allah! Ampunilah aku, belas kasihanilah aku, berilah petunjuk kepadaku dan berilah rezeki kepadaku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2072"
+        }
+      ],
+      "reference": "HR. Muslim 4/2072. Abu Dawud menambah: Ke tika orang Arab Badui berpaling, Nabi n bersabda: “Sungguh dia telah memenuhi kebaikan pada kedua tangannya”. 1/220. (Hisnul Muslim no. 262)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_262.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_10",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 10,
+      "variant_group": null,
+      "arabic": "كَانَ الرَّجُلُ إِذَا أَسْلَمَ عَلَّمَهُ النَّبيُّ صلى الله عليه وسلم الصَّلاَةَ ثُمَّ أَمَرَهُ أَنْ يَدْعُوَ بِهَؤُلاَءِ الْكَلِمَاتِ: ((اللَّهُمَّ اغْفِرِ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَعَافِنِي وَارْزُقْنِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Seorang laki-laki apabila masuk Islam, Nabi Shallallahu’alaihi wasallam mengajarinya shalat, kemudian beliau memerintahkan agar berdoa dengan kalimat ini: ‘Ya Allah, ampunilah aku, belas kasihanilah aku, berilah petunjuk kepadaku, melindungi (dari apa yang tidak kuinginkan) dan berilah rezeki kepadaku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2073"
+        },
+        {
+          "book": "menurut riwayatnya ada ke terangan: Sesungguhnya kalimat-kalimat tersebut akan mencukupi dunia",
+          "no": ""
+        },
+        {
+          "book": "akhiratmu",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Muslim 4/2073, menurut riwayatnya ada ke terangan: Sesungguhnya kalimat-kalimat tersebut akan mencukupi dunia dan akhiratmu. (Hisnul Muslim no. 263)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_263.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_11",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 11,
+      "variant_group": null,
+      "arabic": "((إِنَّ أَفْضَلَ الدُّعَاءِ الْحَمْدُ لِلَّهِ، وَأَفْضَلَ الذِّكْرِ لاَ إِلَهَ إِلاَّ اللَّهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Sesungguhnya doa yang terbaik adalah membaca: Alhamdulillaah. Sedang dzikir yang terbaik adalah: Laa Ilaaha Illallaah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/462"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": "2/1249"
+        },
+        {
+          "book": "Al-Hakim",
+          "no": "1/503"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/462, Ibnu Majah 2/1249, Al-Hakim 1/503. Menurut Al- Hakim, hadits tersebut adalah shahih. Imam Adz-Dzahabi menyetujuinya, Lihat pula Shahihul Jami’ 1/362. (Hisnul Muslim no. 264)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_264.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "tasbih_12",
+      "category": "dhikr",
+      "event": "tasbih",
+      "order": 12,
+      "variant_group": null,
+      "arabic": "الباقيات الصالحات : سبحان الله والحمد لله ، ولا إله إلا الله ،والله أكبر ،و لا حول ولا قوة إلا بالله",
+      "is_quran": false,
+      "translations": {
+        "id": "Kalimat-kalimat yang baik adalah: “Subhaanallaah, walhamdulillaah, wa laa ilaaha illallaah, wallaahu akbar, walaa haula walaa quwwata illaa billaah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad no. 513 menurut penertiban Ahmad Syakir",
+          "no": ""
+        },
+        {
+          "book": "sanadnya shahih",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ahmad no. 513 menurut penertiban Ahmad Syakir, sanadnya shahih, lihat Majma’uz Zawa’id 1/297, Ibnu Hajar mencantumkannya di Bulughul Maram dari riwayat Abu Sa’id kepada An-Nasa’i. Ibnu Hajar berkata: “Hadits tersebut adalah shahih menurut pendapat Ibnu Hibban dan Al-Hakim. (Hisnul Muslim no. 265)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_265.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "protection_01",
+      "category": "dhikr",
+      "event": "protection",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((مَنْ حَفِظَ عَشْرَ آيَاتٍ مِنْ أَوَّلِ سُورَةِ الْكَهْفِ عُصِمَ مِنَ الدَّجَّالِ)) ، وَالْاسْتِعَاذَةُ بِاللَّهِ مِنْ فِتْنَتِهِ عَقِبَ التَّشَهُّدِ الْأَخِيرِ مِنْ كُلِّ صَلاَةٍ.",
+      "is_quran": false,
+      "translations": {
+        "id": "Barangsiapa yang hafal sepuluh ayat dari Permulaan Surat Al Kahfi, maka terpelihara dari (gangguan) dajjal. Begitu juga minta perlindungan kepada Allah dari fitnah dajjal Setelah Tasyahud Ahir dari setiap shalat.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/555"
+        }
+      ],
+      "reference": "HR. Muslim 1/555. Dan dalam riwayat lain, “ dari ahir surah Al kahfi”, Muslim 1/556. Lihat hadits no. 55 dan no. 56 dari buku ini. (Hisnul Muslim no. 199)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_199.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "protection_02",
+      "category": "dhikr",
+      "event": "protection",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أُشْرِكَ بِكَ وَأَنَا أَعْلَمُ، وَأَسْتَغْفِرُكَ لِمَا لاَ أَعْلَمُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu, agar tidak menyekutukan kepadaMu, sedang aku mengetahuinya dan minta ampun terhadap apa yang tidak aku ketahui.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad",
+          "no": ""
+        },
+        {
+          "book": "imam yang lain",
+          "no": "4/403"
+        }
+      ],
+      "reference": "HR. Ahmad dan imam yang lain 4/403, lihat Shahihul Jami’ 3/233, dan Shahihut Targhrib wat Tarhib oleh Al-Albani 1/19. (Hisnul Muslim no. 203)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_203.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "travel_01",
       "category": "situational",
       "event": "travel",
@@ -4404,10 +6054,249 @@
       "phrase_breaks": []
     },
     {
-      "id": "travel_04",
+      "id": "travel_05",
       "category": "situational",
       "event": "travel",
       "order": 4,
+      "variant_group": null,
+      "arabic": "((بِسْمِ اللَّهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Dengan nama Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/296"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/296 dan Al-Albani menyatakan, hadits tersebut shahih dalam Shahih Abi Dawud 3/941. (Hisnul Muslim no. 210)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_210.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_06",
+      "category": "situational",
+      "event": "travel",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لاَ تَضِيعُ وَدَائِعُهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku menitipkan kamu kepada Allah yang tidak akan hilang titipan-Nya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad",
+          "no": "2/403"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": "2/943"
+        }
+      ],
+      "reference": "HR. Ahmad 2/403, Ibnu Majah 2/943, dan lihat Shahih Ibnu Majah 2/133. (Hisnul Muslim no. 211)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_211.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_07",
+      "category": "situational",
+      "event": "travel",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "(( أَسْتَوْدِعُ اللَّهَ دِينَكَ، وَأَمَانَتَكَ، وَخَوَاتِيمَ عَمَلِكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku menitipkan agamamu, amanatmu dan perbuatanmu yang terakhir kepada Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "2/7"
+        },
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/499"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 2/7, At-Tirmidzi 5/499, dan lihat Shahih At-Tirmidzi 2/155. (Hisnul Muslim no. 212)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_212.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_08",
+      "category": "situational",
+      "event": "travel",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((زَوَّدَكَ اللَّهُ التَّقْوَى، وَغَفَرَ ذَنْبَكَ، وَيَسَّرَ لَكَ الخَيْرَ حَيْثُ ما كُنْتَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah memberi bekal taqwa kepadamu, mengampuni dosamu dan memudahkan kebaikan kepadamu di mana saja kamu berada.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi, lihat Shahih At-Tirmidzi 3/155. (Hisnul Muslim no. 213)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_213.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_09",
+      "category": "situational",
+      "event": "travel",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "قَالَ جَابِرٌ رضي الله عنه: ((كُنَّا إِذَا صَعَدْنَا كَبَّرْنَا، وَإِذَا نَزَلْنَا سَبَّحْنَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Dari Jabir Radhiallahu’anhu, dia berkata: “Kami apabila berjalan naik, membaca takbir, dan apabila kami turun, membaca tasbih.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "6/135"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 6/135. (Hisnul Muslim no. 214)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_214.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_10",
+      "category": "situational",
+      "event": "travel",
+      "order": 9,
+      "variant_group": null,
+      "arabic": "((سَمَّعَ سَامِعٌ بِحَمْدِ اللَّهِ، وَحُسْنِ بَلاَئِهِ عَلَيْنَا، رَبَّنَا صاحِبْنَا، وَأَفْضِلْ عَلَيْنَا، عَائِذاً بِاللَّهِ مِنَ النَّارِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga ada yang memperdengarkan puji kami kepada Allah (atas nikmat) dan cobaanNya yang baik bagi kami. Wahai Tuhan kami, temanilah kami (peliharalah kami) dan berilah karunia kepada kami dengan berlindung kepada Allah dari api Neraka.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 215"
+        }
+      ],
+      "reference": "H.R. Muslim 4/2086, Syarah An-Nawawi 17/39.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_215.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_11",
+      "category": "situational",
+      "event": "travel",
+      "order": 10,
+      "variant_group": null,
+      "arabic": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku berlindung dengan kalimat-kalimat Allah yang sempurna, dari kejahatan apa yang diciptakanNya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2080"
+        }
+      ],
+      "reference": "HR. Muslim 4/2080. (Hisnul Muslim no. 216)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_216.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_04",
+      "category": "situational",
+      "event": "travel",
+      "order": 11,
       "variant_group": null,
       "arabic": "((يُكَبِّرُ عَلَى كُلِّ شَرَفٍ ثَلاَثَ تَكْبِيرَاتٍ ثُمَّ يَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ)).",
       "is_quran": false,
@@ -4436,6 +6325,47 @@
       "virtue": null,
       "audio": {
         "file": "hisn_217.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "travel_12",
+      "category": "situational",
+      "event": "travel",
+      "order": 12,
+      "variant_group": null,
+      "arabic": "كَانَ النَّبِيُّ صلى الله عليه وسلم إِذَا أَتَاهُ الْأَمْرُ يَسُرُّهُ قَالَ: ((الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ)) وَإِذَا أَتَاهُ الْأَمْرُ يَكْرَهُهُ قَالَ: ((الْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam apabila ada sesuatu yang menyenangkan, beliau membaca: (( (Segala puji bagi Allah yang dengan nikmatNya segala amal shalih sempur-na.) Apabila ada sesuatu yang tidak disukai, beliau membaca: (( )) (Segala puji bagi Allah, atas segala keadaan.)",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ibnu Sunni dalam kitab ‘AmalulYaumwalLailah",
+          "no": ""
+        },
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        },
+        {
+          "book": "menurut pendapatnya",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ibnu Sunni dalam kitab ‘AmalulYaumwalLailah, Al-Hakim, menurut pendapatnya, hadits tersebut adalah sahih 1/499. Al-Albani menyatakan, hadits terse-but sahih dalam ShahihulJami’4/201. (Hisnul Muslim no. 218)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_218.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4684,6 +6614,121 @@
       "phrase_breaks": []
     },
     {
+      "id": "wind_01",
+      "category": "situational",
+      "event": "wind",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَسْــــــأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan angin ini, dan aku berlindung kepadaMu dari kejelekannya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/326"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": "2/1228"
+        },
+        {
+          "book": "lihatlah kitab Shahih Ibnu Majah",
+          "no": "2/305"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/326, Ibnu Majah 2/1228, dan lihatlah kitab Shahih Ibnu Majah 2/305. (Hisnul Muslim no. 166)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_166.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "wind_02",
+      "category": "situational",
+      "event": "wind",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا فِيهَا، وَخَيْرَ مَا أُرْسِلَتْ بِهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا فِيهَا، وَشَرِّ مَا أُرْسِلَتْ بِهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan angin (ribut ini), kebaikan apa yang di dalamnya dan kebaikan tujuan angin dihembuskan. Aku berlindung kepadaMu dari kejahatan angin ini, kejahatan apa yang di dalamnya dan kejahatan tujuan angin dihembuskan.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/616"
+        },
+        {
+          "book": "Al-Bukhari",
+          "no": "4/76"
+        }
+      ],
+      "reference": "HR. Muslim 2/616 dan Al-Bukhari 4/76. (Hisnul Muslim no. 167)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_167.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "new_moon_01",
+      "category": "situational",
+      "event": "new_moon",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((اللَّهُ أَكْبَرُ، اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْأَمْنِ وَالْإِيمَانِ، وَالسَّلاَمَةِ وَالْإِسْلاَمِ، وَالتَّوْفِيقِ لِمَا تُحِبُّ رَبَّنَا وَتَرْضَى، رَبُّنَا وَرَبُّكَ اللَّهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Allah Maha Besar. Ya Allah! Tampakkan bulan tanggal satu itu kepada kami dengan membawa keamanan dan keimanan, keselamatan dan Islam serta mendapat taufik untuk menjalankan apa yang Engkau senang dan rela. Tuhan kami dan Tuhanmu (wahai bulan sabit) adalah Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/504"
+        },
+        {
+          "book": "Ad-Darimi dengan lafazh hadits yang sama",
+          "no": "1/336"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/504, Ad-Darimi dengan lafazh hadits yang sama 1/336 dan lihat Shahihut Tirmidzi 3/157. (Hisnul Muslim no. 175)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_175.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "illness_01",
       "category": "situational",
       "event": "illness",
@@ -4754,10 +6799,51 @@
       "phrase_breaks": []
     },
     {
-      "id": "illness_03",
+      "id": "illness_06",
       "category": "situational",
       "event": "illness",
       "order": 3,
+      "variant_group": null,
+      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((إِذَا عَادَ الرَّجُلُ أَخَاهُ الْمُسْلِمَ مَشَى فِي خِرَافَةِ الْجَنَّةِ حَتَّى يَجْلِسَ، فَإِذَا جَلَسَ غَمَرَتْهُ الرَّحْمَةُ، فَإِنْ كَانَ غُدْوَةً صَلَّى عَلَيْهِ سَبْعُونَ أَلْفَ مَلَكٍ حَتَّى يُمْسِيَ، وَإِنْ كَانَ مَسَاءً صَلَّى عَلَيْهِ سَبْعُونَ أَلْفَ مَلَكٍ حَتَّى يُصْبِحَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Apabila seorang laki-laki berkunjung kepada saudaranya yang muslim, maka seakan-akan dia berjalan di kebun Surga hingga duduk. Apabila sudah duduk, maka dituruni rahmat dengan deras. Apabila berkunjung di pagi hari, maka tujuh puluh ribu malaikat akan mendoakannya, agar mendapat rahmat hingga sore. Apabila berkunjung di sore hari, maka tujuh puluh ribu malaikat akan mendoakannya agar diberi rahmat hingga pagi.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": ""
+        },
+        {
+          "book": "Ahmad",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi, Ibnu Majah, Ahmad dan lihat Shahih Ibnu Majah 1/244 dan Shahih At-Tirmidzi 1/286. Ahmad Syakir menyatakan, bahwa hadits tersebut adalah shahih. (Hisnul Muslim no. 149)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_149.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "illness_03",
+      "category": "situational",
+      "event": "illness",
+      "order": 4,
       "variant_group": null,
       "arabic": "((اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَأَلْحِقْنِي بِالرَّفِيقِ الْأَعْلَى)).",
       "is_quran": false,
@@ -4794,7 +6880,7 @@
       "id": "illness_04",
       "category": "situational",
       "event": "illness",
-      "order": 4,
+      "order": 5,
       "variant_group": null,
       "arabic": "((جَعَلَ النَّبِيُّ صلى الله عليه وسلم عِنْدَ مَوْتِهِ يُدْخِلُ يَدَيْهِ فِي الْمَاءِ فَيَمْسَحُ بِهِمَا وَجْهَهُ، وَيَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ إِنَّ لِلْمَوْتِ سَكَرَاتٍ)).",
       "is_quran": false,
@@ -4827,7 +6913,7 @@
       "id": "illness_05",
       "category": "situational",
       "event": "illness",
-      "order": 5,
+      "order": 6,
       "variant_group": null,
       "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ لَهُ المُلْكُ وَلَهُ الْحَمْدُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ)).",
       "is_quran": false,
@@ -5108,6 +7194,986 @@
       "phrase_breaks": []
     },
     {
+      "id": "anger_01",
+      "category": "situational",
+      "event": "anger",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku berlindung kepada Allah dan setan yang terkutuk.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/99"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2015"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/99, Muslim 4/2015. (Hisnul Muslim no. 193)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_193.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_01",
+      "category": "situational",
+      "event": "fear",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِم، وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku menjadikan Engkau di leher mereka (agar kekuatan mereka tidak berdaya dalam berhadapan dengan kami). Dan aku berlindung kepadaMu dari kejelekan mereka.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/89"
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/89. Menurut pendapat Al-Hakim dan disepakati Adz- Dzahabi: Hadits di atas adalah shahih 2/142. (Hisnul Muslim no. 126)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_126.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_02",
+      "category": "situational",
+      "event": "fear",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ أَنْتَ عَضُدِي، وَأَنْتَ نَصِيرِي، بِكَ أَحُولُ وَبِكَ أَصُولُ، وَبِكَ أُقاتِلُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Engkau adalah lenganku (pertolonganMu yang kuandalkan dalam menghadapi lawanku). Engkau adalah pembelaku. Dengan pertolongan-Mu aku menang, dengan pertolongan-Mu aku menyergap dan dengan pertolonganMu aku berperang.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "3/42"
+        },
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/572"
+        }
+      ],
+      "reference": "HR. Abu Dawud 3/42, At-Tirmidzi 5/572, dan lihat Shahih At-Tirmidzi 3/183. (Hisnul Muslim no. 127)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_127.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_03",
+      "category": "situational",
+      "event": "fear",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((حَسْبُنا اللَّهُ وَنِعْمَ الْوَكِيلُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "”Cukuplah Allah bagi kami. Dan Dia-lah, Tuhan yang paling tepat dipasrahi (dalam menghadapi segala urusan).”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "5/172"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 5/172. (Hisnul Muslim no. 128)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_128.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_04",
+      "category": "situational",
+      "event": "fear",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ ربَّ السَّمَوَاتِ السَّبْعِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، كُنْ لِي جَاراً مِنْ فُلاَنِ بْنِ فُلاَنٍ، وَأَحْزَابِهِ مِنْ خَلاَئِقِكَ، أَنْ يَفْرُطَ عَلَيَّ أَحَدٌ مِنْهُمْ أَوْ يَطْغَى، عَزَّ جَارُكَ، وَجَلَّ ثَنَاؤُكَ، وَلاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, Tuhan Penguasa tujuh langit, Tuhan Penguasa ‘Arsy yang agung. Jadilah Engkau pelindung bagiku dari Fulan bin Fulan, dan para kelompoknya dari makhlukMu. Jangan ada seorang pun dari mereka menyakitiku atau melampaui batas terhadapku. Sungguh kuat perlindunganMu, dan agunglah pujiMu. Tiada Tuhan yang berhak disembah selain Engkau.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 129"
+        }
+      ],
+      "reference": "Al-Bukhari dalam Al-Adabul Mufrad no. 707. Dinyatakan shahih oleh Al-Albani dalam Shahih Al-Adab Al-Mufrad no. 545.",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_129.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_05",
+      "category": "situational",
+      "event": "fear",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((اللَّهُ أَكْبَرُ، اللَّهُ أَعَزُّ مِنْ خَلْقِهِ جَمِيعاً، اللَّهُ أَعَزُّ مِمَّا أَخَافُ وَأَحْذَرُ، أَعُوذُ بِاللَّهِ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ، الْمُمْسِكِ السَّمَوَاتِ السَّبْعِ أَنْ يَقَعْنَ عَلَى الْأَرْضِ إِلاَّ بِإِذْنِهِ، مِنْ شَرِّ عَبْدِكَ فُلاَنٍ، وَجُنُودِهِ وَأَتْبَاعِهِ وَأَشْيَاعِهِ، مِنْ الْجِنِّ وَالإِنْسِ، اللَّهُمَّ كُنْ لِي جَاراً مِنْ شَرِّهِمْ، جَلَّ ثَنَاؤُكَ وَعَزَّ جَارُكَ، وَتَبَارَكَ اسْمُكَ، وَلاَ إِلَهَ غَيْرُكَ)) (ثلاثَ مرَّاتٍ).",
+      "is_quran": false,
+      "translations": {
+        "id": "Allah Maha Besar. Allah Maha Perkasa dari segala makhlukNya. Allah Maha Perkasa dari apa yang aku takutkan dan khawatirkan. Aku berlindung kepada Allah, yang tiada Tuhan yang berhak disembah selain Dia, yang menahan tujuh langit agar tidak menjatuhi bumi kecuali dengan izinNya, dari kejahatan hambaMu Fulan, serta para pembatunya, pengikutnya dan pendukungnya, dari jenis jin dan manusia. Ya Allah, jadilah Engkau pelindungku dari kejahatan mereka. Agunglah pujiMu, kuatlah perlindunganMu dan Maha Suci asma-Mu. Tiada Tuhan yang berhak disembah selain Engkau. (Dibaca 3 kali).",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari dalam Al-Adabul Mufrad",
+          "no": "no. 708"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dalam Al-Adabul Mufrad no. 708. Dinyatakan shahih oleh Al- Albani dalam Shahih Al-Adab Al-Mufrad no. 546. (Hisnul Muslim no. 130)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_130.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_06",
+      "category": "situational",
+      "event": "fear",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ مُنْزِلَ الْكِتَابِ، سَرِيعَ الْحِسَابِ، اهْزِمِ الأَحْزَابَ، اللَّهُمَّ اهزِمْهُمْ وَزَلْزِلْهُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, yang menurunkan Kitab Suci, yang menghisab perbuatan manusia dengan cepat. Ya Allah, cerai beraikanlah golongan musuh dan goncang-kan mereka.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Musliim",
+          "no": "3/1362"
+        }
+      ],
+      "reference": "HR. Musliim 3/1362. (Hisnul Muslim no. 131)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_131.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_07",
+      "category": "situational",
+      "event": "fear",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اكْفِنِيهِمْ بِمَا شِئْتَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, cukupilah aku dalam menghadapi mereka dengan apa yang Engkau kehendaki.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Musliim",
+          "no": "4/2300"
+        }
+      ],
+      "reference": "HR. Musliim 4/2300. (Hisnul Muslim no. 132)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_132.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_08",
+      "category": "situational",
+      "event": "fear",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ لاَ طَيْرَ إِلاَّ طَيْرُكَ، وَلاَ خَيْرَ إِلاَّ خَيْرُكَ، وَلاَ إِلَهَ غَيْرُكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Tidak ada kesialan kecuali kesialan yang Engkau tentukan, dan Tidak ada kebaikan kecuali kebaikanMu, serta tiada Ilah (yang berhak disembah) selain Engkau.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad",
+          "no": "2/220"
+        },
+        {
+          "book": "Ibnus Sunni",
+          "no": "no. 292"
+        }
+      ],
+      "reference": "HR. Ahmad 2/220, Ibnus Sunni no. 292, dan lihat Al-Ahadits Ash-Shahihah, no. 1065. (Hisnul Muslim no. 205)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_205.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_09",
+      "category": "situational",
+      "event": "fear",
+      "order": 9,
+      "variant_group": null,
+      "arabic": "((إِذَا رَأَى أَحَدُكُم مِنْ أَخِيهِ، أَوْ مِنْ نَفْسِهِ، أَوْ مِنْ مَالِهِ مَا يُعْجِبُهُ [فَلْيَدْعُ لَهُ بِالْبَرَكَةِ] فَإِنَّ الْعَيْنَ حَقٌّ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Apabila seseorang di antara kamu melihat dari saudaranya, diri atau hartanya yang mengherankan, maka hendaklah mendoakan berkah kepadanya. Sesungguhnya ‘ain (kena mata) itu adalah benar.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad",
+          "no": "4/447"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": ""
+        },
+        {
+          "book": "Malik",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ahmad 4/447, Ibnu Majah dan Malik. Dinyatakan shahih oleh Al-Albani dalam Shahihul Jami’ 1/212, dan lihat Zadul Ma’ad 4/170, tahqiq Al-Arnauth. (Hisnul Muslim no. 244)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_244.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fear_10",
+      "category": "situational",
+      "event": "fear",
+      "order": 10,
+      "variant_group": null,
+      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ!)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Tiada Tuhan yang berhak disembah kecuali Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "6/181"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2208"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 6/181, Muslim 4/2208. (Hisnul Muslim no. 245)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_245.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_01",
+      "category": "situational",
+      "event": "waswas",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((يَسْتَعِيذُ بِاللَّهِ و يَنْتَهِي عَمَّا شك فِيهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Berlindung kepada Allah. Maka akan berhenti dari keraguannya",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "6/336"
+        },
+        {
+          "book": "Muslim",
+          "no": "1/120"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 6/336 dengan Fathul Bari dan Muslim 1/120. (Hisnul Muslim no. 133)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_133.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_02",
+      "category": "situational",
+      "event": "waswas",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((يَقُولُ: ((آمَنْتُ بِاللَّهِ وَرُسُلِهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Hendaklah mengatakan: “Aku beriman kepada Allah dan kebenaran para rasul yang diutus oleh-Nya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/119-120"
+        }
+      ],
+      "reference": "HR. Muslim 1/119-120. (Hisnul Muslim no. 134)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_134.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_03",
+      "category": "situational",
+      "event": "waswas",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((يَقْرَأُ قَوْلَهُ تَعَالَى: ﴿هُوَ الْأوَّلُ وَالْآخِرُ وَالظّاهِرُ وَالْباطِنُ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ﴾)).",
+      "is_quran": true,
+      "translations": {
+        "id": "Hendaklah membaca firman Allah Ta’ala: Dia-lah yang Awal (Allah telah ada sebelum segala sesuatu ada), yang Akhir (Di saat segala sesuatu telah hancur, Allah masih tetap kekal), yang dhahir (Dia-lah yang nyata, sebab banyak bukti yang menyatakan adanya Allah), yang Bathin (tidak ada sesuatu yang bisa menghalangiNya. Allah lebih dekat kepada hambaNya daripada mereka pada dirinya). Dia-lah Yang Maha Mengetahui atas segala sesuatu.” (Surat Al Hadid, 57 : 3)",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/329"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/329. Menurut pendapat Al-Albani, hadits di atas adalah hasan dalam Shahih Abu Dawud 3/962. (Hisnul Muslim no. 135)",
+      "grading": {
+        "grade": "hasan",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_135.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_04",
+      "category": "situational",
+      "event": "waswas",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ، وَاتْفُلْ عَلَى يَسَارِكَ (ثلاثاً))).",
+      "is_quran": false,
+      "translations": {
+        "id": "(membaca: A’udzu billahi minas syaithanir rajim), artinya : \"aku berlindung kepada Allah dari godaan syaitan yang terkutuk\". lantas meludahlah ke kirimu, tiga kali.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/1729"
+        }
+      ],
+      "reference": "HR. Muslim 4/1729. Aku membacanya apabila ada setan yang menggangguku, lantas gangguan tersebut dihilangkan. (Hisnul Muslim no. 138)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_138.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_05",
+      "category": "situational",
+      "event": "waswas",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((مَا مِنْ عَبْدٍ يُذنِبُ ذَنْباً فَيُحْسِنُ الطُّهُورَ، ثُمَّ يَقُومُ فَيُصَلِّي رَكْعَتَيْنِ، ثُمَّ يَسْتَغْفِرُ اللَّهَ إِلاَّ غَفَرَ اللَّهُ لَهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Tidaklah ada seorang hamba berbuat suatu dosa, lantas berwudhu dengan sempurna kemudian berdiri untuk melakukan shalat dua ra’kaat, kemudian membaca istighfar kecuali pasti diampuni dosanya.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/86"
+        },
+        {
+          "book": "At-Tirmidzi",
+          "no": "2/257"
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/86, At-Tirmidzi 2/257 dan Al-Albani berpendapat bahwa hadits tersebut shahih dalam Shahih Abu Dawud 1/283. (Hisnul Muslim no. 140)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_140.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_06",
+      "category": "situational",
+      "event": "waswas",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "((الْاسْتِعَاذَةُ بِاللَّهِ مِنْهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Minta perlindungan kepada Allah dari setan (dengan membaca: A’udzu billahi minas syaithanir rajim). artinya, \"aku berlindung kepada Allah dari godaan syaitan yang terkutuk\"",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "1/206"
+        },
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Abu Dawud 1/206, At-Tirmidzi, lihat Shahih At-Tirmidzi 1/77, dan lihat surah Al-Mukminun 98-99. (Hisnul Muslim no. 141)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_141.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_07",
+      "category": "situational",
+      "event": "waswas",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((الْأَذَانُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Membaca adzan.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/291"
+        },
+        {
+          "book": "Al-Bukhari",
+          "no": "1/151"
+        }
+      ],
+      "reference": "HR. Muslim 1/291, Al-Bukhari 1/151. (Hisnul Muslim no. 142)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_142.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "waswas_08",
+      "category": "situational",
+      "event": "waswas",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "((الْأَذْكَارُ وَقِرَاءَةُ الْقُرْآنِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Membaca dzikir tertentu yang sudah diterangkan dalam hadits dan membaca Al-Qur’an",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim 1/539)",
+          "no": ""
+        }
+      ],
+      "reference": "Rasul Shallallahu'alaihi wasallam bersabda: “Jangan jadikan rumah-rumahmu sebagai kuburan. Sesungguhnya setan lari dari rumah yang dibacakan Surah Al- Baqarah di dalamnya.” (HR. Muslim 1/539). Sebagian hal yang dapat mengusir setan adalah bacaan dan zikir di waktu pagi dan sore (yang dilakukan oleh Rasul Shallallahu'alaihi wasallam), bacaan akan tidur dan bangun daripadanya, masuk dan keluar dari rumah, masuk masjid dan keluar daripadanya, membaca ayat Kursi ketika akan tidur, dua ayat yang terakhir dari surah Al-Baqarah dan orang yang membaca: Laa ilaaha illallaah, wahdahu laa syariikalah, lahul mulku walahul hamdu wahuwa ‘alaa kulli syai-in qadiir, seratus kali, maka akan menjadi benteng dari setan pada hari itu. Begitu juga adzan. (Hisnul Muslim no. 143)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_143.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "debt_01",
+      "category": "situational",
+      "event": "debt",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اكْفِنِي بِحَلاَلِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكِ عَمَّنْ سِوَاكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Cukupilah aku dengan rezekiMu yang halal (hingga aku terhindar) dari yang haram. Perkayalah aku dengan karuniaMu (hingga aku tidak minta) kepada selainMu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "5/560"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 5/560, dan lihat kitab Shahihut Tirmidzi 3/180. (Hisnul Muslim no. 136)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_136.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "debt_02",
+      "category": "situational",
+      "event": "debt",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu dari (hal yang) menyedihkan dan menyusahkan, lemah dan malas, bakhil dan penakut, lilitan hutang dan penindasan orang.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "7/158"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 7/158. (Hisnul Muslim no. 137)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_137.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "news_01",
+      "category": "situational",
+      "event": "news",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((قَدَرُ اللَّهُ وَمَا شَاءَ فَعَلَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Allah sudah mentakdirkan sesuatu yang dikehendaki dan dilakukan.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2052"
+        }
+      ],
+      "reference": "HR. Muslim 4/2052. (Hisnul Muslim no. 144)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_144.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "news_02",
+      "category": "situational",
+      "event": "news",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي، وَأَخْلِفْ لِي خَيْرَاً مِنْهَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Sesungguhnya kami milik Allah dan kepadaNya kami akan kembali (di hari Kiamat). Ya Allah! Berilah pahala kepadaku dan gantilah untukku dengan yang lebih baik (dari musibahku).”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/632"
+        }
+      ],
+      "reference": "HR. Muslim 2/632. (Hisnul Muslim no. 154)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_154.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "news_03",
+      "category": "situational",
+      "event": "news",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي مِمَّا ابْتَلاَكَ بِهِ، وَفَضَّلَنِي عَلَى كَثِيرٍ مِمَّنْ خَلَقَ تَفْضِيلاً)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Segala puji bagi Allah yang menyelamatkan aku dari sesuatu yang Allah memberi cobaan kepadamu. Dan Allah telah memberi kemuliaan kepadaku, melebihi orang banyak.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Timidzi",
+          "no": "5/494"
+        },
+        {
+          "book": "lihatlah Shahih At-Tirmidzi",
+          "no": "3/153"
+        }
+      ],
+      "reference": "HR. At-Timidzi 5/494, 5/493, dan lihatlah Shahih At-Tirmidzi 3/153 (Hisnul Muslim no. 194)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_194.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "news_04",
+      "category": "situational",
+      "event": "news",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((كَانَ النَّبيُّ صلى الله عليه وسلم إِذَا أَتَاهُ أَمْرٌ يَسُرُّهُ أَوْ يُسَرُّ بِهِ خَرَّ سَاجِداً شُكْراً لِلَّهِ تَبَارَكَ وَتَعَالَى)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Nabi Shallallahu’alaihi wasallam apabila ada sesuatu yang menggembirakan atau menyenangkannya, beliau bersujud, karena syukur kepada Allah Yang Maha Suci dan Maha Tinggi.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ashhabus Sunan",
+          "no": ""
+        },
+        {
+          "book": "kecuali An-Nasai",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ashhabus Sunan, kecuali An-Nasai, lihat Shahih Ibnu Majah 1/233 dan Irwa’ul Ghalil 2/226. (Hisnul Muslim no. 242)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_242.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "news_05",
+      "category": "situational",
+      "event": "news",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((ضَعْ يَدَكَ عَلَى الَّذِي تَألَّمَ مِنْ جَسَدِكَ وَقُلْ: بِسْمِ اللَّهِ، ثَلاَثاً، وَقُلْ سَبْعَ مَرَّاتٍ: أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Letakkan tanganmu pada tubuhmu yang terasa sakit, dan bacalah: “Bismillaah tiga kali, lalu bacalah tujuh kali: (Aku berlindung kepada Allah dan kekuasaanNya dari kejahatan sesuatu yang aku jumpai dan yang aku takuti.)",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/1728"
+        }
+      ],
+      "reference": "HR. Muslim 4/1728. (Hisnul Muslim no. 243)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_243.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "animals_01",
+      "category": "situational",
+      "event": "animals",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((إِذَا سَمِعْتُمْ صِيَاحَ الدِّيَكَةِ فَاسْأَلُوا اللَّهَ مِنْ فَضْلِهِ؛ فَإِنَّهَا رَأَتْ مَلَكاً وَإِذَا سَمِعْتُمْ نَهِيقَ الْحِمَارِ فَتَعَوَّذُوا بِاللَّهِ مِنَ الشَّيطَانِ؛ فَإِنَّهُ رَأَى شَيْطَاناً)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Apabila kamu mendengar ayam jago berkokok, mintalah anugerah kepada Allah, sesungguhnya ia melihat malaikat. Tapi apabila engkau mendengar keledai meringkik, mintalah perlindungan kepada Allah dari gangguan setan, sesungguhnya ia melihat setan.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "6/350"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2092"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 6/350, Muslim 4/2092. (Hisnul Muslim no. 228)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_228.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "animals_02",
+      "category": "situational",
+      "event": "animals",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((إِذَا سَمِعْتُمْ نُبَاحَ الْكِلاَبِ وَنَهِيقَ الْحَمِيرِ بِاللَّيْلِ فَتَعَوَّذُوا بِاللَّهِ مِنْهُنَّ؛ فَإِنَّهُنَّ يَرَيْنَ مَا لاَ تَرَوْنَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Apabila kamu mendengar anjing menggonggong dan mendengar keledai meringkik, mintalah perlindungan kepada Allah. Sesungguhnya mereka melihat apa yang tidak kamu lihat.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/327"
+        },
+        {
+          "book": "Ahmad",
+          "no": "3/306"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/327, Ahmad 3/306. Menurut pendapat Al-Albani, hadits ini shahih, dalam Shahih Abi Dawud 3/961. (Hisnul Muslim no. 229)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_229.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
       "id": "istikharah_01",
       "category": "situational",
       "event": "istikharah",
@@ -5136,6 +8202,1685 @@
       "virtue": null,
       "audio": {
         "file": "hisn_074.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "iftar_01",
+      "category": "fasting",
+      "event": "iftar",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Telah hilang rasa haus, dan urat-urat telah basah serta pahala akan tetap, insya Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/306"
+        },
+        {
+          "book": "begitu juga imam hadits yang lain",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/306, begitu juga imam hadits yang lain. Dan lihat Shahihul Jami’ 4/209. (Hisnul Muslim no. 176)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_176.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "iftar_02",
+      "category": "fasting",
+      "event": "iftar",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Sesungguhnya aku memohon kepadaMu dengan rahmatMu yang meliputi segala sesuatu, supaya memberi ampunan atasku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ibnu Majah",
+          "no": "1/557"
+        }
+      ],
+      "reference": "HR. Ibnu Majah 1/557. Menurut Al-Hafidz Ibnu Hajar dalam Takhrij Al-Adzkar, lihat Syarah Al-Adzkar 4/342. (Hisnul Muslim no. 177)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_177.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "iftar_03",
+      "category": "fasting",
+      "event": "iftar",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلاَئِكَةُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga orang-orang yang berpuasa berbuka di sisimu dan orang-orang yang baik makan makananmu, serta malaikat mendoakannya, agar kamu mendapat rahmat.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 184"
+        }
+      ],
+      "reference": "Sunan Abu Dawud 3/367, Ibnu Majah 1/556 dan An-Nasa’i dalam ‘Amalul Yaum wal Lailah no. 296-298. Al-Albani menyatakan, hadits tersebut shahih dalam Shahih Abi Dawud, 2/730.",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_184.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fasting_01",
+      "category": "fasting",
+      "event": "fasting_manners",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((إِذَا دُعِيَ أَحَدُكُمْ فَلْيُجِبْ، فَإِنْ كَانَ صَائِماً فَلْيُصَلِّ، وَإِنْ كَانَ مُفْطِراً فَلْيَطْعَمْ)) ، وَمَعْنَى فَلْيُصَلِّ أَيْ فَلْيَدْعُ.",
+      "is_quran": false,
+      "translations": {
+        "id": "Apabila seseorang di antara kamu diundang (makan) hendaklah dipenuhi. Apabila puasa, hendaklah mendoakan (kepada orang yang mengundang). Apabila tidak puasa, hendaklah makan.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/1054"
+        }
+      ],
+      "reference": "HR. Muslim 2/1054. (Hisnul Muslim no. 185)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_185.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "fasting_02",
+      "category": "fasting",
+      "event": "fasting_manners",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((إِنِّي صَائِمٌ، إِنِّي صَائِمٌ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Sesungguhnya aku sedang berpuasa. Sesungguhnya aku sedang berpuasa.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "4/103"
+        },
+        {
+          "book": "Muslim",
+          "no": "2/806"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 4/103, Muslim 2/806. (Hisnul Muslim no. 186)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_186.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "marriage_01",
+      "category": "family",
+      "event": "marriage",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((بَارَكَ اللَّهُ لَكَ، وَبَارَكَ عَلَيْكَ، وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah memberi berkah kepadamu dan atasmu serta mengumpulkan kamu berdua (pengantin laki-laki dan perempuan) dalam kebaikan.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Penyusun-penyusun kitab Sunan",
+          "no": ""
+        },
+        {
+          "book": "kecuali An-Nasai",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Penyusun-penyusun kitab Sunan, kecuali An-Nasai dan lihat Shahih At- Tirmidzi 1/316. (Hisnul Muslim no. 190)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_190.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "marriage_02",
+      "category": "family",
+      "event": "marriage",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "إِذَا تَزَوَّجَ أَحَدُكُمُ امْرَأَةً، أَوْ إِذَا اشْتَرَى خَادِماً فَلْيَقُلْ: ((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا جَبَلْتَهَا عَلَيْهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا جَبَلْتَهَا عَلَيْهِ، وَإِذَا اشْتَرَى بَعِيراً فَلْيَأْخُذْ بِذِرْوَةِ سَنَامِهِ وَلْيَقُلْ مِثْلَ ذَلِكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Apabila seseorang di antara kamu kawin dengan seorang perempuan atau membeli pembantu, hendaklah mengucapkan: Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya. Dan aku mohon perlindungan kepadaMu dari kejelekan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya. Apabila membeli unta, hendaklah memegang puncak punuknya, lalu mengucapkan seperti itu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/248"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": "1/617"
+        },
+        {
+          "book": "lihatlah Shahih Ibnu Majah",
+          "no": "1/324"
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/248, Ibnu Majah 1/617 dan lihatlah Shahih Ibnu Majah 1/324. (Hisnul Muslim no. 191)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_191.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "marriage_03",
+      "category": "family",
+      "event": "marriage",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((بِسْمِ اللَّهِ، اللَّهُمَّ جَنِّبْنَا الشَّيْطَانَ، وَجَنِّبِ الشَّيْطَانَ مَا رَزَقْتَنَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Dengan Nama Allah, Ya Allah! Jauhkan kami dari setan, dan jauhkan setan untuk mengganggu apa yang Engkau rezekikan kepada kami.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "6/141"
+        },
+        {
+          "book": "Muslim",
+          "no": "2/1028"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 6/141, Muslim 2/1028. (Hisnul Muslim no. 192)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_192.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "children_01",
+      "category": "family",
+      "event": "children",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((بَارَكَ اللَّهُ لَكَ فِي الْمَوْهُوبِ لَكَ، وَشَكَرْتَ الْوَاهِبَ، وَبَلَغَ أَشُدَّهُ، وَرُزِقْتَ بِرَّهُ)). وَيَرُدُّ عَلَيْهِ الْمُهَــــــنَّأُ فَيَقُولُ: ((بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ، وَجَزَاكَ اللَّهُ خَيْراً، وَرَزَقَكَ اللَّهُ مِثْلَهُ، وَأَجْزَلَ ثَوَابَكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah memberkahimu dalam anak yang diberikan kepadamu. Kamu pun bersyukur kepada Sang Pemberi, dan dia dapat mencapai dewasa, serta kamu dikaruniai kebaikannya.” Sedang orang yang diberi ucapan selamat membalas dengan mengucapkan: “Semoga Allah juga memberkahimu dan melimpahkan kebahagiaan untukmu. Semoga Allah membalasmu dengan sebaik-baik balasan, mengaruniakan kepadamu sepertinya dan melipat gandakan pahalamu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 145"
+        }
+      ],
+      "reference": "Lihat Al-Adzkar, karya An-Nawawi, hal. 349, dan Shahih Al-Adzkar lin Nawawi, oleh Salim Al-Hilali 2/713.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_145.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "children_02",
+      "category": "family",
+      "event": "children",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "كَانَ رَسُولُ اللَّهِ صلى الله عليه وسلم يُعَوِّذُ الحَسَنَ وَالحُسَينَ رضي الله عنهما ((أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لاَمَّةٍ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Adalah Rasulullah Shallallahu’alaihi wasallam berdoa untuk perlindungan Hasan dan Husain, beliau membaca: “Aku berlindung kepada Allah untukmu berdua dengan kalimat- kalimat Allah yang sempurna, dari segala setan, binatang yang berbisa dan pandangan mata yang jahat.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "4/119"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 4/119. (Hisnul Muslim no. 146)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_146.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "salam_01",
+      "category": "social",
+      "event": "salam",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم: ((لاَ تَدْخُلُوا الْجَنَّةَ حَتَّى تُؤْمِنُوا، وَلاَ تُؤْمِنُوا حَتَّى تَحَابُّوا، أَوَلاَ أَدُلُّكُم عَلَى شَيْءٍ إِذَا فَعَلْتُمُوهُ تَحَابَبْتُم، أَفْشُوا السَّلاَمَ بَيْنَكُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Kamu tidak akan masuk ke Surga hingga kamu beriman, kamu tidak akan beriman secara sempurna hingga kamu saling mencintai. Maukah kamu kutunjukkan sesuatu, apabila kamu lakukan akan saling mencintai? Biasakan mengucapkan salam di antara kamu (apabila bertemu).”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "1/74"
+        },
+        {
+          "book": "begitu juga imam yang lain",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Muslim 1/74, begitu juga imam yang lain. (Hisnul Muslim no. 224)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_224.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "salam_02",
+      "category": "social",
+      "event": "salam",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((ثَلاَثٌ مَنْ جَمَعَهُنَّ فَقَدْ جَمَعَ الْإِيمَانَ: الْإِنْصَافُ مِنْ نَفْسِكَ، وَبَذْلُ السَّلاَمِ لِلْعَالَمِ، وَالْإِنْفَاقُ مِنَ الإِقْتَارِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ada tiga perkara, barangsiapa yang bisa mengerjakannya, maka sungguh telah mengumpulkan keimanan: 1. Berlaku adil terhadap diri sendiri; 2. Menyebarkan salam ke seluruh penduduk dunia; 3. Berinfak dalam keadaan fakir.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "1/82"
+        },
+        {
+          "book": "dari hadits ‘Amar z secara mauquf muallaq",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 1/82, dari hadits ‘Amar z secara mauquf muallaq. (Hisnul Muslim no. 225)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_225.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "salam_03",
+      "category": "social",
+      "event": "salam",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَعَنْ عَبْدِ اللَّهِ بْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا: أنَّ رَجُلاً سَأَلَ النَّبِيَّ صلى الله عليه وسلم أيُّ الْإِسْلاَمِ خَيْرٌ قَالَ: ((تُطْعِمُ الطَّعَامَ، وَتَقْرأُ السَّلاَمَ عَلَى مَنْ عَرَفْتَ وَمَنْ لَمْ تَعْرِفْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Dari Abdullah bin Umar Radhiallahu’anhu, dia berkata: “Sesungguhnya seorang laki-laki bertanya kepada Nabi Shallallahu'alaihi wasallam, manakah ajaran Islam yang lebih baik?” Rasul Shallallahu’alaihi wasallam bersabda: “Hendaklah engkau memberi makanan, mengucapkan salam kepada orang yang kamu kenal dan yang tidak.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "1/55"
+        },
+        {
+          "book": "Muslim",
+          "no": "1/65"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 1/55, Muslim 1/65. (Hisnul Muslim no. 226)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_226.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "salam_04",
+      "category": "social",
+      "event": "salam",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((إذَا سَلَّمَ عَلَيْكُمْ أَهْلُ الْكِتَابِ فَقُولُوا: وَعَلَيْكُمْ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Apabila ahli kitab mengucapkan salam kepadamu, jawablah: Wa 'alaikum.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "11/42"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/1705"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 11/42, Muslim 4/1705. (Hisnul Muslim no. 227)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_227.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "gathering_01",
+      "category": "social",
+      "event": "gathering",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Dari Ibnu Umar katanya adalah pernah dihitung bacaan Rasulullah Shallallahu’alaihi wasallam dalam satu majlis seratus kali sebelum beliau berdiri, yaitu: “Wahai Tuhanku! Ampunilah aku dan terimalah taubatku, sesungguhnya Engkau Maha Menerima taubat lagi Maha Pengampun.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        },
+        {
+          "book": "Imam hadis lain",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi dan Imam hadis lain, lihat pula di Shahih At-Tirmidzi 3/153, Shahih Ibnu Majah 2/321, dan lafazh hadis tersebut menurut riwayat At-Tirmidzi. (Hisnul Muslim no. 195)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_195.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "gathering_02",
+      "category": "social",
+      "event": "gathering",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Maha Suci Engkau, ya Allah, aku memujiMu. Aku bersaksi bahwa tiada Tuhan yang berhak disembah kecuali Engkau, aku minta ampun dan bertaubat kepada- Mu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ashhaabus Sunan",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ashhaabus Sunan dan lihat Shahih At-Tirmidzi 3/153. Dari Aisyah Radhiallahu'anha, dia berkata: “Setiap Rasulullah Shallallahu'alaihi wasallam duduk di suatu tempat, setiap membaca Al-Qur’an dan setiap melakukan shalat, beliau mengakhirinya dengan beberapa kalimat.” Aisyah Radhiallahu'anha berkata: Aku berkata: “Wahai Rasululllah! Aku melihat engkau setiap duduk di suatu majelis, membaca Al-Qur’an atau melakukan shalat, engkau selalu mengakhiri dengan beberapa kalimat itu.” Beliau bersabda: “Ya, barangsiapa yang berkata baik akan distempel pada kebaikan itu (pahala bacaan kalimat tersebut), barangsiapa yang berkata jelek, maka kalimat tersebut merupakan penghapusnya. (Kalimat itu adalah: Subhaanaka wa bihamdika laa ilaaha illaa anta astaghfiruka wa atuubu ilaik).” HR. An-Nasa’i dalam kitab ‘Amalul Yaum wal Lailah, hal. 308. Imam Ahmad 6/77. Dr. Faruq Hamadah menyatakan, hadits tersebut shahih dalam Tahqiq ‘Amalul Yaum wal Lailah, karya An-Nasa’i hal. 273. (Hisnul Muslim no. 196)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_196.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_01",
+      "category": "social",
+      "event": "manners",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((جَزَاكَ اللَّهُ خَيْراً)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah membalasmu dengan kebaikan”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": "2035"
+        }
+      ],
+      "reference": "HR. At-Tirmidzi 2035, lihat Shahihul Jami’ 6244, Shahih At-Tirmidzi 2/200. (Hisnul Muslim no. 198)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_198.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_02",
+      "category": "social",
+      "event": "manners",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((أَحَبَّكَ الَّذِي أَحْبَبْتَنِي لَهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah mencintai kamu yang cinta kepadaku karenaNya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "4/333"
+        }
+      ],
+      "reference": "HR. Abu Dawud 4/333. Al-Albani menyatakan, hadits tersebut hasan dalam Shahih Sunan Abi Dawud 3/965. (Hisnul Muslim no. 200)",
+      "grading": {
+        "grade": "hasan",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_200.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_03",
+      "category": "social",
+      "event": "manners",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((بَارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah memberkahimu dalam keluarga dan hartamu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "4/88"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Baari 4/88. (Hisnul Muslim no. 201)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_201.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_04",
+      "category": "social",
+      "event": "manners",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((بارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ، إِنَّمَا جَزَاءُ السَّلَفِ الْحَمْدُ وَالأَدَاءُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah memberikan berkah kepadamu dalam keluarga dan hartamu. Sesungguhnya balasan meminjami adalah pujian dan pembayaran.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "An-Nasai dalam ‘Amalul Yaum wal Lailah",
+          "no": ""
+        },
+        {
+          "book": "hal.",
+          "no": "300"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": "2/809"
+        }
+      ],
+      "reference": "HR. An-Nasai dalam ‘Amalul Yaum wal Lailah, hal. 300, Ibnu Majah 2/809, dan lihat Shahih Ibnu Majah 2/55. (Hisnul Muslim no. 202)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_202.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_05",
+      "category": "social",
+      "event": "manners",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((وَفِيكَ بَارَكَ اللَّهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Semoga Allah juga melimpahkan berkah kepadamu.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Hisnul Muslim",
+          "no": "no. 204"
+        }
+      ],
+      "reference": "Ibnu Sunni h. 138, no. 278, lihat Al-Waabilush Shayyib Iibnil Qayyim, hal. 304. Tahqiq Muhammad Uyun.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_204.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_06",
+      "category": "social",
+      "event": "manners",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((اللَّهُمَّ فَأَيُّمَا مُؤْمِنٍ سَبَبْتُهُ فَاجْعَلْ ذَلِكَ لَهُ قُرْبَةً إِلَيْكَ يَوْمَ الْقِيَامَةِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah, siapa saja di antara orang mukmin yang kucaci, jadikanlah sebagai sarana yang mendekatkan dirinya kepadaMu di hari Kiamat.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "11/171"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/2007"
+        },
+        {
+          "book": "kalimatnya: “Jadikanlah sebagai pembersih",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 11/171, Muslim 4/2007, dan kalimatnya: “Jadikanlah sebagai pembersih dan rahmat.” (Hisnul Muslim no. 230)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_230.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_07",
+      "category": "social",
+      "event": "manners",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((إِذَا كَانَ أَحَدُكُم مَادِحاً صَاحِبَهُ لاَ مَحَالَةَ فَلْيَقُلْ: أَحْسِبُ فُلاَناً وَاللَّهُ حَسِيبُهُ، وَلاَ أُزَكِّي عَلَى اللَّهِ أَحَداً، أَحْسِبُهُ – إِنْ كَانَ يَعْلَمُ ذَاكَ – كَذَا وَكَذَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Apabila seseorang harus memuji saudaranya, katakanlah: ‘Aku kira Fulan .. dan Allahlah yang mengawasi perbuatannya. Dan aku tidak akan memuji seseorang dihadapan Allah’. Apabila seseorang mengetahui hendaklah berkata: ‘Aku kira begini dan begini’.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "4/2296"
+        }
+      ],
+      "reference": "HR. Muslim 4/2296. (Hisnul Muslim no. 231)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_231.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "manners_08",
+      "category": "social",
+      "event": "manners",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ لاَ تُؤَاخِذْنِي بِمَا يَقُولُونَ، وَاغْفِرْ لِي مَا لاَ يَعْلَمُونَ، [وَاجْعَلْنِي خَيْراً مِمَّا يَظُّنُّونَ])).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, semoga Engkau tidak menghukumku karena apa yang mereka katakan. Ampunilah aku atas apa yang tidak mereka ketahui. [Dan jadikanlah aku lebih baik daripada yang mereka perkirakan].",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari dalam Al-Adabul Mufrad",
+          "no": "no. 761"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dalam Al-Adabul Mufrad no. 761. Isnad hadits tersebut dinyatakan shahih oleh Al-Albani dalam Shahih Al-Adabul Mufrad no. 585. Kalimat dalam kurung tambahan Al-Baihaqi dalam Syu’abul Iman 4/228 dari jalan lain. (Hisnul Muslim no. 232)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_232.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_01",
+      "category": "death",
+      "event": "funeral",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((مَنْ كَانَ آخِرُ كَلاَمِهِ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Barangsiapa yang akhir perkataannya adalah: Laa ilaaha illallaah, akan masuk Surga. Ketika akan meninggal dunia maka si sakit hendaknya diajarkan kalimat \"Laa Ilaaha Illallah\".",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "3/190"
+        }
+      ],
+      "reference": "HR. Abu Dawud 3/190, dan lihat Shahihul Jami’ 5/432. (Hisnul Muslim no. 153)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_02",
+      "category": "death",
+      "event": "funeral",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اغْفِرْ لِفُلاَنٍ (بِاسْمِهِ) وَارْفَعْ دَرَجَتَهُ فِي الْمَهْدِيِّينَ، وَاخْلُفْهُ فِي عَقِبِهِ فِي الْغَابِرِينَ، وَاغْفِرْ لَنَا وَلَهُ يَا رَبَّ الْعَالَمِينَ، وَافْسَحْ لَهُ فِي قَبْرِهِ، وَنَوِّرْ لَهُ فِيهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Ampunilah si Fulan (hendaklah menyebut namanya), angkatlah derajatnya bersama orang-orang yang mendapat petunjuk, berilah penggantinya bagi orang-orang yang ditinggalkan sesudahnya. Dan ampunilah kami dan dia, wahai Tuhan, seru sekalian alam. Lebarkan kuburannya dan berilah penerangan di dalamnya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/634"
+        }
+      ],
+      "reference": "HR. Muslim 2/634. (Hisnul Muslim no. 155)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_155.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_03",
+      "category": "death",
+      "event": "funeral",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَعَافِهِ، وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ، وَوَسِّعْ مُدْخَلَهُ، وَاغْسِلْهُ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ، وَنَقِّهِ مِنَ الْخَطَايَا كَمَا نَقَّيْتَ الثَّوْبَ الأَبْيَضَ مِنَ الدَّنَسِ، وَأَبْدِلْهُ دَاراً خَيْراً مِنْ دَارِهِ، وَأَهْلاً خَيْراً مِنْ أَهْلِهِ، وَزَوْجَاً خَيْراً مِنْ زَوْجِهِ، وَأَدْخِلْهُ الْجَنَّةَ، وَأَعِذْهُ مِنْ عَذَابِ القَبْرِ [وَعَذَابِ النَّارِ])).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Ampunilah dia (mayat) berilah rahmat kepadanya, selamatkanlah dia (dari beberapa hal yang tidak disukai), maafkanlah dia dan tempatkanlah di tempat yang mulia (Surga), luaskan kuburannya, mandikan dia dengan air salju dan air es. Bersihkan dia dari segala kesalahan, sebagaimana Engkau membersihkan baju yang putih dari kotoran, berilah rumah yang lebih baik dari rumahnya (di dunia), berilah keluarga (atau istri di Surga) yang lebih baik daripada keluarganya (di dunia), istri (atau suami) yang lebih baik daripada istrinya (atau suaminya), dan masukkan dia ke Surga, jagalah dia dari siksa kubur dan Neraka.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/663"
+        }
+      ],
+      "reference": "HR. Muslim 2/663. (Hisnul Muslim no. 156)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_156.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_04",
+      "category": "death",
+      "event": "funeral",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اغْفِرْ لِحَيِّنَا وَمَيِّتِنَا، وَشَاهِدِنَا وَغَائِبِنَا، وَصَغِيرِنَا وَكَبيرِنَا، وَذَكَرِنَا وَأُنْثَانَا. اللَّهُمَّ مَنْ أَحْيَيْتَهُ مِنَّا فَأَحْيِهِ عَلَى الْإِسْلاَمِ، وَمَنْ تَوَفَّيْتَهُ مِنَّا فَتَوَفَّهُ عَلَى الإِيمَانِ، اللَّهُمَّ لاَ تَحْرِمْنَا أَجْرَهُ، وَلاَ تُضِلَّنَا بَعْدَهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Ampunilah kepada orang yang hidup di antara kami dan yang mati, orang yang hadir di antara kami dan yang tidak hadir, laki-laki maupun perempuan. Ya Allah! Orang yang Engkau hidupkan di antara kami, hidupkan dengan memegang ajaran Islam, dan orang yang Engkau matikan di antara kami, maka matikan dengan memegang keimanan. Ya Allah! Jangan menghalangi kami untuk tidak memperoleh pahalanya dan jangan sesatkan kami sepeninggalnya.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ibnu Majah",
+          "no": "1/480"
+        },
+        {
+          "book": "Ahmad",
+          "no": "2/368"
+        }
+      ],
+      "reference": "HR. Ibnu Majah 1/480, Ahmad 2/368, dan lihat Shahih Ibnu Majah 1/251. (Hisnul Muslim no. 157)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_157.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_05",
+      "category": "death",
+      "event": "funeral",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ إِنَّ فُلاَنَ بْنَ فُلاَنٍ فِي ذِمَّتِكَ، وَحَبْلِ جِوَارِكَ، فَقِهِ مِنْ فِتْنَةِ الْقَبْرِ، وَعَذَابِ النَّارِ، وَأَنْتَ أَهْلُ الْوَفَاءِ وَالْحَقِّ، فَاغْفِرْ لَهُ وَارْحَمْهُ إِنَّكَ أَنْتَ الغَفُورُ الرَّحيمُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya, Allah! Sesungguhnya Fulan bin Fulan dalam tanggunganMu dan tali perlindunganMu. Peliharalah dia dari fitnah kubur dan siksa Neraka. Engkau adalah Maha Setia dan Maha Benar. Ampunilah dan belas kasihanilah dia. Sesungguhnya Engkau, Tuhan Yang Maha Pengampun lagi Penyayang.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ibnu Majah",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Ibnu Majah. Lihat Shahih Ibnu Majah 1/251 dan Abu Dawud 3/211. (Hisnul Muslim no. 158)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_158.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_06",
+      "category": "death",
+      "event": "funeral",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ عَبْدُكَ وَابْنُ أَمَتِكَ احْتَاجَ إِلَى رَحْمَتِكَ، وَأَنْتَ غَنِيٌّ عَنْ عَذَابِهِ، إِنْ كَانَ مُحْسِناً فَزِدْ فِي حَسَنَاتِهِ، وَإِنْ كَانَ مُسِيئاً فَتَجَاوَزْ عَنْهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya, Allah, ini hambaMu, anak hambaMu perempuan (Hawa), membutuhkan rahmatMu, sedang Engkau tidak membutuhkan untuk menyiksanya, jika ia berbuat baik tambahkanlah dalam amalan baiknya, dan jika dia orang yang salah, lewatkanlah dari kesalahan-nya.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Hakim",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Al-Hakim. Menurut pendapatnya: Hadits tersebut adalah shahih. Adz- Dzahabi menyetujuinya 1/359, dan lihat Ahkamul Jana’iz oleh Al-Albani, halaman 125. (Hisnul Muslim no. 159)",
+      "grading": {
+        "grade": "sahih",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_159.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_07",
+      "category": "death",
+      "event": "funeral",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ أَعِذْهُ مِنْ عَذَابِ القَبْرِ)) وإن قال: ((اللَّهُمَّ اجْعَلْهُ فَرَطاً وَذُخْراً لِوَالِدَيْهِ، وَشَفِيعاً مُجَاباً، اللَّهُمَّ ثَقِّلْ بِهِ مَوَازِينَهُمَا، وَأَعْظِمْ بِهِ أُجورَهُمَا، وَأَلْحِقْهُ بِصَالِحِ الْمُؤْمِنِينَ، وَاجْعَلْهُ فِي كَفَالَةِ إِبْرَاهِيمَ، وَقِهِ بِرَحْمَتِكَ عَذَابَ الْجَحِيمِ، وَأَبْدِلْهُ دَاراً خَيْراً مِنْ دَارِهِ، وَأَهْلاً خَيْراً مِنْ أَهْلِهِ، اللَّهُمَّ اغْفِرْ لِأَسْلاَفِنَا، وَأَفْرَاطِنَا، وَمَنْ سَبَقَنَا بِالْإِيمَانِ)) إن قال ذلك فَحَسَنٌ.",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, lindungilah dia dari siksa kubur. Apabila membaca doa berikut, maka itu lebih baik: “Ya Allah! Jadikanlah kematian anak ini sebagai pahala pendahulu dan simpanan bagi kedua orang tuanya dan pemberi syafaat yang dikabulkan doanya. Ya Allah! Dengan musibah ini, beratkanlah timbangan perbuatan mereka dan berilah pahala yang agung. Anak ini kumpulkan dengan orang-orang yang shalih dan jadikanlah dia dipelihara oleh Nabi Ibrahim. Peliharalah dia dengan rahmatMu dari siksaan Neraka Jahim. Berilah rumah yang lebih baik dari rumahnya (di dunia), berilah keluarga (di Surga) yang lebih baik daripada keluarganya (di dunia). Ya Allah, ampunilah pendahulu-pendahulu kami, anak-anak kami, dan orang-orang yang mendahului kami dalam keimanan”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Malik dalam Al-Muwaththa’ I/",
+          "no": "288"
+        },
+        {
+          "book": "Ibnu Abi Syaibah dalam Al-Mushannaf",
+          "no": "3/217"
+        },
+        {
+          "book": "Al-Baihaqi",
+          "no": "4/9"
+        }
+      ],
+      "reference": "HR. Malik dalam Al-Muwaththa’ I/288, Ibnu Abi Syaibah dalam Al-Mushannaf 3/217, dan Al-Baihaqi 4/9. Syu’aib Al-Arnauth menyatakan, isnad hadits di atas shahih dalam tahqiqnya terhadap Syarhus Sunnah, karya Al-Baghawi 5/357. Lihat Al-Mughni, karya Ibnu Qudamah 3/416 dan Ad-Durusul Muhimmah li ‘Aammatil Ummah, oleh Syaikh Abdul Aziz bin Abdillah bin Baz, halaman 15. (Hisnul Muslim no. 160)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_160.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "funeral_08",
+      "category": "death",
+      "event": "funeral",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اجْعَلْهُ لَنَا فَرَطاً، وَسَلَفاً، وَأَجْراً)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Ya Allah! Jadikan kematian anak ini sebagai simpanan pahala dan amal baik serta pahala buat kami.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Baghawi dalam Syarah As-Sunnah",
+          "no": "5/357"
+        },
+        {
+          "book": "Abdurrazaq",
+          "no": "no. 6588"
+        },
+        {
+          "book": "Al- Bukhari meriwayatkan hadits tersebut secara mu’allaq dalam Kitab Al-Janaiz",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Al-Baghawi dalam Syarah As-Sunnah 5/357, Abdurrazaq no. 6588 dan Al- Bukhari meriwayatkan hadits tersebut secara mu’allaq dalam Kitab Al-Janaiz, 65 bab Membaca Fatihatul Kitab Atas Jenazah 2/113. (Hisnul Muslim no. 161)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_161.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "condolence_01",
+      "category": "death",
+      "event": "condolence",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((إِنَّ للَّهِ مَا أَخَذَ، وَلَهُ مَا أَعْطَى، وَكُلُّ شَيْءٍ عِنْدَهُ بِأَجَلٍ مُسَمَّى... فَلْتَصْبِرْ وَلْتَحْتَسِبْ)). وَإِنْ قَالَ: ((أَعْظَمَ اللَّهُ أَجْرَكَ، وَأَحْسَنَ عَزَاءَكَ، وَغَفَرَ لِمَيِّتِكَ)) فَحَسَنٌ.",
+      "is_quran": false,
+      "translations": {
+        "id": "Sesungguhnya hak Allah adalah mengambil sesuatu dan memberikan sesuatu. Segala sesuatu yang di sisi-Nya dibatasi dengan ajal yang ditentukan. Oleh karena itu, bersabarlah dan carilah ridha Allah.” Apabila seseorang berkata: “Semoga Allah memperbesar pahalamu dan memperbagus dalam menghiburmu dan semoga diampuni mayatmu”, adalah suatu perkataan yang baik.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "2/80"
+        },
+        {
+          "book": "Muslim",
+          "no": "2/636"
+        }
+      ],
+      "reference": "HR. Al-Bukhari 2/80; Muslim 2/636. An-Nawawi, Al-Adzkar, hal. 126. (Hisnul Muslim no. 162)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_162.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "grave_01",
+      "category": "death",
+      "event": "grave",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((بِسْمِ اللَّهِ وَعَلَى سُنَّةِ رَسُولِ اللَّهِ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Bismillaahi wa ‘alaa sunnati Rasulillaah. artinya, \"Dengan nama Allah dan di atas petunjuk Rasulullah\"",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud 3/314 dengan sanad yang shahih",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Abu Dawud 3/314 dengan sanad yang shahih. Untuk Imam Ahmad meriwayatkan sebagai berikut: “Bismillaah wa ‘alaa millati Rasulillaah”, sedang sanadnya shahih. (Hisnul Muslim no. 163)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_163.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "grave_02",
+      "category": "death",
+      "event": "grave",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((اللَّهُمَّ اغْفِرْ لَهُ، اللَّهُمَّ ثَبِّتْهُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Ya Allah, ampunilah dia, ya Allah teguhkanlah dia.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "3/315"
+        },
+        {
+          "book": "Al- Hakim",
+          "no": ""
+        },
+        {
+          "book": "ia menshahihkannya",
+          "no": ""
+        }
+      ],
+      "reference": "Adalah Nabi Shallallahu'alaihi wasallam apabila selesai memakamkan mayat, beliau berdiri di atasnya lalu bersabda: “Mintalah ampun kepada Allah untuk saudaramu, dan mohonkan agar dia teguh dan tahan hati (ketika ditanya oleh dua malaikat), sesungguhnya dia sekarang ditanya.” HR. Abu Dawud 3/315 dan Al- Hakim, ia menshahihkannya dan disepakati oleh Adz-Dzahabi 1/370. (Hisnul Muslim no. 164)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_164.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "grave_03",
+      "category": "death",
+      "event": "grave",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((السَّلاَمُ عَلَيْكُمْ أَهْلَ الدِّيَارِ، مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لاَحِقُونَ، [وَيَرْحَمُ اللَّهُ الْمُسْتَقدِمِينَ مِنَّا وَالْمُسْتأْخِرِينَ] أَسْاَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Semoga kesejahteraan untukmu, wahai penduduk kampung (Barzakh) dari orang-orang mukmin dan muslim. Sesungguhnya kami –insya Allah- akan menyusulkan, kami mohon kepada Allah untuk kami dan kamu, agar diberi keselamatan (dari apa yang tidak diinginkan).",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/671"
+        },
+        {
+          "book": "Ibnu Majah",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Muslim 2/671 dan Ibnu Majah. Lafazh hadits di atas milik Ibnu Majah 1/494, sedangkan doa yang ada di antara dua kurung, menurut riwayat Muslim, 2/671. (Hisnul Muslim no. 165)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_165.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_01",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ، وَالنِّعْمَةَ، لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Aku memenuhi panggilanMu, ya Allah aku memenuhi panggilanMu. Aku memenuhi panggilanMu, tiada sekutu bagiMu, aku memenuhi panggilanMu. Sesungguhnya pujaan dan nikmat adalah milikMu, begitu juga kerajaan, tiada sekutu bagiMu.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "3/408"
+        },
+        {
+          "book": "Muslim",
+          "no": "2/841"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 3/408, Muslim 2/841. (Hisnul Muslim no. 233)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_233.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_02",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((طَافَ النَّبيُّ صلى الله عليه وسلم بِالْبَيْتِ عَلَى بَعِيرٍ كُلَّمَا أَتَى الرُّكْنَ أَشَارَ إِلَيْهِ بِشَيْءٍ عِنْدَهُ وَكَبَّرَ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Nabi Shallallahu’alaihi wasallam melakukan tawaf di Baitullah, di atas unta, setiap datang ke rukun aswad (tiang Ka’bah yang terdapat hajar aswad), beliau memberi isyarat dengan sesuatu yang dipegangnya dan bertakbir.",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "3/476"
+        },
+        {
+          "book": "maksud “sesuatu” adalah tongkat",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 3/476, maksud “sesuatu” adalah tongkat. Lihat Al-Bukhari dengan Fathul Bari 3/472. (Hisnul Muslim no. 234)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_234.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_03",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "((﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ﴾)).",
+      "is_quran": true,
+      "translations": {
+        "id": "“Wahai Tuhan kami! Berilah kami kebaikan di dunia dan kebaikan di akhirat, dan jauhkan kami dari siksaan api Neraka.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Abu Dawud",
+          "no": "2/179"
+        },
+        {
+          "book": "Ahmad",
+          "no": "3/411"
+        },
+        {
+          "book": "Al-Baghawi dalam Syarh As-Sunnah",
+          "no": "7/128"
+        }
+      ],
+      "reference": "HR. Abu Dawud 2/179, Ahmad 3/411 dan Al-Baghawi dalam Syarh As-Sunnah 7/128. Al-Albani menyatakan, hadits tersebut hasan dalam Shahih Abi Dawud 1/354. (Hisnul Muslim no. 235)",
+      "grading": {
+        "grade": "hasan",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_235.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_04",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "لَمَّا دَنَا النَّبِيُّ صلى الله عليه وسلم مِنَ الصَّفَا قَرَأَ: ﴿إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَآئِرِ اللَّهِ﴾ أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ)) فَبَدَأَ بِالصَّفَا فَرَقِيَ عَلَيْهِ حَتَّى رَأَى الْبَيْتَ، فَاسْتَقْبَلَ الْقِبْلَةَ، فَوَحَّدَ اللَّهَ وَكبَّرَهُ وَقَالَ: ((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ، ثُمَّ دَعَا بَيْنَ ذلكَ. قَالَ مِثْلَ هَذَا ثَلاَثَ مَرَّاتٍ)) الْحَدِيثُ. وَفِيهِ: ((فَفَعَلَ عَلَى الْمَرْوَةِ كَمَا فَعَلَ عَلَى الصَّفَا)).",
+      "is_quran": true,
+      "translations": {
+        "id": "Ketika Nabi Shallallahu’alaihi wasallam dekat dengan bukit Shafa, beliau membaca: (Sesungguhnya Shafa dan Marwah ada-lah termasuk sy’iar agama Allah. Aku memulai sa’i dengan apa yang didahulukan oleh Allah.) Kemudian beliau mulai dengan naik ke bukit Shafa, hingga beliau melihat Baitullah. Lalu menghadap kiblat, membaca kalimat tauhid dan takbir, serta membaca: (Tiada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, Tiada sekutu bagiNya. BagiNya kerajaan dan pujian. Dialah Yang Mahakuasa atas segala sesuatu. Tiada Tuhan yang berhak disembah selain Allah Yang Maha Esa, yang melaksanakan janjiNya, mem-bela hambaNya (Muhammad) dan mengalahkan golongan musuh sendirian.) Kemudian beliau berdoa di antara Shafa dan Marwah. Baliau membacanya tiga kali. Di dalam hadits tersebut dikatakan, Nabi Shallallahu’alaihi wasallam juga membaca di Marwah sebagaimana beliau membaca di Shafa.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/888"
+        }
+      ],
+      "reference": "HR. Muslim 2/888. (Hisnul Muslim no. 236)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_236.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_05",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ، وَخَيْرُ مَا قُلْتُ أَنَا وَالنَّبيُّونَ مِنْ قَبْلِي: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Nabi Shallallahu’alaihi wasallam bersabda: Doa yang terbaik (yang mustajab) adalah di hari Arafah, dan sebaik-baiknya apa yang aku dan para nabi baca, adalah: (Tiada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, Tiada sekutu bagiNya. BagiNya kerajaan dan pujian. Dialah Yang Mahakuasa atas segala sesuatu.)",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "At-Tirmidzi",
+          "no": ""
+        }
+      ],
+      "reference": "HR. At-Tirmidzi dan lihat Shahih At-Tirmidzi 3/ 184. Al-Albani menyatakan, hadits tersebut adalah hasan. Lihat pula Al-Ahaditsush Shahihah lil-Albani 4/6. (Hisnul Muslim no. 237)",
+      "grading": {
+        "grade": "hasan",
+        "grader": "al-Albani"
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_237.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_06",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "رَكِبَ النَّبِيُّ صلى الله عليه وسلم الْقَصْوَاءَ حَتَّى أَتَى الْمَشْعَرَ الْحَرَامَ فَاسْتَقْبَلَ الْقِبْلَةَ (فَدَعَاهُ، وَكَبَّرَهُ، وَهَللَّهُ، وَوَحَّدَهُ) فَلَمْ يَزَلْ وَاقِفاً حَتَّى أَسْفَرَ جِدَّاً فَدَفَعَ قَبْلَ أَنْ تَطْلُعَ الشَّمسُ.",
+      "is_quran": false,
+      "translations": {
+        "id": "Nabi Shallallahu’alaihi wasallam naik unta bernama Al-Qaswa’ hingga di Masy’aril Haram, lalu beliau menghadap kiblat, berdoa, membaca takbir dan tahlil serta kalimat tauhid. Beliau terus berdoa hingga fajar menyingsing. Kemudian beliau berangkat (ke Mina) sebelum matahari terbit.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "2/891"
+        }
+      ],
+      "reference": "HR. Muslim 2/891. (Hisnul Muslim no. 238)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_238.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_07",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "((يُكَبِّرُ كُلَّمَا رَمَى بِحَصَاةٍ عِنْدَ الْجِمَارِ الثَّلاَثِ، ثُمَّ يَتَقَدَّمُ، ويَقِفُ يَدْعُو مُسْتَقْبِلَ الْقِبلَةِ، رَافِعاً يَدَيْهِ بَعْدَ الْجَمْرَةِ الْأُولَى وَالثَّانِيَةِ. أَمَّا جَمْرَةُ الْعَقَبَةِ فَيَرْمِيهَا وَيُكَبِّرُ عِنْدَ كُلِّ حَصَاةٍ وَيَنْصَرِفُ وَلاَ يَقِفُ عِنْدَهَا)).",
+      "is_quran": false,
+      "translations": {
+        "id": "Rasulullah Shallallahu’alaihi wasallam bertakbir pada setiap melempar tiga Jumrah dengan batu kecil, kemudian beliau maju dan berdiri untuk berdoa dengan menghadap kiblat dan mengangkat kedua tangannya setelah melempar Jumrah yang pertama dan kedua. Adapun untuk Jumrah Aqabah, beliau melempar dan bertakbir, dan beliau tidak berdiri di situ, tapi langsung pergi.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "3/583"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 3/583, 3/584 dan 3/581. Muslim juga meriwayatkannya. (Hisnul Muslim no. 239)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_239.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_08",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "((سُبْحَانَ اللَّهِ!)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Maha Suci Allah.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "1/210"
+        },
+        {
+          "book": "Muslim",
+          "no": "4/1857"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 1/210, 390 dan 414, Muslim 4/1857. (Hisnul Muslim no. 240)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_240.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "hajj_09",
+      "category": "hajj",
+      "event": "hajj",
+      "order": 9,
+      "variant_group": null,
+      "arabic": "((اللَّهُ أَكْبَرُ!)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Allah Maha Besar.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Al-Bukhari",
+          "no": "8/441"
+        }
+      ],
+      "reference": "HR. Al-Bukhari dengan Fathul Bari 8/441, lihat pula Shahih At-Tirmidzi 2/103, 2/235, dan Musnad Ahmad 5/218. (Hisnul Muslim no. 241)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_241.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "qurban_01",
+      "category": "hajj",
+      "event": "qurban",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "((بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ [اللَّهُمَّ مِنْكَ وَلَكَ] اللَّهُمَّ تَقَبَّلْ مِنِّي)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Dengan nama Allah, (aku menyembelih), Allah Maha Besar. Ya Allah! (ternak ini) dariMu (nikmat yang Engkau berikan, dan kami sembelih) untukMu. Ya Allah! Terimalah kurban ini dariku.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Muslim",
+          "no": "3/1557"
+        },
+        {
+          "book": "Al-Baihaqi",
+          "no": "9/287"
+        },
+        {
+          "book": "sedangkan kalimat di antara dua kurung",
+          "no": ""
+        }
+      ],
+      "reference": "HR. Muslim 3/1557, Al-Baihaqi 9/287, sedangkan kalimat di antara dua kurung, menurut riwayat Al-Baihaqi 9/287. Sedangkan yang terakhir, kami ambilkan dari riwayat Muslim. (Hisnul Muslim no. 246)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_246.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "qurban_02",
+      "category": "hajj",
+      "event": "qurban",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "((أَعُوذُ بكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لاَ يُجَاوِزُهُنَّ بَرٌّ وَلاَ فَاجِرٌ: مِنْ شَرِّ مَا خَلَقَ، وَبَرَأَ وَذَرَأَ، وَمِنْ شَرِّ مَا يَنْزِلُ مِنَ السَّمَاءِ، وَمِنْ شَرِّ مَا يَعْرُجُ فيهَا، وَمِنْ شَرِّ مَا ذَرَأَ فِي الْأَرْضِ، وَمِنْ شَرِّ مَا يَخْرُجُ مِنْهَا، وَمِنْ شَرِّ فِتَنِ اللَّيْلِ وَالنَّهَارِ، وَمِنْ شَرِّ كُلِّ طَارِقٍ إِلاَّ طَارِقاً يَطْرُقُ بِخَيْرٍ يَا رَحْمَنُ)).",
+      "is_quran": false,
+      "translations": {
+        "id": "“Aku berlindung dengan kalimat-kalimat Allah yang sempurna, yang tidak akan diterobos oleh orang baik dan orang durhaka, dari kejahatan apa yang diciptakan dan dijadikanNya, dari kejahatan apa yang turun dari langit dan yang naik ke dalamnya, dari kejahatan yang tumbuh di bumi dan yang keluar daripadanya, dari kejahatan fitnah-fitnah malam dan siang, serta dari kejahatan- kejahatan yang datang (di waktu malam) kecuali dengan tujuan baik, wahai Tuhan Yang Maha Pengasih.”",
+        "en": ""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "Ahmad 3/419 dengan sanad yang shahih",
+          "no": ""
+        },
+        {
+          "book": "Ibnus Sunni",
+          "no": "no. 637"
+        }
+      ],
+      "reference": "HR. Ahmad 3/419 dengan sanad yang shahih, Ibnus Sunni no. 637, lihat pula Majma’uz Zawa’id 10/127 dan Takhrijuth Thahawiyah lil Arnauth 133. (Hisnul Muslim no. 247)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_247.opus",
         "segments": []
       },
       "phrase_breaks": []

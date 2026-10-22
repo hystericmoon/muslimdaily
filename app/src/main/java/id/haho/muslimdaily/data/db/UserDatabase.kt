@@ -114,6 +114,10 @@ interface MySetDao {
     @Query("DELETE FROM variant_choices WHERE eventId = :eventId") suspend fun clearChoices(eventId: String)
     @Query("DELETE FROM event_prefs WHERE eventId = :eventId") suspend fun clearPref(eventId: String)
 
+    @Query("DELETE FROM event_items") suspend fun clearAllItems()
+    @Query("DELETE FROM variant_choices") suspend fun clearAllChoices()
+    @Query("DELETE FROM event_prefs") suspend fun clearAllPrefs()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertItems(items: List<EventItemEntity>)
 
     @Transaction
@@ -156,6 +160,12 @@ interface ChecklistDao {
     suspend fun delete(epochDay: Long, itemKey: String)
 
     @Query("DELETE FROM checklist WHERE epochDay < :epochDay") suspend fun deleteBefore(epochDay: Long)
+
+    @Query("SELECT * FROM checklist ORDER BY epochDay, itemKey") suspend fun all(): List<ChecklistEntity>
+
+    @Query("DELETE FROM checklist") suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(items: List<ChecklistEntity>)
 }
 
 @Dao
@@ -181,4 +191,10 @@ interface ReviewDao {
     @Upsert suspend fun upsert(item: ReviewItemEntity)
 
     @Query("DELETE FROM review_items WHERE duaId = :duaId") suspend fun delete(duaId: String)
+
+    @Query("SELECT * FROM review_items ORDER BY duaId") suspend fun all(): List<ReviewItemEntity>
+
+    @Query("DELETE FROM review_items") suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(items: List<ReviewItemEntity>)
 }

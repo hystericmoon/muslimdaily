@@ -2,10 +2,11 @@ package id.haho.muslimdaily.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.DpSize
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
@@ -15,6 +16,7 @@ import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -26,21 +28,23 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
-import androidx.glance.layout.width
 import androidx.glance.semantics.contentDescription
 import androidx.glance.semantics.semantics
+import androidx.glance.text.FontFamily
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.labelRes
 import java.time.format.DateTimeFormatter
+import kotlin.math.min
 
-/** Next prayer: name, time and a live countdown. 2×2 by default, resizable down to 2×1. */
+/** Next prayer over a living sky: name, time and a live countdown. 2×2, resizable to 2×1. */
 class NextPrayerWidget : GlanceAppWidget() {
-    override val sizeMode = SizeMode.Responsive(setOf(DpSize(110.dp, 50.dp), DpSize(110.dp, 110.dp)))
+    override val sizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val initial = loadWidgetData(context)
@@ -52,7 +56,7 @@ class NextPrayerWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = NextPrayerWidget()
 }
 
-/** Today's six times in a row, the next one highlighted, with a countdown. 4×2 by default. */
+/** Today over a living sky: the sun's path with each prayer on it, and the six times. 4×2. */
 class DayScheduleWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
 
@@ -66,51 +70,102 @@ class DayScheduleWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = DayScheduleWidget()
 }
 
+private val White = ColorProvider(Color.White)
+private val WhiteSoft = ColorProvider(Color.White.copy(alpha = 0.78f))
+private val Corner: Dp = 24.dp
+private val StripHeight: Dp = 54.dp
+
+/** Bitmaps are drawn at up to 2x: sharp on any launcher, well inside the RemoteViews size limit. */
+private fun scale(context: Context) = min(context.resources.displayMetrics.density, 2f)
+
 @Composable
-private fun NoLocation(data: WidgetData) {
+private fun Sky(
+    data: WidgetData,
+    arcTop: Float,
+    arcBottom: Float,
+    markers: Boolean,
+    arc: Boolean,
+    strip: Dp = 0.dp,
+) {
     val context = LocalContext.current
-    GlassPanel(data.colors, GlanceModifier.fillMaxSize().openToday(context)) {
-        Box(GlanceModifier.fillMaxSize().padding(WidgetPadding), contentAlignment = Alignment.Center) {
-            Text(
-                context.getString(R.string.widget_no_location),
-                style = TextStyle(color = data.colors.onSurface, fontSize = 13.sp, textAlign = TextAlign.Center),
-            )
-        }
+    val size = LocalSize.current
+    val snapshot = data.snapshot ?: return
+    val d = scale(context)
+    val bitmap = remember(size, data, arcTop, arcBottom, markers, arc, strip) {
+        SkyPainter.paint(
+            SkyPainter.Spec(
+                widthPx = (size.width.value * d).toInt().coerceAtLeast(1),
+                heightPx = (size.height.value * d).toInt().coerceAtLeast(1),
+                density = d,
+                snapshot = snapshot,
+                now = data.now,
+                arcTop = arcTop,
+                arcBottom = arcBottom,
+                markers = markers,
+                arc = arc,
+                stripPx = (strip.value * d).toInt(),
+                cornerPx = Corner.value * d,
+            ),
+        )
+    }
+    Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
+}
+
+@Composable
+private fun NoLocation() {
+    val context = LocalContext.current
+    val size = LocalSize.current
+    val d = scale(context)
+    val bitmap = remember(size) {
+        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, Corner.value * d)
+    }
+    Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context), contentAlignment = Alignment.Center) {
+        Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
+        Text(
+            context.getString(R.string.widget_no_location),
+            style = TextStyle(color = White, fontSize = 13.sp, textAlign = TextAlign.Center),
+            modifier = GlanceModifier.padding(horizontal = 20.dp),
+        )
     }
 }
 
 @Composable
 internal fun NextPrayerContent(data: WidgetData) {
-    val snapshot = data.snapshot ?: return NoLocation(data)
+    val snapshot = data.snapshot ?: return NoLocation()
     val context = LocalContext.current
-    val c = data.colors
     val next = snapshot.next
     val name = context.getString(next.prayer.labelRes())
     val time = data.time.format(next.time, snapshot.zone)
     val compact = LocalSize.current.height < 100.dp
     val description = context.getString(R.string.widget_next_description, name, time, snapshot.locationName)
-    GlassPanel(c, GlanceModifier.fillMaxSize().openToday(context).semantics { contentDescription = description }) {
+    Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context).semantics { contentDescription = description }) {
         if (compact) {
-            // Rows with an embedded chronometer lay out unreliably in RemoteViews, so the compact
-            // form stacks: name and time, then the countdown.
+            Sky(data, 0f, 0f, markers = false, arc = false)
             Column(
-                GlanceModifier.fillMaxSize().padding(horizontal = WidgetPadding, vertical = 6.dp),
+                GlanceModifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("$name  $time", style = TextStyle(color = c.onSurface, fontSize = 17.sp, fontWeight = FontWeight.Medium), maxLines = 1)
-                Countdown(context, next.time, data.now, c, 13.sp)
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Text(name, style = TextStyle(color = White, fontSize = 15.sp, fontWeight = FontWeight.Medium), maxLines = 1)
+                    Spacer(GlanceModifier.padding(start = 8.dp))
+                    Text(time, style = TextStyle(color = White, fontSize = 24.sp, fontFamily = FontFamily("sans-serif-light")), maxLines = 1)
+                }
+                Countdown(context, next.time, data.now, data.colors, 12.sp, white = true)
             }
         } else {
-            Column(GlanceModifier.fillMaxSize().padding(WidgetPadding), verticalAlignment = Alignment.CenterVertically) {
+            Sky(data, arcTop = 0.74f, arcBottom = 0.92f, markers = true, arc = true)
+            Column(GlanceModifier.fillMaxSize().padding(start = 16.dp, top = 12.dp, end = 16.dp)) {
                 Text(
-                    context.getString(R.string.widget_next_label, snapshot.locationName),
-                    style = TextStyle(color = c.onSurfaceVariant, fontSize = 12.sp),
+                    context.getString(
+                        if (snapshot.nextSlot == null) R.string.widget_next_label_tomorrow else R.string.widget_next_label,
+                        snapshot.locationName,
+                    ),
+                    style = TextStyle(color = WhiteSoft, fontSize = 11.sp),
                     maxLines = 1,
                 )
-                Spacer(GlanceModifier.height(6.dp))
-                Text(name, style = TextStyle(color = c.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Medium), maxLines = 1)
-                Text(time, style = TextStyle(color = c.onSurface, fontSize = 34.sp), maxLines = 1)
-                Countdown(context, next.time, data.now, c, 13.sp)
+                Text(name, style = TextStyle(color = White, fontSize = 16.sp, fontWeight = FontWeight.Medium), maxLines = 1)
+                Text(time, style = TextStyle(color = White, fontSize = 36.sp, fontFamily = FontFamily("sans-serif-light")), maxLines = 1)
+                Countdown(context, next.time, data.now, data.colors, 12.sp, white = true)
             }
         }
     }
@@ -120,51 +175,75 @@ private val DayLabel = DateTimeFormatter.ofPattern("EEEE, d MMM", AppLocale)
 
 @Composable
 internal fun DayScheduleContent(data: WidgetData) {
-    val snapshot = data.snapshot ?: return NoLocation(data)
+    val snapshot = data.snapshot ?: return NoLocation()
     val context = LocalContext.current
-    val c = data.colors
+    val size = LocalSize.current
     val nextSlot = snapshot.nextSlot
+    val next = snapshot.next
+    val nextName = context.getString(next.prayer.labelRes())
+    // Room for the sun's path only when the widget is tall enough; otherwise the strip says it.
+    val roomy = size.height >= 170.dp
     val description = buildString {
-        append(DayLabel.format(snapshot.date)).append(", ").append(snapshot.locationName).append(". ")
+        append(DayLabel.format(snapshot.date)).append(", ").append(data.hijri).append(", ").append(snapshot.locationName).append(". ")
         snapshot.today.forEach { append(context.getString(it.slot.labelRes())).append(' ').append(data.time.format(it.time, snapshot.zone)).append(". ") }
     }
-    GlassPanel(c, GlanceModifier.fillMaxSize().openToday(context).semantics { contentDescription = description }) {
-        Column(GlanceModifier.fillMaxSize().padding(WidgetPadding)) {
-            Text(
-                context.getString(R.string.widget_day_header, DayLabel.format(snapshot.date), snapshot.locationName),
-                style = TextStyle(color = c.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium),
-                maxLines = 1,
-            )
-            Countdown(
-                context, snapshot.next.time, data.now, c, 13.sp,
-                format = context.getString(R.string.widget_countdown_named, context.getString(snapshot.next.prayer.labelRes())),
-            )
+    Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context).semantics { contentDescription = description }) {
+        val stripTop = 1f - (StripHeight.value + 8f) / size.height.value
+        Sky(
+            data,
+            arcTop = 0.36f,
+            arcBottom = (stripTop - 0.06f).coerceAtLeast(0.4f),
+            markers = true,
+            arc = roomy,
+            strip = StripHeight,
+        )
+        Column(GlanceModifier.fillMaxSize()) {
+            Column(GlanceModifier.fillMaxWidth().padding(start = 16.dp, top = 12.dp, end = 16.dp)) {
+                Text(
+                    context.getString(R.string.widget_day_header, DayLabel.format(snapshot.date), data.hijri),
+                    style = TextStyle(color = WhiteSoft, fontSize = 11.sp),
+                    maxLines = 1,
+                )
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Text(nextName, style = TextStyle(color = White, fontSize = 16.sp, fontWeight = FontWeight.Medium), maxLines = 1)
+                    Spacer(GlanceModifier.padding(start = 8.dp))
+                    Text(
+                        data.time.format(next.time, snapshot.zone),
+                        style = TextStyle(color = White, fontSize = 24.sp, fontFamily = FontFamily("sans-serif-light")),
+                        maxLines = 1,
+                    )
+                }
+                Countdown(
+                    context, next.time, data.now, data.colors, 12.sp, white = true,
+                    format = context.getString(R.string.widget_countdown_place, snapshot.locationName),
+                )
+            }
             Spacer(GlanceModifier.defaultWeight())
-            Row(GlanceModifier.fillMaxWidth()) {
+            Row(GlanceModifier.fillMaxWidth().height(StripHeight).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                val d = scale(context)
+                val pill = remember(size) { SkyPainter.pill(((size.width.value - 24f) / 6f * d).toInt(), (44 * d).toInt(), d) }
                 snapshot.today.forEach { slot ->
                     val isNext = slot.slot == nextSlot
-                    Box(GlanceModifier.defaultWeight(), contentAlignment = Alignment.Center) {
+                    Box(GlanceModifier.defaultWeight().height(44.dp), contentAlignment = Alignment.Center) {
                         if (isNext) {
-                            Image(
-                                ImageProvider(R.drawable.widget_pill),
-                                contentDescription = null,
-                                colorFilter = ColorFilter.tint(c.highlight),
-                                contentScale = ContentScale.FillBounds,
-                                modifier = GlanceModifier.fillMaxWidth().height(52.dp),
-                            )
+                            Image(ImageProvider(pill), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
                         }
-                        Column(GlanceModifier.padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                            val fg = if (isNext) c.onHighlight else c.onSurfaceVariant
-                            Text(context.getString(slot.slot.labelRes()), style = TextStyle(color = fg, fontSize = 11.sp, textAlign = TextAlign.Center), maxLines = 1)
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                context.getString(slot.slot.labelRes()),
+                                style = TextStyle(color = if (isNext) White else WhiteSoft, fontSize = 10.sp, textAlign = TextAlign.Center),
+                                maxLines = 1,
+                            )
                             Text(
                                 data.time.format(slot.time, snapshot.zone),
-                                style = TextStyle(color = if (isNext) c.onHighlight else c.onSurface, fontSize = 15.sp, fontWeight = if (isNext) FontWeight.Bold else FontWeight.Normal, textAlign = TextAlign.Center),
+                                style = TextStyle(color = White, fontSize = 14.sp, fontWeight = if (isNext) FontWeight.Bold else FontWeight.Normal, textAlign = TextAlign.Center),
                                 maxLines = 1,
                             )
                         }
                     }
                 }
             }
+            Spacer(GlanceModifier.height(8.dp))
         }
     }
 }

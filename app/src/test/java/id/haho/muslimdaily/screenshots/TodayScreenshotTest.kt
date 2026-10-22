@@ -48,6 +48,17 @@ class TodayScreenshotTest {
         )
     }
 
+    /** 14 Ramadan 1448 (Umm al-Qura): counting down to iftar, then to the end of suhur. */
+    @Test
+    fun ramadanAfternoon() = captureVariants("14-today-ramadan-iftar") {
+        TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2027, 2, 21, 15, 0), checked = emptySet(), progress = emptyMap()), TodayActions())
+    }
+
+    @Test
+    fun ramadanSuhur() = captureVariants("15-today-ramadan-suhur") {
+        TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2027, 2, 21, 3, 30), checked = emptySet(), progress = emptyMap()), TodayActions())
+    }
+
     @Test
     fun noLocation() = captureVariants("13-today-no-location") { TodayScreen(TodayUiState.NoLocation, TodayActions()) }
 

@@ -105,4 +105,7 @@ class DuaDetailViewModel @Inject constructor(
     }
 
     suspend fun contentVersion(): Int = content.contentVersion()
+
+    /** The palette the share card is drawn in. */
+    suspend fun palette() = settings.current().palette
 }

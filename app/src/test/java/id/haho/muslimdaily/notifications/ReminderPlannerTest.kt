@@ -96,4 +96,14 @@ class ReminderPlannerTest {
         )
         assertEquals(listOf(ReminderType.REVIEW), p.map { it.type })
     }
+
+    @Test
+    fun `fasting reminder comes the evening before the next sunnah fast`() {
+        // Wednesday noon: Thursday is a weekly fast, so tonight at 20.00.
+        val p = plan(ReminderSettings(fasting = true, fastingTime = LocalTime.of(20, 0)))
+        assertEquals(LocalDateTime.of(2026, 10, 21, 20, 0), p.single { it.type == ReminderType.FASTING }.at.atZone(zone).toLocalDateTime())
+        // Without the weekly fasts it waits for the next special day, so later than tonight.
+        val special = plan(ReminderSettings(fasting = true, fastingWeekly = false)).single { it.type == ReminderType.FASTING }
+        assertTrue(special.at.isAfter(at(2026, 10, 21, 20, 0)))
+    }
 }

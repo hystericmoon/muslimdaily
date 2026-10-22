@@ -40,6 +40,8 @@ import id.haho.muslimdaily.feature.settings.data.MySetsDataRoute
 import id.haho.muslimdaily.feature.settings.location.LocationRoute
 import id.haho.muslimdaily.feature.today.TodayRoute
 import id.haho.muslimdaily.feature.mosque.NearbyMosqueRoute
+import id.haho.muslimdaily.feature.qibla.QiblaRoute
+import id.haho.muslimdaily.feature.fasting.FastingRoute
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -63,8 +65,12 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenLocation = { navController.navigate(LocationRoute) },
                     onOpenPrayerSettings = { navController.navigate(PrayerSettingsRoute) },
                     onOpenMosques = { navController.navigate(MosquesRoute) },
+                    onOpenQibla = { navController.navigate(QiblaRoute) },
+                    onOpenFasting = { navController.navigate(FastingRoute) },
                 )
             }
+            composable<FastingRoute> { FastingRoute(onBack = back) }
+            composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(LocationRoute) }) }
             composable<MosquesRoute> { NearbyMosqueRoute(onBack = back) }
         }
         navigation<DuasGraph>(startDestination = DuaLibraryRoute) {

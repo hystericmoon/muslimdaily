@@ -50,9 +50,11 @@ import java.time.ZoneId
 class WidgetScreenshotTest {
     private val now = LocalDateTime.of(2026, 10, 21, 10, 0).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
 
-    private fun data(palette: AppPalette, mode: ThemeMode): WidgetData {
+    private fun at(h: Int, m: Int) = LocalDateTime.of(2026, 10, 21, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
+
+    private fun data(palette: AppPalette, mode: ThemeMode, now: java.time.Instant = this.now): WidgetData {
         val settings = TodayPreviewData.settings.copy(palette = palette, themeMode = mode)
-        return WidgetData(PrayerSnapshots.at(now, settings, PrayerCalculator()), WidgetColors.of(settings), TimeFormatter(true), now)
+        return WidgetData(PrayerSnapshots.at(now, settings, PrayerCalculator()), "10 Jumadilawal 1448 H", WidgetColors.of(settings), TimeFormatter(true), now)
     }
 
     private class Fake(private val body: @androidx.compose.runtime.Composable () -> Unit) : GlanceAppWidget() {
@@ -88,13 +90,17 @@ class WidgetScreenshotTest {
 
     @Test
     fun widgets() = runTest {
-        for ((palette, mode) in listOf(AppPalette.TEAL to ThemeMode.LIGHT, AppPalette.TEAL to ThemeMode.DARK, AppPalette.ROSE to ThemeMode.LIGHT, AppPalette.NAVY to ThemeMode.DARK)) {
-            val dark = mode == ThemeMode.DARK
-            val suffix = "${palette.name.lowercase()}-${mode.name.lowercase()}"
-            val d = data(palette, mode)
-            render("80-widget-next-$suffix", DpSize(170.dp, 170.dp), dark) { NextPrayerContent(d) }
-            render("81-widget-next-compact-$suffix", DpSize(250.dp, 70.dp), dark) { NextPrayerContent(d) }
-            render("82-widget-day-$suffix", DpSize(340.dp, 150.dp), dark) { DayScheduleContent(d) }
+        // A day of skies: before dawn, dawn, morning, noon, Ashar, dusk, night.
+        val times = listOf("0330" to at(3, 30), "0440" to at(4, 40), "0900" to at(9, 0), "1300" to at(13, 0), "1630" to at(16, 30), "1810" to at(18, 10), "2100" to at(21, 0))
+        for ((label, t) in times) {
+            val d = data(AppPalette.TEAL, ThemeMode.SYSTEM, t)
+            render("80-widget-next-$label", DpSize(170.dp, 170.dp), false) { NextPrayerContent(d) }
+            render("82-widget-day-$label", DpSize(340.dp, 200.dp), false) { DayScheduleContent(d) }
         }
+        val d = data(AppPalette.TEAL, ThemeMode.SYSTEM, at(10, 0))
+        render("81-widget-next-compact", DpSize(250.dp, 70.dp), false) { NextPrayerContent(d) }
+        render("83-widget-day-short", DpSize(340.dp, 140.dp), false) { DayScheduleContent(d) }
+        val none = data(AppPalette.ROSE, ThemeMode.LIGHT).let { WidgetData(null, it.hijri, it.colors, it.time, it.now) }
+        render("84-widget-no-location", DpSize(170.dp, 170.dp), false) { NextPrayerContent(none) }
     }
 }

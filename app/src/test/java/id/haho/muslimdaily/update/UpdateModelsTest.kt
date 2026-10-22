@@ -43,4 +43,10 @@ class UpdateModelsTest {
         assertNull(parseLatestRelease(release("v0.3.0", """{"name":"a.apk","browser_download_url":"http://x/a.apk"}"""), "0.2.0"))
         assertNull(parseLatestRelease("not json", "0.2.0"))
     }
+
+    @Test fun neverPicksTheWatchApk() {
+        val wear = """{"name":"muslimdaily-wear-0.3.0.apk","browser_download_url":"https://github.com/o/r/releases/download/v0.3.0/w.apk","size":9}"""
+        assertEquals(123L, parseLatestRelease(release("v0.3.0", "$wear,$apk"), "0.2.0")!!.sizeBytes)
+        assertNull(parseLatestRelease(release("v0.3.0", wear), "0.2.0"))
+    }
 }

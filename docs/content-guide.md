@@ -50,10 +50,16 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 
 | Category | Events |
 |---|---|
-| `daily` | `waking_up`, `toilet`, `wudu`, `dressing`, `leaving_home`, `entering_home`, `going_to_masjid`, `entering_masjid`, `leaving_masjid`, `adhan`, `eating`, `drinking`, `sleeping` |
-| `prayer` | `istiftah`, `ruku`, `sujud`, `tashahhud`, `after_salah` |
+| `daily` | `waking_up`, `toilet`, `wudu`, `dressing`, `leaving_home`, `market`, `entering_home`, `going_to_masjid`, `entering_masjid`, `leaving_masjid`, `adhan`, `eating`, `drinking`, `sneezing`, `sleeping`, `night` |
+| `prayer` | `istiftah`, `ruku`, `itidal`, `sujud`, `between_sujud`, `tashahhud`, `after_salah`, `witr`, `tilawah` |
 | `adhkar` | `morning`, `evening` |
-| `situational` | `travel`, `rain`, `thunder`, `illness`, `distress`, `istikharah` |
+| `dhikr` | `shalawat`, `istighfar`, `tasbih`, `protection` |
+| `situational` | `travel`, `rain`, `thunder`, `wind`, `new_moon`, `illness`, `distress`, `anger`, `fear`, `waswas`, `debt`, `news`, `animals`, `istikharah` |
+| `fasting` | `iftar`, `fasting_manners` |
+| `family` | `marriage`, `children` |
+| `social` | `salam`, `gathering`, `manners` |
+| `death` | `funeral`, `condolence`, `grave` |
+| `hajj` | `hajj`, `qurban` |
 | `quran` | `quran_forgiveness`, `quran_goodness`, `quran_ease`, `quran_family` |
 
 New events are added in `content/taxonomy.json` (ask the developer).

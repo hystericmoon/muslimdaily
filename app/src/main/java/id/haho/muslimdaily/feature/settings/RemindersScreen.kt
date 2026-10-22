@@ -240,6 +240,21 @@ fun RemindersContent(
                 )
                 if (r.friday) TimeRow(r.fridayTime) { timeDialog = TimeTarget.FRIDAY }
                 SwitchRow(
+                    title = stringResource(R.string.reminders_fasting_title),
+                    summary = stringResource(R.string.reminders_fasting_summary),
+                    checked = r.fasting,
+                    onCheckedChange = { v -> update { remFasting = v } },
+                    icon = R.drawable.ic_calendar_month,
+                )
+                if (r.fasting) {
+                    TimeRow(r.fastingTime) { timeDialog = TimeTarget.FASTING }
+                    SwitchRow(
+                        title = stringResource(R.string.reminders_fasting_weekly),
+                        checked = r.fastingWeekly,
+                        onCheckedChange = { v -> update { remFastingWeekly = v } },
+                    )
+                }
+                SwitchRow(
                     title = stringResource(R.string.notif_review_title),
                     summary = stringResource(R.string.reminders_review_summary),
                     checked = r.reviewQueue,
@@ -255,6 +270,7 @@ fun RemindersContent(
             TimeTarget.SLEEP -> r.beforeSleepTime
             TimeTarget.FRIDAY -> r.fridayTime
             TimeTarget.REVIEW -> r.reviewTime
+            TimeTarget.FASTING -> r.fastingTime
         }
         TimeDialog(initial, onDismiss = { timeDialog = null }) { time ->
             update {
@@ -262,6 +278,7 @@ fun RemindersContent(
                     TimeTarget.SLEEP -> setSleepTime(time)
                     TimeTarget.FRIDAY -> setFridayTime(time)
                     TimeTarget.REVIEW -> setReviewTime(time)
+                    TimeTarget.FASTING -> setFastingTime(time)
                 }
             }
             timeDialog = null
@@ -269,7 +286,7 @@ fun RemindersContent(
     }
 }
 
-private enum class TimeTarget { SLEEP, FRIDAY, REVIEW }
+private enum class TimeTarget { SLEEP, FRIDAY, REVIEW, FASTING }
 
 @Composable
 private fun PermissionCard(text: String, action: String, onClick: () -> Unit) {

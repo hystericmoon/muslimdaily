@@ -61,3 +61,22 @@ Notes:
   `muslimdaily.updateRepo`) must be **public**.
 * All sideload builds are signed with the shared, non-secret `app/debug.keystore` so CI builds
   install over local ones. Android refuses an update signed with any other key.
+
+## Wear OS tile
+
+Each release also attaches `muslimdaily-wear-<version>.apk`. It has the same package name and
+signing key as the phone's sideload build, which the Wear data layer requires. Install it on
+the watch with adb over Wi-Fi (Settings → Developer options → Wireless debugging on the
+watch):
+
+```bash
+adb pair <watch-ip>:<pairing-port>     # code shown on the watch
+adb connect <watch-ip>:<port>
+adb -s <watch-ip>:<port> install muslimdaily-wear-<version>.apk
+```
+
+Then add the "Shalat berikutnya" tile on the watch. The phone sends a week of prayer times
+whenever its widgets refresh (at each prayer time and on settings changes); opening the phone
+app once after installing is enough to fill the tile. The phone's in-app updater ignores the
+watch APK.
+

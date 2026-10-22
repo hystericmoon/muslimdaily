@@ -27,8 +27,8 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 26
         targetSdk = 37
-        versionCode = 14
-        versionName = "0.3.2"
+        versionCode = 16
+        versionName = "0.4.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
         // GitHub repository whose releases the sideload updater reads (debug builds only).
@@ -154,6 +154,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.glance.appwidget)
+    implementation(libs.play.services.wearable)
     implementation(libs.play.services.location)
     implementation(libs.adhan)
     implementation(libs.kotlinx.serialization.json)

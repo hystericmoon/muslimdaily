@@ -20,6 +20,7 @@ import re
 import subprocess
 import time
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -44,7 +45,8 @@ def audio_urls() -> dict[int, str]:
     return urls
 
 
-def download(n: int, url: str) -> Path:
+def download(n: int, url: str) -> Path | None:
+    """The cached MP3, or None when the site has no recording at that URL."""
     CACHE.mkdir(parents=True, exist_ok=True)
     out = CACHE / f"{n}.mp3"
     if not out.exists() or out.stat().st_size == 0:
@@ -54,6 +56,12 @@ def download(n: int, url: str) -> Path:
                 with urllib.request.urlopen(req, timeout=120) as r:
                     data = r.read()
                 break
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    return None
+                if attempt == 3:
+                    raise
+                time.sleep(2 ** attempt)
             except OSError:
                 if attempt == 3:
                     raise
@@ -93,7 +101,11 @@ def main():
         if not args.dry_run:
             dst = AUDIO_DIR / name
             if not dst.exists():
-                transcode(download(n, urls[n]), dst)
+                src = download(n, urls[n])
+                if src is None:
+                    missing.append(r["id"])
+                    continue
+                transcode(src, dst)
             r["audio_file"] = name
         attached += 1
     if not args.dry_run:

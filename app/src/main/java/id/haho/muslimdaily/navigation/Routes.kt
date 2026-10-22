@@ -14,6 +14,8 @@ import kotlinx.serialization.Serializable
 // Today
 @Serializable data object TodayRoute
 @Serializable data object MosquesRoute
+@Serializable data object QiblaRoute
+@Serializable data object FastingRoute
 
 // Duas
 @Serializable data object DuaLibraryRoute
