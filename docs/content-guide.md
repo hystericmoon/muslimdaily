@@ -54,7 +54,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `prayer` | `istiftah`, `ruku`, `sujud`, `tashahhud`, `after_salah` |
 | `adhkar` | `morning`, `evening` |
 | `situational` | `travel`, `rain`, `thunder`, `illness`, `distress`, `istikharah` |
-| `quran` | `quranic_duas` |
+| `quran` | `quran_forgiveness`, `quran_goodness`, `quran_ease`, `quran_family` |
 
 New events are added in `content/taxonomy.json` (ask the developer).
 
@@ -80,7 +80,12 @@ from the product spec. Evidence columns are still empty.
 * Clear recitation only: no music, melodic intro or sound effects.
 * Opus (`.opus`) mono, 48 kHz, ~24–32 kbps is plenty for speech.
 * Segment times can be read off in Audacity: select each phrase, note start and end.
-* No recitations are bundled yet; duas without `audio_file` simply have no player.
+* Hisnul Muslim rows use the recitation by Hamad ad-Duraihim (one file per dhikr, published by
+  IslamHouse.com, whose FAQ allows republishing unchanged with the source credited). Run
+  `python3 -I tools/hisnul_muslim/fetch_audio.py` after importing new Hisn rows; it downloads the
+  matching MP3 from hisnmuslim.com, transcodes it to `content/audio/hisn_NNN.opus` without editing,
+  and fills `audio_file`. These files have no phrase segments, so playback has no highlighting.
+* Duas without `audio_file` simply have no player.
 
 ## Imported content: Hisnul Muslim
 

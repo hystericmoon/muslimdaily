@@ -422,7 +422,7 @@
     <string name="settings_audio_playback">Pemutaran</string>
     <string name="settings_audio_speed">Kecepatan bawaan</string>
     <string name="settings_reciter">Qari</string>
-    <string name="settings_reciter_default">Bawaan (satu qari tersedia)</string>
+    <string name="settings_reciter_default">Hamad ad-Duraihim (Hisnul Muslim, IslamHouse.com)</string>
     <string name="settings_run_mode">Mode baca</string>
     <string name="settings_auto_advance_summary">Pindah ke doa berikutnya setelah hitungan selesai.</string>
     <string name="settings_haptics">Getaran</string>
@@ -508,7 +508,7 @@
     <string name="methodology_counts_title">Jumlah bacaan</string>
     <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
     <string name="methodology_audio_title">Audio</string>
-    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara.</string>
+    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
     <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>

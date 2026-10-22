@@ -64,7 +64,10 @@
       "label_en": "Qur'anic duas",
       "order": 5,
       "events": [
-        { "id": "quranic_duas", "label": "Doa-doa Al-Qur'an", "label_en": "Duas from the Qur'an", "order": 1 }
+        { "id": "quran_forgiveness", "label": "Ampunan dan rahmat", "label_en": "Forgiveness and mercy", "order": 1 },
+        { "id": "quran_goodness", "label": "Kebaikan dunia dan akhirat", "label_en": "Good in this life and the next", "order": 2 },
+        { "id": "quran_ease", "label": "Ilmu, kemudahan, dan perlindungan", "label_en": "Knowledge, ease and protection", "order": 3 },
+        { "id": "quran_family", "label": "Orang tua, keluarga, dan keturunan", "label_en": "Parents, family and children", "order": 4 }
       ]
     }
   ]

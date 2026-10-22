@@ -1,5 +1,5 @@
 {
-  "content_version": 8,
+  "content_version": 12,
   "duas": [
     {
       "id": "wake_01",
@@ -33,7 +33,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_001.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -70,7 +70,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_002.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -103,7 +103,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_003.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -140,7 +140,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_004.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -177,7 +177,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_010.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -214,7 +214,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_011.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -255,7 +255,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_012.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -288,7 +288,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_013.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -321,7 +321,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_014.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -358,7 +358,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_015.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -395,7 +395,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_005.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -436,7 +436,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_006.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -469,7 +469,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_007.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -506,7 +506,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_008.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -543,7 +543,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_009.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -580,7 +580,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_016.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -613,7 +613,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_017.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -646,7 +646,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_019.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -679,7 +679,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_020.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -712,7 +712,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_021.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -749,7 +749,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_022.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -782,7 +782,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_023.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -815,7 +815,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_024.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -848,7 +848,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_025.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -889,7 +889,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_026.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -926,7 +926,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_178.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -959,7 +959,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_179.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -996,7 +996,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_180.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1033,7 +1033,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_181.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1070,7 +1070,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_099.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1103,7 +1103,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_100.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1140,7 +1140,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_101.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1177,7 +1177,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_102.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1218,7 +1218,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_103.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1251,7 +1251,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_104.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1288,7 +1288,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_105.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1325,7 +1325,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_106.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1358,7 +1358,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_107.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1391,7 +1391,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_108.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1424,7 +1424,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_109.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1461,7 +1461,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_110.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1498,7 +1498,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_111.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1535,7 +1535,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_027.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1568,7 +1568,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_028.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1601,7 +1601,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_029.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1634,7 +1634,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_030.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1671,7 +1671,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_032.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1708,7 +1708,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_033.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1745,7 +1745,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_034.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1782,7 +1782,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_035.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1823,7 +1823,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_036.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1864,7 +1864,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_037.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1901,7 +1901,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_041.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1938,7 +1938,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_042.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -1971,7 +1971,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_043.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2008,7 +2008,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_044.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2049,7 +2049,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_045.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2082,7 +2082,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_046.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2115,7 +2115,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_047.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2152,7 +2152,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_052.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2185,7 +2185,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_053.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2222,7 +2222,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_054.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2259,7 +2259,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_055.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2296,7 +2296,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_056.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2333,7 +2333,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_057.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2366,7 +2366,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_058.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2403,7 +2403,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_059.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2436,7 +2436,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_060.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2469,7 +2469,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_061.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2506,7 +2506,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_062.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2547,7 +2547,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_063.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2580,7 +2580,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_064.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2613,7 +2613,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_065.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2646,7 +2646,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_066.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2683,7 +2683,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_067.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2716,7 +2716,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_068.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2749,7 +2749,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_069.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2786,7 +2786,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_070.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2823,7 +2823,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_071.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2860,7 +2860,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_072.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2897,7 +2897,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_073.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2930,7 +2930,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_075.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -2967,7 +2967,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_076.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3000,7 +3000,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_077.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3033,7 +3033,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_078.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3066,7 +3066,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_079.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3107,7 +3107,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_082.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3144,7 +3144,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_084.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3181,7 +3181,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_085.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3222,7 +3222,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_086.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3263,7 +3263,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_088.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3296,7 +3296,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_090.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3329,7 +3329,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_091.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3370,7 +3370,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_092.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3407,7 +3407,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_093.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3440,7 +3440,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_094.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3477,7 +3477,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_095.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3514,7 +3514,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_096.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3555,7 +3555,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_097.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3592,7 +3592,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_098.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3625,7 +3625,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_075.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3662,7 +3662,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_076.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3695,7 +3695,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_077.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3728,7 +3728,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_078.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3761,7 +3761,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_079.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3802,7 +3802,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_082.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3839,7 +3839,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_084.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3876,7 +3876,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_085.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3917,7 +3917,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_086.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3958,7 +3958,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_088.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -3991,7 +3991,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_090.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4024,7 +4024,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_091.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4065,7 +4065,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_092.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4102,7 +4102,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_093.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4135,7 +4135,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_094.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4172,7 +4172,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_095.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4209,7 +4209,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_096.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4250,7 +4250,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_097.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4287,7 +4287,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_098.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4324,7 +4324,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_206.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4357,7 +4357,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_207.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4398,7 +4398,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_208.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4435,7 +4435,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_217.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4468,7 +4468,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_169.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4505,7 +4505,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_170.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4538,7 +4538,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_171.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4571,7 +4571,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_172.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4608,7 +4608,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_173.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4645,7 +4645,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_174.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4678,7 +4678,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_168.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4711,7 +4711,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_147.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4748,7 +4748,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_148.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4785,7 +4785,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_150.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4818,7 +4818,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_151.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4855,7 +4855,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_152.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4888,7 +4888,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_120.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4921,7 +4921,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_121.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4958,7 +4958,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_122.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -4995,7 +4995,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_123.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -5032,7 +5032,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_124.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -5065,7 +5065,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_125.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -5102,7 +5102,7 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
+        "file": "hisn_139.opus",
         "segments": []
       },
       "phrase_breaks": []
@@ -5128,6 +5128,1029 @@
         }
       ],
       "reference": "HR. Al-Bukhari 7/162. (Hisnul Muslim no. 74)",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "hisn_074.opus",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_01",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ ٱلْخَـٰسِرِينَ ﴿٢٣﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Keduanya berkata, \"Ya Tuhan kami, kami telah menzalimi diri kami sendiri. Jika Engkau tidak mengampuni kami dan memberi rahmat kepada kami, niscaya kami termasuk orang-orang yang rugi.\"",
+        "en": "They said, \"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-A'raf [7]: 23"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_02",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "ٱلَّذِينَ يَقُولُونَ رَبَّنَآ إِنَّنَآ ءَامَنَّا فَٱغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ ٱلنَّارِ ﴿١٦﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(Yaitu) orang-orang yang berdoa, \"Ya Tuhan kami, kami benar-benar beriman, maka ampunilah dosa-dosa kami dan lindungilah kami dari azab neraka.\"",
+        "en": "Those who say, 'Our Lord, indeed we have believed, so forgive us our sins and protect us from the punishment of the Fire,' \""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Ali 'Imran [3]: 16"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_03",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَمَا كَانَ قَوْلَهُمْ إِلَّآ أَن قَالُوا۟ رَبَّنَا ٱغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِىٓ أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَـٰفِرِينَ ﴿١٤٧﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan tidak lain ucapan mereka hanyalah doa, \"Ya Tuhan kami, ampunilah dosa-dosa kami dan tindakan-tindakan kami yang berlebihan (dalam) urusan kami[149] dan tetapkanlah pendirian kami, dan tolonglah kami terhadap orang-orang kafir.\"\n[149] Melampaui batas-batas hukum yang telah ditetapkan Allah -Subḥānahu wata'ālā-.",
+        "en": "And their words were not but that they said, \"Our Lord, forgive us our sins and the excess [committed] in our affairs and plant firmly our feet and give us victory over the disbelieving people.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Ali 'Imran [3]: 147"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_04",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "وَقُل رَّبِّ ٱغْفِرْ وَٱرْحَمْ وَأَنتَ خَيْرُ ٱلرَّٰحِمِينَ ﴿١١٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan katakanlah (Muhammad), \"Ya Tuhanku, berilah ampunan dan (berilah) rahmat, Engkaulah pemberi rahmat yang terbaik.\"",
+        "en": "And, [O Muḥammad], say, \"My Lord, forgive and have mercy, and You are the best of the merciful.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Mu'minun [23]: 118"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_05",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "قَالَ رَبِّ إِنِّى ظَلَمْتُ نَفْسِى فَٱغْفِرْ لِى فَغَفَرَ لَهُۥٓ ۚ إِنَّهُۥ هُوَ ٱلْغَفُورُ ٱلرَّحِيمُ ﴿١٦﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dia (Musa) berdoa, \"Ya Tuhanku, sesungguhnya aku telah menzalimi diriku sendiri, maka ampunilah aku.\" Maka Dia (Allah) mengampuninya. Sungguh, Allah, Dialah Yang Maha Pengampun, Maha Penyayang.",
+        "en": "He said, \"My Lord, indeed I have wronged myself, so forgive me,\" and He forgave him. Indeed, He is the Forgiving, the Merciful."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Qasas [28]: 16"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_06",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "وَٱلَّذِينَ جَآءُو مِنۢ بَعْدِهِمْ يَقُولُونَ رَبَّنَا ٱغْفِرْ لَنَا وَلِإِخْوَٰنِنَا ٱلَّذِينَ سَبَقُونَا بِٱلْإِيمَـٰنِ وَلَا تَجْعَلْ فِى قُلُوبِنَا غِلًّا لِّلَّذِينَ ءَامَنُوا۟ رَبَّنَآ إِنَّكَ رَءُوفٌ رَّحِيمٌ ﴿١٠﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan orang-orang yang datang sesudah mereka (Muhajirin dan Ansar), mereka berdoa, \"Ya Tuhan kami, ampunilah kami dan saudara-saudara kami yang telah beriman lebih dahulu dari kami, dan janganlah Engkau tanamkan kedengkian dalam hati kami terhadap orang-orang yang beriman. Ya Tuhan kami, sungguh, Engkau Maha Penyantun, Maha Penyayang.\"",
+        "en": "And [there is a share for] those who come after them, saying, \"Our Lord, forgive us and our brothers who preceded us in faith and put not in our hearts [any] resentment toward those who have believed. Our Lord, indeed You are Kind and Merciful.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Hasyr [59]: 10"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_07",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ تُوبُوٓا۟ إِلَى ٱللَّهِ تَوْبَةً نَّصُوحًا عَسَىٰ رَبُّكُمْ أَن يُكَفِّرَ عَنكُمْ سَيِّـَٔاتِكُمْ وَيُدْخِلَكُمْ جَنَّـٰتٍ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَـٰرُ يَوْمَ لَا يُخْزِى ٱللَّهُ ٱلنَّبِىَّ وَٱلَّذِينَ ءَامَنُوا۟ مَعَهُۥ ۖ نُورُهُمْ يَسْعَىٰ بَيْنَ أَيْدِيهِمْ وَبِأَيْمَـٰنِهِمْ يَقُولُونَ رَبَّنَآ أَتْمِمْ لَنَا نُورَنَا وَٱغْفِرْ لَنَآ ۖ إِنَّكَ عَلَىٰ كُلِّ شَىْءٍ قَدِيرٌ ﴿٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Wahai orang-orang yang beriman! Bertobatlah kepada Allah dengan tobat yang semurni-murninya, mudah-mudahan Tuhan kamu akan menghapus kesalahan-kesalahanmu dan memasukkan kamu ke dalam surga-surga yang mengalir di bawahnya sungai-sungai, pada hari ketika Allah tidak mengecewakan Nabi dan orang-orang yang beriman bersama dengannya; sedang cahaya mereka memancar di hadapan dan di sebelah kanan mereka, sambil mereka berkata, \"Ya Tuhan kami, sempurnakanlah untuk kami cahaya kami dan ampunilah kami; sungguh, Engkau Mahakuasa atas segala sesuatu.\"",
+        "en": "O you who have believed, repent to Allāh with sincere repentance. Perhaps[1709] your Lord will remove from you your misdeeds and admit you into gardens beneath which rivers flow [on] the Day when Allāh will not disgrace the Prophet and those who believed with him. Their light will proceed before them and on their right; they will say, \"Our Lord, perfect for us our light and forgive us. Indeed, You are over all things competent.\"\n[1709] i.e., it is expected or promised."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "At-Tahrim [66]: 8"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_08",
+      "category": "quran",
+      "event": "quran_forgiveness",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "رَّبِّ ٱغْفِرْ لِى وَلِوَٰلِدَىَّ وَلِمَن دَخَلَ بَيْتِىَ مُؤْمِنًا وَلِلْمُؤْمِنِينَ وَٱلْمُؤْمِنَـٰتِ وَلَا تَزِدِ ٱلظَّـٰلِمِينَ إِلَّا تَبَارًۢا ﴿٢٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Ya Tuhanku, ampunilah aku, ibu bapakku, dan siapa pun yang memasuki rumahku dengan beriman dan semua orang yang beriman laki-laki dan perempuan. Dan janganlah Engkau tambahkan bagi orang-orang yang zalim itu selain kehancuran.\"",
+        "en": "My Lord, forgive me and my parents and whoever enters my house a believer and the believing men and believing women. And do not increase the wrongdoers except in destruction.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Nuh [71]: 28"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_09",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "وَمِنْهُم مَّن يَقُولُ رَبَّنَآ ءَاتِنَا فِى ٱلدُّنْيَا حَسَنَةً وَفِى ٱلْـَٔاخِرَةِ حَسَنَةً وَقِنَا عَذَابَ ٱلنَّارِ ﴿٢٠١﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan di antara mereka ada orang yang berdoa, \"Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.\"",
+        "en": "But among them is he who says, \"Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Baqarah [2]: 201"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_10",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "وَإِذْ يَرْفَعُ إِبْرَٰهِـۧمُ ٱلْقَوَاعِدَ مِنَ ٱلْبَيْتِ وَإِسْمَـٰعِيلُ رَبَّنَا تَقَبَّلْ مِنَّآ ۖ إِنَّكَ أَنتَ ٱلسَّمِيعُ ٱلْعَلِيمُ ﴿١٢٧﴾ رَبَّنَا وَٱجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِن ذُرِّيَّتِنَآ أُمَّةً مُّسْلِمَةً لَّكَ وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَآ ۖ إِنَّكَ أَنتَ ٱلتَّوَّابُ ٱلرَّحِيمُ ﴿١٢٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(127) Dan (ingatlah) ketika Ibrahim meninggikan pondasi Baitullah bersama Ismail (seraya berdoa), \"Ya Tuhan kami, terimalah (amal) dari kami. Sungguh, Engkaulah Yang Maha Mendengar, Maha Mengetahui\".\n(128) Ya Tuhan kami, jadikanlah kami orang yang berserah diri kepada-Mu, dan anak cucu kami (juga) umat yang berserah diri kepada-Mu dan tunjukkanlah kepada kami cara-cara melakukan (ibadah) haji kami, dan terimalah tobat kami. Sungguh, Engkaulah Yang Maha Penerima tobat, Maha Penyayang.",
+        "en": "(127) And [mention] when Abraham was raising the foundations of the House and [with him] Ishmael, [saying], \"Our Lord, accept [this] from us. Indeed, You are the Hearing,[42] the Knowing.[43]\n(128) Our Lord, and make us Muslims [in submission] to You and from our descendants a Muslim nation [in submission] to You. And show us our rites [of worship] and accept our repentance. Indeed, You are the Accepting of Repentance, the Merciful.\n[42] Who hears every sound, distinguishes every voice, understands every word, and accepts and responds to supplications.\n[43] Refer to footnote in 2:32."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Baqarah [2]: 127–128"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_11",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَلَمَّا بَرَزُوا۟ لِجَالُوتَ وَجُنُودِهِۦ قَالُوا۟ رَبَّنَآ أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَـٰفِرِينَ ﴿٢٥٠﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan ketika mereka maju melawan Jalut dan tentaranya, mereka berdoa, \"Ya Tuhan kami, limpahkanlah kesabaran kepada kami, kokohkanlah langkah kami dan tolonglah kami menghadapi orang-orang kafir.\"",
+        "en": "And when they went forth to [face] Goliath and his soldiers, they said, \"Our Lord, pour upon us patience and plant firmly our feet and give us victory over the disbelieving people.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Baqarah [2]: 250"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_12",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ ٱلْوَهَّابُ ﴿٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(Mereka berdoa), \"Ya Tuhan kami, janganlah Engkau condongkan hati kami kepada kesesatan setelah Engkau berikan petunjuk kepada kami, dan karuniakanlah kepada kami rahmat dari sisi-Mu, sesungguhnya Engkau Maha Pemberi.\"",
+        "en": "[Who say], \"Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.[117]\n[117] Who gives and grants continually without being asked."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Ali 'Imran [3]: 8"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_13",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ ۖ إِنَّ عَذَابَهَا كَانَ غَرَامًا ﴿٦٥﴾ إِنَّهَا سَآءَتْ مُسْتَقَرًّا وَمُقَامًا ﴿٦٦﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(65) Dan orang-orang yang berkata, \"Ya Tuhan kami, jauhkanlah azab Jahanam dari kami, karena sesungguhnya azabnya itu membuat kebinasaan yang kekal,\"\n(66) Sungguh, Jahanam itu seburuk-buruk tempat menetap dan tempat kediaman.",
+        "en": "(65) And those who say, \"Our Lord, avert from us the punishment of Hell. Indeed, its punishment is ever adhering;\n(66) Indeed, it is evil as a settlement and residence.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Furqan [25]: 65–66"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_14",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "رَبِّ هَبْ لِى حُكْمًا وَأَلْحِقْنِى بِٱلصَّـٰلِحِينَ ﴿٨٣﴾ وَٱجْعَل لِّى لِسَانَ صِدْقٍ فِى ٱلْـَٔاخِرِينَ ﴿٨٤﴾ وَٱجْعَلْنِى مِن وَرَثَةِ جَنَّةِ ٱلنَّعِيمِ ﴿٨٥﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(83) (Ibrahim berdoa), \"Ya Tuhanku, berikanlah kepadaku ilmu dan masukkanlah aku ke dalam golongan orang-orang yang saleh,\n(84) dan jadikanlah aku buah tutur yang baik bagi orang-orang (yang datang) kemudian,\n(85) dan jadikanlah aku termasuk orang yang mewarisi surga yang penuh kenikmatan,",
+        "en": "(83) [And he said], \"My Lord, grant me authority and join me with the righteous.\n(84) And grant me a mention [i.e., reputation] of honor among later generations.\n(85) And place me among the inheritors of the Garden of Pleasure."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Asy-Syu'ara' [26]: 83–85"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_15",
+      "category": "quran",
+      "event": "quran_goodness",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِّلَّذِينَ كَفَرُوا۟ وَٱغْفِرْ لَنَا رَبَّنَآ ۖ إِنَّكَ أَنتَ ٱلْعَزِيزُ ٱلْحَكِيمُ ﴿٥﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Ya Tuhan kami, janganlah Engkau jadikan kami (sasaran) fitnah bagi orang-orang kafir. Dan ampunilah kami, ya Tuhan kami. Sesungguhnya Engkau Żat Yang Mahaperkasa, Mahabijaksana.\"",
+        "en": "Our Lord, make us not [objects of] torment for the disbelievers and forgive us, our Lord. Indeed, it is You who is the Exalted in Might, the Wise.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Mumtahanah [60]: 5"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_16",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "قَالَ رَبِّ ٱشْرَحْ لِى صَدْرِى ﴿٢٥﴾ وَيَسِّرْ لِىٓ أَمْرِى ﴿٢٦﴾ وَٱحْلُلْ عُقْدَةً مِّن لِّسَانِى ﴿٢٧﴾ يَفْقَهُوا۟ قَوْلِى ﴿٢٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(25) Dia (Musa) berkata, \"Ya Tuhanku, lapangkanlah dadaku,[511]\n(26) dan mudahkanlah untukku urusanku,\n(27) dan lepaskanlah kekakuan dari lidahku,\n(28) agar mereka mengerti perkataanku,\n[511] Nabi Musa -'alaihissalām- memohon kepada Allah agar dadanya dilapangkan untuk menghadapi Fir'aun yang terkenal sebagai seorang raja yang kejam.",
+        "en": "(25) [Moses] said, \"My Lord, expand [i.e., relax] for me my breast [with assurance]\n(26) And ease for me my task\n(27) And untie the knot from my tongue\n(28) That they may understand my speech."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Taha [20]: 25–28"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_17",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "فَتَعَـٰلَى ٱللَّهُ ٱلْمَلِكُ ٱلْحَقُّ ۗ وَلَا تَعْجَلْ بِٱلْقُرْءَانِ مِن قَبْلِ أَن يُقْضَىٰٓ إِلَيْكَ وَحْيُهُۥ ۖ وَقُل رَّبِّ زِدْنِى عِلْمًا ﴿١١٤﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Maka Mahatinggi Allah, Raja yang sebenar-benarnya. Dan janganlah engkau (Muhammad) tergesa-gesa (membaca) Al-Qur`an sebelum selesai diwahyukan kepadamu,[525] dan katakanlah, \"Ya Tuhanku, tambahkanlah ilmu kepadaku.\"\n[525] Nabi Muhammad -ṣallallāhu 'alaihi wa sallam- dilarang oleh Allah menirukan bacaan Jibril -'alaihissalām- kalimat demi kalimat sebelum Jibril -'alaihissalām- selesai membacakannya, agar Nabi Muhammad -ṣallallāhu 'alaihi wa sallam- menghafal dan memahami betul-betul ayat yang diturunkan.",
+        "en": "So high [above all] is Allāh, the Sovereign,[861] the Truth.[862] And, [O Muḥammad], do not hasten with [recitation of] the Qur’ān before its revelation is completed to you, and say, \"My Lord, increase me in knowledge.\"\n[861] And owner of everything in existence.\n[862] Or \"the True Reality,\" i.e., the real and permanent existence upon which all other existence depends."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Taha [20]: 114"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_18",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَقُل رَّبِّ أَدْخِلْنِى مُدْخَلَ صِدْقٍ وَأَخْرِجْنِى مُخْرَجَ صِدْقٍ وَٱجْعَل لِّى مِن لَّدُنكَ سُلْطَـٰنًا نَّصِيرًا ﴿٨٠﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan katakanlah (Muhammad), ya Tuhanku, masukkan aku ke tempat masuk yang benar dan keluarkan (pula) aku ke tempat keluar yang benar dan berikanlah kepadaku dari sisi-Mu kekuasaan yang dapat menolong-(Ku).[482]\n[482] Memohon kepada Allah agar kita memasuki suatu ibadah dan selesai mengrjakannya dengan niat yang baik dan penuh keikhlasan serta bersih dari riya` dan dari sesuatu yang merusak pahala. Ayat ini juga mengisyaratkan kepada Nabi agar berhijrah dari Mekkah ke Madinah. Dan ada juga yang menafsirkan memohon kepada Allah agar kita memasuki kubur dengan baik dan keluar darinya ketika hari berbangkit dengan baik pula.",
+        "en": "And say, \"My Lord, cause me to enter a sound entrance[772] and to exit a sound exit[773] and grant me from Yourself a supporting authority.\"\n[772] Into Madīnah at the time of emigration, or into the grave.\n[773] From Makkah, or from the grave at the time of resurrection."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Isra' [17]: 80"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_19",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "إِذْ أَوَى ٱلْفِتْيَةُ إِلَى ٱلْكَهْفِ فَقَالُوا۟ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا ﴿١٠﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(Ingatlah) ketika pemuda-pemuda itu berlindung ke dalam gua lalu mereka berdoa, \"Ya Tuhan kami. Berikanlah rahmat kepada kami dari sisi-Mu dan sempurnakanlah petunjuk yang lurus bagi kami dalam urusan kami.\"",
+        "en": "[Mention] when the youths retreated to the cave and said, \"Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Kahf [18]: 10"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_20",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "فَسَقَىٰ لَهُمَا ثُمَّ تَوَلَّىٰٓ إِلَى ٱلظِّلِّ فَقَالَ رَبِّ إِنِّى لِمَآ أَنزَلْتَ إِلَىَّ مِنْ خَيْرٍ فَقِيرٌ ﴿٢٤﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Maka dia (Musa) memberi minum (ternak) kedua perempuan itu, kemudian dia kembali ke tempat yang teduh lalu berdoa, \"Ya Tuhanku, sesungguhnya aku sangat memerlukan kebaikan apa pun yang Engkau turunkan kepadaku.\"",
+        "en": "So he watered [their flocks] for them; then he went back to the shade and said, \"My Lord, indeed I am, for whatever good You would send down to me, in need.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Qasas [28]: 24"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_21",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "وَقُل رَّبِّ أَنزِلْنِى مُنزَلًا مُّبَارَكًا وَأَنتَ خَيْرُ ٱلْمُنزِلِينَ ﴿٢٩﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan berdoalah, \"Ya Tuhanku, tempatkanlah aku pada tempat yang diberkahi, dan Engkau adalah sebaik-baik pemberi tempat.\"",
+        "en": "And say, 'My Lord, let me land at a blessed landing place, and You are the best to accommodate [us].'\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Mu'minun [23]: 29"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_22",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "۞ وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ ٱلضُّرُّ وَأَنتَ أَرْحَمُ ٱلرَّٰحِمِينَ ﴿٨٣﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan (ingatlah kisah) Ayub, ketika dia berdoa kepada Tuhannya, \"(Ya Tuhanku), sungguh, aku telah ditimpa penyakit, padahal Engkau Tuhan Yang Maha Penyayang dari semua yang penyayang.\"",
+        "en": "And [mention] Job, when he called to his Lord, \"Indeed, adversity has touched me, and You are the most merciful of the merciful.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Anbiya' [21]: 83"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_23",
+      "category": "quran",
+      "event": "quran_ease",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "وَقُل رَّبِّ أَعُوذُ بِكَ مِنْ هَمَزَٰتِ ٱلشَّيَـٰطِينِ ﴿٩٧﴾ وَأَعُوذُ بِكَ رَبِّ أَن يَحْضُرُونِ ﴿٩٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(97) Dan katakanlah, \"Ya Tuhanku, aku berlindung kepada Engkau dari bisikan-bisikan setan,\n(98) dan aku berlindung (pula) kepada Engkau ya Tuhanku, agar mereka tidak mendekati aku.\"",
+        "en": "(97) And say, \"My Lord, I seek refuge in You from the incitements of the devils,\n(98) And I seek refuge in You, my Lord, lest they be present with me.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Mu'minun [23]: 97–98"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_24",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 1,
+      "variant_group": null,
+      "arabic": "وَٱخْفِضْ لَهُمَا جَنَاحَ ٱلذُّلِّ مِنَ ٱلرَّحْمَةِ وَقُل رَّبِّ ٱرْحَمْهُمَا كَمَا رَبَّيَانِى صَغِيرًا ﴿٢٤﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan rendahkanlah dirimu terhadap keduanya dengan penuh kasih sayang dan ucapkanlah, \"Wahai Tuhanku! Sayangilah keduanya sebagaimana mereka berdua telah mendidik aku pada waktu kecil.\"",
+        "en": "And lower to them the wing of humility out of mercy and say, \"My Lord, have mercy upon them as they brought me up [when I was] small.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Isra' [17]: 24"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_25",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 2,
+      "variant_group": null,
+      "arabic": "رَبِّ ٱجْعَلْنِى مُقِيمَ ٱلصَّلَوٰةِ وَمِن ذُرِّيَّتِى ۚ رَبَّنَا وَتَقَبَّلْ دُعَآءِ ﴿٤٠﴾ رَبَّنَا ٱغْفِرْ لِى وَلِوَٰلِدَىَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ ٱلْحِسَابُ ﴿٤١﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "(40) Ya Tuhanku, jadikanlah aku dan anak cucuku orang yang tetap melaksanakan salat, ya Tuhan kami, perkenankanlah doaku.\n(41) Ya Tuhan kami, ampunilah aku dan kedua ibu bapakku dan semua orang yang beriman pada hari diadakan perhitungan (hari Kiamat).\"",
+        "en": "(40) My Lord, make me an establisher of prayer, and [many] from my descendants. Our Lord, and accept my supplication.\n(41) Our Lord, forgive me and my parents and the believers the Day the account is established.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Ibrahim [14]: 40–41"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_26",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 3,
+      "variant_group": null,
+      "arabic": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَٰجِنَا وَذُرِّيَّـٰتِنَا قُرَّةَ أَعْيُنٍ وَٱجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا ﴿٧٤﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan orang-orang yang berkata, \"Ya Tuhan kami, anugerahkanlah kepada kami pasangan kami dan keturunan kami sebagai penyenang hati (kami), dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa.\"",
+        "en": "And those who say, \"Our Lord, grant us from among our wives and offspring comfort to our eyes[1038] and make us a leader [i.e., example] for the righteous.\"\n[1038] i.e., a source of happiness due to their righteousness."
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Furqan [25]: 74"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_27",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 4,
+      "variant_group": null,
+      "arabic": "هُنَالِكَ دَعَا زَكَرِيَّا رَبَّهُۥ ۖ قَالَ رَبِّ هَبْ لِى مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ ٱلدُّعَآءِ ﴿٣٨﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Di sanalah Zakaria berdoa kepada Tuhannya. Dia berkata, \"Ya Tuhanku, berilah aku keturunan yang baik dari sisi-Mu, sesungguhnya Engkau Maha Mendengar doa.\"",
+        "en": "At that, Zechariah called upon his Lord, saying, \"My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Ali 'Imran [3]: 38"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_28",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 5,
+      "variant_group": null,
+      "arabic": "وَزَكَرِيَّآ إِذْ نَادَىٰ رَبَّهُۥ رَبِّ لَا تَذَرْنِى فَرْدًا وَأَنتَ خَيْرُ ٱلْوَٰرِثِينَ ﴿٨٩﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan (ingatlah kisah) Zakaria, ketika dia berdoa kepada Tuhannya, \"Ya Tuhanku, janganlah Engkau biarkan aku hidup seorang diri (tanpa keturunan) dan Engkaulah ahli waris yang terbaik.[537]\n[537] Sekiranya Allah tidak mengabulkan doanya, yakni memberi keturunan, Zakaria menyerahkan dirinya kepada Allah, sebab Allah adalah ahli waris yang terbaik.",
+        "en": "And [mention] Zechariah, when he called to his Lord, \"My Lord, do not leave me alone [with no heir], while You are the best of inheritors.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Anbiya' [21]: 89"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_29",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 6,
+      "variant_group": null,
+      "arabic": "رَبِّ هَبْ لِى مِنَ ٱلصَّـٰلِحِينَ ﴿١٠٠﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Ya Tuhanku, anugerahkanlah kepadaku (seorang anak) yang saleh.\"",
+        "en": "My Lord, grant me [a child] from among the righteous.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "As-Saffat [37]: 100"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_30",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 7,
+      "variant_group": null,
+      "arabic": "فَتَبَسَّمَ ضَاحِكًا مِّن قَوْلِهَا وَقَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَـٰلِحًا تَرْضَىٰهُ وَأَدْخِلْنِى بِرَحْمَتِكَ فِى عِبَادِكَ ٱلصَّـٰلِحِينَ ﴿١٩﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Maka dia (Sulaiman) tersenyum lalu tertawa karena (mendengar) perkataan semut itu. Dan dia berdoa, \"Ya Tuhanku, anugerahkanlah aku ilham untuk tetap mensyukuri nikmat-Mu yang telah Engkau anugerahkan kepadaku dan kepada kedua orang tuaku, dan agar aku mengerjakan kebajikan yang Engkau ridai; dan masukkanlah aku dengan rahmat-Mu ke dalam golongan hamba-hamba-Mu yang saleh.\"",
+        "en": "So [Solomon] smiled, amused at her speech, and said, \"My Lord, enable me[1073] to be grateful for Your favor which You have bestowed upon me and upon my parents and to do righteousness of which You approve. And admit me by Your mercy into [the ranks of] Your righteous servants.\"[1074]\n[1073] More literally, \"gather within me the utmost strength and ability.\"\n[1074] Or \"with Your righteous servants [into Paradise].\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "An-Naml [27]: 19"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
+      "grading": {
+        "grade": "",
+        "grader": ""
+      },
+      "alt_gradings": [],
+      "virtue": null,
+      "audio": {
+        "file": "",
+        "segments": []
+      },
+      "phrase_breaks": []
+    },
+    {
+      "id": "quran_31",
+      "category": "quran",
+      "event": "quran_family",
+      "order": 8,
+      "variant_group": null,
+      "arabic": "وَوَصَّيْنَا ٱلْإِنسَـٰنَ بِوَٰلِدَيْهِ إِحْسَـٰنًا ۖ حَمَلَتْهُ أُمُّهُۥ كُرْهًا وَوَضَعَتْهُ كُرْهًا ۖ وَحَمْلُهُۥ وَفِصَـٰلُهُۥ ثَلَـٰثُونَ شَهْرًا ۚ حَتَّىٰٓ إِذَا بَلَغَ أَشُدَّهُۥ وَبَلَغَ أَرْبَعِينَ سَنَةً قَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَـٰلِحًا تَرْضَىٰهُ وَأَصْلِحْ لِى فِى ذُرِّيَّتِىٓ ۖ إِنِّى تُبْتُ إِلَيْكَ وَإِنِّى مِنَ ٱلْمُسْلِمِينَ ﴿١٥﴾",
+      "is_quran": true,
+      "translations": {
+        "id": "Dan Kami perintahkan kepada manusia agar berbuat baik kepada kedua orang tuanya. Ibunya telah mengandungnya dengan susah payah, dan melahirkannya dengan susah payah (pula). Masa mengandung sampai menyapihnya selama tiga puluh bulan, sehingga apabila dia (anak itu) telah dewasa dan umurnya mencapai empat puluh tahun dia berdoa, \"Ya Tuhanku, berilah aku petunjuk agar aku dapat mensyukuri nikmat-Mu yang telah Engkau limpahkan kepadaku dan kepada kedua orang tuaku, dan agar aku dapat berbuat kebajikan yang Engkau ridai; dan berilah aku kebaikan yang akan mengalir sampai kepada anak cucuku. Sungguh, aku bertobat kepada Engkau, dan sungguh aku termasuk orang muslim.\"",
+        "en": "And We have enjoined upon man, to his parents, good treatment. His mother carried him with hardship and gave birth to him with hardship, and his gestation and weaning [period] is thirty months. [He grows] until, when he reaches maturity and reaches [the age of] forty years, he says, \"My Lord, enable me[1482] to be grateful for Your favor which You have bestowed upon me and upon my parents and to work righteousness of which You will approve and make righteous for me my offspring. Indeed, I have repented to You, and indeed, I am of the Muslims.\"\n[1482] Literally, \"gather within me the utmost strength and ability.\""
+      },
+      "transliteration": "",
+      "count": null,
+      "sources": [
+        {
+          "book": "QS.",
+          "no": "Al-Ahqaf [46]: 15"
+        }
+      ],
+      "reference": "Teks Arab: Tanzil Quran Text (Uthmani), tanzil.net. Terjemah: Kementerian Agama RI via QuranEnc.com (indonesian_affairs v1.0.1); English: Saheeh International via QuranEnc.com.",
       "grading": {
         "grade": "",
         "grader": ""
