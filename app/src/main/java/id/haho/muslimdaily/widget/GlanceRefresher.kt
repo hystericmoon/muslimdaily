@@ -15,9 +15,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Redraws everything glanceable: both home-screen widgets and the lock-screen next-prayer
- * notification. Called when the next prayer changes (REFRESH alarm), on boot and time changes,
- * and when settings they show change.
+ * Redraws everything glanceable: both home-screen widgets, the lock-screen next-prayer
+ * notification and the Wear OS tile's data. Called when the next prayer changes (REFRESH
+ * alarm), on boot and time changes, and when settings they show change.
  */
 @Singleton
 class GlanceRefresher @Inject constructor(
@@ -26,6 +26,7 @@ class GlanceRefresher @Inject constructor(
     private val calculator: PrayerCalculator,
     private val notifier: Notifier,
     private val clock: Clock,
+    private val wear: WearSync,
 ) {
     suspend fun refresh() {
         val manager = GlanceAppWidgetManager(context)
@@ -38,6 +39,7 @@ class GlanceRefresher @Inject constructor(
         }
         val s = settings.current()
         val snapshot = PrayerSnapshots.at(Instant.now(clock), s, calculator)
+        wear.push(s, Instant.now(clock))
         if (s.reminders.nextPrayerOngoing && snapshot != null) {
             notifier.nextPrayerOngoing(snapshot, DateFormat.is24HourFormat(context))
         } else {

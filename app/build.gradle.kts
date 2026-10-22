@@ -154,6 +154,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.glance.appwidget)
+    implementation(libs.play.services.wearable)
     implementation(libs.play.services.location)
     implementation(libs.adhan)
     implementation(libs.kotlinx.serialization.json)

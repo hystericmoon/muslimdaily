@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withTranslation
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AppPalette
 import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
@@ -105,10 +106,7 @@ object DuaShareCard {
 
         var y = card.top + CARD_PAD
         fun draw(l: StaticLayout) {
-            c.save()
-            c.translate(card.left + CARD_PAD, y)
-            l.draw(c)
-            c.restore()
+            c.withTranslation(card.left + CARD_PAD, y) { l.draw(this) }
             y += l.height
         }
         draw(label)

@@ -665,4 +665,11 @@
     <string name="backup_restore_confirm_body">Pengaturan, set saya, hafalan, dan ceklis di ponsel ini akan diganti dengan isi cadangan.</string>
     <string name="backup_restore_choose">Pilih berkas</string>
     <string name="data_my_sets_title">Set saya</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_next_prayer">Shalat berikutnya</string>
+    <string name="tile_no_location">Atur lokasi di aplikasi</string>
+    <string name="tile_subtitle">%1$s lagi · %2$s</string>
+    <string name="tile_hours_minutes">%1$d j %2$d m</string>
+    <string name="tile_minutes">%d m</string>
 </resources>
