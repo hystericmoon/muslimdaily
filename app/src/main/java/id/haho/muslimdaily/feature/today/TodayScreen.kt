@@ -91,6 +91,7 @@ data class TodayActions(
     val onEnableTravelFromSuggestion: () -> Unit = {},
     val onDismissTravel: () -> Unit = {},
     val onOpenMosques: () -> Unit = {},
+    val onOpenQibla: () -> Unit = {},
 )
 
 @Composable
@@ -100,6 +101,7 @@ fun TodayRoute(
     onOpenLocation: () -> Unit,
     onOpenPrayerSettings: () -> Unit,
     onOpenMosques: () -> Unit,
+    onOpenQibla: () -> Unit,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -137,6 +139,7 @@ fun TodayRoute(
             onEnableTravelFromSuggestion = viewModel::enableTravelMode,
             onDismissTravel = viewModel::dismissTravel,
             onOpenMosques = onOpenMosques,
+            onOpenQibla = onOpenQibla,
         ),
     )
 }
@@ -261,6 +264,11 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
                         Modifier.size(AppTheme.dimens.smallIcon),
                     )
                 },
+            )
+            AssistChip(
+                onClick = actions.onOpenQibla,
+                label = { Text(stringResource(R.string.qibla_open)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_explore), null, Modifier.size(AppTheme.dimens.smallIcon)) },
             )
         }
     }

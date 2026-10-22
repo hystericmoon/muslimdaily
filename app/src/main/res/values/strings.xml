@@ -589,4 +589,16 @@
     <string name="mosque_route">Rute</string>
     <string name="mosque_route_to">Rute ke %s</string>
     <string name="mosque_attribution">Data masjid © kontributor OpenStreetMap (ODbL), disimpan di perangkat. Lokasi Anda tidak dikirim ke mana pun; rute dibuka di aplikasi peta pilihan Anda.</string>
+
+    <!-- Qibla -->
+    <string name="qibla_title">Arah kiblat</string>
+    <string name="qibla_open">Kiblat</string>
+    <string name="qibla_bearing">Kiblat %1$d° dari utara sejati, dari %2$s</string>
+    <string name="qibla_aligned">Menghadap kiblat</string>
+    <string name="qibla_turn_right">Putar %d° ke kanan</string>
+    <string name="qibla_turn_left">Putar %d° ke kiri</string>
+    <string name="qibla_no_sensor">Ponsel ini tidak punya kompas. Gunakan sudut di bawah dengan kompas lain.</string>
+    <string name="qibla_calibrate">Kompas kurang akurat. Gerakkan ponsel membentuk angka 8 beberapa kali.</string>
+    <string name="qibla_note">Letakkan ponsel mendatar, jauh dari logam, magnet, dan perangkat elektronik. Arah dihitung dari lokasi tersimpan.</string>
+    <string name="qibla_no_location">Atur lokasi untuk menghitung arah kiblat.</string>
 </resources>
