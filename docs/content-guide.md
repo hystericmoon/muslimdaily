@@ -98,3 +98,21 @@ from the product spec and is pre-filled as `draft`. The reviewer confirms it and
 
 These are app defaults, not content, but they touch fiqh. They are listed in
 [review-checklist.md](review-checklist.md).
+
+## Imported content: Hisnul Muslim
+
+The draft rows in `duas.csv` (24 events) and the full sheet `content/source/import/hisnul_muslim.csv`
+(all 267 entries) come from `tools/hisnul_muslim/import_hisn.py`:
+
+* **Indonesian translation and takhrij**: the Indonesian Hisnul Muslim PDF supplied by the owner
+  ("Hisnul Muslim Kumpulan Doa dan Dzikir Shahih Dari AlQuran dan AsSunnah").
+* **Arabic text and repetition counts**: hisnmuslim.com, joined by the book's entry number.
+* Entries the PDF's appendix reports as graded weak by al-Albani are left out of `duas.csv`
+  and marked `LEMAH` in the full sheet.
+
+Every imported row is a `draft`. `reviewer_notes` holds the full footnote and any warning
+(misprinted number, merged entry, narration context in the Arabic, disputed count). The
+reviewer checks each row, fills grade/grader where blank, adds audio, and only then sets
+`published`. To re-run: `python3 tools/hisnul_muslim/import_hisn.py --pdf <file> --merge`
+(this replaces the imported draft rows' placeholders; review edits should be made after
+the final import, not before).

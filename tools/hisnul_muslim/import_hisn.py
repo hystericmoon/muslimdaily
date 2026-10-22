@@ -9,8 +9,8 @@ Sources, joined by the book's standard entry number (1-267):
   * Arabic text and repetition counts: hisnmuslim.com, the book's official site.
 
 Always writes content/source/import/hisnul_muslim.csv: every entry, same columns as duas.csv
-plus hisn_no / hisn_chapter, all with status "draft". This folder is not committed: the
-translation's redistribution licence still has to be confirmed.
+plus hisn_no / hisn_chapter, all with status "draft". It is the review sheet for chapters
+that have no app event yet.
 
 With --merge, also replaces the placeholder rows in content/source/duas.csv for each app
 event that has a matching Hisnul Muslim chapter, skipping entries the appendix marks weak.
