@@ -114,6 +114,10 @@ interface MySetDao {
     @Query("DELETE FROM variant_choices WHERE eventId = :eventId") suspend fun clearChoices(eventId: String)
     @Query("DELETE FROM event_prefs WHERE eventId = :eventId") suspend fun clearPref(eventId: String)
 
+    @Query("DELETE FROM event_items") suspend fun clearAllItems()
+    @Query("DELETE FROM variant_choices") suspend fun clearAllChoices()
+    @Query("DELETE FROM event_prefs") suspend fun clearAllPrefs()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertItems(items: List<EventItemEntity>)
 
     @Transaction

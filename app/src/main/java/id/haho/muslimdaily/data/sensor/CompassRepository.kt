@@ -6,6 +6,9 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.display.DisplayManager
+import android.view.Display
+import android.view.Surface
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +27,7 @@ data class Heading(val degrees: Double, val reliable: Boolean)
 @Singleton
 class CompassRepository @Inject constructor(@ApplicationContext private val context: Context) {
     private val sensors = context.getSystemService(SensorManager::class.java)
+    private val displays = context.getSystemService(DisplayManager::class.java)
 
     private val sensor: Sensor?
         get() = sensors?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
@@ -42,7 +46,10 @@ class CompassRepository @Inject constructor(@ApplicationContext private val cont
                 SensorManager.getRotationMatrixFromVector(rotation, event.values)
                 SensorManager.getOrientation(rotation, orientation)
                 val magnetic = Math.toDegrees(orientation[0].toDouble())
-                val trueNorth = (magnetic + declination + 360.0) % 360.0
+                // getOrientation gives the azimuth of the phone's natural top; in landscape the
+                // screen's top is a quarter turn away from it.
+                val screen = 90.0 * (displays?.getDisplay(Display.DEFAULT_DISPLAY)?.rotation ?: Surface.ROTATION_0)
+                val trueNorth = ((magnetic + screen + declination) % 360.0 + 360.0) % 360.0
                 trySend(Heading(trueNorth, accuracy >= SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM))
             }
 

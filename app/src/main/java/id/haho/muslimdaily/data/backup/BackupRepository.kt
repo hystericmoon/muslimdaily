@@ -7,6 +7,8 @@ import id.haho.muslimdaily.data.db.ReviewItemEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.Clock
@@ -71,15 +73,21 @@ class BackupRepository @Inject constructor(
             .getOrElse { throw IllegalArgumentException("Not a backup file", it) }
         require(file.format == FORMAT) { "Not a backup file" }
         require(file.version <= VERSION) { "Backup from a newer version" }
-        val sets = mySets.importJson(file.mySets)
-        db.withTransaction {
-            db.reviewDao().deleteAll()
-            db.reviewDao().insertAll(file.reviews.map { ReviewItemEntity(it.duaId, it.box, it.dueEpochDay, it.lastReviewedEpochDay, it.addedEpochDay) })
-            db.checklistDao().deleteAll()
-            db.checklistDao().insertAll(file.checklist.map { ChecklistEntity(it.epochDay, it.itemKey) })
+        // One transaction, and not cancellable: leaving the screen mid-restore must not leave
+        // the data half replaced.
+        val sets = withContext(NonCancellable) {
+            db.withTransaction {
+                val sets = mySets.importJson(file.mySets, replaceAll = true)
+                db.reviewDao().deleteAll()
+                db.reviewDao().insertAll(file.reviews.map { ReviewItemEntity(it.duaId, it.box, it.dueEpochDay, it.lastReviewedEpochDay, it.addedEpochDay) })
+                db.checklistDao().deleteAll()
+                db.checklistDao().insertAll(file.checklist.map { ChecklistEntity(it.epochDay, it.itemKey) })
+                sets
+            }.also {
+                // Settings last: they trigger alarm rescheduling and widget redraws.
+                settings.restore(file.settings.mapValues { (_, s) -> s.type to s.value })
+            }
         }
-        // Settings last: they trigger alarm rescheduling and widget redraws.
-        settings.restore(file.settings.mapValues { (_, s) -> s.type to s.value })
         return Summary(file.settings.size, sets, file.reviews.size, file.checklist.size)
     }
 

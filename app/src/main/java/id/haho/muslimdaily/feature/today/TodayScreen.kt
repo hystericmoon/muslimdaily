@@ -543,7 +543,6 @@ private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> U
             Text(
                 stringResource(if (suhur) R.string.ramadan_suhur_left else R.string.ramadan_iftar_left, durationLabel(left)),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             )
             GlassTonalButton(onClick = onIftarDua) {
                 Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(AppTheme.dimens.smallIcon))

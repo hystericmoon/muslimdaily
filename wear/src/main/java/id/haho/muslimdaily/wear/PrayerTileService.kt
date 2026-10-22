@@ -50,20 +50,29 @@ class PrayerTileService : TileService() {
         // Each entry is valid from one prayer until the next; the first starts now.
         val upcoming = data.upcoming(now)
         var start = now
+        fun add(root: LayoutElementBuilders.LayoutElement, from: Instant, until: Instant?) {
+            val validity = TimelineBuilders.TimeInterval.Builder().setStartMillis(from.toEpochMilli())
+            until?.let { validity.setEndMillis(it.toEpochMilli()) }
+            builder.addTimelineEntry(
+                TimelineBuilders.TimelineEntry.Builder()
+                    .setLayout(LayoutElementBuilders.Layout.Builder().setRoot(root).build())
+                    .setValidity(validity.build())
+                    .build(),
+            )
+        }
         upcoming.forEachIndexed { i, slot ->
-            val entry = TimelineBuilders.TimelineEntry.Builder()
-                .setLayout(LayoutElementBuilders.Layout.Builder().setRoot(nextLayout(data, upcoming.drop(i))).build())
-                .setValidity(
-                    TimelineBuilders.TimeInterval.Builder()
-                        .setStartMillis(start.toEpochMilli())
-                        .setEndMillis(slot.time.toEpochMilli())
-                        .build(),
-                )
-                .build()
-            builder.addTimelineEntry(entry)
+            val rest = upcoming.drop(i)
+            // "Besok" holds until midnight, so an entry that spans it is split there.
+            val midnight = slot.day.atStartOfDay(data.zone).toInstant()
+            if (start < midnight && midnight < slot.time) {
+                add(nextLayout(data, rest, start), start, midnight)
+                start = midnight
+            }
+            add(nextLayout(data, rest, start), start, slot.time)
             start = slot.time
         }
-        if (upcoming.isEmpty()) builder.addTimelineEntry(TimelineBuilders.TimelineEntry.Builder().setLayout(LayoutElementBuilders.Layout.Builder().setRoot(noData()).build()).build())
+        // After the last prayer we know of, ask for the phone rather than show a stale time.
+        add(noData(), start, null)
         return builder.build()
     }
 
@@ -89,9 +98,10 @@ class PrayerTileService : TileService() {
         )
         .build()
 
-    private fun nextLayout(data: PrayerData, upcoming: List<PrayerData.Slot>): LayoutElementBuilders.LayoutElement {
+    /** The next prayer as shown from [shownFrom], the start of its timeline entry. */
+    private fun nextLayout(data: PrayerData, upcoming: List<PrayerData.Slot>, shownFrom: Instant): LayoutElementBuilders.LayoutElement {
         val next = upcoming.first()
-        val today = Instant.now().atZone(data.zone).toLocalDate()
+        val today = shownFrom.atZone(data.zone).toLocalDate()
         val header = getString(if (next.day.isAfter(today)) R.string.tile_tomorrow else R.string.tile_next, data.place)
         val after = upcoming.drop(1).take(2).joinToString("   ") { "${label(it)} ${clock(data, it.time)}" }
         val column = Column.Builder()

@@ -95,6 +95,7 @@ class QiblaViewModel @Inject constructor(
 
 /** Within this many degrees the phone counts as facing the qibla. */
 private const val ALIGNED_DEGREES = 3.0
+private const val SPOKEN_STEP = 15
 
 @Composable
 fun QiblaRoute(onBack: () -> Unit, onOpenLocation: () -> Unit, viewModel: QiblaViewModel = hiltViewModel()) {
@@ -125,7 +126,15 @@ fun QiblaContent(state: QiblaUiState, onOpenLocation: () -> Unit) {
 private fun Ready(state: QiblaUiState.Ready) {
     val bearing = state.bearing.roundToInt() % 360
     val turn = state.heading?.let { Qibla.turn(it, state.bearing) }
-    val aligned = turn != null && abs(turn) <= ALIGNED_DEGREES
+    // Hysteresis: aligned within ALIGNED_DEGREES, lost only past twice that, so sensor jitter at
+    // the edge doesn't buzz and announce over and over.
+    // Plain holder, not state: it only remembers the last answer between sensor readings.
+    val latch = remember { BooleanArray(1) }
+    val aligned = when {
+        turn == null -> false
+        latch[0] -> abs(turn) <= ALIGNED_DEGREES * 2
+        else -> abs(turn) <= ALIGNED_DEGREES
+    }.also { latch[0] = it }
     val haptics = LocalHapticFeedback.current
     LaunchedEffect(aligned) { if (aligned) haptics.performHapticFeedback(HapticFeedbackType.Confirm) }
 
@@ -142,6 +151,12 @@ private fun Ready(state: QiblaUiState.Ready) {
             aligned -> stringResource(R.string.qibla_aligned)
             turn > 0 -> stringResource(R.string.qibla_turn_right, abs(turn).roundToInt())
             else -> stringResource(R.string.qibla_turn_left, abs(turn).roundToInt())
+        }
+        val step = turn?.let { (abs(it) / SPOKEN_STEP).roundToInt().coerceAtLeast(1) * SPOKEN_STEP }
+        val spoken = when {
+            turn == null || aligned -> guidance
+            turn > 0 -> stringResource(R.string.qibla_turn_right, step!!)
+            else -> stringResource(R.string.qibla_turn_left, step!!)
         }
         Dial(
             heading = state.heading ?: 0.0,
@@ -163,7 +178,11 @@ private fun Ready(state: QiblaUiState.Ready) {
                     guidance,
                     style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    // Announced in 15° steps, not on every sensor reading.
+                    modifier = Modifier.semantics {
+                        liveRegion = LiveRegionMode.Polite
+                        contentDescription = spoken
+                    },
                 )
                 Text(
                     stringResource(R.string.qibla_bearing, bearing, state.place),

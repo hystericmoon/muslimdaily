@@ -64,6 +64,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.stateIn
 import java.time.Clock
 import java.time.DayOfWeek
@@ -111,11 +114,18 @@ data class FastingUiState(
 
 @HiltViewModel
 class FastingViewModel @Inject constructor(settings: SettingsRepository, clock: Clock) : ViewModel() {
-    private val todayDate = LocalDate.now(clock)
-    private val anchor = MutableStateFlow(todayDate)
-    private val selected = MutableStateFlow(todayDate)
+    private val anchor = MutableStateFlow(LocalDate.now(clock))
+    private val selected = MutableStateFlow(LocalDate.now(clock))
 
-    val state: StateFlow<FastingUiState?> = combine(settings.settings, anchor, selected) { s, a, sel ->
+    /** Today, re-read every minute so a screen left open past midnight moves on. */
+    private val todays = flow {
+        while (true) {
+            emit(LocalDate.now(clock))
+            delay(60_000)
+        }
+    }.distinctUntilChanged()
+
+    val state: StateFlow<FastingUiState?> = combine(settings.settings, anchor, selected, todays) { s, a, sel, todayDate ->
         val adj = s.hijriAdjustment
         val month = FastingCalendar.month(a, adj)
         FastingUiState(

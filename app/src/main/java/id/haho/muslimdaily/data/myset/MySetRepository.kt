@@ -99,10 +99,18 @@ class MySetRepository @Inject constructor(private val db: UserDatabase) {
         return json.encodeToString(ExportFile.serializer(), ExportFile(events = events))
     }
 
-    /** Replaces the customisation of every event in the file. Returns the number of events imported. */
-    suspend fun importJson(text: String): Int {
+    /**
+     * Replaces the customisation of every event in the file; with [replaceAll], events missing from
+     * the file go back to their defaults too. Returns the number of events imported.
+     */
+    suspend fun importJson(text: String, replaceAll: Boolean = false): Int {
         val file = json.decodeFromString(ExportFile.serializer(), text)
         require(file.format == FORMAT) { "Not a My set export" }
+        if (replaceAll) {
+            dao.clearAllItems()
+            dao.clearAllChoices()
+            dao.clearAllPrefs()
+        }
         file.events.forEach { e ->
             dao.reset(e.event)
             dao.replaceItems(e.event, e.items.mapIndexed { i, it -> EventItemEntity(e.event, it.key, it.enabled, i) })

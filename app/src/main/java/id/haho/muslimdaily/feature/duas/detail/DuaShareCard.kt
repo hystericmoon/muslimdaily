@@ -38,8 +38,13 @@ object DuaShareCard {
     private const val PAD = 64f
     private const val CARD_PAD = 72f
     private const val MAX_HEIGHT = 4800
+    private const val MIN_TEXT_SCALE = 0.5f
 
-    fun render(context: Context, dua: Dua, title: String, source: String, palette: AppPalette): Bitmap {
+    /**
+     * A long dua is drawn smaller rather than cut off, so the source and footer always make it
+     * onto the image.
+     */
+    fun render(context: Context, dua: Dua, title: String, source: String, palette: AppPalette, textScale: Float = 1f): Bitmap {
         val scheme = colorSchemeFor(palette, dark = false)
         val res = context.resources
         val arabicFace = ResourcesCompat.getFont(context, if (dua.isQuran) R.font.amiri_quran else R.font.amiri_regular) ?: Typeface.SERIF
@@ -71,16 +76,19 @@ object DuaShareCard {
 
         val onSurface = scheme.onSurface.toArgb()
         val muted = scheme.onSurfaceVariant.toArgb()
-        val label = layout(title.uppercase(Locale.forLanguageTag("id")), latinFace, 30f, scheme.primary.toArgb(), bold = true)
-        val arabic = layout(dua.arabic, arabicFace, 64f, onSurface, rtl = true, spacing = 1.3f)
-        val translation = dua.translationId.takeIf { it.isNotBlank() }?.let { layout(it, latinFace, 36f, onSurface, spacing = 1.35f) }
-        val sourceLayout = layout(source, latinFace, 28f, muted)
+        val label = layout(title.uppercase(Locale.forLanguageTag("id")), latinFace, 30f * textScale, scheme.primary.toArgb(), bold = true)
+        val arabic = layout(dua.arabic, arabicFace, 64f * textScale, onSurface, rtl = true, spacing = 1.3f)
+        val translation = dua.translationId.takeIf { it.isNotBlank() }?.let { layout(it, latinFace, 36f * textScale, onSurface, spacing = 1.35f) }
+        val sourceLayout = layout(source, latinFace, 28f * textScale, muted)
         val footer = layout(res.getString(R.string.share_footer), latinFace, 26f, muted, bold = true, align = Layout.Alignment.ALIGN_CENTER)
 
         val gap = 44f
         val cardHeight = CARD_PAD * 2 + label.height + gap + arabic.height + gap + 6f + gap +
             (translation?.let { it.height + gap } ?: 0f) + sourceLayout.height
-        val height = (PAD * 2 + cardHeight + 28f + footer.height).toInt().coerceAtMost(MAX_HEIGHT)
+        val height = (PAD * 2 + cardHeight + 28f + footer.height).toInt()
+        if (height > MAX_HEIGHT && textScale > MIN_TEXT_SCALE) {
+            return render(context, dua, title, source, palette, (textScale * 0.85f).coerceAtLeast(MIN_TEXT_SCALE))
+        }
 
         val bmp = createBitmap(WIDTH, height)
         val c = Canvas(bmp)

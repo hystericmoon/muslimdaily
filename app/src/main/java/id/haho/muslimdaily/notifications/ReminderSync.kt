@@ -29,14 +29,14 @@ class ReminderSync @Inject constructor(
         notifier.createChannels()
         scope.launch {
             settings.settings
-                .map { Triple(it.reminders, it.location, it.calculation) }
+                .map { listOf(it.reminders, it.location, it.calculation, it.hijriAdjustment) }
                 .distinctUntilChanged()
                 .collect { scheduler.rescheduleAll() }
         }
         scope.launch {
             // Everything the widgets and the lock-screen notification draw.
             settings.settings
-                .map { listOf(it.location, it.calculation, it.iqamahOffsets, it.palette, it.themeMode, it.reminders.nextPrayerOngoing) }
+                .map { listOf(it.location, it.calculation, it.iqamahOffsets, it.palette, it.themeMode, it.reminders.nextPrayerOngoing, it.hijriAdjustment) }
                 .distinctUntilChanged()
                 .collect { glance.refresh() }
         }
