@@ -1,5 +1,9 @@
 package id.haho.muslimdaily.screenshots
 
+import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.muslimdaily.feature.duas.components.sourceLabel
+import id.haho.muslimdaily.feature.duas.detail.DuaShareCard
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
@@ -108,4 +112,21 @@ class RealContentScreenshotTest {
 
     @Test
     fun quranSources() = sources("68-real-sources-quran", "quran_16")
+
+    /** The share image, rendered from real content, written next to the screenshots. */
+    @Test
+    fun shareCards() {
+        val context = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
+        for ((name, duaId, palette) in listOf(
+            Triple("69-share-ayat-kursi", "morning_01", AppPalette.TEAL),
+            Triple("69-share-quran-rose", "quran_16", AppPalette.ROSE),
+            Triple("69-share-graded-navy", duas.first { it.grading != null }.id, AppPalette.NAVY),
+        )) {
+            val d = dua(duaId)
+            val source = d.sources.joinToString("; ") { sourceLabel(it) } +
+                (d.grading?.let { " · ${it.grade.replaceFirstChar(Char::titlecase)} (${it.grader})" } ?: "")
+            val bmp = DuaShareCard.render(context, d, event(d.event).label, source, palette)
+            java.io.File("../docs/screenshots/$name.png").outputStream().use { bmp.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        }
+    }
 }

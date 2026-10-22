@@ -31,6 +31,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.feature.duas.components.gradeLabel
+import id.haho.muslimdaily.feature.duas.components.sourceLabel
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
@@ -65,6 +67,15 @@ fun DuaDetailRoute(
         title = title,
         onBack = onBack,
         actions = {
+            if (s != null) {
+                val source = buildString {
+                    append(s.dua.sources.joinToString("; ") { sourceLabel(it) })
+                    if (s.dua.grading != null) append(" · ").append(gradeLabel(s.dua))
+                }
+                IconButton(onClick = { scope.launch { DuaShareCard.share(context, s.dua, title, source, viewModel.palette()) } }) {
+                    Icon(painterResource(R.drawable.ic_share), stringResource(R.string.share_dua))
+                }
+            }
             IconButton(onClick = { scope.launch { reportError(context, viewModel.duaId, viewModel.contentVersion()) } }) {
                 Icon(painterResource(R.drawable.ic_flag), stringResource(R.string.settings_report))
             }

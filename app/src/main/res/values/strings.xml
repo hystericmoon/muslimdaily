@@ -648,4 +648,8 @@
     <string name="ramadan_suhur_left">Sahur berakhir %s lagi</string>
     <string name="ramadan_iftar_left">Berbuka %s lagi</string>
     <string name="ramadan_iftar_dua">Doa berbuka</string>
+
+    <!-- Share -->
+    <string name="share_dua">Bagikan doa</string>
+    <string name="share_footer">Muslim Daily</string>
 </resources>
