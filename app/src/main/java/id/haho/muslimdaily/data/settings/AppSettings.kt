@@ -64,6 +64,11 @@ data class ReminderSettings(
     val mosqueBeforeMinutes: Int = 10,
     /** A quiet ongoing notification with the next prayer and a countdown, shown on the lock screen. */
     val nextPrayerOngoing: Boolean = false,
+    /** The evening before a sunnah fast. */
+    val fasting: Boolean = false,
+    val fastingTime: LocalTime = LocalTime.of(20, 0),
+    /** Whether Mondays and Thursdays count for the fasting reminder. */
+    val fastingWeekly: Boolean = true,
 )
 
 data class MemorizeSettings(

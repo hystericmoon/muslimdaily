@@ -21,7 +21,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.time.Clock
+import id.haho.muslimdaily.domain.fasting.FastingCalendar
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
+import id.haho.muslimdaily.feature.fasting.labelRes
 import id.haho.muslimdaily.widget.GlanceRefresher
 import java.time.DayOfWeek
 import java.time.Duration
@@ -92,6 +94,20 @@ class ReminderReceiver : BroadcastReceiver() {
             ReminderType.EVENING_ADHKAR -> context.getString(R.string.notif_evening_text)
             ReminderType.BEFORE_SLEEP -> context.getString(R.string.notif_sleep_text)
             ReminderType.FRIDAY -> context.getString(R.string.notif_friday_text)
+            ReminderType.FASTING -> {
+                val tomorrow = FastingCalendar.day(today.plusDays(1), s.hijriAdjustment)
+                val kinds = tomorrow.sunnah(s.reminders.fastingWeekly)
+                if (kinds.isEmpty()) return
+                val names = kinds.joinToString(", ") { context.getString(it.labelRes()) }
+                val fajr = location?.let {
+                    calculator.schedule(tomorrow.date, it.latitude, it.longitude, zone, s.calculation).fajr
+                }
+                if (fajr != null) {
+                    context.getString(R.string.notif_fasting_text_fajr, names, id.haho.muslimdaily.core.ui.TimeFormatter(DateFormat.is24HourFormat(context)).format(fajr, zone))
+                } else {
+                    context.getString(R.string.notif_fasting_text, names)
+                }
+            }
             ReminderType.REVIEW -> {
                 val due = reviews.dueCountOnce(today)
                 if (due == 0) return // Only remind when something is due.

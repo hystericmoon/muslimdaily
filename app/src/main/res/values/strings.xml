@@ -598,4 +598,46 @@
     <string name="qibla_calibrate">Kompas kurang akurat. Gerakkan ponsel membentuk angka 8 beberapa kali.</string>
     <string name="qibla_note">Letakkan ponsel mendatar, jauh dari logam, magnet, dan perangkat elektronik. Arah dihitung dari lokasi tersimpan.</string>
     <string name="qibla_no_location">Atur lokasi untuk menghitung arah kiblat.</string>
+
+    <!-- Sunnah fasting -->
+    <string name="fasting_title">Kalender puasa</string>
+    <string name="fasting_open">Puasa</string>
+    <string name="fasting_today">Hari ini</string>
+    <string name="fasting_tomorrow">Besok</string>
+    <string name="fasting_none">Tidak ada puasa khusus</string>
+    <string name="fasting_none_detail">Tidak ada puasa sunnah khusus atau larangan pada hari ini.</string>
+    <string name="fasting_upcoming">Hari puasa berikutnya</string>
+    <string name="fasting_previous_month">Bulan sebelumnya</string>
+    <string name="fasting_next_month">Bulan berikutnya</string>
+    <string name="fasting_legend_special">Puasa sunnah</string>
+    <string name="fasting_legend_weekly">Senin dan Kamis</string>
+    <string name="fasting_legend_forbidden">Dilarang berpuasa</string>
+    <string name="fasting_hijri_note">Tanggal Hijriah dihitung (Umm al-Qura) dan bisa berbeda satu hari dari penetapan setempat. Sesuaikan di Pengaturan → Waktu shalat → Kalender Hijriah.</string>
+    <string name="fasting_friday_note">Mengkhususkan hari Jumat saja untuk berpuasa dilarang (HR. Al-Bukhari no. 1985, Muslim no. 1144).</string>
+    <string name="fast_ramadan">Puasa Ramadan (wajib)</string>
+    <string name="fast_arafah">Puasa Arafah</string>
+    <string name="fast_tasua">Puasa Tasu\'a</string>
+    <string name="fast_ashura">Puasa Asyura</string>
+    <string name="fast_white_days">Ayyamul Bidh (13–15)</string>
+    <string name="fast_shawwal">Puasa enam hari Syawal</string>
+    <string name="fast_monday">Puasa Senin</string>
+    <string name="fast_thursday">Puasa Kamis</string>
+    <string name="fast_eid_fitr">Idul Fitri: dilarang berpuasa</string>
+    <string name="fast_eid_adha">Idul Adha: dilarang berpuasa</string>
+    <string name="fast_tashriq">Hari Tasyrik: dilarang berpuasa</string>
+    <string name="fast_dalil_ramadan">QS. Al-Baqarah [2]: 183–185</string>
+    <string name="fast_dalil_muslim_1162">HR. Muslim no. 1162</string>
+    <string name="fast_dalil_tasua">HR. Muslim no. 1134</string>
+    <string name="fast_dalil_white_days">HR. At-Tirmidzi no. 761, dihasankan al-Albani</string>
+    <string name="fast_dalil_shawwal">HR. Muslim no. 1164</string>
+    <string name="fast_dalil_monday">HR. Muslim no. 1162; HR. At-Tirmidzi no. 747, dishahihkan al-Albani</string>
+    <string name="fast_dalil_thursday">HR. At-Tirmidzi no. 747, dishahihkan al-Albani</string>
+    <string name="fast_dalil_eid">HR. Al-Bukhari no. 1990, Muslim no. 1137</string>
+    <string name="fast_dalil_tashriq">HR. Muslim no. 1141</string>
+    <string name="notif_fasting_title">Puasa sunnah besok</string>
+    <string name="notif_fasting_text">Besok: %s.</string>
+    <string name="notif_fasting_text_fajr">Besok: %1$s. Sahur sebelum Subuh, pukul %2$s.</string>
+    <string name="reminders_fasting_title">Pengingat puasa sunnah</string>
+    <string name="reminders_fasting_summary">Malam sebelumnya, beserta waktu Subuh</string>
+    <string name="reminders_fasting_weekly">Termasuk Senin dan Kamis</string>
 </resources>

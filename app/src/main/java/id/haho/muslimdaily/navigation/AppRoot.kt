@@ -71,6 +71,7 @@ fun AppRoot(
             Destination.SLEEP_EVENT -> EventRoute("sleeping")
             Destination.MEMORIZE -> MemorizeGraph
             Destination.MOSQUES -> MosquesRoute
+            Destination.FASTING -> FastingRoute
         }
         navController.navigate(target) { launchSingleTop = true }
         onDestinationHandled()

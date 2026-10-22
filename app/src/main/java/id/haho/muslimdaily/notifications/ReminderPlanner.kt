@@ -5,6 +5,7 @@ import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.domain.fasting.FastingCalendar
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSchedule
 import java.time.DayOfWeek
@@ -21,6 +22,9 @@ enum class ReminderType(val requestCode: Int) {
 
     /** Minutes before each prayer: time to head to the mosque. */
     PRE_PRAYER(20),
+
+    /** The evening before a sunnah fast. */
+    FASTING(22),
 
     /** Not a notification: redraws widgets and the lock-screen countdown when the next prayer changes. */
     REFRESH(21),
@@ -93,6 +97,14 @@ object ReminderPlanner {
                 .filter { it.isAfter(now) }
                 .minOrNull()
                 ?.let { result += PlannedReminder(ReminderType.REFRESH, it) }
+        }
+        if (r.fasting) {
+            // The first evening (at the chosen time) whose next day is a sunnah fast.
+            val first = nextDaily(now, zone, r.fastingTime)
+            generateSequence(first) { it.plusSeconds(86_400) }.take(60).firstOrNull { evening ->
+                val tomorrow = evening.atZone(zone).toLocalDate().plusDays(1)
+                FastingCalendar.day(tomorrow, settings.hijriAdjustment).sunnah(r.fastingWeekly).isNotEmpty()
+            }?.let { result += PlannedReminder(ReminderType.FASTING, it) }
         }
         if (r.beforeSleep) result += PlannedReminder(ReminderType.BEFORE_SLEEP, nextDaily(now, zone, r.beforeSleepTime))
         if (r.reviewQueue) result += PlannedReminder(ReminderType.REVIEW, nextDaily(now, zone, r.reviewTime))

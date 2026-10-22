@@ -92,6 +92,7 @@ data class TodayActions(
     val onDismissTravel: () -> Unit = {},
     val onOpenMosques: () -> Unit = {},
     val onOpenQibla: () -> Unit = {},
+    val onOpenFasting: () -> Unit = {},
 )
 
 @Composable
@@ -102,6 +103,7 @@ fun TodayRoute(
     onOpenPrayerSettings: () -> Unit,
     onOpenMosques: () -> Unit,
     onOpenQibla: () -> Unit,
+    onOpenFasting: () -> Unit,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -140,6 +142,7 @@ fun TodayRoute(
             onDismissTravel = viewModel::dismissTravel,
             onOpenMosques = onOpenMosques,
             onOpenQibla = onOpenQibla,
+            onOpenFasting = onOpenFasting,
         ),
     )
 }
@@ -264,6 +267,11 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
                         Modifier.size(AppTheme.dimens.smallIcon),
                     )
                 },
+            )
+            AssistChip(
+                onClick = actions.onOpenFasting,
+                label = { Text(stringResource(R.string.fasting_open)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(AppTheme.dimens.smallIcon)) },
             )
             AssistChip(
                 onClick = actions.onOpenQibla,

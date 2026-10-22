@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /** Where a notification tap should land. */
-enum class Destination { TODAY, MORNING_RUN, EVENING_RUN, SLEEP_EVENT, MEMORIZE, MOSQUES }
+enum class Destination { TODAY, MORNING_RUN, EVENING_RUN, SLEEP_EVENT, MEMORIZE, MOSQUES, FASTING }
 
 @Singleton
 class Notifier @Inject constructor(@ApplicationContext private val context: Context) {
@@ -81,6 +81,7 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
             ReminderType.BEFORE_SLEEP -> R.string.notif_sleep_title to Destination.SLEEP_EVENT
             ReminderType.FRIDAY -> R.string.notif_friday_title to Destination.TODAY
             ReminderType.REVIEW -> R.string.notif_review_title to Destination.MEMORIZE
+            ReminderType.FASTING -> R.string.notif_fasting_title to Destination.FASTING
             else -> return
         }
         post(type.requestCode, CHANNEL_REMINDERS, context.getString(title), text, destination)
