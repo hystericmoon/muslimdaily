@@ -49,10 +49,11 @@ Set the address that "Report an error" pre-fills in `gradle.properties`:
 Debug / sideload builds (`SELF_UPDATE = true`) can update themselves from GitHub Releases;
 release (store) builds have no updater and no INTERNET permission.
 
-1. Bump `versionCode` and `versionName` in `app/build.gradle.kts`.
-2. Tag and push: `git tag v0.2.0 && git push origin v0.2.0`.
-3. `.github/workflows/release.yml` builds the debug APK and attaches it to a GitHub release.
-4. Phones check once a day on launch (Settings → Pembaruan aplikasi → Periksa otomatis), or on
+1. Bump `versionCode` and `versionName` in `app/build.gradle.kts` and push.
+2. `.github/workflows/release.yml` sees a version with no release yet, builds the debug APK,
+   and creates the `vX.Y.Z` tag and GitHub release with the APK attached. (Pushing a `vX.Y.Z`
+   tag yourself, or running the workflow by hand, does the same.)
+3. Phones check once a day on launch (Settings → Pembaruan aplikasi → Periksa otomatis), or on
    demand from that screen, then download and hand the APK to the system installer.
 
 Notes:
