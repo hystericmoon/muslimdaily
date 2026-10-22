@@ -117,7 +117,7 @@ class TodayViewModel @Inject constructor(
 
     fun updateLocationFromGps(onResult: (LocationRepository.FixResult) -> Unit) {
         viewModelScope.launch {
-            val result = locations.updateFromGps()
+            val result = runCatching { locations.updateFromGps() }.getOrDefault(LocationRepository.FixResult.Unavailable)
             if (result is LocationRepository.FixResult.Success) travelKm.value = null
             onResult(result)
         }

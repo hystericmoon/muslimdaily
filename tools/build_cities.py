@@ -4,14 +4,13 @@
     python3 tools/build_cities.py [--cache DIR]
 
 Downloads GeoNames dumps (CC BY 4.0, https://www.geonames.org) and writes
-app/src/main/assets/cities.tsv.gz with: geonameid, name, ascii name, country code, region,
+app/src/main/assets/cities.tsv with: geonameid, name, ascii name, country code, region,
 latitude, longitude, IANA time zone, population.
 
 Coverage: every city worldwide with population >= 15,000, plus every Indonesian place with
 population >= 5,000 so smaller kabupaten seats are findable.
 """
 import argparse
-import gzip
 import io
 import sys
 import urllib.request
@@ -19,7 +18,9 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "app/src/main/assets/cities.tsv.gz"
+# Plain TSV: the Android build unpacks *.gz assets and drops the extension, and the APK is
+# zip-compressed anyway.
+OUT = ROOT / "app/src/main/assets/cities.tsv"
 BASE = "https://download.geonames.org/export/dump/"
 
 
@@ -61,8 +62,7 @@ def main() -> int:
         fields = [r[0], r[1], r[2], r[8], region, f"{float(r[4]):.4f}", f"{float(r[5]):.4f}", r[17], r[14]]
         out.write("\t".join(f.replace("\t", " ") for f in fields) + "\n")
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    with gzip.open(OUT, "wt", encoding="utf-8", compresslevel=9) as f:
-        f.write(out.getvalue())
+    OUT.write_text(out.getvalue(), encoding="utf-8")
     print(f"Wrote {len(rows)} cities to {OUT} ({OUT.stat().st_size // 1024} KB)")
     return 0
 

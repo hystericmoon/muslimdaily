@@ -12,7 +12,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.Locale
-import java.util.zip.GZIPInputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.cos
@@ -30,7 +29,7 @@ data class City(
 
 /**
  * Offline city search for the manual location picker, backed by GeoNames (CC BY 4.0) data in
- * assets/cities.tsv.gz. Imported into Room the first time the picker is opened.
+ * assets/cities.tsv. Imported into Room the first time the picker is opened.
  */
 @Singleton
 class CityRepository @Inject constructor(
@@ -44,7 +43,7 @@ class CityRepository @Inject constructor(
         if (dao.count() > 0) return@withLock
         withContext(Dispatchers.IO) {
             val cities = mutableListOf<CityEntity>()
-            GZIPInputStream(context.assets.open("cities.tsv.gz")).bufferedReader().useLines { lines ->
+            context.assets.open("cities.tsv").bufferedReader().useLines { lines ->
                 lines.forEach { line ->
                     val f = line.split('\t')
                     if (f.size >= 9) {

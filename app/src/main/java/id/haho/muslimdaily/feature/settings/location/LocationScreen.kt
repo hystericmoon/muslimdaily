@@ -78,7 +78,8 @@ class LocationViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     val results: StateFlow<List<City>?> = _query.debounce(150).mapLatest { q ->
-        if (q.isBlank()) cities.popular() else cities.search(q)
+        // A data problem must never close the app; an empty list shows the "not found" note.
+        runCatching { if (q.isBlank()) cities.popular() else cities.search(q) }.getOrDefault(emptyList())
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private val _busy = MutableStateFlow(false)
@@ -96,7 +97,7 @@ class LocationViewModel @Inject constructor(
     fun useGps(onResult: (LocationRepository.FixResult) -> Unit) {
         viewModelScope.launch {
             _busy.value = true
-            onResult(locations.updateFromGps())
+            onResult(runCatching { locations.updateFromGps() }.getOrDefault(LocationRepository.FixResult.Unavailable))
             _busy.value = false
         }
     }

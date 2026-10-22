@@ -54,7 +54,8 @@ class LocationRepository @Inject constructor(
             source.cancel()
             client.lastLocation.awaitOrNull()
         } ?: return FixResult.Unavailable
-        val city = cities.nearest(fix.latitude, fix.longitude)
+        // Naming the fix is a nicety; fall back to coordinates if the city list is unavailable.
+        val city = runCatching { cities.nearest(fix.latitude, fix.longitude) }.getOrNull()
         val saved = SavedLocation(
             name = city?.name ?: "%.3f, %.3f".format(fix.latitude, fix.longitude),
             latitude = fix.latitude,
