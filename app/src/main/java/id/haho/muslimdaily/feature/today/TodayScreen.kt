@@ -187,7 +187,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl),
     ) {
         item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
-        item(key = "next") { NextPrayerCard(data, Modifier.padding(horizontal = gutter).enterReveal(0)) }
+        item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = gutter).enterReveal(0)) }
         data.travelSuggestionKm?.let { km ->
             item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(gutter)) }
         }
@@ -262,17 +262,12 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
                     )
                 },
             )
-            AssistChip(
-                onClick = actions.onOpenMosques,
-                label = { Text(stringResource(R.string.mosque_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_mosque), null, Modifier.size(AppTheme.dimens.smallIcon)) },
-            )
         }
     }
 }
 
 @Composable
-private fun NextPrayerCard(data: TodayData, modifier: Modifier = Modifier) {
+private fun NextPrayerCard(data: TodayData, onOpenMosques: () -> Unit, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     val next = data.next
     val name = stringResource(next.prayer.labelRes())
@@ -316,6 +311,12 @@ private fun NextPrayerCard(data: TodayData, modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
+            }
+            // Next to the prayer it serves: where to pray it.
+            GlassTonalButton(onClick = onOpenMosques, modifier = Modifier.padding(top = AppTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_mosque), null, Modifier.size(AppTheme.dimens.smallIcon))
+                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Text(stringResource(R.string.mosque_open))
             }
             if (data.activeWindows.isNotEmpty()) {
                 HorizontalDivider(

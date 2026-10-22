@@ -2,7 +2,8 @@ package id.haho.muslimdaily.widget
 
 import android.content.Context
 import android.text.format.DateFormat
-import androidx.glance.appwidget.updateAll
+import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.glance.appwidget.state.updateAppWidgetState
 import dagger.hilt.android.qualifiers.ApplicationContext
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
@@ -27,8 +28,14 @@ class GlanceRefresher @Inject constructor(
     private val clock: Clock,
 ) {
     suspend fun refresh() {
-        NextPrayerWidget().updateAll(context)
-        DayScheduleWidget().updateAll(context)
+        val manager = GlanceAppWidgetManager(context)
+        val stamp = System.currentTimeMillis()
+        for (widget in listOf(NextPrayerWidget(), DayScheduleWidget())) {
+            manager.getGlanceIds(widget.javaClass).forEach { id ->
+                updateAppWidgetState(context, id) { it[WidgetRefreshKey] = stamp }
+                widget.update(context, id)
+            }
+        }
         val s = settings.current()
         val snapshot = PrayerSnapshots.at(Instant.now(clock), s, calculator)
         if (s.reminders.nextPrayerOngoing && snapshot != null) {

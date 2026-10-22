@@ -502,7 +502,7 @@
     <string name="methodology_scope_title">Cakupan</string>
     <string name="methodology_scope_body">Hanya Al-Qur\'an dan Sunnah yang sahih atau hasan, di atas manhaj salaf. Tidak ada doa atau amalan tanpa dalil.</string>
     <string name="methodology_sources_title">Sumber</string>
-    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim. Setiap doa mencantumkan kitab dan nomor haditsnya, dapat dilihat dengan mengetuk label sumber.</string>
+    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim, ditambah doa-doa dari Al-Qur\'an. Setiap doa mencantumkan kitab dan nomor hadits atau surah dan ayatnya, dapat dilihat dengan mengetuk label sumber.</string>
     <string name="methodology_grading_title">Kebijakan derajat</string>
     <string name="methodology_grading_body">Derajat ditampilkan bila disebutkan dalam takhrij kitab sumber, beserta siapa yang menilai. Riwayat yang dinilai lemah oleh Syaikh al-Albani tidak dimuat.</string>
     <string name="methodology_counts_title">Jumlah bacaan</string>
@@ -510,7 +510,7 @@
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
-    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Setiap doa menampilkan sumber dan takhrijnya.</string>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI melalui QuranEnc.com. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
     <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI dan dapat disesuaikan. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>
@@ -560,9 +560,11 @@
     <string name="mosque_title">Masjid terdekat</string>
     <string name="mosque_open">Masjid terdekat</string>
     <string name="mosque_locating">Mencari lokasi Anda…</string>
-    <string name="mosque_permission_title">Izinkan lokasi</string>
+    <string name="mosque_permission_title">Cari masjid di sekitar Anda</string>
     <string name="mosque_permission_body">Lokasi dipakai sekali untuk mencari masjid di sekitar Anda. Tidak disimpan dan tidak dikirim ke mana pun.</string>
     <string name="mosque_allow_location">Izinkan lokasi</string>
+    <string name="mosque_open_settings">Buka pengaturan aplikasi</string>
+    <string name="mosque_permission_blocked">Izin lokasi ditolak. Aktifkan di Pengaturan → Izin → Lokasi.</string>
     <string name="mosque_use_saved">Pakai lokasi tersimpan (%s)</string>
     <string name="mosque_unavailable_title">Lokasi tidak tersedia</string>
     <string name="mosque_unavailable_body">Nyalakan lokasi di perangkat, lalu coba lagi.</string>

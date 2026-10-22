@@ -2,6 +2,16 @@ package id.haho.muslimdaily.feature.mosque
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.activity.compose.LocalActivity
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -60,6 +70,8 @@ data class MosqueActions(
     val onRetry: () -> Unit = {},
     val onDirections: (Mosque) -> Unit = {},
     val onSearchMaps: (latitude: Double, longitude: Double) -> Unit = { _, _ -> },
+    /** Location was denied for good; the allow buttons open app settings instead. */
+    val permissionBlocked: Boolean = false,
 )
 
 @Composable
@@ -69,10 +81,20 @@ fun NearbyMosqueRoute(onBack: () -> Unit, viewModel: NearbyMosqueViewModel = hil
     val context = LocalContext.current
     val unnamed = stringResource(R.string.mosque_unnamed)
     val query = stringResource(R.string.mosque_map_query)
-    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+    val activity = LocalActivity.current
+    // After "don't ask again" the system dialog no longer shows, so the button opens app settings.
+    var blocked by rememberSaveable { mutableStateOf(false) }
+    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+        val precise = result[Manifest.permission.ACCESS_FINE_LOCATION] == true
+        blocked = !precise && activity != null &&
+            !ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)
         viewModel.onPermissionResult()
     }
-    fun launch(intent: android.content.Intent) {
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        if (viewModel.hasPrecisePermission()) blocked = false
+        viewModel.onResume()
+    }
+    fun launch(intent: Intent) {
         try {
             context.startActivity(intent)
         } catch (_: ActivityNotFoundException) {
@@ -87,8 +109,13 @@ fun NearbyMosqueRoute(onBack: () -> Unit, viewModel: NearbyMosqueViewModel = hil
             canOpenMaps = canSearch,
             actions = MosqueActions(
                 onAllowLocation = {
-                    permission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+                    if (blocked) {
+                        launch(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null)))
+                    } else {
+                        permission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+                    }
                 },
+                permissionBlocked = blocked,
                 onUseSaved = viewModel::useSaved,
                 onRetry = viewModel::locate,
                 onDirections = { m -> launch(MapsIntents.directions(context, m, m.name.ifBlank { unnamed })) },
@@ -119,7 +146,15 @@ fun NearbyMosqueContent(
                 body = stringResource(R.string.mosque_permission_body),
             ) {
                 GlassButton(onClick = actions.onAllowLocation, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.mosque_allow_location))
+                    Text(stringResource(if (actions.permissionBlocked) R.string.mosque_open_settings else R.string.mosque_allow_location))
+                }
+                if (actions.permissionBlocked) {
+                    Text(
+                        stringResource(R.string.mosque_permission_blocked),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 state.savedName?.let { name ->
                     GlassOutlinedButton(onClick = actions.onUseSaved, modifier = Modifier.fillMaxWidth()) {
@@ -221,7 +256,9 @@ private fun OriginNote(origin: Origin, actions: MosqueActions) {
             )
             is Origin.Approximate -> {
                 InfoNote(stringResource(R.string.mosque_origin_approximate))
-                GlassTonalButton(onClick = actions.onAllowLocation) { Text(stringResource(R.string.mosque_allow_precise)) }
+                GlassTonalButton(onClick = actions.onAllowLocation) {
+                    Text(stringResource(if (actions.permissionBlocked) R.string.mosque_open_settings else R.string.mosque_allow_precise))
+                }
             }
             is Origin.Saved -> {
                 InfoNote(stringResource(R.string.mosque_origin_saved, origin.name))

@@ -7,6 +7,10 @@ import android.os.SystemClock
 import android.text.format.DateFormat
 import android.widget.RemoteViews
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.glance.currentState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
@@ -70,6 +74,21 @@ suspend fun loadWidgetData(context: Context): WidgetData {
         time = TimeFormatter(DateFormat.is24HourFormat(context)),
         now = now,
     )
+}
+
+/** Bumped by [GlanceRefresher] so a widget re-reads its data even while its session is alive. */
+val WidgetRefreshKey = longPreferencesKey("refreshed_at")
+
+/**
+ * The widget's data, reloaded whenever [WidgetRefreshKey] changes. Glance keeps a session alive
+ * for a while after an update and recomposes it instead of calling provideGlance again, so data
+ * read once in provideGlance would go stale.
+ */
+@Composable
+fun rememberWidgetData(context: Context, initial: WidgetData): WidgetData {
+    val stamp = currentState(WidgetRefreshKey) ?: 0L
+    val data by produceState(initial, stamp) { if (stamp != 0L) value = loadWidgetData(context) }
+    return data
 }
 
 /**
@@ -165,7 +184,9 @@ fun Countdown(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setColorInt(R.id.countdown, "setTextColor", colors.countdownDay.toArgb(), colors.countdownNight.toArgb())
         } else {
-            setTextColor(R.id.countdown, colors.countdownDay.toArgb())
+            val night = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
+                android.content.res.Configuration.UI_MODE_NIGHT_YES
+            setTextColor(R.id.countdown, (if (night) colors.countdownNight else colors.countdownDay).toArgb())
         }
     }
     // An embedded RemoteViews fills its parent unless told otherwise, pushing siblings out.

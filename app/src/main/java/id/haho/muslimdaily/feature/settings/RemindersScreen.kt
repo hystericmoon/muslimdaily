@@ -61,6 +61,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import id.haho.muslimdaily.widget.GlanceRefresher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,6 +69,7 @@ class RemindersViewModel @Inject constructor(
     private val repository: SettingsRepository,
     private val scheduler: ReminderScheduler,
     private val notifier: Notifier,
+    private val glance: GlanceRefresher,
 ) : ViewModel() {
     val settings: StateFlow<AppSettings?> = repository.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -78,8 +80,12 @@ class RemindersViewModel @Inject constructor(
         viewModelScope.launch { repository.update(block) }
     }
 
+    /** After a permission change: re-plan alarms and post the lock-screen notification if it can now show. */
     fun reschedule() {
-        viewModelScope.launch { scheduler.rescheduleAll() }
+        viewModelScope.launch {
+            scheduler.rescheduleAll()
+            glance.refresh()
+        }
     }
 }
 
@@ -96,6 +102,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
     }
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         permissions = permissions.copy(notifications = viewModel.notificationsAllowed())
+        viewModel.reschedule()
     }
     val askNotifications = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

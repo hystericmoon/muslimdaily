@@ -43,8 +43,8 @@ class NextPrayerWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(DpSize(110.dp, 50.dp), DpSize(110.dp, 110.dp)))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val data = loadWidgetData(context)
-        provideContent { NextPrayerContent(data) }
+        val initial = loadWidgetData(context)
+        provideContent { NextPrayerContent(rememberWidgetData(context, initial)) }
     }
 }
 
@@ -57,8 +57,8 @@ class DayScheduleWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val data = loadWidgetData(context)
-        provideContent { DayScheduleContent(data) }
+        val initial = loadWidgetData(context)
+        provideContent { DayScheduleContent(rememberWidgetData(context, initial)) }
     }
 }
 

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -58,7 +59,10 @@ class LocationRepository @Inject constructor(
             client.getCurrentLocation(priority, source.token).awaitOrNull()
         } ?: run {
             source.cancel()
-            client.lastLocation.awaitOrNull()
+            // A cached fix may be from somewhere else on a trip; only trust a recent one.
+            client.lastLocation.awaitOrNull()?.takeIf {
+                SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos < MAX_CACHED_AGE_NANOS
+            }
         } ?: return null
         return Fix(fix.latitude, fix.longitude, fix.accuracy.takeIf { fix.hasAccuracy() }, precise)
     }
@@ -126,5 +130,6 @@ class LocationRepository @Inject constructor(
 
     private companion object {
         const val FIX_TIMEOUT_MS = 15_000L
+        const val MAX_CACHED_AGE_NANOS = 3 * 60 * 1_000_000_000L
     }
 }

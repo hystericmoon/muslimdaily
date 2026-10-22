@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.semantics
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.InfoRow
 import id.haho.muslimdaily.core.designsystem.component.NavigationRow
 import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
@@ -66,7 +67,12 @@ fun AboutContent() {
         }
         SettingsGroup(stringResource(R.string.about_licenses)) {
             Licenses.forEach { license ->
-                NavigationRow(title = license.name, summary = license.detail, onClick = { shown = license })
+                // Only licences with a full text open one; the rest are complete as shown.
+                if (license.asset != null) {
+                    NavigationRow(title = license.name, summary = license.detail, onClick = { shown = license })
+                } else {
+                    InfoRow(title = license.name, summary = license.detail)
+                }
             }
         }
     }

@@ -14,7 +14,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import java.time.Clock
+import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject
@@ -55,15 +61,35 @@ class NearbyMosqueViewModel @Inject constructor(
     private val _state = MutableStateFlow<MosqueUiState>(MosqueUiState.Locating)
     val state: StateFlow<MosqueUiState> = _state.asStateFlow()
 
-    private val _header = MutableStateFlow<MosqueHeader?>(null)
-    val header: StateFlow<MosqueHeader?> = _header.asStateFlow()
+    /** The next prayer and how long until it, kept current while the screen is shown. */
+    val header: StateFlow<MosqueHeader?> = combine(ticker(), settings.settings) { now, s ->
+        PrayerSnapshots.at(now, s, calculator)?.let { MosqueHeader(it.next, it.zone, now) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    private fun ticker() = flow {
+        while (true) {
+            emit(Instant.now(clock))
+            delay(TICK_MS)
+        }
+    }
+
+    private var fixedAt: Instant? = null
 
     init {
-        viewModelScope.launch {
-            val now = Instant.now(clock)
-            PrayerSnapshots.at(now, settings.current(), calculator)?.let { _header.value = MosqueHeader(it.next, it.zone, now) }
-        }
         if (location.hasPermission()) locate() else viewModelScope.launch { askPermission() }
+    }
+
+    /**
+     * Back on screen (from settings, or reopened from a later pre-prayer notification): pick up a
+     * permission granted meanwhile, and take a fresh fix if the last one is old.
+     */
+    fun onResume() {
+        val stale = fixedAt?.let { Duration.between(it, Instant.now(clock)) > REFIX_AFTER } ?: false
+        when (val s = _state.value) {
+            is MosqueUiState.NeedsPermission -> if (location.hasPermission()) locate()
+            is MosqueUiState.Ready -> if (stale && s.origin !is Origin.Saved) locate()
+            else -> Unit
+        }
     }
 
     private suspend fun askPermission() {
@@ -81,6 +107,7 @@ class NearbyMosqueViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = MosqueUiState.Locating
             val fix = location.currentFix()
+            fixedAt = Instant.now(clock)
             val origin = when {
                 fix == null -> savedOrigin()
                 fix.precise -> Origin.Precise(fix.latitude, fix.longitude, fix.accuracyMeters?.toInt())
@@ -105,3 +132,6 @@ class NearbyMosqueViewModel @Inject constructor(
         }
     }
 }
+
+private const val TICK_MS = 30_000L
+private val REFIX_AFTER: Duration = Duration.ofMinutes(2)

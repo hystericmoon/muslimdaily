@@ -75,6 +75,23 @@ fun NavigationRow(
     )
 }
 
+/** A read-only row: no chevron, no click, read by TalkBack as plain text. */
+@Composable
+fun InfoRow(
+    title: String,
+    modifier: Modifier = Modifier,
+    summary: String? = null,
+    @DrawableRes icon: Int? = null,
+) {
+    ListItem(
+        headlineContent = { Text(title) },
+        supportingContent = summary?.let { { Text(it) } },
+        leadingContent = icon?.let { { Icon(painterResource(it), null) } },
+        colors = TransparentListColors,
+        modifier = modifier.semantics(mergeDescendants = true) {},
+    )
+}
+
 @Composable
 fun SwitchRow(
     title: String,

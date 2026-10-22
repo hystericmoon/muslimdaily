@@ -41,9 +41,9 @@ data class CalculationSettings(
     val customIshaAngle: Double = 18.0,
     val asr: AsrMethod = AsrMethod.STANDARD,
     val offsets: PrayerOffsets = PrayerOffsets(),
-    /** Minutes after sunrise until the sun is considered fully risen. Ustadz to confirm the default. */
+    /** Minutes after sunrise until the sun is considered fully risen. */
     val sunriseRiseMinutes: Int = 15,
-    /** Length of the prohibited window before Dhuhr at zawal. Ustadz to confirm the default. */
+    /** Length of the prohibited window before Dhuhr at zawal. */
     val zawalMinutes: Int = 10,
 )
 

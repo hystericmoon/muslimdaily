@@ -11,7 +11,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.NavigationRow
+import id.haho.muslimdaily.core.designsystem.component.InfoRow
 import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
 import id.haho.muslimdaily.core.designsystem.component.StepperRow
 import id.haho.muslimdaily.core.designsystem.component.SwitchRow
@@ -46,10 +46,10 @@ fun AudioSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Un
                     canDecrement = settings.audioSpeed > 0.5f,
                     canIncrement = settings.audioSpeed < 1.25f,
                 )
-                NavigationRow(
+                // One reciter for now, so this is information rather than a choice.
+                InfoRow(
                     title = stringResource(R.string.settings_reciter),
                     summary = stringResource(R.string.settings_reciter_default),
-                    onClick = {},
                 )
             }
         }
