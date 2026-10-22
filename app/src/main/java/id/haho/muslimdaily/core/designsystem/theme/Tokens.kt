@@ -63,21 +63,15 @@ data class ExtendedColors(
     val onCompleteFill: Color,
 )
 
-internal val LightExtendedColors = ExtendedColors(
-    highlightFill = LightTokens.highlightFill,
-    onHighlightFill = LightTokens.onHighlightFill,
-    highlightIndicator = LightTokens.highlightIndicator,
-    completeFill = LightTokens.completeFill,
-    onCompleteFill = LightTokens.onCompleteFill,
+internal fun extendedColors(t: ColorTokens) = ExtendedColors(
+    highlightFill = t.highlightFill,
+    onHighlightFill = t.onHighlightFill,
+    highlightIndicator = t.highlightIndicator,
+    completeFill = t.completeFill,
+    onCompleteFill = t.onCompleteFill,
 )
 
-internal val DarkExtendedColors = ExtendedColors(
-    highlightFill = DarkTokens.highlightFill,
-    onHighlightFill = DarkTokens.onHighlightFill,
-    highlightIndicator = DarkTokens.highlightIndicator,
-    completeFill = DarkTokens.completeFill,
-    onCompleteFill = DarkTokens.onCompleteFill,
-)
+internal val LightExtendedColors = extendedColors(paletteTokens(AppPalette.entries.first(), dark = false))
 
 /**
  * Motion is calm and short: springs without bounce for layout and state changes, a light bounce

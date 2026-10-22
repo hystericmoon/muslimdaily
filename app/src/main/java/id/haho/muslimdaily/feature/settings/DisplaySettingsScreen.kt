@@ -123,6 +123,11 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                         )
                     },
                 )
+                PalettePicker(
+                    selected = settings.palette,
+                    enabled = !settings.dynamicColor,
+                    onSelect = { p -> update { palette = p } },
+                )
                 SwitchRow(
                     title = stringResource(R.string.display_dynamic_color),
                     summary = stringResource(R.string.display_dynamic_color_summary),

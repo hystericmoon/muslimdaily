@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
             MuslimDailyTheme(
                 themeMode = settings.themeMode,
                 dynamicColor = settings.dynamicColor,
+                palette = settings.palette,
                 arabicScale = settings.arabicScale,
                 translationScale = settings.translationScale,
                 glass = settings.glassEffect,

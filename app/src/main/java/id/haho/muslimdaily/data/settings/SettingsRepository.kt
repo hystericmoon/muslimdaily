@@ -13,6 +13,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import id.haho.muslimdaily.core.designsystem.theme.AppPalette
 import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 import id.haho.muslimdaily.core.model.Prayer
 import kotlinx.coroutines.flow.Flow
@@ -85,6 +86,7 @@ class SettingsRepository @Inject constructor(
         return AppSettings(
             themeMode = enumOr(K.theme, d.themeMode),
             dynamicColor = this[K.dynamicColor] ?: d.dynamicColor,
+            palette = enumOr(K.palette, d.palette),
             glassEffect = this[K.glassEffect] ?: d.glassEffect,
             translationMode = enumOr(K.translation, d.translationMode),
             showTransliteration = this[K.transliteration] ?: d.showTransliteration,
@@ -119,6 +121,7 @@ class SettingsRepository @Inject constructor(
 class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var themeMode: ThemeMode by enumKey(K.theme, ThemeMode.SYSTEM)
     var dynamicColor: Boolean by key(K.dynamicColor, false)
+    var palette: AppPalette by enumKey(K.palette, AppPalette.entries.first())
     var glassEffect: Boolean by key(K.glassEffect, true)
     var translationMode: TranslationMode by enumKey(K.translation, TranslationMode.INDONESIAN)
     var showTransliteration: Boolean by key(K.transliteration, false)
@@ -185,6 +188,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
 internal object K {
     val theme = stringPreferencesKey("theme")
     val dynamicColor = booleanPreferencesKey("dynamic_color")
+    val palette = stringPreferencesKey("palette")
     val glassEffect = booleanPreferencesKey("glass_effect")
     val translation = stringPreferencesKey("translation_mode")
     val transliteration = booleanPreferencesKey("transliteration")

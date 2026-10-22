@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import com.github.takahirom.roborazzi.captureRoboImage
 import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
+import id.haho.muslimdaily.core.designsystem.theme.AppPalette
 import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
 import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 
@@ -27,6 +28,21 @@ fun captureVariants(name: String, content: @Composable () -> Unit) {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, variant.fontScale)) {
                 MuslimDailyTheme(themeMode = variant.mode) {
+                    GlassBackdrop { content() }
+                }
+            }
+        }
+    }
+}
+
+/** Captures [content] once per colour theme in light and dark, at a phone-sized viewport. */
+fun capturePalettes(name: String, content: @Composable () -> Unit) {
+    val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+    Settings.System.putString(context.contentResolver, Settings.System.TIME_12_24, "24")
+    AppPalette.entries.forEach { palette ->
+        listOf(ThemeMode.LIGHT, ThemeMode.DARK).forEach { mode ->
+            captureRoboImage("$name-${palette.name.lowercase()}-${mode.name.lowercase()}.png") {
+                MuslimDailyTheme(themeMode = mode, palette = palette) {
                     GlassBackdrop { content() }
                 }
             }

@@ -484,6 +484,16 @@
     <string name="display_theme_light">Terang</string>
     <string name="display_theme_dark">Gelap</string>
     <string name="display_dynamic_color">Warna dinamis</string>
+    <string name="display_palette">Warna</string>
+    <string name="display_palette_dynamic_note">Matikan warna dinamis untuk memilih warna tema.</string>
+    <string name="palette_teal">Toska</string>
+    <string name="palette_navy">Biru tua</string>
+    <string name="palette_forest">Hijau hutan</string>
+    <string name="palette_slate">Batu</string>
+    <string name="palette_olive">Zaitun</string>
+    <string name="palette_rose">Mawar</string>
+    <string name="palette_lavender">Lavender</string>
+    <string name="palette_peach">Persik</string>
     <string name="display_glass">Efek kaca</string>
     <string name="display_glass_summary">Kartu, tombol dan panel tampil seperti kaca buram. Matikan untuk tampilan polos.</string>
     <string name="display_dynamic_color_summary">Ikuti warna wallpaper (Android 12+). Mati secara bawaan agar kontras teks tetap terjaga.</string>
