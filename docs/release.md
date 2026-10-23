@@ -48,7 +48,8 @@ Debug / sideload builds (`SELF_UPDATE = true`) can update themselves from GitHub
 release (store) builds have no updater and no INTERNET permission.
 
 1. Bump `versionCode` and `versionName` in `app/build.gradle.kts` and push.
-2. `.github/workflows/release.yml` sees a version with no release yet, builds the debug APK,
+2. Once that change is on `main` (merged), `.github/workflows/release.yml` sees a version with no
+   release yet, builds the debug APK,
    and creates the `vX.Y.Z` tag and GitHub release with the APK attached. (Pushing a `vX.Y.Z`
    tag yourself, or running the workflow by hand, does the same.)
 3. Phones check once a day on launch (Settings → Pembaruan aplikasi → Periksa otomatis), or on
