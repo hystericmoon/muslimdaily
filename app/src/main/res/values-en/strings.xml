@@ -525,16 +525,19 @@
     <string name="about_licenses">Licenses and attribution</string>
 
     <!-- Widgets -->
-    <string name="widget_next_name">Next prayer</string>
-    <string name="widget_day_name">Today\'s prayer times</string>
-    <string name="widget_next_description_picker">Next prayer with a countdown.</string>
-    <string name="widget_day_description_picker">Today\'s six times; the next one is highlighted.</string>
+    <string name="widget_name">Prayer times</string>
+    <string name="widget_description_picker">The next prayer and today\'s times. Resize it to any size.</string>
     <string name="widget_countdown_format">in %s</string>
     <string name="widget_no_location">Set a location in the app to see prayer times.</string>
-    <string name="widget_next_label">Next · %s</string>
-    <string name="widget_next_label_tomorrow">Tomorrow · %s</string>
-    <string name="widget_day_header">%1$s · %2$s</string>
-    <string name="widget_countdown_place">in %%s · %1$s</string>
+    <string name="widget_tomorrow">Tomorrow · %s</string>
+    <string name="widget_hijri_day">%1$d %2$s</string>
+    <string name="widget_now_fajr_ends">Fajr ends %s</string>
+    <string name="widget_now_prohibited">Prohibited time</string>
+    <string name="widget_now_prohibited_until">Prohibited until %s</string>
+    <string name="widget_now_duha">Dhuha until %s</string>
+    <string name="widget_now_prayer">%s time</string>
+    <string name="widget_fast_tomorrow">Tomorrow: %s</string>
+    <string name="widget_a11y_next">Next: %1$s at %2$s</string>
     <string name="widget_next_description">Next prayer %1$s at %2$s, %3$s</string>
 
     <!-- Pre-prayer and lock-screen notifications -->
