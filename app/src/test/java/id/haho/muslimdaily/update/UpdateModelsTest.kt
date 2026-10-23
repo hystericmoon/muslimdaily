@@ -5,6 +5,10 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.assertNull
+import kotlin.test.assertEquals
 
 class UpdateModelsTest {
 
@@ -49,4 +53,27 @@ class UpdateModelsTest {
         assertEquals(123L, parseLatestRelease(release("v0.3.0", "$wear,$apk"), "0.2.0")!!.sizeBytes)
         assertNull(parseLatestRelease(release("v0.3.0", wear), "0.2.0"))
     }
+
+    @Test
+    fun `pre-releases sort before their final release`() {
+        assertTrue(Versions.isNewer("0.6.0-beta.2", "0.6.0-beta.1"))
+        assertTrue(Versions.isNewer("0.6.0-beta.10", "0.6.0-beta.9"))
+        assertTrue(Versions.isNewer("0.6.0", "0.6.0-beta.3"))
+        assertTrue(Versions.isNewer("0.6.0-beta.1", "0.5.3"))
+        assertFalse(Versions.isNewer("0.6.0-beta.1", "0.6.0"))
+        assertFalse(Versions.isNewer("0.6.0-beta.1", "0.6.0-beta.1"))
+        assertTrue(Versions.isPreRelease("0.6.0-beta.1"))
+        assertFalse(Versions.isPreRelease("0.6.0"))
+    }
+
+    @Test
+    fun `beta channel takes the newest release, pre-releases included`() {
+        fun release(tag: String, pre: Boolean) = """{"tag_name":"$tag","prerelease":$pre,"assets":[{"name":"muslimdaily-$tag.apk","browser_download_url":"https://example.com/$tag.apk","size":1}]}"""
+        val list = "[" + listOf(release("v0.6.0-beta.2", true), release("v0.5.3", false), release("v0.6.0-beta.1", true)).joinToString(",") + "]"
+        assertEquals("0.6.0-beta.2", parseNewestRelease(list, "0.5.3")?.version)
+        assertNull(parseNewestRelease(list, "0.6.0-beta.2"))
+        // The stable channel never offers a pre-release.
+        assertNull(parseLatestRelease(release("v0.6.0-beta.2", true), "0.5.3"))
+    }
 }
+

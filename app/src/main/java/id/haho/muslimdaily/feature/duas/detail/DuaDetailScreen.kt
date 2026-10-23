@@ -19,6 +19,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import id.haho.muslimdaily.data.note.NoteRepository
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -50,6 +61,7 @@ data class DuaDetailActions(
     val onRepeat: (Boolean) -> Unit = {},
     val onMemorize: () -> Unit = {},
     val onSetInMySet: (Boolean) -> Unit = {},
+    val onSaveNote: (String) -> Unit = {},
 )
 
 @Composable
@@ -100,6 +112,7 @@ fun DuaDetailRoute(
                 actions = DuaDetailActions(
                     onMemorize = { onMemorize(s.dua.id) },
                     onSetInMySet = viewModel::setInMySet,
+                    onSaveNote = viewModel::saveNote,
                 ),
             )
         }
@@ -135,6 +148,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
             SourceChip(dua)
         }
         DuaTranslations(dua, state.prefs)
+        NoteCard(state.note, actions.onSaveNote)
         dua.virtue?.let { virtue ->
             Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
                 Text(
@@ -172,6 +186,63 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
         InfoNote(
             stringResource(if (state.inMySet) R.string.dua_in_set_note else R.string.dua_not_in_set_note),
             Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+/**
+ * The reader's private note: what the dua means to them, when they read it, who taught it.
+ * Shown as their own words, apart from the sourced text, and never shared.
+ */
+@Composable
+private fun NoteCard(note: String?, onSave: (String) -> Unit) {
+    var editing by remember { mutableStateOf(false) }
+    GlassCard(
+        shape = MaterialTheme.shapes.large,
+        color = Glass.colors.clear,
+        onClick = { editing = true },
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(Modifier.padding(AppTheme.spacing.lg), verticalAlignment = Alignment.Top) {
+            Icon(painterResource(R.drawable.ic_edit_note), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(AppTheme.dimens.icon))
+            Spacer(Modifier.width(AppTheme.spacing.md))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxs)) {
+                Text(stringResource(R.string.note_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                if (note.isNullOrBlank()) {
+                    Text(stringResource(R.string.note_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else {
+                    Text(note, style = AppTheme.reading.bodyLarge)
+                }
+            }
+        }
+    }
+    if (editing) {
+        var text by remember { mutableStateOf(note.orEmpty()) }
+        GlassAlertDialog(
+            onDismissRequest = { editing = false },
+            title = { Text(stringResource(R.string.note_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                    OutlinedTextField(
+                        value = text,
+                        onValueChange = { text = it.take(NoteRepository.MAX_LENGTH) },
+                        placeholder = { Text(stringResource(R.string.note_hint)) },
+                        minLines = 3,
+                        maxLines = 8,
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text(stringResource(R.string.note_private), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            },
+            confirmButton = { TextButton(onClick = { onSave(text); editing = false }) { Text(stringResource(R.string.routine_save)) } },
+            dismissButton = {
+                if (!note.isNullOrBlank()) {
+                    TextButton(onClick = { onSave(""); editing = false }) { Text(stringResource(R.string.note_delete)) }
+                } else {
+                    TextButton(onClick = { editing = false }) { Text(stringResource(R.string.action_cancel)) }
+                }
+            },
         )
     }
 }

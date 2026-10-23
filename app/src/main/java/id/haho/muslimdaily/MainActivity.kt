@@ -1,5 +1,6 @@
 package id.haho.muslimdaily
 
+import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
 import id.haho.muslimdaily.core.designsystem.glass.frostWhenOverlayOpen
 import android.content.Context
@@ -46,6 +47,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import id.haho.muslimdaily.feature.onboarding.OnboardingRoute
+import id.haho.muslimdaily.feature.whatsnew.WhatsNew
+import id.haho.muslimdaily.feature.whatsnew.WhatsNewDialog
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -105,6 +108,10 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.frostWhenOverlayOpen(),
                         )
                     }
+                    val whatsNew by viewModel.whatsNew.collectAsStateWithLifecycle()
+                    if (onboarding == false && whatsNew.isNotEmpty()) {
+                        WhatsNewDialog(whatsNew, onDismiss = viewModel::dismissWhatsNew)
+                    }
                     // Once per new crash report: offer to send it, never send it silently.
                     var crashPending by remember { mutableStateOf(CrashLog.unseen(this@MainActivity) != null) }
                     val crashScope = rememberCoroutineScope()
@@ -146,7 +153,7 @@ class MainActivity : ComponentActivity() {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    settingsRepository: SettingsRepository,
+    private val settingsRepository: SettingsRepository,
     reviews: ReviewRepository,
     clock: Clock,
 ) : ViewModel() {
@@ -159,11 +166,25 @@ class MainViewModel @Inject constructor(
      */
     private val firstRun = MutableStateFlow<Boolean?>(null)
 
+    /** Release highlights to show once after an update; empty on a fresh install. */
+    private val _whatsNew = MutableStateFlow<List<WhatsNew.Release>>(emptyList())
+    val whatsNew: StateFlow<List<WhatsNew.Release>> = _whatsNew
+
     init {
         viewModelScope.launch {
             val s = settingsRepository.settings.first()
-            firstRun.value = !s.onboardingDone && s.location == null
+            val fresh = !s.onboardingDone && s.location == null
+            firstRun.value = fresh
+            if (s.whatsNewSeen != BuildConfig.VERSION_NAME) {
+                _whatsNew.value = WhatsNew.since(s.whatsNewSeen, BuildConfig.VERSION_NAME, firstRun = fresh)
+                if (fresh) settingsRepository.update { whatsNewSeen = BuildConfig.VERSION_NAME }
+            }
         }
+    }
+
+    fun dismissWhatsNew() {
+        _whatsNew.value = emptyList()
+        viewModelScope.launch { settingsRepository.update { whatsNewSeen = BuildConfig.VERSION_NAME } }
     }
 
     val showOnboarding: StateFlow<Boolean?> = combine(firstRun, settingsRepository.settings) { first, s ->

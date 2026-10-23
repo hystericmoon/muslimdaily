@@ -12,8 +12,8 @@ shalat dan arah kiblat, dan (hanya saat layar Masjid terdekat terbuka) untuk men
 sekitar Anda. Perhitungan dilakukan di perangkat. Lokasi disimpan di perangkat dan tidak dikirim
 ke server mana pun. Anda dapat memilih kota secara manual tanpa memberi izin lokasi.
 
-**Data yang disimpan di perangkat.** Pengaturan, kota pilihan, set doa Anda, jadwal hafalan dan
-daftar centang harian. Data ini tetap di perangkat sampai Anda menghapus aplikasi atau datanya.
+**Data yang disimpan di perangkat.** Pengaturan, kota pilihan, set doa dan rangkaian Anda, catatan
+pribadi pada doa, jadwal hafalan dan daftar centang harian. Data ini tetap di perangkat sampai Anda menghapus aplikasi atau datanya.
 
 **Laporan kerusakan dan diagnosa.** Bila aplikasi berhenti mendadak, laporan teknis (versi
 aplikasi, model perangkat, versi Android, dan jejak galat) disimpan di perangkat, paling banyak
@@ -52,8 +52,8 @@ the qibla direction, and (only while the Nearby mosques screen is open) to find 
 you. The calculation runs on the device. The location is stored on the device and is never sent
 to any server. You can pick a city by hand without granting location access.
 
-**Data stored on the device.** Settings, the chosen city, your dua sets, memorization schedule and
-the daily checklist. It stays on the device until you uninstall the app or clear its data.
+**Data stored on the device.** Settings, the chosen city, your dua sets and routines, your private
+notes on duas, memorization schedule and the daily checklist. It stays on the device until you uninstall the app or clear its data.
 
 **Crash reports and diagnostics.** If the app stops unexpectedly, a technical report (app version,
 device model, Android version and the error trace) is kept on the device, at most five. The app

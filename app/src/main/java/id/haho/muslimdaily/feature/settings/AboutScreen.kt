@@ -22,6 +22,9 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.feature.whatsnew.WhatsNew
+import id.haho.muslimdaily.feature.whatsnew.WhatsNewDialog
+import id.haho.muslimdaily.update.Versions
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
 import id.haho.muslimdaily.core.designsystem.component.InfoRow
 import id.haho.muslimdaily.core.designsystem.component.NavigationRow
@@ -66,6 +69,18 @@ fun AboutContent() {
             Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.about_body), style = AppTheme.reading.bodyLarge)
             Text(stringResource(R.string.settings_no_ads), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        var whatsNew by remember { mutableStateOf(false) }
+        SettingsGroup(null) {
+            NavigationRow(
+                title = stringResource(R.string.whats_new_settings),
+                summary = stringResource(R.string.whats_new_settings_summary),
+                icon = R.drawable.ic_info,
+                onClick = { whatsNew = true },
+            )
+        }
+        if (whatsNew) {
+            WhatsNewDialog(WhatsNew.releases.filter { !Versions.isNewer(it.version, BuildConfig.VERSION_NAME) }.take(3)) { whatsNew = false }
         }
         SettingsGroup(stringResource(R.string.about_licenses)) {
             Licenses.forEach { license ->

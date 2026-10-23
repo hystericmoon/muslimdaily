@@ -791,4 +791,30 @@
     <string name="event_my_set_use">Use it</string>
     <string name="customize_routine_hint">Want a separate routine, with duas from elsewhere too?</string>
     <string name="event_start_short">Start reading</string>
+    <string name="update_beta">Join the beta</string>
+    <string name="update_beta_summary">Get beta versions early to try them. They may still have bugs; report them through Feedback and diagnostics.</string>
+    <string name="note_title">My note</string>
+    <string name="note_empty">Tap to write a private note: what it means to you, when you read it, or who taught it to you.</string>
+    <string name="note_hint">Write a note…</string>
+    <string name="note_private">Kept only on this device and in your backups.</string>
+    <string name="note_delete">Delete note</string>
+    <string name="whats_new_title">What\'s new in %1$s</string>
+    <string name="whats_new_earlier">Earlier, %1$s</string>
+    <string name="whats_new_ok">OK</string>
+    <string name="whats_new_settings">What\'s new</string>
+    <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_6_0">
+        <item>My note: write a private note on any dua. It stays on your device and in your backups.</item>
+        <item>Join the beta: in Settings → Updates, turn on beta to get new versions early.</item>
+        <item>This screen appears once after each update.</item>
+    </string-array>
+    <string-array name="whats_new_0_5_3">
+        <item>Choose the Arabic typeface in Display and text. The default is now Noto Naskh Arabic, clearer on phone screens.</item>
+        <item>The audio player and Start reading now sit neatly on top of the bottom menu.</item>
+        <item>One Adjust button to choose and reorder duas.</item>
+    </string-array>
+    <string-array name="whats_new_0_5_2">
+        <item>My routines: pick duas from anywhere, order them, and read them one after another like the morning adhkar.</item>
+        <item>Theme colours now fill the width of the screen.</item>
+    </string-array>
 </resources>

@@ -49,6 +49,7 @@ data class UpdateActions(
     val onDownload: () -> Unit = {},
     val onInstall: () -> Unit = {},
     val onAutoCheck: (Boolean) -> Unit = {},
+    val onBetaChannel: (Boolean) -> Unit = {},
 )
 
 /** The activity-scoped updater, shared by the start-up prompt and this screen. */
@@ -69,6 +70,7 @@ fun UpdatesRoute(onBack: () -> Unit) {
                 onDownload = viewModel::download,
                 onInstall = { viewModel.installIntent()?.let(context::startActivity) },
                 onAutoCheck = viewModel::setAutoCheck,
+                onBetaChannel = viewModel::setBetaChannel,
             ),
         )
     }
@@ -102,6 +104,12 @@ fun UpdatesContent(state: UpdateUiState, actions: UpdateActions) {
                 summary = stringResource(R.string.update_auto_summary),
                 checked = state.autoCheck,
                 onCheckedChange = actions.onAutoCheck,
+            )
+            SwitchRow(
+                title = stringResource(R.string.update_beta),
+                summary = stringResource(R.string.update_beta_summary),
+                checked = state.betaChannel,
+                onCheckedChange = actions.onBetaChannel,
             )
         }
         InfoNote(

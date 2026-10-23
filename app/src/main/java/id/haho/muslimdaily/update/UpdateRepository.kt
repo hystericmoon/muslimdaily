@@ -35,6 +35,11 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
         get() = prefs.getBoolean(KEY_AUTO, true)
         set(value) = prefs.edit { putBoolean(KEY_AUTO, value) }
 
+    /** Beta: pre-releases too. Testers opt in; everyone else stays on final releases. */
+    var betaChannel: Boolean
+        get() = prefs.getBoolean(KEY_BETA, Versions.isPreRelease(BuildConfig.VERSION_NAME))
+        set(value) = prefs.edit { putBoolean(KEY_BETA, value) }
+
     var lastCheckMillis: Long
         get() = prefs.getLong(KEY_LAST, 0L)
         private set(value) = prefs.edit { putLong(KEY_LAST, value) }
@@ -44,7 +49,11 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
 
     /** Returns the newer release, or null when up to date. Throws [IOException] when offline. */
     suspend fun check(nowMillis: Long = System.currentTimeMillis()): AvailableUpdate? = withContext(Dispatchers.IO) {
-        val url = URL("https://api.github.com/repos/${BuildConfig.UPDATE_REPO}/releases/latest")
+        val beta = betaChannel
+        val url = URL(
+            "https://api.github.com/repos/${BuildConfig.UPDATE_REPO}/" +
+                if (beta) "releases?per_page=$BETA_PAGE" else "releases/latest",
+        )
         val conn = (url.openConnection() as HttpURLConnection).apply {
             connectTimeout = TIMEOUT_MS
             readTimeout = TIMEOUT_MS
@@ -56,7 +65,7 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
                 HttpURLConnection.HTTP_OK -> {
                     val body = conn.inputStream.bufferedReader().use { it.readText() }
                     lastCheckMillis = nowMillis
-                    parseLatestRelease(body, BuildConfig.VERSION_NAME)
+                    if (beta) parseNewestRelease(body, BuildConfig.VERSION_NAME) else parseLatestRelease(body, BuildConfig.VERSION_NAME)
                 }
                 // No release published yet.
                 HttpURLConnection.HTTP_NOT_FOUND -> {
@@ -130,6 +139,8 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
 
     private companion object {
         const val KEY_AUTO = "auto_check"
+        const val KEY_BETA = "beta_channel"
+        const val BETA_PAGE = 15
         const val KEY_LAST = "last_check"
         const val TIMEOUT_MS = 15_000
         const val AUTO_INTERVAL_MS = 20L * 60 * 60 * 1000

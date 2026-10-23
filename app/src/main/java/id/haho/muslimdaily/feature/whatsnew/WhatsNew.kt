@@ -1,0 +1,95 @@
+package id.haho.muslimdaily.feature.whatsnew
+
+import androidx.annotation.ArrayRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.update.Versions
+
+/**
+ * Release highlights shown once after an update, written for readers rather than developers.
+ * Add an entry (newest first) with each release that changes what people see.
+ */
+object WhatsNew {
+    data class Release(val version: String, @ArrayRes val items: Int)
+
+    val releases = listOf(
+        Release("0.6.0", R.array.whats_new_0_6_0),
+        Release("0.5.3", R.array.whats_new_0_5_3),
+        Release("0.5.2", R.array.whats_new_0_5_2),
+    )
+
+    /**
+     * What to show when [current] runs after [seen]. Nothing on a fresh install ([seen] blank and
+     * [firstRun]), at most the three latest releases after a long gap.
+     */
+    fun since(seen: String, current: String, firstRun: Boolean): List<Release> {
+        if (firstRun) return emptyList()
+        return releases
+            .filter { !Versions.isNewer(it.version, current) }
+            .filter { seen.isBlank() || Versions.isNewer(it.version, seen) }
+            .take(3)
+    }
+}
+
+@Composable
+fun WhatsNewDialog(releases: List<WhatsNew.Release>, onDismiss: () -> Unit) {
+    if (releases.isEmpty()) return
+    GlassAlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.whats_new_title, releases.first().version)) },
+        text = {
+            Column(
+                Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+            ) {
+                releases.forEachIndexed { i, release ->
+                    if (i > 0) {
+                        Text(
+                            stringResource(R.string.whats_new_earlier, release.version),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.semantics { heading() },
+                        )
+                    }
+                    stringArrayResource(release.items).forEach { item ->
+                        Row(verticalAlignment = Alignment.Top) {
+                            Icon(
+                                painterResource(R.drawable.ic_check),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(top = 2.dp).size(AppTheme.dimens.smallIcon),
+                            )
+                            Spacer(Modifier.width(AppTheme.spacing.sm))
+                            Text(item, style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.whats_new_ok)) } },
+    )
+}

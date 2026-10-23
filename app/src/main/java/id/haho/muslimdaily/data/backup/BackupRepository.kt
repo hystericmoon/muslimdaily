@@ -3,6 +3,7 @@ package id.haho.muslimdaily.data.backup
 import androidx.room.withTransaction
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.data.db.ChecklistEntity
+import id.haho.muslimdaily.data.db.DuaNoteEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
 import id.haho.muslimdaily.data.db.RoutineEntity
 import id.haho.muslimdaily.data.db.UserDatabase
@@ -39,6 +40,9 @@ class BackupRepository @Inject constructor(
     data class Tick(val epochDay: Long, val itemKey: String)
 
     @Serializable
+    data class NoteJson(val duaId: String, val text: String, val updatedAt: Long)
+
+    @Serializable
     data class RoutineJson(val id: String, val name: String, val position: Int, val updatedAt: Long, val duaIds: List<String>)
 
     @Serializable
@@ -54,6 +58,8 @@ class BackupRepository @Inject constructor(
         val checklist: List<Tick>,
         /** Since version 2. */
         val routines: List<RoutineJson> = emptyList(),
+        /** Since version 3. */
+        val notes: List<NoteJson> = emptyList(),
     )
 
     /** What a restore brought back, for the confirmation message. */
@@ -73,6 +79,7 @@ class BackupRepository @Inject constructor(
                 val items = dao.allItems().groupBy { it.routineId }
                 dao.all().map { r -> RoutineJson(r.id, r.name, r.position, r.updatedAt, items[r.id].orEmpty().sortedBy { it.position }.map { it.duaId }) }
             },
+            notes = db.noteDao().all().map { NoteJson(it.duaId, it.text, it.updatedAt) },
         )
         return json.encodeToString(BackupFile.serializer(), file)
     }
@@ -97,6 +104,8 @@ class BackupRepository @Inject constructor(
                 file.routines.forEach { r ->
                     db.routineDao().save(RoutineEntity(r.id, r.name, r.position, r.updatedAt), r.duaIds)
                 }
+                db.noteDao().deleteAll()
+                db.noteDao().insertAll(file.notes.map { DuaNoteEntity(it.duaId, it.text, it.updatedAt) })
                 sets
             }.also {
                 // Settings last: they trigger alarm rescheduling and widget redraws.
@@ -108,6 +117,6 @@ class BackupRepository @Inject constructor(
 
     companion object {
         const val FORMAT = "muslimdaily.backup"
-        const val VERSION = 2
+        const val VERSION = 3
     }
 }

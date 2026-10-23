@@ -106,6 +106,8 @@ data class AppSettings(
     val haptics: Boolean = true,
     /** The first-launch setup was finished or skipped. */
     val onboardingDone: Boolean = false,
+    /** The app version whose "what's new" the reader has seen; blank on a fresh install. */
+    val whatsNewSeen: String = "",
     /** Old saved locations were given an elevation once (see LocationRepository.backfillElevation). */
     val elevationChecked: Boolean = false,
     /** The Hijri month-end ("yyyy-mm" of the month asked about) the user already answered. */
