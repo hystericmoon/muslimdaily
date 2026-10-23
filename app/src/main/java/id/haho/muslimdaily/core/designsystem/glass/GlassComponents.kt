@@ -1,5 +1,15 @@
 package id.haho.muslimdaily.core.designsystem.glass
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.background
 import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.animation.AnimatedVisibility
@@ -320,3 +330,31 @@ fun glassSegmentedColors(): SegmentedButtonColors = SegmentedButtonDefaults.colo
     activeContentColor = Glass.colors.onTinted,
     inactiveContainerColor = Color.Transparent,
 )
+
+/**
+ * A bar docked on the bottom navigation (or the screen edge where there is none): full width,
+ * the navigation's own glass, a hairline on top. For a screen's persistent controls, so they line
+ * up with the menu instead of floating as a narrower card above it.
+ */
+@Composable
+fun DockedBar(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
+    val g = Glass.colors
+    Row(
+        modifier
+            .fillMaxWidth()
+            .background(g.chrome)
+            .drawBehind {
+                if (g.enabled) {
+                    drawRect(Brush.verticalGradient(0f to g.sheen, 0.6f to Color.Transparent))
+                    drawLine(g.rimTop, Offset(0f, 0f), Offset(size.width, 0f), strokeWidth = 1.dp.toPx())
+                }
+            }
+            // Zero under the phone's bottom navigation (it consumes the inset); the gesture-bar
+            // height on tablets, where the rail leaves the bottom edge free.
+            .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom))
+            .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+        content = content,
+    )
+}

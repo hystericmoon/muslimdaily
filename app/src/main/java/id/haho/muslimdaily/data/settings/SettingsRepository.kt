@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.data.settings
 
+import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
@@ -150,6 +151,7 @@ class SettingsRepository @Inject constructor(
             reciterId = this[K.reciter] ?: d.reciterId,
             autoAdvance = this[K.autoAdvance] ?: d.autoAdvance,
             haptics = this[K.haptics] ?: d.haptics,
+            arabicFont = enumOr(K.arabicFont, d.arabicFont),
             onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
             elevationChecked = this[K.elevationChecked] ?: false,
             hijriConfirmedFor = this[K.hijriConfirmedFor] ?: d.hijriConfirmedFor,
@@ -191,6 +193,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var reciterId: String by key(K.reciter, "default")
     var autoAdvance: Boolean by key(K.autoAdvance, true)
     var haptics: Boolean by key(K.haptics, true)
+    var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
     var onboardingDone: Boolean by key(K.onboardingDone, false)
     var elevationChecked: Boolean by key(K.elevationChecked, false)
     var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
@@ -278,6 +281,7 @@ internal object K {
     val reciter = stringPreferencesKey("reciter")
     val autoAdvance = booleanPreferencesKey("auto_advance")
     val haptics = booleanPreferencesKey("haptics")
+    val arabicFont = stringPreferencesKey("arabic_font")
     val onboardingDone = booleanPreferencesKey("onboarding_done")
     val elevationChecked = booleanPreferencesKey("elevation_checked")
     val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")

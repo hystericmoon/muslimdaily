@@ -129,4 +129,22 @@ class RealContentScreenshotTest {
             java.io.File("../docs/screenshots/$name.png").outputStream().use { bmp.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
         }
     }
+
+    /** The same Hisn dua and Qur'anic dua in each Arabic typeface the reader can choose. */
+    @Test
+    fun arabicFonts() {
+        id.haho.muslimdaily.core.designsystem.theme.ArabicFont.entries.forEach { font ->
+            com.github.takahirom.roborazzi.captureRoboImage("67-real-font-${font.name.lowercase()}.png") {
+                id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme(themeMode = id.haho.muslimdaily.core.designsystem.theme.ThemeMode.LIGHT, arabicFont = font) {
+                    id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop {
+                        androidx.compose.foundation.layout.Column(Modifier.padding(16.dp)) {
+                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("istiftah_05").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AppTheme.arabic.arabicBody)
+                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("quran_01").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AppTheme.arabic.quranBody)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+

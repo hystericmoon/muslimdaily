@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
+import id.haho.muslimdaily.core.designsystem.theme.AmiriQuran
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 
 private val ArabicLocale = LocaleList("ar")
@@ -51,9 +52,10 @@ fun ArabicText(
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
+    val shown = remember(text) { withQuranOrnaments(text) }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Text(
-            text = text,
+            text = shown,
             modifier = modifier.fillMaxWidth(),
             style = style,
             color = color,
@@ -62,6 +64,23 @@ fun ArabicText(
             overflow = TextOverflow.Ellipsis,
             onTextLayout = onTextLayout,
         )
+    }
+}
+
+/**
+ * The verse-end sign (۝) and the ornate Qur'anic brackets (﴾ ﴿) are drawn with Amiri Quran in
+ * every typeface: Naskh-style UI faces draw them as a plain circle and brace-like brackets, which
+ * read as stray punctuation inside a dua.
+ */
+private val ORNAMENTS = setOf('\u06DD', '\uFD3E', '\uFD3F')
+
+private fun withQuranOrnaments(text: AnnotatedString): AnnotatedString {
+    if (text.none { it in ORNAMENTS }) return text
+    return buildAnnotatedString {
+        append(text)
+        text.forEachIndexed { i, c ->
+            if (c in ORNAMENTS) addStyle(SpanStyle(fontFamily = AmiriQuran), i, i + 1)
+        }
     }
 }
 

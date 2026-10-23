@@ -267,15 +267,6 @@
     <string name="state_disabled">off</string>
 
     <!-- Event -->
-    <string name="event_full_set">Full set</string>
-    <string name="event_my_set">My set</string>
-    <string name="event_full_set_hint">All duas in the default order.</string>
-    <string name="event_my_set_empty_hint">My set isn\'t set up yet, so it matches the full set. Tap the customize icon to choose.</string>
-    <plurals name="event_hidden">
-        <item quantity="one">%d hidden</item>
-        <item quantity="other">%d hidden</item>
-    </plurals>
-    <string name="event_customize">Customize set</string>
     <string name="event_item_position">%1$d of %2$d</string>
     <string name="event_variants_hint">Several sahih forms. Choose the one you read.</string>
     <string name="event_form_n">Form %d</string>
@@ -756,8 +747,6 @@
     <string name="crash_prompt_send">Send report</string>
     <string name="crash_prompt_later">Later</string>
     <string name="event_start_all">Start reading (%1$d duas)</string>
-    <string name="event_start_hint">One dua per screen. Tap the card after reading it to tick it off and move to the next.</string>
-    <string name="event_choose_order">Choose and reorder</string>
     <string name="event_save_routine">Make a routine</string>
     <string name="routine_section">My routines</string>
     <string name="routine_empty_title">Make your own routine</string>
@@ -788,4 +777,18 @@
         <item quantity="one">%d selected</item>
         <item quantity="other">%d selected</item>
     </plurals>
+    <string name="display_arabic_font">Arabic typeface</string>
+    <string name="display_font_naskh">The clearest on phone screens. Default.</string>
+    <string name="display_font_scheherazade">Large, well-spaced vowel marks, easy to read slowly.</string>
+    <string name="display_font_amiri">Classical book style. Qur\'anic verses use Amiri Quran.</string>
+    <string name="event_adjust">Adjust</string>
+    <string name="event_my_set_active">Using my set.</string>
+    <plurals name="event_my_set_hidden">
+        <item quantity="one">Using my set: %d dua hidden.</item>
+        <item quantity="other">Using my set: %d duas hidden.</item>
+    </plurals>
+    <string name="event_my_set_off">My set is saved but not in use.</string>
+    <string name="event_my_set_use">Use it</string>
+    <string name="customize_routine_hint">Want a separate routine, with duas from elsewhere too?</string>
+    <string name="event_start_short">Start reading</string>
 </resources>

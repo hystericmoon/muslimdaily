@@ -7,6 +7,8 @@ import id.haho.muslimdaily.feature.duas.library.DuaLibraryContent
 import id.haho.muslimdaily.feature.routines.RoutineEditActions
 import id.haho.muslimdaily.feature.routines.RoutineEditScreen
 import id.haho.muslimdaily.feature.routines.RoutineEditState
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.dp
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -60,4 +62,19 @@ class RoutineScreenshotTest {
             actions = RoutineEditActions(),
         )
     }
+
+    /** The docked bars, as they sit on the bottom navigation. */
+    @Test
+    @Config(qualifiers = "id-w400dp-h300dp-xhdpi")
+    fun dockedBars() = captureVariants("114-docked-bars") {
+        androidx.compose.foundation.layout.Column {
+            id.haho.muslimdaily.feature.duas.event.EventActionBar(count = 8, onStart = {}, onCustomize = {})
+            androidx.compose.foundation.layout.Spacer(androidx.compose.ui.Modifier.height(24.dp))
+            id.haho.muslimdaily.feature.duas.components.PlayerBar(
+                isPlaying = true, speed = 1f, repeat = false, enabled = true,
+                onToggle = {}, onSpeed = {}, onRepeat = {},
+            )
+        }
+    }
 }
+

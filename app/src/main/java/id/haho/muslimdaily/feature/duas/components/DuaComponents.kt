@@ -6,6 +6,7 @@ import androidx.compose.material3.ripple
 import id.haho.muslimdaily.core.designsystem.glass.pressScale
 import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
 import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
+import id.haho.muslimdaily.core.designsystem.glass.DockedBar
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -240,9 +241,10 @@ fun PlayerBar(
     modifier: Modifier = Modifier,
 ) {
     var speedMenu by remember { mutableStateOf(false) }
-    GlassCard(shape = MaterialTheme.shapes.extraLarge, modifier = modifier.fillMaxWidth()) {
+    // Docked on the bottom navigation, full width, like a media mini-player.
+    DockedBar(modifier) {
         Row(
-            Modifier.padding(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
+            Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {

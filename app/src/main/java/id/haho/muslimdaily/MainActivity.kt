@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
                 arabicScale = settings.arabicScale,
                 translationScale = settings.translationScale,
                 glass = settings.glassEffect,
+                arabicFont = settings.arabicFont,
             ) {
                 GlassBackdrop {
                     when (onboarding) {
