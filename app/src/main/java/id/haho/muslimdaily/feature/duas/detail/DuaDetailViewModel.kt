@@ -20,6 +20,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import id.haho.muslimdaily.data.note.NoteRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -35,6 +36,8 @@ data class DuaDetailState(
     val prefs: ReadingPrefs,
     val playback: PlaybackState,
     val inMySet: Boolean,
+    /** The reader's own note, if any. */
+    val note: String? = null,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,6 +48,7 @@ class DuaDetailViewModel @Inject constructor(
     private val mySets: MySetRepository,
     private val settings: SettingsRepository,
     private val audio: AudioEngine,
+    private val notes: NoteRepository,
 ) : ViewModel() {
     val duaId: String = savedState.toRoute<DuaDetailRoute>().duaId
 
@@ -75,7 +79,12 @@ class DuaDetailViewModel @Inject constructor(
                 inMySet = included,
             )
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+    }.combine(notes.note(duaId)) { st, note -> st?.copy(note = note) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    fun saveNote(text: String) {
+        viewModelScope.launch { notes.save(duaId, text) }
+    }
 
     private fun keyOf(d: Dua) = d.variantGroup?.let { SetItem.groupKey(it) } ?: d.id
 

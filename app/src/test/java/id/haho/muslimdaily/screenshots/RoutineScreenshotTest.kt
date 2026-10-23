@@ -76,5 +76,26 @@ class RoutineScreenshotTest {
             )
         }
     }
+
+    @Test
+    @Config(qualifiers = "id-w400dp-h900dp-xhdpi")
+    fun whatsNew() = captureVariants("115-whats-new") {
+        id.haho.muslimdaily.feature.whatsnew.WhatsNewDialog(
+            id.haho.muslimdaily.feature.whatsnew.WhatsNew.since("0.5.2", "0.6.0", firstRun = false),
+        ) {}
+    }
+
+    @Test
+    fun duaWithNote() = captureVariants("116-dua-note") {
+        id.haho.muslimdaily.feature.duas.detail.DuaDetailContent(
+            id.haho.muslimdaily.feature.duas.detail.DuaDetailState(
+                DuaPreviewData.duas.first(), null,
+                id.haho.muslimdaily.feature.duas.components.ReadingPrefs(),
+                id.haho.muslimdaily.audio.PlaybackState(), inMySet = true,
+                note = "Dibaca bersama anak-anak setiap pagi sebelum berangkat sekolah.",
+            ),
+            id.haho.muslimdaily.feature.duas.detail.DuaDetailActions(),
+        )
+    }
 }
 

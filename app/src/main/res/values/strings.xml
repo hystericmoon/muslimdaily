@@ -779,4 +779,30 @@
     <string name="event_my_set_use">Pakai</string>
     <string name="customize_routine_hint">Ingin rangkaian terpisah, dengan doa dari tempat lain juga?</string>
     <string name="event_start_short">Mulai baca</string>
+    <string name="update_beta">Ikut uji coba (beta)</string>
+    <string name="update_beta_summary">Dapatkan versi beta lebih awal untuk dicoba. Versi ini bisa masih punya kesalahan; laporkan lewat Masukan dan diagnosa.</string>
+    <string name="note_title">Catatan saya</string>
+    <string name="note_empty">Ketuk untuk menulis catatan pribadi: maknanya bagi Anda, kapan Anda membacanya, atau dari siapa Anda mempelajarinya.</string>
+    <string name="note_hint">Tulis catatan…</string>
+    <string name="note_private">Hanya tersimpan di perangkat ini dan di cadangan Anda.</string>
+    <string name="note_delete">Hapus catatan</string>
+    <string name="whats_new_title">Apa yang baru di %1$s</string>
+    <string name="whats_new_earlier">Sebelumnya, %1$s</string>
+    <string name="whats_new_ok">Oke</string>
+    <string name="whats_new_settings">Apa yang baru</string>
+    <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_6_0">
+        <item>Catatan saya: tulis catatan pribadi pada doa mana pun. Hanya tersimpan di perangkat Anda dan di cadangan.</item>
+        <item>Ikut uji coba: di Pengaturan → Pembaruan, nyalakan beta untuk mendapat versi baru lebih awal.</item>
+        <item>Layar ini muncul sekali setiap kali ada pembaruan.</item>
+    </string-array>
+    <string-array name="whats_new_0_5_3">
+        <item>Pilih huruf Arab di Tampilan dan teks. Bawaannya kini Noto Naskh Arabic, yang lebih jelas di layar ponsel.</item>
+        <item>Pemutar audio dan tombol Mulai baca kini menempel rapi di atas menu bawah.</item>
+        <item>Satu tombol Sesuaikan untuk memilih dan mengurutkan doa.</item>
+    </string-array>
+    <string-array name="whats_new_0_5_2">
+        <item>Rangkaian saya: pilih doa dari mana saja, urutkan, lalu baca berurutan seperti dzikir pagi.</item>
+        <item>Warna tema kini memenuhi lebar layar.</item>
+    </string-array>
 </resources>

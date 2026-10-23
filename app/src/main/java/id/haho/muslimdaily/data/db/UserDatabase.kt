@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
     entities = [
         EventPrefEntity::class, EventItemEntity::class, VariantChoiceEntity::class,
         RunSessionEntity::class, ChecklistEntity::class, ReviewItemEntity::class,
-        RoutineEntity::class, RoutineItemEntity::class,
+        RoutineEntity::class, RoutineItemEntity::class, DuaNoteEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
-    // 2: the user's own routines. Added tables only, so Room migrates without losing data.
-    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    // Added tables only, so Room migrates without losing data. 2: routines. 3: notes on duas.
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)],
 )
 abstract class UserDatabase : RoomDatabase() {
     abstract fun mySetDao(): MySetDao
@@ -35,6 +35,22 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun checklistDao(): ChecklistDao
     abstract fun reviewDao(): ReviewDao
     abstract fun routineDao(): RoutineDao
+    abstract fun noteDao(): NoteDao
+}
+
+/** The reader's own note on a dua: a reminder of meaning, when they read it, who taught it. */
+@Entity(tableName = "dua_notes")
+data class DuaNoteEntity(@PrimaryKey val duaId: String, val text: String, val updatedAt: Long)
+
+@Dao
+interface NoteDao {
+    @Query("SELECT * FROM dua_notes WHERE duaId = :duaId") fun observe(duaId: String): Flow<DuaNoteEntity?>
+    @Query("SELECT duaId FROM dua_notes") fun observeIds(): Flow<List<String>>
+    @Query("SELECT * FROM dua_notes ORDER BY duaId") suspend fun all(): List<DuaNoteEntity>
+    @Upsert suspend fun upsert(note: DuaNoteEntity)
+    @Query("DELETE FROM dua_notes WHERE duaId = :duaId") suspend fun delete(duaId: String)
+    @Query("DELETE FROM dua_notes") suspend fun deleteAll()
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(notes: List<DuaNoteEntity>)
 }
 
 /** A routine the user built: duas from any occasion, in their order, read like the adhkar. */

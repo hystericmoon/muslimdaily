@@ -153,6 +153,7 @@ class SettingsRepository @Inject constructor(
             haptics = this[K.haptics] ?: d.haptics,
             arabicFont = enumOr(K.arabicFont, d.arabicFont),
             onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
+            whatsNewSeen = this[K.whatsNewSeen] ?: d.whatsNewSeen,
             elevationChecked = this[K.elevationChecked] ?: false,
             hijriConfirmedFor = this[K.hijriConfirmedFor] ?: d.hijriConfirmedFor,
             memorize = MemorizeSettings(
@@ -195,6 +196,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var haptics: Boolean by key(K.haptics, true)
     var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
     var onboardingDone: Boolean by key(K.onboardingDone, false)
+    var whatsNewSeen: String by key(K.whatsNewSeen, "")
     var elevationChecked: Boolean by key(K.elevationChecked, false)
     var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
     var memLoops: Int by key(K.memLoops, 3)
@@ -283,6 +285,7 @@ internal object K {
     val haptics = booleanPreferencesKey("haptics")
     val arabicFont = stringPreferencesKey("arabic_font")
     val onboardingDone = booleanPreferencesKey("onboarding_done")
+    val whatsNewSeen = stringPreferencesKey("whats_new_seen")
     val elevationChecked = booleanPreferencesKey("elevation_checked")
     val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")
     val memLoops = intPreferencesKey("mem_loops")

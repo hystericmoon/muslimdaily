@@ -27,6 +27,7 @@ sealed interface UpdateStatus {
 data class UpdateUiState(
     val enabled: Boolean = false,
     val autoCheck: Boolean = true,
+    val betaChannel: Boolean = false,
     val lastCheckMillis: Long = 0L,
     val status: UpdateStatus = UpdateStatus.Idle,
     /** Show the "update available" dialog (from the automatic daily check). */
@@ -41,6 +42,7 @@ class UpdateViewModel @Inject constructor(private val repository: UpdateReposito
         UpdateUiState(
             enabled = repository.enabled,
             autoCheck = repository.autoCheck,
+            betaChannel = repository.betaChannel,
             lastCheckMillis = repository.lastCheckMillis,
         ),
     )
@@ -112,6 +114,13 @@ class UpdateViewModel @Inject constructor(private val repository: UpdateReposito
     }
 
     fun dismissPrompt() = _state.update { it.copy(prompt = false) }
+
+    /** Switching channel checks again at once, so a tester sees the beta straight away. */
+    fun setBetaChannel(enabled: Boolean) {
+        repository.betaChannel = enabled
+        _state.update { it.copy(betaChannel = enabled) }
+        checkNow()
+    }
 
     fun setAutoCheck(enabled: Boolean) {
         repository.autoCheck = enabled

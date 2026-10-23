@@ -6,8 +6,14 @@ For the maintainer: how to run a small beta. Testers get the Indonesian section 
 
 - **Who.** 5–8 testers across: one older user at a large font size, one budget Xiaomi/Oppo/Vivo
   phone, one regular masjid-goer, one English user if possible.
-- **Install.** Send them the latest `muslimdaily-<version>.apk` from GitHub Releases. Updates then
-  arrive through Settings → Pembaruan.
+- **Install.** Send them the latest `muslimdaily-<version>.apk` from GitHub Releases, and ask them
+  to turn on **Settings → Pembaruan → Ikut uji coba (beta)**. Updates then arrive in the app.
+- **Publish a beta.** Set `versionName` to a suffixed version, e.g. `0.6.1-beta.1` (and raise
+  `versionCode` as usual). The release workflow publishes it as a GitHub pre-release: only phones
+  with the beta switch on are offered it. The final `0.6.1` later supersedes every `0.6.1-beta.N`
+  for everyone, testers included.
+- **Tell them what changed.** Add an entry to `WhatsNew.releases` with a short list in both
+  `strings.xml` files; it shows once after the update and stays under Settings → Tentang.
 - **Watch, don't ask.** In a short call or in person, ask them to do the three tasks below while
   thinking aloud. Note where they hesitate or tap the wrong thing; don't help unless they're stuck
   for a minute.
@@ -39,6 +45,9 @@ diminta.
 
 **Biarkan pengingat menyala** setidaknya seminggu, dan perhatikan apakah adzan berbunyi tepat
 waktu.
+
+**Nyalakan beta** di Pengaturan → Pembaruan → Ikut uji coba (beta), supaya versi uji coba
+berikutnya langsung muncul di aplikasi.
 
 **Kirim masukan** kapan saja lewat Pengaturan → Masukan dan diagnosa → Kirim masukan. Email akan
 terbuka dengan data teknis di bawahnya; Anda bisa membaca dan menghapus bagian mana pun sebelum
