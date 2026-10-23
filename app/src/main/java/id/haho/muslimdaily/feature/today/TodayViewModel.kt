@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.data.checklist.ChecklistRepository
 import id.haho.muslimdaily.data.content.ContentRepository
+import id.haho.muslimdaily.data.routine.RoutineRepository
+import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.data.run.RunSessionRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -38,7 +40,11 @@ class TodayViewModel @Inject constructor(
     private val runSessions: RunSessionRepository,
     private val calculator: PrayerCalculator,
     private val clock: Clock,
+    routines: RoutineRepository,
 ) : ViewModel() {
+    /** The user's routines, started from Today like the adhkar. */
+    val routines: StateFlow<List<Routine>> = routines.routines()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     /** Ticks every 15 seconds; the screen shows minutes, so this keeps it accurate without churn. */
     private val now: Flow<Instant> = flow {

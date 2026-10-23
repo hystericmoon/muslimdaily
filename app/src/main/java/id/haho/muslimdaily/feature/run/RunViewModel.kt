@@ -8,6 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.myset.MySetRepository
+import id.haho.muslimdaily.data.routine.Routine
+import id.haho.muslimdaily.data.routine.RoutineRepository
 import id.haho.muslimdaily.data.run.RunItem
 import id.haho.muslimdaily.data.run.RunSession
 import id.haho.muslimdaily.data.run.RunSessionRepository
@@ -79,9 +81,12 @@ class RunViewModel @Inject constructor(
     private val mySets: MySetRepository,
     private val sessions: RunSessionRepository,
     private val settings: SettingsRepository,
+    private val routines: RoutineRepository,
     private val clock: Clock,
 ) : ViewModel() {
+    /** An occasion id, or a routine's run key ("routine:<id>"). */
     val eventId: String = savedState.toRoute<RunRoute>().eventId
+    private val routineId: String? = Routine.idFromRunKey(eventId)
 
     private val _state = MutableStateFlow<RunUiState?>(null)
     val state: StateFlow<RunUiState?> = _state.asStateFlow()
@@ -95,9 +100,13 @@ class RunViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val s = settings.current()
-            val label = content.eventOnce(eventId)?.label.orEmpty()
+            val label = routineId?.let { routines.routine(it)?.name } ?: content.eventOnce(eventId)?.label.orEmpty()
             val prefs = ReadingPrefs(s.translationMode, s.showTransliteration)
-            val resumed = sessions.load(eventId, today)?.let { session ->
+            // An edited routine starts afresh rather than resuming a list it no longer has.
+            val routineIds = routineId?.let { routines.routine(it)?.duaIds }
+            val resumed = sessions.load(eventId, today)?.takeIf { session ->
+                routineIds == null || session.items.map { it.duaId } == routineIds
+            }?.let { session ->
                 val duas = content.duas(session.items.map { it.duaId })
                 if (duas.size == session.items.size) session to duas else null
             }
@@ -118,8 +127,14 @@ class RunViewModel @Inject constructor(
     }
 
     private suspend fun newSession(): Pair<RunSession, List<Dua>> {
-        val canonical = ActiveSet.canonical(content.duasForEventOnce(eventId))
-        val duas = ActiveSet.active(canonical, mySets.customizationOnce(eventId))
+        val duas = if (routineId != null) {
+            // The routine's own order; a dua removed from the content since is skipped.
+            val ids = routines.routine(routineId)?.duaIds.orEmpty()
+            val byId = content.duas(ids).associateBy { it.id }
+            ids.mapNotNull { byId[it] }
+        } else {
+            ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(eventId)), mySets.customizationOnce(eventId))
+        }
         val session = RunSession(
             eventId = eventId,
             day = today,
@@ -139,7 +154,7 @@ class RunViewModel @Inject constructor(
         if (effect == null) return
         _state.value = next
         _effects.trySend(effect)
-        if (effect == RunEffect.SessionComplete && !s.completed) {
+        if (effect == RunEffect.SessionComplete && !s.completed && routineId == null) {
             viewModelScope.launch { mySets.advanceRotation(eventId) }
         }
         if (effect != RunEffect.Tick && next.autoAdvance) scheduleAdvance(s.index)

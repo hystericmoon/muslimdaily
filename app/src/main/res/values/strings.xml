@@ -270,7 +270,6 @@
         <item quantity="other">%d disembunyikan</item>
     </plurals>
     <string name="event_customize">Sesuaikan set</string>
-    <string name="event_start">Mulai baca</string>
     <string name="event_item_position">%1$d dari %2$d</string>
     <string name="event_variants_hint">Beberapa bentuk yang sahih. Pilih yang dibaca.</string>
     <string name="event_form_n">Bentuk %d</string>
@@ -745,4 +744,35 @@
     <string name="crash_prompt_body">Laporan kerusakan tersimpan di perangkat. Kirim ke pengembang agar bisa diperbaiki? Anda akan melihat isinya di email sebelum mengirim.</string>
     <string name="crash_prompt_send">Kirim laporan</string>
     <string name="crash_prompt_later">Nanti</string>
+    <string name="event_start_all">Mulai baca (%1$d doa)</string>
+    <string name="event_start_hint">Satu doa per layar. Ketuk kartu setelah membaca untuk mencentangnya dan lanjut ke doa berikutnya.</string>
+    <string name="event_choose_order">Pilih dan urutkan</string>
+    <string name="event_save_routine">Jadikan rangkaian</string>
+    <string name="routine_section">Rangkaian saya</string>
+    <string name="routine_empty_title">Buat rangkaian sendiri</string>
+    <string name="routine_empty_body">Pilih doa dari mana saja, atur urutannya, lalu baca berurutan seperti dzikir pagi dan petang.</string>
+    <string name="routine_new">Buat rangkaian</string>
+    <string name="routine_new_title">Rangkaian baru</string>
+    <string name="routine_edit_title">Ubah rangkaian</string>
+    <string name="routine_edit_named">Ubah %1$s</string>
+    <string name="routine_pick_title">Pilih doa</string>
+    <string name="routine_pick_done">Selesai</string>
+    <string name="routine_save">Simpan</string>
+    <string name="routine_name">Nama rangkaian</string>
+    <string name="routine_name_hint">Misalnya: Doa sebelum berangkat kerja</string>
+    <string name="routine_intro">Seret pegangan untuk mengubah urutan. Rangkaian dibaca satu doa per layar, sama seperti dzikir pagi.</string>
+    <string name="routine_add">Tambah doa</string>
+    <string name="routine_remove">Keluarkan dari rangkaian</string>
+    <string name="routine_need_duas">Tambahkan setidaknya satu doa.</string>
+    <string name="routine_need_name">Beri nama rangkaian.</string>
+    <string name="routine_delete">Hapus rangkaian</string>
+    <string name="routine_delete_title">Hapus %1$s?</string>
+    <string name="routine_delete_body">Doanya tetap ada di daftar doa; hanya rangkaian ini yang dihapus.</string>
+    <string name="today_routines">Rangkaian saya</string>
+    <plurals name="routine_count">
+        <item quantity="other">%d doa</item>
+    </plurals>
+    <plurals name="routine_selected">
+        <item quantity="other">%d dipilih</item>
+    </plurals>
 </resources>

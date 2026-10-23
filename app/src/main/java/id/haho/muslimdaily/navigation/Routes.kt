@@ -24,6 +24,8 @@ import kotlinx.serialization.Serializable
 @Serializable data class DuaDetailRoute(val duaId: String)
 @Serializable data class CustomizeRoute(val eventId: String)
 @Serializable data class RunRoute(val eventId: String)
+/** [id] null creates a routine; [fromEvent] pre-fills it with that occasion's duas. */
+@Serializable data class RoutineEditRoute(val id: String? = null, val fromEvent: String? = null)
 
 // Memorize
 @Serializable data object MemorizeHomeRoute

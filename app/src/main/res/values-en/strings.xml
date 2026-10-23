@@ -276,7 +276,6 @@
         <item quantity="other">%d hidden</item>
     </plurals>
     <string name="event_customize">Customize set</string>
-    <string name="event_start">Start reading</string>
     <string name="event_item_position">%1$d of %2$d</string>
     <string name="event_variants_hint">Several sahih forms. Choose the one you read.</string>
     <string name="event_form_n">Form %d</string>
@@ -756,4 +755,37 @@
     <string name="crash_prompt_body">A crash report was saved on the device. Send it to the developer so it can be fixed? You\'ll see its contents in the email before sending.</string>
     <string name="crash_prompt_send">Send report</string>
     <string name="crash_prompt_later">Later</string>
+    <string name="event_start_all">Start reading (%1$d duas)</string>
+    <string name="event_start_hint">One dua per screen. Tap the card after reading it to tick it off and move to the next.</string>
+    <string name="event_choose_order">Choose and reorder</string>
+    <string name="event_save_routine">Make a routine</string>
+    <string name="routine_section">My routines</string>
+    <string name="routine_empty_title">Make your own routine</string>
+    <string name="routine_empty_body">Pick duas from anywhere, set their order, then read them one after another like the morning and evening adhkar.</string>
+    <string name="routine_new">New routine</string>
+    <string name="routine_new_title">New routine</string>
+    <string name="routine_edit_title">Edit routine</string>
+    <string name="routine_edit_named">Edit %1$s</string>
+    <string name="routine_pick_title">Choose duas</string>
+    <string name="routine_pick_done">Done</string>
+    <string name="routine_save">Save</string>
+    <string name="routine_name">Routine name</string>
+    <string name="routine_name_hint">For example: Before leaving for work</string>
+    <string name="routine_intro">Drag the handle to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
+    <string name="routine_add">Add duas</string>
+    <string name="routine_remove">Remove from routine</string>
+    <string name="routine_need_duas">Add at least one dua.</string>
+    <string name="routine_need_name">Give the routine a name.</string>
+    <string name="routine_delete">Delete routine</string>
+    <string name="routine_delete_title">Delete %1$s?</string>
+    <string name="routine_delete_body">The duas stay in the library; only this routine is deleted.</string>
+    <string name="today_routines">My routines</string>
+    <plurals name="routine_count">
+        <item quantity="one">%d dua</item>
+        <item quantity="other">%d duas</item>
+    </plurals>
+    <plurals name="routine_selected">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
 </resources>

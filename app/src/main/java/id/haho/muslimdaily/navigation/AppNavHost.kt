@@ -22,6 +22,7 @@ import id.haho.muslimdaily.feature.duas.customize.CustomizeRoute
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailRoute
 import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
+import id.haho.muslimdaily.feature.routines.RoutineEditRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.AboutRoute
 import id.haho.muslimdaily.feature.settings.diagnostics.DiagnosticsRoute
@@ -68,6 +69,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenMosques = { navController.navigate(MosquesRoute) },
                     onOpenQibla = { navController.navigate(QiblaRoute) },
                     onOpenFasting = { navController.navigate(FastingRoute) },
+                    onStartRun = { navController.navigate(RunRoute(it)) },
                 )
             }
             composable<FastingRoute> { FastingRoute(onBack = back) }
@@ -82,8 +84,10 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
                     onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
+                    onRoutine = { id, fromEvent -> navController.navigate(RoutineEditRoute(id, fromEvent)) },
                 )
             }
+            composable<RoutineEditRoute> { RoutineEditRoute(onBack = back) }
             composable<SearchRoute> {
                 SearchRoute(onBack = back, onOpenDua = { navController.navigate(DuaDetailRoute(it)) })
             }
@@ -93,6 +97,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
                     onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
+                    onSaveAsRoutine = { navController.navigate(RoutineEditRoute(fromEvent = it)) },
                 )
             }
             composable<DuaDetailRoute> {

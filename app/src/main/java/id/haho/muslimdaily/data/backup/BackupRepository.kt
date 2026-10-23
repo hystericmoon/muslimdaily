@@ -4,6 +4,7 @@ import androidx.room.withTransaction
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.data.db.ChecklistEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
+import id.haho.muslimdaily.data.db.RoutineEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -38,6 +39,9 @@ class BackupRepository @Inject constructor(
     data class Tick(val epochDay: Long, val itemKey: String)
 
     @Serializable
+    data class RoutineJson(val id: String, val name: String, val position: Int, val updatedAt: Long, val duaIds: List<String>)
+
+    @Serializable
     data class BackupFile(
         val format: String = FORMAT,
         val version: Int = VERSION,
@@ -48,6 +52,8 @@ class BackupRepository @Inject constructor(
         val mySets: String,
         val reviews: List<Review>,
         val checklist: List<Tick>,
+        /** Since version 2. */
+        val routines: List<RoutineJson> = emptyList(),
     )
 
     /** What a restore brought back, for the confirmation message. */
@@ -63,6 +69,10 @@ class BackupRepository @Inject constructor(
             mySets = mySets.exportJson(),
             reviews = db.reviewDao().all().map { Review(it.duaId, it.box, it.dueEpochDay, it.lastReviewedEpochDay, it.addedEpochDay) },
             checklist = db.checklistDao().all().map { Tick(it.epochDay, it.itemKey) },
+            routines = db.routineDao().let { dao ->
+                val items = dao.allItems().groupBy { it.routineId }
+                dao.all().map { r -> RoutineJson(r.id, r.name, r.position, r.updatedAt, items[r.id].orEmpty().sortedBy { it.position }.map { it.duaId }) }
+            },
         )
         return json.encodeToString(BackupFile.serializer(), file)
     }
@@ -82,6 +92,11 @@ class BackupRepository @Inject constructor(
                 db.reviewDao().insertAll(file.reviews.map { ReviewItemEntity(it.duaId, it.box, it.dueEpochDay, it.lastReviewedEpochDay, it.addedEpochDay) })
                 db.checklistDao().deleteAll()
                 db.checklistDao().insertAll(file.checklist.map { ChecklistEntity(it.epochDay, it.itemKey) })
+                db.routineDao().deleteAllItems()
+                db.routineDao().deleteAll()
+                file.routines.forEach { r ->
+                    db.routineDao().save(RoutineEntity(r.id, r.name, r.position, r.updatedAt), r.duaIds)
+                }
                 sets
             }.also {
                 // Settings last: they trigger alarm rescheduling and widget redraws.
@@ -93,6 +108,6 @@ class BackupRepository @Inject constructor(
 
     companion object {
         const val FORMAT = "muslimdaily.backup"
-        const val VERSION = 1
+        const val VERSION = 2
     }
 }

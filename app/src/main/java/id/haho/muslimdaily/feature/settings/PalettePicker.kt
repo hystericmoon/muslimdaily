@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
@@ -71,13 +70,16 @@ fun PalettePicker(
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
     ) {
         Text(stringResource(R.string.display_palette), style = MaterialTheme.typography.bodyLarge)
+        // Four equal columns that always span the row: a fixed cell width left the spare width
+        // as a gap on the right of wider phones.
         FlowRow(
             Modifier.fillMaxWidth().selectableGroup().alpha(if (enabled) 1f else 0.38f),
             horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            maxItemsInEachRow = COLUMNS,
         ) {
             AppPalette.entries.forEach { palette ->
-                Swatch(palette, dark, palette == selected, enabled) { onSelect(palette) }
+                Swatch(palette, dark, palette == selected, enabled, Modifier.weight(1f)) { onSelect(palette) }
             }
         }
         if (!enabled) {
@@ -91,15 +93,14 @@ fun PalettePicker(
 }
 
 private val SwatchSize = 40.dp
-private val SwatchCell = 80.dp
+private const val COLUMNS = 4
 
 @Composable
-private fun Swatch(palette: AppPalette, dark: Boolean, selected: Boolean, enabled: Boolean, onClick: () -> Unit) {
+private fun Swatch(palette: AppPalette, dark: Boolean, selected: Boolean, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val scheme = remember(palette, dark) { colorSchemeFor(palette, dark) }
     val ring by animateDpAsState(if (selected) 3.dp else 0.dp, AppTheme.motion.fade(), label = "ring")
     Column(
-        Modifier
-            .width(SwatchCell)
+        modifier
             .clip(MaterialTheme.shapes.medium)
             .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick)
             .padding(vertical = AppTheme.spacing.xs),

@@ -72,6 +72,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.data.routine.Routine
+import id.haho.muslimdaily.feature.routines.RoutinesCard
 import id.haho.muslimdaily.core.designsystem.component.EmptyState
 import id.haho.muslimdaily.core.designsystem.component.bidiIsolate
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
@@ -103,6 +105,7 @@ data class TodayActions(
     val onOpenQibla: () -> Unit = {},
     val onOpenFasting: () -> Unit = {},
     val onAnswerHijri: (HijriCheck, Boolean?) -> Unit = { _, _ -> },
+    val onStartRoutine: (Routine) -> Unit = {},
 )
 
 @Composable
@@ -114,9 +117,11 @@ fun TodayRoute(
     onOpenMosques: () -> Unit,
     onOpenQibla: () -> Unit,
     onOpenFasting: () -> Unit,
+    onStartRun: (String) -> Unit = {},
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val routines by viewModel.routines.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -154,7 +159,9 @@ fun TodayRoute(
             onOpenQibla = onOpenQibla,
             onOpenFasting = onOpenFasting,
             onAnswerHijri = viewModel::answerHijri,
+            onStartRoutine = { onStartRun(it.runKey) },
         ),
+        routines = routines,
     )
 }
 
@@ -164,12 +171,13 @@ fun TodayScreen(
     actions: TodayActions,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     initiallyExpanded: Set<String> = emptySet(),
+    routines: List<Routine> = emptyList(),
 ) {
     Box(Modifier.fillMaxSize()) {
         when (state) {
             TodayUiState.Loading -> Unit
             TodayUiState.NoLocation -> NoLocation(actions)
-            is TodayUiState.Ready -> TodayContent(state.data, actions, initiallyExpanded)
+            is TodayUiState.Ready -> TodayContent(state.data, actions, initiallyExpanded, routines)
         }
         SnackbarHost(snackbarHostState, Modifier.align(Alignment.BottomCenter))
     }
@@ -199,7 +207,7 @@ private fun NoLocation(actions: TodayActions) {
 private val TwoPaneWidth = 840.dp
 
 @Composable
-private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>) {
+private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>, routines: List<Routine>) {
     var expanded by remember { mutableStateOf(initiallyExpanded) }
     val onExpandToggle: (String) -> Unit = { key -> expanded = if (key in expanded) expanded - key else expanded + key }
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -207,7 +215,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         if (maxWidth >= TwoPaneWidth) {
             Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
                 LazyColumn(Modifier.weight(1f).fillMaxSize(), contentPadding = bottom) {
-                    glanceItems(data, actions)
+                    glanceItems(data, actions, routines)
                     otherItems(data, actions)
                 }
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
@@ -217,7 +225,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
             }
         } else {
             LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize(), contentPadding = bottom) {
-                glanceItems(data, actions)
+                glanceItems(data, actions, routines)
                 scheduleItems(data, actions, expanded, onExpandToggle)
                 otherItems(data, actions)
             }
@@ -226,7 +234,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
 }
 
 /** Header, next prayer and the cards that matter right now. */
-private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions) {
+private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>) {
     item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
     item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
     data.hijriCheck?.let { c ->
@@ -244,6 +252,21 @@ private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions) {
     }
     item(key = "adhkar") {
         AdhkarCardView(data, actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+    }
+    if (routines.isNotEmpty()) {
+        item(key = "routines") {
+            Column {
+                SectionHeader(stringResource(R.string.today_routines))
+                RoutinesCard(
+                    routines = routines,
+                    onStart = actions.onStartRoutine,
+                    onEdit = {},
+                    onNew = {},
+                    compact = true,
+                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(1),
+                )
+            }
+        }
     }
 }
 
