@@ -84,7 +84,11 @@ class PrayerTileService : TileService() {
         if (slot.isFridayDhuhr) getString(R.string.jumuah) else resources.getStringArray(R.array.slots)[slot.slot]
 
     private fun clock(data: PrayerData, t: Instant): String =
-        DateTimeFormatter.ofPattern(if (data.is24) "HH.mm" else "h.mm", Locale.forLanguageTag("id")).format(t.atZone(data.zone))
+        Locale.getDefault().let { l ->
+            // Indonesian writes 04.32, English 04:32.
+            val sep = if (l.language == "en") ":" else "."
+            DateTimeFormatter.ofPattern(if (data.is24) "HH${sep}mm" else "h${sep}mm", l).format(t.atZone(data.zone))
+        }
 
     private fun text(value: String, size: Float, color: Int, bold: Boolean = false) = Text.Builder()
         .setText(value)

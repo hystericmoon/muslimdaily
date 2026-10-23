@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.duas.components
 
+import id.haho.muslimdaily.core.ui.AppLocale
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.ripple
 import id.haho.muslimdaily.core.designsystem.glass.pressScale
@@ -80,8 +81,10 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        val showId = prefs.translation != TranslationMode.ENGLISH && dua.translationId.isNotBlank()
         val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEn.isNotBlank()
+        // Most Hisnul Muslim entries have no licensed English yet; Indonesian stands in rather
+        // than showing the Arabic alone.
+        val showId = dua.translationId.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)
         if (showId) Text(dua.translationId, style = reading.bodyLarge, maxLines = maxLines, overflow = TextOverflow.Ellipsis)
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
@@ -297,7 +300,7 @@ fun PlayerBar(
 
 private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 
-fun speedLabel(speed: Float): String = String.format(Locale.forLanguageTag("id"), "%.2f×", speed).replace(",00", "").replace(Regex("(,\\d)0×"), "$1×")
+fun speedLabel(speed: Float): String = String.format(AppLocale, "%.2f×", speed).replace(Regex("[.,]00×"), "×").replace(Regex("([.,]\\d)0×"), "$1×")
 
 private const val CARD_ARABIC_LINES = 4
 private const val CARD_TRANSLATION_LINES = 3

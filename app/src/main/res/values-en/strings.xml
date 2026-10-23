@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muslim Daily</string>
+
+    <!-- Navigation -->
+    <string name="nav_today">Today</string>
+    <string name="nav_duas">Duas</string>
+    <string name="nav_memorize">Memorize</string>
+    <string name="nav_settings">Settings</string>
+    <plurals name="review_due_badge">
+        <item quantity="one">%d dua due for review</item>
+        <item quantity="other">%d duas due for review</item>
+    </plurals>
+
+    <!-- Common actions -->
+    <string name="action_back">Back</string>
+    <string name="action_close">Close</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_done">Done</string>
+    <string name="action_search">Search</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_start">Start</string>
+    <string name="action_resume">Resume</string>
+    <string name="action_more">More</string>
+    <string name="action_retry">Try again</string>
+    <string name="update_title">App updates</string>
+    <string name="update_summary">Check for and install the latest version</string>
+    <string name="update_check">Check for updates</string>
+    <string name="update_checking">Checking…</string>
+    <string name="update_up_to_date">The app is up to date.</string>
+    <string name="update_available">Version %1$s available</string>
+    <string name="update_prompt_body">A new version is ready to download.</string>
+    <string name="update_download">Download update</string>
+    <string name="update_downloading">Downloading…</string>
+    <string name="update_downloading_percent">Downloading… %1$d%%</string>
+    <string name="update_ready">Version %1$s is ready to install.</string>
+    <string name="update_install">Install</string>
+    <string name="update_later">Later</string>
+    <string name="update_failed">Failed. Check your internet connection and try again.</string>
+    <string name="update_never_checked">Never checked</string>
+    <string name="update_last_checked">Last checked %1$s</string>
+    <string name="update_auto">Check automatically</string>
+    <string name="update_auto_summary">Once a day when the app is opened</string>
+    <string name="update_privacy">Checking only fetches release info from GitHub. No personal data is sent. Installing always asks for your confirmation.</string>
+
+
+    <!-- Prayers -->
+    <string name="prayer_fajr">Fajr</string>
+    <string name="prayer_sunrise">Sunrise</string>
+    <string name="prayer_dhuhr">Dhuhr</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isha</string>
+    <string name="prayer_jumuah">Jumu\'ah</string>
+
+    <!-- Durations -->
+    <string name="duration_hours_minutes">%1$d h %2$d min</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <string name="duration_under_minute">less than 1 minute</string>
+    <string name="countdown_in">in %s</string>
+
+    <!-- Hijri months -->
+    <string-array name="hijri_months">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabi\' al-Awwal</item>
+        <item>Rabi\' al-Thani</item>
+        <item>Jumada al-Ula</item>
+        <item>Jumada al-Akhirah</item>
+        <item>Rajab</item>
+        <item>Sha\'ban</item>
+        <item>Ramadan</item>
+        <item>Shawwal</item>
+        <item>Dhul Qa\'dah</item>
+        <item>Dhul Hijjah</item>
+    </string-array>
+    <string name="hijri_date">%1$d %2$s %3$d AH</string>
+
+    <!-- Today -->
+    <string name="today_next">Next</string>
+    <string name="today_tomorrow">tomorrow</string>
+    <string name="today_now_badge">Now</string>
+    <string name="today_iqamah">Iqamah %s</string>
+    <string name="today_schedule">Prayer times</string>
+    <string name="today_other_sunnah">Other sunnah prayers</string>
+    <string name="today_prohibited_title">Prohibited times</string>
+    <string name="today_method_footer">%1$s · Asr %2$s</string>
+    <string name="today_change_method">Change calculation</string>
+    <string name="today_location_chip">Location: %s</string>
+    <string name="today_travel_chip">Travel mode</string>
+    <string name="today_no_location_title">Location not set</string>
+    <string name="today_no_location_body">Set a location to show prayer times. The location is stored only on this device.</string>
+    <string name="today_use_gps">Use current location</string>
+    <string name="today_pick_city">Choose city</string>
+    <string name="today_travel_suggestion">Your device is about %1$d km from %2$s. Update the location or turn on travel mode?</string>
+    <string name="today_update_location">Update location</string>
+    <string name="today_enable_travel">Travel mode</string>
+    <string name="today_dismiss">Dismiss</string>
+    <string name="today_expand_rawatib">Show sunnah rawatib</string>
+    <string name="today_collapse_rawatib">Hide sunnah rawatib</string>
+    <string name="state_expanded">expanded</string>
+    <string name="state_collapsed">collapsed</string>
+    <string name="today_private_note">This checklist is private, stored only on this device, and resets every day.</string>
+
+    <!-- Windows -->
+    <string name="window_morning_adhkar">Morning adhkar time</string>
+    <string name="window_evening_adhkar">Evening adhkar time</string>
+    <string name="window_prohibited_after_fajr">Prohibited time after the Fajr prayer until the sun has risen</string>
+    <string name="window_prohibited_zawal">Prohibited time when the sun is directly overhead (zawal)</string>
+    <string name="window_prohibited_after_asr">Prohibited time after the Asr prayer until Maghrib</string>
+    <string name="window_duha">Dhuha time</string>
+    <string name="window_witr">Witr time</string>
+    <string name="window_until">until %s</string>
+    <string name="window_range">%1$s – %2$s</string>
+    <string name="note_adhkar_window">Some scholars allow a wider time range.</string>
+    <string name="note_prohibited_cause">Scholars differ on prayers that have a reason, such as tahiyyat al-masjid.</string>
+    <string name="note_duha_best">The best time is when the heat of the sun begins to be felt.</string>
+    <string name="note_jumuah">Those who do not attend the Jumu\'ah prayer pray Dhuhr.</string>
+    <string name="prohibited_after_fajr_short">After the Fajr prayer</string>
+    <string name="prohibited_zawal_short">Zawal</string>
+    <string name="prohibited_after_asr_short">After the Asr prayer</string>
+
+    <!-- Rawatib -->
+    <string name="rawatib_before">Before</string>
+    <string name="rawatib_after">After</string>
+    <string name="rawatib_fard">Fard</string>
+    <string name="rawatib_between_adhan">Between the adhan and iqamah</string>
+    <plurals name="rakah_count">
+        <item quantity="one">%d rak\'ah</item>
+        <item quantity="other">%d rak\'ahs</item>
+    </plurals>
+    <string name="rakah_or">%1$s or %2$s</string>
+    <string name="rakah_with_label">%1$s %2$s</string>
+    <string name="tier_muakkadah">Mu\'akkadah</string>
+    <string name="tier_ghairu">Ghayr mu\'akkadah</string>
+    <string name="rawatib_evidence">Evidence</string>
+    <string name="rawatib_evidence_missing">Evidence not yet listed.</string>
+    <string name="duha_title">Dhuha prayer</string>
+    <string name="witr_title">Witr prayer</string>
+
+    <!-- Adhkar card -->
+    <string name="adhkar_morning">Morning adhkar</string>
+    <string name="adhkar_evening">Evening adhkar</string>
+    <string name="adhkar_active">Time now · until %s</string>
+    <string name="adhkar_upcoming">Starts at %s</string>
+    <string name="adhkar_progress">%1$d of %2$d</string>
+    <string name="adhkar_done_today">Read today</string>
+    <string name="adhkar_open_list">View list</string>
+
+    <!-- Content status (debug builds) -->
+
+    <!-- Calculation -->
+    <string name="method_kemenag">Kemenag RI</string>
+    <string name="method_mwl">Muslim World League (MWL)</string>
+    <string name="method_umm_al_qura">Umm al-Qura</string>
+    <string name="method_custom">Custom</string>
+    <string name="method_kemenag_desc">Fajr 20°, Isha 18°, with ihtiyat. Default for Indonesia.</string>
+    <string name="method_mwl_desc">Fajr 18°, Isha 17°.</string>
+    <string name="method_umm_al_qura_desc">Fajr 18.5°, Isha 90 minutes after Maghrib.</string>
+    <string name="method_custom_desc">Set the Fajr and Isha angles yourself.</string>
+    <string name="asr_standard">standard</string>
+    <string name="asr_hanafi">Hanafi</string>
+
+    <!-- Location -->
+    <string name="location_permission_denied">Location permission not granted. You can still choose a city manually.</string>
+    <string name="location_unavailable">Couldn\'t get your location. Try again or choose a city.</string>
+
+    <!-- Settings -->
+    <string name="settings_group_prayer">Prayer</string>
+    <string name="settings_group_reading">Reading</string>
+    <string name="settings_group_trust">Trust</string>
+    <string name="settings_prayer">Prayer time calculation</string>
+    <string name="settings_location">Location</string>
+    <string name="settings_reminders">Reminders</string>
+    <string name="settings_reminders_summary">Adhan, morning and evening adhkar, before sleep, Jumu\'ah</string>
+    <string name="settings_display">Display and text</string>
+    <string name="settings_display_summary">Translation, transliteration, text size, theme</string>
+    <string name="settings_audio">Audio and memorization</string>
+    <string name="settings_audio_summary">Speed, repetition, pauses</string>
+    <string name="settings_my_sets">Backup and my sets</string>
+    <string name="settings_my_sets_summary">Back up all data, export or import sets</string>
+    <string name="settings_methodology">Methodology</string>
+    <string name="settings_methodology_summary">Sources and hadith grading policy</string>
+    <string name="settings_report">Report an error</string>
+    <string name="settings_report_summary">Email the content maintainer</string>
+    <string name="settings_about">About the app</string>
+    <string name="settings_about_summary">Version, licenses, attribution</string>
+    <string name="settings_no_ads">No ads, no account, no tracking. All data is stored on this device.</string>
+    <string name="settings_method">Calculation method</string>
+    <string name="settings_fajr_angle">Fajr angle</string>
+    <string name="settings_isha_angle">Isha angle</string>
+    <string name="settings_asr">Asr time</string>
+    <string name="settings_asr_shadow">Shadow length</string>
+    <string name="settings_asr_standard">Standard (1×)</string>
+    <string name="settings_asr_hanafi">Hanafi (2×)</string>
+    <string name="settings_offsets">Minute adjustments</string>
+    <string name="settings_offsets_note">Shift times if your local mosque\'s schedule differs.</string>
+    <string name="settings_iqamah">Iqamah delay</string>
+    <string name="settings_iqamah_note">Minutes after the adhan. Match your mosque.</string>
+    <string name="settings_off">Off</string>
+    <string name="settings_minutes">%d min</string>
+    <string name="settings_minutes_plus">+%d min</string>
+    <string name="settings_decrease">Decrease %s</string>
+    <string name="settings_increase">Increase %s</string>
+    <string name="settings_sunnah">Sunnah rawatib</string>
+    <string name="settings_travel_mode">Travel mode</string>
+    <string name="settings_travel_mode_summary">Hide rawatib except the Fajr sunnah. Witr is still shown.</string>
+    <string name="settings_dhuhr_qabliyah">Before Dhuhr</string>
+    <string name="settings_dhuhr_qabliyah_summary">Both narrations are sahih; choose the one you practice.</string>
+    <string name="settings_checklist_history">Keep checklist history</string>
+    <string name="settings_checklist_history_summary">Off: the checklist is cleared every day. Never shared.</string>
+    <string name="settings_hijri">Hijri calendar</string>
+    <string name="settings_hijri_adjust">Date adjustment</string>
+    <string name="settings_hijri_adjust_summary">Shift by one day if it differs from the local moon sighting.</string>
+    <string name="settings_windows">Prohibited times and Dhuha</string>
+    <string name="settings_windows_note">Default values. Adjust if needed.</string>
+    <string name="settings_sunrise_rise">Sun has risen after sunrise</string>
+    <string name="settings_zawal">Zawal duration before Dhuhr</string>
+
+    <!-- Location screen -->
+    <string name="location_current">Current location</string>
+    <string name="location_source_gps">From GPS</string>
+    <string name="location_source_manual">Chosen manually</string>
+    <string name="location_locating">Finding location…</string>
+    <string name="location_privacy">Your location is taken only once when you ask, and is not sent anywhere.</string>
+    <string name="location_search">Search city</string>
+    <string name="location_popular">Cities in Indonesia</string>
+    <string name="location_results">Search results</string>
+    <string name="location_no_results">City not found. Try another spelling.</string>
+    <string name="location_attribution">City data: GeoNames (CC BY 4.0)</string>
+
+    <!-- Duas -->
+    <string name="duas_title">Duas and dhikr</string>
+    <plurals name="duas_in_event">
+        <item quantity="one">%d dua</item>
+        <item quantity="other">%d duas</item>
+    </plurals>
+    <string name="dua_open">Open dua</string>
+    <string name="dua_grade_by">%1$s · %2$s</string>
+    <string name="dua_source_chip_description">Source and grading: %s. Tap for details.</string>
+    <string name="dua_sources_title">Source and grading</string>
+    <string name="dua_sources">References</string>
+    <string name="dua_grading">Grading</string>
+    <string name="dua_alt_gradings">Other gradings</string>
+    <string name="dua_grading_policy">Duas are taken from Hisn al-Muslim (Sa\'id al-Qahtani). Narrations graded weak by al-Albani are not included. See Settings → Methodology.</string>
+    <string name="dua_reference">Takhrij</string>
+    <plurals name="dua_count">
+        <item quantity="one">%d×</item>
+        <item quantity="other">%d×</item>
+    </plurals>
+    <string name="dua_virtue">Virtue</string>
+    <string name="dua_no_audio">Audio for this dua is not available yet.</string>
+    <string name="dua_memorize">Memorize</string>
+    <string name="dua_add_to_set">Add to my set</string>
+    <string name="dua_remove_from_set">Remove from my set</string>
+    <string name="dua_in_set_note">This dua is in your set for this occasion.</string>
+    <string name="dua_not_in_set_note">This dua is hidden from your set. The full set still includes it.</string>
+    <string name="player_play">Play</string>
+    <string name="player_pause">Pause</string>
+    <string name="player_repeat">Repeat</string>
+    <string name="player_speed">Speed %s</string>
+    <string name="state_enabled">on</string>
+    <string name="state_disabled">off</string>
+
+    <!-- Event -->
+    <string name="event_full_set">Full set</string>
+    <string name="event_my_set">My set</string>
+    <string name="event_full_set_hint">All duas in the default order.</string>
+    <string name="event_my_set_empty_hint">My set isn\'t set up yet, so it matches the full set. Tap the customize icon to choose.</string>
+    <plurals name="event_hidden">
+        <item quantity="one">%d hidden</item>
+        <item quantity="other">%d hidden</item>
+    </plurals>
+    <string name="event_customize">Customize set</string>
+    <string name="event_start">Start reading</string>
+    <string name="event_item_position">%1$d of %2$d</string>
+    <string name="event_variants_hint">Several sahih forms. Choose the one you read.</string>
+    <string name="event_form_n">Form %d</string>
+    <string name="event_empty_title">No duas yet</string>
+    <string name="event_empty_body">There are no duas for this section yet.</string>
+
+    <!-- Search -->
+    <string name="search_title">Search duas</string>
+    <string name="search_hint">Words in Arabic, Indonesian or English</string>
+    <string name="search_supporting">No need to type diacritics.</string>
+    <string name="search_empty_title">No results</string>
+    <string name="search_empty_body">Try other words or a different spelling.</string>
+    <plurals name="search_count">
+        <item quantity="one">%d result</item>
+        <item quantity="other">%d results</item>
+    </plurals>
+
+    <!-- Report -->
+    <string name="report_subject_dua">Error report: %s</string>
+    <string name="report_subject_general">Error report</string>
+    <string name="report_body">Describe the error here:\n\n\n---\nDua ID: %1$s\nApp version: %2$s\nContent version: %3$s\nDevice: %4$s</string>
+    <string name="report_no_email_app">No email app found.</string>
+
+    <!-- Customize -->
+    <string name="customize_title">Customize: %s</string>
+    <string name="customize_reset">Reset</string>
+    <string name="customize_reset_title">Return to the full set?</string>
+    <string name="customize_reset_body">The order, hidden duas and chosen forms will be cleared.</string>
+    <string name="customize_intro">Turn a dua off to hide it, drag the handle to reorder. The full set stays available.</string>
+    <string name="customize_item_n">Dua %d</string>
+    <plurals name="customize_forms">
+        <item quantity="one">%d form</item>
+        <item quantity="other">%d forms</item>
+    </plurals>
+    <plurals name="customize_hidden">
+        <item quantity="one">Hidden (%d)</item>
+        <item quantity="other">Hidden (%d)</item>
+    </plurals>
+    <string name="customize_restore">Show</string>
+    <string name="customize_rotate">Rotate each session</string>
+    <string name="customize_rotate_note">Each time a session ends, the next form is used.</string>
+    <string name="customize_move_up">Move up</string>
+    <string name="customize_move_down">Move down</string>
+
+    <!-- Run mode -->
+    <string name="run_count">%1$d of %2$d</string>
+    <string name="run_position">Dua %1$d of %2$d</string>
+    <string name="run_summary">Summary</string>
+    <string name="run_done">Done</string>
+    <string name="run_not_read">Not read yet</string>
+    <string name="run_tap_count">Count</string>
+    <string name="run_tap_read">Mark as read</string>
+    <string name="run_tap_hint">Tap the card to count</string>
+    <string name="run_tap_read_hint">Tap the card after reading</string>
+    <string name="run_undo">Undo</string>
+    <string name="run_previous">Previous</string>
+    <string name="run_next">Next</string>
+    <string name="run_auto_advance">Auto-advance</string>
+    <string name="run_restart">Restart</string>
+    <string name="run_summary_done">%s complete</string>
+    <string name="run_summary_partial">Not all read yet</string>
+    <plurals name="run_summary_count">
+        <item quantity="one">%1$d of %2$d read</item>
+        <item quantity="other">%1$d of %2$d read</item>
+    </plurals>
+    <string name="run_go_to_open">Go to unread duas</string>
+    <string name="run_private_note">Counts are only used to resume today\'s session. No history or statistics.</string>
+
+    <!-- My sets data -->
+    <string name="data_intro">Save your set choices to a file as a backup or to use on another device.</string>
+    <string name="data_share">Share file</string>
+    <string name="data_save">Save to file</string>
+    <string name="data_import">Import from file</string>
+    <string name="data_import_note">Importing replaces the set settings for the occasions in the file.</string>
+    <string name="data_saved">File saved.</string>
+    <string name="data_failed">Couldn\'t save the file.</string>
+    <string name="data_imported">%d occasions imported.</string>
+    <string name="data_import_failed">The file can\'t be read.</string>
+
+    <!-- Memorize -->
+    <string name="memorize_session_title">Memorize</string>
+    <string name="memorize_settings">Memorization settings</string>
+    <string name="memorize_listen_only">Listen only</string>
+    <string name="memorize_step_n">%1$d. %2$s</string>
+    <string name="memorize_step_listen">Listen</string>
+    <string name="memorize_step_build">Build</string>
+    <string name="memorize_step_recall">Recall</string>
+    <string name="memorize_step_check">Check</string>
+    <string name="memorize_hint_listen">Listen to the full dua twice while reading the text.</string>
+    <string name="memorize_hint_build">The segment grows by one phrase each time. After each loop, repeat it aloud during the pause.</string>
+    <string name="memorize_hint_recall">Some words are hidden. Recite from memory, then raise the level.</string>
+    <string name="memorize_hint_check">Reveal the full text and rate your memorization honestly.</string>
+    <string name="memorize_listen_twice">Listen 2×</string>
+    <string name="memorize_restart">From the start</string>
+    <string name="memorize_not_segmented">The audio for this dua isn\'t split into phrases yet, so practice uses the whole dua.</string>
+    <string name="memorize_build_start">Start building</string>
+    <string name="memorize_your_turn">Your turn: repeat aloud</string>
+    <string name="memorize_listen_now">Listen</string>
+    <string name="memorize_build_progress">Segment %1$d of %2$d · loop %3$d of %4$d</string>
+    <string name="memorize_ab_title">Repeat section A–B</string>
+    <string name="memorize_ab_body">Choose the start and end phrases to repeat with pauses.</string>
+    <string name="memorize_ab_from">From (A)</string>
+    <string name="memorize_ab_to">To (B)</string>
+    <string name="memorize_ab_play">Repeat phrases %1$d–%2$d</string>
+    <string name="memorize_phrase_n">Phrase %d</string>
+    <string name="memorize_fade_level">Hide level</string>
+    <string name="memorize_fade_percent">%d%%</string>
+    <plurals name="memorize_hidden_words">
+        <item quantity="one">Text with %d word hidden. Use Play with gaps to practice by listening.</item>
+        <item quantity="other">Text with %d words hidden. Use Play with gaps to practice by listening.</item>
+    </plurals>
+    <string name="memorize_talkback_recall">TalkBack is on: hidden phrases are muted during playback. Fill the gaps from memory.</string>
+    <string name="memorize_play_with_gaps">Play with gaps</string>
+    <string name="memorize_rate_prompt">How well do you know it?</string>
+    <string name="memorize_rate_again">Again</string>
+    <string name="memorize_rate_hard">Hard</string>
+    <string name="memorize_rate_easy">Easy</string>
+    <plurals name="memorize_next_in_days">
+        <item quantity="one">Comes back in %d day</item>
+        <item quantity="other">Comes back in %d days</item>
+    </plurals>
+    <string name="memorize_scheduled">Review on %s</string>
+    <string name="memorize_memorized">Memorized</string>
+    <string name="memorize_box_n">Box %d</string>
+    <string name="memorize_next_review">Next dua</string>
+    <string name="memorize_next_step">Continue to %s</string>
+    <string name="memorize_loops">Loops per segment</string>
+    <string name="memorize_pause">Pause to repeat</string>
+    <string name="memorize_pause_summary">Automatic: about 1.2× the segment length.</string>
+    <string name="memorize_pause_auto">Automatic</string>
+    <string name="memorize_pause_manual">Manual</string>
+    <string name="memorize_pause_seconds">Pause length</string>
+    <string name="memorize_seconds">%d s</string>
+    <string name="memorize_speed">Memorization speed</string>
+    <string name="memorize_add">Memorize a dua</string>
+    <string name="memorize_empty_title">Nothing memorized yet</string>
+    <string name="memorize_empty_body">Choose a dua to memorize. After you rate it, the dua joins the review schedule.</string>
+    <string name="memorize_my_hifz">My hifz</string>
+    <string name="memorize_no_streaks">Reviews after 1, 3, 7, 14 and 30 days. No streaks or scores.</string>
+    <string name="memorize_review_title">Today\'s review</string>
+    <string name="memorize_review_none">Nothing to review today.</string>
+    <plurals name="memorize_review_due">
+        <item quantity="one">%d dua due for review</item>
+        <item quantity="other">%d duas due for review</item>
+    </plurals>
+    <string name="memorize_review_start">Start review</string>
+    <string name="memorize_open">Open memorization</string>
+    <string name="memorize_due_badge">Due for review</string>
+    <string name="memorize_next_on">Next %s</string>
+    <string name="memorize_pick_title">Choose a dua to memorize</string>
+    <string name="memorize_listen_done">Done</string>
+    <string name="memorize_listen_only_start">Tap to start</string>
+    <string name="memorize_listen_only_note">You can turn off the screen. Controls are available on the lock screen and headset buttons.</string>
+
+    <!-- Audio settings -->
+    <string name="settings_audio_playback">Playback</string>
+    <string name="settings_audio_speed">Default speed</string>
+    <string name="settings_reciter">Reciter</string>
+    <string name="settings_reciter_default">Hamad ad-Duraihim (Hisn al-Muslim, IslamHouse.com)</string>
+    <string name="settings_run_mode">Reading mode</string>
+    <string name="settings_auto_advance_summary">Move to the next dua when the count is complete.</string>
+    <string name="settings_haptics">Vibration</string>
+    <string name="settings_haptics_summary">A light vibration on each count, different when complete.</string>
+    <string name="settings_memorize">Memorization</string>
+
+    <!-- Reminders -->
+    <string name="reminders_intro">All reminders are off by default. Turn on the ones you need.</string>
+    <string name="reminders_notif_permission">Notifications aren\'t allowed, so reminders won\'t appear.</string>
+    <string name="reminders_allow">Allow notifications</string>
+    <string name="reminders_exact_permission">Without the exact alarm permission, reminders may be a few minutes late.</string>
+    <string name="reminders_allow_exact">Allow exact alarms</string>
+    <string name="reminders_adhan">Adhan</string>
+    <string name="reminders_need_location">Set a location so prayer time reminders can be scheduled.</string>
+    <string name="reminders_sound">Sound</string>
+    <string name="reminders_silent">Silent</string>
+    <string name="reminders_adhan_note">Sound uses the device notification tone. On Fridays, the Dhuhr reminder reads Jumu\'ah.</string>
+    <string name="reminders_adhkar">Adhkar</string>
+    <string name="reminders_after_fajr">%d minutes after Fajr</string>
+    <string name="reminders_after_asr">%d minutes after Asr</string>
+    <string name="reminders_offset">Delay after prayer time</string>
+    <string name="reminders_other">Other</string>
+    <string name="reminders_review_summary">Only when memorized duas are due for review.</string>
+    <string name="reminders_time">Time</string>
+
+    <!-- Notifications -->
+    <string name="channel_adhan">Prayer times</string>
+    <string name="channel_adhan_desc">Notifies when prayer time begins, with sound.</string>
+    <string name="channel_adhan_silent">Prayer times (silent)</string>
+    <string name="channel_adhan_silent_desc">Notifies when prayer time begins, without sound.</string>
+    <string name="channel_reminders">Reminders</string>
+    <string name="channel_reminders_desc">Adhkar, before sleep, Jumu\'ah and memorization review. No sound.</string>
+    <string name="notif_adhan_title">%s time</string>
+    <string name="notif_adhan_text">%1$s at %2$s · %3$s</string>
+    <string name="notif_morning_text">Morning adhkar time has begun.</string>
+    <string name="notif_evening_text">Evening adhkar time has begun.</string>
+    <string name="notif_sleep_title">Before sleep</string>
+    <string name="notif_sleep_text">Dhikr and duas before sleep.</string>
+    <string name="notif_friday_title">Friday</string>
+    <string name="notif_friday_text">Reading Surah al-Kahf and sending abundant salawat.</string>
+    <string name="notif_review_title">Memorization review</string>
+
+    <!-- Display -->
+    <string name="display_translation">Translation</string>
+    <string name="display_translation_id">Indonesian</string>
+    <string name="display_translation_en">English</string>
+    <string name="display_translation_both">Both</string>
+    <string name="display_transliteration">Latin transliteration</string>
+    <string name="display_transliteration_summary">Off by default. A reading aid, not a replacement for the Arabic text.</string>
+    <string name="display_text_size">Text size</string>
+    <string name="display_arabic_size">Arabic text</string>
+    <string name="display_translation_size">Translation</string>
+    <string name="display_size_note">Separate from the system font size; the two are combined.</string>
+    <string name="display_sample_arabic">هٰذَا نَصٌّ تَجْرِيبِيٌّ</string>
+    <string name="display_sample_translation">Sample text for size (not a dua).</string>
+    <string name="display_theme">Theme</string>
+    <string name="display_theme_mode">Mode</string>
+    <string name="display_theme_system">System</string>
+    <string name="display_theme_light">Light</string>
+    <string name="display_theme_dark">Dark</string>
+    <string name="display_dynamic_color">Dynamic color</string>
+    <string name="display_palette">Color</string>
+    <string name="display_palette_dynamic_note">Turn off dynamic color to choose a theme color.</string>
+    <string name="palette_teal">Teal</string>
+    <string name="palette_navy">Navy</string>
+    <string name="palette_forest">Forest</string>
+    <string name="palette_slate">Slate</string>
+    <string name="palette_olive">Olive</string>
+    <string name="palette_rose">Rose</string>
+    <string name="palette_lavender">Lavender</string>
+    <string name="palette_peach">Peach</string>
+    <string name="display_glass">Glass effect</string>
+    <string name="display_glass_summary">Cards, buttons and panels look like frosted glass. Turn off for a plain look.</string>
+    <string name="display_dynamic_color_summary">Follow wallpaper colors (Android 12+). Off by default to keep text contrast.</string>
+
+    <!-- Methodology -->
+    <string name="methodology_scope_title">Scope</string>
+    <string name="methodology_scope_body">Only the Qur\'an and the Sunnah that is sahih or hasan, upon the manhaj of the salaf. No duas or practices without evidence.</string>
+    <string name="methodology_sources_title">Sources</string>
+    <string name="methodology_sources_body">The base reference is Hisn al-Muslim, plus duas from the Qur\'an. Each dua lists the book and hadith number, or the surah and ayah, which you can see by tapping the source label.</string>
+    <string name="methodology_grading_title">Grading policy</string>
+    <string name="methodology_grading_body">Grades are shown when stated in the takhrij of the source book, along with who graded them. Narrations graded weak by Shaykh al-Albani are not included.</string>
+    <string name="methodology_counts_title">Recitation counts</string>
+    <string name="methodology_counts_body">Counts are shown only when stated in the Sunnah. No artificial targets, streaks, badges or worship statistics.</string>
+    <string name="methodology_audio_title">Audio</string>
+    <string name="methodology_audio_body">Only clear recitation, with no music, melodic intros or sound effects. The Hisn al-Muslim dhikr and dua audio is recited by Hamad ad-Duraihim, published by IslamHouse.com, and included unaltered.</string>
+    <string name="methodology_review_title">Content sources</string>
+    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text from hisnmuslim.com. Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) via QuranEnc.com. Each dua shows its source and takhrij. English translations are shown for the Qur\'anic duas; the Hisn al-Muslim entries show the Indonesian translation until a licensed English translation is added.</string>
+    <string name="methodology_prayer_title">Prayer times</string>
+    <string name="methodology_prayer_body">The default calculation follows Kemenag RI, including its elevation correction for sunrise and Maghrib, and can be adjusted. Tested against Kemenag\'s official schedule for 16 cities across WIB, WITA and WIT: at most 1 minute apart. Imsak time is not shown.</string>
+    <string name="methodology_version_title">Version</string>
+    <string name="methodology_content_version">Content version: %s</string>
+    <string name="methodology_app_version">App version: %s</string>
+
+    <!-- About -->
+    <string name="about_body">A daily guide: prayer times, sunnah rawatib, morning and evening adhkar, and everyday duas from waking to sleep. Works fully offline.</string>
+    <string name="about_licenses">Licenses and attribution</string>
+
+    <!-- Widgets -->
+    <string name="widget_next_name">Next prayer</string>
+    <string name="widget_day_name">Today\'s prayer times</string>
+    <string name="widget_next_description_picker">Next prayer with a countdown.</string>
+    <string name="widget_day_description_picker">Today\'s six times; the next one is highlighted.</string>
+    <string name="widget_countdown_format">in %s</string>
+    <string name="widget_no_location">Set a location in the app to see prayer times.</string>
+    <string name="widget_next_label">Next · %s</string>
+    <string name="widget_next_label_tomorrow">Tomorrow · %s</string>
+    <string name="widget_day_header">%1$s · %2$s</string>
+    <string name="widget_countdown_place">in %%s · %1$s</string>
+    <string name="widget_next_description">Next prayer %1$s at %2$s, %3$s</string>
+
+    <!-- Pre-prayer and lock-screen notifications -->
+    <string name="channel_pre_prayer">Before prayer</string>
+    <string name="channel_pre_prayer_desc">A few minutes before prayer time, with a list of nearby mosques.</string>
+    <string name="channel_next_prayer">Next prayer (lock screen)</string>
+    <string name="channel_next_prayer_desc">A silent notification with the next prayer and a countdown.</string>
+    <plurals name="notif_pre_prayer_title">
+        <item quantity="one">%1$s in %2$d minute</item>
+        <item quantity="other">%1$s in %2$d minutes</item>
+    </plurals>
+    <string name="notif_pre_prayer_text">Begins at %s. Tap to see nearby mosques.</string>
+    <string name="notif_next_prayer_title">%1$s %2$s</string>
+    <string name="reminders_glance">Lock screen and widgets</string>
+    <string name="reminders_mosque_title">Remind before prayer</string>
+    <string name="reminders_mosque_summary">%d minutes before the adhan, with nearby mosques</string>
+    <string name="reminders_lead">Before the adhan</string>
+    <string name="reminders_ongoing_title">Next prayer on lock screen</string>
+    <string name="reminders_ongoing_summary">A silent notification with a countdown. Shown as a Live Update on Android 16.</string>
+    <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Muslim Daily.</string>
+
+    <!-- Nearby mosques -->
+    <string name="mosque_title">Nearby mosques</string>
+    <string name="mosque_open">Nearby mosques</string>
+    <string name="mosque_locating">Finding your location…</string>
+    <string name="mosque_permission_title">Find mosques near you</string>
+    <string name="mosque_permission_body">Your location is used once to find mosques near you. It is not stored or sent anywhere.</string>
+    <string name="mosque_allow_location">Allow location</string>
+    <string name="mosque_open_settings">Open app settings</string>
+    <string name="mosque_permission_blocked">Location permission denied. Turn it on in Settings → Permissions → Location.</string>
+    <string name="mosque_use_saved">Use saved location (%s)</string>
+    <string name="mosque_unavailable_title">Location unavailable</string>
+    <string name="mosque_unavailable_body">Turn on location on your device, then try again.</string>
+    <string name="mosque_origin_precise">From your current location (accuracy ±%d m).</string>
+    <string name="mosque_origin_precise_unknown">From your current location.</string>
+    <string name="mosque_origin_approximate">Approximate location: distances may be off by several kilometers.</string>
+    <string name="mosque_allow_precise">Use precise location</string>
+    <string name="mosque_origin_saved">From saved location, %s. Distances are approximate.</string>
+    <string name="mosque_use_current">Use current location</string>
+    <string name="mosque_none_title">No mosque data within 5 km</string>
+    <string name="mosque_none_body">Offline data comes from OpenStreetMap and is incomplete. Try searching in a maps app.</string>
+    <string name="mosque_search_maps">Search mosques in a maps app</string>
+    <string name="mosque_map_query">mosque</string>
+    <string name="mosque_unnamed">Mosque or musalla (unnamed)</string>
+    <string name="mosque_distance">%1$s · %2$s</string>
+    <plurals name="mosque_walk_minutes">
+        <item quantity="one">±%d minute walk</item>
+        <item quantity="other">±%d minutes walk</item>
+    </plurals>
+    <string name="mosque_meters">%d m</string>
+    <string name="mosque_km">%s km</string>
+    <string name="mosque_route">Directions</string>
+    <string name="mosque_route_to">Directions to %s</string>
+    <string name="mosque_attribution">Mosque data © OpenStreetMap contributors (ODbL), stored on the device. Your location is not sent anywhere; directions open in your chosen maps app.</string>
+
+    <!-- Qibla -->
+    <string name="qibla_title">Qibla direction</string>
+    <string name="qibla_open">Qibla</string>
+    <string name="qibla_bearing">Qibla %1$d° from true north, from %2$s</string>
+    <string name="qibla_aligned">Facing the qibla</string>
+    <string name="qibla_turn_right">Turn %d° right</string>
+    <string name="qibla_turn_left">Turn %d° left</string>
+    <string name="qibla_no_sensor">This phone has no compass. Use the angle below with another compass.</string>
+    <string name="qibla_calibrate">Compass accuracy is low. Move the phone in a figure 8 a few times.</string>
+    <string name="qibla_note">Hold the phone flat, away from metal, magnets and electronic devices. The direction is calculated from the saved location.</string>
+    <string name="qibla_no_location">Set a location to calculate the qibla direction.</string>
+
+    <!-- Sunnah fasting -->
+    <string name="fasting_title">Fasting calendar</string>
+    <string name="fasting_open">Fasting</string>
+    <string name="fasting_today">Today</string>
+    <string name="fasting_tomorrow">Tomorrow</string>
+    <string name="fasting_none">No special fast</string>
+    <string name="fasting_none_detail">No special sunnah fast or prohibition today.</string>
+    <string name="fasting_upcoming">Upcoming fasting days</string>
+    <string name="fasting_previous_month">Previous month</string>
+    <string name="fasting_next_month">Next month</string>
+    <string name="fasting_legend_special">Sunnah fast</string>
+    <string name="fasting_legend_weekly">Monday and Thursday</string>
+    <string name="fasting_legend_forbidden">Fasting prohibited</string>
+    <string name="fasting_hijri_note">Hijri dates are calculated (Umm al-Qura) and may differ by one day from the local isbat. Adjust in Settings → Prayer times → Hijri calendar.</string>
+    <string name="fasting_friday_note">Singling out Friday alone for fasting is prohibited (al-Bukhari no. 1985, Muslim no. 1144).</string>
+    <string name="fast_ramadan">Ramadan fast (obligatory)</string>
+    <string name="fast_arafah">Arafah fast</string>
+    <string name="fast_tasua">Tasu\'a fast</string>
+    <string name="fast_ashura">\'Ashura fast</string>
+    <string name="fast_white_days">Ayyam al-Bid (13–15)</string>
+    <string name="fast_shawwal">Six days of Shawwal</string>
+    <string name="fast_monday">Monday fast</string>
+    <string name="fast_thursday">Thursday fast</string>
+    <string name="fast_eid_fitr">Eid al-Fitr: fasting prohibited</string>
+    <string name="fast_eid_adha">Eid al-Adha: fasting prohibited</string>
+    <string name="fast_tashriq">Days of Tashriq: fasting prohibited</string>
+    <string name="fast_dalil_ramadan">Qur\'an, al-Baqarah 2:183–185</string>
+    <string name="fast_dalil_muslim_1162">Muslim no. 1162</string>
+    <string name="fast_dalil_tasua">Muslim no. 1134</string>
+    <string name="fast_dalil_white_days">at-Tirmidhi no. 761, graded hasan by al-Albani</string>
+    <string name="fast_dalil_shawwal">Muslim no. 1164</string>
+    <string name="fast_dalil_monday">Muslim no. 1162; at-Tirmidhi no. 747, graded sahih by al-Albani</string>
+    <string name="fast_dalil_thursday">at-Tirmidhi no. 747, graded sahih by al-Albani</string>
+    <string name="fast_dalil_eid">al-Bukhari no. 1990, Muslim no. 1137</string>
+    <string name="fast_dalil_tashriq">Muslim no. 1141</string>
+    <string name="notif_fasting_title">Sunnah fast tomorrow</string>
+    <string name="notif_fasting_text">Tomorrow: %s.</string>
+    <string name="notif_fasting_text_fajr">Tomorrow: %1$s. Suhur before Fajr, at %2$s.</string>
+    <string name="reminders_fasting_title">Sunnah fasting reminders</string>
+    <string name="reminders_fasting_summary">The evening before, with the Fajr time</string>
+    <string name="reminders_fasting_weekly">Include Monday and Thursday</string>
+
+    <!-- Ramadan -->
+    <string name="ramadan_day">Ramadan day %d</string>
+    <string name="ramadan_suhur">Suhur ends</string>
+    <string name="ramadan_iftar">Iftar</string>
+    <string name="ramadan_suhur_left">Suhur ends in %s</string>
+    <string name="ramadan_iftar_left">Iftar in %s</string>
+    <string name="ramadan_iftar_dua">Dua for iftar</string>
+
+    <!-- Share -->
+    <string name="share_dua">Share dua</string>
+    <string name="share_footer">Muslim Daily</string>
+
+    <!-- Backup -->
+    <string name="backup_title">Full backup</string>
+    <string name="backup_intro">One file with your settings, my sets, memorization and checklist. Save it to Drive or send it to a new phone, then restore it there.</string>
+    <string name="backup_create">Create backup</string>
+    <string name="backup_restore">Restore from backup</string>
+    <string name="backup_saved">Backup saved.</string>
+    <string name="backup_restored">Backup restored: %1$d sets, %2$d memorized duas.</string>
+    <string name="backup_restore_failed">This file isn\'t a Muslim Daily backup.</string>
+    <string name="backup_restore_confirm_title">Restore backup?</string>
+    <string name="backup_restore_confirm_body">Settings, my sets, memorization and checklist on this phone will be replaced with the backup contents.</string>
+    <string name="backup_restore_choose">Choose file</string>
+    <string name="data_my_sets_title">My set</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_next_prayer">Next prayer</string>
+    <string name="tile_no_location">Set location in the app</string>
+    <string name="tile_subtitle">%1$s left · %2$s</string>
+    <string name="tile_hours_minutes">%1$d h %2$d m</string>
+    <string name="tile_minutes">%d m</string>
+    <!-- 0.5.0 -->
+    <string name="rawatib_variant_home">at home</string>
+    <string name="rawatib_variant_masjid">at the mosque</string>
+    <string name="display_language">Language</string>
+    <string name="display_language_app">App language</string>
+    <string name="display_language_current">English</string>
+    <string name="display_language_summary">%1$s. Tap to choose Bahasa Indonesia or English.</string>
+    <string name="display_language_summary_device">%1$s. Follows the device language; tap to change it.</string>
+    <string name="onboarding_title">Assalamu\'alaikum</string>
+    <string name="onboarding_body">Two quick steps so the times and reminders fit you. Everything can be skipped and changed any time in Settings.</string>
+    <string name="onboarding_location_title">Location</string>
+    <string name="onboarding_location_body">Used on this device to calculate prayer times and the qibla direction. Your location is never sent anywhere.</string>
+    <string name="onboarding_location_use">Use my location</string>
+    <string name="onboarding_location_later">Or choose your city later on the Today screen.</string>
+    <string name="onboarding_location_finding">Finding your location…</string>
+    <string name="onboarding_location_denied">Location permission wasn\'t given. You can still choose a city by hand.</string>
+    <string name="onboarding_location_set">Location: %1$s</string>
+    <string name="onboarding_reminders_title">Reminders</string>
+    <string name="onboarding_reminders_body">Muslim Daily only sends the notifications you turn on.</string>
+    <string name="onboarding_reminders_prayer">Remind me when each prayer begins</string>
+    <string name="onboarding_reminders_adhkar">Remind me of the morning and evening adhkar</string>
+    <string name="onboarding_notifications_denied">Notifications aren\'t allowed yet, so reminders can\'t appear. Allow them in Settings → Reminders.</string>
+    <string name="onboarding_exact_body">To show reminders right on time, allow exact alarms. Without them, reminders can be a few minutes late.</string>
+    <string name="onboarding_exact_allow">Allow exact alarms</string>
+    <string name="onboarding_later">Other settings, such as the calculation method and adhan sound, are in the Settings tab.</string>
+    <string name="onboarding_start">Start</string>
+    <string name="hijri_check_title">Start of %1$s</string>
+    <string name="hijri_check_body">The government sets the start of the month at the sidang isbat on the evening of 29 %1$s. What was announced? The app\'s calendar will follow it.</string>
+    <string name="hijri_check_new">Tomorrow is 1 %1$s</string>
+    <string name="hijri_check_new_today">Today is 1 %1$s</string>
+    <string name="hijri_check_complete">%1$s completes 30 days</string>
+    <string name="hijri_check_skip">Keep the calculated date</string>
+</resources>

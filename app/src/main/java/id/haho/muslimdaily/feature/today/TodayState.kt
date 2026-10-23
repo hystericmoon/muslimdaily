@@ -49,7 +49,35 @@ data class TodayData(
     val travelSuggestionKm: Int?,
     /** Set during Ramadan, and on its eve after Maghrib. */
     val ramadan: RamadanCard? = null,
+    /** Asks, around the government's month-start announcement, which day the new month begins. */
+    val hijriCheck: HijriCheck? = null,
 )
+
+/**
+ * Indonesia starts Ramadan, Syawal and Zulhijah on the sidang isbat announcement, made on the
+ * evening of the 29th, so the calculated calendar can be a day off. From Maghrib on the 29th
+ * until the end of the following day the app asks once which way it went.
+ *
+ * [month] is the month ending; [calculatedNew] is whether the calculation already starts the
+ * next month on the day after the 29th.
+ */
+data class HijriCheck(
+    val key: String,
+    val month: Int,
+    val year: Int,
+    val calculatedNew: Boolean,
+    /** Asked on the evening of the 29th itself (true) or on the following day. */
+    val onEve: Boolean,
+) {
+    val nextMonth: Int get() = month % 12 + 1
+
+    /** The change to the Hijri adjustment for an answer ("the new month starts the day after the 29th"). */
+    fun delta(startsNext: Boolean): Int = when {
+        startsNext && !calculatedNew -> 1
+        !startsNext && calculatedNew -> -1
+        else -> 0
+    }
+}
 
 /**
  * The fasting day in Ramadan: today until Maghrib, then tomorrow. Suhur ends at Subuh (the app
@@ -107,7 +135,7 @@ object TodayStateBuilder {
         val zone = runCatching { ZoneId.of(location.timeZoneId) }.getOrDefault(ZoneId.systemDefault())
         val date = now.atZone(zone).toLocalDate()
         val calc = settings.calculation
-        fun day(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, calc)
+        fun day(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, calc, location.elevation)
         val yesterday = day(date.minusDays(1))
         val today = day(date)
         val tomorrow = day(date.plusDays(1))
@@ -157,8 +185,26 @@ object TodayStateBuilder {
                 checked = checked,
                 travelSuggestionKm = travelSuggestionKm,
                 ramadan = ramadanCard(now, date, today, tomorrow, settings.hijriAdjustment),
+                hijriCheck = hijriCheck(now, date, today, settings),
             ),
         )
+    }
+
+    /** The months whose start Indonesia sets by isbat: Ramadan, Syawal and Zulhijah. */
+    private val ISBAT_EVES = setOf(8, 9, 11)
+
+    private fun hijriCheck(now: Instant, date: LocalDate, today: PrayerSchedule, settings: AppSettings): HijriCheck? {
+        val adj = settings.hijriAdjustment
+        fun eve(d: LocalDate) = HijriCalendar.of(d, adj).takeIf { it.day == 29 && it.month in ISBAT_EVES }
+        val eveDate = when {
+            !now.isBefore(today.maghrib) && eve(date) != null -> date
+            eve(date.minusDays(1)) != null -> date.minusDays(1)
+            else -> return null
+        }
+        val h = eve(eveDate)!!
+        val key = "${h.year}-${h.month}"
+        if (settings.hijriConfirmedFor == key) return null
+        return HijriCheck(key, h.month, h.year, calculatedNew = HijriCalendar.of(eveDate.plusDays(1), adj).day == 1, onEve = eveDate == date)
     }
 
     private fun ramadanCard(now: Instant, date: LocalDate, today: PrayerSchedule, tomorrow: PrayerSchedule, hijriAdjustment: Int): RamadanCard? {

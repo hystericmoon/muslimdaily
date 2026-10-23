@@ -10,7 +10,8 @@ import kotlin.math.abs
 import kotlin.test.assertTrue
 
 /**
- * Compares the Kemenag preset with the official schedule for five cities across the year. The
+ * Compares the Kemenag preset with the official schedule for 16 cities in all three time zones,
+ * on four dates across the year. The
  * official tables use Kemenag's own city coordinates (we use GeoNames centres), so up to one
  * minute of difference is expected; anything larger means the preset is wrong.
  */
@@ -18,13 +19,18 @@ class KemenagReferenceTest {
     @Test
     fun `kemenag preset matches the official schedule within one minute`() {
         val calculator = PrayerCalculator()
-        val rows = javaClass.classLoader!!.getResource("kemenag_reference.tsv")!!.readText()
-            .lines().filter { it.isNotBlank() && !it.startsWith("#") }
+        // kemenag_reference.tsv: an earlier mirror; kemenag_official.tsv: 16 cities in WIB, WITA
+        // and WIT, downloaded from bimasislam.kemenag.go.id itself.
+        val rows = listOf("kemenag_reference.tsv", "kemenag_official.tsv").flatMap { file ->
+            javaClass.classLoader!!.getResource(file)!!.readText().lines().filter { it.isNotBlank() && !it.startsWith("#") }
+        }
         val deltas = mutableMapOf<String, MutableList<Long>>()
         rows.forEach { row ->
             val f = row.split('\t')
             val zone = ZoneId.of(f[3])
-            val s = calculator.schedule(LocalDate.parse(f[4]), f[1].toDouble(), f[2].toDouble(), zone, CalculationSettings())
+            // Optional 12th column: GeoNames terrain height in metres.
+            val elevation = f.getOrNull(11)?.toIntOrNull() ?: 0
+            val s = calculator.schedule(LocalDate.parse(f[4]), f[1].toDouble(), f[2].toDouble(), zone, CalculationSettings(), elevation)
             val ours = listOf(s.fajr, s.sunrise, s.dhuhr, s.asr, s.maghrib, s.isha).map { it.atZone(zone).toLocalTime() }
             listOf("subuh", "terbit", "dzuhur", "ashar", "maghrib", "isya").forEachIndexed { i, name ->
                 val official = LocalTime.parse(f[5 + i])

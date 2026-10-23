@@ -171,7 +171,7 @@ internal fun NextPrayerContent(data: WidgetData) {
     }
 }
 
-private val DayLabel = DateTimeFormatter.ofPattern("EEEE, d MMM", AppLocale)
+private val DayLabel get() = DateTimeFormatter.ofPattern("EEEE, d MMM", AppLocale)
 
 @Composable
 internal fun DayScheduleContent(data: WidgetData) {

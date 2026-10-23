@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.data.location
 
+import id.haho.muslimdaily.core.ui.AppLocale
 import android.content.Context
 import androidx.room.withTransaction
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,6 +26,7 @@ data class City(
     val latitude: Double,
     val longitude: Double,
     val timeZone: String,
+    val elevation: Int = 0,
 )
 
 /**
@@ -51,6 +53,7 @@ class CityRepository @Inject constructor(
                             id = f[0].toLong(), name = f[1], asciiName = f[2], country = f[3], region = f[4],
                             latitude = f[5].toDouble(), longitude = f[6].toDouble(), timeZone = f[7],
                             population = f[8].toLongOrNull() ?: 0,
+                            elevation = f.getOrNull(9)?.toIntOrNull() ?: 0,
                         )
                     }
                 }
@@ -97,10 +100,11 @@ class CityRepository @Inject constructor(
         name = name,
         region = region,
         countryCode = country,
-        countryName = Locale.Builder().setRegion(country).build().getDisplayCountry(Locale.forLanguageTag("id")),
+        countryName = Locale.Builder().setRegion(country).build().getDisplayCountry(AppLocale),
         latitude = latitude,
         longitude = longitude,
         timeZone = timeZone,
+        elevation = elevation,
     )
 }
 

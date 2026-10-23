@@ -93,9 +93,29 @@ class LocationRepository @Inject constructor(
             timeZoneId = ZoneId.systemDefault().id,
             source = LocationSource.GPS,
             updatedAtMillis = System.currentTimeMillis(),
+            // The town's terrain height is steadier than a phone's GPS altitude (which is also
+            // above the ellipsoid, not sea level); the fix's altitude is the fallback.
+            elevation = city?.takeIf { distanceKm(fix.latitude, fix.longitude, it.latitude, it.longitude) < 15 }?.elevation
+                ?: fix.altitude.takeIf { fix.hasAltitude() }?.toInt()?.coerceAtLeast(0) ?: 0,
         )
         settings.update { setLocation(saved) }
         return FixResult.Success(saved)
+    }
+
+    /**
+     * Locations saved before 0.5.0 have no elevation. Takes it from the nearest town once, so a
+     * highland user's Maghrib moves to match Kemenag without picking the city again.
+     */
+    suspend fun backfillElevation() {
+        val s = settings.current()
+        val loc = s.location ?: return
+        if (loc.elevation != 0 || s.elevationChecked) return
+        val city = cities.nearest(loc.latitude, loc.longitude)
+            ?.takeIf { distanceKm(loc.latitude, loc.longitude, it.latitude, it.longitude) < 15 }
+        settings.update {
+            elevationChecked = true
+            if (city != null && city.elevation > 0) setLocation(loc.copy(elevation = city.elevation))
+        }
     }
 
     suspend fun saveCity(city: City) {
@@ -108,6 +128,7 @@ class LocationRepository @Inject constructor(
                     timeZoneId = city.timeZone,
                     source = LocationSource.MANUAL,
                     updatedAtMillis = System.currentTimeMillis(),
+                    elevation = city.elevation,
                 ),
             )
         }

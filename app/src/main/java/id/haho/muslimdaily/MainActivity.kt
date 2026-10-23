@@ -29,6 +29,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.Clock
 import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import id.haho.muslimdaily.feature.onboarding.OnboardingRoute
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -62,6 +66,7 @@ class MainActivity : ComponentActivity() {
             val pending by destination.collectAsStateWithLifecycle()
             val settings by viewModel.settings.collectAsStateWithLifecycle()
             val reviewDue by viewModel.reviewDue.collectAsStateWithLifecycle()
+            val onboarding by viewModel.showOnboarding.collectAsStateWithLifecycle()
             MuslimDailyTheme(
                 themeMode = settings.themeMode,
                 dynamicColor = settings.dynamicColor,
@@ -71,12 +76,16 @@ class MainActivity : ComponentActivity() {
                 glass = settings.glassEffect,
             ) {
                 GlassBackdrop {
-                    AppRoot(
-                        reviewDueCount = reviewDue,
-                        pendingDestination = pending,
-                        onDestinationHandled = { destination.value = null },
-                        modifier = Modifier.frostWhenOverlayOpen(),
-                    )
+                    when (onboarding) {
+                        null -> Unit // settings still loading: a blank backdrop for a moment
+                        true -> OnboardingRoute()
+                        false -> AppRoot(
+                            reviewDueCount = reviewDue,
+                            pendingDestination = pending,
+                            onDestinationHandled = { destination.value = null },
+                            modifier = Modifier.frostWhenOverlayOpen(),
+                        )
+                    }
                     val update by updates.state.collectAsStateWithLifecycle()
                     if (update.prompt) {
                         UpdatePromptDialog(
@@ -102,6 +111,23 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     val settings: StateFlow<AppSettings> = settingsRepository.settings
         .stateIn(viewModelScope, SharingStarted.Eagerly, AppSettings())
+
+    /**
+     * The first-launch setup is shown to a new install (no location yet), decided once at launch
+     * so that picking a location inside the setup doesn't close it; finishing it does.
+     */
+    private val firstRun = MutableStateFlow<Boolean?>(null)
+
+    init {
+        viewModelScope.launch {
+            val s = settingsRepository.settings.first()
+            firstRun.value = !s.onboardingDone && s.location == null
+        }
+    }
+
+    val showOnboarding: StateFlow<Boolean?> = combine(firstRun, settingsRepository.settings) { first, s ->
+        first?.let { it && !s.onboardingDone }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     /** Badge on the Memorize tab. Re-evaluated on each launch; no streaks or history. */
     val reviewDue: StateFlow<Int> = reviews.dueCount(LocalDate.now(clock))

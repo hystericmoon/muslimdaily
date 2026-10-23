@@ -319,7 +319,7 @@ private fun rakahText(line: RawatibLine): String? {
     val parts = line.entries.mapNotNull { r ->
         r.rakah?.let { n ->
             val count = pluralStringResource(R.plurals.rakah_count, n, n)
-            if (line.entries.size > 1 && r.variantLabel != null) stringResource(R.string.rakah_with_label, count, r.variantLabel) else count
+            if (line.entries.size > 1 && r.variantLabel != null) stringResource(R.string.rakah_with_label, count, variantLabel(r.variantLabel)) else count
         }
     }
     if (parts.isEmpty()) return null
@@ -504,3 +504,13 @@ private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, en
 
 /** Dividers inside glass cards are hairlines; a solid line reads as heavy on translucent fills. */
 private const val DIVIDER_ALPHA = 0.5f
+
+/** The rawatib variant labels are Indonesian in the content; the known ones are translated here. */
+@Composable
+private fun variantLabel(label: String): String = when (label) {
+    "di rumah" -> stringResource(R.string.rawatib_variant_home)
+    "di masjid" -> stringResource(R.string.rawatib_variant_masjid)
+    "2 rakaat" -> pluralStringResource(R.plurals.rakah_count, 2, 2)
+    "4 rakaat" -> pluralStringResource(R.plurals.rakah_count, 4, 4)
+    else -> label
+}

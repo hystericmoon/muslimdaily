@@ -29,6 +29,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.FilterChip
@@ -52,6 +57,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -96,6 +102,7 @@ data class TodayActions(
     val onOpenMosques: () -> Unit = {},
     val onOpenQibla: () -> Unit = {},
     val onOpenFasting: () -> Unit = {},
+    val onAnswerHijri: (HijriCheck, Boolean?) -> Unit = { _, _ -> },
 )
 
 @Composable
@@ -146,6 +153,7 @@ fun TodayRoute(
             onOpenMosques = onOpenMosques,
             onOpenQibla = onOpenQibla,
             onOpenFasting = onOpenFasting,
+            onAnswerHijri = viewModel::answerHijri,
         ),
     )
 }
@@ -187,48 +195,89 @@ private fun NoLocation(actions: TodayActions) {
     }
 }
 
+/** Two columns from this width (Material's expanded class): today at a glance beside the schedule. */
+private val TwoPaneWidth = 840.dp
+
 @Composable
 private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>) {
-    val gutter = AppTheme.dimens.screenGutter
     var expanded by remember { mutableStateOf(initiallyExpanded) }
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl),
-    ) {
-        item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
-        item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = gutter).enterReveal(0)) }
-        data.ramadan?.let { r ->
-            item(key = "ramadan") { RamadanCardView(r, data, { actions.onOpenEvent("iftar") }, Modifier.padding(start = gutter, end = gutter, top = AppTheme.spacing.md).enterReveal(1)) }
+    val onExpandToggle: (String) -> Unit = { key -> expanded = if (key in expanded) expanded - key else expanded + key }
+    BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        val bottom = PaddingValues(bottom = AppTheme.spacing.xxl)
+        if (maxWidth >= TwoPaneWidth) {
+            Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
+                LazyColumn(Modifier.weight(1f).fillMaxSize(), contentPadding = bottom) {
+                    glanceItems(data, actions)
+                    otherItems(data, actions)
+                }
+                LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
+                    item(key = "pane-top") { Spacer(Modifier.height(AppTheme.spacing.lg)) }
+                    scheduleItems(data, actions, expanded, onExpandToggle)
+                }
+            }
+        } else {
+            LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize(), contentPadding = bottom) {
+                glanceItems(data, actions)
+                scheduleItems(data, actions, expanded, onExpandToggle)
+                otherItems(data, actions)
+            }
         }
-        data.travelSuggestionKm?.let { km ->
-            item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(gutter)) }
-        }
-        item(key = "adhkar") {
-            AdhkarCardView(data, actions, Modifier.padding(start = gutter, end = gutter, top = AppTheme.spacing.md).enterReveal(1))
-        }
-        item(key = "schedule-header") { SectionHeader(stringResource(R.string.today_schedule)) }
-        item(key = "schedule") {
-            PrayerListCard(
-                data = data,
-                expanded = expanded,
-                onExpandToggle = { key -> expanded = if (key in expanded) expanded - key else expanded + key },
-                onToggle = actions.onToggle,
-                modifier = Modifier.padding(horizontal = gutter).enterReveal(2),
-            )
-        }
-        item(key = "private-note") {
-            InfoNote(
-                stringResource(R.string.today_private_note),
-                Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.sm),
-                icon = R.drawable.ic_lock,
-            )
-        }
-        item(key = "other-header") { SectionHeader(stringResource(R.string.today_other_sunnah)) }
-        item(key = "other") { OtherSunnahCard(data, actions.onToggle, Modifier.padding(horizontal = gutter).enterReveal(3)) }
-        item(key = "prohibited-header") { SectionHeader(stringResource(R.string.today_prohibited_title)) }
-        item(key = "prohibited") { ProhibitedCard(data, Modifier.padding(horizontal = gutter).enterReveal(4)) }
-        item(key = "footer") { MethodFooter(data, actions.onOpenPrayerSettings) }
     }
+}
+
+/** Header, next prayer and the cards that matter right now. */
+private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions) {
+    item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
+    item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
+    data.hijriCheck?.let { c ->
+        item(key = "hijri") {
+            HijriCheckCard(c, actions.onAnswerHijri, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+        }
+    }
+    data.ramadan?.let { r ->
+        item(key = "ramadan") {
+            RamadanCardView(r, data, { actions.onOpenEvent("iftar") }, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+        }
+    }
+    data.travelSuggestionKm?.let { km ->
+        item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(AppTheme.dimens.screenGutter)) }
+    }
+    item(key = "adhkar") {
+        AdhkarCardView(data, actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+    }
+}
+
+private fun LazyListScope.scheduleItems(
+    data: TodayData,
+    actions: TodayActions,
+    expanded: Set<String>,
+    onExpandToggle: (String) -> Unit,
+) {
+    item(key = "schedule-header") { SectionHeader(stringResource(R.string.today_schedule)) }
+    item(key = "schedule") {
+        PrayerListCard(
+            data = data,
+            expanded = expanded,
+            onExpandToggle = onExpandToggle,
+            onToggle = actions.onToggle,
+            modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(2),
+        )
+    }
+    item(key = "private-note") {
+        InfoNote(
+            stringResource(R.string.today_private_note),
+            Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+            icon = R.drawable.ic_lock,
+        )
+    }
+}
+
+private fun LazyListScope.otherItems(data: TodayData, actions: TodayActions) {
+    item(key = "other-header") { SectionHeader(stringResource(R.string.today_other_sunnah)) }
+    item(key = "other") { OtherSunnahCard(data, actions.onToggle, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(3)) }
+    item(key = "prohibited-header") { SectionHeader(stringResource(R.string.today_prohibited_title)) }
+    item(key = "prohibited") { ProhibitedCard(data, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(4)) }
+    item(key = "footer") { MethodFooter(data, actions.onOpenPrayerSettings) }
 }
 
 @Composable
@@ -567,3 +616,37 @@ private fun RamadanTime(label: String, clock: String, active: Boolean, modifier:
     }
 }
 
+
+/** Month start by sidang isbat: one question, two plain answers, and a way to leave it. */
+@Composable
+private fun HijriCheckCard(check: HijriCheck, onAnswer: (HijriCheck, Boolean?) -> Unit, modifier: Modifier = Modifier) {
+    val months = stringArrayResource(R.array.hijri_months)
+    val ending = months[check.month - 1]
+    val next = months[check.nextMonth - 1]
+    GlassCard(modifier.fillMaxWidth()) {
+        Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(AppTheme.dimens.icon))
+                Text(
+                    stringResource(R.string.hijri_check_title, next),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.semantics { heading() },
+                )
+            }
+            Text(
+                stringResource(R.string.hijri_check_body, ending, next),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            GlassTonalButton(onClick = { onAnswer(check, true) }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(if (check.onEve) R.string.hijri_check_new else R.string.hijri_check_new_today, next))
+            }
+            GlassTonalButton(onClick = { onAnswer(check, false) }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.hijri_check_complete, ending))
+            }
+            TextButton(onClick = { onAnswer(check, null) }, modifier = Modifier.align(Alignment.End)) {
+                Text(stringResource(R.string.hijri_check_skip))
+            }
+        }
+    }
+}

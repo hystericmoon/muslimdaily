@@ -34,7 +34,7 @@ import kotlin.test.assertEquals
  * ActiveSet rules as the repository.
  */
 @RunWith(AndroidJUnit4::class)
-@Config(qualifiers = "w400dp-h2000dp")
+@Config(qualifiers = "id-w400dp-h2000dp")
 class CustomizeUiTest {
     @get:Rule val compose = createComposeRule()
 

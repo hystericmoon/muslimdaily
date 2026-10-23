@@ -26,6 +26,23 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import id.haho.muslimdaily.feature.duas.event.EventViewModel
+import id.haho.muslimdaily.feature.duas.event.EventRoute
+import id.haho.muslimdaily.core.designsystem.glass.Glass
+import androidx.hilt.lifecycle.viewmodel.HiltViewModelFactory
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.MutableCreationExtras
+import androidx.lifecycle.DEFAULT_ARGS_KEY
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
+import androidx.core.os.bundleOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.key
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,27 +74,70 @@ class DuaLibraryViewModel @Inject constructor(content: ContentRepository) : View
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 }
 
+/** From this width the library and the chosen occasion sit side by side (list-detail). */
+private val ListDetailWidth = 840.dp
+
 @Composable
 fun DuaLibraryRoute(
     onOpenEvent: (String) -> Unit,
     onSearch: () -> Unit,
+    onOpenDua: (String) -> Unit = {},
+    onCustomize: (String) -> Unit = {},
+    onStart: (String) -> Unit = {},
     viewModel: DuaLibraryViewModel = hiltViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
-    AppScreen(
-        title = stringResource(R.string.duas_title),
-        actions = {
-            IconButton(onClick = onSearch) {
-                Icon(painterResource(R.drawable.ic_search), stringResource(R.string.action_search))
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val twoPane = maxWidth >= ListDetailWidth
+        var selected by rememberSaveable { mutableStateOf<String?>(null) }
+        val shown = selected ?: categories?.firstOrNull()?.events?.firstOrNull()?.id
+        val library = @Composable { modifier: Modifier ->
+            AppScreen(
+                title = stringResource(R.string.duas_title),
+                modifier = modifier,
+                actions = {
+                    IconButton(onClick = onSearch) {
+                        Icon(painterResource(R.drawable.ic_search), stringResource(R.string.action_search))
+                    }
+                },
+            ) {
+                categories?.let {
+                    DuaLibraryContent(it, selectedId = if (twoPane) shown else null, onOpenEvent = if (twoPane) { id -> selected = id } else onOpenEvent)
+                }
             }
-        },
-    ) {
-        categories?.let { DuaLibraryContent(it, onOpenEvent) }
+        }
+        if (twoPane) {
+            Row(Modifier.fillMaxSize()) {
+                library(Modifier.weight(0.42f))
+                VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                Box(Modifier.weight(0.58f)) {
+                    // One view model per occasion, keyed like the EventRoute destination would be.
+                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) }
+                }
+            }
+        } else {
+            library(Modifier)
+        }
     }
 }
 
 @Composable
-fun DuaLibraryContent(categories: List<DuaCategory>, onOpenEvent: (String) -> Unit) {
+private fun EventPane(eventId: String, onOpenDua: (String) -> Unit, onCustomize: (String) -> Unit, onStart: (String) -> Unit) {
+    val owner = checkNotNull(LocalViewModelStoreOwner.current)
+    val defaults = owner as HasDefaultViewModelProviderFactory
+    val extras = MutableCreationExtras(defaults.defaultViewModelCreationExtras)
+        .apply { set(DEFAULT_ARGS_KEY, bundleOf("eventId" to eventId)) }
+    val vm: EventViewModel = viewModel(
+        viewModelStoreOwner = owner,
+        key = "event-pane:$eventId",
+        factory = HiltViewModelFactory(LocalContext.current, defaults.defaultViewModelProviderFactory),
+        extras = extras,
+    )
+    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, viewModel = vm)
+}
+
+@Composable
+fun DuaLibraryContent(categories: List<DuaCategory>, selectedId: String? = null, onOpenEvent: (String) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
         categories.forEachIndexed { index, category ->
             item(key = category.id) {
@@ -95,6 +155,7 @@ fun DuaLibraryContent(categories: List<DuaCategory>, onOpenEvent: (String) -> Un
                                 timeline = timeline,
                                 isFirst = i == 0,
                                 isLast = i == category.events.lastIndex,
+                                selected = event.id == selectedId,
                                 onClick = { onOpenEvent(event.id) },
                             )
                         }
@@ -110,13 +171,14 @@ fun DuaLibraryContent(categories: List<DuaCategory>, onOpenEvent: (String) -> Un
  * waking to sleeping.
  */
 @Composable
-private fun EventRow(event: DuaEvent, timeline: Boolean, isFirst: Boolean, isLast: Boolean, onClick: () -> Unit) {
+private fun EventRow(event: DuaEvent, timeline: Boolean, isFirst: Boolean, isLast: Boolean, selected: Boolean = false, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
             .heightIn(min = AppTheme.dimens.largeTouchTarget)
-            .selectable(selected = false, role = Role.Button, onClick = onClick)
+            .then(if (selected) Modifier.background(Glass.colors.tinted) else Modifier)
+            .selectable(selected = selected, role = Role.Button, onClick = onClick)
             .padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {

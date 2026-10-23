@@ -12,7 +12,7 @@ import org.robolectric.annotation.GraphicsMode
 /** Today in every colour theme, light and dark, at phone size. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h860dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h860dp-xhdpi")
 class PaletteScreenshotTest {
 
     @Test

@@ -63,7 +63,7 @@ private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1)
 private val settings = TodayPreviewData.settings
 
 @ThemePreviews @Composable
-private fun DuaLibraryPreview() = PreviewSurface { DuaLibraryContent(DuaPreviewData.categories) {} }
+private fun DuaLibraryPreview() = PreviewSurface { DuaLibraryContent(DuaPreviewData.categories, onOpenEvent = {}) }
 
 @ThemePreviews @Composable
 private fun EventPreview() = PreviewSurface {

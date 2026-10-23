@@ -10,7 +10,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h860dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h860dp-xhdpi")
 class ShellScreenshotTest {
     @Test
     fun emptyState() = captureVariants("00-empty-state") {

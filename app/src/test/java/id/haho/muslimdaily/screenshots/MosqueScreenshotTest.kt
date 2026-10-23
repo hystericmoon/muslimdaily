@@ -21,7 +21,7 @@ import java.time.ZoneId
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h860dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h860dp-xhdpi")
 class MosqueScreenshotTest {
     private val zone = ZoneId.of("Asia/Jakarta")
     private val now = LocalDateTime.of(2026, 10, 21, 11, 31).atZone(zone).toInstant()

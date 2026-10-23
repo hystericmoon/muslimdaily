@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.settings
 
+import id.haho.muslimdaily.core.ui.clockPattern
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import id.haho.muslimdaily.core.designsystem.glass.Glass
 import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
@@ -132,7 +133,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
     }
 }
 
-private val TimeFormat = DateTimeFormatter.ofPattern("HH.mm", AppLocale)
+private val TimeFormat get() = DateTimeFormatter.ofPattern(clockPattern(true), AppLocale)
 
 @Composable
 fun RemindersContent(

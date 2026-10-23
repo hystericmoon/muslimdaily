@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.duas.detail
 
+import id.haho.muslimdaily.core.ui.AppLocale
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -26,7 +27,6 @@ import id.haho.muslimdaily.core.model.Dua
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.Locale
 
 /**
  * A dua as a shareable image: the Arabic, the Indonesian translation and the source with its
@@ -76,7 +76,7 @@ object DuaShareCard {
 
         val onSurface = scheme.onSurface.toArgb()
         val muted = scheme.onSurfaceVariant.toArgb()
-        val label = layout(title.uppercase(Locale.forLanguageTag("id")), latinFace, 30f * textScale, scheme.primary.toArgb(), bold = true)
+        val label = layout(title.uppercase(AppLocale), latinFace, 30f * textScale, scheme.primary.toArgb(), bold = true)
         val arabic = layout(dua.arabic, arabicFace, 64f * textScale, onSurface, rtl = true, spacing = 1.3f)
         val translation = dua.translationId.takeIf { it.isNotBlank() }?.let { layout(it, latinFace, 36f * textScale, onSurface, spacing = 1.35f) }
         val sourceLayout = layout(source, latinFace, 28f * textScale, muted)

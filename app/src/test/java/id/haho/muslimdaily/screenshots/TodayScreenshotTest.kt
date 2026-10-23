@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h2400dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h2400dp-xhdpi")
 class TodayScreenshotTest {
 
     @Test

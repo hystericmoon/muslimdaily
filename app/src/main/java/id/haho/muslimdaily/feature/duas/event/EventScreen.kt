@@ -43,7 +43,8 @@ import id.haho.muslimdaily.feature.duas.components.DuaCard
 
 @Composable
 fun EventRoute(
-    onBack: () -> Unit,
+    /** Null in the list-detail pane, where there is nothing to go back to. */
+    onBack: (() -> Unit)?,
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,

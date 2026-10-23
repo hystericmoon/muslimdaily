@@ -78,6 +78,9 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 DuaLibraryRoute(
                     onOpenEvent = { navController.navigate(EventRoute(it)) },
                     onSearch = { navController.navigate(SearchRoute) },
+                    onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
+                    onCustomize = { navController.navigate(CustomizeRoute(it)) },
+                    onStart = { navController.navigate(RunRoute(it)) },
                 )
             }
             composable<SearchRoute> {

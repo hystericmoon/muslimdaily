@@ -45,7 +45,7 @@ import java.time.ZoneId
  */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "xhdpi")
+@Config(qualifiers = "id-xhdpi")
 @OptIn(ExperimentalGlanceApi::class)
 class WidgetScreenshotTest {
     private val now = LocalDateTime.of(2026, 10, 21, 10, 0).atZone(ZoneId.of("Asia/Jakarta")).toInstant()

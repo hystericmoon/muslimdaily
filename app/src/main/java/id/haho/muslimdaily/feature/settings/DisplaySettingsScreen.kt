@@ -3,6 +3,12 @@ package id.haho.muslimdaily.feature.settings
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import id.haho.muslimdaily.core.designsystem.glass.Glass
 import android.os.Build
+import id.haho.muslimdaily.core.designsystem.component.NavigationRow
+import androidx.compose.ui.platform.LocalContext
+import android.provider.Settings
+import android.net.Uri
+import android.content.Intent
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,6 +55,19 @@ private fun Float.step(delta: Float) = (((this + delta) * 10).roundToInt() / 10f
 @Composable
 fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+        item {
+            SettingsGroup(stringResource(R.string.display_language)) {
+                val context = LocalContext.current
+                NavigationRow(
+                    title = stringResource(R.string.display_language_app),
+                    summary = stringResource(
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) R.string.display_language_summary else R.string.display_language_summary_device,
+                        stringResource(R.string.display_language_current),
+                    ),
+                    onClick = { openLanguageSettings(context) },
+                )
+            }
+        }
         item {
             SettingsGroup(stringResource(R.string.display_translation)) {
                 RadioGroup(
@@ -159,4 +178,18 @@ private fun SizePreview() {
             Text(stringResource(R.string.display_sample_translation), style = AppTheme.reading.bodyLarge)
         }
     }
+}
+
+/**
+ * Android 13+ has a per-app language page; older versions follow the device language, so the
+ * row opens the device's language settings there.
+ */
+private fun openLanguageSettings(context: Context) {
+    val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        Intent(Settings.ACTION_APP_LOCALE_SETTINGS, Uri.fromParts("package", context.packageName, null))
+    } else {
+        Intent(Settings.ACTION_LOCALE_SETTINGS)
+    }
+    runCatching { context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+        .onFailure { runCatching { context.startActivity(Intent(Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } }
 }

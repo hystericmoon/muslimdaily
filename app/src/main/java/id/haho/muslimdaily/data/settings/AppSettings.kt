@@ -33,6 +33,8 @@ data class SavedLocation(
     val timeZoneId: String,
     val source: LocationSource,
     val updatedAtMillis: Long,
+    /** Metres above sea level, for Kemenag's sunrise and Maghrib horizon correction. */
+    val elevation: Int = 0,
 )
 
 data class CalculationSettings(
@@ -100,6 +102,12 @@ data class AppSettings(
     val reciterId: String = "default",
     val autoAdvance: Boolean = true,
     val haptics: Boolean = true,
+    /** The first-launch setup was finished or skipped. */
+    val onboardingDone: Boolean = false,
+    /** Old saved locations were given an elevation once (see LocationRepository.backfillElevation). */
+    val elevationChecked: Boolean = false,
+    /** The Hijri month-end ("yyyy-mm" of the month asked about) the user already answered. */
+    val hijriConfirmedFor: String = "",
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )
