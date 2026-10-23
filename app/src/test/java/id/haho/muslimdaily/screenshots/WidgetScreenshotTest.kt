@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.Shader
 import android.provider.Settings
 import android.view.View
@@ -35,6 +37,7 @@ import java.io.File
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.util.Locale
 
 /**
  * Renders the prayer-times widget through Glance's RemoteViews translation (what launchers get),
@@ -49,9 +52,9 @@ import java.time.ZoneId
 class WidgetScreenshotTest {
     private fun at(h: Int, m: Int): Instant = LocalDateTime.of(2026, 10, 23, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
 
-    private fun data(now: Instant, located: Boolean = true): WidgetData {
+    private fun data(now: Instant, located: Boolean = true, is24: Boolean = true): WidgetData {
         val settings = TodayPreviewData.settings.let { if (located) it else it.copy(location = null) }
-        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(true), now)
+        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(is24), now)
     }
 
     private class Fake(private val body: @androidx.compose.runtime.Composable () -> Unit) : GlanceAppWidget() {
@@ -59,14 +62,21 @@ class WidgetScreenshotTest {
         override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent { body() }
     }
 
-    private suspend fun render(name: String, size: DpSize, data: WidgetData, fontScale: Float = 1f) {
+    /**
+     * [preview] renders for the widget picker instead: no wallpaper, clipped to the widget's
+     * corners (Robolectric does not apply the sky's own rounding), into the app's resources.
+     */
+    private suspend fun render(name: String, size: DpSize, data: WidgetData, fontScale: Float = 1f, preview: Boolean = false, locale: Locale? = null) {
         val base = ApplicationProvider.getApplicationContext<Context>()
         Settings.System.putString(base.contentResolver, Settings.System.TIME_12_24, "24")
-        val config = Configuration(base.resources.configuration).apply { this.fontScale = fontScale }
+        val config = Configuration(base.resources.configuration).apply {
+            this.fontScale = fontScale
+            locale?.let { setLocale(it) }
+        }
         val context = base.createConfigurationContext(config)
         val views = Fake { PrayerWidgetContent(data) }.compose(context, size = size)
         val density = context.resources.displayMetrics.density
-        val pad = (16 * density).toInt()
+        val pad = if (preview) 0 else (16 * density).toInt()
         val w = (size.width.value * density).toInt()
         val h = (size.height.value * density).toInt()
         val host = FrameLayout(context)
@@ -76,10 +86,16 @@ class WidgetScreenshotTest {
         host.layout(0, 0, w, h)
         val bitmap = Bitmap.createBitmap(w + 2 * pad, h + 2 * pad, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        canvas.drawPaint(Paint().apply { shader = LinearGradient(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat(), 0xFF8EC5FC.toInt(), 0xFFE0C3FC.toInt(), Shader.TileMode.CLAMP) })
+        if (preview) {
+            val corner = 24 * density
+            canvas.clipPath(Path().apply { addRoundRect(RectF(0f, 0f, w.toFloat(), h.toFloat()), corner, corner, Path.Direction.CW) })
+        } else {
+            canvas.drawPaint(Paint().apply { shader = LinearGradient(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat(), 0xFF8EC5FC.toInt(), 0xFFE0C3FC.toInt(), Shader.TileMode.CLAMP) })
+        }
         canvas.translate(pad.toFloat(), pad.toFloat())
         host.draw(canvas)
-        File("../docs/screenshots").apply { mkdirs() }.resolve("$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        val out = if (preview) File("src/main/res/drawable-nodpi") else File("../docs/screenshots").apply { mkdirs() }
+        out.resolve("$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
 
     private val widths = listOf(76, 164, 252, 340, 428)
@@ -97,5 +113,16 @@ class WidgetScreenshotTest {
         render("82-widget-4x2-font200", DpSize(340.dp, 164.dp), morning, fontScale = 2f)
         render("83-widget-4x1-landscape", DpSize(340.dp, 56.dp), morning)
         render("84-widget-no-location", DpSize(164.dp, 164.dp), data(at(8, 30), located = false))
+        render("widget_preview", DpSize(340.dp, 164.dp), morning, preview = true)
+        // After Isya the date reads "Besok · …"; at 2×2 it must leave the countdown whole.
+        render("85-widget-2x2-2100", DpSize(164.dp, 164.dp), data(at(21, 0)))
+        // A Samsung-style 5×2 in English with 12-hour times: no "11:41 …".
+        val default = Locale.getDefault()
+        try {
+            Locale.setDefault(Locale.ENGLISH)
+            render("86-widget-5x2-en-12h-2100", DpSize(428.dp, 164.dp), data(at(21, 0), is24 = false), locale = Locale.ENGLISH)
+        } finally {
+            Locale.setDefault(default)
+        }
     }
 }
