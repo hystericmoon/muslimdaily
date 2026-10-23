@@ -24,6 +24,7 @@ import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
 import id.haho.muslimdaily.feature.duas.search.SearchRoute
 import id.haho.muslimdaily.feature.settings.AboutRoute
+import id.haho.muslimdaily.feature.settings.diagnostics.DiagnosticsRoute
 import id.haho.muslimdaily.feature.settings.DisplaySettingsRoute
 import id.haho.muslimdaily.feature.settings.MethodologyRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
@@ -133,6 +134,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onDisplay = { navController.navigate(DisplaySettingsRoute) },
                         onMethodology = { navController.navigate(MethodologyRoute) },
                         onAbout = { navController.navigate(AboutRoute) },
+                        onDiagnostics = { navController.navigate(DiagnosticsRoute) },
                         onUpdates = { navController.navigate(UpdatesRoute) },
                     ),
                 )
@@ -145,6 +147,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<DisplaySettingsRoute> { DisplaySettingsRoute(onBack = back) }
             composable<MethodologyRoute> { MethodologyRoute(onBack = back) }
             composable<AboutRoute> { AboutRoute(onBack = back) }
+            composable<DiagnosticsRoute> { DiagnosticsRoute(onBack = back) }
             composable<UpdatesRoute> { UpdatesRoute(onBack = back) }
         }
     }

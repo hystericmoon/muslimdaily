@@ -41,6 +41,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object MethodologyRoute
 @Serializable data object MySetsDataRoute
 @Serializable data object AboutRoute
+@Serializable data object DiagnosticsRoute
 
 @Serializable data object UpdatesRoute
 

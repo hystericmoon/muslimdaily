@@ -32,6 +32,7 @@ data class SettingsDestinations(
     val onMySets: () -> Unit = {},
     val onMethodology: () -> Unit = {},
     val onReportError: () -> Unit = {},
+    val onDiagnostics: () -> Unit = {},
     val onAbout: () -> Unit = {},
     val onUpdates: () -> Unit = {},
 )
@@ -109,6 +110,12 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
                     summary = stringResource(R.string.settings_report_summary),
                     icon = R.drawable.ic_flag,
                     onClick = d.onReportError,
+                )
+                NavigationRow(
+                    title = stringResource(R.string.diag_title),
+                    summary = stringResource(R.string.diag_summary),
+                    icon = R.drawable.ic_bug_report,
+                    onClick = d.onDiagnostics,
                 )
                 NavigationRow(
                     title = stringResource(R.string.settings_about),

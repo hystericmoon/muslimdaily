@@ -11,6 +11,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
+import id.haho.muslimdaily.feature.settings.diagnostics.sendFeedback
+import id.haho.muslimdaily.feature.settings.diagnostics.DiagnosticsViewModel
+import id.haho.muslimdaily.core.diagnostics.CrashLog
+import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.Text
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,6 +55,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val updates: UpdateViewModel by viewModels()
+    private val diagnostics: DiagnosticsViewModel by viewModels()
 
     /** Screen requested by a notification tap; consumed by [AppRoot]. */
     private val destination = MutableStateFlow<Destination?>(null)
@@ -90,6 +102,28 @@ class MainActivity : ComponentActivity() {
                             pendingDestination = pending,
                             onDestinationHandled = { destination.value = null },
                             modifier = Modifier.frostWhenOverlayOpen(),
+                        )
+                    }
+                    // Once per new crash report: offer to send it, never send it silently.
+                    var crashPending by remember { mutableStateOf(CrashLog.unseen(this@MainActivity) != null) }
+                    val crashScope = rememberCoroutineScope()
+                    if (crashPending && onboarding == false) {
+                        GlassAlertDialog(
+                            onDismissRequest = { CrashLog.markSeen(this@MainActivity); crashPending = false },
+                            title = { Text(stringResource(R.string.crash_prompt_title)) },
+                            text = { Text(stringResource(R.string.crash_prompt_body)) },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    CrashLog.markSeen(this@MainActivity)
+                                    crashPending = false
+                                    crashScope.launch { sendFeedback(this@MainActivity, diagnostics.load()) }
+                                }) { Text(stringResource(R.string.crash_prompt_send)) }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { CrashLog.markSeen(this@MainActivity); crashPending = false }) {
+                                    Text(stringResource(R.string.crash_prompt_later))
+                                }
+                            },
                         )
                     }
                     val update by updates.state.collectAsStateWithLifecycle()
