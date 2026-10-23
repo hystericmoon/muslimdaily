@@ -40,4 +40,13 @@ python -m unittest discover -s tools          # content pipeline
 
 Work on a branch, run lint and tests, push, open a PR to main, merge once CI is green.
 
+Standing approval from the owner: merge your own PR (merge commit) as soon as CI is green and it
+is mergeable, without asking. Ask first only when the PR carries a risk:
+
+- it changes `versionName` (merging publishes a release to users),
+- it changes shipped religious content (`content/source/*.csv`, `content/*.json`, `content/audio/`),
+- it changes `UserDatabase`, `BackupRepository` or anything that could lose user data,
+- it adds a permission, network access or a new third-party dependency,
+- a review comment or a test result you could not resolve is still open.
+
 More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
