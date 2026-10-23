@@ -12,6 +12,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import id.haho.muslimdaily.core.designsystem.theme.ArabicTypography
+import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
+import androidx.compose.material3.RadioButton
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -76,6 +87,11 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     checked = settings.showTransliteration,
                     onCheckedChange = { v -> update { showTransliteration = v } },
                 )
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.display_arabic_font)) {
+                ArabicFontPicker(settings.arabicFont, settings.arabicScale) { f -> update { arabicFont = f } }
             }
         }
         item {
@@ -166,3 +182,48 @@ private fun SizePreview() {
     }
 }
 
+
+/**
+ * Each option is shown in its own typeface, with the same vocalised sample, so the choice is
+ * made by reading rather than by name. A radio group: the row is the target.
+ */
+@Composable
+private fun ArabicFontPicker(selected: ArabicFont, scale: Float, onSelect: (ArabicFont) -> Unit) {
+    Column(Modifier.selectableGroup()) {
+        ArabicFont.entries.forEach { font ->
+            val isSelected = font == selected
+            val style = remember(font, scale) { ArabicTypography.of(font).scaled(scale).arabicBody }
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .selectable(selected = isSelected, role = Role.RadioButton, onClick = { onSelect(font) })
+                    .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RadioButton(selected = isSelected, onClick = null)
+                Spacer(Modifier.width(AppTheme.spacing.md))
+                Column(Modifier.weight(1f)) {
+                    Text(font.displayName(), style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        stringResource(font.descriptionRes()),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    ArabicText(stringResource(R.string.display_font_sample), style = style, modifier = Modifier.fillMaxWidth())
+                }
+            }
+        }
+    }
+}
+
+private fun ArabicFont.displayName(): String = when (this) {
+    ArabicFont.NASKH -> "Noto Naskh Arabic"
+    ArabicFont.SCHEHERAZADE -> "Scheherazade New"
+    ArabicFont.AMIRI -> "Amiri"
+}
+
+private fun ArabicFont.descriptionRes(): Int = when (this) {
+    ArabicFont.NASKH -> R.string.display_font_naskh
+    ArabicFont.SCHEHERAZADE -> R.string.display_font_scheherazade
+    ArabicFont.AMIRI -> R.string.display_font_amiri
+}

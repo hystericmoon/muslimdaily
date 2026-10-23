@@ -22,6 +22,7 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withTranslation
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
 import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
 import id.haho.muslimdaily.core.model.Dua
 import kotlinx.coroutines.Dispatchers
@@ -44,10 +45,24 @@ object DuaShareCard {
      * A long dua is drawn smaller rather than cut off, so the source and footer always make it
      * onto the image.
      */
-    fun render(context: Context, dua: Dua, title: String, source: String, palette: AppPalette, textScale: Float = 1f): Bitmap {
+    fun render(
+        context: Context,
+        dua: Dua,
+        title: String,
+        source: String,
+        palette: AppPalette,
+        textScale: Float = 1f,
+        font: ArabicFont = ArabicFont.NASKH,
+    ): Bitmap {
         val scheme = colorSchemeFor(palette, dark = false)
         val res = context.resources
-        val arabicFace = ResourcesCompat.getFont(context, if (dua.isQuran) R.font.amiri_quran else R.font.amiri_regular) ?: Typeface.SERIF
+        // The reader's chosen typeface, so the image looks like the app.
+        val arabicRes = when (font) {
+            ArabicFont.NASKH -> R.font.noto_naskh_arabic
+            ArabicFont.SCHEHERAZADE -> R.font.scheherazade_new
+            ArabicFont.AMIRI -> if (dua.isQuran) R.font.amiri_quran else R.font.amiri_regular
+        }
+        val arabicFace = ResourcesCompat.getFont(context, arabicRes) ?: Typeface.SERIF
         val latinFace = ResourcesCompat.getFont(context, R.font.plus_jakarta_sans) ?: Typeface.SANS_SERIF
         val inner = (WIDTH - 2 * PAD - 2 * CARD_PAD).toInt()
 
@@ -87,7 +102,7 @@ object DuaShareCard {
             (translation?.let { it.height + gap } ?: 0f) + sourceLayout.height
         val height = (PAD * 2 + cardHeight + 28f + footer.height).toInt()
         if (height > MAX_HEIGHT && textScale > MIN_TEXT_SCALE) {
-            return render(context, dua, title, source, palette, (textScale * 0.85f).coerceAtLeast(MIN_TEXT_SCALE))
+            return render(context, dua, title, source, palette, (textScale * 0.85f).coerceAtLeast(MIN_TEXT_SCALE), font)
         }
 
         val bmp = createBitmap(WIDTH, height)
@@ -132,9 +147,9 @@ object DuaShareCard {
     }
 
     /** Renders and hands the image to the share sheet, with the source as text alongside. */
-    suspend fun share(context: Context, dua: Dua, title: String, source: String, palette: AppPalette) {
+    suspend fun share(context: Context, dua: Dua, title: String, source: String, palette: AppPalette, font: ArabicFont) {
         val file = withContext(Dispatchers.Default) {
-            val bmp = render(context, dua, title, source, palette)
+            val bmp = render(context, dua, title, source, palette, font = font)
             withContext(Dispatchers.IO) {
                 File(context.cacheDir, "export").apply { mkdirs() }.resolve("doa-${dua.id}.png").apply {
                     outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG, 100, it) }

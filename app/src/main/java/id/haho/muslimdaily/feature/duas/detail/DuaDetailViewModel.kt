@@ -108,4 +108,5 @@ class DuaDetailViewModel @Inject constructor(
 
     /** The palette the share card is drawn in. */
     suspend fun palette() = settings.current().palette
+    suspend fun arabicFont() = settings.current().arabicFont
 }

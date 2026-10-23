@@ -30,6 +30,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
+import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.DockedBar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateMapOf
@@ -72,7 +76,12 @@ data class CustomizeActions(
 )
 
 @Composable
-fun CustomizeRoute(onBack: () -> Unit, viewModel: CustomizeViewModel = hiltViewModel()) {
+fun CustomizeRoute(
+    onBack: () -> Unit,
+    /** Opens the routine editor with this occasion's set, to keep it as its own routine. */
+    onSaveAsRoutine: (String) -> Unit = {},
+    viewModel: CustomizeViewModel = hiltViewModel(),
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     var confirmReset by remember { mutableStateOf(false) }
     AppScreen(
@@ -81,6 +90,21 @@ fun CustomizeRoute(onBack: () -> Unit, viewModel: CustomizeViewModel = hiltViewM
         actions = {
             TextButton(onClick = { confirmReset = true }, enabled = state?.isCustomized == true) {
                 Text(stringResource(R.string.customize_reset))
+            }
+        },
+        bottomBar = {
+            DockedBar {
+                Text(
+                    stringResource(R.string.customize_routine_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                GlassTonalButton(onClick = { onSaveAsRoutine(viewModel.eventId) }) {
+                    Icon(painterResource(R.drawable.ic_bookmark_add), null, Modifier.size(AppTheme.dimens.smallIcon))
+                    Spacer(Modifier.width(AppTheme.spacing.sm))
+                    Text(stringResource(R.string.event_save_routine), maxLines = 1)
+                }
             }
         },
     ) {

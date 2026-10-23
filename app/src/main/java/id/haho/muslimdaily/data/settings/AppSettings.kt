@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.data.settings
 
+import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
 import id.haho.muslimdaily.core.designsystem.theme.AppPalette
 import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 import id.haho.muslimdaily.core.model.Prayer
@@ -89,6 +90,7 @@ data class AppSettings(
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,
     val showTransliteration: Boolean = false,
     val arabicScale: Float = 1f,
+    val arabicFont: ArabicFont = ArabicFont.NASKH,
     val translationScale: Float = 1f,
     val calculation: CalculationSettings = CalculationSettings(),
     val iqamahOffsets: Map<Prayer, Int> = emptyMap(),

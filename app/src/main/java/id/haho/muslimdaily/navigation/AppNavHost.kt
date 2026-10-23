@@ -97,13 +97,14 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
                     onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
-                    onSaveAsRoutine = { navController.navigate(RoutineEditRoute(fromEvent = it)) },
                 )
             }
             composable<DuaDetailRoute> {
                 DuaDetailRoute(onBack = back, onMemorize = { navController.navigate(MemorizeSessionRoute(it)) })
             }
-            composable<CustomizeRoute> { CustomizeRoute(onBack = back) }
+            composable<CustomizeRoute> {
+                CustomizeRoute(onBack = back, onSaveAsRoutine = { navController.navigate(RoutineEditRoute(fromEvent = it)) })
+            }
             composable<RunRoute> { RunRoute(onClose = back) }
         }
         navigation<MemorizeGraph>(startDestination = MemorizeHomeRoute) {

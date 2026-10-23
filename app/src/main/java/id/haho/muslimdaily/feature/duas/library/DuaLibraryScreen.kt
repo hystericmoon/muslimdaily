@@ -136,7 +136,7 @@ fun DuaLibraryRoute(
                 VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 Box(Modifier.weight(0.58f)) {
                     // One view model per occasion, keyed like the EventRoute destination would be.
-                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) { onRoutine(null, it) } }
+                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) }
                 }
             }
         } else {
@@ -151,7 +151,6 @@ private fun EventPane(
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
-    onSaveAsRoutine: (String) -> Unit,
 ) {
     val owner = checkNotNull(LocalViewModelStoreOwner.current)
     val defaults = owner as HasDefaultViewModelProviderFactory
@@ -163,7 +162,7 @@ private fun EventPane(
         factory = HiltViewModelFactory(LocalContext.current, defaults.defaultViewModelProviderFactory),
         extras = extras,
     )
-    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, onSaveAsRoutine = onSaveAsRoutine, viewModel = vm)
+    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, viewModel = vm)
 }
 
 @Composable

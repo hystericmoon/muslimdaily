@@ -32,6 +32,8 @@ private data class License(val name: String, val detail: String, val asset: Stri
 
 private val Licenses = listOf(
     License("Plus Jakarta Sans", "SIL Open Font License 1.1", "licenses/plus_jakarta_sans_OFL.txt"),
+    License("Noto Naskh Arabic", "SIL Open Font License 1.1", "licenses/noto_naskh_arabic_OFL.txt"),
+    License("Scheherazade New", "SIL Open Font License 1.1", "licenses/scheherazade_new_OFL.txt"),
     License("Amiri", "SIL Open Font License 1.1", "licenses/amiri_OFL.txt"),
     License("Amiri Quran", "SIL Open Font License 1.1", "licenses/amiri_quran_OFL.txt"),
     License("Noto Sans Arabic", "SIL Open Font License 1.1", "licenses/noto_sans_arabic_OFL.txt"),

@@ -22,11 +22,13 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
 import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.DockedBar
 import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -53,8 +55,6 @@ fun EventRoute(
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
-    /** Opens the routine editor pre-filled with this occasion's duas. */
-    onSaveAsRoutine: (String) -> Unit = {},
     viewModel: EventViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -62,9 +62,14 @@ fun EventRoute(
     AppScreen(
         title = s?.event?.label.orEmpty(),
         onBack = onBack,
-        actions = {
-            IconButton(onClick = { onCustomize(viewModel.eventId) }) {
-                Icon(painterResource(R.drawable.ic_tune), stringResource(R.string.event_customize))
+        // Docked on the menu, one row: read now, or adjust which duas and in what order.
+        bottomBar = {
+            if (s != null && s.items.isNotEmpty()) {
+                EventActionBar(
+                    count = s.items.size,
+                    onStart = { onStart(viewModel.eventId) },
+                    onCustomize = { onCustomize(viewModel.eventId) },
+                )
             }
         },
     ) {
@@ -75,8 +80,6 @@ fun EventRoute(
                 onOpenDua = onOpenDua,
                 onChooseForm = viewModel::chooseForm,
                 onCustomize = { onCustomize(viewModel.eventId) },
-                onStart = { onStart(viewModel.eventId) },
-                onSaveAsRoutine = { onSaveAsRoutine(viewModel.eventId) },
             )
         }
     }
@@ -89,8 +92,6 @@ fun EventContent(
     onOpenDua: (String) -> Unit,
     onChooseForm: (group: String, duaId: String) -> Unit,
     onCustomize: () -> Unit,
-    onStart: () -> Unit = {},
-    onSaveAsRoutine: () -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize(),
@@ -101,73 +102,24 @@ fun EventContent(
         ),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
     ) {
-        // The actions sit first, in words: a floating button and an icon were easy to miss.
-        if (state.items.isNotEmpty()) {
-            item(key = "actions") {
-                Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                    GlassButton(onClick = onStart, modifier = Modifier.fillMaxWidth()) {
-                        Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(AppTheme.dimens.smallIcon))
-                        Spacer(Modifier.width(AppTheme.spacing.sm))
-                        Text(stringResource(R.string.event_start_all, state.items.size))
-                    }
-                    InfoNote(stringResource(R.string.event_start_hint))
-                    // An equal pair; stacked at large font sizes, where two labels can't share a row.
-                    val secondary = @Composable { modifier: Modifier ->
-                        GlassTonalButton(onClick = onCustomize, modifier = modifier) {
-                            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(AppTheme.dimens.smallIcon))
-                            Spacer(Modifier.width(AppTheme.spacing.sm))
-                            Text(stringResource(R.string.event_choose_order), textAlign = TextAlign.Center)
-                        }
-                    }
-                    val save = @Composable { modifier: Modifier ->
-                        GlassTonalButton(onClick = onSaveAsRoutine, modifier = modifier) {
-                            Icon(painterResource(R.drawable.ic_bookmark_add), null, Modifier.size(AppTheme.dimens.smallIcon))
-                            Spacer(Modifier.width(AppTheme.spacing.sm))
-                            Text(stringResource(R.string.event_save_routine), textAlign = TextAlign.Center)
-                        }
-                    }
-                    if (isLargeFontScale()) {
-                        secondary(Modifier.fillMaxWidth())
-                        save(Modifier.fillMaxWidth())
+        // Only when the reader has their own set: say so, and how to change it.
+        when {
+            state.customized && state.useMySet -> item(key = "my-set") {
+                InfoNote(
+                    if (state.hiddenCount > 0) {
+                        androidx.compose.ui.res.pluralStringResource(R.plurals.event_my_set_hidden, state.hiddenCount, state.hiddenCount)
                     } else {
-                        Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                            secondary(Modifier.weight(1f))
-                            save(Modifier.weight(1f))
-                        }
-                    }
+                        stringResource(R.string.event_my_set_active)
+                    },
+                )
+            }
+            state.customized -> item(key = "my-set-off") {
+                FlowRow(verticalArrangement = Arrangement.Center) {
+                    InfoNote(stringResource(R.string.event_my_set_off), Modifier.align(Alignment.CenterVertically))
+                    TextButton(onClick = { onUseMySet(true) }) { Text(stringResource(R.string.event_my_set_use)) }
                 }
             }
-        }
-        item(key = "mode") {
-            Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                val options = listOf(false to R.string.event_full_set, true to R.string.event_my_set)
-                // At large font sizes the check mark leaves too little room for the label.
-                val large = isLargeFontScale()
-                SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                    options.forEachIndexed { i, (value, label) ->
-                        val selected = state.useMySet == value
-                        SegmentedButton(
-                            selected = selected,
-                            onClick = { onUseMySet(value) },
-                            shape = SegmentedButtonDefaults.itemShape(i, options.size),
-                            colors = glassSegmentedColors(),
-                            icon = { if (!large) SegmentedButtonDefaults.Icon(selected) },
-                            label = { Text(stringResource(label), maxLines = 2, textAlign = TextAlign.Center) },
-                        )
-                    }
-                }
-                when {
-                    state.useMySet && !state.customized -> InfoNote(stringResource(R.string.event_my_set_empty_hint))
-                    state.useMySet && state.hiddenCount > 0 -> FlowRow(verticalArrangement = Arrangement.Center) {
-                        InfoNote(
-                            androidx.compose.ui.res.pluralStringResource(R.plurals.event_hidden, state.hiddenCount, state.hiddenCount),
-                            Modifier.align(Alignment.CenterVertically),
-                        )
-                        TextButton(onClick = onCustomize) { Text(stringResource(R.string.event_customize)) }
-                    }
-                    !state.useMySet -> InfoNote(stringResource(R.string.event_full_set_hint))
-                }
-            }
+            else -> Unit
         }
         if (state.items.isEmpty()) {
             item(key = "empty") {
@@ -220,6 +172,27 @@ private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseF
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun EventActionBar(count: Int, onStart: () -> Unit, onCustomize: () -> Unit) {
+    DockedBar {
+        GlassButton(onClick = onStart, modifier = Modifier.weight(1f)) {
+            Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(AppTheme.dimens.smallIcon))
+            Spacer(Modifier.width(AppTheme.spacing.sm))
+            // The count drops at large font sizes so the label fits the row.
+            Text(
+                if (isLargeFontScale()) stringResource(R.string.event_start_short) else stringResource(R.string.event_start_all, count),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        GlassTonalButton(onClick = onCustomize) {
+            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(AppTheme.dimens.smallIcon))
+            Spacer(Modifier.width(AppTheme.spacing.sm))
+            Text(stringResource(R.string.event_adjust), maxLines = 1)
         }
     }
 }

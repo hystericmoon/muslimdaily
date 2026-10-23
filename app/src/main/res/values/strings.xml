@@ -262,14 +262,6 @@
     <string name="state_disabled">mati</string>
 
     <!-- Event -->
-    <string name="event_full_set">Set lengkap</string>
-    <string name="event_my_set">Set saya</string>
-    <string name="event_full_set_hint">Semua doa dalam urutan bawaan.</string>
-    <string name="event_my_set_empty_hint">Set saya belum diatur, jadi masih sama dengan set lengkap. Ketuk ikon atur untuk memilih.</string>
-    <plurals name="event_hidden">
-        <item quantity="other">%d disembunyikan</item>
-    </plurals>
-    <string name="event_customize">Sesuaikan set</string>
     <string name="event_item_position">%1$d dari %2$d</string>
     <string name="event_variants_hint">Beberapa bentuk yang sahih. Pilih yang dibaca.</string>
     <string name="event_form_n">Bentuk %d</string>
@@ -745,8 +737,6 @@
     <string name="crash_prompt_send">Kirim laporan</string>
     <string name="crash_prompt_later">Nanti</string>
     <string name="event_start_all">Mulai baca (%1$d doa)</string>
-    <string name="event_start_hint">Satu doa per layar. Ketuk kartu setelah membaca untuk mencentangnya dan lanjut ke doa berikutnya.</string>
-    <string name="event_choose_order">Pilih dan urutkan</string>
     <string name="event_save_routine">Jadikan rangkaian</string>
     <string name="routine_section">Rangkaian saya</string>
     <string name="routine_empty_title">Buat rangkaian sendiri</string>
@@ -775,4 +765,18 @@
     <plurals name="routine_selected">
         <item quantity="other">%d dipilih</item>
     </plurals>
+    <string name="display_arabic_font">Huruf Arab</string>
+    <string name="display_font_sample" translatable="false">هٰذَا نَصٌّ تَجْرِيبِيٌّ لِاخْتِبَارِ الْخَطِّ وَالْحَرَكَاتِ</string>
+    <string name="display_font_naskh">Paling jelas di layar ponsel. Bawaan.</string>
+    <string name="display_font_scheherazade">Harakat besar dan renggang, mudah dibaca perlahan.</string>
+    <string name="display_font_amiri">Gaya kitab klasik. Ayat Al-Qur\'an memakai Amiri Quran.</string>
+    <string name="event_adjust">Sesuaikan</string>
+    <string name="event_my_set_active">Memakai set saya.</string>
+    <plurals name="event_my_set_hidden">
+        <item quantity="other">Memakai set saya: %d doa disembunyikan.</item>
+    </plurals>
+    <string name="event_my_set_off">Set saya tersimpan tetapi tidak dipakai.</string>
+    <string name="event_my_set_use">Pakai</string>
+    <string name="customize_routine_hint">Ingin rangkaian terpisah, dengan doa dari tempat lain juga?</string>
+    <string name="event_start_short">Mulai baca</string>
 </resources>

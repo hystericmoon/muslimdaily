@@ -117,6 +117,7 @@ fun MuslimDailyTheme(
     arabicScale: Float = 1f,
     translationScale: Float = 1f,
     glass: Boolean = true,
+    arabicFont: ArabicFont = ArabicFont.NASKH,
     content: @Composable () -> Unit,
 ) {
     val dark = when (themeMode) {
@@ -136,7 +137,7 @@ fun MuslimDailyTheme(
             context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f,
         ) == 0f
     }
-    val arabic = remember(arabicScale) { ArabicTypography().scaled(arabicScale) }
+    val arabic = remember(arabicFont, arabicScale) { ArabicTypography.of(arabicFont).scaled(arabicScale) }
     val readingTypography = remember(translationScale) { AppTypography.scaled(translationScale) }
 
     val glassColors = remember(colorScheme, dark, glass) { glassColors(colorScheme, dark, glass) }

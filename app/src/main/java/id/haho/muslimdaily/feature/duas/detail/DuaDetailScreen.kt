@@ -72,7 +72,7 @@ fun DuaDetailRoute(
                     append(s.dua.sources.joinToString("; ") { sourceLabel(it) })
                     if (s.dua.grading != null) append(" · ").append(gradeLabel(s.dua))
                 }
-                IconButton(onClick = { scope.launch { DuaShareCard.share(context, s.dua, title, source, viewModel.palette()) } }) {
+                IconButton(onClick = { scope.launch { DuaShareCard.share(context, s.dua, title, source, viewModel.palette(), viewModel.arabicFont()) } }) {
                     Icon(painterResource(R.drawable.ic_share), stringResource(R.string.share_dua))
                 }
             }
@@ -90,9 +90,6 @@ fun DuaDetailRoute(
                     onToggle = { viewModel.togglePlay(title) },
                     onSpeed = viewModel::setSpeed,
                     onRepeat = viewModel::setRepeat,
-                    modifier = Modifier
-                        .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm)
-                        .navigationBarsPadding(),
                 )
             }
         },
