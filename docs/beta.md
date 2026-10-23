@@ -41,7 +41,7 @@ diminta.
 1. Buka aplikasi pertama kali dan siapkan lokasi serta pengingat.
 2. Ikuti satu hari: centang shalat yang Anda kerjakan dan baca dzikir pagi atau petang lewat
    tombol Mulai.
-3. Cari doa masuk rumah, lalu dengarkan audionya.
+3. Cari doa keluar rumah, lalu dengarkan audionya.
 
 **Biarkan pengingat menyala** setidaknya seminggu, dan perhatikan apakah adzan berbunyi tepat
 waktu.

@@ -93,6 +93,31 @@ from the product spec. Evidence columns are still empty.
   and fills `audio_file`. These files have no phrase segments, so playback has no highlighting.
 * Duas without `audio_file` simply have no player.
 
+### Phrase segments helper
+
+Without phrases, a dua is one block: no moving highlight, and memorisation works on the whole
+text. `tools/segment_audio.py` proposes phrases for rows that have audio but no `|` yet. It only
+breaks where the source text already has punctuation (، . : ؛ ۝ and Qur'anic brackets) and
+pairs each break with a pause in the recitation; it never changes a word. A person approves
+every row.
+
+```bash
+python3 -I tools/segment_audio.py suggest --event morning --event evening   # or --id morning_03
+```
+
+1. Open `build/segments/review.html` in a browser. Tap each time range: the recitation should
+   say exactly the phrase next to it.
+2. In `build/segments/review.csv`, set `approved` to `ya` for rows that sound right. To fix a
+   row, edit `audio_segments` or move/remove `|` in `arabic_marked` (keep the counts equal).
+   Rows marked `match` or `close` usually need no edits; `partial` rows need the closest look.
+3. `python3 -I tools/segment_audio.py apply`, then `python3 tools/build_content.py`.
+
+`apply` skips a row if its Arabic changed since the suggestion, or if `arabic_marked` differs
+from the source by anything other than `|`. Some long Qur'anic passages (e.g. Ayat al-Kursi)
+have no punctuation inside, so they stay one or two phrases; adding waqf breaks there is a
+content decision. Run this after the final Hisn import, because `import_hisn.py --merge`
+replaces imported rows.
+
 ## Imported content: Hisnul Muslim
 
 The rows in `duas.csv` (24 events) and the full sheet `content/source/import/hisnul_muslim.csv`
@@ -111,6 +136,9 @@ The rows in `duas.csv` (24 events) and the full sheet `content/source/import/his
   «﴾.» becomes «﴾». The words themselves are never changed.
 * Entries the PDF's appendix reports al-Albani graded weak are left out of `duas.csv` and
   marked `LEMAH` in the full sheet. A count he judged unauthentic is left blank.
+* An event with no rows is hidden from the library, routines and memorisation. Two are empty
+  on purpose: `entering_home` (Hisn no. 18 is graded weak) and `drinking` (no Hisn chapter).
+  Filling them needs another sahih or hasan source.
 
 Imported rows ship as they are; there is no review step. To re-run:
 `python3 tools/hisnul_muslim/import_hisn.py --pdf <file> --merge`. It replaces the previously
