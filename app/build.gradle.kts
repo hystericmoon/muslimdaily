@@ -27,8 +27,8 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 26
         targetSdk = 37
-        versionCode = 17
-        versionName = "0.5.0"
+        versionCode = 18
+        versionName = "0.5.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
         // GitHub repository whose releases the sideload updater reads (debug builds only).

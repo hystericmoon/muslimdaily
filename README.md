@@ -95,6 +95,7 @@ Stack: Kotlin 2.3, Jetpack Compose (BOM 2026.09), Material 3, Hilt, Navigation C
 | [fonts.md](docs/fonts.md) | Typefaces and licences (why not KFGQPC) |
 | [release.md](docs/release.md) | Signing, release gate, store listing notes |
 | [ihrish-integration.md](docs/ihrish-integration.md) | Assessment of adding kajian schedules |
+| [beta.md](docs/beta.md) | Running the beta, reading diagnostics, tester instructions |
 | [device-qa.md](docs/device-qa.md) | Manual test pass on real phones, a watch and a tablet |
 | [talkback-checklist.md](docs/talkback-checklist.md) | Task-based TalkBack test |
 | [privacy-policy.md](docs/privacy-policy.md) | Privacy policy (Indonesian and English) |

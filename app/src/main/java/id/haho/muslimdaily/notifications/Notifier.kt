@@ -63,6 +63,13 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
         return granted && NotificationManagerCompat.from(context).areNotificationsEnabled()
     }
 
+    /** Names of this app's notification channels the user has turned off in system settings. */
+    fun mutedChannels(): List<String> {
+        return context.getSystemService(NotificationManager::class.java).notificationChannels
+            .filter { it.importance == NotificationManager.IMPORTANCE_NONE }
+            .map { it.name.toString() }
+    }
+
     fun adhan(prayer: Prayer, at: Instant, zone: ZoneId, place: String, silent: Boolean, is24Hour: Boolean) {
         val name = context.getString(prayer.labelRes())
         post(

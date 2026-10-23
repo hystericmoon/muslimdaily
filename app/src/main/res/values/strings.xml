@@ -703,4 +703,46 @@
     <string name="hijri_check_skip">Biarkan sesuai perhitungan</string>
     <string name="language_indonesian" translatable="false">Bahasa Indonesia</string>
     <string name="language_english" translatable="false">English</string>
+    <string name="diag_title">Masukan dan diagnosa</string>
+    <string name="diag_summary">Kirim masukan uji coba, cek mengapa pengingat tidak berbunyi</string>
+    <string name="diag_intro">Data di layar ini tetap di perangkat. Tidak ada yang dikirim kecuali Anda menekan Kirim masukan dan mengirim emailnya sendiri.</string>
+    <string name="diag_send">Kirim masukan</string>
+    <string name="diag_permissions">Izin dan baterai</string>
+    <string name="diag_notifications">Notifikasi</string>
+    <string name="diag_exact">Alarm tepat waktu</string>
+    <string name="diag_battery">Penghemat baterai</string>
+    <string name="diag_allowed">Diizinkan</string>
+    <string name="diag_not_allowed">Tidak diizinkan</string>
+    <string name="diag_battery_free">Tidak dibatasi</string>
+    <string name="diag_battery_restricted">Dibatasi: Android bisa menunda pengingat</string>
+    <string name="diag_open_settings">Buka pengaturan</string>
+    <string name="diag_muted">Saluran notifikasi yang dimatikan: %1$s</string>
+    <string name="diag_oem">Ponsel merek ini sering menghentikan aplikasi di latar belakang. Langkah untuk mengizinkannya: dontkillmyapp.com/%1$s</string>
+    <string name="diag_next">Pengingat berikutnya</string>
+    <string name="diag_none_planned">Tidak ada pengingat yang aktif</string>
+    <string name="diag_recent">Terakhir berbunyi</string>
+    <string name="diag_none_fired">Belum ada pengingat yang berbunyi</string>
+    <string name="diag_fired_at">Dijadwalkan %1$s · %2$s</string>
+    <string name="diag_on_time">tepat waktu</string>
+    <string name="diag_late">terlambat %1$d menit</string>
+    <string name="diag_crashes">Laporan kerusakan</string>
+    <string name="diag_no_crashes">Aplikasi belum pernah berhenti mendadak</string>
+    <string name="diag_crash_count">%1$d laporan tersimpan</string>
+    <string name="diag_crash_latest">Terakhir: %1$s</string>
+    <string name="diag_clear_crashes">Hapus laporan</string>
+    <string name="diag_type_adhan">Adzan %1$s</string>
+    <string name="diag_type_morning">Dzikir pagi</string>
+    <string name="diag_type_evening">Dzikir petang</string>
+    <string name="diag_type_sleep">Sebelum tidur</string>
+    <string name="diag_type_friday">Hari Jumat</string>
+    <string name="diag_type_review">Ulang hafalan</string>
+    <string name="diag_type_pre_prayer">Sebelum shalat</string>
+    <string name="diag_type_fasting">Puasa sunnah</string>
+    <string name="diag_type_other">Lainnya</string>
+    <string name="diag_email_subject">Masukan uji coba Muslim Daily %1$s</string>
+    <string name="diag_email_template">Apa yang terjadi?\n\n\nApa yang Anda harapkan?\n\n\nLangkah sebelum itu terjadi:\n1.\n2.\n\n(Data di bawah membantu mencari penyebabnya. Hapus bagian mana pun yang tidak ingin Anda kirim.)</string>
+    <string name="crash_prompt_title">Aplikasi berhenti mendadak</string>
+    <string name="crash_prompt_body">Laporan kerusakan tersimpan di perangkat. Kirim ke pengembang agar bisa diperbaiki? Anda akan melihat isinya di email sebelum mengirim.</string>
+    <string name="crash_prompt_send">Kirim laporan</string>
+    <string name="crash_prompt_later">Nanti</string>
 </resources>

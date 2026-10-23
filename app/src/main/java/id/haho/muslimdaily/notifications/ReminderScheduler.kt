@@ -40,8 +40,8 @@ class ReminderScheduler @Inject constructor(
         val planned = ReminderPlanner.plan(Instant.now(clock), settings.current(), calculator)
         val byType = planned.associateBy { it.type }
         ReminderType.entries.forEach { type ->
-            val pending = pendingIntent(type, byType[type]?.silent ?: false)
             val next = byType[type]
+            val pending = pendingIntent(type, next?.silent ?: false, next?.at?.toEpochMilli() ?: 0L)
             if (next == null) {
                 alarms.cancel(pending)
             } else {
@@ -61,14 +61,15 @@ class ReminderScheduler @Inject constructor(
         }
     }
 
-    private fun pendingIntent(type: ReminderType, silent: Boolean): PendingIntent =
+    private fun pendingIntent(type: ReminderType, silent: Boolean, dueMillis: Long): PendingIntent =
         PendingIntent.getBroadcast(
             context,
             type.requestCode,
             Intent(context, ReminderReceiver::class.java)
                 .setAction(ACTION_REMINDER)
                 .putExtra(EXTRA_TYPE, type.name)
-                .putExtra(EXTRA_SILENT, silent),
+                .putExtra(EXTRA_SILENT, silent)
+                .putExtra(EXTRA_DUE, dueMillis),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
@@ -92,5 +93,6 @@ class ReminderScheduler @Inject constructor(
         const val ACTION_REMINDER = "id.haho.muslimdaily.action.REMINDER"
         const val EXTRA_TYPE = "type"
         const val EXTRA_SILENT = "silent"
+        const val EXTRA_DUE = "due"
     }
 }

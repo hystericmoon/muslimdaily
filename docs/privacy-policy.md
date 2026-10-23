@@ -15,6 +15,12 @@ ke server mana pun. Anda dapat memilih kota secara manual tanpa memberi izin lok
 **Data yang disimpan di perangkat.** Pengaturan, kota pilihan, set doa Anda, jadwal hafalan dan
 daftar centang harian. Data ini tetap di perangkat sampai Anda menghapus aplikasi atau datanya.
 
+**Laporan kerusakan dan diagnosa.** Bila aplikasi berhenti mendadak, laporan teknis (versi
+aplikasi, model perangkat, versi Android, dan jejak galat) disimpan di perangkat, paling banyak
+lima. Aplikasi juga mencatat kapan pengingat terakhir berbunyi. Data ini hanya dikirim bila Anda
+menekan Kirim masukan atau Kirim laporan, lalu mengirim email yang terbuka di aplikasi email Anda;
+Anda dapat membaca dan menghapus isinya sebelum mengirim.
+
 **Cadangan.** Bila Anda membuat cadangan, aplikasi menulis satu berkas JSON ke tempat yang Anda
 pilih. Aplikasi tidak mengunggahnya ke mana pun.
 
@@ -48,6 +54,12 @@ to any server. You can pick a city by hand without granting location access.
 
 **Data stored on the device.** Settings, the chosen city, your dua sets, memorization schedule and
 the daily checklist. It stays on the device until you uninstall the app or clear its data.
+
+**Crash reports and diagnostics.** If the app stops unexpectedly, a technical report (app version,
+device model, Android version and the error trace) is kept on the device, at most five. The app
+also records when reminders last rang. This data is only sent if you tap Send feedback or Send
+report and then send the email that opens in your email app; you can read and delete any part of
+it before sending.
 
 **Backups.** When you create a backup, the app writes one JSON file to the place you choose. The
 app does not upload it anywhere.

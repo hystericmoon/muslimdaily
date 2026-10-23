@@ -10,6 +10,11 @@ import id.haho.muslimdaily.feature.onboarding.OnboardingScreen
 import id.haho.muslimdaily.feature.today.TodayActions
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
+import id.haho.muslimdaily.core.diagnostics.ReminderLog
+import id.haho.muslimdaily.feature.settings.diagnostics.Diagnostics
+import id.haho.muslimdaily.feature.settings.diagnostics.DiagnosticsContent
+import id.haho.muslimdaily.notifications.PlannedReminder
+import id.haho.muslimdaily.notifications.ReminderType
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -57,4 +62,30 @@ class AdaptiveScreenshotTest {
     fun libraryEnglish() = captureVariants("104-library-english") {
         DuaLibraryContent(DuaPreviewData.categories) {}
     }
+
+    @Test
+    fun diagnostics() = captureVariants("105-diagnostics") {
+        val due = java.time.Instant.parse("2026-10-22T22:13:00Z")
+        DiagnosticsContent(
+            Diagnostics(
+                notifications = true,
+                exact = false,
+                batteryRestricted = true,
+                mutedChannels = emptyList(),
+                planned = listOf(
+                    PlannedReminder(ReminderType.ADHAN_FAJR, due.plusSeconds(86_400)),
+                    PlannedReminder(ReminderType.MORNING_ADHKAR, due.plusSeconds(86_400 + 900)),
+                ),
+                fired = listOf(
+                    ReminderLog.Entry("ADHAN_FAJR", due, due.plusSeconds(420), exact = false),
+                    ReminderLog.Entry("ADHAN_ISHA", due.minusSeconds(32_000), due.minusSeconds(31_990), exact = false),
+                ),
+                crashes = emptyList(),
+                zone = java.time.ZoneId.of("Asia/Jakarta"),
+                manufacturer = "xiaomi",
+            ),
+            time = id.haho.muslimdaily.core.ui.TimeFormatter(true),
+        )
+    }
 }
+
