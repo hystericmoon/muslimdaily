@@ -1,8 +1,13 @@
 # Licence request to IslamHouse
 
-**Status: draft, not sent.** Send from the maintainer's own address to IslamHouse's contact
-(https://islamhouse.com → "Contact us"; the site's FAQ is https://d1.islamhouse.com/html/faq.htm).
-Keep their reply in this folder as `islamhouse-reply-<date>.pdf` and link it from About.
+**Status: sent 2026-10-23 through the contact form, awaiting a reply.** The form at
+https://islamhouse.com → "Contact us" allows only 500 characters, so the short message below
+went instead of the full letter (the site's FAQ is https://d1.islamhouse.com/html/faq.htm). If
+they ask for details, email them the full letter. Keep their reply in this folder as
+`islamhouse-reply-<date>.pdf` and link it from About.
+
+Until a reply arrives, the English translations (point 1 below) and a Play Store release
+(point 2) stay on hold.
 
 Why: the app bundles the Hisn al-Muslim recitation by Hamad ad-Duraihim (about 26 MB, Opus) on
 the strength of IslamHouse's FAQ, which allows republishing without changes and with credit. The
@@ -12,7 +17,17 @@ site's disclaimer is less clear, and two further uses need a yes before they shi
    there). `tools/hisnul_muslim/fetch_english.py` is ready but not applied.
 2. A Play Store release, which is a distribution channel beyond GitHub.
 
----
+## Message sent (contact form)
+
+> Assalamu'alaikum. I maintain Muslim Daily, a free, offline, ad-free Android app
+> (github.com/hystericmoon/muslimdaily). May we include, unchanged and credited to IslamHouse:
+> 1. Hamad ad-Duraihim's Hisn al-Muslim audio, converted to Opus without edits
+> 2. The English Hisn al-Muslim text from hisnmuslim.com (who is the translator?)
+> 3. Distributed via GitHub and Google Play
+>
+> Your FAQ seems to allow this; we'd like written confirmation. Jazakumullahu khairan.
+
+## Full letter (for email follow-up)
 
 **Subject:** Permission to include Hisn al-Muslim audio and translation in a free, offline app
 
