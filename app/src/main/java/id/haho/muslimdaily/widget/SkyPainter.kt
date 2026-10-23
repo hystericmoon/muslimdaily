@@ -1,13 +1,12 @@
 package id.haho.muslimdaily.widget
 
 import android.graphics.Bitmap
+import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
@@ -121,8 +120,7 @@ object SkyPainter {
 
         if (stars && look.stars > 0.01f) stars(c, w, h, density, look.stars)
 
-        roundAndRim(c, bmp, w, h, density, cornerPx)
-        return bmp
+        return roundAndRim(bmp, w, h, density, cornerPx)
     }
 
     /** A plain night sky, for a widget with nothing to show yet. */
@@ -143,13 +141,16 @@ object SkyPainter {
         }
     }
 
-    /** Rounded corners (launchers before Android 12 draw widgets edge to edge) and a soft rim. */
-    private fun roundAndRim(c: Canvas, bmp: Bitmap, w: Float, h: Float, d: Float, corner: Float) {
-        val mask = Paint(Paint.ANTI_ALIAS_FLAG).apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN) }
-        val shape = createBitmap(bmp.width, bmp.height, Bitmap.Config.ALPHA_8)
-        Canvas(shape).drawRoundRect(RectF(0f, 0f, w, h), corner, corner, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.BLACK })
-        c.drawBitmap(shape, 0f, 0f, mask)
-        shape.recycle()
+    /**
+     * Rounded corners (launchers before Android 12 draw widgets edge to edge) and a soft rim. The
+     * sky is drawn through a shader into an anti-aliased rounded rectangle on a clear bitmap, so
+     * the corners are truly transparent.
+     */
+    private fun roundAndRim(sky: Bitmap, w: Float, h: Float, d: Float, corner: Float): Bitmap {
+        val bmp = createBitmap(sky.width, sky.height)
+        val c = Canvas(bmp)
+        c.drawRoundRect(RectF(0f, 0f, w, h), corner, corner, Paint(Paint.ANTI_ALIAS_FLAG).apply { shader = BitmapShader(sky, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP) })
+        sky.recycle()
         val rim = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
             strokeWidth = 1f * d
@@ -157,5 +158,6 @@ object SkyPainter {
         }
         val inset = rim.strokeWidth / 2
         c.drawRoundRect(RectF(inset, inset, w - inset, h - inset), corner, corner, rim)
+        return bmp
     }
 }

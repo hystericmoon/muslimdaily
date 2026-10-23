@@ -128,4 +128,20 @@ class WidgetModelTest {
         assertEquals(1f, WidgetGrid.of(340f, 164f).scale)
         assertEquals(1.35f, WidgetGrid.of(800f, 600f).scale)
     }
+
+    @Test
+    fun `the countdown ends at the prayer however late the widget is drawn`() {
+        val now = at(23, 44)
+        val subuh = at(4, 11, friday.plusDays(1))
+        // Read at elapsed 1_000_000: the base comes from that reading, so a redraw later (a resize
+        // recomposes with the same data) still reaches zero at Subuh, not that much later.
+        val base = chronometerBase(subuh, now, elapsedAtNow = 1_000_000L)
+        assertEquals(1_000_000L + Duration.between(now, subuh).toMillis(), base)
+    }
+
+    @Test
+    fun `12-hour times keep their digits and shrink only the marker`() {
+        assertEquals(listOf("11:40" to 16f, " AM" to 16f * 0.7f), clockParts("11:40 AM", 16f).toList())
+        assertEquals(listOf("11.40" to 16f), clockParts("11.40", 16f).toList())
+    }
 }

@@ -794,6 +794,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0_beta_2">
+        <item>Jam di widget tidak lagi terpotong di ukuran apa pun, juga dalam bahasa Inggris dan format 12 jam.</item>
+        <item>Di widget lebar yang tinggi, shalat berikutnya kini tampil besar, dan jam di deretan jadwal lebih besar.</item>
+        <item>Hitung mundur di widget tetap tepat setelah ukurannya diubah, dan sudut widget kini membulat di Android 8–11.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0">
         <item>Satu widget jadwal shalat untuk semua ukuran, dari 1×1 sampai 5×3. Makin besar, makin lengkap: tanggal Hijriah, tempat, jadwal hari ini, dan puasa sunnah besok.</item>
         <item>Langit di widget kini lebih nyata dan mengikuti waktu shalat, dengan huruf yang sama seperti aplikasi.</item>
