@@ -53,6 +53,7 @@ import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.data.location.LocationRepository
+import id.haho.muslimdaily.feature.settings.LanguageRow
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -188,6 +189,8 @@ fun OnboardingScreen(
     exactAllowed: Boolean,
     locationMessage: String?,
     actions: OnboardingActions,
+    /** Off in screenshots, where there is no activity to switch language on. */
+    showLanguage: Boolean = true,
 ) {
     val prayerOn = FIVE_PRAYERS.all { settings.reminders.adhan[it] != AdhanMode.OFF }
     val adhkarOn = settings.reminders.morningAdhkar && settings.reminders.eveningAdhkar
@@ -216,6 +219,9 @@ fun OnboardingScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            if (showLanguage) {
+                GlassCard(Modifier.fillMaxWidth()) { LanguageRow(Modifier.padding(vertical = AppTheme.spacing.sm)) }
+            }
 
             Step(R.drawable.ic_my_location, stringResource(R.string.onboarding_location_title), stringResource(R.string.onboarding_location_body)) {
                 val location = settings.location

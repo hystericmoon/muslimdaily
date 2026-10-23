@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
+import id.haho.muslimdaily.core.ui.AppLanguage
 import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.notifications.ReminderSync
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,7 @@ class MuslimDailyApp : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        AppLanguage.onAppStart(this)
         reminderSync.start()
         CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
             runCatching { locations.backfillElevation() }

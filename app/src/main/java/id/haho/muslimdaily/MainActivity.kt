@@ -2,7 +2,9 @@ package id.haho.muslimdaily
 
 import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
 import id.haho.muslimdaily.core.designsystem.glass.frostWhenOverlayOpen
+import android.content.Context
 import android.content.Intent
+import id.haho.muslimdaily.core.ui.AppLanguage
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,6 +47,10 @@ class MainActivity : ComponentActivity() {
 
     /** Screen requested by a notification tap; consumed by [AppRoot]. */
     private val destination = MutableStateFlow<Destination?>(null)
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLanguage.wrap(newBase))
+    }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)

@@ -23,8 +23,13 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
 * **Today**: next prayer with countdown and iqamah, current windows (adhkar, prohibited,
   Duha, Witr), a qabliyah → fard → ba'diyah timeline per prayer with a private checklist that
   resets daily, Friday Jumu'ah rules, travel mode (suggested, never automatic), Hijri date.
-* **Prayer times**: Kemenag RI by default (within ±1 minute of the official schedule, tested),
-  MWL, Umm al-Qura, custom angles, Hanafi Asr, per-prayer offsets. No Imsak.
+* **First launch**: a short setup for location and reminders, each explained before Android's
+  permission dialog; everything can be skipped.
+* **Prayer times**: Kemenag RI by default, with its elevation correction for sunrise and
+  Maghrib; within ±1 minute of the official bimasislam.kemenag.go.id schedule for 16 cities in
+  WIB, WITA and WIT (tested). MWL, Umm al-Qura, custom angles, Hanafi Asr, per-prayer offsets.
+  No Imsak. Around the 29th of Sya'ban, Ramadan and Zulkaidah the app asks for the sidang isbat
+  result and adjusts the Hijri date.
 * **Duas**: categories → events → duas, FTS search across Arabic (tashkeel-insensitive),
   Indonesian and English, source and grading sheet, virtue, audio with phrase highlighting.
 * **My set**: full canonical set by default; opt-in customisation (hide, reorder, choose or
@@ -50,6 +55,11 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
 * **Share and backup**: share any dua as an image that carries its source; one-file backup
   and restore of settings, sets, memorisation and checklist.
 * **Colour themes**: eight palettes, all keeping the glass look and AA contrast.
+* **Languages**: Indonesian UI by default, also on phones set to English; English can be
+  chosen in setup or Settings → Tampilan (kept as the per-app language on Android 13+). Hisn al-Muslim
+  entries keep their Indonesian translation in English until a licensed English text is added.
+* **Tablets and foldables**: navigation rail from 600dp; Today in two columns and the dua
+  library as list-detail from 840dp.
 * **Accessibility**: WCAG 2.2 AA colours, ≥ 48dp targets, TalkBack labels and live regions,
   Arabic locale for TTS, 200% font without clipping, reduced motion. See
   [docs/accessibility.md](docs/accessibility.md).
@@ -85,6 +95,11 @@ Stack: Kotlin 2.3, Jetpack Compose (BOM 2026.09), Material 3, Hilt, Navigation C
 | [fonts.md](docs/fonts.md) | Typefaces and licences (why not KFGQPC) |
 | [release.md](docs/release.md) | Signing, release gate, store listing notes |
 | [ihrish-integration.md](docs/ihrish-integration.md) | Assessment of adding kajian schedules |
+| [device-qa.md](docs/device-qa.md) | Manual test pass on real phones, a watch and a tablet |
+| [talkback-checklist.md](docs/talkback-checklist.md) | Task-based TalkBack test |
+| [privacy-policy.md](docs/privacy-policy.md) | Privacy policy (Indonesian and English) |
+| [play-store.md](docs/play-store.md) | What a Play Store release would need |
+| [islamhouse-licence-request.md](docs/islamhouse-licence-request.md) | Draft licence confirmation for the Hisn audio and English text |
 
 ## Licences
 

@@ -27,8 +27,8 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 26
         targetSdk = 37
-        versionCode = 16
-        versionName = "0.4.1"
+        versionCode = 17
+        versionName = "0.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
         // GitHub repository whose releases the sideload updater reads (debug builds only).
@@ -51,6 +51,12 @@ android {
                 keyPassword = keystoreProps.getProperty("keyPassword")
             }
         }
+    }
+
+    // The in-app language switch needs every language's resources installed, so a Play bundle
+    // must not split them out by device language.
+    bundle {
+        language { enableSplit = false }
     }
 
     buildTypes {

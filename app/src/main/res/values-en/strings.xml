@@ -690,11 +690,8 @@
     <string name="rawatib_variant_masjid">at the mosque</string>
     <string name="display_language">Language</string>
     <string name="display_language_app">App language</string>
-    <string name="display_language_current">English</string>
-    <string name="display_language_summary">%1$s. Tap to choose Bahasa Indonesia or English.</string>
-    <string name="display_language_summary_device">%1$s. Follows the device language; tap to change it.</string>
     <string name="onboarding_title">Assalamu\'alaikum</string>
-    <string name="onboarding_body">Two quick steps so the times and reminders fit you. Everything can be skipped and changed any time in Settings.</string>
+    <string name="onboarding_body">A few quick steps so the times and reminders fit you. Everything can be skipped and changed any time in Settings.</string>
     <string name="onboarding_location_title">Location</string>
     <string name="onboarding_location_body">Used on this device to calculate prayer times and the qibla direction. Your location is never sent anywhere.</string>
     <string name="onboarding_location_use">Use my location</string>

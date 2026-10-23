@@ -677,11 +677,8 @@
     <string name="rawatib_variant_masjid">di masjid</string>
     <string name="display_language">Bahasa</string>
     <string name="display_language_app">Bahasa aplikasi</string>
-    <string name="display_language_current">Bahasa Indonesia</string>
-    <string name="display_language_summary">%1$s. Ketuk untuk memilih Bahasa Indonesia atau English.</string>
-    <string name="display_language_summary_device">%1$s. Mengikuti bahasa perangkat; ketuk untuk mengubahnya.</string>
     <string name="onboarding_title">Assalamu\'alaikum</string>
-    <string name="onboarding_body">Dua langkah singkat agar jadwal dan pengingat sesuai untuk Anda. Semuanya bisa dilewati dan diubah kapan saja di Pengaturan.</string>
+    <string name="onboarding_body">Beberapa langkah singkat agar jadwal dan pengingat sesuai untuk Anda. Semuanya bisa dilewati dan diubah kapan saja di Pengaturan.</string>
     <string name="onboarding_location_title">Lokasi</string>
     <string name="onboarding_location_body">Dipakai untuk menghitung waktu shalat dan arah kiblat di perangkat ini. Lokasi tidak pernah dikirim ke mana pun.</string>
     <string name="onboarding_location_use">Gunakan lokasi saya</string>
@@ -704,4 +701,6 @@
     <string name="hijri_check_new_today">Hari ini sudah 1 %1$s</string>
     <string name="hijri_check_complete">%1$s digenapkan 30 hari</string>
     <string name="hijri_check_skip">Biarkan sesuai perhitungan</string>
+    <string name="language_indonesian" translatable="false">Bahasa Indonesia</string>
+    <string name="language_english" translatable="false">English</string>
 </resources>
