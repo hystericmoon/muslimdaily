@@ -1,11 +1,12 @@
 name: Release
 
 # Publishes a sideload build that the in-app updater (debug builds) installs.
-# Runs when versionName in app/build.gradle.kts changes to a version that has no release yet,
-# or when a tag like v0.2.0 is pushed. The release and its tag are created here.
+# Runs when versionName in app/build.gradle.kts changes on main to a version that has no release
+# yet, or when a tag like v0.2.0 is pushed. The release and its tag are created here. Feature
+# branches never publish: a version bump releases only once its PR is merged.
 on:
   push:
-    branches: [main, "claude/**"]
+    branches: [main]
     paths: ["app/build.gradle.kts", ".github/workflows/release.yml"]
     tags: ["v*"]
   workflow_dispatch:
@@ -29,6 +30,10 @@ jobs:
         run: |
           version=$(sed -n 's/.*versionName = "\(.*\)".*/\1/p' app/build.gradle.kts)
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [[ "$GITHUB_REF" != refs/heads/main && "$GITHUB_REF" != refs/tags/* ]]; then
+            echo "Releases are published from main or a version tag, not $GITHUB_REF; nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           if [[ "$GITHUB_REF" == refs/tags/* && "${GITHUB_REF_NAME#v}" != "$version" ]]; then
             echo "Tag $GITHUB_REF_NAME does not match versionName $version"; exit 1
           fi
