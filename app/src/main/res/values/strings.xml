@@ -513,16 +513,19 @@
     <string name="about_licenses">Lisensi dan atribusi</string>
 
     <!-- Widgets -->
-    <string name="widget_next_name">Shalat berikutnya</string>
-    <string name="widget_day_name">Jadwal shalat hari ini</string>
-    <string name="widget_next_description_picker">Shalat berikutnya dengan hitung mundur.</string>
-    <string name="widget_day_description_picker">Enam waktu hari ini; yang berikutnya ditandai.</string>
+    <string name="widget_name">Jadwal shalat</string>
+    <string name="widget_description_picker">Shalat berikutnya dan jadwal hari ini. Bisa diubah ke ukuran apa pun.</string>
     <string name="widget_countdown_format">dalam %s</string>
     <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
-    <string name="widget_next_label">Berikutnya · %s</string>
-    <string name="widget_next_label_tomorrow">Besok · %s</string>
-    <string name="widget_day_header">%1$s · %2$s</string>
-    <string name="widget_countdown_place">dalam %%s · %1$s</string>
+    <string name="widget_tomorrow">Besok · %s</string>
+    <string name="widget_hijri_day">%1$d %2$s</string>
+    <string name="widget_now_fajr_ends">Subuh berakhir %s</string>
+    <string name="widget_now_prohibited">Waktu terlarang</string>
+    <string name="widget_now_prohibited_until">Waktu terlarang hingga %s</string>
+    <string name="widget_now_duha">Dhuha hingga %s</string>
+    <string name="widget_now_prayer">Waktu %s</string>
+    <string name="widget_fast_tomorrow">Besok: %s</string>
+    <string name="widget_a11y_next">Berikutnya %1$s pukul %2$s</string>
     <string name="widget_next_description">Shalat berikutnya %1$s pukul %2$s, %3$s</string>
 
     <!-- Pre-prayer and lock-screen notifications -->

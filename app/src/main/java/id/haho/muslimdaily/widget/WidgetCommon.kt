@@ -2,48 +2,37 @@ package id.haho.muslimdaily.widget
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.SystemClock
 import android.text.format.DateFormat
+import android.util.TypedValue
+import android.view.Gravity
 import android.widget.RemoteViews
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
-import androidx.datastore.preferences.core.longPreferencesKey
-import androidx.glance.currentState
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.glance.ColorFilter
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.glance.GlanceModifier
-import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.AndroidRemoteViews
 import androidx.glance.appwidget.action.actionStartActivity
-import androidx.glance.color.ColorProvider
+import androidx.glance.background
+import androidx.glance.currentState
 import androidx.glance.layout.Box
-import androidx.glance.layout.ContentScale
-import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.padding
 import androidx.glance.layout.wrapContentSize
-import androidx.glance.unit.ColorProvider
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import id.haho.muslimdaily.MainActivity
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
-import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
 import id.haho.muslimdaily.core.ui.TimeFormatter
-import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
-import id.haho.muslimdaily.domain.prayer.PrayerSnapshot
-import id.haho.muslimdaily.domain.prayer.HijriCalendar
-import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.notifications.Destination
 import id.haho.muslimdaily.notifications.Notifier
 import java.time.Clock
@@ -57,12 +46,9 @@ interface WidgetEntryPoint {
     fun clock(): Clock
 }
 
-/** Everything a widget draws, read once per update. */
+/** Everything the widget draws, read once per update. [model] is null until a location is set. */
 class WidgetData(
-    val snapshot: PrayerSnapshot?,
-    /** Today's Hijri date, e.g. "10 Jumadilawal 1448 H". */
-    val hijri: String,
-    val colors: WidgetColors,
+    val model: WidgetModel?,
     val time: TimeFormatter,
     val now: Instant,
 )
@@ -71,13 +57,8 @@ suspend fun loadWidgetData(context: Context): WidgetData {
     val deps = EntryPointAccessors.fromApplication(context.applicationContext, WidgetEntryPoint::class.java)
     val settings = deps.settings().current()
     val now = Instant.now(deps.clock())
-    val snapshot = PrayerSnapshots.at(now, settings, deps.calculator())
-    val h = HijriCalendar.of(snapshot?.date ?: java.time.LocalDate.now(), settings.hijriAdjustment)
-    val months = context.resources.getStringArray(R.array.hijri_months)
     return WidgetData(
-        snapshot = snapshot,
-        hijri = context.getString(R.string.hijri_date, h.day, months[(h.month - 1).coerceIn(0, 11)], h.year),
-        colors = WidgetColors.of(settings),
+        model = WidgetModels.at(now, settings, deps.calculator()),
         time = TimeFormatter(DateFormat.is24HourFormat(context)),
         now = now,
     )
@@ -98,46 +79,6 @@ fun rememberWidgetData(context: Context, initial: WidgetData): WidgetData {
     return data
 }
 
-/**
- * Widget colours from the app's palette. Widgets can't blur what is behind them, so the glass is
- * a translucent fill with a light rim. Day/night follow the app's theme mode; "system" lets the
- * launcher switch with the device.
- */
-class WidgetColors(
-    val glass: ColorProvider,
-    val rim: ColorProvider,
-    val onSurface: ColorProvider,
-    val onSurfaceVariant: ColorProvider,
-    val primary: ColorProvider,
-    val highlight: ColorProvider,
-    val onHighlight: ColorProvider,
-    /** Raw colours for the countdown, which is a plain RemoteViews Chronometer. */
-    val countdownDay: Color,
-    val countdownNight: Color,
-) {
-    companion object {
-        fun of(settings: AppSettings): WidgetColors {
-            val light = colorSchemeFor(settings.palette, dark = false)
-            val dark = colorSchemeFor(settings.palette, dark = true)
-            val day = when (settings.themeMode) { ThemeMode.DARK -> dark; else -> light }
-            val night = when (settings.themeMode) { ThemeMode.LIGHT -> light; else -> dark }
-            fun pick(f: (androidx.compose.material3.ColorScheme) -> Color) = ColorProvider(day = f(day), night = f(night))
-            return WidgetColors(
-                // Opaque here: the panel and rim drawables carry the alpha (a tint's alpha is dropped).
-                glass = ColorProvider(day = if (day === dark) day.surfaceContainer else day.surface, night = if (night === dark) night.surfaceContainer else night.surface),
-                rim = ColorProvider(day = Color.White, night = Color.White),
-                onSurface = pick { it.onSurface },
-                onSurfaceVariant = pick { it.onSurfaceVariant },
-                primary = pick { it.primary },
-                highlight = pick { it.secondaryContainer },
-                onHighlight = pick { it.onSecondaryContainer },
-                countdownDay = day.primary,
-                countdownNight = night.primary,
-            )
-        }
-    }
-}
-
 /** Taps open the Today screen. */
 fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
     actionStartActivity(
@@ -147,39 +88,67 @@ fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
     ),
 )
 
+/** Text on the sky is white; text on the white pill is the night sky's darkest blue. */
+const val OnSky: Int = 0xFFFFFFFF.toInt()
+const val OnPill: Int = 0xFF0B1A3A.toInt()
+
 /**
- * A live countdown to [target]. Glance has no chronometer, so this embeds a RemoteViews one; the
- * launcher ticks it every second without waking the app.
+ * Text in the app's typeface. Glance can only name system fonts, so each label is a small
+ * RemoteViews layout whose TextView sets Plus Jakarta Sans (Regular or SemiBold, as in the app).
+ * Sizes are in sp, so the system font size still applies.
+ */
+@Composable
+fun Label(
+    text: String,
+    sizeSp: Float,
+    modifier: GlanceModifier = GlanceModifier,
+    semibold: Boolean = false,
+    color: Int = OnSky,
+    maxLines: Int = 1,
+    center: Boolean = false,
+    /** Take the space [modifier] gives (e.g. a weight) and shorten with "…" instead of growing. */
+    fill: Boolean = false,
+) {
+    val context = LocalContext.current
+    val views = RemoteViews(context.packageName, if (semibold) R.layout.widget_text_semibold else R.layout.widget_text).apply {
+        setTextViewText(R.id.text, text)
+        setTextViewTextSize(R.id.text, TypedValue.COMPLEX_UNIT_SP, sizeSp)
+        setTextColor(R.id.text, color)
+        if (maxLines != 1) setInt(R.id.text, "setMaxLines", maxLines)
+        if (center) setInt(R.id.text, "setGravity", Gravity.CENTER)
+    }
+    // An embedded RemoteViews fills its parent unless told otherwise, pushing siblings out.
+    AndroidRemoteViews(views, if (fill) modifier else modifier.wrapContentSize())
+}
+
+/** The next prayer's time on a white pill: marked by shape and weight, not colour alone. */
+@Composable
+fun Pill(text: String, sizeSp: Float, padH: Dp = 7.dp, padV: Dp = 0.dp) {
+    Box(GlanceModifier.background(ImageProvider(R.drawable.widget_pill)).padding(horizontal = padH, vertical = padV)) {
+        Label(text, sizeSp, semibold = true, color = OnPill)
+    }
+}
+
+/**
+ * A live countdown to [target]. Glance has no chronometer, so this embeds a RemoteViews one;
+ * the launcher ticks it every second without waking the app.
  */
 @Composable
 fun Countdown(
-    context: Context,
     target: Instant,
     now: Instant,
-    colors: WidgetColors,
-    size: TextUnit,
-    format: String = context.getString(R.string.widget_countdown_format),
+    sizeSp: Float,
+    format: String = LocalContext.current.getString(R.string.widget_countdown_format),
+    semibold: Boolean = false,
     modifier: GlanceModifier = GlanceModifier,
-    /** Over the sky the countdown is white, whatever the palette. */
-    white: Boolean = false,
 ) {
-    val views = RemoteViews(context.packageName, R.layout.widget_countdown).apply {
+    val context = LocalContext.current
+    val views = RemoteViews(context.packageName, if (semibold) R.layout.widget_countdown_semibold else R.layout.widget_countdown).apply {
         val base = SystemClock.elapsedRealtime() + (target.toEpochMilli() - now.toEpochMilli())
         setChronometer(R.id.countdown, base, format, true)
         setChronometerCountDown(R.id.countdown, true)
-        setTextViewTextSize(R.id.countdown, android.util.TypedValue.COMPLEX_UNIT_SP, size.value)
-        if (white) {
-            setTextColor(R.id.countdown, android.graphics.Color.argb(230, 255, 255, 255))
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            setColorInt(R.id.countdown, "setTextColor", colors.countdownDay.toArgb(), colors.countdownNight.toArgb())
-        } else {
-            val night = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
-                android.content.res.Configuration.UI_MODE_NIGHT_YES
-            setTextColor(R.id.countdown, (if (night) colors.countdownNight else colors.countdownDay).toArgb())
-        }
+        setTextViewTextSize(R.id.countdown, TypedValue.COMPLEX_UNIT_SP, sizeSp)
+        setTextColor(R.id.countdown, OnSky)
     }
-    // An embedded RemoteViews fills its parent unless told otherwise, pushing siblings out.
     AndroidRemoteViews(views, modifier.wrapContentSize())
 }
-
-val WidgetPadding: Dp = 14.dp

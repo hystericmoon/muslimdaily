@@ -15,8 +15,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Redraws everything glanceable: both home-screen widgets, the lock-screen next-prayer
- * notification and the Wear OS tile's data. Called when the next prayer changes (REFRESH
+ * Redraws everything glanceable: the prayer-times widget (under both of its receivers), the
+ * lock-screen next-prayer notification and the Wear OS tile's data. Called when the next prayer changes (REFRESH
  * alarm), on boot and time changes, and when settings they show change.
  */
 @Singleton

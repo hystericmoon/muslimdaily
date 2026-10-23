@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- See widget_next_prayer.xml for how updates work. -->
+<!--
+  The former "today's prayer times" widget. It now shows the same resizable widget as
+  widget_next_prayer.xml and is hidden from the picker (Android 12+), so widgets already placed
+  keep working without a second entry in the list.
+-->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:targetApi="31"
-    android:description="@string/widget_day_description_picker"
+    android:description="@string/widget_description_picker"
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="250dp"
     android:minHeight="110dp"
-    android:minResizeWidth="250dp"
-    android:minResizeHeight="90dp"
+    android:minResizeWidth="40dp"
+    android:minResizeHeight="40dp"
     android:targetCellWidth="4"
     android:targetCellHeight="2"
-    android:previewImage="@drawable/widget_preview_day"
-    android:previewLayout="@layout/widget_preview_day"
+    android:previewImage="@drawable/widget_preview"
+    android:previewLayout="@layout/widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
-    android:widgetCategory="home_screen|keyguard" />
+    android:widgetCategory="home_screen|keyguard"
+    android:widgetFeatures="hide_from_picker" />

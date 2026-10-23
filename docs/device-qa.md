@@ -62,10 +62,12 @@ Leave the phone idle (screen off, unplugged) for at least one full prayer cycle.
 
 | # | Step | Expected |
 |---|---|---|
-| 5.1 | Add both widgets on the stock launcher and one third-party launcher | Previews look like the real widget; sky matches time of day. |
-| 5.2 | Resize the next-prayer widget to 2×1 and 4×2 | Compact layout at 2×1; no clipped text. |
+| 5.1 | Add the "Jadwal shalat" widget on the stock launcher and one third-party launcher | One entry in the picker; the preview looks like the real widget; sky matches time of day. |
+| 5.2 | Resize it through 1×1, 2×1, 4×1, 2×2, 4×2 and 4×3 (and 5 wide where the launcher allows) | Each size shows its layout (`docs/screenshots/80-widget-*`); no clipped or "…" times; text is Plus Jakarta Sans. |
 | 5.3 | Wait across a prayer time with the screen on | Widget moves to the next prayer within 1 minute. |
-| 5.4 | Change palette and dark mode in the app | Widgets follow. |
+| 5.4 | Upgrade over a build that had a "Jadwal shalat hari ini" widget placed | It keeps working and shows the new widget; the picker lists only "Jadwal shalat" (Android 12+). |
+| 5.4b | Android 8–11 phone | Panels, pills and chips have round corners; the widget's own corners are round. |
+| 5.4c | Pixel on Android 16 QPR2+: add the widget to the lock-screen widget page | It shows and stays legible; tapping asks to unlock, then opens Today. |
 | 5.5 | Add the Quick Settings tile | Shows the next prayer and time; tap opens Today. |
 
 ## 6. Watch

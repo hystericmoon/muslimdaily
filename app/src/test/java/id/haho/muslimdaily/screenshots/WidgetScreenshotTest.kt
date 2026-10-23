@@ -20,41 +20,38 @@ import androidx.glance.appwidget.compose
 import androidx.glance.appwidget.provideContent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
-import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.feature.today.TodayPreviewData
-import id.haho.muslimdaily.widget.DayScheduleContent
-import id.haho.muslimdaily.widget.NextPrayerContent
-import id.haho.muslimdaily.widget.WidgetColors
+import id.haho.muslimdaily.widget.PrayerWidgetContent
 import id.haho.muslimdaily.widget.WidgetData
+import id.haho.muslimdaily.widget.WidgetModels
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.io.File
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
 /**
- * Renders the home-screen widgets through Glance's RemoteViews translation (what launchers get),
- * over a wallpaper-like gradient, in light and dark and a few palettes.
+ * Renders the prayer-times widget through Glance's RemoteViews translation (what launchers get),
+ * over a wallpaper-like gradient: every size from 1×1 to 5×3, the 4×2 through the day, at 200%
+ * system font, in a short landscape row, and with no location yet. Friday 23 October 2026,
+ * Jakarta: Dhuhr is Jumu'ah and tomorrow is the first of the white days.
  */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "id-xhdpi")
 @OptIn(ExperimentalGlanceApi::class)
 class WidgetScreenshotTest {
-    private val now = LocalDateTime.of(2026, 10, 21, 10, 0).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
+    private fun at(h: Int, m: Int): Instant = LocalDateTime.of(2026, 10, 23, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
 
-    private fun at(h: Int, m: Int) = LocalDateTime.of(2026, 10, 21, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
-
-    private fun data(palette: AppPalette, mode: ThemeMode, now: java.time.Instant = this.now): WidgetData {
-        val settings = TodayPreviewData.settings.copy(palette = palette, themeMode = mode)
-        return WidgetData(PrayerSnapshots.at(now, settings, PrayerCalculator()), "10 Jumadilawal 1448 H", WidgetColors.of(settings), TimeFormatter(true), now)
+    private fun data(now: Instant, located: Boolean = true): WidgetData {
+        val settings = TodayPreviewData.settings.let { if (located) it else it.copy(location = null) }
+        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(true), now)
     }
 
     private class Fake(private val body: @androidx.compose.runtime.Composable () -> Unit) : GlanceAppWidget() {
@@ -62,14 +59,12 @@ class WidgetScreenshotTest {
         override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent { body() }
     }
 
-    private suspend fun render(name: String, size: DpSize, dark: Boolean, body: @androidx.compose.runtime.Composable () -> Unit) {
+    private suspend fun render(name: String, size: DpSize, data: WidgetData, fontScale: Float = 1f) {
         val base = ApplicationProvider.getApplicationContext<Context>()
         Settings.System.putString(base.contentResolver, Settings.System.TIME_12_24, "24")
-        val config = Configuration(base.resources.configuration).apply {
-            uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or if (dark) Configuration.UI_MODE_NIGHT_YES else Configuration.UI_MODE_NIGHT_NO
-        }
+        val config = Configuration(base.resources.configuration).apply { this.fontScale = fontScale }
         val context = base.createConfigurationContext(config)
-        val views = Fake(body).compose(context, size = size)
+        val views = Fake { PrayerWidgetContent(data) }.compose(context, size = size)
         val density = context.resources.displayMetrics.density
         val pad = (16 * density).toInt()
         val w = (size.width.value * density).toInt()
@@ -81,26 +76,26 @@ class WidgetScreenshotTest {
         host.layout(0, 0, w, h)
         val bitmap = Bitmap.createBitmap(w + 2 * pad, h + 2 * pad, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        val wallpaper = if (dark) intArrayOf(0xFF0B1F2A.toInt(), 0xFF3A2245.toInt()) else intArrayOf(0xFF8EC5FC.toInt(), 0xFFE0C3FC.toInt())
-        canvas.drawPaint(Paint().apply { shader = LinearGradient(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat(), wallpaper[0], wallpaper[1], Shader.TileMode.CLAMP) })
+        canvas.drawPaint(Paint().apply { shader = LinearGradient(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat(), 0xFF8EC5FC.toInt(), 0xFFE0C3FC.toInt(), Shader.TileMode.CLAMP) })
         canvas.translate(pad.toFloat(), pad.toFloat())
         host.draw(canvas)
         File("../docs/screenshots").apply { mkdirs() }.resolve("$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
 
+    private val widths = listOf(76, 164, 252, 340, 428)
+    private val heights = listOf(76, 164, 252)
+
     @Test
     fun widgets() = runTest {
-        // A day of skies: before dawn, dawn, morning, noon, Ashar, dusk, night.
-        val times = listOf("0330" to at(3, 30), "0440" to at(4, 40), "0900" to at(9, 0), "1300" to at(13, 0), "1630" to at(16, 30), "1810" to at(18, 10), "2100" to at(21, 0))
-        for ((label, t) in times) {
-            val d = data(AppPalette.TEAL, ThemeMode.SYSTEM, t)
-            render("80-widget-next-$label", DpSize(170.dp, 170.dp), false) { NextPrayerContent(d) }
-            render("82-widget-day-$label", DpSize(340.dp, 200.dp), false) { DayScheduleContent(d) }
+        val morning = data(at(8, 30))
+        heights.forEachIndexed { r, h ->
+            widths.forEachIndexed { c, w -> render("80-widget-${c + 1}x${r + 1}", DpSize(w.dp, h.dp), morning) }
         }
-        val d = data(AppPalette.TEAL, ThemeMode.SYSTEM, at(10, 0))
-        render("81-widget-next-compact", DpSize(250.dp, 70.dp), false) { NextPrayerContent(d) }
-        render("83-widget-day-short", DpSize(340.dp, 140.dp), false) { DayScheduleContent(d) }
-        val none = data(AppPalette.ROSE, ThemeMode.LIGHT).let { WidgetData(null, it.hijri, it.colors, it.time, it.now) }
-        render("84-widget-no-location", DpSize(170.dp, 170.dp), false) { NextPrayerContent(none) }
+        for ((label, t) in listOf("0445" to at(4, 45), "1135" to at(11, 35), "1730" to at(17, 30), "1820" to at(18, 20), "2100" to at(21, 0))) {
+            render("81-widget-4x2-$label", DpSize(340.dp, 164.dp), data(t))
+        }
+        render("82-widget-4x2-font200", DpSize(340.dp, 164.dp), morning, fontScale = 2f)
+        render("83-widget-4x1-landscape", DpSize(340.dp, 56.dp), morning)
+        render("84-widget-no-location", DpSize(164.dp, 164.dp), data(at(8, 30), located = false))
     }
 }
