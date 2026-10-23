@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.data.db
 
+import androidx.room.AutoMigration
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -21,15 +22,62 @@ import kotlinx.coroutines.flow.Flow
     entities = [
         EventPrefEntity::class, EventItemEntity::class, VariantChoiceEntity::class,
         RunSessionEntity::class, ChecklistEntity::class, ReviewItemEntity::class,
+        RoutineEntity::class, RoutineItemEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
+    // 2: the user's own routines. Added tables only, so Room migrates without losing data.
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
 )
 abstract class UserDatabase : RoomDatabase() {
     abstract fun mySetDao(): MySetDao
     abstract fun runSessionDao(): RunSessionDao
     abstract fun checklistDao(): ChecklistDao
     abstract fun reviewDao(): ReviewDao
+    abstract fun routineDao(): RoutineDao
+}
+
+/** A routine the user built: duas from any occasion, in their order, read like the adhkar. */
+@Entity(tableName = "routines")
+data class RoutineEntity(@PrimaryKey val id: String, val name: String, val position: Int, val updatedAt: Long)
+
+@Entity(tableName = "routine_items", primaryKeys = ["routineId", "position"])
+data class RoutineItemEntity(val routineId: String, val position: Int, val duaId: String)
+
+@Dao
+interface RoutineDao {
+    @Query("SELECT * FROM routines ORDER BY position, updatedAt")
+    fun observeRoutines(): Flow<List<RoutineEntity>>
+
+    @Query("SELECT * FROM routine_items ORDER BY routineId, position")
+    fun observeItems(): Flow<List<RoutineItemEntity>>
+
+    @Query("SELECT * FROM routines WHERE id = :id") suspend fun routine(id: String): RoutineEntity?
+    @Query("SELECT * FROM routines ORDER BY position, updatedAt") suspend fun all(): List<RoutineEntity>
+    @Query("SELECT * FROM routine_items WHERE routineId = :id ORDER BY position") suspend fun items(id: String): List<RoutineItemEntity>
+    @Query("SELECT * FROM routine_items ORDER BY routineId, position") suspend fun allItems(): List<RoutineItemEntity>
+    @Query("SELECT COALESCE(MAX(position), -1) + 1 FROM routines") suspend fun nextPosition(): Int
+
+    @Upsert suspend fun upsert(routine: RoutineEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertItems(items: List<RoutineItemEntity>)
+    @Query("DELETE FROM routine_items WHERE routineId = :id") suspend fun clearItems(id: String)
+    @Query("DELETE FROM routines WHERE id = :id") suspend fun delete(id: String)
+    @Query("DELETE FROM routines") suspend fun deleteAll()
+    @Query("DELETE FROM routine_items") suspend fun deleteAllItems()
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(routines: List<RoutineEntity>)
+
+    @Transaction
+    suspend fun save(routine: RoutineEntity, duaIds: List<String>) {
+        upsert(routine)
+        clearItems(routine.id)
+        insertItems(duaIds.mapIndexed { i, d -> RoutineItemEntity(routine.id, i, d) })
+    }
+
+    @Transaction
+    suspend fun remove(id: String) {
+        clearItems(id)
+        delete(id)
+    }
 }
 
 /** Whether an event uses the full canonical set or the user's customised set. */

@@ -4,7 +4,6 @@ import id.haho.muslimdaily.core.designsystem.glass.glassSegmentedColors
 import id.haho.muslimdaily.core.ui.isLargeFontScale
 import androidx.compose.ui.text.style.TextAlign
 import id.haho.muslimdaily.core.designsystem.glass.enterReveal
-import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -23,6 +22,12 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
+import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +53,8 @@ fun EventRoute(
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
+    /** Opens the routine editor pre-filled with this occasion's duas. */
+    onSaveAsRoutine: (String) -> Unit = {},
     viewModel: EventViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -60,15 +67,6 @@ fun EventRoute(
                 Icon(painterResource(R.drawable.ic_tune), stringResource(R.string.event_customize))
             }
         },
-        floatingActionButton = {
-            if (s != null && s.items.isNotEmpty()) {
-                GlassExtendedFab(
-                    onClick = { onStart(viewModel.eventId) },
-                    icon = { Icon(painterResource(R.drawable.ic_play_arrow), null) },
-                    text = { Text(stringResource(R.string.event_start)) },
-                )
-            }
-        },
     ) {
         if (s != null) {
             EventContent(
@@ -77,6 +75,8 @@ fun EventRoute(
                 onOpenDua = onOpenDua,
                 onChooseForm = viewModel::chooseForm,
                 onCustomize = { onCustomize(viewModel.eventId) },
+                onStart = { onStart(viewModel.eventId) },
+                onSaveAsRoutine = { onSaveAsRoutine(viewModel.eventId) },
             )
         }
     }
@@ -89,6 +89,8 @@ fun EventContent(
     onOpenDua: (String) -> Unit,
     onChooseForm: (group: String, duaId: String) -> Unit,
     onCustomize: () -> Unit,
+    onStart: () -> Unit = {},
+    onSaveAsRoutine: () -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize(),
@@ -99,6 +101,43 @@ fun EventContent(
         ),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
     ) {
+        // The actions sit first, in words: a floating button and an icon were easy to miss.
+        if (state.items.isNotEmpty()) {
+            item(key = "actions") {
+                Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                    GlassButton(onClick = onStart, modifier = Modifier.fillMaxWidth()) {
+                        Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(AppTheme.dimens.smallIcon))
+                        Spacer(Modifier.width(AppTheme.spacing.sm))
+                        Text(stringResource(R.string.event_start_all, state.items.size))
+                    }
+                    InfoNote(stringResource(R.string.event_start_hint))
+                    // An equal pair; stacked at large font sizes, where two labels can't share a row.
+                    val secondary = @Composable { modifier: Modifier ->
+                        GlassTonalButton(onClick = onCustomize, modifier = modifier) {
+                            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(AppTheme.dimens.smallIcon))
+                            Spacer(Modifier.width(AppTheme.spacing.sm))
+                            Text(stringResource(R.string.event_choose_order), textAlign = TextAlign.Center)
+                        }
+                    }
+                    val save = @Composable { modifier: Modifier ->
+                        GlassTonalButton(onClick = onSaveAsRoutine, modifier = modifier) {
+                            Icon(painterResource(R.drawable.ic_bookmark_add), null, Modifier.size(AppTheme.dimens.smallIcon))
+                            Spacer(Modifier.width(AppTheme.spacing.sm))
+                            Text(stringResource(R.string.event_save_routine), textAlign = TextAlign.Center)
+                        }
+                    }
+                    if (isLargeFontScale()) {
+                        secondary(Modifier.fillMaxWidth())
+                        save(Modifier.fillMaxWidth())
+                    } else {
+                        Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                            secondary(Modifier.weight(1f))
+                            save(Modifier.weight(1f))
+                        }
+                    }
+                }
+            }
+        }
         item(key = "mode") {
             Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
                 val options = listOf(false to R.string.event_full_set, true to R.string.event_my_set)

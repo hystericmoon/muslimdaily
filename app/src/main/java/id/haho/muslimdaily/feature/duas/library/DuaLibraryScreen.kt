@@ -63,16 +63,27 @@ import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.DuaCategory
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.data.content.ContentRepository
+import id.haho.muslimdaily.feature.routines.RoutinesCard
+import id.haho.muslimdaily.data.routine.RoutineRepository
+import id.haho.muslimdaily.data.routine.Routine
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class DuaLibraryViewModel @Inject constructor(content: ContentRepository) : ViewModel() {
+class DuaLibraryViewModel @Inject constructor(content: ContentRepository, routines: RoutineRepository) : ViewModel() {
     val categories: StateFlow<List<DuaCategory>?> = content.categories()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+    val routines: StateFlow<List<Routine>> = routines.routines()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 }
+
+class RoutineActions(
+    val onStart: (Routine) -> Unit = {},
+    val onEdit: (Routine) -> Unit = {},
+    val onNew: () -> Unit = {},
+)
 
 /** From this width the library and the chosen occasion sit side by side (list-detail). */
 private val ListDetailWidth = 840.dp
@@ -84,9 +95,12 @@ fun DuaLibraryRoute(
     onOpenDua: (String) -> Unit = {},
     onCustomize: (String) -> Unit = {},
     onStart: (String) -> Unit = {},
+    /** Routine editor: (routine id or null for new, occasion to pre-fill from or null). */
+    onRoutine: (String?, String?) -> Unit = { _, _ -> },
     viewModel: DuaLibraryViewModel = hiltViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
+    val routines by viewModel.routines.collectAsStateWithLifecycle()
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val twoPane = maxWidth >= ListDetailWidth
         var selected by rememberSaveable { mutableStateOf<String?>(null) }
@@ -102,7 +116,17 @@ fun DuaLibraryRoute(
                 },
             ) {
                 categories?.let {
-                    DuaLibraryContent(it, selectedId = if (twoPane) shown else null, onOpenEvent = if (twoPane) { id -> selected = id } else onOpenEvent)
+                    DuaLibraryContent(
+                        it,
+                        selectedId = if (twoPane) shown else null,
+                        routines = routines,
+                        routineActions = RoutineActions(
+                            onStart = { r -> onStart(r.runKey) },
+                            onEdit = { r -> onRoutine(r.id, null) },
+                            onNew = { onRoutine(null, null) },
+                        ),
+                        onOpenEvent = if (twoPane) { id -> selected = id } else onOpenEvent,
+                    )
                 }
             }
         }
@@ -112,7 +136,7 @@ fun DuaLibraryRoute(
                 VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 Box(Modifier.weight(0.58f)) {
                     // One view model per occasion, keyed like the EventRoute destination would be.
-                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) }
+                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) { onRoutine(null, it) } }
                 }
             }
         } else {
@@ -122,7 +146,13 @@ fun DuaLibraryRoute(
 }
 
 @Composable
-private fun EventPane(eventId: String, onOpenDua: (String) -> Unit, onCustomize: (String) -> Unit, onStart: (String) -> Unit) {
+private fun EventPane(
+    eventId: String,
+    onOpenDua: (String) -> Unit,
+    onCustomize: (String) -> Unit,
+    onStart: (String) -> Unit,
+    onSaveAsRoutine: (String) -> Unit,
+) {
     val owner = checkNotNull(LocalViewModelStoreOwner.current)
     val defaults = owner as HasDefaultViewModelProviderFactory
     val extras = MutableCreationExtras(defaults.defaultViewModelCreationExtras)
@@ -133,12 +163,31 @@ private fun EventPane(eventId: String, onOpenDua: (String) -> Unit, onCustomize:
         factory = HiltViewModelFactory(LocalContext.current, defaults.defaultViewModelProviderFactory),
         extras = extras,
     )
-    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, viewModel = vm)
+    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, onSaveAsRoutine = onSaveAsRoutine, viewModel = vm)
 }
 
 @Composable
-fun DuaLibraryContent(categories: List<DuaCategory>, selectedId: String? = null, onOpenEvent: (String) -> Unit) {
+fun DuaLibraryContent(
+    categories: List<DuaCategory>,
+    selectedId: String? = null,
+    routines: List<Routine>? = null,
+    routineActions: RoutineActions = RoutineActions(),
+    onOpenEvent: (String) -> Unit,
+) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+        // The user's own routines come first: they are what they open the tab for.
+        if (routines != null) {
+            item(key = "routines") {
+                SectionHeader(stringResource(R.string.routine_section))
+                RoutinesCard(
+                    routines = routines,
+                    onStart = routineActions.onStart,
+                    onEdit = routineActions.onEdit,
+                    onNew = routineActions.onNew,
+                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter),
+                )
+            }
+        }
         categories.forEachIndexed { index, category ->
             item(key = category.id) {
                 SectionHeader(category.label)
