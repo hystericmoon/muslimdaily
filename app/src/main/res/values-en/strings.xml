@@ -806,6 +806,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_7_0">
+        <item>One prayer-times widget for every size, from 1×1 to 5×3. The bigger it is, the more it shows: the Hijri date, the place, today\'s times and a sunnah fast tomorrow.</item>
+        <item>The widget\'s sky is more realistic and follows the prayer times, in the same typeface as the app.</item>
+        <item>After Isya the widget shows tomorrow\'s times. Widgets you already placed switch to the new look.</item>
+    </string-array>
     <string-array name="whats_new_0_6_0">
         <item>My note: write a private note on any dua. It stays on your device and in your backups.</item>
         <item>Join the beta: in Settings → Updates, turn on beta to get new versions early.</item>

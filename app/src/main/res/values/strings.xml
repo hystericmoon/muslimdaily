@@ -794,6 +794,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0">
+        <item>Satu widget jadwal shalat untuk semua ukuran, dari 1×1 sampai 5×3. Makin besar, makin lengkap: tanggal Hijriah, tempat, jadwal hari ini, dan puasa sunnah besok.</item>
+        <item>Langit di widget kini lebih nyata dan mengikuti waktu shalat, dengan huruf yang sama seperti aplikasi.</item>
+        <item>Setelah Isya, widget menampilkan jadwal besok. Widget lama Anda otomatis berganti tampilan.</item>
+    </string-array>
     <string-array name="whats_new_0_6_0">
         <item>Catatan saya: tulis catatan pribadi pada doa mana pun. Hanya tersimpan di perangkat Anda dan di cadangan.</item>
         <item>Ikut uji coba: di Pengaturan → Pembaruan, nyalakan beta untuk mendapat versi baru lebih awal.</item>
