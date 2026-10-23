@@ -153,7 +153,7 @@ internal fun PrayerWidgetContent(data: WidgetData) {
     Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context).semantics { contentDescription = t.description }) {
         SkyBackground(model.sky)
         val k = grid.scale
-        val l = Layout(model, t, data, k, grid.tight, size.width, TextFit(context))
+        val l = Layout(model, t, data, k, grid.tight, size.width, size.height, TextFit(context))
         when (grid.rows) {
             1 -> when (grid.columns) {
                 1 -> l.OneByOne()
@@ -200,6 +200,8 @@ private fun SkyBackground(look: SkyLook) {
 /**
  * The widget's layouts, one per size class, built from the same few parts. [k] scales the type;
  * each layout shrinks it further, by [fit], when its times, names or countdown would not fit [width].
+ * In a row of times, a 12-hour "AM"/"PM" is left out when keeping it would shrink the digits:
+ * each prayer's name already says which half of the day it is.
  */
 private class Layout(
     val model: WidgetModel,
@@ -208,6 +210,7 @@ private class Layout(
     val k: Float,
     val tight: Boolean,
     val width: Dp,
+    val height: Dp,
     val fit: TextFit,
 ) {
     val next = model.nextSlot
@@ -233,8 +236,14 @@ private class Layout(
     }
 
     /** Each prayer's name and time in its share of [width], as in [TimeColumns] (the time with room for the pill). */
-    fun columnLines(slots: List<SlotTime>, nameSp: Float, timeSp: Float, width: Dp, column: Dp): Array<FitLine> =
-        slots.flatMap { listOf(FitLine(width - column + 4.dp, t.name(it.slot) to nameSp), FitLine(width - column + 16.dp, *clockParts(t.time(it.time), timeSp))) }.toTypedArray()
+    fun columnLines(slots: List<SlotTime>, nameSp: Float, timeSp: Float, width: Dp, column: Dp, marker: Boolean = true): Array<FitLine> =
+        slots.flatMap { listOf(FitLine(width - column + 4.dp, t.name(it.slot) to nameSp), FitLine(width - column + 16.dp, *clockParts(columnTime(it, marker), timeSp))) }.toTypedArray()
+
+    fun columnTime(s: SlotTime, marker: Boolean): String = t.time(s.time).let { if (marker) it else clockDigits(it) }
+
+    /** Whether the times in a row keep their "AM"/"PM" without shrinking the digits. */
+    fun keepsMarker(slots: List<SlotTime>, nameSp: Float, timeSp: Float, width: Dp, column: Dp): Boolean =
+        fit.factor(width, *columnLines(slots, nameSp, timeSp, width, column)) >= 0.97f
 
     /** One line per prayer, name and time side by side, as in [TimeList]. */
     fun listLines(slots: List<SlotTime>, sp: Float, extra: Dp): Array<FitLine> =
@@ -293,7 +302,8 @@ private class Layout(
         val column = inner / slots.size
         // The header keeps the next prayer and its countdown whole; the date gives way.
         val s = k * fit.factor(inner, FitLine(16.dp + 4.dp + 8.dp + 40.dp, t.nextName to 12f * k, countdownSample(format) to 12f * k))
-        val c = k * fit.factor(inner, *columnLines(slots, 12f * k, 16f * k, inner, column))
+        val marker = keepsMarker(slots, 12f * k, 16f * k, inner, column)
+        val c = k * fit.factor(inner, *columnLines(slots, 12f * k, 16f * k, inner, column, marker))
         Column(GlanceModifier.fillMaxSize().padding(horizontal = 6.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             if (!tight) {
                 Row(GlanceModifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -309,7 +319,7 @@ private class Layout(
                 }
                 Spacer(GlanceModifier.height(4.dp))
             }
-            TimeColumns(slots, 12f * c, 16f * c)
+            TimeColumns(slots, 12f * c, 16f * c, marker = marker)
         }
     }
 
@@ -405,7 +415,8 @@ private class Layout(
             if (big) FitLine(placeRow + 20.dp, t.now to 13f * k) else FitLine(placeRow + 4.dp, t.nextName to 13f * k, countdownSample(format) to 13f * k),
         )
         val b = k * fit.factor(inner, FitLine(8.dp + 10.dp + 16.dp, t.nextName to 16f * k, *clockParts(t.nextTime, nextSp * k), countdownSample(format) to 13f * k))
-        val c = k * fit.factor(inner - 8.dp, *columnLines(slots, 13f * k, 16f * k, inner - 8.dp, column))
+        val marker = keepsMarker(slots, 13f * k, 16f * k, inner - 8.dp, column)
+        val c = k * fit.factor(inner - 8.dp, *columnLines(slots, 13f * k, 16f * k, inner - 8.dp, column, marker))
         Column(GlanceModifier.fillMaxSize().padding(12.dp)) {
             Column(GlanceModifier.fillMaxWidth().padding(horizontal = 4.dp)) {
                 Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -437,11 +448,12 @@ private class Layout(
             Spacer(GlanceModifier.height(if (big) 6.dp else 8.dp))
             Panel(GlanceModifier.defaultWeight().fillMaxWidth()) {
                 Column(GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
-                    TimeColumns(slots, 13f * c, 16f * c, gap = if (big) 3.dp else 6.dp)
+                    TimeColumns(slots, 13f * c, 16f * c, gap = if (big) 3.dp else 6.dp, marker = marker)
                 }
             }
             val fast = t.fast
-            if (big && fast != null) {
+            // Only where the 3-row layout has its full height: in a shorter wide cell it would crowd the times.
+            if (big && fast != null && height >= 250.dp) {
                 Spacer(GlanceModifier.height(8.dp))
                 InfoChip(R.drawable.ic_calendar_month, fast, 12f * s, GlanceModifier.fillMaxWidth())
             }
@@ -518,14 +530,15 @@ private class Layout(
 
     /** The times side by side, name over time; the next one bold on a pill. */
     @Composable
-    fun TimeColumns(slots: List<SlotTime>, nameSp: Float, timeSp: Float, gap: Dp = 2.dp) {
+    fun TimeColumns(slots: List<SlotTime>, nameSp: Float, timeSp: Float, gap: Dp = 2.dp, marker: Boolean = true) {
         Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             slots.forEach { s ->
                 val isNext = s.slot == next
                 Column(GlanceModifier.defaultWeight(), horizontalAlignment = Alignment.CenterHorizontally) {
                     Label(t.name(s.slot), nameSp, semibold = isNext)
                     Spacer(GlanceModifier.height(gap))
-                    if (isNext) Pill(clockText(t.time(s.time)), timeSp, padH = 6.dp, padV = 2.dp) else Box(GlanceModifier.padding(vertical = 2.dp)) { Label(clockText(t.time(s.time)), timeSp) }
+                    val time = clockText(columnTime(s, marker))
+                    if (isNext) Pill(time, timeSp, padH = 6.dp, padV = 2.dp) else Box(GlanceModifier.padding(vertical = 2.dp)) { Label(time, timeSp) }
                 }
             }
         }

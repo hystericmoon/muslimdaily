@@ -117,7 +117,9 @@ data class WidgetGrid(val columns: Int, val rows: Int, val tight: Boolean, val s
             }
             val rows = when {
                 h < 150f -> 1
-                h < 250f -> 2
+                // Wide widgets fill a tall 2-row cell (Samsung's grid) with the next prayer large
+                // instead of an empty panel around the times.
+                h < (if (columns >= 4) 215f else 250f) -> 2
                 else -> 3
             }
             // Bigger widgets (tablets, large launchers) get bigger type instead of empty space.

@@ -60,7 +60,7 @@ class WidgetFitTest {
 
     // The launcher grid's sizes, plus larger cells (tablets, Samsung's 5-column grid) where the type scales up.
     private val widths = listOf(76, 110, 164, 195, 252, 290, 340, 400, 428, 520)
-    private val heights = listOf(56, 76, 150, 164, 250, 252, 330)
+    private val heights = listOf(56, 76, 150, 164, 215, 230, 250, 252, 330)
     private val times = listOf(4 to 45, 8 to 30, 11 to 35, 17 to 30, 19 to 5, 21 to 0, 23 to 50)
     private val indonesian = Locale.forLanguageTag("id-ID")
 
@@ -93,7 +93,7 @@ class WidgetFitTest {
         val model = data.model!!
         val text = WidgetText(context, model, data.time)
         // What must always show in full: the times, the prayer names and the countdown.
-        val whole = (model.slots.map { text.time(it.time) } + model.slots.map { text.name(it.slot) }).toSet()
+        val whole = (model.slots.map { text.time(it.time) } + model.slots.map { clockDigits(text.time(it.time)) } + model.slots.map { text.name(it.slot) }).toSet()
 
         val views = Fake(data).compose(context, size = case.size)
         val density = context.resources.displayMetrics.density

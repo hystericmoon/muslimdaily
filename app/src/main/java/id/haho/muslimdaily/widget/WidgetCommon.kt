@@ -155,6 +155,9 @@ fun clockText(time: String): CharSequence {
     return SpannableString(time).apply { setSpan(RelativeSizeSpan(MeridiemScale), m.range.first, time.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
 }
 
+/** A clock time without its 12-hour "AM"/"PM", for a row where the prayer names say it. */
+fun clockDigits(time: String): String = Meridiem.replace(time, "")
+
 /** [clockText]'s parts at their sizes, for [TextFit]. */
 fun clockParts(time: String, sp: Float): Array<Pair<String, Float>> {
     val m = Meridiem.find(time) ?: return arrayOf(time to sp)
