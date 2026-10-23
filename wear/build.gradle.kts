@@ -4,6 +4,12 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+/** versionCode / versionName from app/build.gradle.kts, the single place a release bumps. */
+fun phoneVersion(key: String): String {
+    val text = providers.fileContents(rootProject.layout.projectDirectory.file("app/build.gradle.kts")).asText.get()
+    return Regex("""$key = "?([^"\s]+)"?""").find(text)?.groupValues?.get(1) ?: error("No $key in app/build.gradle.kts")
+}
+
 // Same release key as the phone app (keystore.properties, never committed).
 val keystoreProps = rootProject.file("keystore.properties").takeIf { it.exists() }?.let { file ->
     Properties().apply { file.inputStream().use { load(it) } }
@@ -19,8 +25,9 @@ android {
         applicationId = "id.haho.muslimdaily"
         minSdk = 30
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        // Follows the phone app, so each release's watch APK installs over the previous one.
+        versionCode = phoneVersion("versionCode").toInt()
+        versionName = phoneVersion("versionName")
     }
 
     signingConfigs {

@@ -67,17 +67,27 @@ fun splitPhrases(arabic: String, breaks: List<Int>, segments: List<Segment>): Li
 data class DuaEvent(
     val id: String,
     val categoryId: String,
-    val label: String,
+    val labelId: String,
     val order: Int,
     val duaCount: Int = 0,
-)
+    val labelEn: String = "",
+) {
+    /** The name in the app's language; read on use so a language switch applies at once. */
+    val label: String get() = localizedLabel(labelId, labelEn)
+}
 
 data class DuaCategory(
     val id: String,
-    val label: String,
+    val labelId: String,
     val order: Int,
     val events: List<DuaEvent>,
-)
+    val labelEn: String = "",
+) {
+    val label: String get() = localizedLabel(labelId, labelEn)
+}
+
+private fun localizedLabel(id: String, en: String): String =
+    if (en.isNotBlank() && java.util.Locale.getDefault().language == "en") en else id
 
 data class Rawatib(
     val id: String,

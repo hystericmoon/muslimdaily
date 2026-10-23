@@ -512,7 +512,7 @@
     <string name="methodology_review_title">Sumber konten</string>
     <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI melalui QuranEnc.com. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
-    <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI dan dapat disesuaikan. Tidak menampilkan waktu imsak.</string>
+    <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI, termasuk koreksi ketinggian tempat untuk terbit dan Maghrib, dan dapat disesuaikan. Diuji terhadap jadwal resmi Kemenag untuk 16 kota di WIB, WITA dan WIT: selisih paling banyak 1 menit. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>
     <string name="methodology_content_version">Versi konten: %s</string>
     <string name="methodology_app_version">Versi aplikasi: %s</string>
@@ -672,4 +672,35 @@
     <string name="tile_subtitle">%1$s lagi · %2$s</string>
     <string name="tile_hours_minutes">%1$d j %2$d m</string>
     <string name="tile_minutes">%d m</string>
+    <!-- 0.5.0 -->
+    <string name="rawatib_variant_home">di rumah</string>
+    <string name="rawatib_variant_masjid">di masjid</string>
+    <string name="display_language">Bahasa</string>
+    <string name="display_language_app">Bahasa aplikasi</string>
+    <string name="onboarding_title">Assalamu\'alaikum</string>
+    <string name="onboarding_body">Beberapa langkah singkat agar jadwal dan pengingat sesuai untuk Anda. Semuanya bisa dilewati dan diubah kapan saja di Pengaturan.</string>
+    <string name="onboarding_location_title">Lokasi</string>
+    <string name="onboarding_location_body">Dipakai untuk menghitung waktu shalat dan arah kiblat di perangkat ini. Lokasi tidak pernah dikirim ke mana pun.</string>
+    <string name="onboarding_location_use">Gunakan lokasi saya</string>
+    <string name="onboarding_location_later">Atau pilih kota sendiri nanti di layar Hari ini.</string>
+    <string name="onboarding_location_finding">Mencari lokasi…</string>
+    <string name="onboarding_location_denied">Izin lokasi tidak diberikan. Anda tetap bisa memilih kota secara manual.</string>
+    <string name="onboarding_location_set">Lokasi: %1$s</string>
+    <string name="onboarding_reminders_title">Pengingat</string>
+    <string name="onboarding_reminders_body">Muslim Daily hanya mengirim notifikasi yang Anda nyalakan.</string>
+    <string name="onboarding_reminders_prayer">Ingatkan saat masuk waktu shalat</string>
+    <string name="onboarding_reminders_adhkar">Ingatkan dzikir pagi dan petang</string>
+    <string name="onboarding_notifications_denied">Notifikasi belum diizinkan, jadi pengingat belum bisa muncul. Izinkan lewat Pengaturan → Pengingat.</string>
+    <string name="onboarding_exact_body">Agar pengingat muncul tepat pada waktunya, izinkan alarm tepat waktu. Tanpanya, pengingat bisa terlambat beberapa menit.</string>
+    <string name="onboarding_exact_allow">Izinkan alarm tepat waktu</string>
+    <string name="onboarding_later">Pengaturan lain, seperti metode perhitungan dan suara adzan, ada di tab Pengaturan.</string>
+    <string name="onboarding_start">Mulai</string>
+    <string name="hijri_check_title">Awal %1$s</string>
+    <string name="hijri_check_body">Pemerintah menetapkan awal bulan lewat sidang isbat pada petang tanggal 29 %1$s. Apa hasilnya? Kalender di aplikasi akan menyesuaikan.</string>
+    <string name="hijri_check_new">Besok sudah 1 %1$s</string>
+    <string name="hijri_check_new_today">Hari ini sudah 1 %1$s</string>
+    <string name="hijri_check_complete">%1$s digenapkan 30 hari</string>
+    <string name="hijri_check_skip">Biarkan sesuai perhitungan</string>
+    <string name="language_indonesian" translatable="false">Bahasa Indonesia</string>
+    <string name="language_english" translatable="false">English</string>
 </resources>

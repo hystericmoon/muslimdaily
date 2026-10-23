@@ -36,7 +36,7 @@ object PrayerSnapshots {
         val location = settings.location ?: return null
         val zone = runCatching { ZoneId.of(location.timeZoneId) }.getOrElse { ZoneId.systemDefault() }
         val date = now.atZone(zone).toLocalDate()
-        fun schedule(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, settings.calculation)
+        fun schedule(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, settings.calculation, location.elevation)
         val today = schedule(date)
         val next = nextPrayer(now, listOf(today, schedule(date.plusDays(1))), settings)
         return PrayerSnapshot(

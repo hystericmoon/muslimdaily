@@ -31,7 +31,7 @@ class WearSync @Inject constructor(
         val zone = runCatching { ZoneId.of(location.timeZoneId) }.getOrElse { ZoneId.systemDefault() }
         val today = now.atZone(zone).toLocalDate()
         val times = (0L until DAYS).flatMap { d ->
-            val s = calculator.schedule(today.plusDays(d), location.latitude, location.longitude, zone, settings.calculation)
+            val s = calculator.schedule(today.plusDays(d), location.latitude, location.longitude, zone, settings.calculation, location.elevation)
             PrayerTimeSlot.entries.map { s.time(it).toEpochMilli() }
         }
         val request = PutDataMapRequest.create(PATH).apply {

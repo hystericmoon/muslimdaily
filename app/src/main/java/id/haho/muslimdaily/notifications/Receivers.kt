@@ -80,7 +80,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
         val prayer = type.prayer
         if (prayer != null && location != null) {
-            val schedule = calculator.schedule(today, location.latitude, location.longitude, zone, s.calculation)
+            val schedule = calculator.schedule(today, location.latitude, location.longitude, zone, s.calculation, location.elevation)
             val shown = if (prayer == Prayer.DHUHR && today.dayOfWeek == DayOfWeek.FRIDAY) {
                 Prayer.JUMUAH
             } else {
@@ -100,7 +100,7 @@ class ReminderReceiver : BroadcastReceiver() {
                 if (kinds.isEmpty()) return
                 val names = kinds.joinToString(", ") { context.getString(it.labelRes()) }
                 val fajr = location?.let {
-                    calculator.schedule(tomorrow.date, it.latitude, it.longitude, zone, s.calculation).fajr
+                    calculator.schedule(tomorrow.date, it.latitude, it.longitude, zone, s.calculation, it.elevation).fajr
                 }
                 if (fajr != null) {
                     context.getString(R.string.notif_fasting_text_fajr, names, id.haho.muslimdaily.core.ui.TimeFormatter(DateFormat.is24HourFormat(context)).format(fajr, zone))

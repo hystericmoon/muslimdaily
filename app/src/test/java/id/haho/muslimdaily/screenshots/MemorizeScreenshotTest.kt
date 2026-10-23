@@ -24,7 +24,7 @@ import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h1000dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h1000dp-xhdpi")
 class MemorizeScreenshotTest {
     private val today = LocalDate.of(2026, 10, 21)
     private val dua = DuaPreviewData.dua("morning_02", 2)

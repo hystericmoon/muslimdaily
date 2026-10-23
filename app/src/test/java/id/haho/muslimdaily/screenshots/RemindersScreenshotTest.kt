@@ -15,7 +15,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h1800dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h1800dp-xhdpi")
 class RemindersScreenshotTest {
     @Test
     fun reminders() = captureVariants("43-settings-reminders") {

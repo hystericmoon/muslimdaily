@@ -22,7 +22,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h1600dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h1600dp-xhdpi")
 class DuasScreenshotTest {
     private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1)
 

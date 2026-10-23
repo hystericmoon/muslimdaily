@@ -102,6 +102,7 @@ class SettingsRepository @Inject constructor(
                 timeZoneId = this[K.locTz] ?: return@let null,
                 source = enumOr(K.locSource, LocationSource.MANUAL),
                 updatedAtMillis = this[K.locUpdated] ?: 0L,
+                elevation = this[K.locElevation] ?: 0,
             )
         }
         val r = d.reminders
@@ -130,7 +131,11 @@ class SettingsRepository @Inject constructor(
             dynamicColor = this[K.dynamicColor] ?: d.dynamicColor,
             palette = enumOr(K.palette, d.palette),
             glassEffect = this[K.glassEffect] ?: d.glassEffect,
-            translationMode = enumOr(K.translation, d.translationMode),
+            // Until chosen, the translation follows the app language.
+            translationMode = enumOr(
+                K.translation,
+                if (java.util.Locale.getDefault().language == "en") TranslationMode.ENGLISH else d.translationMode,
+            ),
             showTransliteration = this[K.transliteration] ?: d.showTransliteration,
             arabicScale = this[K.arabicScale] ?: d.arabicScale,
             translationScale = this[K.translationScale] ?: d.translationScale,
@@ -145,6 +150,9 @@ class SettingsRepository @Inject constructor(
             reciterId = this[K.reciter] ?: d.reciterId,
             autoAdvance = this[K.autoAdvance] ?: d.autoAdvance,
             haptics = this[K.haptics] ?: d.haptics,
+            onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
+            elevationChecked = this[K.elevationChecked] ?: false,
+            hijriConfirmedFor = this[K.hijriConfirmedFor] ?: d.hijriConfirmedFor,
             memorize = MemorizeSettings(
                 loopsPerChunk = this[K.memLoops] ?: m.loopsPerChunk,
                 pauseMode = enumOr(K.memPauseMode, m.pauseMode),
@@ -183,6 +191,9 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var reciterId: String by key(K.reciter, "default")
     var autoAdvance: Boolean by key(K.autoAdvance, true)
     var haptics: Boolean by key(K.haptics, true)
+    var onboardingDone: Boolean by key(K.onboardingDone, false)
+    var elevationChecked: Boolean by key(K.elevationChecked, false)
+    var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
     var memLoops: Int by key(K.memLoops, 3)
     var memPauseMode: PauseMode by enumKey(K.memPauseMode, PauseMode.AUTO)
     var memPauseSeconds: Int by key(K.memPauseSeconds, 3)
@@ -217,6 +228,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
         p[K.locTz] = location.timeZoneId
         p[K.locSource] = location.source.name
         p[K.locUpdated] = location.updatedAtMillis
+        p[K.locElevation] = location.elevation
     }
 
     private fun <T> key(key: Preferences.Key<T>, default: T) = object : kotlin.properties.ReadWriteProperty<Any?, T> {
@@ -258,6 +270,7 @@ internal object K {
     val locTz = stringPreferencesKey("loc_tz")
     val locSource = stringPreferencesKey("loc_source")
     val locUpdated = longPreferencesKey("loc_updated")
+    val locElevation = intPreferencesKey("loc_elevation")
     val travel = booleanPreferencesKey("travel_mode")
     val dhuhrQabliyah = intPreferencesKey("dhuhr_qabliyah_rakah")
     val checklistHistory = booleanPreferencesKey("checklist_history")
@@ -265,6 +278,9 @@ internal object K {
     val reciter = stringPreferencesKey("reciter")
     val autoAdvance = booleanPreferencesKey("auto_advance")
     val haptics = booleanPreferencesKey("haptics")
+    val onboardingDone = booleanPreferencesKey("onboarding_done")
+    val elevationChecked = booleanPreferencesKey("elevation_checked")
+    val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")
     val memLoops = intPreferencesKey("mem_loops")
     val memPauseMode = stringPreferencesKey("mem_pause_mode")
     val memPauseSeconds = intPreferencesKey("mem_pause_seconds")

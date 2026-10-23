@@ -50,6 +50,11 @@ private fun Float.step(delta: Float) = (((this + delta) * 10).roundToInt() / 10f
 fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
         item {
+            SettingsGroup(stringResource(R.string.display_language)) {
+                LanguageRow()
+            }
+        }
+        item {
             SettingsGroup(stringResource(R.string.display_translation)) {
                 RadioGroup(
                     options = TranslationMode.entries,
@@ -160,3 +165,4 @@ private fun SizePreview() {
         }
     }
 }
+

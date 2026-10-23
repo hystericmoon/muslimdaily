@@ -30,7 +30,7 @@ import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-@Config(qualifiers = "w400dp-h860dp")
+@Config(qualifiers = "id-w400dp-h860dp")
 class RunModeUiTest {
     @get:Rule val compose = createComposeRule()
 

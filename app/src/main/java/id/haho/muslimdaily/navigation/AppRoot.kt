@@ -34,6 +34,16 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.NavigationRailItemDefaults
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -81,30 +91,87 @@ fun AppRoot(
     val immersive = immersiveRoutes.any { destination?.hasRoute(it) == true }
 
     val motion = AppTheme.motion
-    Scaffold(
-        modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        containerColor = Color.Transparent,
-        bottomBar = {
-            AnimatedVisibility(
-                visible = !immersive,
-                enter = slideInVertically(motion.layout()) { it } + fadeIn(motion.fade()),
-                exit = slideOutVertically(motion.layout()) { it } + fadeOut(motion.fade()),
-            ) {
-                AppNavigationBar(destination, reviewDueCount) { target ->
-                    navController.navigate(target.graph) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+    val onSelect: (TopLevelDestination) -> Unit = { target ->
+        navController.navigate(target.graph) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+    BoxWithConstraints(modifier) {
+        // Tablets and unfolded foldables (Material's medium width and up) get a rail at the side;
+        // a bottom bar there puts the tabs far from the content and stretches them.
+        if (maxWidth >= RailWidth) {
+            Row(Modifier.fillMaxSize()) {
+                AnimatedVisibility(
+                    visible = !immersive,
+                    enter = slideInHorizontally(motion.layout()) { -it } + fadeIn(motion.fade()),
+                    exit = slideOutHorizontally(motion.layout()) { -it } + fadeOut(motion.fade()),
+                ) {
+                    AppNavigationRail(destination, reviewDueCount, onSelect)
                 }
+                AppNavHost(navController = navController, modifier = Modifier.weight(1f).fillMaxHeight())
             }
+        } else {
+            Scaffold(
+                contentWindowInsets = WindowInsets(0),
+                containerColor = Color.Transparent,
+                bottomBar = {
+                    AnimatedVisibility(
+                        visible = !immersive,
+                        enter = slideInVertically(motion.layout()) { it } + fadeIn(motion.fade()),
+                        exit = slideOutVertically(motion.layout()) { it } + fadeOut(motion.fade()),
+                    ) {
+                        AppNavigationBar(destination, reviewDueCount, onSelect)
+                    }
+                },
+            ) { padding ->
+                AppNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(padding).consumeWindowInsets(padding),
+                )
+            }
+        }
+    }
+}
+
+private val RailWidth = 600.dp
+
+@Composable
+private fun AppNavigationRail(
+    destination: NavDestination?,
+    reviewDueCount: Int,
+    onSelect: (TopLevelDestination) -> Unit,
+) {
+    val g = Glass.colors
+    NavigationRail(
+        containerColor = g.chrome,
+        modifier = Modifier.fillMaxHeight().drawBehind {
+            if (g.enabled) drawLine(g.rimTop, Offset(size.width, 0f), Offset(size.width, size.height), strokeWidth = 1.dp.toPx())
         },
-    ) { padding ->
-        AppNavHost(
-            navController = navController,
-            modifier = Modifier.padding(padding).consumeWindowInsets(padding),
-        )
+    ) {
+        Spacer(Modifier.weight(1f))
+        TopLevelDestination.entries.forEach { item ->
+            val selected = destination?.hierarchy?.any { it.hasRoute(item.graph::class) } == true
+            val label = stringResource(item.label)
+            val badge = item == TopLevelDestination.MEMORIZE && reviewDueCount > 0
+            val badgeDescription = if (badge) pluralStringResource(R.plurals.review_due_badge, reviewDueCount, reviewDueCount) else null
+            NavigationRailItem(
+                selected = selected,
+                onClick = { onSelect(item) },
+                icon = {
+                    BadgedBox(badge = { if (badge) Badge { Text(reviewDueCount.toString()) } }) {
+                        Icon(painterResource(if (selected) item.selectedIcon else item.icon), contentDescription = null)
+                    }
+                },
+                label = { NavLabel(label) },
+                colors = NavigationRailItemDefaults.colors(indicatorColor = g.tinted),
+                modifier = Modifier
+                    .padding(vertical = AppTheme.spacing.xs)
+                    .then(if (badgeDescription != null) Modifier.semantics { contentDescription = "$label, $badgeDescription" } else Modifier),
+            )
+        }
+        Spacer(Modifier.weight(1f))
     }
 }
 

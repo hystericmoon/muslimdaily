@@ -106,6 +106,16 @@ class TodayViewModel @Inject constructor(
         travelKm.value = null
     }
 
+    /** [startsNext] null: dismissed without an answer; the calendar stays as calculated. */
+    fun answerHijri(check: HijriCheck, startsNext: Boolean?) {
+        viewModelScope.launch {
+            settingsRepository.update {
+                if (startsNext != null) hijriAdjustment = (hijriAdjustment + check.delta(startsNext)).coerceIn(-1, 1)
+                hijriConfirmedFor = check.key
+            }
+        }
+    }
+
     fun setTravelMode(enabled: Boolean) {
         viewModelScope.launch { settingsRepository.update { travelMode = enabled } }
     }

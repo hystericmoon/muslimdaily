@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
     ],
     // 2: removed draft/review status, added the takhrij reference. Content is re-imported
     // from the bundled assets, so a destructive migration loses nothing.
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -110,6 +110,8 @@ data class CityEntity(
     val longitude: Double,
     val timeZone: String,
     val population: Long,
+    /** Metres above sea level; Kemenag corrects sunrise and Maghrib for it. */
+    val elevation: Int = 0,
 )
 
 @Fts4(notIndexed = ["cityId"], tokenizer = FtsOptions.TOKENIZER_UNICODE61)
@@ -123,6 +125,7 @@ data class EventWithCount(
     val id: String,
     val categoryId: String,
     val label: String,
+    val labelEn: String,
     val sortOrder: Int,
     val duaCount: Int,
 )
@@ -139,7 +142,7 @@ interface ContentDao {
     fun categories(): Flow<List<CategoryEntity>>
 
     @Query(
-        """SELECT e.id, e.categoryId, e.label, e.sortOrder,
+        """SELECT e.id, e.categoryId, e.label, e.labelEn, e.sortOrder,
            (SELECT COUNT(*) FROM duas d WHERE d.event = e.id) AS duaCount
            FROM events e ORDER BY e.sortOrder""",
     )

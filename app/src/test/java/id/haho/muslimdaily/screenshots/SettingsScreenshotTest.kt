@@ -13,7 +13,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h1400dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h1400dp-xhdpi")
 class SettingsScreenshotTest {
     @Test fun display() = captureVariants("45-settings-display") { DisplaySettingsContent(TodayPreviewData.settings) {} }
     @Test fun methodology() = captureVariants("46-settings-methodology") { MethodologyContent(3) }

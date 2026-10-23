@@ -65,7 +65,7 @@ object ReminderPlanner {
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
         val today = now.atZone(zone).toLocalDate()
         val schedules: List<PrayerSchedule> = location?.let { loc ->
-            (0L..7L).map { calculator.schedule(today.plusDays(it), loc.latitude, loc.longitude, zone, settings.calculation) }
+            (0L..7L).map { calculator.schedule(today.plusDays(it), loc.latitude, loc.longitude, zone, settings.calculation, loc.elevation) }
         }.orEmpty()
 
         fun firstAfter(pick: (PrayerSchedule) -> Instant): Instant? = schedules.map(pick).firstOrNull { it.isAfter(now) }

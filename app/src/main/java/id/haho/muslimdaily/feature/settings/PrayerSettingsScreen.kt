@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.settings
 
+import id.haho.muslimdaily.core.ui.AppLocale
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -206,7 +207,7 @@ private fun AngleStepper(titleRes: Int, value: Double, onChange: (Double) -> Uni
     val title = stringResource(titleRes)
     StepperRow(
         title = title,
-        valueText = String.format(Locale.forLanguageTag("id"), "%.1f°", value),
+        valueText = String.format(AppLocale, "%.1f°", value),
         onDecrement = { onChange((value - 0.5).coerceIn(10.0, 22.0)) },
         onIncrement = { onChange((value + 0.5).coerceIn(10.0, 22.0)) },
         decrementDescription = stringResource(R.string.settings_decrease, title),

@@ -22,15 +22,31 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-val AppLocale: Locale = Locale.forLanguageTag("id-ID")
+/**
+ * The locale the app's text is in: English when the app (or device) language is English,
+ * otherwise Indonesian. Read on use, so a language change applies without a restart.
+ */
+val AppLocale: Locale
+    get() = Locale.getDefault().takeIf { it.language == "en" } ?: Indonesian
+
+private val Indonesian: Locale = Locale.forLanguageTag("id-ID")
+
+/** True when the app's text is English. */
+val isEnglish: Boolean get() = AppLocale.language == "en"
+
+/** Clock pattern: Indonesian writes 04.32, English 04:32. */
+fun clockPattern(is24Hour: Boolean): String = when {
+    isEnglish -> if (is24Hour) "HH:mm" else "h:mm a"
+    else -> if (is24Hour) "HH.mm" else "h.mm a"
+}
 
 /** True at 150% system font and above, where side-by-side controls switch to stacked layouts. */
 @Composable
 fun isLargeFontScale(): Boolean = androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.5f
 
-/** Formats clock times following the device's 12/24-hour preference, Indonesian style (04.32). */
+/** Formats clock times following the device's 12/24-hour preference, in the app's language style. */
 class TimeFormatter(is24Hour: Boolean) {
-    private val formatter = DateTimeFormatter.ofPattern(if (is24Hour) "HH.mm" else "h.mm a", AppLocale)
+    private val formatter = DateTimeFormatter.ofPattern(clockPattern(is24Hour), AppLocale)
     fun format(instant: Instant, zone: ZoneId): String = formatter.format(instant.atZone(zone))
 }
 
@@ -41,7 +57,7 @@ fun rememberTimeFormatter(): TimeFormatter {
     return remember(is24) { TimeFormatter(is24) }
 }
 
-private val LongDate = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", AppLocale)
+private val LongDate get() = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", AppLocale)
 
 fun formatLongDate(date: LocalDate): String = LongDate.format(date)
 

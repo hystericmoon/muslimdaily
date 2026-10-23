@@ -5,7 +5,7 @@
 
 Downloads GeoNames dumps (CC BY 4.0, https://www.geonames.org) and writes
 app/src/main/assets/cities.tsv with: geonameid, name, ascii name, country code, region,
-latitude, longitude, IANA time zone, population.
+latitude, longitude, IANA time zone, population, elevation in metres (SRTM, 0 when unknown).
 
 Coverage: every city worldwide with population >= 15,000, plus every Indonesian place with
 population >= 5,000 so smaller kabupaten seats are findable.
@@ -59,7 +59,10 @@ def main() -> int:
     out = io.StringIO()
     for r in sorted(rows.values(), key=lambda r: -int(r[14] or 0)):
         region = admin1.get(f"{r[8]}.{r[10]}", "")
-        fields = [r[0], r[1], r[2], r[8], region, f"{float(r[4]):.4f}", f"{float(r[5]):.4f}", r[17], r[14]]
+        # GeoNames "dem" is the SRTM terrain height; -9999 marks ocean/no data.
+        dem = int(r[16]) if r[16].lstrip("-").isdigit() and int(r[16]) > -1000 else 0
+        elevation = int(r[15]) if r[15].lstrip("-").isdigit() else dem
+        fields = [r[0], r[1], r[2], r[8], region, f"{float(r[4]):.4f}", f"{float(r[5]):.4f}", r[17], r[14], str(max(dem or elevation, 0))]
         out.write("\t".join(f.replace("\t", " ") for f in fields) + "\n")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(out.getvalue(), encoding="utf-8")

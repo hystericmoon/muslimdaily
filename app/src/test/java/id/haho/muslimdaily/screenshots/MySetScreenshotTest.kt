@@ -21,7 +21,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h860dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h860dp-xhdpi")
 class MySetScreenshotTest {
     private val duas = DuaPreviewData.duas + DuaPreviewData.dua("morning_05", 5) + DuaPreviewData.dua("morning_06", 6)
 

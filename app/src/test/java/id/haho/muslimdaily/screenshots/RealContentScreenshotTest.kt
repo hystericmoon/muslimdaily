@@ -39,7 +39,7 @@ import java.io.File
 /** The shipped content files in content/, so layout is checked against real lengths. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w400dp-h1800dp-xhdpi")
+@Config(qualifiers = "id-w400dp-h1800dp-xhdpi")
 class RealContentScreenshotTest {
     private val content = File("../content")
     private val taxonomy = ContentJsonFormat.decodeFromString(TaxonomyFile.serializer(), File(content, "taxonomy.json").readText())
