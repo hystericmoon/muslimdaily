@@ -16,8 +16,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedButton
@@ -26,9 +25,9 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -38,6 +37,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.ui.isLargeFontScale
@@ -55,7 +55,45 @@ fun SettingsGroup(title: String?, modifier: Modifier = Modifier, content: @Compo
     }
 }
 
-private val TransparentListColors @Composable get() = ListItemDefaults.colors(containerColor = Color.Transparent)
+/**
+ * A settings row with Material's list-item sizes, except that the leading and trailing parts stay
+ * centred however many lines the summary wraps to (Material's ListItem moves them to the top at
+ * three lines, which breaks the column of icons down a group).
+ */
+@Composable
+private fun SettingsListItem(
+    headline: String,
+    modifier: Modifier = Modifier,
+    supporting: String? = null,
+    leading: (@Composable () -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null,
+) {
+    Row(
+        modifier
+            .fillMaxWidth()
+            .heightIn(min = if (supporting == null) OneLineHeight else TwoLineHeight)
+            .padding(horizontal = AppTheme.spacing.lg, vertical = AppTheme.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+    ) {
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+            leading?.invoke()
+        }
+        Column(Modifier.weight(1f)) {
+            Text(headline, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            supporting?.let {
+                Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+            trailing?.invoke()
+        }
+    }
+}
+
+/** Material list-item heights for one and two lines. */
+private val OneLineHeight = 56.dp
+private val TwoLineHeight = 72.dp
 
 @Composable
 fun NavigationRow(
@@ -65,12 +103,11 @@ fun NavigationRow(
     summary: String? = null,
     @DrawableRes icon: Int? = null,
 ) {
-    ListItem(
-        headlineContent = { Text(title) },
-        supportingContent = summary?.let { { Text(it) } },
-        leadingContent = icon?.let { { Icon(painterResource(it), null) } },
-        trailingContent = { Icon(painterResource(R.drawable.ic_chevron_right), null) },
-        colors = TransparentListColors,
+    SettingsListItem(
+        headline = title,
+        supporting = summary,
+        leading = icon?.let { { Icon(painterResource(it), null) } },
+        trailing = { Icon(painterResource(R.drawable.ic_chevron_right), null) },
         modifier = modifier.selectable(selected = false, role = Role.Button, onClick = onClick),
     )
 }
@@ -83,11 +120,10 @@ fun InfoRow(
     summary: String? = null,
     @DrawableRes icon: Int? = null,
 ) {
-    ListItem(
-        headlineContent = { Text(title) },
-        supportingContent = summary?.let { { Text(it) } },
-        leadingContent = icon?.let { { Icon(painterResource(it), null) } },
-        colors = TransparentListColors,
+    SettingsListItem(
+        headline = title,
+        supporting = summary,
+        leading = icon?.let { { Icon(painterResource(it), null) } },
         modifier = modifier.semantics(mergeDescendants = true) {},
     )
 }
@@ -102,12 +138,11 @@ fun SwitchRow(
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
 ) {
-    ListItem(
-        headlineContent = { Text(title) },
-        supportingContent = summary?.let { { Text(it) } },
-        leadingContent = icon?.let { { Icon(painterResource(it), null) } },
-        trailingContent = { Switch(checked = checked, onCheckedChange = null, enabled = enabled) },
-        colors = TransparentListColors,
+    SettingsListItem(
+        headline = title,
+        supporting = summary,
+        leading = icon?.let { { Icon(painterResource(it), null) } },
+        trailing = { Switch(checked = checked, onCheckedChange = null, enabled = enabled) },
         modifier = modifier.toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
     )
 }
@@ -124,11 +159,10 @@ fun <T> RadioGroup(
 ) {
     Column(modifier.selectableGroup()) {
         options.forEach { option ->
-            ListItem(
-                headlineContent = { Text(label(option)) },
-                supportingContent = description?.invoke(option)?.let { { Text(it) } },
-                leadingContent = { RadioButton(selected = option == selected, onClick = null) },
-                colors = TransparentListColors,
+            SettingsListItem(
+                headline = label(option),
+                supporting = description?.invoke(option),
+                leading = { RadioButton(selected = option == selected, onClick = null) },
                 modifier = Modifier.selectable(selected = option == selected, role = Role.RadioButton, onClick = { onSelect(option) }),
             )
         }
