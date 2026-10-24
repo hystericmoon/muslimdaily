@@ -211,7 +211,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         val bottom = PaddingValues(bottom = AppTheme.spacing.xxl)
         if (maxWidth >= TwoPaneWidth) {
             Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
-                LazyColumn(Modifier.weight(1f).fillMaxSize(), contentPadding = bottom) {
+                LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
                     glanceItems(data, actions, routines)
                     otherItems(data, actions)
                 }
@@ -221,7 +221,8 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
                 }
             }
         } else {
-            LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize(), contentPadding = bottom) {
+            // The list starts below the status bar, so scrolled content never runs under the clock.
+            LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
                 glanceItems(data, actions, routines)
                 scheduleItems(data, actions, expanded, onExpandToggle)
                 otherItems(data, actions)
@@ -232,7 +233,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
 
 /** Header, next prayer and the cards that matter right now. */
 private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>) {
-    item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
+    item(key = "header") { Header(data, actions) }
     item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
     if (data.prohibited.isNotEmpty()) {
         item(key = "prohibited") {
