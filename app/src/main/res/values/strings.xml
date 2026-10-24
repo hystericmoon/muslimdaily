@@ -790,6 +790,12 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0_final">
+        <item>Halaman Hari ini lebih ringkas: kartu shalat berikutnya lebih pendek, dengan Kiblat dan Masjid terdekat tepat di bawah jamnya.</item>
+        <item>Dzikir pagi dan petang, waktu terlarang, dan shalat Dhuha kini hanya muncul saat waktunya berlangsung.</item>
+        <item>Buka Subuh atau Isya untuk melihat kapan waktunya berakhir. Witir kini dicentang di dalam Isya.</item>
+        <item>Juga di versi 0.7: widget jadwal shalat baru untuk semua ukuran, serta aplikasi yang lebih cepat dan ringan.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_4">
         <item>Aplikasi kini lebih cepat dibuka dan lebih ringan: unduhannya sekitar sepertiga lebih kecil, dan menggulir terasa lebih mulus.</item>
         <item>Widget memakai lebih sedikit memori, dengan tampilan yang sama.</item>

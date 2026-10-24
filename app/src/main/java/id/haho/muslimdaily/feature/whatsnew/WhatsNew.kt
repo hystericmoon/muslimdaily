@@ -37,6 +37,7 @@ object WhatsNew {
     data class Release(val version: String, @ArrayRes val items: Int)
 
     val releases = listOf(
+        Release("0.7.0", R.array.whats_new_0_7_0_final),
         Release("0.7.0-beta.4", R.array.whats_new_0_7_0_beta_4),
         Release("0.7.0-beta.3", R.array.whats_new_0_7_0_beta_3),
         Release("0.7.0-beta.2", R.array.whats_new_0_7_0_beta_2),
@@ -48,12 +49,14 @@ object WhatsNew {
 
     /**
      * What to show when [current] runs after [seen]. Nothing on a fresh install ([seen] blank and
-     * [firstRun]), at most the three latest releases after a long gap.
+     * [firstRun]), at most the three latest releases after a long gap. A final release sums up its
+     * betas, so their entries are left out once it ships.
      */
     fun since(seen: String, current: String, firstRun: Boolean): List<Release> {
         if (firstRun) return emptyList()
         return releases
             .filter { !Versions.isNewer(it.version, current) }
+            .filter { Versions.isPreRelease(current) || !Versions.isPreRelease(it.version) }
             .filter { seen.isBlank() || Versions.isNewer(it.version, seen) }
             .take(3)
     }
