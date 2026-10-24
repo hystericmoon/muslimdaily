@@ -30,6 +30,15 @@ class WhatsNewTest {
     }
 
     @Test
+    fun `a final release sums up its betas`() {
+        // From the last stable release, or from a beta, a final 0.7.0 shows its own highlights only.
+        assertEquals(listOf("0.7.0"), WhatsNew.since("0.6.0", "0.7.0", firstRun = false).map { it.version })
+        assertEquals(listOf("0.7.0"), WhatsNew.since("0.7.0-beta.4", "0.7.0", firstRun = false).map { it.version })
+        // A beta still lists the betas before it.
+        assertEquals(listOf("0.7.0-beta.4", "0.7.0-beta.3"), WhatsNew.since("0.7.0-beta.2", "0.7.0-beta.4", firstRun = false).map { it.version })
+    }
+
+    @Test
     fun `releases are listed newest first`() {
         val versions = WhatsNew.releases.map { it.version }
         assertEquals(versions, versions.sortedWith { a, b -> if (id.haho.muslimdaily.update.Versions.isNewer(a, b)) -1 else 1 })

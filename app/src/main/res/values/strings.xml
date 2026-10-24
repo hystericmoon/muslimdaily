@@ -84,7 +84,6 @@
     <string name="today_now_badge">Sekarang</string>
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Jadwal shalat</string>
-    <string name="today_other_sunnah">Shalat sunnah lainnya</string>
     <string name="today_prohibited_title">Waktu terlarang</string>
     <string name="today_method_footer">%1$s · Ashar %2$s</string>
     <string name="today_change_method">Ubah perhitungan</string>
@@ -107,14 +106,12 @@
     <string name="today_private_note">Ceklis ini pribadi, hanya tersimpan di perangkat, dan diulang setiap hari.</string>
 
     <!-- Windows -->
-    <string name="window_morning_adhkar">Waktu dzikir pagi</string>
     <string name="window_evening_adhkar">Waktu dzikir petang</string>
-    <string name="window_prohibited_after_fajr">Waktu terlarang setelah shalat Subuh hingga matahari naik</string>
-    <string name="window_prohibited_zawal">Waktu terlarang saat matahari tepat di atas (zawal)</string>
-    <string name="window_prohibited_after_asr">Waktu terlarang setelah shalat Ashar hingga Maghrib</string>
-    <string name="window_duha">Waktu Dhuha</string>
     <string name="window_witr">Waktu Witir</string>
-    <string name="window_until">hingga %s</string>
+    <string name="today_fajr_ends">Hingga syuruq %s</string>
+    <string name="today_isha_ends_third">Hingga sepertiga malam %s</string>
+    <string name="today_isha_ends_middle">Hingga tengah malam %s</string>
+    <string name="today_isha_ends_fajr">Hingga Subuh %s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Sebagian ulama membolehkan rentang waktu yang lebih luas.</string>
     <string name="note_prohibited_cause">Ulama berbeda pendapat tentang shalat yang memiliki sebab, seperti tahiyatul masjid.</string>
@@ -145,7 +142,6 @@
     <string name="adhkar_morning">Dzikir pagi</string>
     <string name="adhkar_evening">Dzikir petang</string>
     <string name="adhkar_active">Sekarang waktunya · hingga %s</string>
-    <string name="adhkar_upcoming">Mulai pukul %s</string>
     <string name="adhkar_progress">%1$d dari %2$d</string>
     <string name="adhkar_done_today">Sudah dibaca hari ini</string>
     <string name="adhkar_open_list">Lihat daftar</string>
@@ -796,6 +792,16 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0_final">
+        <item>Halaman Hari ini lebih ringkas: kartu shalat berikutnya lebih pendek, dengan Kiblat dan Masjid terdekat tepat di bawah jamnya.</item>
+        <item>Dzikir pagi dan petang, waktu terlarang, dan shalat Dhuha kini hanya muncul saat waktunya berlangsung.</item>
+        <item>Buka Subuh atau Isya untuk melihat kapan waktunya berakhir. Witir kini dicentang di dalam Isya.</item>
+        <item>Juga di versi 0.7: widget jadwal shalat baru untuk semua ukuran, serta aplikasi yang lebih cepat dan ringan.</item>
+    </string-array>
+    <string-array name="whats_new_0_7_0_beta_4">
+        <item>Aplikasi kini lebih cepat dibuka dan lebih ringan: unduhannya sekitar sepertiga lebih kecil, dan menggulir terasa lebih mulus.</item>
+        <item>Widget memakai lebih sedikit memori, dengan tampilan yang sama.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_3">
         <item>Widget lebih rapi dan mudah dibaca: jarak yang sama di semua ukuran, dan shalat berikutnya selalu paling menonjol.</item>
         <item>Di widget yang tinggi, jadwal kini tersusun dua baris dengan jam yang lebih besar, tidak lagi menyisakan ruang kosong.</item>
