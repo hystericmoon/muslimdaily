@@ -7,12 +7,16 @@ import id.haho.muslimdaily.feature.duas.library.DuaLibraryContent
 import id.haho.muslimdaily.feature.routines.RoutineEditActions
 import id.haho.muslimdaily.feature.routines.RoutineEditScreen
 import id.haho.muslimdaily.feature.routines.RoutineEditState
+import id.haho.muslimdaily.feature.today.TodayActions
+import id.haho.muslimdaily.feature.today.TodayPreviewData
+import id.haho.muslimdaily.feature.today.TodayScreen
 import androidx.compose.foundation.layout.height
 import androidx.compose.ui.unit.dp
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
@@ -97,5 +101,28 @@ class RoutineScreenshotTest {
             id.haho.muslimdaily.feature.duas.detail.DuaDetailActions(),
         )
     }
-}
 
+    // Today's timed sections, each shown only while its window runs (Jakarta, Wed 21 Oct 2026).
+
+    @Test
+    @Config(qualifiers = "id-w400dp-h2400dp-xhdpi")
+    fun todayDhuha() = captureVariants("118-today-dhuha") {
+        TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 8, 30), checked = setOf("fard:FAJR")), TodayActions())
+    }
+
+    @Test
+    @Config(qualifiers = "id-w400dp-h2400dp-xhdpi")
+    fun todayWitr() = captureVariants("119-today-witr") {
+        TodayScreen(
+            TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 20, 30), checked = setOf("fard:ISHA"), progress = emptyMap()),
+            TodayActions(),
+        )
+    }
+
+    /** No window running: only the next prayer and the schedule. */
+    @Test
+    @Config(qualifiers = "id-w400dp-h2400dp-xhdpi")
+    fun todayQuiet() = captureVariants("120-today-quiet") {
+        TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 13, 0), checked = emptySet(), progress = emptyMap()), TodayActions())
+    }
+}
