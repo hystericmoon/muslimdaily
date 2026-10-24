@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.roborazzi)
+    alias(libs.plugins.baselineprofile)
 }
 
 val reportEmail = providers.gradleProperty("muslimdaily.reportEmail").getOrElse("")
@@ -121,6 +122,14 @@ android {
     }
 }
 
+// The app's own startup and Baseline Profiles, generated on a phone with
+// `./gradlew :app:generateSideloadBaselineProfile` and committed under src/sideload/generated
+// (the build GitHub Releases ship). The startup profile also orders the dex for launch.
+baselineProfile {
+    automaticGenerationDuringBuild = false
+    dexLayoutOptimization = true
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
@@ -143,6 +152,7 @@ androidComponents {
 }
 
 dependencies {
+    baselineProfile(project(":baselineprofile"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
