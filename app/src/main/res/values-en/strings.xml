@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Muslim Daily</string>
+    <string name="app_name">Adwam</string>
 
     <!-- Navigation -->
     <string name="nav_today">Today</string>
@@ -555,7 +555,7 @@
     <string name="reminders_lead">Before the adhan</string>
     <string name="reminders_ongoing_title">Next prayer on lock screen</string>
     <string name="reminders_ongoing_summary">A silent notification with a countdown. Shown as a Live Update on Android 16.</string>
-    <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Muslim Daily.</string>
+    <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Adwam.</string>
 
     <!-- Nearby mosques -->
     <string name="mosque_title">Nearby mosques</string>
@@ -655,7 +655,7 @@
 
     <!-- Share -->
     <string name="share_dua">Share dua</string>
-    <string name="share_footer">Muslim Daily</string>
+    <string name="share_footer">Adwam</string>
 
     <!-- Backup -->
     <string name="backup_title">Full backup</string>
@@ -664,7 +664,7 @@
     <string name="backup_restore">Restore from backup</string>
     <string name="backup_saved">Backup saved.</string>
     <string name="backup_restored">Backup restored: %1$d sets, %2$d memorized duas.</string>
-    <string name="backup_restore_failed">This file isn\'t a Muslim Daily backup.</string>
+    <string name="backup_restore_failed">This file isn\'t an Adwam backup.</string>
     <string name="backup_restore_confirm_title">Restore backup?</string>
     <string name="backup_restore_confirm_body">Settings, my sets, memorization and checklist on this phone will be replaced with the backup contents.</string>
     <string name="backup_restore_choose">Choose file</string>
@@ -691,7 +691,7 @@
     <string name="onboarding_location_denied">Location permission wasn\'t given. You can still choose a city by hand.</string>
     <string name="onboarding_location_set">Location: %1$s</string>
     <string name="onboarding_reminders_title">Reminders</string>
-    <string name="onboarding_reminders_body">Muslim Daily only sends the notifications you turn on.</string>
+    <string name="onboarding_reminders_body">Adwam only sends the notifications you turn on.</string>
     <string name="onboarding_reminders_prayer">Remind me when each prayer begins</string>
     <string name="onboarding_reminders_adhkar">Remind me of the morning and evening adhkar</string>
     <string name="onboarding_notifications_denied">Notifications aren\'t allowed yet, so reminders can\'t appear. Allow them in Settings → Reminders.</string>
@@ -741,7 +741,7 @@
     <string name="diag_type_pre_prayer">Before prayer</string>
     <string name="diag_type_fasting">Sunnah fast</string>
     <string name="diag_type_other">Other</string>
-    <string name="diag_email_subject">Muslim Daily %1$s beta feedback</string>
+    <string name="diag_email_subject">Adwam %1$s beta feedback</string>
     <string name="diag_email_template">What happened?\n\n\nWhat did you expect?\n\n\nSteps before it happened:\n1.\n2.\n\n(The data below helps find the cause. Delete any part you don\'t want to send.)</string>
     <string name="crash_prompt_title">The app stopped unexpectedly</string>
     <string name="crash_prompt_body">A crash report was saved on the device. Send it to the developer so it can be fixed? You\'ll see its contents in the email before sending.</string>

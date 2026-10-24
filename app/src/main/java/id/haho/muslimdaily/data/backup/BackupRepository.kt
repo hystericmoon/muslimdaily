@@ -84,7 +84,7 @@ class BackupRepository @Inject constructor(
         return json.encodeToString(BackupFile.serializer(), file)
     }
 
-    /** Throws [IllegalArgumentException] for a file that is not a Muslim Daily backup. */
+    /** Throws [IllegalArgumentException] for a file that is not an Adwam (formerly Muslim Daily) backup. */
     suspend fun restore(text: String): Summary {
         val file = runCatching { json.decodeFromString(BackupFile.serializer(), text) }
             .getOrElse { throw IllegalArgumentException("Not a backup file", it) }

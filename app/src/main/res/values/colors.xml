@@ -4,5 +4,6 @@
     <color name="window_background">#FBF8F1</color>
     <color name="launcher_background">#1F5F5B</color>
     <color name="launcher_foreground">#FBF8F1</color>
+    <color name="launcher_accent">#C9A227</color>
     <color name="notification_accent">#006A65</color>
 </resources>

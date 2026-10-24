@@ -58,7 +58,7 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
             connectTimeout = TIMEOUT_MS
             readTimeout = TIMEOUT_MS
             setRequestProperty("Accept", "application/vnd.github+json")
-            setRequestProperty("User-Agent", "MuslimDaily/${BuildConfig.VERSION_NAME}")
+            setRequestProperty("User-Agent", "Adwam/${BuildConfig.VERSION_NAME}")
         }
         try {
             when (conn.responseCode) {
@@ -89,7 +89,7 @@ class UpdateRepository @Inject constructor(@param:ApplicationContext private val
             connectTimeout = TIMEOUT_MS
             readTimeout = TIMEOUT_MS
             instanceFollowRedirects = true
-            setRequestProperty("User-Agent", "MuslimDaily/${BuildConfig.VERSION_NAME}")
+            setRequestProperty("User-Agent", "Adwam/${BuildConfig.VERSION_NAME}")
         }
         try {
             if (conn.responseCode != HttpURLConnection.HTTP_OK) throw IOException("HTTP ${conn.responseCode}")

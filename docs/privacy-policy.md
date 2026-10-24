@@ -1,10 +1,10 @@
-# Kebijakan Privasi / Privacy Policy — Muslim Daily
+# Kebijakan Privasi / Privacy Policy — Adwam (formerly Muslim Daily)
 
 Berlaku sejak / Effective: versi 0.5.0
 
 ## Bahasa Indonesia
 
-Muslim Daily tidak mengumpulkan, mengirim, atau menjual data pribadi Anda. Aplikasi ini tidak
+Adwam tidak mengumpulkan, mengirim, atau menjual data pribadi Anda. Aplikasi ini tidak
 memiliki akun, iklan, analitik, atau pelacak.
 
 **Lokasi.** Bila Anda mengizinkan, aplikasi membaca lokasi perangkat untuk menghitung waktu
@@ -44,7 +44,7 @@ https://github.com/hystericmoon/muslimdaily/issues.
 
 ## English
 
-Muslim Daily does not collect, transmit or sell your personal data. It has no accounts, ads,
+Adwam does not collect, transmit or sell your personal data. It has no accounts, ads,
 analytics or trackers.
 
 **Location.** If you allow it, the app reads the device location to calculate prayer times and
