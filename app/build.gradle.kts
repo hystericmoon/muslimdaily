@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.roborazzi)
+    alias(libs.plugins.baselineprofile)
 }
 
 val reportEmail = providers.gradleProperty("muslimdaily.reportEmail").getOrElse("")
@@ -31,7 +32,7 @@ android {
         versionName = "0.7.0-beta.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
-        // GitHub repository whose releases the sideload updater reads (debug builds only).
+        // GitHub repository whose releases the sideload updater reads (debug and sideload builds).
         buildConfigField("String", "UPDATE_REPO", "\"$updateRepo\"")
     }
 
@@ -72,6 +73,21 @@ android {
             buildConfigField("boolean", "SELF_UPDATE", "false")
             signingConfig = signingConfigs.findByName("release")
         }
+        // What GitHub Releases ship: optimised like release (R8, not debuggable), but with the
+        // debug package, shared key and updater, so it installs over earlier sideload builds.
+        create("sideload") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".debug"
+            buildConfigField("boolean", "SELF_UPDATE", "true")
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
+    }
+
+    // The sideload build uses the updater's manifest and file provider paths from the debug set.
+    sourceSets.getByName("sideload") {
+        manifest.srcFile("src/debug/AndroidManifest.xml")
+        res.srcDirs("src/debug/res")
     }
 
     compileOptions {
@@ -106,6 +122,14 @@ android {
     }
 }
 
+// The app's own startup and Baseline Profiles, generated on a phone with
+// `./gradlew :app:generateSideloadBaselineProfile` and committed under src/sideload/generated
+// (the build GitHub Releases ship). The startup profile also orders the dex for launch.
+baselineProfile {
+    automaticGenerationDuringBuild = false
+    dexLayoutOptimization = true
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
@@ -128,6 +152,7 @@ androidComponents {
 }
 
 dependencies {
+    baselineProfile(project(":baselineprofile"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)

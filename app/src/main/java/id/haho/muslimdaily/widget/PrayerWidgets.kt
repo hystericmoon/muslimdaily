@@ -81,8 +81,11 @@ private val Corner: Dp = 24.dp
 private val DividerColor = Color(0x4DFFFFFF)
 private val White = ColorProvider(Color.White)
 
-/** Bitmaps are drawn at up to 2x: sharp on any launcher, well inside the RemoteViews size limit. */
-private fun scale(context: Context) = min(context.resources.displayMetrics.density, 2f)
+/**
+ * The sky is drawn at up to 1.5x and stretched by the launcher: it is a soft gradient, so on a
+ * 2.75x phone it looks the same as 2x (faint stars included) at about half the bitmap memory.
+ */
+private fun scale(context: Context) = min(context.resources.displayMetrics.density, 1.5f)
 
 /** The words the widget shows, in the app's language. */
 internal class WidgetText(private val context: Context, private val model: WidgetModel, private val clock: TimeFormatter) {
