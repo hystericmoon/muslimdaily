@@ -792,6 +792,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_8_0">
+        <item>Muslim Daily kini bernama Adwam (أدوم), yang berarti «yang paling terus-menerus». Isi, catatan, hafalan, dan pengaturan Anda tetap sama.</item>
+        <item>Ikon baru di layar utama, notifikasi, dan jam Wear OS. Di Android 13 ke atas, ikon mengikuti warna ikon bertema di ponsel Anda.</item>
+        <item>Jika widget jadwal shalat lambat berganti ke shalat berikutnya, halaman Hari ini kini menampilkan catatan untuk mengizinkan alarm tepat waktu.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_final">
         <item>Halaman Hari ini lebih ringkas: kartu shalat berikutnya lebih pendek, dengan Kiblat dan Masjid terdekat tepat di bawah jamnya.</item>
         <item>Dzikir pagi dan petang, waktu terlarang, dan shalat Dhuha kini hanya muncul saat waktunya berlangsung.</item>

@@ -804,6 +804,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_8_0">
+        <item>Muslim Daily is now called Adwam (أدوم), meaning “the most constant”. Your content, notes, memorisation and settings stay as they are.</item>
+        <item>A new icon on your home screen, in notifications and on Wear OS. On Android 13 and later it follows your phone’s themed icons.</item>
+        <item>If the prayer-times widget is slow to move to the next prayer, Today now shows a note to allow exact alarms.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_final">
         <item>A more compact Today screen: a shorter next-prayer card, with Qibla and Nearby masjid right below the time.</item>
         <item>Morning and evening adhkar, prohibited times and Dhuha now appear only while their time is running.</item>
