@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Muslim Daily</string>
+    <string name="app_name">Adwam</string>
 
     <!-- Navigation -->
     <string name="nav_today">Hari ini</string>
@@ -543,7 +543,7 @@
     <string name="reminders_lead">Sebelum adzan</string>
     <string name="reminders_ongoing_title">Shalat berikutnya di layar kunci</string>
     <string name="reminders_ongoing_summary">Notifikasi senyap dengan hitung mundur. Di Android 16 tampil sebagai Live Update.</string>
-    <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Muslim Daily.</string>
+    <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Adwam.</string>
 
     <!-- Nearby mosques -->
     <string name="mosque_title">Masjid terdekat</string>
@@ -643,7 +643,7 @@
 
     <!-- Share -->
     <string name="share_dua">Bagikan doa</string>
-    <string name="share_footer">Muslim Daily</string>
+    <string name="share_footer">Adwam</string>
 
     <!-- Backup -->
     <string name="backup_title">Cadangan lengkap</string>
@@ -652,7 +652,7 @@
     <string name="backup_restore">Pulihkan dari cadangan</string>
     <string name="backup_saved">Cadangan tersimpan.</string>
     <string name="backup_restored">Cadangan dipulihkan: %1$d set, %2$d doa hafalan.</string>
-    <string name="backup_restore_failed">Berkas ini bukan cadangan Muslim Daily.</string>
+    <string name="backup_restore_failed">Berkas ini bukan cadangan Adwam.</string>
     <string name="backup_restore_confirm_title">Pulihkan cadangan?</string>
     <string name="backup_restore_confirm_body">Pengaturan, set saya, hafalan, dan ceklis di ponsel ini akan diganti dengan isi cadangan.</string>
     <string name="backup_restore_choose">Pilih berkas</string>
@@ -679,7 +679,7 @@
     <string name="onboarding_location_denied">Izin lokasi tidak diberikan. Anda tetap bisa memilih kota secara manual.</string>
     <string name="onboarding_location_set">Lokasi: %1$s</string>
     <string name="onboarding_reminders_title">Pengingat</string>
-    <string name="onboarding_reminders_body">Muslim Daily hanya mengirim notifikasi yang Anda nyalakan.</string>
+    <string name="onboarding_reminders_body">Adwam hanya mengirim notifikasi yang Anda nyalakan.</string>
     <string name="onboarding_reminders_prayer">Ingatkan saat masuk waktu shalat</string>
     <string name="onboarding_reminders_adhkar">Ingatkan dzikir pagi dan petang</string>
     <string name="onboarding_notifications_denied">Notifikasi belum diizinkan, jadi pengingat belum bisa muncul. Izinkan lewat Pengaturan → Pengingat.</string>
@@ -731,7 +731,7 @@
     <string name="diag_type_pre_prayer">Sebelum shalat</string>
     <string name="diag_type_fasting">Puasa sunnah</string>
     <string name="diag_type_other">Lainnya</string>
-    <string name="diag_email_subject">Masukan uji coba Muslim Daily %1$s</string>
+    <string name="diag_email_subject">Masukan uji coba Adwam %1$s</string>
     <string name="diag_email_template">Apa yang terjadi?\n\n\nApa yang Anda harapkan?\n\n\nLangkah sebelum itu terjadi:\n1.\n2.\n\n(Data di bawah membantu mencari penyebabnya. Hapus bagian mana pun yang tidak ingin Anda kirim.)</string>
     <string name="crash_prompt_title">Aplikasi berhenti mendadak</string>
     <string name="crash_prompt_body">Laporan kerusakan tersimpan di perangkat. Kirim ke pengembang agar bisa diperbaiki? Anda akan melihat isinya di email sebelum mengirim.</string>

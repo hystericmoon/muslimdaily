@@ -32,7 +32,7 @@ Reading a report's diagnostics:
 
 ## Untuk penguji (kirimkan bagian ini)
 
-Assalamu'alaikum, terima kasih sudah mau mencoba Muslim Daily.
+Assalamu'alaikum, terima kasih sudah mau mencoba Adwam.
 
 **Pasang.** Unduh berkas APK yang dikirim, buka, dan izinkan pemasangan dari sumber ini bila
 diminta.

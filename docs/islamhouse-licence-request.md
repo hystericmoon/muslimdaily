@@ -19,7 +19,7 @@ site's disclaimer is less clear, and two further uses need a yes before they shi
 
 ## Message sent (contact form)
 
-> Assalamu'alaikum. I maintain Muslim Daily, a free, offline, ad-free Android app
+> Assalamu'alaikum. I maintain Adwam (formerly Muslim Daily), a free, offline, ad-free Android app
 > (github.com/hystericmoon/muslimdaily). May we include, unchanged and credited to IslamHouse:
 > 1. Hamad ad-Duraihim's Hisn al-Muslim audio, converted to Opus without edits
 > 2. The English Hisn al-Muslim text from hisnmuslim.com (who is the translator?)
@@ -33,7 +33,7 @@ site's disclaimer is less clear, and two further uses need a yes before they shi
 
 Assalamu'alaikum warahmatullahi wabarakatuh,
 
-I maintain Muslim Daily, a free and open-source Android app for daily prayer times and adhkar,
+I maintain Adwam (formerly Muslim Daily), a free and open-source Android app for daily prayer times and adhkar,
 mainly for Indonesian Muslims. It has no ads, accounts or tracking, and works fully offline.
 Source: https://github.com/hystericmoon/muslimdaily
 
@@ -58,5 +58,5 @@ is not allowed, please tell me and I will follow it.
 Jazakumullahu khairan,
 
 [Name]
-Muslim Daily maintainer
+Adwam maintainer
 [Email]

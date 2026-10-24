@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Muslim Daily</string>
+    <string name="app_name">Adwam</string>
     <string name="tile_label">Next prayer</string>
     <string name="tile_next">Next · %s</string>
     <string name="tile_tomorrow">Tomorrow · %s</string>
-    <string name="tile_no_data">Open Muslim Daily on your phone to send prayer times.</string>
+    <string name="tile_no_data">Open Adwam on your phone to send prayer times.</string>
     <string-array name="slots">
         <item>Fajr</item>
         <item>Sunrise</item>

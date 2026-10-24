@@ -50,7 +50,7 @@ class DiagnosticsLogTest {
         val files = CrashLog.files(context)
         assertEquals(5, files.size)
         val text = files.first().readText()
-        assertTrue("boom 6" in text && "Muslim Daily" in text)
+        assertTrue("boom 6" in text && "Adwam" in text)
         assertNotNull(CrashLog.unseen(context))
         CrashLog.markSeen(context)
         assertNull(CrashLog.unseen(context))
