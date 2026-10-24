@@ -121,6 +121,10 @@ class WidgetScreenshotTest {
         try {
             Locale.setDefault(Locale.ENGLISH)
             render("86-widget-5x2-en-12h-2100", DpSize(428.dp, 164.dp), data(at(21, 0), is24 = false), locale = Locale.ENGLISH)
+            // Samsung's grid gives tall cells: the times use the height instead of floating in it.
+            render("87-widget-5x3-tall-en-12h", DpSize(412.dp, 360.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
+            render("88-widget-4x3-tall-en-12h", DpSize(330.dp, 240.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
+            render("89-widget-1x3-tall-en-12h", DpSize(84.dp, 240.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
         } finally {
             Locale.setDefault(default)
         }

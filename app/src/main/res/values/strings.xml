@@ -794,6 +794,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0_beta_3">
+        <item>Widget lebih rapi dan mudah dibaca: jarak yang sama di semua ukuran, dan shalat berikutnya selalu paling menonjol.</item>
+        <item>Di widget yang tinggi, jadwal kini tersusun dua baris dengan jam yang lebih besar, tidak lagi menyisakan ruang kosong.</item>
+        <item>Widget satu kolom menampilkan lebih banyak shalat berikutnya, tersusun rapi dari atas.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_2">
         <item>Jam di widget tidak lagi terpotong di ukuran apa pun, juga dalam bahasa Inggris dan format 12 jam.</item>
         <item>Di widget lebar yang tinggi, shalat berikutnya kini tampil besar, dan jam di deretan jadwal lebih besar.</item>
