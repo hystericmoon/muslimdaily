@@ -794,6 +794,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_7_0_beta_4">
+        <item>Aplikasi kini lebih cepat dibuka dan lebih ringan: unduhannya sekitar sepertiga lebih kecil, dan menggulir terasa lebih mulus.</item>
+        <item>Widget memakai lebih sedikit memori, dengan tampilan yang sama.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_3">
         <item>Widget lebih rapi dan mudah dibaca: jarak yang sama di semua ukuran, dan shalat berikutnya selalu paling menonjol.</item>
         <item>Di widget yang tinggi, jadwal kini tersusun dua baris dengan jam yang lebih besar, tidak lagi menyisakan ruang kosong.</item>

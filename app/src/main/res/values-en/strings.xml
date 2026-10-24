@@ -806,6 +806,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_7_0_beta_4">
+        <item>The app now opens faster and is lighter: the download is about a third smaller, and scrolling feels smoother.</item>
+        <item>The widget uses less memory, with the same look.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_3">
         <item>A tidier, easier-to-read widget: the same spacing at every size, with the next prayer always the most prominent.</item>
         <item>On a tall widget the times now sit in two rows with larger type, instead of leaving empty space.</item>

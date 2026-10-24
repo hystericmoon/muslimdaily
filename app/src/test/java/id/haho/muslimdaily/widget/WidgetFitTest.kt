@@ -32,6 +32,7 @@ import org.robolectric.annotation.GraphicsMode
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Locale
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Every widget size, in Indonesian and English, 24- and 12-hour, through the day (after Isya the
@@ -72,7 +73,8 @@ class WidgetFitTest {
 
     @Test fun english12Hour() = everyTextFits(Locale.ENGLISH, is24 = false)
 
-    private fun everyTextFits(locale: Locale, is24: Boolean) = runTest {
+    // Each locale renders ~1,900 widgets: more than runTest's default minute on a busy machine.
+    private fun everyTextFits(locale: Locale, is24: Boolean) = runTest(timeout = 5.minutes) {
         val problems = mutableListOf<String>()
         for ((h, m) in times) for (w in widths) for (ht in heights) {
             for (fontScale in listOf(1f, 1.3f, 2f)) problems += check(Case(locale, is24, h, m, DpSize(w.dp, ht.dp), fontScale))
