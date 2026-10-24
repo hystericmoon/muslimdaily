@@ -97,6 +97,8 @@
     <string name="today_update_location">Perbarui lokasi</string>
     <string name="today_enable_travel">Mode safar</string>
     <string name="today_dismiss">Abaikan</string>
+    <string name="today_widget_alarm_note">Widget jadwal shalat bisa terlambat sampai 10 menit berganti ke shalat berikutnya. Izinkan alarm tepat waktu agar selalu berganti tepat pada waktunya.</string>
+    <string name="today_widget_alarm_allow">Izinkan</string>
     <string name="today_expand_rawatib">Tampilkan sunnah rawatib</string>
     <string name="today_collapse_rawatib">Sembunyikan sunnah rawatib</string>
     <string name="state_expanded">terbuka</string>

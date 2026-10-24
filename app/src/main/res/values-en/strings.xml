@@ -99,6 +99,8 @@
     <string name="today_update_location">Update location</string>
     <string name="today_enable_travel">Travel mode</string>
     <string name="today_dismiss">Dismiss</string>
+    <string name="today_widget_alarm_note">The prayer-times widget can take up to 10 minutes to move to the next prayer. Allow exact alarms so it always changes on time.</string>
+    <string name="today_widget_alarm_allow">Allow</string>
     <string name="today_expand_rawatib">Show sunnah rawatib</string>
     <string name="today_collapse_rawatib">Hide sunnah rawatib</string>
     <string name="state_expanded">expanded</string>

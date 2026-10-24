@@ -13,6 +13,10 @@ import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
 import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import android.Manifest
+import android.content.Intent
+import android.os.Build
+import android.provider.Settings
+import androidx.core.net.toUri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -103,6 +107,8 @@ data class TodayActions(
     val onOpenFasting: () -> Unit = {},
     val onAnswerHijri: (HijriCheck, Boolean?) -> Unit = { _, _ -> },
     val onStartRoutine: (Routine) -> Unit = {},
+    val onAllowExactAlarms: () -> Unit = {},
+    val onDismissWidgetAlarms: () -> Unit = {},
 )
 
 @Composable
@@ -119,6 +125,7 @@ fun TodayRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val routines by viewModel.routines.collectAsStateWithLifecycle()
+    val widgetAlarmNote by viewModel.widgetAlarmNote.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -137,7 +144,10 @@ fun TodayRoute(
         if (granted) viewModel.updateLocationFromGps(::handle) else handle(LocationRepository.FixResult.NoPermission)
     }
 
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.checkTravel() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.checkTravel()
+        viewModel.checkWidgetAlarms()
+    }
 
     TodayScreen(
         state = state,
@@ -157,8 +167,15 @@ fun TodayRoute(
             onOpenFasting = onOpenFasting,
             onAnswerHijri = viewModel::answerHijri,
             onStartRoutine = { onStartRun(it.runKey) },
+            onAllowExactAlarms = {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
+                }
+            },
+            onDismissWidgetAlarms = viewModel::dismissWidgetAlarms,
         ),
         routines = routines,
+        widgetAlarmNote = widgetAlarmNote,
     )
 }
 
@@ -169,12 +186,13 @@ fun TodayScreen(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     initiallyExpanded: Set<String> = emptySet(),
     routines: List<Routine> = emptyList(),
+    widgetAlarmNote: Boolean = false,
 ) {
     Box(Modifier.fillMaxSize()) {
         when (state) {
             TodayUiState.Loading -> Unit
             TodayUiState.NoLocation -> NoLocation(actions)
-            is TodayUiState.Ready -> TodayContent(state.data, actions, initiallyExpanded, routines)
+            is TodayUiState.Ready -> TodayContent(state.data, actions, initiallyExpanded, routines, widgetAlarmNote)
         }
         SnackbarHost(snackbarHostState, Modifier.align(Alignment.BottomCenter))
     }
@@ -204,7 +222,7 @@ private fun NoLocation(actions: TodayActions) {
 private val TwoPaneWidth = 840.dp
 
 @Composable
-private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>, routines: List<Routine>) {
+private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>, routines: List<Routine>, widgetAlarmNote: Boolean) {
     var expanded by remember { mutableStateOf(initiallyExpanded) }
     val onExpandToggle: (String) -> Unit = { key -> expanded = if (key in expanded) expanded - key else expanded + key }
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -212,7 +230,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         if (maxWidth >= TwoPaneWidth) {
             Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
-                    glanceItems(data, actions, routines)
+                    glanceItems(data, actions, routines, widgetAlarmNote)
                     otherItems(data, actions)
                 }
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
@@ -223,7 +241,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
         } else {
             // The list starts below the status bar, so scrolled content never runs under the clock.
             LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
-                glanceItems(data, actions, routines)
+                glanceItems(data, actions, routines, widgetAlarmNote)
                 scheduleItems(data, actions, expanded, onExpandToggle)
                 otherItems(data, actions)
             }
@@ -232,9 +250,14 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
 }
 
 /** Header, next prayer and the cards that matter right now. */
-private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>) {
+private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>, widgetAlarmNote: Boolean) {
     item(key = "header") { Header(data, actions) }
     item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
+    if (widgetAlarmNote) {
+        item(key = "widget-alarms") {
+            WidgetAlarmNote(actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md))
+        }
+    }
     if (data.prohibited.isNotEmpty()) {
         item(key = "prohibited") {
             ProhibitedCard(data, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
@@ -424,6 +447,31 @@ private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modi
         Icon(painterResource(icon), null, Modifier.size(AppTheme.dimens.smallIcon))
         Spacer(Modifier.width(AppTheme.spacing.sm))
         Text(label)
+    }
+}
+
+/** Beside the next prayer: why the home-screen widget may lag, and how to fix it. */
+@Composable
+private fun WidgetAlarmNote(actions: TodayActions, modifier: Modifier = Modifier) {
+    GlassCard(
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        color = Glass.colors.tinted,
+        contentColor = Glass.colors.onTinted,
+    ) {
+        Column(Modifier.padding(AppTheme.spacing.lg)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_schedule), null)
+                Text(stringResource(R.string.today_widget_alarm_note), style = MaterialTheme.typography.bodyMedium)
+            }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
+                modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.sm),
+            ) {
+                TextButton(onClick = actions.onDismissWidgetAlarms) { Text(stringResource(R.string.today_dismiss)) }
+                GlassTonalButton(onClick = actions.onAllowExactAlarms) { Text(stringResource(R.string.today_widget_alarm_allow)) }
+            }
+        }
     }
 }
 
