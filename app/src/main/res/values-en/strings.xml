@@ -108,8 +108,10 @@
     <!-- Windows -->
     <string name="window_evening_adhkar">Evening adhkar time</string>
     <string name="window_witr">Witr time</string>
-    <string name="today_fajr_ends">until sunrise %s</string>
-    <string name="today_isha_ends">until a third of the night %1$s · middle of the night %2$s · Fajr %3$s</string>
+    <string name="today_fajr_ends">Until sunrise %s</string>
+    <string name="today_isha_ends_third">Until a third of the night %s</string>
+    <string name="today_isha_ends_middle">Until the middle of the night %s</string>
+    <string name="today_isha_ends_fajr">Until Fajr %s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Some scholars allow a wider time range.</string>
     <string name="note_prohibited_cause">Scholars differ on prayers that have a reason, such as tahiyyat al-masjid.</string>
@@ -555,7 +557,7 @@
 
     <!-- Nearby mosques -->
     <string name="mosque_title">Nearby mosques</string>
-    <string name="mosque_open">Nearby mosques</string>
+    <string name="mosque_open">Nearby masjid</string>
     <string name="mosque_locating">Finding your location…</string>
     <string name="mosque_permission_title">Find mosques near you</string>
     <string name="mosque_permission_body">Your location is used once to find mosques near you. It is not stored or sent anywhere.</string>

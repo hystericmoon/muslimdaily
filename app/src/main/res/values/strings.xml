@@ -106,8 +106,10 @@
     <!-- Windows -->
     <string name="window_evening_adhkar">Waktu dzikir petang</string>
     <string name="window_witr">Waktu Witir</string>
-    <string name="today_fajr_ends">hingga syuruq %s</string>
-    <string name="today_isha_ends">hingga sepertiga malam %1$s · tengah malam %2$s · Subuh %3$s</string>
+    <string name="today_fajr_ends">Hingga syuruq %s</string>
+    <string name="today_isha_ends_third">Hingga sepertiga malam %s</string>
+    <string name="today_isha_ends_middle">Hingga tengah malam %s</string>
+    <string name="today_isha_ends_fajr">Hingga Subuh %s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Sebagian ulama membolehkan rentang waktu yang lebih luas.</string>
     <string name="note_prohibited_cause">Ulama berbeda pendapat tentang shalat yang memiliki sebab, seperti tahiyatul masjid.</string>

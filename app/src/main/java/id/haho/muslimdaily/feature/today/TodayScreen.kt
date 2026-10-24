@@ -53,7 +53,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -66,7 +65,6 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import java.time.Duration
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -399,41 +397,21 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                     ) { text ->
                         Text(text, style = MaterialTheme.typography.titleMedium)
                     }
-                    next.iqamah?.let {
-                        Text(
-                            stringResource(R.string.today_iqamah, time.format(it, data.zone)),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
                 }
             }
-            // Where to face and where to pray it, under the prayer they serve: side by side, or
-            // stacked when large text would break the labels mid-word.
-            val qibla = stringResource(R.string.qibla_open)
-            val mosques = stringResource(R.string.mosque_open)
-            if (LocalDensity.current.fontScale > LARGE_FONT_SCALE) {
-                Column(
-                    Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
-                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-                ) {
-                    NextPrayerAction(R.drawable.ic_explore, qibla, actions.onOpenQibla, Modifier.fillMaxWidth())
-                    NextPrayerAction(R.drawable.ic_mosque, mosques, actions.onOpenMosques, Modifier.fillMaxWidth())
-                }
-            } else {
-                Row(
-                    Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
-                    horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-                ) {
-                    NextPrayerAction(R.drawable.ic_explore, qibla, actions.onOpenQibla, Modifier.weight(1f))
-                    NextPrayerAction(R.drawable.ic_mosque, mosques, actions.onOpenMosques, Modifier.weight(1f))
-                }
+            // Where to face and where to pray it, under the prayer they serve; each as wide as its
+            // label, wrapping to a second line when large text needs it.
+            FlowRow(
+                Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            ) {
+                NextPrayerAction(R.drawable.ic_explore, stringResource(R.string.qibla_open), actions.onOpenQibla)
+                NextPrayerAction(R.drawable.ic_mosque, stringResource(R.string.mosque_open), actions.onOpenMosques)
             }
         }
     }
 }
-
-/** Above this text scale the next prayer's two actions stack. */
-private const val LARGE_FONT_SCALE = 1.3f
 
 @Composable
 private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
@@ -444,7 +422,7 @@ private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modi
     ) {
         Icon(painterResource(icon), null, Modifier.size(AppTheme.dimens.smallIcon))
         Spacer(Modifier.width(AppTheme.spacing.sm))
-        Text(label, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
+        Text(label)
     }
 }
 

@@ -118,14 +118,13 @@ private fun PrayerRowView(
     // Nothing to expand when no reviewed rawatib or fard data has shipped yet.
     val plan = row.plan?.takeIf { it.before.isNotEmpty() || it.after.isNotEmpty() || it.fard != null }
     val name = stringResource(row.plan?.prayer?.labelRes() ?: row.slot.labelRes())
-    // When the time ends, the first line inside the row. Isya's three ends are listed side by side, unranked.
+    // When the time ends, the first lines inside the row. Isya's three ends are stacked, unranked.
     val ends = when (row.slot) {
-        PrayerTimeSlot.FAJR -> stringResource(R.string.today_fajr_ends, time.format(data.sunrise, data.zone))
-        PrayerTimeSlot.ISHA -> stringResource(
-            R.string.today_isha_ends,
-            time.format(data.ishaEnds.thirdOfNight, data.zone),
-            time.format(data.ishaEnds.midnight, data.zone),
-            time.format(data.ishaEnds.fajr, data.zone),
+        PrayerTimeSlot.FAJR -> listOf(stringResource(R.string.today_fajr_ends, time.format(data.sunrise, data.zone)))
+        PrayerTimeSlot.ISHA -> listOf(
+            stringResource(R.string.today_isha_ends_third, time.format(data.ishaEnds.thirdOfNight, data.zone)),
+            stringResource(R.string.today_isha_ends_middle, time.format(data.ishaEnds.midnight, data.zone)),
+            stringResource(R.string.today_isha_ends_fajr, time.format(data.ishaEnds.fajr, data.zone)),
         )
         else -> null
     }
@@ -213,13 +212,16 @@ private fun PrayerRowView(
                 exit = shrinkVertically(AppTheme.motion.layout()) + fadeOut(AppTheme.motion.fade()),
             ) {
                 Column {
-                    ends?.let {
-                        Text(
-                            it,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = if (row.isCurrent) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.sm),
-                        )
+                    ends?.let { lines ->
+                        Column(Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.sm)) {
+                            lines.forEach {
+                                Text(
+                                    it,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = if (row.isCurrent) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
                     }
                     Timeline(plan, witr, data, onToggle, onShowEvidence)
                 }
@@ -291,6 +293,7 @@ private fun TimelineStepRow(
                 onCheckedChange = { onToggle(key, it) },
                 modifier = Modifier.padding(start = AppTheme.spacing.md, end = AppTheme.spacing.xs),
                 minHeight = AppTheme.dimens.largeTouchTarget,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     Modifier.weight(1f).padding(
@@ -451,6 +454,7 @@ private fun SunnahWindowRow(
         onCheckedChange = onCheckedChange,
         minHeight = AppTheme.dimens.largeTouchTarget,
         modifier = Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             Modifier.weight(1f).padding(
