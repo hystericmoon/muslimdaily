@@ -72,6 +72,21 @@ android {
             buildConfigField("boolean", "SELF_UPDATE", "false")
             signingConfig = signingConfigs.findByName("release")
         }
+        // What GitHub Releases ship: optimised like release (R8, not debuggable), but with the
+        // debug package, shared key and updater, so it installs over earlier sideload builds.
+        create("sideload") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".debug"
+            buildConfigField("boolean", "SELF_UPDATE", "true")
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
+    }
+
+    // The sideload build uses the updater's manifest and file provider paths from the debug set.
+    sourceSets.getByName("sideload") {
+        manifest.srcFile("src/debug/AndroidManifest.xml")
+        res.srcDirs("src/debug/res")
     }
 
     compileOptions {
