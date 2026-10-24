@@ -802,6 +802,12 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_7_0_final">
+        <item>A more compact Today screen: a shorter next-prayer card, with Qibla and Nearby masjid right below the time.</item>
+        <item>Morning and evening adhkar, prohibited times and Dhuha now appear only while their time is running.</item>
+        <item>Open Fajr or Isha to see when its time ends. Witr is now ticked inside Isha.</item>
+        <item>Also in 0.7: a new prayer-times widget for every size, and a faster, lighter app.</item>
+    </string-array>
     <string-array name="whats_new_0_7_0_beta_4">
         <item>The app now opens faster and is lighter: the download is about a third smaller, and scrolling feels smoother.</item>
         <item>The widget uses less memory, with the same look.</item>
