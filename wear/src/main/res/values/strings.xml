@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Muslim Daily</string>
+    <string name="app_name">Adwam</string>
     <string name="tile_label">Shalat berikutnya</string>
     <string name="tile_next">Berikutnya · %s</string>
     <string name="tile_tomorrow">Besok · %s</string>
-    <string name="tile_no_data">Buka Muslim Daily di ponsel untuk mengirim jadwal shalat.</string>
+    <string name="tile_no_data">Buka Adwam di ponsel untuk mengirim jadwal shalat.</string>
     <string-array name="slots">
         <item>Subuh</item>
         <item>Terbit</item>

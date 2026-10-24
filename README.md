@@ -1,6 +1,6 @@
-# Muslim Daily
+# Adwam
 
-A native Android daily Muslim guide upon the manhaj salaf: prayer times, sunnah rawatib,
+Adwam (أدوم, formerly Muslim Daily) is a native Android daily Muslim guide upon the manhaj salaf: prayer times, sunnah rawatib,
 morning and evening adhkar, and authentic duas from waking to sleeping, with Arabic text,
 translation, audio and a memorisation mode. Offline-first. No account, no ads, no analytics.
 

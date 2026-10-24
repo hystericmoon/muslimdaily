@@ -37,7 +37,7 @@ object CrashLog {
         val trace = StringWriter().also { error.printStackTrace(PrintWriter(it)) }.toString()
         val now = Instant.now()
         val text = buildString {
-            appendLine("Muslim Daily ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+            appendLine("Adwam ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
             appendLine("${Build.MANUFACTURER} ${Build.MODEL}, Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
             appendLine("Time: $now")
             appendLine("Thread: ${thread.name}")
