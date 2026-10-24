@@ -44,12 +44,15 @@ Set the address that "Report an error" pre-fills in `gradle.properties`:
 
 ## Sideload builds and the in-app updater
 
-Debug / sideload builds (`SELF_UPDATE = true`) can update themselves from GitHub Releases;
-release (store) builds have no updater and no INTERNET permission.
+Debug and sideload builds (`SELF_UPDATE = true`) can update themselves from GitHub Releases;
+release (store) builds have no updater and no INTERNET permission. GitHub Releases ship the
+**sideload** build type: optimised like release (R8, resource shrinking, not debuggable, with the
+app's Baseline Profile) but with the debug package (`id.haho.muslimdaily.debug`), the shared key
+and the updater, so it installs over earlier sideload and debug builds.
 
 1. Bump `versionCode` and `versionName` in `app/build.gradle.kts` and push.
 2. Once that change is on `main` (merged), `.github/workflows/release.yml` sees a version with no
-   release yet, builds the debug APK,
+   release yet, builds the sideload APK (`:app:assembleSideload`),
    and creates the `vX.Y.Z` tag and GitHub release with the APK attached. (Pushing a `vX.Y.Z`
    tag yourself, or running the workflow by hand, does the same.)
 3. Phones check once a day on launch (Settings → Pembaruan aplikasi → Periksa otomatis), or on
@@ -62,6 +65,10 @@ Notes:
   `muslimdaily.updateRepo`) must be **public**.
 * All sideload builds are signed with the shared, non-secret `app/debug.keystore` so CI builds
   install over local ones. Android refuses an update signed with any other key.
+* After big UI changes, regenerate the Baseline Profile on an **emulator**, not a phone someone
+  uses: `ANDROID_SERIAL=<emulator> ./gradlew :app:generateSideloadBaselineProfile`, then commit
+  `app/src/sideload/generated/baselineProfiles/`. `gradle.properties` keeps the app installed
+  after the run (Gradle would otherwise uninstall it and its data).
 
 ## Wear OS tile
 

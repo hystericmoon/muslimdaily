@@ -32,7 +32,7 @@ android {
         versionName = "0.7.0-beta.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
-        // GitHub repository whose releases the sideload updater reads (debug builds only).
+        // GitHub repository whose releases the sideload updater reads (debug and sideload builds).
         buildConfigField("String", "UPDATE_REPO", "\"$updateRepo\"")
     }
 
