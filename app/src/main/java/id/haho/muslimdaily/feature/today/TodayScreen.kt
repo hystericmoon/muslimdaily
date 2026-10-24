@@ -52,9 +52,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -370,92 +369,82 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
         color = Glass.colors.tinted,
         contentColor = Glass.colors.onTinted,
     ) {
-        BesideOrBelow(Modifier.padding(AppTheme.dimens.cardPadding)) {
-            Column(Modifier.semantics(mergeDescendants = true) {}) {
-                Text(stringResource(R.string.today_next), style = MaterialTheme.typography.labelLarge)
-                Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
-                    Text(name, style = MaterialTheme.typography.headlineMedium, modifier = Modifier.weight(1f, fill = false))
+        Column(Modifier.padding(AppTheme.dimens.cardPadding)) {
+            // The prayer on the left, its time on the right; with large text the time wraps below.
+            FlowRow(
+                Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            ) {
+                Column(Modifier.padding(end = AppTheme.spacing.md)) {
+                    Text(stringResource(R.string.today_next), style = MaterialTheme.typography.labelLarge)
+                    Text(name, style = MaterialTheme.typography.headlineMedium)
                     if (next.isTomorrow) {
+                        Text(stringResource(R.string.today_tomorrow), style = MaterialTheme.typography.titleMedium)
+                    }
+                }
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(clock, style = MaterialTheme.typography.displayMedium)
+                    val countdown = stringResource(R.string.countdown_in, durationLabel(next.remaining))
+                    val motion = AppTheme.motion
+                    AnimatedContent(
+                        targetState = countdown,
+                        transitionSpec = {
+                            (slideInVertically(motion.layout()) { it / 2 } + fadeIn(motion.fade()))
+                                .togetherWith(slideOutVertically(motion.layout()) { -it / 2 } + fadeOut(motion.fade()))
+                        },
+                        contentAlignment = Alignment.CenterEnd,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                        label = "countdown",
+                    ) { text ->
+                        Text(text, style = MaterialTheme.typography.titleMedium)
+                    }
+                    next.iqamah?.let {
                         Text(
-                            stringResource(R.string.today_tomorrow),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(bottom = AppTheme.spacing.xs),
+                            stringResource(R.string.today_iqamah, time.format(it, data.zone)),
+                            style = MaterialTheme.typography.bodyMedium,
                         )
                     }
                 }
-                Text(clock, style = MaterialTheme.typography.displayMedium)
-                val countdown = stringResource(R.string.countdown_in, durationLabel(next.remaining))
-                val motion = AppTheme.motion
-                AnimatedContent(
-                    targetState = countdown,
-                    transitionSpec = {
-                        (slideInVertically(motion.layout()) { it / 2 } + fadeIn(motion.fade()))
-                            .togetherWith(slideOutVertically(motion.layout()) { -it / 2 } + fadeOut(motion.fade()))
-                    },
-                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-                    label = "countdown",
-                ) { text ->
-                    Text(text, style = MaterialTheme.typography.titleMedium)
-                }
-                next.iqamah?.let {
-                    Text(
-                        stringResource(R.string.today_iqamah, time.format(it, data.zone)),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
             }
-            // Where to face and where to pray it, next to the prayer they serve.
-            Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                NextPrayerAction(R.drawable.ic_explore, stringResource(R.string.qibla_open), actions.onOpenQibla)
-                NextPrayerAction(R.drawable.ic_mosque, stringResource(R.string.mosque_open), actions.onOpenMosques)
+            // Where to face and where to pray it, under the prayer they serve: side by side, or
+            // stacked when large text would break the labels mid-word.
+            val qibla = stringResource(R.string.qibla_open)
+            val mosques = stringResource(R.string.mosque_open)
+            if (LocalDensity.current.fontScale > LARGE_FONT_SCALE) {
+                Column(
+                    Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                ) {
+                    NextPrayerAction(R.drawable.ic_explore, qibla, actions.onOpenQibla, Modifier.fillMaxWidth())
+                    NextPrayerAction(R.drawable.ic_mosque, mosques, actions.onOpenMosques, Modifier.fillMaxWidth())
+                }
+            } else {
+                Row(
+                    Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
+                    horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                ) {
+                    NextPrayerAction(R.drawable.ic_explore, qibla, actions.onOpenQibla, Modifier.weight(1f))
+                    NextPrayerAction(R.drawable.ic_mosque, mosques, actions.onOpenMosques, Modifier.weight(1f))
+                }
             }
         }
     }
 }
 
+/** Above this text scale the next prayer's two actions stack. */
+private const val LARGE_FONT_SCALE = 1.3f
+
 @Composable
-private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit) {
+private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     GlassTonalButton(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         contentPadding = PaddingValues(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
     ) {
         Icon(painterResource(icon), null, Modifier.size(AppTheme.dimens.smallIcon))
         Spacer(Modifier.width(AppTheme.spacing.sm))
         Text(label, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
-    }
-}
-
-/** Narrow enough to sit beside the time on a phone; a long label wraps to a second line. */
-private val NextPrayerActionsWidth = 136.dp
-
-/**
- * The next prayer's details with its actions in a narrow column beside them, which keeps the card
- * short; when they don't fit side by side (large text) the actions go full width below.
- */
-@Composable
-private fun BesideOrBelow(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val gap = AppTheme.spacing.md
-    Layout(content, modifier.fillMaxWidth()) { measurables, constraints ->
-        val (main, side) = measurables
-        val width = constraints.maxWidth
-        val gapPx = gap.roundToPx()
-        val sideWidth = NextPrayerActionsWidth.roundToPx()
-        val info = main.measure(constraints.copy(minWidth = 0, minHeight = 0))
-        if (info.width + gapPx + sideWidth <= width) {
-            val actions = side.measure(Constraints.fixedWidth(sideWidth))
-            val height = maxOf(info.height, actions.height)
-            layout(width, height) {
-                info.place(0, (height - info.height) / 2)
-                actions.place(width - sideWidth, (height - actions.height) / 2)
-            }
-        } else {
-            val actions = side.measure(Constraints.fixedWidth(width))
-            layout(width, info.height + gapPx + actions.height) {
-                info.place(0, 0)
-                actions.place(0, info.height + gapPx)
-            }
-        }
     }
 }
 

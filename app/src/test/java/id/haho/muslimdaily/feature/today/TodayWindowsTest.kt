@@ -14,7 +14,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-/** The Today sections that appear only while their time window is in progress (Jakarta, Wed 21 Oct 2026). */
+/** Today's timed sections and the times inside the prayer rows (Jakarta, Wed 21 Oct 2026). */
 class TodayWindowsTest {
     private val zone = ZoneId.of("Asia/Jakarta")
     private val settings = TodayPreviewData.settings
@@ -33,7 +33,15 @@ class TodayWindowsTest {
         LocalDateTime.ofInstant(instant.plus(Duration.ofMinutes(plusMinutes)), zone)
 
     @Test
-    fun `before Subuh only last night's witr runs`() {
+    fun `sunrise is Subuh's end, not a row of its own`() {
+        val d = data(at(today.dhuhr, 30))
+        assertEquals(listOf(PrayerTimeSlot.FAJR, PrayerTimeSlot.DHUHR, PrayerTimeSlot.ASR, PrayerTimeSlot.MAGHRIB, PrayerTimeSlot.ISHA), d.rows.map { it.slot })
+        assertEquals(today.sunrise, d.sunrise)
+    }
+
+    /** Witr sits inside the Isya row all day: tonight's window, or last night's until Subuh. */
+    @Test
+    fun `before Subuh Isya's witr is last night's`() {
         val d = data(at(today.fajr, -30))
         assertNull(d.adhkar)
         assertNull(d.duha)
@@ -50,7 +58,7 @@ class TodayWindowsTest {
         assertEquals(today.sunrise, adhkar.end)
         assertEquals(listOf(WindowType.PROHIBITED_AFTER_FAJR), d.prohibited.map { it.type })
         assertNull(d.duha)
-        assertNull(d.witr)
+        assertEquals(today.isha, d.witr?.start)
     }
 
     @Test
@@ -67,7 +75,7 @@ class TodayWindowsTest {
         val duha = assertNotNull(d.duha)
         assertEquals(today.sunrise.plus(Duration.ofMinutes(settings.calculation.sunriseRiseMinutes.toLong())), duha.start)
         assertNull(d.adhkar)
-        assertNull(d.witr)
+        assertEquals(today.isha, d.witr?.start)
         assertTrue(d.prohibited.isEmpty())
     }
 
@@ -83,7 +91,7 @@ class TodayWindowsTest {
         val d = data(at(today.dhuhr, 30))
         assertNull(d.adhkar)
         assertNull(d.duha)
-        assertNull(d.witr)
+        assertEquals(today.isha, d.witr?.start)
         assertTrue(d.prohibited.isEmpty())
     }
 
@@ -100,7 +108,7 @@ class TodayWindowsTest {
     fun `between Maghrib and Isya nothing timed shows`() {
         val d = data(at(today.maghrib, 10))
         assertNull(d.adhkar)
-        assertNull(d.witr)
+        assertEquals(today.isha, d.witr?.start)
         assertTrue(d.prohibited.isEmpty())
     }
 
