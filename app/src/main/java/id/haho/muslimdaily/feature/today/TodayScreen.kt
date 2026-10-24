@@ -37,7 +37,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -53,6 +52,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
@@ -66,6 +67,7 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import java.time.Duration
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -87,8 +89,6 @@ import id.haho.muslimdaily.core.ui.hijriLabel
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.rememberTimeFormatter
 import id.haho.muslimdaily.data.location.LocationRepository
-import id.haho.muslimdaily.domain.prayer.TimeWindow
-import id.haho.muslimdaily.domain.prayer.WindowType
 import kotlinx.coroutines.launch
 
 data class TodayActions(
@@ -236,7 +236,12 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
 /** Header, next prayer and the cards that matter right now. */
 private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>) {
     item(key = "header") { Header(data, actions, Modifier.statusBarsPadding()) }
-    item(key = "next") { NextPrayerCard(data, actions.onOpenMosques, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
+    item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
+    if (data.prohibited.isNotEmpty()) {
+        item(key = "prohibited") {
+            ProhibitedCard(data, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+        }
+    }
     data.hijriCheck?.let { c ->
         item(key = "hijri") {
             HijriCheckCard(c, actions.onAnswerHijri, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
@@ -250,8 +255,10 @@ private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, ro
     data.travelSuggestionKm?.let { km ->
         item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(AppTheme.dimens.screenGutter)) }
     }
-    item(key = "adhkar") {
-        AdhkarCardView(data, actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+    data.adhkar?.let { card ->
+        item(key = "adhkar") {
+            AdhkarCardView(card, data, actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+        }
     }
     if (routines.isNotEmpty()) {
         item(key = "routines") {
@@ -296,10 +303,6 @@ private fun LazyListScope.scheduleItems(
 }
 
 private fun LazyListScope.otherItems(data: TodayData, actions: TodayActions) {
-    item(key = "other-header") { SectionHeader(stringResource(R.string.today_other_sunnah)) }
-    item(key = "other") { OtherSunnahCard(data, actions.onToggle, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(3)) }
-    item(key = "prohibited-header") { SectionHeader(stringResource(R.string.today_prohibited_title)) }
-    item(key = "prohibited") { ProhibitedCard(data, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(4)) }
     item(key = "footer") { MethodFooter(data, actions.onOpenPrayerSettings) }
 }
 
@@ -351,17 +354,12 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
                 label = { Text(stringResource(R.string.fasting_open)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(AppTheme.dimens.smallIcon)) },
             )
-            AssistChip(
-                onClick = actions.onOpenQibla,
-                label = { Text(stringResource(R.string.qibla_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_explore), null, Modifier.size(AppTheme.dimens.smallIcon)) },
-            )
         }
     }
 }
 
 @Composable
-private fun NextPrayerCard(data: TodayData, onOpenMosques: () -> Unit, modifier: Modifier = Modifier) {
+private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     val next = data.next
     val name = stringResource(next.prayer.labelRes())
@@ -372,7 +370,7 @@ private fun NextPrayerCard(data: TodayData, onOpenMosques: () -> Unit, modifier:
         color = Glass.colors.tinted,
         contentColor = Glass.colors.onTinted,
     ) {
-        Column(Modifier.padding(AppTheme.dimens.cardPadding)) {
+        BesideOrBelow(Modifier.padding(AppTheme.dimens.cardPadding)) {
             Column(Modifier.semantics(mergeDescendants = true) {}) {
                 Text(stringResource(R.string.today_next), style = MaterialTheme.typography.labelLarge)
                 Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
@@ -406,68 +404,59 @@ private fun NextPrayerCard(data: TodayData, onOpenMosques: () -> Unit, modifier:
                     )
                 }
             }
-            // Next to the prayer it serves: where to pray it.
-            GlassTonalButton(onClick = onOpenMosques, modifier = Modifier.padding(top = AppTheme.spacing.md)) {
-                Icon(painterResource(R.drawable.ic_mosque), null, Modifier.size(AppTheme.dimens.smallIcon))
-                Spacer(Modifier.width(AppTheme.spacing.sm))
-                Text(stringResource(R.string.mosque_open))
-            }
-            if (data.activeWindows.isNotEmpty()) {
-                HorizontalDivider(
-                    Modifier.padding(vertical = AppTheme.spacing.md),
-                    color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.24f),
-                )
-                Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                    data.activeWindows.forEach { WindowLine(it, data) }
-                }
+            // Where to face and where to pray it, next to the prayer they serve.
+            Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                NextPrayerAction(R.drawable.ic_explore, stringResource(R.string.qibla_open), actions.onOpenQibla)
+                NextPrayerAction(R.drawable.ic_mosque, stringResource(R.string.mosque_open), actions.onOpenMosques)
             }
         }
     }
 }
 
 @Composable
-private fun WindowLine(window: TimeWindow, data: TodayData) {
-    val time = rememberTimeFormatter()
-    val until = stringResource(R.string.window_until, time.format(window.end, data.zone))
-    val label = stringResource(window.type.labelRes())
-    if (window.type.isProhibited) {
-        Surface(
-            color = Glass.colors.alert,
-            contentColor = Glass.colors.onAlert,
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Row(
-                Modifier.padding(AppTheme.spacing.md).semantics(mergeDescendants = true) {},
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-            ) {
-                Icon(painterResource(R.drawable.ic_block), null, Modifier.size(AppTheme.dimens.icon))
-                Column {
-                    Text(label, style = MaterialTheme.typography.bodyMedium)
-                    Text(until, style = MaterialTheme.typography.labelLarge)
-                }
-            }
-        }
-    } else {
-        Row(
-            Modifier.semantics(mergeDescendants = true) {},
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-        ) {
-            Icon(painterResource(windowIcon(window)), null, Modifier.size(AppTheme.dimens.icon))
-            Column {
-                Text(label, style = MaterialTheme.typography.bodyMedium)
-                Text(until, style = MaterialTheme.typography.labelLarge)
-            }
-        }
+private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit) {
+    GlassTonalButton(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
+    ) {
+        Icon(painterResource(icon), null, Modifier.size(AppTheme.dimens.smallIcon))
+        Spacer(Modifier.width(AppTheme.spacing.sm))
+        Text(label, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
     }
 }
 
-private fun windowIcon(window: TimeWindow): Int = when (window.type) {
-    WindowType.MORNING_ADHKAR -> R.drawable.ic_wb_sunny
-    WindowType.EVENING_ADHKAR -> R.drawable.ic_wb_twilight
-    WindowType.DUHA -> R.drawable.ic_sunny
-    WindowType.WITR -> R.drawable.ic_nightlight
-    else -> R.drawable.ic_block
+/** Narrow enough to sit beside the time on a phone; a long label wraps to a second line. */
+private val NextPrayerActionsWidth = 136.dp
+
+/**
+ * The next prayer's details with its actions in a narrow column beside them, which keeps the card
+ * short; when they don't fit side by side (large text) the actions go full width below.
+ */
+@Composable
+private fun BesideOrBelow(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val gap = AppTheme.spacing.md
+    Layout(content, modifier.fillMaxWidth()) { measurables, constraints ->
+        val (main, side) = measurables
+        val width = constraints.maxWidth
+        val gapPx = gap.roundToPx()
+        val sideWidth = NextPrayerActionsWidth.roundToPx()
+        val info = main.measure(constraints.copy(minWidth = 0, minHeight = 0))
+        if (info.width + gapPx + sideWidth <= width) {
+            val actions = side.measure(Constraints.fixedWidth(sideWidth))
+            val height = maxOf(info.height, actions.height)
+            layout(width, height) {
+                info.place(0, (height - info.height) / 2)
+                actions.place(width - sideWidth, (height - actions.height) / 2)
+            }
+        } else {
+            val actions = side.measure(Constraints.fixedWidth(width))
+            layout(width, info.height + gapPx + actions.height) {
+                info.place(0, 0)
+                actions.place(0, info.height + gapPx)
+            }
+        }
+    }
 }
 
 @Composable
@@ -498,15 +487,13 @@ private fun TravelSuggestion(km: Int, locationName: String, actions: TodayAction
 }
 
 @Composable
-private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Modifier = Modifier) {
-    val card = data.adhkar
+private fun AdhkarCardView(card: AdhkarCard, data: TodayData, actions: TodayActions, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     val isMorning = card.eventId == TodayStateBuilder.MORNING
     val title = stringResource(if (isMorning) R.string.adhkar_morning else R.string.adhkar_evening)
     val subtitle = when {
         card.progress?.completed == true -> stringResource(R.string.adhkar_done_today)
-        card.active -> stringResource(R.string.adhkar_active, time.format(card.end, data.zone))
-        else -> stringResource(R.string.adhkar_upcoming, time.format(card.start, data.zone))
+        else -> stringResource(R.string.adhkar_active, time.format(card.end, data.zone))
     }
     GlassCard(
         modifier = modifier.fillMaxWidth(),
@@ -538,9 +525,7 @@ private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Mod
                     }
                 }
             }
-            if (card.active) {
-                InfoNote(stringResource(R.string.note_adhkar_window), Modifier.padding(top = AppTheme.spacing.sm))
-            }
+            InfoNote(stringResource(R.string.note_adhkar_window), Modifier.padding(top = AppTheme.spacing.sm))
             FlowRow(
                 Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
@@ -551,11 +536,7 @@ private fun AdhkarCardView(data: TodayData, actions: TodayActions, modifier: Mod
                 }
                 val resume = card.progress?.let { !it.completed && it.done > 0 } == true
                 val label = stringResource(if (resume) R.string.action_resume else R.string.action_start)
-                if (card.active) {
-                    GlassButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
-                } else {
-                    GlassTonalButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
-                }
+                GlassButton(onClick = { actions.onStartAdhkar(card.eventId) }) { Text(label) }
             }
         }
     }

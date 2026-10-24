@@ -56,6 +56,7 @@ import id.haho.muslimdaily.core.designsystem.component.TierBadge
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.core.model.Rawatib
+import id.haho.muslimdaily.core.ui.durationLabel
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.rememberTimeFormatter
 import id.haho.muslimdaily.data.checklist.ChecklistRepository
@@ -73,10 +74,11 @@ internal fun PrayerListCard(
     modifier: Modifier = Modifier,
 ) {
     var evidenceFor by remember { mutableStateOf<RawatibLine?>(null) }
+    val time = rememberTimeFormatter()
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column {
             data.rows.forEachIndexed { i, row ->
-                if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = DIVIDER_ALPHA))
+                if (i > 0) ListDivider()
                 PrayerRowView(
                     row = row,
                     data = data,
@@ -85,6 +87,24 @@ internal fun PrayerListCard(
                     onToggle = onToggle,
                     onShowEvidence = { evidenceFor = it },
                 )
+                // Dhuha and Witr join the list only while their time is running.
+                val window = when (row.slot) {
+                    PrayerTimeSlot.SUNRISE -> data.duha
+                    PrayerTimeSlot.ISHA -> data.witr
+                    else -> null
+                }
+                if (window != null) {
+                    val isDuha = window.type == WindowType.DUHA
+                    val key = if (isDuha) ChecklistRepository.DUHA else ChecklistRepository.WITR
+                    ListDivider()
+                    SunnahWindowRow(
+                        title = stringResource(if (isDuha) R.string.duha_title else R.string.witr_title),
+                        range = stringResource(R.string.window_range, time.format(window.start, data.zone), time.format(window.end, data.zone)),
+                        note = if (isDuha) stringResource(R.string.note_duha_best) else null,
+                        checked = key in data.checked,
+                        onCheckedChange = { onToggle(key, it) },
+                    )
+                }
             }
         }
     }
@@ -151,13 +171,35 @@ private fun PrayerRowView(
                         )
                     }
                 }
+                val detailColor = if (row.isCurrent) contentColor else MaterialTheme.colorScheme.onSurfaceVariant
+                if (row.isNext) {
+                    Text(
+                        stringResource(R.string.countdown_in, durationLabel(data.next.remaining)),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 row.iqamah?.let {
                     Text(
                         stringResource(R.string.today_iqamah, time.format(it, data.zone)),
                         style = MaterialTheme.typography.bodySmall,
-                        color = if (row.isCurrent) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = detailColor,
                     )
                 }
+                // When each time ends. Isya's three ends are listed side by side, unranked.
+                val ends = when (row.slot) {
+                    PrayerTimeSlot.FAJR -> data.rows.firstOrNull { it.slot == PrayerTimeSlot.SUNRISE }?.let {
+                        stringResource(R.string.today_fajr_ends, time.format(it.time, data.zone))
+                    }
+                    PrayerTimeSlot.ISHA -> stringResource(
+                        R.string.today_isha_ends,
+                        time.format(data.ishaEnds.thirdOfNight, data.zone),
+                        time.format(data.ishaEnds.midnight, data.zone),
+                        time.format(data.ishaEnds.fajr, data.zone),
+                    )
+                    else -> null
+                }
+                ends?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = detailColor) }
             }
             Text(
                 time.format(row.time, data.zone),
@@ -385,42 +427,11 @@ private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
 }
 
 @Composable
-internal fun OtherSunnahCard(data: TodayData, onToggle: (String, Boolean) -> Unit, modifier: Modifier = Modifier) {
-    val time = rememberTimeFormatter()
-    GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
-        Column(Modifier.padding(vertical = AppTheme.spacing.sm)) {
-            data.duha?.let { w ->
-                SunnahWindowRow(
-                    title = stringResource(R.string.duha_title),
-                    range = stringResource(R.string.window_range, time.format(w.start, data.zone), time.format(w.end, data.zone)),
-                    note = stringResource(R.string.note_duha_best),
-                    checked = ChecklistRepository.DUHA in data.checked,
-                    active = data.now in w,
-                    onCheckedChange = { onToggle(ChecklistRepository.DUHA, it) },
-                )
-            }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = DIVIDER_ALPHA), modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter))
-            data.witr?.let { w ->
-                SunnahWindowRow(
-                    title = stringResource(R.string.witr_title),
-                    range = stringResource(R.string.window_range, time.format(w.start, data.zone), time.format(w.end, data.zone)),
-                    note = null,
-                    checked = ChecklistRepository.WITR in data.checked,
-                    active = data.now in w,
-                    onCheckedChange = { onToggle(ChecklistRepository.WITR, it) },
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun SunnahWindowRow(
     title: String,
     range: String,
     note: String?,
     checked: Boolean,
-    active: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
     CheckRow(
@@ -437,14 +448,12 @@ private fun SunnahWindowRow(
         ) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
                 Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.align(Alignment.CenterVertically))
-                if (active) {
-                    Badge(
-                        stringResource(R.string.today_now_badge),
-                        container = MaterialTheme.colorScheme.primary,
-                        content = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                    )
-                }
+                Badge(
+                    stringResource(R.string.today_now_badge),
+                    container = MaterialTheme.colorScheme.primary,
+                    content = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                )
             }
             Text(range, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
@@ -457,15 +466,19 @@ internal fun ProhibitedCard(data: TodayData, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
-            data.prohibited.forEach { w -> ProhibitedRow(w, data, time.format(w.start, data.zone), time.format(w.end, data.zone)) }
+            Text(
+                stringResource(R.string.today_prohibited_title),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() },
+            )
+            data.prohibited.forEach { w -> ProhibitedRow(w, time.format(w.start, data.zone), time.format(w.end, data.zone)) }
             InfoNote(stringResource(R.string.note_prohibited_cause))
         }
     }
 }
 
 @Composable
-private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, end: String) {
-    val active = data.now in window
+private fun ProhibitedRow(window: TimeWindow, start: String, end: String) {
     val label = stringResource(
         when (window.type) {
             WindowType.PROHIBITED_AFTER_FAJR -> R.string.prohibited_after_fajr_short
@@ -481,7 +494,7 @@ private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, en
         Icon(
             painterResource(R.drawable.ic_block),
             contentDescription = null,
-            tint = if (active) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = MaterialTheme.colorScheme.error,
             modifier = Modifier.size(AppTheme.dimens.icon),
         )
         Column(Modifier.weight(1f)) {
@@ -492,18 +505,19 @@ private fun ProhibitedRow(window: TimeWindow, data: TodayData, start: String, en
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        if (active) {
-            Badge(
-                stringResource(R.string.today_now_badge),
-                container = Glass.colors.alert,
-                content = Glass.colors.onAlert,
-            )
-        }
+        Badge(
+            stringResource(R.string.today_now_badge),
+            container = Glass.colors.alert,
+            content = Glass.colors.onAlert,
+        )
     }
 }
 
 /** Dividers inside glass cards are hairlines; a solid line reads as heavy on translucent fills. */
 private const val DIVIDER_ALPHA = 0.5f
+
+@Composable
+private fun ListDivider() = HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = DIVIDER_ALPHA))
 
 /** The rawatib variant labels are Indonesian in the content; the known ones are translated here. */
 @Composable

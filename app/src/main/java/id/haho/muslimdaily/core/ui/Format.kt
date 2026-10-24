@@ -14,7 +14,6 @@ import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.data.settings.AsrMethod
 import id.haho.muslimdaily.data.settings.CalcMethod
 import id.haho.muslimdaily.domain.prayer.HijriDate
-import id.haho.muslimdaily.domain.prayer.WindowType
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -96,17 +95,6 @@ fun PrayerTimeSlot.labelRes(): Int = when (this) {
     PrayerTimeSlot.ASR -> R.string.prayer_asr
     PrayerTimeSlot.MAGHRIB -> R.string.prayer_maghrib
     PrayerTimeSlot.ISHA -> R.string.prayer_isha
-}
-
-@StringRes
-fun WindowType.labelRes(): Int = when (this) {
-    WindowType.MORNING_ADHKAR -> R.string.window_morning_adhkar
-    WindowType.EVENING_ADHKAR -> R.string.window_evening_adhkar
-    WindowType.PROHIBITED_AFTER_FAJR -> R.string.window_prohibited_after_fajr
-    WindowType.PROHIBITED_ZAWAL -> R.string.window_prohibited_zawal
-    WindowType.PROHIBITED_AFTER_ASR -> R.string.window_prohibited_after_asr
-    WindowType.DUHA -> R.string.window_duha
-    WindowType.WITR -> R.string.window_witr
 }
 
 @StringRes

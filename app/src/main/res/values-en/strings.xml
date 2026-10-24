@@ -86,7 +86,6 @@
     <string name="today_now_badge">Now</string>
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Prayer times</string>
-    <string name="today_other_sunnah">Other sunnah prayers</string>
     <string name="today_prohibited_title">Prohibited times</string>
     <string name="today_method_footer">%1$s · Asr %2$s</string>
     <string name="today_change_method">Change calculation</string>
@@ -107,14 +106,10 @@
     <string name="today_private_note">This checklist is private, stored only on this device, and resets every day.</string>
 
     <!-- Windows -->
-    <string name="window_morning_adhkar">Morning adhkar time</string>
     <string name="window_evening_adhkar">Evening adhkar time</string>
-    <string name="window_prohibited_after_fajr">Prohibited time after the Fajr prayer until the sun has risen</string>
-    <string name="window_prohibited_zawal">Prohibited time when the sun is directly overhead (zawal)</string>
-    <string name="window_prohibited_after_asr">Prohibited time after the Asr prayer until Maghrib</string>
-    <string name="window_duha">Dhuha time</string>
     <string name="window_witr">Witr time</string>
-    <string name="window_until">until %s</string>
+    <string name="today_fajr_ends">until sunrise %s</string>
+    <string name="today_isha_ends">until a third of the night %1$s · middle of the night %2$s · Fajr %3$s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Some scholars allow a wider time range.</string>
     <string name="note_prohibited_cause">Scholars differ on prayers that have a reason, such as tahiyyat al-masjid.</string>
@@ -146,7 +141,6 @@
     <string name="adhkar_morning">Morning adhkar</string>
     <string name="adhkar_evening">Evening adhkar</string>
     <string name="adhkar_active">Time now · until %s</string>
-    <string name="adhkar_upcoming">Starts at %s</string>
     <string name="adhkar_progress">%1$d of %2$d</string>
     <string name="adhkar_done_today">Read today</string>
     <string name="adhkar_open_list">View list</string>

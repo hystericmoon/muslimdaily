@@ -39,12 +39,14 @@ data class TodayData(
     val method: CalcMethod,
     val asr: AsrMethod,
     val next: NextPrayer,
-    val activeWindows: List<TimeWindow>,
     val rows: List<PrayerRow>,
+    /** Today's Isya ends, shown on its row. */
+    val ishaEnds: IshaEnds,
+    // The sections below are set only while their window is in progress.
     val duha: TimeWindow?,
     val witr: TimeWindow?,
     val prohibited: List<TimeWindow>,
-    val adhkar: AdhkarCard,
+    val adhkar: AdhkarCard?,
     val checked: Set<String>,
     val travelSuggestionKm: Int?,
     /** Set during Ramadan, and on its eve after Maghrib. */
@@ -105,12 +107,24 @@ data class PrayerRow(
     val isNext: Boolean,
 )
 
+/**
+ * The ends of Isya the screen lists side by side, without ranking them: a third and the middle of
+ * the night, both measured from Maghrib to the next Subuh, and that Subuh.
+ */
+data class IshaEnds(val thirdOfNight: Instant, val midnight: Instant, val fajr: Instant) {
+    companion object {
+        fun of(maghrib: Instant, nextFajr: Instant): IshaEnds {
+            val night = Duration.between(maghrib, nextFajr)
+            return IshaEnds(maghrib.plus(night.dividedBy(3)), maghrib.plus(night.dividedBy(2)), nextFajr)
+        }
+    }
+}
+
 data class RunProgress(val done: Int, val total: Int, val completed: Boolean)
 
+/** The morning or evening adhkar whose window is in progress. */
 data class AdhkarCard(
     val eventId: String,
-    val active: Boolean,
-    val start: Instant,
     val end: Instant,
     val progress: RunProgress?,
 )
@@ -176,12 +190,13 @@ object TodayStateBuilder {
                 method = calc.method,
                 asr = calc.asr,
                 next = next.copy(iqamah = iqamah(next.prayer, next.time)),
-                activeWindows = active,
                 rows = rows,
-                duha = windows.firstOrNull { it.type == WindowType.DUHA },
-                witr = active.firstOrNull { it.type == WindowType.WITR } ?: windows.firstOrNull { it.type == WindowType.WITR },
-                prohibited = windows.filter { it.type.isProhibited },
-                adhkar = adhkarCard(now, today, tomorrow, runProgress),
+                ishaEnds = IshaEnds.of(today.maghrib, tomorrow.fajr),
+                duha = active.firstOrNull { it.type == WindowType.DUHA },
+                // After midnight this is still last night's window, which runs to this morning's Subuh.
+                witr = active.firstOrNull { it.type == WindowType.WITR },
+                prohibited = active.filter { it.type.isProhibited }.sortedBy { it.start },
+                adhkar = adhkarCard(active, runProgress),
                 checked = checked,
                 travelSuggestionKm = travelSuggestionKm,
                 ramadan = ramadanCard(now, date, today, tomorrow, settings.hijriAdjustment),
@@ -245,16 +260,9 @@ object TodayStateBuilder {
         else -> PrayerTimeSlot.ISHA
     }
 
-    private fun adhkarCard(
-        now: Instant,
-        today: PrayerSchedule,
-        tomorrow: PrayerSchedule,
-        progress: Map<String, RunProgress>,
-    ): AdhkarCard = when {
-        now.isBefore(today.fajr) -> AdhkarCard(MORNING, false, today.fajr, today.sunrise, progress[MORNING])
-        now.isBefore(today.sunrise) -> AdhkarCard(MORNING, true, today.fajr, today.sunrise, progress[MORNING])
-        now.isBefore(today.asr) -> AdhkarCard(EVENING, false, today.asr, today.maghrib, progress[EVENING])
-        now.isBefore(today.maghrib) -> AdhkarCard(EVENING, true, today.asr, today.maghrib, progress[EVENING])
-        else -> AdhkarCard(MORNING, false, tomorrow.fajr, tomorrow.sunrise, null)
+    private fun adhkarCard(active: List<TimeWindow>, progress: Map<String, RunProgress>): AdhkarCard? {
+        val window = active.firstOrNull { it.type == WindowType.MORNING_ADHKAR || it.type == WindowType.EVENING_ADHKAR } ?: return null
+        val id = if (window.type == WindowType.MORNING_ADHKAR) MORNING else EVENING
+        return AdhkarCard(id, window.end, progress[id])
     }
 }
