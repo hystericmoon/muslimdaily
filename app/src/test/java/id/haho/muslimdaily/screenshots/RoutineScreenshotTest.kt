@@ -116,6 +116,7 @@ class RoutineScreenshotTest {
         TodayScreen(
             TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 20, 30), checked = setOf("fard:ISHA"), progress = emptyMap()),
             TodayActions(),
+            initiallyExpanded = setOf("ISHA"),
         )
     }
 

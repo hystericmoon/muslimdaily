@@ -85,6 +85,8 @@ fun CheckRow(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     minHeight: Dp = AppTheme.dimens.minTouchTarget,
+    /** Top puts the checkbox level with the first line; CenterVertically centres it on the whole item. */
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
@@ -92,7 +94,7 @@ fun CheckRow(
             .fillMaxWidth()
             .heightIn(min = minHeight)
             .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = verticalAlignment,
     ) {
         content()
         // A display-only Checkbox has no touch size of its own; the 48dp slot puts its centre on

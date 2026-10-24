@@ -39,12 +39,15 @@ data class TodayData(
     val method: CalcMethod,
     val asr: AsrMethod,
     val next: NextPrayer,
+    /** The five prayers; sunrise is not a row of its own but Subuh's end, [sunrise]. */
     val rows: List<PrayerRow>,
-    /** Today's Isya ends, shown on its row. */
+    val sunrise: Instant,
+    /** Today's Isya ends, shown inside its row. */
     val ishaEnds: IshaEnds,
+    /** Witr's window, checked inside the Isya row: last night's until Subuh, then tonight's. */
+    val witr: TimeWindow?,
     // The sections below are set only while their window is in progress.
     val duha: TimeWindow?,
-    val witr: TimeWindow?,
     val prohibited: List<TimeWindow>,
     val adhkar: AdhkarCard?,
     val checked: Set<String>,
@@ -99,7 +102,6 @@ data class NextPrayer(
 
 data class PrayerRow(
     val slot: PrayerTimeSlot,
-    /** Null for sunrise, which is informational. */
     val plan: PrayerPlan?,
     val time: Instant,
     val iqamah: Instant?,
@@ -165,7 +167,7 @@ object TodayStateBuilder {
 
         val next = nextPrayer(now, today, tomorrow, isFriday)
         val current = currentSlot(now, today)
-        val rows = PrayerTimeSlot.entries.map { slot ->
+        val rows = PrayerTimeSlot.entries.filter { it != PrayerTimeSlot.SUNRISE }.map { slot ->
             val prayer = slot.toPrayer()
             val p = prayer?.let { plan(it) }
             val time = today.time(slot)
@@ -191,10 +193,11 @@ object TodayStateBuilder {
                 asr = calc.asr,
                 next = next.copy(iqamah = iqamah(next.prayer, next.time)),
                 rows = rows,
+                sunrise = today.sunrise,
                 ishaEnds = IshaEnds.of(today.maghrib, tomorrow.fajr),
-                duha = active.firstOrNull { it.type == WindowType.DUHA },
                 // After midnight this is still last night's window, which runs to this morning's Subuh.
-                witr = active.firstOrNull { it.type == WindowType.WITR },
+                witr = active.firstOrNull { it.type == WindowType.WITR } ?: windows.firstOrNull { it.type == WindowType.WITR },
+                duha = active.firstOrNull { it.type == WindowType.DUHA },
                 prohibited = active.filter { it.type.isProhibited }.sortedBy { it.start },
                 adhkar = adhkarCard(active, runProgress),
                 checked = checked,
