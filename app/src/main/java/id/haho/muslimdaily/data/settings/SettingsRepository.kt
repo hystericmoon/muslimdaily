@@ -156,6 +156,7 @@ class SettingsRepository @Inject constructor(
             whatsNewSeen = this[K.whatsNewSeen] ?: d.whatsNewSeen,
             elevationChecked = this[K.elevationChecked] ?: false,
             hijriConfirmedFor = this[K.hijriConfirmedFor] ?: d.hijriConfirmedFor,
+            widgetAlarmNoteDismissed = this[K.widgetAlarmNoteDismissed] ?: d.widgetAlarmNoteDismissed,
             memorize = MemorizeSettings(
                 loopsPerChunk = this[K.memLoops] ?: m.loopsPerChunk,
                 pauseMode = enumOr(K.memPauseMode, m.pauseMode),
@@ -199,6 +200,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var whatsNewSeen: String by key(K.whatsNewSeen, "")
     var elevationChecked: Boolean by key(K.elevationChecked, false)
     var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
+    var widgetAlarmNoteDismissed: Boolean by key(K.widgetAlarmNoteDismissed, false)
     var memLoops: Int by key(K.memLoops, 3)
     var memPauseMode: PauseMode by enumKey(K.memPauseMode, PauseMode.AUTO)
     var memPauseSeconds: Int by key(K.memPauseSeconds, 3)
@@ -288,6 +290,7 @@ internal object K {
     val whatsNewSeen = stringPreferencesKey("whats_new_seen")
     val elevationChecked = booleanPreferencesKey("elevation_checked")
     val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")
+    val widgetAlarmNoteDismissed = booleanPreferencesKey("widget_alarm_note_dismissed")
     val memLoops = intPreferencesKey("mem_loops")
     val memPauseMode = stringPreferencesKey("mem_pause_mode")
     val memPauseSeconds = intPreferencesKey("mem_pause_seconds")

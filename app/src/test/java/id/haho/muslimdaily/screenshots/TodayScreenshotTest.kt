@@ -62,6 +62,12 @@ class TodayScreenshotTest {
     @Test
     fun noLocation() = captureVariants("13-today-no-location") { TodayScreen(TodayUiState.NoLocation, TodayActions()) }
 
+    /** A widget is placed but alarms are inexact: the note under the next prayer. */
+    @Test
+    fun widgetAlarmNote() = captureVariants("117-today-widget-alarm-note") {
+        TodayScreen(TodayPreviewData.ready(), TodayActions(), widgetAlarmNote = true)
+    }
+
     @Test
     fun settingsHome() = captureVariants("40-settings-home") { SettingsHomeContent(TodayPreviewData.settings, SettingsDestinations()) }
 

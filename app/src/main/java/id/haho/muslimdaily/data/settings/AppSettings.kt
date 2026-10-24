@@ -112,6 +112,8 @@ data class AppSettings(
     val elevationChecked: Boolean = false,
     /** The Hijri month-end ("yyyy-mm" of the month asked about) the user already answered. */
     val hijriConfirmedFor: String = "",
+    /** The reader dismissed Today's note asking for exact alarms so the widget changes on time. */
+    val widgetAlarmNoteDismissed: Boolean = false,
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )

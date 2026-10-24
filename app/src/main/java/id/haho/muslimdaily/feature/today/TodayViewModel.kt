@@ -1,8 +1,11 @@
 package id.haho.muslimdaily.feature.today
 
+import android.content.Context
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import id.haho.muslimdaily.data.checklist.ChecklistRepository
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.routine.RoutineRepository
@@ -11,6 +14,8 @@ import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.data.run.RunSessionRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
+import id.haho.muslimdaily.notifications.ReminderScheduler
+import id.haho.muslimdaily.widget.isWidgetPlaced
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +38,9 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TodayViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val settingsRepository: SettingsRepository,
+    private val scheduler: ReminderScheduler,
     content: ContentRepository,
     private val checklist: ChecklistRepository,
     private val locations: LocationRepository,
@@ -55,6 +62,8 @@ class TodayViewModel @Inject constructor(
     }
 
     private val travelKm = MutableStateFlow<Int?>(null)
+
+    private val widgetNeedsExact = MutableStateFlow(false)
 
     private val settings = settingsRepository.settings
 
@@ -101,6 +110,22 @@ class TodayViewModel @Inject constructor(
             val km = locations.distanceFromSavedKm(saved) ?: return@launch
             travelKm.value = km.roundToInt().takeIf { km >= TRAVEL_SUGGESTION_KM }
         }
+    }
+
+    /**
+     * A widget is placed but alarms are inexact (Android 12+ without the permission, the default
+     * on 14+), so it can take up to 10 minutes to move to the next prayer.
+     */
+    val widgetAlarmNote: StateFlow<Boolean> = combine(widgetNeedsExact, settings) { needs, s -> needs && !s.widgetAlarmNoteDismissed }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
+
+    /** On resume: a widget may have been placed, or exact alarms allowed, meanwhile. */
+    fun checkWidgetAlarms() {
+        widgetNeedsExact.value = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !scheduler.canScheduleExact() && isWidgetPlaced(context)
+    }
+
+    fun dismissWidgetAlarms() {
+        viewModelScope.launch { settingsRepository.update { widgetAlarmNoteDismissed = true } }
     }
 
     fun dismissTravel() {
