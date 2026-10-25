@@ -40,6 +40,8 @@ class WhatsNewTest {
         assertEquals(listOf("0.8.1"), WhatsNew.since("0.8.0", "0.8.1", firstRun = false).map { it.version })
         assertEquals(listOf("0.8.1", "0.8.0"), WhatsNew.since("0.7.0", "0.8.1", firstRun = false).map { it.version })
         assertEquals(listOf("0.9.0"), WhatsNew.since("0.8.1", "0.9.0", firstRun = false).map { it.version })
+        // The move to id.haho.adwam: data (with the version last seen) comes over from 0.9.0.
+        assertEquals(listOf("1.0.0"), WhatsNew.since("0.9.0", "1.0.0", firstRun = false).map { it.version })
         // A beta still lists the betas before it.
         assertEquals(listOf("0.7.0-beta.4", "0.7.0-beta.3"), WhatsNew.since("0.7.0-beta.2", "0.7.0-beta.4", firstRun = false).map { it.version })
     }

@@ -826,6 +826,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_0_0">
+        <item>Adwam now installs as a new app. The first time you open it, your data moves over from the old one; then allow notifications again and add the widget again.</item>
+        <item>On first install the app now always opens in Indonesian, even when your phone is in English.</item>
+    </string-array>
     <string-array name="whats_new_0_9_0">
         <item>On phones that have it, the prayer-times widget now uses Google Sans, closer to the app\'s look.</item>
         <item>Getting ready for the next Adwam, which will install as a new app: your data will be able to move straight over.</item>
