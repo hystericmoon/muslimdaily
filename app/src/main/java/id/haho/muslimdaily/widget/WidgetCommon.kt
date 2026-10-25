@@ -109,9 +109,10 @@ const val OnSky: Int = 0xFFFFFFFF.toInt()
 const val OnPill: Int = 0xFF0B1A3A.toInt()
 
 /**
- * A widget label: a small RemoteViews layout whose TextView asks for Plus Jakarta Sans (Regular or
- * SemiBold). Launchers inflate it in a restricted context, where TextView does not load font
- * resources, so on phones it shows in the system font; only previews and tests show the app's.
+ * A widget label: a small RemoteViews layout, Regular or SemiBold. Launchers inflate it in a
+ * restricted context where TextView cannot load the app's own fonts, so it names a system font
+ * instead: Google Sans Flex, the closest to the app's Plus Jakarta Sans, on phones that have it
+ * (Pixel and Pixel-based ROMs); elsewhere the name is unknown and the system font is used.
  * Sizes are in sp, so the system font size still applies.
  */
 @Composable
@@ -170,8 +171,8 @@ class FitLine(val extra: Dp, vararg val parts: Pair<String, Float>)
 /**
  * The factor (at most 1) the type must shrink by for every line to fit [width], so a 12-hour
  * "11:41 AM", a long name or a large system font scales the layout down instead of ending in "…".
- * Measured with the widget's own SemiBold label (Plus Jakarta Sans, wider than the system font
- * launchers fall back to), so the estimate matches what the label needs.
+ * Measured with the widget's own SemiBold label, in the font this phone will draw it in
+ * (Google Sans or the system font), so the estimate matches what the label needs.
  */
 class TextFit(context: Context) {
     private val metrics = context.resources.displayMetrics

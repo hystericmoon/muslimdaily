@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A widget label in the app's typeface, SemiBold, as titles and labels in the app. -->
+<!-- A widget label, SemiBold, as titles and labels in the app. Google Sans where the phone has it (see Label). -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:ellipsize="end"
-    android:fontFamily="@font/plus_jakarta_sans"
+    android:fontFamily="google-sans-flex"
     android:fontFeatureSettings="tnum"
     android:fontVariationSettings="'wght' 600"
     android:includeFontPadding="false"
