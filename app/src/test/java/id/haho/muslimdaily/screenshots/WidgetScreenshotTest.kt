@@ -29,6 +29,8 @@ import id.haho.muslimdaily.widget.PrayerWidgetContent
 import id.haho.muslimdaily.widget.WidgetData
 import id.haho.muslimdaily.widget.WidgetModels
 import kotlinx.coroutines.test.runTest
+import id.haho.muslimdaily.widget.WidgetTestFont
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -50,6 +52,9 @@ import java.util.Locale
 @Config(qualifiers = "id-xhdpi")
 @OptIn(ExperimentalGlanceApi::class)
 class WidgetScreenshotTest {
+    @Before
+    fun widgetFont() = WidgetTestFont.install(ApplicationProvider.getApplicationContext())
+
     private fun at(h: Int, m: Int): Instant = LocalDateTime.of(2026, 10, 23, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
 
     private fun data(now: Instant, located: Boolean = true, is24: Boolean = true): WidgetData {

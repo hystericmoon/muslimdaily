@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="end"
-    android:fontFamily="@font/plus_jakarta_sans"
+    android:fontFamily="google-sans-flex"
     android:fontFeatureSettings="tnum"
     android:fontVariationSettings="'wght' 400"
     android:gravity="end"

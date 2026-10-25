@@ -24,6 +24,7 @@ import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import kotlinx.coroutines.test.runTest
 import org.junit.After
+import org.junit.Before
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,6 +50,9 @@ class WidgetFitTest {
 
     @After
     fun restoreLocale() = Locale.setDefault(default)
+
+    @Before
+    fun widgetFont() = WidgetTestFont.install(ApplicationProvider.getApplicationContext())
 
     private class Fake(private val data: WidgetData) : GlanceAppWidget() {
         override val sizeMode = SizeMode.Single
