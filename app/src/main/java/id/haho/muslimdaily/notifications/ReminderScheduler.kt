@@ -9,6 +9,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
+import id.haho.muslimdaily.data.handover.Handover
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import kotlinx.coroutines.sync.Mutex
@@ -37,7 +38,8 @@ class ReminderScheduler @Inject constructor(
         Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarms.canScheduleExactAlarms()
 
     suspend fun rescheduleAll() = mutex.withLock {
-        val planned = ReminderPlanner.plan(Instant.now(clock), settings.current(), calculator)
+        // After handing its data to the new app, this one sends nothing (the new app does).
+        val planned = if (Handover.movedTo(context) != null) emptyList() else ReminderPlanner.plan(Instant.now(clock), settings.current(), calculator)
         val byType = planned.associateBy { it.type }
         ReminderType.entries.forEach { type ->
             val next = byType[type]

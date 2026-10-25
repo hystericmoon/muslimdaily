@@ -5,6 +5,7 @@ import android.text.format.DateFormat
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import dagger.hilt.android.qualifiers.ApplicationContext
+import id.haho.muslimdaily.data.handover.Handover
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
@@ -36,6 +37,11 @@ class GlanceRefresher @Inject constructor(
                 updateAppWidgetState(context, id) { it[WidgetRefreshKey] = stamp }
                 widget.update(context, id)
             }
+        }
+        if (Handover.movedTo(context) != null) {
+            // Moved to the new app: the widgets say so, and the ongoing notification goes.
+            notifier.cancelNextPrayerOngoing()
+            return
         }
         val s = settings.current()
         val snapshot = PrayerSnapshots.at(Instant.now(clock), s, calculator)
