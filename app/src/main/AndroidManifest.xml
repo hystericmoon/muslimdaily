@@ -98,6 +98,10 @@
         </service>
 
         <receiver
+            android:name=".widget.WidgetTickReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".widget.NextPrayerWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_name">

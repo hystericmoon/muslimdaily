@@ -24,6 +24,9 @@ data class WidgetModel(
     val day: LocalDate,
     val isTomorrow: Boolean,
     val hijri: HijriDate,
+    /** Today, for the header: the date stays today's after Isya, though the next prayer is tomorrow. */
+    val today: LocalDate,
+    val todayHijri: HijriDate,
     /** The listed day's six times, in order. */
     val slots: List<SlotTime>,
     val next: NextPrayer,
@@ -34,6 +37,8 @@ data class WidgetModel(
     /** A sunnah fast tomorrow, if any. */
     val fastTomorrow: FastKind?,
     val sky: SkyLook,
+    /** The bar under the next prayer: the day's prayers, or the night from Isya to Subuh. */
+    val track: Track,
 ) {
     /** On Fridays Dhuhr is listed as Jumu'ah. */
     val friday: Boolean get() = day.dayOfWeek == DayOfWeek.FRIDAY
@@ -41,6 +46,14 @@ data class WidgetModel(
     /** The five prayers, without sunrise. */
     val prayers: List<SlotTime> get() = slots.filter { it.slot != PrayerTimeSlot.SUNRISE }
 }
+
+/**
+ * The bar's stops from left to right (the next prayer among them) and how far along it now is,
+ * 0 to 1. Each gap between two stops gets the same length, like a line map, so the stops can sit
+ * under evenly spread labels: [progress] is the stop index plus the fraction of that gap, over
+ * the number of gaps.
+ */
+data class Track(val stops: List<SlotTime>, val progress: Float)
 
 /** The "now" line. [until] is left out when it is the next prayer's time, which the widget already shows. */
 data class NowLine(val kind: NowKind, val until: Instant?)
@@ -55,6 +68,7 @@ object WidgetModels {
         val zone = runCatching { ZoneId.of(location.timeZoneId) }.getOrElse { ZoneId.systemDefault() }
         val date = now.atZone(zone).toLocalDate()
         fun schedule(d: LocalDate) = calculator.schedule(d, location.latitude, location.longitude, zone, settings.calculation, location.elevation)
+        val yesterday = schedule(date.minusDays(1))
         val today = schedule(date)
         val tomorrow = schedule(date.plusDays(1))
         val next = PrayerSnapshots.nextPrayer(now, listOf(today, tomorrow), settings)
@@ -84,6 +98,8 @@ object WidgetModels {
             day = shown.date,
             isTomorrow = isTomorrow,
             hijri = HijriCalendar.of(shown.date, settings.hijriAdjustment),
+            today = date,
+            todayHijri = HijriCalendar.of(date, settings.hijriAdjustment),
             slots = slots,
             next = next,
             nextSlot = slots.first { it.time == next.time }.slot,
@@ -91,7 +107,26 @@ object WidgetModels {
             fastTomorrow = FastingCalendar.day(date.plusDays(1), settings.hijriAdjustment)
                 .sunnah(settings.reminders.fastingWeekly).firstOrNull(),
             sky = Sky.at(now, today),
+            track = when {
+                now.isBefore(today.fajr) -> night(now, yesterday.isha, today.fajr)
+                isTomorrow -> night(now, today.isha, tomorrow.fajr)
+                else -> day(now, slots.filter { it.slot != PrayerTimeSlot.SUNRISE })
+            },
         )
+    }
+
+    private fun fraction(now: Instant, from: Instant, to: Instant): Float {
+        val span = Duration.between(from, to).toMillis().coerceAtLeast(1)
+        return (Duration.between(from, now).toMillis().toFloat() / span).coerceIn(0f, 1f)
+    }
+
+    private fun night(now: Instant, isha: Instant, fajr: Instant) =
+        Track(listOf(SlotTime(PrayerTimeSlot.ISHA, isha), SlotTime(PrayerTimeSlot.FAJR, fajr)), fraction(now, isha, fajr))
+
+    private fun day(now: Instant, prayers: List<SlotTime>): Track {
+        val i = prayers.indexOfLast { !it.time.isAfter(now) }.coerceIn(0, prayers.size - 2)
+        val progress = (i + fraction(now, prayers[i].time, prayers[i + 1].time)) / (prayers.size - 1)
+        return Track(prayers, progress)
     }
 }
 

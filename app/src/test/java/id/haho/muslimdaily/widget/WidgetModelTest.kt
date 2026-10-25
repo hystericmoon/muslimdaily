@@ -130,13 +130,26 @@ class WidgetModelTest {
     }
 
     @Test
-    fun `the countdown ends at the prayer however late the widget is drawn`() {
-        val now = at(23, 44)
-        val subuh = at(4, 11, friday.plusDays(1))
-        // Read at elapsed 1_000_000: the base comes from that reading, so a redraw later (a resize
-        // recomposes with the same data) still reaches zero at Subuh, not that much later.
-        val base = chronometerBase(subuh, now, elapsedAtNow = 1_000_000L)
-        assertEquals(1_000_000L + Duration.between(now, subuh).toMillis(), base)
+    fun `the bar runs through the day's prayers, an equal length between each two`() {
+        val d = day()
+        // Halfway from Dhuhr to Asr: one gap of four done, plus half of the next.
+        val half = d.dhuhr.plus(Duration.between(d.dhuhr, d.asr).dividedBy(2))
+        val track = model(half).track
+        assertEquals(listOf(Prayer.FAJR, Prayer.DHUHR, Prayer.ASR, Prayer.MAGHRIB, Prayer.ISHA).size, track.stops.size)
+        assertEquals(1.5f / 4, track.progress, 0.001f)
+        assertEquals(0f, model(d.fajr).track.progress, 0.001f)
+    }
+
+    @Test
+    fun `at night the bar runs from Isya to Subuh, before and after midnight`() {
+        val after = model(at(21, 0)).track
+        assertEquals(listOf(PrayerTimeSlot.ISHA, PrayerTimeSlot.FAJR), after.stops.map { it.slot })
+        assertEquals(day().isha, after.stops.first().time)
+        assertEquals(day(friday.plusDays(1)).fajr, after.stops.last().time)
+        val before = model(at(2, 0)).track
+        assertEquals(day(friday.minusDays(1)).isha, before.stops.first().time)
+        assertEquals(day().fajr, before.stops.last().time)
+        assertTrue(before.progress > after.progress)
     }
 
     @Test
