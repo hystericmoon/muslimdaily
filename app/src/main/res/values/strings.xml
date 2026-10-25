@@ -802,6 +802,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_9_0">
+        <item>Di ponsel yang memilikinya, widget jadwal shalat kini memakai huruf Google Sans, lebih serasi dengan aplikasi.</item>
+        <item>Persiapan untuk Adwam berikutnya, yang akan terpasang sebagai aplikasi baru: data Anda nanti bisa dipindahkan langsung ke sana.</item>
+    </string-array>
     <string-array name="whats_new_0_8_1">
         <item>Lebih mudah dipakai dengan TalkBack: tombol dan daftar centang dibacakan dengan jelas, termasuk yang belum dikerjakan, dan fokus tidak lagi melompat ke atas.</item>
     </string-array>
