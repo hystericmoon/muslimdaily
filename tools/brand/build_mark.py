@@ -13,7 +13,6 @@ Writes:
   app/src/main/res/drawable/ic_launcher_foreground.xml   adaptive icon foreground (line + gold dot)
   app/src/main/res/drawable/ic_launcher_monochrome.xml   themed icon (one ink; Android tints it)
   app/src/main/res/drawable/ic_notification.xml          status-bar glyph (white)
-  wear/src/main/res/drawable/ic_tile.xml                 Wear app and tile glyph (white)
   docs/brand/adwam-mark.svg                              the master outline (teal + gold)
 """
 import re
@@ -126,9 +125,6 @@ def main():
         "app/src/main/res/drawable/ic_notification.xml": vector(
             shape, dot, 24, 22, "@android:color/white", "@android:color/white", 24,
             "Notification glyph: the Adwam mark, monochrome."),
-        "wear/src/main/res/drawable/ic_tile.xml": vector(
-            shape, dot, 24, 22, "#FFFFFFFF", "#FFFFFFFF", 24,
-            "Wear app and tile glyph: the Adwam mark, monochrome."),
     }
     for rel, text in out.items():
         (ROOT / rel).write_text(text)

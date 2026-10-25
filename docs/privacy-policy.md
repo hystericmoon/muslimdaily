@@ -24,10 +24,6 @@ Anda dapat membaca dan menghapus isinya sebelum mengirim.
 **Cadangan.** Bila Anda membuat cadangan, aplikasi menulis satu berkas JSON ke tempat yang Anda
 pilih. Aplikasi tidak mengunggahnya ke mana pun.
 
-**Jam tangan Wear OS.** Bila Anda memasang aplikasi jam tangan, ponsel mengirim nama kota dan
-waktu shalat tujuh hari ke jam tangan yang terpasang melalui Wearable Data Layer milik Google Play
-services. Data ini hanya untuk jam tangan Anda.
-
 **Pembaruan (hanya versi dari GitHub).** Versi yang dipasang dari GitHub Releases memeriksa
 api.github.com untuk versi baru dan mengunduh APK dari GitHub. Permintaan ini memuat alamat IP Anda
 seperti permintaan web biasa; tidak ada data lain yang dikirim. Versi Play Store tidak memiliki
@@ -63,10 +59,6 @@ it before sending.
 
 **Backups.** When you create a backup, the app writes one JSON file to the place you choose. The
 app does not upload it anywhere.
-
-**Wear OS watch.** If you install the watch app, the phone sends the city name and seven days of
-prayer times to your paired watch through Google Play services' Wearable Data Layer. This data is
-only for your watch.
 
 **Updates (GitHub builds only).** Builds installed from GitHub Releases check api.github.com for a
 newer version and download the APK from GitHub. These requests carry your IP address like any web

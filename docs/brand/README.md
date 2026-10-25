@@ -30,4 +30,4 @@ Rules:
 - Launcher art keeps the mark 56 of 108 units wide, centred, so it fits the safe zone under any mask.
 
 To change the mark, edit `tools/brand/build_mark.py` (needs `pip install shapely`) and run it; it
-rewrites the launcher, themed, notification and Wear drawables and `adwam-mark.svg`.
+rewrites the launcher, themed and notification drawables and `adwam-mark.svg`.

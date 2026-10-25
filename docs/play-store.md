@@ -19,8 +19,7 @@ it says so.
 | Item | Work | Notes |
 |---|---|---|
 | Upload key + Play App Signing | Create an upload keystore (`keystore.properties`, see release.md) and enrol in Play App Signing. | The GitHub build uses the shared debug key, so Play and GitHub installs can't update each other. Say so on the listing. |
-| Wear OS | Publish the `wear` module as a Wear OS form factor on the same listing. | Same package name and signing key as the phone app (already set up). Needs round and square screenshots (the tile previews exist). |
-| App bundle | `./gradlew :app:bundleRelease :wear:bundleRelease` in the release workflow. | Play requires AAB. |
+| App bundle | `./gradlew :app:bundleRelease` in the release workflow. | Play requires AAB. |
 | Store listing | Short and full description in Indonesian and English, 8 phone screenshots (take them from `docs/screenshots`), a 1024×500 feature graphic. | |
 | Content rating | IARC questionnaire: no violence, no user content, no purchases. | Expected: Everyone / 3+. |
 | Target audience | 13+ is the simple choice; "includes children" pulls in the Families policy. | |
@@ -42,8 +41,7 @@ Play reviews these against its policies. The answers below are what the code act
 
 - Does the app collect or share user data? **No.**
 - Location: processed on device only, not collected (Play's definition of "collected" is data
-  leaving the device). The Wear sync goes to the user's own watch through Google Play services;
-  Play treats data the user sends to their own devices as not shared.
+  leaving the device).
 - Is data encrypted in transit? Not applicable (no transmission).
 - Can users request deletion? Yes: clearing app data or uninstalling removes everything.
 
