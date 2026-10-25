@@ -29,8 +29,8 @@ android {
         applicationId = "id.haho.adwam"
         minSdk = 26
         targetSdk = 37
-        versionCode = 28
-        versionName = "0.8.1"
+        versionCode = 29
+        versionName = "0.9.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "REPORT_EMAIL", "\"$reportEmail\"")
         // GitHub repository whose releases the sideload updater reads (debug and sideload builds).
