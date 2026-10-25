@@ -817,6 +817,7 @@
     <string-array name="whats_new_1_0_0">
         <item>Adwam kini terpasang sebagai aplikasi baru. Saat pertama dibuka, data dari aplikasi lama dipindahkan langsung; setelah itu izinkan lagi notifikasi dan pasang ulang widget.</item>
         <item>Saat pertama dipasang, aplikasi kini selalu terbuka dalam bahasa Indonesia, meski bahasa ponsel Anda Inggris.</item>
+        <item>Tile Wear OS dihapus. Jika Anda memakainya, tile di jam tangan tidak lagi diperbarui dan bisa dihapus dari jam.</item>
     </string-array>
     <string-array name="whats_new_0_9_0">
         <item>Di ponsel yang memilikinya, widget jadwal shalat kini memakai huruf Google Sans, lebih serasi dengan aplikasi.</item>
