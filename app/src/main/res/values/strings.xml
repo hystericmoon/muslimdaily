@@ -796,6 +796,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_0_8_1">
+        <item>Lebih mudah dipakai dengan TalkBack: tombol dan daftar centang dibacakan dengan jelas, termasuk yang belum dikerjakan, dan fokus tidak lagi melompat ke atas.</item>
+    </string-array>
     <string-array name="whats_new_0_8_0">
         <item>Muslim Daily kini bernama Adwam (أدوم), yang berarti «yang paling terus-menerus». Isi, catatan, hafalan, dan pengaturan Anda tetap sama.</item>
         <item>Ikon baru di layar utama, notifikasi, dan jam Wear OS. Di Android 13 ke atas, ikon mengikuti warna ikon bertema di ponsel Anda.</item>

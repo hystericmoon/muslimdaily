@@ -36,6 +36,9 @@ class WhatsNewTest {
         assertEquals(listOf("0.7.0"), WhatsNew.since("0.7.0-beta.4", "0.7.0", firstRun = false).map { it.version })
         // The rename to Adwam: users on 0.7.0 see 0.8.0's highlights only.
         assertEquals(listOf("0.8.0"), WhatsNew.since("0.7.0", "0.8.0", firstRun = false).map { it.version })
+        // 0.8.1 adds its own line; anyone skipping 0.8.0 still hears about the rename.
+        assertEquals(listOf("0.8.1"), WhatsNew.since("0.8.0", "0.8.1", firstRun = false).map { it.version })
+        assertEquals(listOf("0.8.1", "0.8.0"), WhatsNew.since("0.7.0", "0.8.1", firstRun = false).map { it.version })
         // A beta still lists the betas before it.
         assertEquals(listOf("0.7.0-beta.4", "0.7.0-beta.3"), WhatsNew.since("0.7.0-beta.2", "0.7.0-beta.4", firstRun = false).map { it.version })
     }

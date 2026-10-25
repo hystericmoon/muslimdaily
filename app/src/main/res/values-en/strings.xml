@@ -808,6 +808,9 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_8_1">
+        <item>Easier to use with TalkBack: buttons and checklist items are read clearly, including the ones not done yet, and focus no longer jumps back to the top.</item>
+    </string-array>
     <string-array name="whats_new_0_8_0">
         <item>Muslim Daily is now called Adwam (أدوم), meaning “the most constant”. Your content, notes, memorisation and settings stay as they are.</item>
         <item>A new icon on your home screen, in notifications and on Wear OS. On Android 13 and later it follows your phone’s themed icons.</item>
