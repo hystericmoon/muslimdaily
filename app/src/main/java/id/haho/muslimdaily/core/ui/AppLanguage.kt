@@ -58,11 +58,23 @@ object AppLanguage {
         }
     }
 
-    /** Before Android 13: the activity's base context in the chosen language. */
+    /**
+     * The activity's base context in the chosen language.
+     *
+     * Before Android 13 this is the only switch. From 13 the per-app language normally arrives in
+     * the base context already, but the first start pins Indonesian in [onAppStart] while the
+     * first activity may already be on its way with the device's language; Android then does not
+     * always restart it, and a fresh install on an English phone opened in English. So when the
+     * base context doesn't match the choice, it is applied here too.
+     */
     fun wrap(base: Context): Context {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return base
-        val locale = Locale.forLanguageTag(current(base))
-        Locale.setDefault(locale)
+        val tag = current(base)
+        val locale = Locale.forLanguageTag(tag)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (base.resources.configuration.locales[0].language == locale.language) return base
+        } else {
+            Locale.setDefault(locale)
+        }
         val config = Configuration(base.resources.configuration).apply { setLocale(locale) }
         return base.createConfigurationContext(config)
     }
