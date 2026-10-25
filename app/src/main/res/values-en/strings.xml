@@ -814,6 +814,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_0_9_0">
+        <item>On phones that have it, the prayer-times widget now uses Google Sans, closer to the app\'s look.</item>
+        <item>Getting ready for the next Adwam, which will install as a new app: your data will be able to move straight over.</item>
+    </string-array>
     <string-array name="whats_new_0_8_1">
         <item>Easier to use with TalkBack: buttons and checklist items are read clearly, including the ones not done yet, and focus no longer jumps back to the top.</item>
     </string-array>
