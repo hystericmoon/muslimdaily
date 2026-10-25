@@ -47,6 +47,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import id.haho.muslimdaily.feature.onboarding.OnboardingRoute
+import id.haho.muslimdaily.feature.handover.MovedScreen
+import id.haho.muslimdaily.data.handover.Handover
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import id.haho.muslimdaily.feature.whatsnew.WhatsNew
 import id.haho.muslimdaily.feature.whatsnew.WhatsNewDialog
 import kotlinx.coroutines.flow.StateFlow
@@ -88,6 +92,9 @@ class MainActivity : ComponentActivity() {
             val settings by viewModel.settings.collectAsStateWithLifecycle()
             val reviewDue by viewModel.reviewDue.collectAsStateWithLifecycle()
             val onboarding by viewModel.showOnboarding.collectAsStateWithLifecycle()
+            // Once the data has gone to the new Adwam app, this app only points there.
+            var movedTo by remember { mutableStateOf(Handover.movedTo(this)) }
+            LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { movedTo = Handover.movedTo(this@MainActivity) }
             MuslimDailyTheme(
                 themeMode = settings.themeMode,
                 dynamicColor = settings.dynamicColor,
@@ -98,6 +105,10 @@ class MainActivity : ComponentActivity() {
                 arabicFont = settings.arabicFont,
             ) {
                 GlassBackdrop {
+                    movedTo?.let { moved ->
+                        MovedScreen(moved)
+                        return@GlassBackdrop
+                    }
                     when (onboarding) {
                         null -> Unit // settings still loading: a blank backdrop for a moment
                         true -> OnboardingRoute()

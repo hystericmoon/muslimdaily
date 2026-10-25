@@ -519,6 +519,12 @@
     <string name="widget_description_picker">Shalat berikutnya dan jadwal hari ini. Bisa diubah ke ukuran apa pun.</string>
     <string name="widget_countdown_format">dalam %s</string>
     <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
+    <string name="handover_moved_title">Adwam sudah pindah</string>
+    <string name="handover_moved_body">Data Anda sudah ada di aplikasi Adwam yang baru. Aplikasi ini tidak lagi mengirim pengingat, jadi bisa dihapus.</string>
+    <string name="handover_open_new">Buka Adwam yang baru</string>
+    <string name="handover_remove_old">Hapus aplikasi ini</string>
+    <string name="handover_remove_hint">Membuka info aplikasi. Ketuk Uninstal di sana.</string>
+    <string name="handover_widget_moved">Adwam sudah pindah. Ketuk untuk membuka aplikasi yang baru.</string>
     <string name="widget_tomorrow">Besok · %s</string>
     <string name="widget_hijri_day">%1$d %2$s</string>
     <string name="widget_now_fajr_ends">Subuh berakhir %s</string>

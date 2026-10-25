@@ -16,8 +16,15 @@
     <!-- Exact prayer-time reminders; the app falls back to inexact alarms if the user declines. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-    <!-- Maps apps the nearby-mosque screen hands directions to. -->
+    <!-- Only an app signed with the same key (the new Adwam, id.haho.adwam) may take this app's data. -->
+    <permission
+        android:name="${applicationId}.permission.HANDOVER"
+        android:protectionLevel="signature" />
+
+    <!-- Maps apps the nearby-mosque screen hands directions to; the new Adwam app, to open it after the move. -->
     <queries>
+        <package android:name="id.haho.adwam" />
+        <package android:name="id.haho.adwam.debug" />
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="geo" />
@@ -113,6 +120,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_day_schedule" />
         </receiver>
+
+        <provider
+            android:name=".data.handover.HandoverProvider"
+            android:authorities="${applicationId}.handover"
+            android:exported="true"
+            android:permission="${applicationId}.permission.HANDOVER" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

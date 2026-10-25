@@ -38,11 +38,14 @@ import androidx.glance.layout.wrapContentHeight
 import androidx.glance.semantics.contentDescription
 import androidx.glance.semantics.semantics
 import androidx.glance.unit.ColorProvider
+import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.action.clickable
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.core.ui.labelRes
+import id.haho.muslimdaily.data.handover.Handover
 import id.haho.muslimdaily.domain.prayer.SlotTime
 import id.haho.muslimdaily.feature.fasting.labelRes
 import java.time.Instant
@@ -58,6 +61,10 @@ open class PrayerTimesWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        Handover.movedTo(context)?.let { moved ->
+            provideContent { MovedWidgetContent(moved) }
+            return
+        }
         val initial = loadWidgetData(context)
         provideContent { PrayerWidgetContent(rememberWidgetData(context, initial)) }
     }
@@ -677,6 +684,31 @@ private fun NoLocation() {
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
         Label(
             context.getString(R.string.widget_no_location),
+            13f,
+            GlanceModifier.padding(horizontal = 16.dp),
+            maxLines = 4,
+            center = true,
+        )
+    }
+}
+
+/** After the move to the new Adwam app: this widget says so and opens the new app. */
+@Composable
+internal fun MovedWidgetContent(newPackage: String) {
+    val context = LocalContext.current
+    val size = LocalSize.current
+    val d = scale(context)
+    val bitmap = remember(size) {
+        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, Corner.value * d)
+    }
+    val open = context.packageManager.getLaunchIntentForPackage(newPackage)
+    Box(
+        GlanceModifier.fillMaxSize().cornerRadius(Corner).let { m -> open?.let { m.clickable(actionStartActivity(it)) } ?: m },
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
+        Label(
+            context.getString(R.string.handover_widget_moved),
             13f,
             GlanceModifier.padding(horizontal = 16.dp),
             maxLines = 4,

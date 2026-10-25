@@ -531,6 +531,12 @@
     <string name="widget_description_picker">The next prayer and today\'s times. Resize it to any size.</string>
     <string name="widget_countdown_format">in %s</string>
     <string name="widget_no_location">Set a location in the app to see prayer times.</string>
+    <string name="handover_moved_title">Adwam has moved</string>
+    <string name="handover_moved_body">Your data is now in the new Adwam app. This app no longer sends reminders, so you can remove it.</string>
+    <string name="handover_open_new">Open the new Adwam</string>
+    <string name="handover_remove_old">Remove this app</string>
+    <string name="handover_remove_hint">Opens App info. Tap Uninstall there.</string>
+    <string name="handover_widget_moved">Adwam has moved. Tap to open the new app.</string>
     <string name="widget_tomorrow">Tomorrow · %s</string>
     <string name="widget_hijri_day">%1$d %2$s</string>
     <string name="widget_now_fajr_ends">Fajr ends %s</string>
