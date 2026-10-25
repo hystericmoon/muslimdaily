@@ -119,7 +119,7 @@ class WidgetScreenshotTest {
         render("83-widget-4x1-landscape", DpSize(340.dp, 56.dp), morning)
         render("84-widget-no-location", DpSize(164.dp, 164.dp), data(at(8, 30), located = false))
         render("widget_preview", DpSize(340.dp, 164.dp), morning, preview = true)
-        // After Isya the date reads "Besok · …"; at 2×2 it must leave the countdown whole.
+        // After Isya: today's date stays, the countdown runs to tomorrow's Subuh.
         render("85-widget-2x2-2100", DpSize(164.dp, 164.dp), data(at(21, 0)))
         // A Samsung-style 5×2 in English with 12-hour times: no "11:41 …".
         val default = Locale.getDefault()

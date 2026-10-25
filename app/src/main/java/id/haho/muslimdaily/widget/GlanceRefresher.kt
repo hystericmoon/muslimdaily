@@ -30,14 +30,8 @@ class GlanceRefresher @Inject constructor(
     private val wear: WearSync,
 ) {
     suspend fun refresh() {
-        val manager = GlanceAppWidgetManager(context)
-        val stamp = System.currentTimeMillis()
-        for (widget in listOf(NextPrayerWidget(), DayScheduleWidget())) {
-            manager.getGlanceIds(widget.javaClass).forEach { id ->
-                updateAppWidgetState(context, id) { it[WidgetRefreshKey] = stamp }
-                widget.update(context, id)
-            }
-        }
+        refreshWidgets()
+        WidgetTicker.schedule(context)
         if (Handover.movedTo(context) != null) {
             // Moved to the new app: the widgets say so, and the ongoing notification goes.
             notifier.cancelNextPrayerOngoing()
@@ -50,6 +44,18 @@ class GlanceRefresher @Inject constructor(
             notifier.nextPrayerOngoing(snapshot, DateFormat.is24HourFormat(context))
         } else {
             notifier.cancelNextPrayerOngoing()
+        }
+    }
+
+    /** Redraws the widgets only (the minute tick): each re-reads its data. */
+    suspend fun refreshWidgets() {
+        val manager = GlanceAppWidgetManager(context)
+        val stamp = System.currentTimeMillis()
+        for (widget in listOf(NextPrayerWidget(), DayScheduleWidget())) {
+            manager.getGlanceIds(widget.javaClass).forEach { id ->
+                updateAppWidgetState(context, id) { it[WidgetRefreshKey] = stamp }
+                widget.update(context, id)
+            }
         }
     }
 }

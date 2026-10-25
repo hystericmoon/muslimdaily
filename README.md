@@ -42,8 +42,9 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
 * **Reminders**: adhan per prayer (sound or silent), morning/evening adhkar, before sleep,
   Friday, review queue. All off by default.
 * **Widgets and tiles**: one prayer-times widget that resizes from 1×1 to 5×3 and adds detail
-  as it grows (next prayer with a live countdown, the date and Hijri date, the place, the day's
-  times, what matters now, a sunnah fast tomorrow), over a sky that follows the time of day and
+  as it grows (the next prayer, the time until it in words, a bar of how far the day has gone,
+  the date and Hijri date, the place, the day's times, what matters now, a sunnah fast
+  tomorrow), a smoked-glass card over a sky that follows the time of day, which
   can sit on the lock screen where the phone allows it; an optional lock-screen next-prayer
   notification (a Live Update on Android 16); a Quick Settings tile; and a Wear OS tile fed by
   the phone.

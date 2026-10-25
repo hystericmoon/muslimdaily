@@ -529,7 +529,16 @@
     <!-- Widgets -->
     <string name="widget_name">Prayer times</string>
     <string name="widget_description_picker">The next prayer and today\'s times. Resize it to any size.</string>
-    <string name="widget_countdown_format">in %s</string>
+    <string name="widget_next">Next</string>
+    <string name="widget_arrives_in">Starts in</string>
+    <string name="widget_in_hm">%1$d hr %2$d min</string>
+    <string name="widget_in_h">%d hr</string>
+    <string name="widget_in_m">%d min</string>
+    <string name="widget_in_hm_short">%1$dh %2$dm</string>
+    <string name="widget_in_h_short">%dh</string>
+    <string name="widget_in_m_short">%dm</string>
+    <string name="widget_about">± %s</string>
+    <string name="widget_prayer_jumuah">Jumu\'ah</string>
     <string name="widget_no_location">Set a location in the app to see prayer times.</string>
     <string name="handover_moved_title">Adwam has moved</string>
     <string name="handover_moved_body">Your data is now in the new Adwam app. This app no longer sends reminders, so you can remove it.</string>
@@ -537,7 +546,6 @@
     <string name="handover_remove_old">Remove this app</string>
     <string name="handover_remove_hint">Opens App info. Tap Uninstall there.</string>
     <string name="handover_widget_moved">Adwam has moved. Tap to open the new app.</string>
-    <string name="widget_tomorrow">Tomorrow · %s</string>
     <string name="widget_hijri_day">%1$d %2$s</string>
     <string name="widget_now_fajr_ends">Fajr ends %s</string>
     <string name="widget_now_prohibited">Prohibited time</string>
@@ -545,7 +553,7 @@
     <string name="widget_now_duha">Dhuha until %s</string>
     <string name="widget_now_prayer">%s time</string>
     <string name="widget_fast_tomorrow">Tomorrow: %s</string>
-    <string name="widget_a11y_next">Next: %1$s at %2$s</string>
+    <string name="widget_a11y_next">Next: %1$s at %2$s, in %3$s</string>
     <string name="widget_next_description">Next prayer %1$s at %2$s, %3$s</string>
 
     <!-- Pre-prayer and lock-screen notifications -->

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A widget label in the system monospace, letter-spaced: small caps labels, chips and the bar's scale. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:fontFamily="monospace"
+    android:includeFontPadding="false"
+    android:letterSpacing="0.06"
+    android:maxLines="1" />
