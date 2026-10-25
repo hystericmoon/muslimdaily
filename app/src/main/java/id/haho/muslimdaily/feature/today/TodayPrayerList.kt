@@ -45,6 +45,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -213,7 +214,11 @@ private fun PrayerRowView(
             ) {
                 Column {
                     ends?.let { lines ->
-                        Column(Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.sm)) {
+                        // One TalkBack stop for all of a prayer's end times.
+                        Column(
+                            Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.sm)
+                                .semantics(mergeDescendants = true) {},
+                        ) {
                             lines.forEach {
                                 Text(
                                     it,
@@ -472,7 +477,15 @@ private fun SunnahWindowRow(
                 )
             }
             Text(range, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            // TalkBack adds its own full stop between merged lines; drop the note's so it isn't read twice.
+            note?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.semantics { contentDescription = it.trimEnd('.') },
+                )
+            }
         }
     }
 }

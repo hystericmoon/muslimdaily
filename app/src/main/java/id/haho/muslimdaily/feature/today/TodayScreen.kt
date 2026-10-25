@@ -54,6 +54,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.foundation.focusable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -61,14 +67,13 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import java.time.Duration
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -149,6 +154,22 @@ fun TodayRoute(
         viewModel.checkWidgetAlarms()
     }
 
+    // Confirms a new place, the first one included, so it is heard as well as seen.
+    val place = when (val s = state) {
+        TodayUiState.Loading -> null
+        TodayUiState.NoLocation -> ""
+        is TodayUiState.Ready -> s.data.locationName
+    }
+    var shownPlace by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(place) {
+        if (place == null) return@LaunchedEffect
+        val before = shownPlace
+        shownPlace = place
+        if (before != null && before != place && place.isNotEmpty()) {
+            snackbar.showSnackbar(resources.getString(R.string.location_prayer_times_for, place))
+        }
+    }
+
     TodayScreen(
         state = state,
         snackbarHostState = snackbar,
@@ -172,7 +193,10 @@ fun TodayRoute(
                     context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
                 }
             },
-            onDismissWidgetAlarms = viewModel::dismissWidgetAlarms,
+            onDismissWidgetAlarms = {
+                viewModel.dismissWidgetAlarms()
+                scope.launch { snackbar.showSnackbar(resources.getString(R.string.today_widget_alarm_dismissed)) }
+            },
         ),
         routines = routines,
         widgetAlarmNote = widgetAlarmNote,
@@ -198,13 +222,29 @@ fun TodayScreen(
     }
 }
 
+/**
+ * Moves keyboard and TalkBack focus to the screen's title once it appears, so the screen starts
+ * there rather than on the tab bar (which TalkBack picks after onboarding or a tab change).
+ */
+@Composable
+private fun rememberEntryFocus(): FocusRequester {
+    val requester = remember { FocusRequester() }
+    LaunchedEffect(requester) {
+        withFrameNanos {}
+        runCatching { requester.requestFocus() }
+    }
+    return requester
+}
+
 @Composable
 private fun NoLocation(actions: TodayActions) {
+    val titleFocus = rememberEntryFocus()
     Column(Modifier.fillMaxSize().statusBarsPadding(), verticalArrangement = Arrangement.Center) {
         EmptyState(
             icon = R.drawable.ic_location_on,
             title = stringResource(R.string.today_no_location_title),
             body = stringResource(R.string.today_no_location_body),
+            titleModifier = Modifier.focusRequester(titleFocus).focusable(),
         ) {
             GlassButton(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_my_location), null)
@@ -224,25 +264,33 @@ private val TwoPaneWidth = 840.dp
 @Composable
 private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpanded: Set<String>, routines: List<Routine>, widgetAlarmNote: Boolean) {
     var expanded by remember { mutableStateOf(initiallyExpanded) }
+    val headerFocus = rememberEntryFocus()
+    // When the widget note is dismissed, focus moves on to the schedule instead of the top.
+    val afterNote = remember { FocusRequester() }
+    var noteShown by remember { mutableStateOf(widgetAlarmNote) }
+    LaunchedEffect(widgetAlarmNote) {
+        if (noteShown && !widgetAlarmNote) runCatching { afterNote.requestFocus() }
+        noteShown = widgetAlarmNote
+    }
     val onExpandToggle: (String) -> Unit = { key -> expanded = if (key in expanded) expanded - key else expanded + key }
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         val bottom = PaddingValues(bottom = AppTheme.spacing.xxl)
         if (maxWidth >= TwoPaneWidth) {
             Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
-                    glanceItems(data, actions, routines, widgetAlarmNote)
+                    glanceItems(data, actions, routines, widgetAlarmNote, headerFocus)
                     otherItems(data, actions)
                 }
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
                     item(key = "pane-top") { Spacer(Modifier.height(AppTheme.spacing.lg)) }
-                    scheduleItems(data, actions, expanded, onExpandToggle)
+                    scheduleItems(data, actions, expanded, onExpandToggle, afterNote)
                 }
             }
         } else {
             // The list starts below the status bar, so scrolled content never runs under the clock.
             LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
-                glanceItems(data, actions, routines, widgetAlarmNote)
-                scheduleItems(data, actions, expanded, onExpandToggle)
+                glanceItems(data, actions, routines, widgetAlarmNote, headerFocus)
+                scheduleItems(data, actions, expanded, onExpandToggle, afterNote)
                 otherItems(data, actions)
             }
         }
@@ -250,8 +298,14 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
 }
 
 /** Header, next prayer and the cards that matter right now. */
-private fun LazyListScope.glanceItems(data: TodayData, actions: TodayActions, routines: List<Routine>, widgetAlarmNote: Boolean) {
-    item(key = "header") { Header(data, actions) }
+private fun LazyListScope.glanceItems(
+    data: TodayData,
+    actions: TodayActions,
+    routines: List<Routine>,
+    widgetAlarmNote: Boolean,
+    headerFocus: FocusRequester,
+) {
+    item(key = "header") { Header(data, actions, headerFocus) }
     item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
     if (widgetAlarmNote) {
         item(key = "widget-alarms") {
@@ -303,8 +357,9 @@ private fun LazyListScope.scheduleItems(
     actions: TodayActions,
     expanded: Set<String>,
     onExpandToggle: (String) -> Unit,
+    headerFocus: FocusRequester,
 ) {
-    item(key = "schedule-header") { SectionHeader(stringResource(R.string.today_schedule)) }
+    item(key = "schedule-header") { SectionHeader(stringResource(R.string.today_schedule), Modifier.focusRequester(headerFocus).focusable()) }
     item(key = "schedule") {
         PrayerListCard(
             data = data,
@@ -328,7 +383,7 @@ private fun LazyListScope.otherItems(data: TodayData, actions: TodayActions) {
 }
 
 @Composable
-private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = Modifier) {
+private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusRequester, modifier: Modifier = Modifier) {
     val locationDescription = stringResource(R.string.today_location_chip, data.locationName)
     Column(
         modifier = modifier.fillMaxWidth().padding(
@@ -341,7 +396,7 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
         Text(
             formatLongDate(data.date),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.semantics { heading() },
+            modifier = Modifier.focusRequester(headerFocus).focusable().semantics { heading() },
         )
         Text(
             hijriLabel(data.hijri),
@@ -354,7 +409,8 @@ private fun Header(data: TodayData, actions: TodayActions, modifier: Modifier = 
         ) {
             AssistChip(
                 onClick = actions.onOpenLocation,
-                label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                // The chip's description already names the place; the visible name is not read twice.
+                label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.clearAndSetSemantics {}) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(AppTheme.dimens.smallIcon)) },
                 modifier = Modifier.semantics { contentDescription = locationDescription },
             )
@@ -416,7 +472,6 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                                 .togetherWith(slideOutVertically(motion.layout()) { -it / 2 } + fadeOut(motion.fade()))
                         },
                         contentAlignment = Alignment.CenterEnd,
-                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                         label = "countdown",
                     ) { text ->
                         Text(text, style = MaterialTheme.typography.titleMedium)

@@ -105,6 +105,8 @@ fun EmptyState(
     title: String,
     body: String,
     modifier: Modifier = Modifier,
+    /** For the title, e.g. to move focus to it when the screen appears. */
+    titleModifier: Modifier = Modifier,
     action: @Composable ColumnScope.() -> Unit = {},
 ) {
     Column(
@@ -122,7 +124,7 @@ fun EmptyState(
             title,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.semantics { heading() },
+            modifier = titleModifier.semantics { heading() },
         )
         Text(
             body,

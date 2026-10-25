@@ -24,6 +24,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import kotlinx.coroutines.delay
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -101,9 +108,11 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
         permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())
         viewModel.reschedule()
     }
+    var refocus by remember { mutableIntStateOf(0) }
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         permissions = permissions.copy(notifications = viewModel.notificationsAllowed())
         viewModel.reschedule()
+        refocus++
     }
     val askNotifications = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -124,6 +133,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
                 permissions = permissions,
                 onAskNotifications = askNotifications,
                 onAskExact = askExact,
+                refocus = refocus,
                 update = { block ->
                     viewModel.update(block)
                     if (!permissions.notifications) askNotifications()
@@ -132,6 +142,9 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
         }
     }
 }
+
+private val GROUPS = listOf("adhan", "adhkar", "glance", "other")
+private const val PROMPT_SETTLE_MS = 500L
 
 private val TimeFormat get() = DateTimeFormatter.ofPattern(clockPattern(true), AppLocale)
 
@@ -142,24 +155,42 @@ fun RemindersContent(
     onAskNotifications: () -> Unit,
     onAskExact: () -> Unit,
     update: (SettingsEditor.() -> Unit) -> Unit,
+    /** Bumped after a permission prompt closes: focus returns to the group that asked for it. */
+    refocus: Int = 0,
 ) {
     val r = settings.reminders
     var timeDialog by remember { mutableStateOf<TimeTarget?>(null) }
+    // When the app's window comes back after the system prompt, TalkBack would start again at the
+    // tab bar. Requesting focus in the group whose setting asked keeps it there; on API 37 TalkBack
+    // then returns to the option that was just chosen.
+    val groupFocus = remember { GROUPS.associateWith { FocusRequester() } }
+    var lastGroup by rememberSaveable { mutableStateOf(GROUPS.first()) }
+    LaunchedEffect(refocus) {
+        if (refocus > 0) {
+            delay(PROMPT_SETTLE_MS)
+            runCatching { groupFocus.getValue(lastGroup).requestFocus() }
+        }
+    }
+    fun inGroup(key: String): (SettingsEditor.() -> Unit) -> Unit = { block -> lastGroup = key; update(block) }
+    fun titleFocus(key: String) = Modifier.focusRequester(groupFocus.getValue(key)).focusable()
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
-        item {
+        // Stable keys: when a permission card goes away, the groups below keep their identity, so
+        // TalkBack's focus stays where it was instead of jumping back to the top.
+        item(key = "intro") {
             InfoNote(
                 stringResource(R.string.reminders_intro),
                 Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
             )
         }
         if (!permissions.notifications) {
-            item { PermissionCard(stringResource(R.string.reminders_notif_permission), stringResource(R.string.reminders_allow), onAskNotifications) }
+            item(key = "perm-notifications") { PermissionCard(stringResource(R.string.reminders_notif_permission), stringResource(R.string.reminders_allow), onAskNotifications) }
         }
         if (!permissions.exactAlarms) {
-            item { PermissionCard(stringResource(R.string.reminders_exact_permission), stringResource(R.string.reminders_allow_exact), onAskExact) }
+            item(key = "perm-exact") { PermissionCard(stringResource(R.string.reminders_exact_permission), stringResource(R.string.reminders_allow_exact), onAskExact) }
         }
-        item {
-            SettingsGroup(stringResource(R.string.reminders_adhan)) {
+        item(key = "adhan") {
+            val update = inGroup("adhan")
+            SettingsGroup(stringResource(R.string.reminders_adhan), titleModifier = titleFocus("adhan")) {
                 if (settings.location == null) {
                     InfoNote(stringResource(R.string.reminders_need_location), Modifier.padding(AppTheme.dimens.screenGutter))
                 }
@@ -183,8 +214,9 @@ fun RemindersContent(
                 InfoNote(stringResource(R.string.reminders_adhan_note), Modifier.padding(AppTheme.dimens.screenGutter))
             }
         }
-        item {
-            SettingsGroup(stringResource(R.string.reminders_adhkar)) {
+        item(key = "adhkar") {
+            val update = inGroup("adhkar")
+            SettingsGroup(stringResource(R.string.reminders_adhkar), titleModifier = titleFocus("adhkar")) {
                 SwitchRow(
                     title = stringResource(R.string.adhkar_morning),
                     summary = stringResource(R.string.reminders_after_fajr, r.morningOffsetMinutes),
@@ -203,8 +235,9 @@ fun RemindersContent(
                 if (r.eveningAdhkar) OffsetStepper(r.eveningOffsetMinutes) { v -> update { remEveningOffset = v } }
             }
         }
-        item {
-            SettingsGroup(stringResource(R.string.reminders_glance)) {
+        item(key = "glance") {
+            val update = inGroup("glance")
+            SettingsGroup(stringResource(R.string.reminders_glance), titleModifier = titleFocus("glance")) {
                 SwitchRow(
                     title = stringResource(R.string.reminders_mosque_title),
                     summary = stringResource(R.string.reminders_mosque_summary, r.mosqueBeforeMinutes),
@@ -223,8 +256,9 @@ fun RemindersContent(
                 InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(AppTheme.dimens.screenGutter))
             }
         }
-        item {
-            SettingsGroup(stringResource(R.string.reminders_other)) {
+        item(key = "other") {
+            val update = inGroup("other")
+            SettingsGroup(stringResource(R.string.reminders_other), titleModifier = titleFocus("other")) {
                 SwitchRow(
                     title = stringResource(R.string.notif_sleep_title),
                     checked = r.beforeSleep,

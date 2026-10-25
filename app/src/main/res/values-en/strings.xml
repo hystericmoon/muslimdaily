@@ -101,8 +101,12 @@
     <string name="today_dismiss">Dismiss</string>
     <string name="today_widget_alarm_note">The prayer-times widget can take up to 10 minutes to move to the next prayer. Allow exact alarms so it always changes on time.</string>
     <string name="today_widget_alarm_allow">Allow</string>
-    <string name="today_expand_rawatib">Show sunnah rawatib</string>
-    <string name="today_collapse_rawatib">Hide sunnah rawatib</string>
+    <string name="today_expand_rawatib">show sunnah rawatib</string>
+    <string name="today_collapse_rawatib">hide sunnah rawatib</string>
+    <string name="check_state_done">Done</string>
+    <string name="check_state_not_done">Not done yet</string>
+    <string name="location_prayer_times_for">Prayer times are now for %s</string>
+    <string name="today_widget_alarm_dismissed">Note dismissed. Exact alarms can be allowed in Settings › Reminders.</string>
     <string name="state_expanded">expanded</string>
     <string name="state_collapsed">collapsed</string>
     <string name="today_private_note">This checklist is private, stored only on this device, and resets every day.</string>
