@@ -64,8 +64,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 TodayRoute(
                     onStartAdhkar = { navController.navigate(RunRoute(it)) },
                     onOpenEvent = { navController.navigate(EventRoute(it)) },
-                    onOpenLocation = { navController.navigate(LocationRoute) },
-                    onOpenPrayerSettings = { navController.navigate(PrayerSettingsRoute) },
+                    onOpenLocation = { navController.navigate(TodayLocationRoute) },
+                    onOpenPrayerSettings = { navController.navigate(TodayPrayerSettingsRoute) },
                     onOpenMosques = { navController.navigate(MosquesRoute) },
                     onOpenQibla = { navController.navigate(QiblaRoute) },
                     onOpenFasting = { navController.navigate(FastingRoute) },
@@ -73,7 +73,9 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 )
             }
             composable<FastingRoute> { FastingRoute(onBack = back) }
-            composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(LocationRoute) }) }
+            composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
+            composable<TodayLocationRoute> { LocationRoute(onBack = back) }
+            composable<TodayPrayerSettingsRoute> { PrayerSettingsRoute(onBack = back) }
             composable<MosquesRoute> { NearbyMosqueRoute(onBack = back) }
         }
         navigation<DuasGraph>(startDestination = DuaLibraryRoute) {

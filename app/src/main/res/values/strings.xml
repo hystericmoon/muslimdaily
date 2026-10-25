@@ -99,8 +99,12 @@
     <string name="today_dismiss">Abaikan</string>
     <string name="today_widget_alarm_note">Widget jadwal shalat bisa terlambat sampai 10 menit berganti ke shalat berikutnya. Izinkan alarm tepat waktu agar selalu berganti tepat pada waktunya.</string>
     <string name="today_widget_alarm_allow">Izinkan</string>
-    <string name="today_expand_rawatib">Tampilkan sunnah rawatib</string>
-    <string name="today_collapse_rawatib">Sembunyikan sunnah rawatib</string>
+    <string name="today_expand_rawatib">tampilkan sunnah rawatib</string>
+    <string name="today_collapse_rawatib">sembunyikan sunnah rawatib</string>
+    <string name="check_state_done">Sudah dikerjakan</string>
+    <string name="check_state_not_done">Belum dikerjakan</string>
+    <string name="location_prayer_times_for">Jadwal shalat kini untuk %s</string>
+    <string name="today_widget_alarm_dismissed">Catatan ditutup. Izin alarm tepat waktu ada di Pengaturan › Pengingat.</string>
     <string name="state_expanded">terbuka</string>
     <string name="state_collapsed">tertutup</string>
     <string name="today_private_note">Ceklis ini pribadi, hanya tersimpan di perangkat, dan diulang setiap hari.</string>

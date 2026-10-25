@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.Dp
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
@@ -89,11 +91,14 @@ fun CheckRow(
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable RowScope.() -> Unit,
 ) {
+    // TalkBack says "checked" but stays silent when unchecked, so both states are named.
+    val state = stringResource(if (checked) R.string.check_state_done else R.string.check_state_not_done)
     Row(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = minHeight)
-            .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
+            .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange)
+            .semantics { stateDescription = state },
         verticalAlignment = verticalAlignment,
     ) {
         content()

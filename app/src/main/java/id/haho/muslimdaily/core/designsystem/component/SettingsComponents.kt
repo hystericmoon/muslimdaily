@@ -2,6 +2,7 @@ package id.haho.muslimdaily.core.designsystem.component
 
 import id.haho.muslimdaily.core.designsystem.glass.glassSegmentedColors
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -44,9 +45,14 @@ import id.haho.muslimdaily.core.ui.isLargeFontScale
 
 /** A titled group of settings rows on a rounded container. */
 @Composable
-fun SettingsGroup(title: String?, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+fun SettingsGroup(
+    title: String?,
+    modifier: Modifier = Modifier,
+    titleModifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit,
+) {
     Column(modifier) {
-        if (title != null) SectionHeader(title)
+        if (title != null) SectionHeader(title, titleModifier)
         GlassCard(
             modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter),
         ) {
@@ -108,7 +114,7 @@ fun NavigationRow(
         supporting = summary,
         leading = icon?.let { { Icon(painterResource(it), null) } },
         trailing = { Icon(painterResource(R.drawable.ic_chevron_right), null) },
-        modifier = modifier.selectable(selected = false, role = Role.Button, onClick = onClick),
+        modifier = modifier.clickable(role = Role.Button, onClick = onClick),
     )
 }
 
@@ -275,7 +281,7 @@ fun <T> SegmentedRow(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         RadioButton(selected = option == selected, onClick = null)
-                        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = AppTheme.spacing.sm))
+                        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = AppTheme.spacing.sm).clearAndSetSemantics {})
                     }
                 }
             }
@@ -288,7 +294,8 @@ fun <T> SegmentedRow(
                     selected = option == selected,
                     onClick = { onSelect(option) },
                     shape = SegmentedButtonDefaults.itemShape(i, options.size),
-                    label = { Text(text, maxLines = 1) },
+                    // The segment's description is "title: option"; the visible option is not read twice.
+                    label = { Text(text, maxLines = 1, modifier = Modifier.clearAndSetSemantics {}) },
                     colors = glassSegmentedColors(),
                     modifier = Modifier.semantics { contentDescription = "$title: $text" },
                 )

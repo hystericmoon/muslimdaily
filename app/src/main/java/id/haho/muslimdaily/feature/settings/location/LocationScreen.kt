@@ -5,6 +5,7 @@ import id.haho.muslimdaily.core.designsystem.glass.GlassCard
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -217,7 +217,7 @@ fun LocationContent(
                 supportingContent = { Text(listOf(city.region, city.countryName).filter { it.isNotBlank() }.joinToString(", ")) },
                 leadingContent = { Icon(painterResource(R.drawable.ic_location_on), null) },
                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
-                modifier = Modifier.selectable(selected = false, role = Role.Button, onClick = { onSelect(city) }),
+                modifier = Modifier.clickable(role = Role.Button, onClick = { onSelect(city) }),
             )
         }
         item {

@@ -12,9 +12,9 @@ set; "Implemented" means built to the rule but needs a device pass with TalkBack
 | Touch targets ≥ 48dp | Rows ≥ 64dp; player main button 72dp; run card is the whole card; checklist rows are whole-row toggles | Verified (screenshots) |
 | 200% font, no clipping | Arabic leading 1.9× with `LineHeightStyle.Trim.None`; steppers stack and segmented choices become radio lists at ≥ 150%; button labels wrap; nav labels capped at 1.5× and step down to fit | Verified (`*-font200.png`) |
 | In-app text size | Arabic and translation scales (80–180%) applied on top of the system scale | Implemented |
-| TalkBack labels | Icon buttons have descriptions; decorative icons are null; settings rows merge label + value; steppers name their effect ("Tambah Subuh") | Implemented, partly tested |
+| TalkBack labels | Icon buttons have descriptions; decorative icons are null; settings rows merge label + value and read as buttons, not unselected toggles; segmented choices read "title: option" once; checklist rows say "Sudah/Belum dikerjakan"; steppers name their effect ("Tambah Subuh") | Device pass 2026-10-25 (emulator) |
 | Headings | Section headers, screen titles, sheet titles marked as headings | Implemented |
-| Live regions | Next-prayer countdown (updates per minute), run-mode count ("2 dari 3"), memorize turn prompts, stepper values | Verified for run mode (UI test) |
+| Live regions | Run-mode count ("2 dari 3"), memorize turn prompts, stepper values. Not the next-prayer countdown: it is read with the card when focused, so it doesn't interrupt every minute | Verified for run mode (UI test) |
 | Arabic voice | Every Arabic string carries an Arabic `LocaleList` span (exported as `LocaleSpan`); English translations an English one | Implemented |
 | Bidi isolation | City names inside Indonesian sentences wrapped in FSI…PDI | Implemented |
 | Timing adjustable (2.2.1) | Auto-advance toggle (run mode menu and settings); memorize pauses auto or manual; no timeouts | Implemented |

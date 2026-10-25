@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import id.haho.muslimdaily.core.designsystem.glass.Glass
 import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -216,7 +217,7 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                     Modifier
                         .fillMaxWidth()
                         .heightIn(min = AppTheme.dimens.largeTouchTarget)
-                        .selectable(selected = false, role = Role.Button, onClick = { showHidden = !showHidden })
+                        .clickable(role = Role.Button, onClick = { showHidden = !showHidden })
                         .semantics { stateDescription = stateLabel }
                         .padding(horizontal = AppTheme.dimens.screenGutter),
                     verticalAlignment = Alignment.CenterVertically,
