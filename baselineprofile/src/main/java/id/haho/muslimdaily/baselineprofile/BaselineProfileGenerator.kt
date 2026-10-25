@@ -69,7 +69,7 @@ class BaselineProfileGenerator {
     }
 
     private companion object {
-        const val PACKAGE = "id.haho.muslimdaily.debug"
+        const val PACKAGE = "id.haho.adwam.debug"
         const val TIMEOUT = 5_000L
     }
 }

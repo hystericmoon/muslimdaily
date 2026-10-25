@@ -21,6 +21,8 @@ class HandoverTest {
         assertEquals("id.haho.adwam.debug", Handover.newPackageFor("id.haho.muslimdaily.debug"))
         assertEquals("id.haho.adwam", Handover.newPackageFor("id.haho.muslimdaily"))
         assertNull(Handover.newPackageFor("id.haho.adwam.debug"))
+        assertEquals("id.haho.muslimdaily.debug", Handover.legacyPackageFor("id.haho.adwam.debug"))
+        assertEquals("id.haho.muslimdaily", Handover.legacyPackageFor("id.haho.adwam"))
     }
 
     @Test

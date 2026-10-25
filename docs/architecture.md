@@ -6,7 +6,7 @@ Single module, single activity, MVVM with unidirectional data flow. ViewModels e
 screenshot tests render.
 
 ```
-id.haho.muslimdaily
+id.haho.muslimdaily   (Kotlin package; the app installs as id.haho.adwam)
 ├── core
 │   ├── designsystem   theme (generated colours, both type scales, tokens), components
 │   ├── model          Prayer, Dua, Phrase, Rawatib …

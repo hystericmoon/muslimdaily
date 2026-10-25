@@ -25,7 +25,8 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "id.haho.muslimdaily"
+        // Adwam's package since the rename; before 1.0 it was id.haho.muslimdaily (see Handover).
+        applicationId = "id.haho.adwam"
         minSdk = 26
         targetSdk = 37
         versionCode = 28

@@ -22,7 +22,8 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "id.haho.muslimdaily"
+        // Must match the phone app's package for the Data Layer to pair them.
+        applicationId = "id.haho.adwam"
         minSdk = 30
         targetSdk = 36
         // Follows the phone app, so each release's watch APK installs over the previous one.
@@ -49,7 +50,7 @@ android {
 
     buildTypes {
         debug {
-            // Matches the phone's sideload build (id.haho.muslimdaily.debug).
+            // Matches the phone's sideload build (id.haho.adwam.debug).
             applicationIdSuffix = ".debug"
         }
         release {

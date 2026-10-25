@@ -1,6 +1,7 @@
 # Adwam (formerly Muslim Daily)
 
-Native Android app `id.haho.muslimdaily` (plus a Wear OS module in `wear/`). Kotlin 2.3,
+Native Android app `id.haho.adwam` (formerly `id.haho.muslimdaily`; the Kotlin packages keep that
+name) plus a Wear OS module in `wear/`. Kotlin 2.3,
 Compose, Hilt, Room, DataStore, Glance. Sideloaded through GitHub Releases.
 
 ## Content rules (non-negotiable)
