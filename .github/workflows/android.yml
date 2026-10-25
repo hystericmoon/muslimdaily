@@ -39,9 +39,9 @@ jobs:
       - name: Android SDK 37
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
       - name: Lint, unit and UI tests (Robolectric)
-        run: ./gradlew :app:lintDebug :app:testDebugUnitTest :wear:lintDebug :wear:testDebugUnitTest --stacktrace
+        run: ./gradlew :app:lintDebug :app:testDebugUnitTest --stacktrace
       - name: Debug and release builds
-        run: ./gradlew :app:assembleDebug :app:assembleRelease :app:assembleSideload :wear:assembleDebug
+        run: ./gradlew :app:assembleDebug :app:assembleRelease :app:assembleSideload
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -49,10 +49,8 @@ jobs:
           path: |
             app/build/reports/
             app/build/test-results/
-            wear/build/reports/
       - uses: actions/upload-artifact@v4
         with:
           name: apks
           path: |
             app/build/outputs/apk/
-            wear/build/outputs/apk/

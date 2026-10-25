@@ -7,7 +7,6 @@ each minor release (0.x.0) on at least:
 - one Pixel or Android One phone on the latest Android,
 - one phone with an aggressive battery manager (Xiaomi/HyperOS, Oppo/ColorOS, Vivo/Funtouch or
   Samsung One UI with "Put unused apps to sleep" on),
-- one Wear OS 4+ watch paired to one of them,
 - if available, a tablet or unfolded foldable (≥ 600dp wide).
 
 Record results in the release PR as a table: step, device, pass/fail, note.

@@ -81,21 +81,3 @@ Notes:
   `app/src/sideload/generated/baselineProfiles/`. `gradle.properties` keeps the app installed
   after the run (Gradle would otherwise uninstall it and its data).
 
-## Wear OS tile
-
-Each release also attaches `muslimdaily-wear-<version>.apk`. It has the same package name and
-signing key as the phone's sideload build, which the Wear data layer requires. Install it on
-the watch with adb over Wi-Fi (Settings → Developer options → Wireless debugging on the
-watch):
-
-```bash
-adb pair <watch-ip>:<pairing-port>     # code shown on the watch
-adb connect <watch-ip>:<port>
-adb -s <watch-ip>:<port> install muslimdaily-wear-<version>.apk
-```
-
-Then add the "Shalat berikutnya" tile on the watch. The phone sends a week of prayer times
-whenever its widgets refresh (at each prayer time and on settings changes); opening the phone
-app once after installing is enough to fill the tile. The phone's in-app updater ignores the
-watch APK.
-
