@@ -836,6 +836,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_1_0">
+        <item>The prayer-times widget has a new look: the large figure is now the current time, and under it the time left until the next prayer, with that prayer\'s time, such as \"2 hr 47 min until Maghrib 5:51 PM\".</item>
+        <item>Its background is now translucent black glass, with the sun by day and the moon at that night\'s phase, drawn from NASA imagery.</item>
+        <item>Prayer names show above their times along the bottom of the widget, and the Hijri date is now written like the regular date.</item>
+    </string-array>
     <string-array name="whats_new_1_0_1">
         <item>The prayer-times widget no longer has a thick border: its card now fills nearly the whole widget.</item>
         <item>On taller 4×2 widgets, such as on Samsung phones, the prayer names now show above their times, along with the line below, such as "Dhuha until 11:30".</item>
