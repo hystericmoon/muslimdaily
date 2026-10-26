@@ -199,7 +199,7 @@ internal fun PrayerWidgetContent(data: WidgetData) {
     val grid = WidgetGrid.of(size.width.value, size.height.value, context.resources.configuration.fontScale)
     // Built on every composition (cheap), so a language switch shows at the next update.
     val t = WidgetText(context, model, data.time, data.now, data.precise)
-    val inset = if (grid.rows == 1 || grid.columns == 1) Space.InsetSmall else Space.Inset
+    val inset = Space.Inset
     Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context).semantics { contentDescription = t.description }) {
         SkyBackground(model.sky, inset)
         val l = Layout(model, t, grid.scale, grid.tight, size.width, size.height, inset, TextFit(context), context.resources.configuration.fontScale)
@@ -240,12 +240,11 @@ private fun SkyBackground(look: SkyLook, inset: Dp) {
 
 /**
  * The widget's spacing, shared by every layout so edges and gaps line up between sizes. The card
- * sits [Inset] inside the sky ([InsetSmall] on one-row and one-column widgets); text sits [Pad]
- * inside the card ([PadSmall] on one-column widgets).
+ * sits [Inset] inside the sky, so the sky shows as a hairline rim rather than a frame; text sits
+ * [Pad] inside the card ([PadSmall] on one-column widgets).
  */
 private object Space {
-    val Inset = 6.dp
-    val InsetSmall = 4.dp
+    val Inset = 1.5.dp
     val Pad = 14.dp
     val PadSmall = 8.dp
     val PadShort = 10.dp
@@ -500,7 +499,7 @@ private class Layout(
     fun Medium(tall: Boolean) {
         val pad = Space.Pad
         val inner = inner(pad)
-        Card(inner, pad, crumb = t.dateShort, chip = t.hijriShort, baseTimeSp = if (tall) 44f else 34f, baseCdSp = 13f, scaleNames = tall, footer = tall)
+        Card(inner, pad, crumb = t.dateShort, chip = t.hijriShort, baseTimeSp = if (tall) 44f else 34f, baseCdSp = 13f, tall = tall)
     }
 
     /** Four and five columns: the reference layout. */
@@ -515,19 +514,18 @@ private class Layout(
             chip = if (five || tall) t.hijriLong else t.hijriShort,
             baseTimeSp = if (tall) 52f else 40f,
             baseCdSp = if (tall) 17f else 15f,
-            scaleNames = tall || five,
-            footer = tall,
+            tall = tall,
             long = true,
         )
     }
 
     @Composable
-    fun Card(inner: Dp, pad: Dp, crumb: CharSequence, chip: String, baseTimeSp: Float, baseCdSp: Float, scaleNames: Boolean, footer: Boolean, long: Boolean = false) {
+    fun Card(inner: Dp, pad: Dp, crumb: CharSequence, chip: String, baseTimeSp: Float, baseCdSp: Float, tall: Boolean, long: Boolean = false) {
         val name = if (long) t.nextNameLong else t.nextName
         // Tall cells: spare height goes to the time and the countdown (up to 2x, capped by width), not to gaps.
         val fixed = line(12f * k) + Space.M * 3 + 1.dp + line(9.5f * k) + Space.S + Space.Bar + Space.S + line(9f * k) * 2 + Space.M + line(11f * k)
         val cardH = height - inset * 2 - Space.L - Space.Pad
-        val grow = if (footer) ((cardH - fixed - (Space.L + Space.S) * 2 - 4.dp) / line(baseTimeSp * k)).coerceIn(1f, 2f) else 1f
+        val grow = if (tall) ((cardH - fixed - (Space.L + Space.S) * 2 - 4.dp) / line(baseTimeSp * k)).coerceIn(1f, 2f) else 1f
         val timeSp = baseTimeSp * grow
         val cdSp = baseCdSp * (1f + (grow - 1f) / 2)
         // The chip keeps its room; the crumb shortens before it.
@@ -546,19 +544,20 @@ private class Layout(
         val st = st0 * both
         // The card's height inside its padding (more below the scale than above the header).
         val avail = height - inset * 2 - Space.L - Space.Pad
-        val withNames = Scale(inner, names = scaleNames).let { if (scaleNames && it.small) Scale(inner, names = false) else it }
+        val withNames = Scale(inner, names = true).let { if (it.small) Scale(inner, names = false) else it }
         val headerH = maxOf(line(12f * k * v), line(chipSp * v) + 6.dp)
         val bodyH = line(9.5f * s) + Space.S + line(timeSp * st)
         // The gaps as drawn: fixed on tall cards, at least M where they flex.
-        val gap = if (footer) Space.L + Space.S else Space.M
-        val need = headerH + Space.M + 1.dp + gap + bodyH + gap + Space.Bar + Space.S + withNames.height + (if (footer) Space.M + maxOf(line(11f * k), 12.dp) + 2.dp else 0.dp)
-        val roomy = avail >= need
-        // Names over the scale's times only where they fit; otherwise the times alone.
-        val scale = if (scaleNames && !roomy) Scale(inner, names = false) else withNames
+        val gap = if (tall) Space.L + Space.S else Space.M
+        val base = headerH + Space.M + 1.dp + gap + bodyH + gap + Space.Bar + Space.S
+        // Decided by the room there is, not the size class (Samsung's 2-row cells are taller than
+        // Pixel's): names over the scale's times where they fit, then the footer under them.
+        val scale = if (avail >= base + withNames.height) withNames else Scale(inner, names = false)
+        val footer = avail >= base + withNames.height + Space.M + maxOf(line(11f * k), 12.dp) + 2.dp
         // Tall cards keep one rhythm from header to footer and centre the group in the card.
         Column(
             GlanceModifier.fillMaxSize().padding(start = inset + pad, end = inset + pad, top = inset + Space.L, bottom = inset + Space.Pad),
-            verticalAlignment = if (footer) Alignment.CenterVertically else Alignment.Top,
+            verticalAlignment = if (tall) Alignment.CenterVertically else Alignment.Top,
         ) {
             Column(GlanceModifier.fillMaxWidth()) {
                 Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -569,7 +568,7 @@ private class Layout(
                 Spacer(GlanceModifier.height(Space.M))
                 Box(GlanceModifier.fillMaxWidth().height(1.dp).background(DividerColor)) {}
             }
-            Spacer(if (footer) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
+            Spacer(if (tall) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
             Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
                 Column {
                     NextLabel(9.5f * s, 13f * s, long)
@@ -585,17 +584,17 @@ private class Layout(
                 }
             }
             // Tall: the next prayer and the bar stay together in the middle, the footer at the bottom.
-            Spacer(if (footer) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
+            Spacer(if (tall) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
             Column(GlanceModifier.fillMaxWidth()) {
                 Bar(inner, Space.Bar, scale.stops)
                 // Flexible gaps (short cards) can close to nothing; fixed ones (tall cards) cannot.
-            val minGap = if (footer) gap else 0.dp
-            if (!scale.small && avail >= headerH + Space.M + 1.dp + minGap * 2 + bodyH + Space.Bar + Space.S + scale.height) {
+                val minGap = if (tall) gap else 0.dp
+                if (!scale.small && avail >= headerH + Space.M + 1.dp + minGap * 2 + bodyH + Space.Bar + Space.S + scale.height) {
                     Spacer(GlanceModifier.height(Space.S))
                     scale.Draw()
                 }
             }
-            if (footer && roomy) Footer(11f * k, inner)
+            if (footer) Footer(11f * k, inner)
         }
     }
 
