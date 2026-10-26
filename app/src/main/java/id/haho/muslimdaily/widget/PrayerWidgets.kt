@@ -1,6 +1,10 @@
 package id.haho.muslimdaily.widget
 
 import android.content.Context
+import android.os.Build
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,11 +27,9 @@ import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
-import androidx.glance.layout.ColumnScope
 import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
-import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -46,16 +48,18 @@ import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.data.handover.Handover
-import id.haho.muslimdaily.domain.prayer.SlotTime
 import id.haho.muslimdaily.feature.fasting.labelRes
+import id.haho.muslimdaily.domain.prayer.SlotTime
+import java.time.Duration
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import kotlin.math.min
 
 /**
- * The prayer-times widget: one widget for every size from 1×1 to 5×3 (and larger), over a sky
- * that follows the time of day. It shows the next prayer with a live countdown and, as it grows,
- * the date, the place, the day's times, what matters now and a sunnah fast tomorrow.
+ * The prayer-times widget: one widget for every size from 1×1 to 5×3 (and larger), a smoked-glass
+ * card over a sky that follows the time of day. It shows the next prayer, the time until it and
+ * how far the day has gone and, as it grows, the date and Hijri date, the place, the day's times,
+ * what matters now and a sunnah fast tomorrow.
  */
 open class PrayerTimesWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
@@ -66,6 +70,8 @@ open class PrayerTimesWidget : GlanceAppWidget() {
             return
         }
         val initial = loadWidgetData(context)
+        // Keeps the countdown's minute tick going while a widget is placed.
+        WidgetTicker.schedule(context)
         provideContent { PrayerWidgetContent(rememberWidgetData(context, initial)) }
     }
 }
@@ -84,9 +90,17 @@ class DayScheduleWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = DayScheduleWidget()
 }
 
-private val Corner: Dp = 24.dp
-private val DividerColor = Color(0x4DFFFFFF)
+/** The sky's corners: the launcher's own widget radius on Android 12+, else 24dp. */
+private fun corner(context: Context): Dp =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        (context.resources.getDimension(android.R.dimen.system_app_widget_background_radius) / context.resources.displayMetrics.density).dp
+    } else {
+        24.dp
+    }
+
+private val DividerColor = Color(0x1AFFFFFF)
 private val White = ColorProvider(Color.White)
+private val MutedTint = ColorProvider(Color(Muted))
 
 /**
  * The sky is drawn at up to 1.5x and stretched by the launcher: it is a soft gradient, so on a
@@ -95,27 +109,47 @@ private val White = ColorProvider(Color.White)
 private fun scale(context: Context) = min(context.resources.displayMetrics.density, 1.5f)
 
 /** The words the widget shows, in the app's language. */
-internal class WidgetText(private val context: Context, private val model: WidgetModel, private val clock: TimeFormatter) {
+internal class WidgetText(private val context: Context, private val model: WidgetModel, private val clock: TimeFormatter, now: Instant = Instant.now(), private val precise: Boolean = true) {
     private fun s(id: Int, vararg args: Any) = context.getString(id, *args)
-    private fun day(pattern: String): String {
-        val text = DateTimeFormatter.ofPattern(pattern, AppLocale).format(model.day)
-        return if (model.isTomorrow) s(R.string.widget_tomorrow, text) else text
-    }
-    private val month = context.resources.getStringArray(R.array.hijri_months)[(model.hijri.month - 1).coerceIn(0, 11)]
+    private fun day(pattern: String): String = DateTimeFormatter.ofPattern(pattern, AppLocale).format(model.today)
+    private val month = context.resources.getStringArray(R.array.hijri_months)[(model.todayHijri.month - 1).coerceIn(0, 11)]
 
     fun name(slot: PrayerTimeSlot): String =
         if (slot == PrayerTimeSlot.DHUHR && model.friday) s(R.string.prayer_jumuah) else s(slot.labelRes())
     fun time(t: Instant): String = clock.format(t, model.zone)
 
     val nextName = s(model.next.prayer.labelRes())
+    /** Where there is room: on Fridays "Shalat Jumat", which can't be read as the day. */
+    val nextNameLong = if (model.nextSlot == PrayerTimeSlot.DHUHR && model.friday) s(R.string.widget_prayer_jumuah) else nextName
     val nextTime = time(model.next.time)
     val dateTiny = day("EEE, d")
     val dateShort = day("EEE, d MMM")
     val dateMedium = day("EEE, d MMMM")
     val dateLong = day("EEEE, d MMMM")
-    val hijriShort = s(R.string.widget_hijri_day, model.hijri.day, month)
-    val hijriLong = s(R.string.hijri_date, model.hijri.day, month, model.hijri.year)
+    val hijriShort = s(R.string.widget_hijri_day, model.todayHijri.day, month)
+    val hijriLong = s(R.string.hijri_date, model.todayHijri.day, month, model.todayHijri.year)
     val place = model.locationName
+    val nextLabel = s(R.string.widget_next).uppercase(AppLocale)
+    val arrivesLabel = s(R.string.widget_arrives_in).uppercase(AppLocale)
+
+    /**
+     * Time until the next prayer in whole minutes, rounded up (it reads "1 menit" until the
+     * prayer comes in). Rounded to ten minutes and marked "±" when the widget can't redraw each
+     * minute (see [WidgetTicker]).
+     */
+    private val minutes: Long = Duration.between(now, model.next.time).let { d -> (d.seconds + 59) / 60 }.coerceAtLeast(0).let { m ->
+        if (precise) m else ((m + 5) / 10 * 10).coerceAtLeast(10)
+    }
+    private fun span(hm: Int, h: Int, m: Int): String {
+        val text = when {
+            minutes >= 60 && minutes % 60 == 0L -> s(h, minutes / 60)
+            minutes >= 60 -> s(hm, minutes / 60, minutes % 60)
+            else -> s(m, minutes)
+        }
+        return if (precise) text else s(R.string.widget_about, text)
+    }
+    val countdown = span(R.string.widget_in_hm, R.string.widget_in_h, R.string.widget_in_m)
+    val countdownShort = span(R.string.widget_in_hm_short, R.string.widget_in_h_short, R.string.widget_in_m_short)
 
     val now: String = model.now.let { line ->
         val until = line.until?.let { time(it) }
@@ -141,11 +175,16 @@ internal class WidgetText(private val context: Context, private val model: Widge
 
     val fast: String? = model.fastTomorrow?.let { s(R.string.widget_fast_tomorrow, s(it.labelRes())) }
 
+    /** "Jakarta / Sen, 26 Okt": the place muted, the date white. */
+    fun crumb(date: String): CharSequence = SpannableString("$place / $date").apply {
+        setSpan(ForegroundColorSpan(Muted), 0, place.length + 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
     /** TalkBack hears the widget as one sentence. */
     val description: String = buildString {
         append(dateLong).append(", ").append(hijriLong).append(", ").append(place).append(". ")
-        append(s(R.string.widget_a11y_next, nextName, nextTime)).append(". ")
-        append(now).append(". ")
+        append(s(R.string.widget_a11y_next, nextNameLong, nextTime, countdown)).append(". ")
+        append(this@WidgetText.now).append(". ")
         model.prayers.joinTo(this, ", ") { "${name(it.slot)} ${time(it.time)}" }
         append('.')
         fast?.let { append(' ').append(it).append('.') }
@@ -159,516 +198,512 @@ internal fun PrayerWidgetContent(data: WidgetData) {
     val size = LocalSize.current
     val grid = WidgetGrid.of(size.width.value, size.height.value, context.resources.configuration.fontScale)
     // Built on every composition (cheap), so a language switch shows at the next update.
-    val t = WidgetText(context, model, data.time)
-    Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context).semantics { contentDescription = t.description }) {
-        SkyBackground(model.sky)
-        val k = grid.scale
-        val l = Layout(model, t, data, k, grid.tight, size.width, size.height, TextFit(context), context.resources.configuration.fontScale)
+    val t = WidgetText(context, model, data.time, data.now, data.precise)
+    val inset = if (grid.rows == 1 || grid.columns == 1) Space.InsetSmall else Space.Inset
+    Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context).semantics { contentDescription = t.description }) {
+        SkyBackground(model.sky, inset)
+        val l = Layout(model, t, grid.scale, grid.tight, size.width, size.height, inset, TextFit(context), context.resources.configuration.fontScale)
         when (grid.rows) {
             1 -> when (grid.columns) {
                 1 -> l.OneByOne()
                 2 -> l.TwoByOne()
-                3 -> l.WideOne(l.window(4))
-                4 -> l.WideOne(model.prayers, hijri = true)
-                else -> l.WideOne(model.slots, hijri = true, year = true)
-            }
-            2 -> when (grid.columns) {
-                1 -> l.Narrow()
-                2 -> l.TwoByTwo()
-                3 -> l.ThreeByTwo()
-                4 -> l.Schedule(model.prayers, big = false)
-                else -> l.Schedule(model.slots, big = false, year = true)
+                else -> l.WideOne(grid.columns)
             }
             else -> when (grid.columns) {
-                1 -> l.Narrow(date = true)
-                2 -> l.TwoByThree()
-                3 -> l.ThreeByThree()
-                4 -> l.Schedule(model.prayers, big = true)
-                else -> l.Schedule(model.slots, big = true, year = true)
+                1 -> l.Narrow(tall = grid.rows > 2)
+                2 -> l.Square(tall = grid.rows > 2)
+                3 -> l.Medium(tall = grid.rows > 2)
+                else -> l.Wide(grid.columns, tall = grid.rows > 2)
             }
         }
     }
 }
 
 @Composable
-private fun SkyBackground(look: SkyLook) {
+private fun SkyBackground(look: SkyLook, inset: Dp) {
     val context = LocalContext.current
     val size = LocalSize.current
     val d = scale(context)
-    val bitmap = remember(size, look) {
+    val corner = corner(context)
+    val bitmap = remember(size, look, inset) {
         SkyPainter.paint(
             (size.width.value * d).toInt().coerceAtLeast(1),
             (size.height.value * d).toInt().coerceAtLeast(1),
             d,
             look,
-            Corner.value * d,
+            corner.value * d,
+            cardInsetPx = inset.value * d,
         )
     }
     Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
 }
 
 /**
- * The widget's spacing scale, shared by every layout so edges and gaps line up between sizes.
- * [Edge] is the margin inside the widget (one-column widgets use [EdgeNarrow]); text in a header
- * sits [ListInset] in when a list follows, so it lines up with the names in that list.
+ * The widget's spacing, shared by every layout so edges and gaps line up between sizes. The card
+ * sits [Inset] inside the sky ([InsetSmall] on one-row and one-column widgets); text sits [Pad]
+ * inside the card ([PadSmall] on one-column widgets).
  */
 private object Space {
-    val Edge = 12.dp
-    val EdgeNarrow = 8.dp
-    /** One-row widgets are short: less margin above and below. */
-    val EdgeShort = 8.dp
+    val Inset = 6.dp
+    val InsetSmall = 4.dp
+    val Pad = 14.dp
+    val PadSmall = 8.dp
+    val PadShort = 10.dp
     val XS = 2.dp
     val S = 4.dp
     val M = 8.dp
     val L = 12.dp
-    /** Inside a panel, to its rows and pills. */
-    val Panel = 4.dp
-    /** Name and time inside a list row, from the row's (or pill's) edge. */
-    val Row = 8.dp
-    val ListInset = Panel + Row
+    val Bar = 5.dp
+    val BarThin = 4.dp
 }
 
 /**
- * The widget's layouts, one per size class, built from the same few parts. The next prayer is the
- * largest text in every layout and comes before the day's times; the date and place are quiet
- * context (a header in the schedule layouts, a closing line in the small ones).
- * [k] scales the type; each layout shrinks it further, by [fit], when its times, names or countdown
- * would not fit [width]. In a row of times, a 12-hour "AM"/"PM" is left out when keeping it would
- * shrink the digits: each prayer's name already says which half of the day it is.
+ * The widget's layouts, one per size class, from the same few parts: a header (place and date, the
+ * Hijri date as a chip), the next prayer (a mono label, its name in the accent, its time large),
+ * the time until it (smaller, so it never competes with the time), and the bar of the day with
+ * the prayer times as its scale. [k] scales the type for big widgets; each layout shrinks it
+ * further, by [fit], when its texts would not fit.
  */
 private class Layout(
     val model: WidgetModel,
     val t: WidgetText,
-    val data: WidgetData,
     val k: Float,
     val tight: Boolean,
     val width: Dp,
     val height: Dp,
+    val inset: Dp,
     val fit: TextFit,
     private val fontScale: Float,
 ) {
     val next = model.nextSlot
-    val inFormat: String
-        @Composable get() = LocalContext.current.getString(R.string.widget_countdown_format)
-
-    /** The widest the countdown gets, for measuring. */
-    fun countdownSample(format: String) = format.replace("%s", "00:00:00")
 
     /** A line of [sp] text, in dp, for deciding what fits the height (labels use no font padding). */
     fun line(sp: Float): Dp = (sp * fontScale.coerceAtLeast(1f) * 1.2f).dp
 
-    /** Four prayers that include the next one, for rows too narrow for five. */
-    fun window(n: Int): List<SlotTime> {
-        val prayers = model.prayers
-        val i = prayers.indexOfFirst { it.slot == next }.coerceAtLeast(0)
-        val start = i.coerceAtMost(prayers.size - n).coerceAtLeast(0)
-        return prayers.subList(start, start + n)
-    }
+    fun inner(pad: Dp) = width - (inset + pad) * 2
+    fun innerHeight(pad: Dp) = height - (inset + pad) * 2
 
-    /** Prayers other than the next one, nearest after it first. */
-    fun others(n: Int): List<SlotTime> {
-        val prayers = model.prayers
-        val i = prayers.indexOfFirst { it.slot == next }
-        return (prayers.drop(i + 1) + prayers.take(i).reversed()).take(n)
-    }
-
-    /** Each prayer's name and time in its share of [width], as in [TimeColumns] (the time with room for the pill). */
-    fun columnLines(slots: List<SlotTime>, nameSp: Float, timeSp: Float, width: Dp, column: Dp, marker: Boolean = true): Array<FitLine> =
-        slots.flatMap { listOf(FitLine(width - column + 4.dp, t.name(it.slot) to nameSp), FitLine(width - column + 16.dp, *clockParts(columnTime(it, marker), timeSp))) }.toTypedArray()
-
-    fun columnTime(s: SlotTime, marker: Boolean): String = t.time(s.time).let { if (marker) it else clockDigits(it) }
-
-    /** Whether the times in a row keep their "AM"/"PM" without shrinking the digits. */
-    fun keepsMarker(slots: List<SlotTime>, nameSp: Float, timeSp: Float, width: Dp, column: Dp): Boolean =
-        fit.factor(width, *columnLines(slots, nameSp, timeSp, width, column)) >= 0.97f
-
-    /** One line per prayer, name and time side by side, as in [TimeList]. */
-    fun listLines(slots: List<SlotTime>, sp: Float, extra: Dp): Array<FitLine> =
-        slots.map { FitLine(extra, t.name(it.slot) to sp, *clockParts(t.time(it.time), sp)) }.toTypedArray()
-
-    @Composable
-    fun Countdown(sp: Float, format: String, semibold: Boolean = false, modifier: GlanceModifier = GlanceModifier) =
-        id.haho.muslimdaily.widget.Countdown(chronometerBase(model.next.time, data.now, data.elapsed), sp, format, semibold, modifier)
+    /** The factor (at most 1) the type must shrink by for [need] to fit the card's height. */
+    fun fitHeight(pad: Dp, need: Dp): Float = (innerHeight(pad) / need).coerceIn(0.5f, 1f)
 
     // ---- 1 row ----
 
     @Composable
     fun OneByOne() {
-        val inner = width - Space.EdgeNarrow * 2
-        val s = k * fit.factor(
-            inner,
-            FitLine(0.dp, t.nextName to 12f * k),
-            FitLine(12.dp, *clockParts(t.nextTime, 15f * k)),
-            FitLine(0.dp, countdownSample("%s") to 11f * k),
-        )
-        Column(
-            GlanceModifier.fillMaxSize().padding(horizontal = Space.EdgeNarrow, vertical = Space.S),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Label(t.nextName, 12f * s, semibold = true)
+        val pad = Space.PadSmall
+        val inner = inner(pad)
+        val s = k * fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, *clockParts(t.nextTime, 22f * k)))
+        val showBar = innerHeight(pad) >= line(11f * s) + line(22f * s) + Space.M + Space.BarThin
+        Column(GlanceModifier.fillMaxSize().padding(inset + pad), verticalAlignment = Alignment.CenterVertically) {
+            Label(t.nextName, 11f * s, semibold = true, color = Accent)
             Spacer(GlanceModifier.height(Space.XS))
-            Pill(clockText(t.nextTime), 15f * s, padH = 6.dp)
-            if (!tight) {
-                Spacer(GlanceModifier.height(Space.XS))
-                Countdown(11f * s, format = "%s", semibold = true)
+            Label(clockText(t.nextTime), 22f * s, medium = true)
+            if (showBar && !tight) {
+                Spacer(GlanceModifier.height(Space.M))
+                Bar(inner, Space.BarThin)
             }
         }
     }
 
-    /** The next prayer leads; the date follows, then how long until it. */
     @Composable
     fun TwoByOne() {
-        val inner = width - Space.Edge * 2
-        val format = inFormat
+        val pad = Space.PadShort
+        val inner = inner(pad)
         val s = k * fit.factor(
             inner,
-            FitLine(Space.M + 16.dp, t.nextName to 14f * k, *clockParts(t.nextTime, 16f * k)),
-            FitLine(0.dp, countdownSample(format) to 12f * k),
+            FitLine(Space.M, t.nextName to 11f * k, t.countdownShort to 10f * k),
+            FitLine(0.dp, *clockParts(t.nextTime, 28f * k)),
         )
-        Column(GlanceModifier.fillMaxSize().padding(horizontal = Space.Edge, vertical = Space.EdgeShort), verticalAlignment = Alignment.CenterVertically) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Label(t.nextName, 14f * s, semibold = true)
+        val base = line(11f * s) + Space.XS + line(28f * s)
+        val showDate = innerHeight(pad) >= line(11f * s) + Space.XS + line(20f * s) + Space.S + line(10f * s) + Space.S + Space.BarThin
+        val full = base + (if (showDate) Space.S + line(10f * s) else 0.dp) + Space.M + Space.BarThin
+        val showBar = innerHeight(pad) >= full * 0.72f
+        // With the date and bar both kept, the type shrinks to the height (large system fonts).
+        val hv = (innerHeight(pad) / full).coerceIn(0.72f, 1f)
+        Column(GlanceModifier.fillMaxSize().padding(horizontal = inset + Space.L, vertical = inset + pad), verticalAlignment = Alignment.CenterVertically) {
+            Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Label(t.nextName, 11f * s * hv, semibold = true, color = Accent)
+                Spacer(GlanceModifier.defaultWeight())
                 Spacer(GlanceModifier.width(Space.M))
-                Pill(clockText(t.nextTime), 16f * s, padH = 8.dp)
+                Label(t.countdownShort, 10f * s * hv, color = Muted)
             }
             if (!tight) {
                 Spacer(GlanceModifier.height(Space.XS))
-                Countdown(12f * s, format = format)
-                Label(t.dateShort, 12f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
-            }
-        }
-    }
-
-    @Composable
-    fun WideOne(slots: List<SlotTime>, hijri: Boolean = false, year: Boolean = false) {
-        val inner = width - Space.Edge * 2
-        val format = inFormat
-        val column = inner / slots.size
-        // The header keeps the next prayer and its countdown whole; the date gives way.
-        val s = k * fit.factor(inner, FitLine(Space.S + Space.M + 40.dp, t.nextName to 12f * k, countdownSample(format) to 12f * k))
-        val marker = keepsMarker(slots, 12f * k, 16f * k, inner, column)
-        val c = k * fit.factor(inner, *columnLines(slots, 12f * k, 16f * k, inner, column, marker))
-        Column(GlanceModifier.fillMaxSize().padding(horizontal = Space.Edge, vertical = Space.EdgeShort), verticalAlignment = Alignment.CenterVertically) {
-            if (!tight) {
-                Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    NextAndCountdown(12f * s, format)
-                    Spacer(GlanceModifier.width(Space.M))
-                    val date = if (hijri) "${t.dateShort} · ${if (year) t.hijriLong else t.hijriShort}" else t.dateShort
-                    Label(date, 12f * s, GlanceModifier.defaultWeight().wrapContentHeight(), fill = true, end = true)
+                Label(clockText(t.nextTime), 28f * s * hv, medium = true)
+                if (showDate) {
+                    Spacer(GlanceModifier.height(Space.S))
+                    Label("${t.dateShort} · ${t.hijriShort}", 10f * s * hv, GlanceModifier.fillMaxWidth().wrapContentHeight(), color = Muted, fill = true)
                 }
-                Spacer(GlanceModifier.height(Space.S))
-            }
-            TimeColumns(slots, 12f * c, 16f * c, marker = marker)
-        }
-    }
-
-    // ---- 2 rows ----
-
-    /**
-     * One column: the next prayer, then as many of the following prayers as the height holds, in
-     * a steady rhythm from the top. Glance drops children past ten per row or column, so the parts
-     * are nested.
-     */
-    @Composable
-    fun Narrow(date: Boolean = false) {
-        val inner = width - Space.EdgeNarrow * 2
-        val first = k * fit.factor(
-            inner,
-            FitLine(0.dp, t.nextName to 12f * k),
-            FitLine(0.dp, *clockParts(t.nextTime, 22f * k)),
-            FitLine(0.dp, countdownSample("%s") to 11f * k),
-        )
-        val top = Space.EdgeNarrow * 2 + (if (date) line(11f * first) + Space.M else 0.dp) +
-            line(12f * first) + line(22f * first) + line(11f * first) + Space.M + 1.dp + Space.S
-        val item = line(11f * first) + line(14f * first) + Space.M
-        val count = ((height - top) / item).toInt().coerceIn(1, 4)
-        val shown = others(count)
-        val s = k * fit.factor(
-            inner,
-            FitLine(0.dp, t.nextName to 12f * k),
-            FitLine(0.dp, *clockParts(t.nextTime, 22f * k)),
-            FitLine(0.dp, countdownSample("%s") to 11f * k),
-            *shown.flatMap { listOf(FitLine(0.dp, t.name(it.slot) to 11f * k), FitLine(0.dp, *clockParts(t.time(it.time), 14f * k))) }.toTypedArray(),
-        )
-        Column(GlanceModifier.fillMaxSize().padding(Space.EdgeNarrow)) {
-            if (date) {
-                Label(t.dateTiny, 11f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
-                Spacer(GlanceModifier.height(Space.M))
-            }
-            Column {
-                Label(t.nextName, 12f * s, semibold = true)
-                Label(clockText(t.nextTime), 22f * s, semibold = true)
-                Countdown(11f * s, format = "%s")
-            }
-            Spacer(GlanceModifier.height(Space.M))
-            Box(GlanceModifier.fillMaxWidth().height(1.dp).background(DividerColor)) {}
-            Column(GlanceModifier.fillMaxWidth()) {
-                shown.forEach {
+                if (showBar) {
                     Spacer(GlanceModifier.height(Space.M))
-                    Column {
-                        Label(t.name(it.slot), 11f * s)
-                        Label(clockText(t.time(it.time)), 14f * s, semibold = true)
+                    Bar(inner(Space.L), Space.BarThin)
+                }
+            }
+        }
+    }
+
+    /** One row, 3 to 5 columns: next prayer and time, the time until it, and (4+) the dates. */
+    @Composable
+    fun WideOne(columns: Int) {
+        val pad = Space.Pad
+        val inner = inner(pad)
+        val dates = columns >= 4
+        val chipW = fit.monoWidth(t.hijriShort, 10f * k) + 12f
+        val dateW = fit.width(if (tight) t.dateTiny else t.dateShort, 11f * k)
+        val datesWidth = when {
+            !dates -> 0.dp
+            tight -> (chipW + dateW).dp + Space.S + Space.L
+            else -> maxOf(chipW, dateW).dp + Space.L
+        }
+        val vertical = if (tight) Space.S else Space.PadShort
+        val timeSp = if (tight) 22f else 28f
+        val tall = (innerHeight(vertical) / ((if (tight) 0.dp else line(11f * k) + Space.XS) + line(timeSp * k))).coerceAtMost(1f)
+        val s = k * tall * fit.factor(
+            inner - datesWidth,
+            FitLine(Space.L * 2 + if (tight) 10.dp else 0.dp, *(if (tight) arrayOf(t.nextName to 11f * k) else emptyArray()), *clockParts(t.nextTime, timeSp * k), (if (tight) t.countdownShort else t.countdown) to 14f * k),
+            FitLine(Space.L * 2, *clockParts(t.nextTime, timeSp * k), mono = listOf(t.arrivesLabel to 9f * k)),
+        )
+        Row(GlanceModifier.fillMaxSize().padding(horizontal = inset + pad, vertical = inset + vertical), verticalAlignment = Alignment.CenterVertically) {
+            if (tight) {
+                // Too short for two lines: the name stays, beside the time.
+                Label(t.nextName, 11f * s, semibold = true, color = Accent)
+                Spacer(GlanceModifier.width(Space.S + Space.XS))
+                Label(clockText(t.nextTime), timeSp * s, medium = true)
+            } else {
+                Column {
+                    Label(t.nextName, 11f * s, semibold = true, color = Accent)
+                    Spacer(GlanceModifier.height(Space.XS))
+                    Label(clockText(t.nextTime), timeSp * s, medium = true)
+                }
+            }
+            Spacer(GlanceModifier.width(Space.L * 2))
+            Column {
+                if (!tight) {
+                    Label(t.arrivesLabel, 9f * s, mono = true, color = Muted)
+                    Spacer(GlanceModifier.height(Space.S))
+                }
+                Label(if (tight) t.countdownShort else t.countdown, 14f * s, medium = true)
+            }
+            Spacer(GlanceModifier.defaultWeight())
+            if (dates) {
+                Spacer(GlanceModifier.width(Space.L))
+                if (tight) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Label(t.dateTiny, 11f * k)
+                        Spacer(GlanceModifier.width(Space.S))
+                        Chip(t.hijriShort, 10f * k)
+                    }
+                } else {
+                    Column(horizontalAlignment = Alignment.End) {
+                        Chip(t.hijriShort, 10f * k)
+                        Spacer(GlanceModifier.height(Space.S))
+                        Label(t.dateShort, 11f * k)
                     }
                 }
             }
         }
     }
 
-    @Composable
-    fun TwoByTwo() {
-        val inner = width - Space.Edge * 2
-        // The countdown keeps its room; the date shortens before it.
-        val s = k * fit.factor(inner, FitLine(Space.ListInset * 2 + Space.M + 40.dp, countdownSample("%s") to 12f * k))
-        val l = k * fit.factor(inner, *listLines(model.prayers, 13f * k, extra = Space.ListInset * 2 + 6.dp))
-        Column(GlanceModifier.fillMaxSize().padding(Space.Edge)) {
-            Row(GlanceModifier.fillMaxWidth().padding(horizontal = Space.ListInset), verticalAlignment = Alignment.CenterVertically) {
-                Label(t.dateShort, 12f * s, GlanceModifier.defaultWeight(), fill = true)
-                Spacer(GlanceModifier.width(Space.M))
-                Countdown(12f * s, format = "%s", semibold = true)
-            }
-            Spacer(GlanceModifier.height(Space.M))
-            Panel(GlanceModifier.defaultWeight().fillMaxWidth()) { TimeList(model.prayers, 13f * l) }
-        }
-    }
-
-    @Composable
-    fun ThreeByTwo() {
-        val format = inFormat
-        val panel = (112 * k).dp
-        val left = width - Space.Edge * 2 - Space.L - panel
-        val s = k * fit.factor(
-            left,
-            FitLine(0.dp, t.nextName to 14f * k),
-            FitLine(0.dp, *clockParts(t.nextTime, 32f * k)),
-            FitLine(0.dp, countdownSample(format) to 12f * k),
-        )
-        val l = k * fit.factor(panel, *listLines(model.prayers, 12f * k, extra = Space.ListInset * 2 + 6.dp))
-        Row(GlanceModifier.fillMaxSize().padding(Space.Edge)) {
-            Column(GlanceModifier.defaultWeight().fillMaxHeight()) {
-                Label(t.nextName, 14f * s, semibold = true)
-                Label(clockText(t.nextTime), 32f * s)
-                Countdown(12f * s, format = format)
-                Spacer(GlanceModifier.defaultWeight())
-                Label(t.dateShort, 12f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
-            }
-            Spacer(GlanceModifier.width(Space.L))
-            Panel(GlanceModifier.width(panel).fillMaxHeight()) { TimeList(model.prayers, 12f * l) }
-        }
-    }
+    // ---- 2 and 3 rows ----
 
     /**
-     * The reference layout: date and place over the day's times; at 3 rows, the next prayer large
-     * and what matters now. When the times panel has height to spare, the times reflow into two
-     * rows, so each gets twice the width and larger type instead of floating in empty space.
+     * One column: the date (tall), the next prayer, its time with the hours stacked over the
+     * minutes (so a narrow, tall widget gets large figures instead of empty space), the time until
+     * it and the bar.
      */
     @Composable
-    fun Schedule(slots: List<SlotTime>, big: Boolean, year: Boolean = false) {
-        val inner = width - Space.Edge * 2
-        val format = inFormat
-        val nextSp = (if (year) 45f else 36f)
-        // A long Hijri date (with the year) only where the row is wide enough for both dates.
-        val hijri = if (year) t.hijriLong else t.hijriShort
-        // The place gives way to what follows it on its row.
-        val placeRow = Space.S * 2 + 20.dp + Space.M * 2 + 40.dp
-        val s = k * fit.factor(
-            inner,
-            if (big) FitLine(placeRow + 20.dp, t.now to 13f * k) else FitLine(placeRow + 4.dp, t.nextName to 13f * k, countdownSample(format) to 13f * k),
-        )
-        val b = k * fit.factor(inner, FitLine(Space.S * 2 + Space.M * 2 + 16.dp, t.nextName to 16f * k, *clockParts(t.nextTime, nextSp * k), countdownSample(format) to 13f * k))
-        val fast = t.fast?.takeIf { big && height >= 250.dp }
-
-        // What the panel gets: the height left after the header, the large next prayer and the chip.
-        val header = maxOf(20.dp, line(13f * s)) * 2 + Space.S
-        val hero = if (big) Space.M + line(nextSp * b) else 0.dp
-        val chip = if (fast != null) Space.M + line(12f * s) + 12.dp else 0.dp
-        val panelHeight = height - Space.Edge * 2 - header - hero - Space.M - chip - Space.Panel * 2
-
-        val rowWidth = inner - Space.Panel * 2
-        val oneColumn = rowWidth / slots.size
-        val oneMarker = keepsMarker(slots, 13f * k, 16f * k, rowWidth, oneColumn)
-        val one = k * fit.factor(rowWidth, *columnLines(slots, 13f * k, 16f * k, rowWidth, oneColumn, oneMarker))
-        val perRow = (slots.size + 1) / 2
-        val twoColumn = rowWidth / perRow
-        val twoMarker = keepsMarker(slots, 14f * k, 22f * k, rowWidth, twoColumn)
-        val two = k * fit.factor(rowWidth, *columnLines(slots, 14f * k, 22f * k, rowWidth, twoColumn, twoMarker))
-        val twoRowsNeed = (line(14f * two) + Space.XS + line(22f * two) + 4.dp) * 2 + Space.M
-        val twoRows = slots.size > 3 && panelHeight >= twoRowsNeed
-
-        Column(GlanceModifier.fillMaxSize().padding(Space.Edge)) {
-            Column(GlanceModifier.fillMaxWidth().padding(horizontal = Space.S)) {
-                Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    IconChip(R.drawable.ic_dark_mode)
-                    Spacer(GlanceModifier.width(Space.M))
-                    Label(if (year) t.dateLong else t.dateMedium, 13f * s, GlanceModifier.defaultWeight(), fill = true)
-                    Spacer(GlanceModifier.width(Space.M))
-                    Label(hijri, 13f * s)
-                }
-                Spacer(GlanceModifier.height(Space.S))
-                Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    IconChip(R.drawable.ic_location_on)
-                    Spacer(GlanceModifier.width(Space.M))
-                    Label(t.place, 13f * s, GlanceModifier.defaultWeight(), fill = true)
-                    Spacer(GlanceModifier.width(Space.M))
-                    if (big) NowLine(13f * s) else NextAndCountdown(13f * s, format)
-                }
-            }
-            if (big) {
+    fun Narrow(tall: Boolean) {
+        val pad = Space.PadSmall
+        val inner = inner(pad)
+        val digits = clockDigits(t.nextTime)
+        val parts = digits.split(':', '.')
+        val marker = t.nextTime.removePrefix(digits).trim()
+        val head = if (tall) line(11f * k) + line(10f * k) * 3 + Space.M else 0.dp
+        val rest = line(12f * k) + Space.XS + Space.S + line(11f * k) + Space.M + Space.BarThin + (if (marker.isNotEmpty()) line(10f * k) else 0.dp)
+        // Two lines of figures share what the height leaves, at most 44sp each.
+        val figSp = ((innerHeight(pad) - head - rest).value / 2 / 1.2f / fontScale.coerceAtLeast(1f)).coerceIn(18f, 44f)
+        val f = k * fit.factor(inner, *parts.map { FitLine(0.dp, it to figSp * k) }.toTypedArray())
+        val s = k * fit.factor(inner, FitLine(0.dp, t.nextName to 12f * k), FitLine(0.dp, t.countdownShort to 11f * k))
+        Column(GlanceModifier.fillMaxSize().padding(inset + pad)) {
+            if (tall) {
+                Label(t.dateTiny, 11f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
+                val word = t.hijriShort.split(' ').maxBy { fit.width(it, 10f * s) }
+                Label(t.hijriShort, 10f * s * fit.factor(inner, FitLine(0.dp, word to 10f * s)), GlanceModifier.fillMaxWidth().wrapContentHeight(), color = Muted, maxLines = 3, fill = true)
                 Spacer(GlanceModifier.height(Space.M))
-                Row(GlanceModifier.fillMaxWidth().padding(horizontal = Space.S), verticalAlignment = Alignment.Bottom) {
-                    Label(t.nextName, 16f * b, semibold = true, modifier = GlanceModifier.padding(bottom = 6.dp))
-                    Spacer(GlanceModifier.width(Space.M))
-                    Label(clockText(t.nextTime), nextSp * b)
-                    Spacer(GlanceModifier.defaultWeight())
-                    Countdown(13f * b, format = format, modifier = GlanceModifier.padding(bottom = 6.dp))
-                }
             }
-            Spacer(GlanceModifier.height(Space.M))
-            Panel(GlanceModifier.defaultWeight().fillMaxWidth()) {
-                Column(GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
-                    if (twoRows) {
-                        TimeColumns(slots.take(perRow), 14f * two, 22f * two, gap = Space.XS, marker = twoMarker, columns = perRow)
-                        Spacer(GlanceModifier.height(Space.M))
-                        TimeColumns(slots.drop(perRow), 14f * two, 22f * two, gap = Space.XS, marker = twoMarker, columns = perRow)
-                    } else {
-                        TimeColumns(slots, 13f * one, 16f * one, gap = if (big) Space.XS else Space.S, marker = oneMarker)
-                    }
-                }
-            }
-            if (fast != null) {
-                Spacer(GlanceModifier.height(Space.M))
-                InfoChip(R.drawable.ic_calendar_month, fast, 12f * s, GlanceModifier.fillMaxWidth())
-            }
-        }
-    }
-
-    // ---- 3 rows, narrower ----
-
-    @Composable
-    fun TwoByThree() {
-        val inner = width - Space.Edge * 2
-        val format = inFormat
-        val s = k * fit.factor(inner, FitLine(Space.ListInset * 2 + Space.S, t.nextName to 12f * k, countdownSample(format) to 12f * k), FitLine(20.dp, t.now to 12f * k))
-        val l = k * fit.factor(inner, *listLines(model.prayers, 14f * k, extra = Space.ListInset * 2 + 6.dp))
-        Column(GlanceModifier.fillMaxSize().padding(Space.Edge)) {
-            Column(GlanceModifier.fillMaxWidth().padding(horizontal = Space.ListInset)) {
-                NextAndCountdown(12f * s, format)
-                Label(t.dateShort, 12f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
-            }
-            Spacer(GlanceModifier.height(Space.M))
-            Panel(GlanceModifier.defaultWeight().fillMaxWidth()) { TimeList(model.prayers, 14f * l) }
-            Spacer(GlanceModifier.height(Space.M))
-            InfoChip(null, t.now, 12f * s, GlanceModifier.fillMaxWidth())
-        }
-    }
-
-    @Composable
-    fun ThreeByThree() {
-        val inner = width - Space.Edge * 2
-        val b = k * fit.factor(inner, FitLine(Space.ListInset * 2 + Space.M * 2, t.nextName to 14f * k, *clockParts(t.nextTime, 32f * k), countdownSample("%s") to 12f * k))
-        val l = k * fit.factor(inner, *listLines(model.prayers, 13f * k, extra = Space.ListInset * 2 + 6.dp))
-        Column(GlanceModifier.fillMaxSize().padding(Space.Edge)) {
-            Row(GlanceModifier.fillMaxWidth().padding(horizontal = Space.ListInset), verticalAlignment = Alignment.Bottom) {
-                Label(t.nextName, 14f * b, semibold = true, modifier = GlanceModifier.padding(bottom = 5.dp))
-                Spacer(GlanceModifier.width(Space.M))
-                Label(clockText(t.nextTime), 32f * b)
-                Spacer(GlanceModifier.defaultWeight())
-                Countdown(12f * b, format = "%s", modifier = GlanceModifier.padding(bottom = 5.dp))
+            Label(t.nextName, 12f * s, semibold = true, color = Accent)
+            Spacer(GlanceModifier.height(Space.XS))
+            Column(GlanceModifier.defaultWeight(), verticalAlignment = Alignment.CenterVertically) {
+                parts.forEach { Label(it, figSp * f, medium = true) }
+                if (marker.isNotEmpty()) Label(marker, 10f * s, color = Muted)
             }
             Spacer(GlanceModifier.height(Space.S))
-            Row(GlanceModifier.fillMaxWidth().padding(horizontal = Space.ListInset)) {
-                Label(t.dateMedium, 12f * k, GlanceModifier.defaultWeight(), fill = true)
-                Spacer(GlanceModifier.width(Space.M))
-                Label(t.hijriShort, 12f * k)
-            }
-            Label(t.place, 12f * k, GlanceModifier.fillMaxWidth().wrapContentHeight().padding(horizontal = Space.ListInset), fill = true)
+            Label(t.countdownShort, 11f * s, color = Muted)
             Spacer(GlanceModifier.height(Space.M))
-            Panel(GlanceModifier.defaultWeight().fillMaxWidth()) { TimeList(model.prayers, 13f * l) }
+            Bar(inner, Space.BarThin)
+        }
+    }
+
+    /**
+     * Two columns: the date and Hijri chip, the next prayer, the time until it, the bar. Spare
+     * height goes to the time (up to half again as large), then to one gap under the header.
+     */
+    @Composable
+    fun Square(tall: Boolean) {
+        val pad = Space.L
+        val inner = inner(pad)
+        val header = line(12f * k) + Space.S + line(10f * k) + 6.dp + Space.L
+        val rest = line(9.5f * k) + Space.XS + Space.S + (if (tall) line(9.5f * k) + Space.XS + line(18f * k) else line(12f * k)) + Space.M + Space.Bar + (if (tall) Space.M + line(11f * k) else 0.dp)
+        val grow = ((innerHeight(pad) - header - rest) / line(34f * k)).coerceIn(0.5f, 1.5f)
+        val timeSp = 34f * grow
+        val s = k * fit.factor(
+            inner,
+            FitLine(Space.S + Space.XS, t.nextName to 13f * k, mono = listOf(t.nextLabel to 9.5f * k)),
+            FitLine(Space.S, t.countdown to 12f * k, mono = listOf(t.arrivesLabel to 9.5f * k)),
+        )
+        val ts = k * fit.factor(inner, FitLine(0.dp, *clockParts(t.nextTime, timeSp * k))) * minOf(1f, s / k)
+        val cdGrow = if (tall) fit.factor(inner, FitLine(0.dp, t.countdown to 12f * k * 1.5f)) * 1.5f else 1f
+        // Glance drops children past ten per column, so the parts are nested.
+        Column(GlanceModifier.fillMaxSize().padding(inset + pad)) {
+            Column {
+                Label(t.dateShort, 12f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), medium = true, fill = true)
+                Spacer(GlanceModifier.height(Space.S))
+                Chip(t.hijriShort, 10f * k * fit.factor(inner, FitLine(16.dp, mono = listOf(t.hijriShort to 10f * k))))
+            }
+            Spacer(GlanceModifier.defaultWeight())
+            Column {
+                NextLabel(9.5f * s, 13f * s, long = false)
+                Spacer(GlanceModifier.height(Space.XS))
+                Label(clockText(t.nextTime), timeSp * ts, medium = true)
+                Spacer(GlanceModifier.height(Space.S))
+                if (tall) {
+                    // Tall: the countdown gets its own line and a larger size, still under the time's.
+                    Label(t.arrivesLabel, 9.5f * s, mono = true, color = Muted)
+                    Spacer(GlanceModifier.height(Space.XS))
+                    Label(t.countdown, 12f * s * cdGrow, medium = true)
+                } else {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Label(t.arrivesLabel, 9.5f * s, mono = true, color = Muted)
+                        Spacer(GlanceModifier.width(Space.S))
+                        Label(t.countdown, 12f * s, medium = true)
+                    }
+                }
+            }
+            Spacer(GlanceModifier.height(Space.M))
+            Bar(inner, Space.Bar)
+            if (tall) Footer(11f * k, inner)
+        }
+    }
+
+    /** Three columns: header, the next prayer beside the time until it, the bar and its scale. */
+    @Composable
+    fun Medium(tall: Boolean) {
+        val pad = Space.Pad
+        val inner = inner(pad)
+        Card(inner, pad, crumb = t.dateShort, chip = t.hijriShort, baseTimeSp = if (tall) 44f else 34f, baseCdSp = 13f, scaleNames = tall, footer = tall)
+    }
+
+    /** Four and five columns: the reference layout. */
+    @Composable
+    fun Wide(columns: Int, tall: Boolean) {
+        val pad = Space.Pad
+        val inner = inner(pad)
+        val five = columns >= 5
+        Card(
+            inner, pad,
+            crumb = t.crumb(if (five) t.dateMedium else t.dateShort),
+            chip = if (five || tall) t.hijriLong else t.hijriShort,
+            baseTimeSp = if (tall) 52f else 40f,
+            baseCdSp = if (tall) 17f else 15f,
+            scaleNames = tall || five,
+            footer = tall,
+            long = true,
+        )
+    }
+
+    @Composable
+    fun Card(inner: Dp, pad: Dp, crumb: CharSequence, chip: String, baseTimeSp: Float, baseCdSp: Float, scaleNames: Boolean, footer: Boolean, long: Boolean = false) {
+        val name = if (long) t.nextNameLong else t.nextName
+        // Tall cells: spare height goes to the time and the countdown (up to 2x, capped by width), not to gaps.
+        val fixed = line(12f * k) + Space.M * 3 + 1.dp + line(9.5f * k) + Space.S + Space.Bar + Space.S + line(9f * k) * 2 + Space.M + line(11f * k)
+        val cardH = height - inset * 2 - Space.L - Space.Pad
+        val grow = if (footer) ((cardH - fixed - (Space.L + Space.S) * 2 - 4.dp) / line(baseTimeSp * k)).coerceIn(1f, 2f) else 1f
+        val timeSp = baseTimeSp * grow
+        val cdSp = baseCdSp * (1f + (grow - 1f) / 2)
+        // The chip keeps its room; the crumb shortens before it.
+        val chipSp = 10f * k * fit.factor(inner, FitLine(64.dp, mono = listOf(chip to 10f * k)))
+        // Shrinks to the height too (large system fonts on a short cell), keeping the header, the
+        // next prayer and the bar; the scale and footer drop out before anything shrinks for them.
+        val v = fitHeight(Space.L, maxOf(line(12f * k), line(10f * k) + 6.dp) + Space.M + 1.dp + Space.M + line(9.5f * k) + Space.S + line(baseTimeSp * k) + Space.M + Space.Bar + Space.XS)
+        val s0 = k * v * fit.factor(inner, FitLine(Space.L * 2 + Space.S + Space.XS, name to 13f * k, mono = listOf(t.nextLabel to 9.5f * k, t.arrivesLabel to 9.5f * k)))
+        val st0 = k * v * fit.factor(inner, FitLine(Space.L * 2, *clockParts(t.nextTime, timeSp * k), t.countdown to cdSp * k))
+        // The two columns side by side: the wider of label and time on the left, of label and
+        // countdown on the right. Both shrink together if that pair does not fit.
+        val left = maxOf(fit.monoWidth(t.nextLabel, 9.5f * s0) + 6f + fit.width(name, 13f * s0), clockParts(t.nextTime, timeSp * st0).sumOf { (x, sp) -> fit.width(x, sp).toDouble() }.toFloat())
+        val right = maxOf(fit.monoWidth(t.arrivesLabel, 9.5f * s0), fit.width(t.countdown, cdSp * st0))
+        val both = ((inner.value * 0.96f - Space.L.value * 2) / (left + right)).coerceAtMost(1f)
+        val s = s0 * both
+        val st = st0 * both
+        // The card's height inside its padding (more below the scale than above the header).
+        val avail = height - inset * 2 - Space.L - Space.Pad
+        val withNames = Scale(inner, names = scaleNames).let { if (scaleNames && it.small) Scale(inner, names = false) else it }
+        val headerH = maxOf(line(12f * k * v), line(chipSp * v) + 6.dp)
+        val bodyH = line(9.5f * s) + Space.S + line(timeSp * st)
+        // The gaps as drawn: fixed on tall cards, at least M where they flex.
+        val gap = if (footer) Space.L + Space.S else Space.M
+        val need = headerH + Space.M + 1.dp + gap + bodyH + gap + Space.Bar + Space.S + withNames.height + (if (footer) Space.M + maxOf(line(11f * k), 12.dp) + 2.dp else 0.dp)
+        val roomy = avail >= need
+        // Names over the scale's times only where they fit; otherwise the times alone.
+        val scale = if (scaleNames && !roomy) Scale(inner, names = false) else withNames
+        // Tall cards keep one rhythm from header to footer and centre the group in the card.
+        Column(
+            GlanceModifier.fillMaxSize().padding(start = inset + pad, end = inset + pad, top = inset + Space.L, bottom = inset + Space.Pad),
+            verticalAlignment = if (footer) Alignment.CenterVertically else Alignment.Top,
+        ) {
+            Column(GlanceModifier.fillMaxWidth()) {
+                Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Label(crumb, 12f * k * v, GlanceModifier.defaultWeight().wrapContentHeight(), fill = true)
+                    Spacer(GlanceModifier.width(Space.M))
+                    Chip(chip, chipSp * v)
+                }
+                Spacer(GlanceModifier.height(Space.M))
+                Box(GlanceModifier.fillMaxWidth().height(1.dp).background(DividerColor)) {}
+            }
+            Spacer(if (footer) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
+            Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+                Column {
+                    NextLabel(9.5f * s, 13f * s, long)
+                    Spacer(GlanceModifier.height(Space.S))
+                    Label(clockText(t.nextTime), timeSp * st, medium = true)
+                }
+                Spacer(GlanceModifier.defaultWeight())
+                Spacer(GlanceModifier.width(Space.L))
+                Column(horizontalAlignment = Alignment.End) {
+                    Label(t.arrivesLabel, 9.5f * s, mono = true, color = Muted)
+                    Spacer(GlanceModifier.height(Space.S))
+                    Label(t.countdown, cdSp * st, medium = true, modifier = GlanceModifier.padding(bottom = 2.dp))
+                }
+            }
+            // Tall: the next prayer and the bar stay together in the middle, the footer at the bottom.
+            Spacer(if (footer) GlanceModifier.height(Space.L + Space.S) else GlanceModifier.defaultWeight())
+            Column(GlanceModifier.fillMaxWidth()) {
+                Bar(inner, Space.Bar, scale.stops)
+                // Flexible gaps (short cards) can close to nothing; fixed ones (tall cards) cannot.
+            val minGap = if (footer) gap else 0.dp
+            if (!scale.small && avail >= headerH + Space.M + 1.dp + minGap * 2 + bodyH + Space.Bar + Space.S + scale.height) {
+                    Spacer(GlanceModifier.height(Space.S))
+                    scale.Draw()
+                }
+            }
+            if (footer && roomy) Footer(11f * k, inner)
         }
     }
 
     // ---- parts ----
 
+    /** "BERIKUTNYA  Ashar": the label muted and mono, the prayer in the accent. */
     @Composable
-    fun NextAndCountdown(sp: Float, format: String) {
+    fun NextLabel(labelSp: Float, nameSp: Float, long: Boolean) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Label(t.nextName, sp, semibold = true)
-            Spacer(GlanceModifier.width(Space.S))
-            Countdown(sp, format = format)
+            Label(t.nextLabel, labelSp, mono = true, color = Muted)
+            Spacer(GlanceModifier.width(Space.S + Space.XS))
+            Label(if (long) t.nextNameLong else t.nextName, nameSp, semibold = true, color = Accent)
         }
     }
 
-    /** What matters now, with its icon, for a header row. */
+    /** The bar of the day (or night): accent up to now, dashed after. [stops] in dp from the start. */
     @Composable
-    fun NowLine(sp: Float) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(ImageProvider(t.nowIcon), contentDescription = null, modifier = GlanceModifier.size(14.dp), colorFilter = ColorFilter.tint(White))
-            Spacer(GlanceModifier.width(6.dp))
-            Label(t.now, sp)
-        }
+    fun Bar(barWidth: Dp, barHeight: Dp, stops: List<Dp>? = null) {
+        val context = LocalContext.current
+        val d = context.resources.displayMetrics.density
+        val n = model.track.stops.size
+        val at = stops ?: List(n) { i -> barWidth * (i.toFloat() / (n - 1)) }
+        val bitmap = SkyPainter.bar((barWidth.value * d).toInt(), (barHeight.value * d).toInt(), d, FloatArray(n) { at[it].value * d }, model.track.progress)
+        Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.width(barWidth).height(barHeight))
     }
 
     /**
-     * The times side by side, name over time; the next one bold on a pill. [columns] keeps a short
-     * second row aligned with the first (empty cells fill the rest).
+     * The bar's scale: each stop's time (and, with [names], its prayer above it), spread from edge
+     * to edge with the next one in the accent. [stops] is where each time's middle lands, so the
+     * bar's stops sit right under them.
      */
+    inner class Scale(private val inner: Dp, private val names: Boolean) {
+        private val items = model.track.stops
+        private val nameSp = 8.5f * k
+        private val baseSp = 9f * k
+        private fun timeOf(i: Int) = clockDigits(t.time(items[i].time))
+        private val raw = items.indices.map { i -> fit.monoWidth(timeOf(i), baseSp) to if (names) fit.monoWidth(t.name(items[i].slot), nameSp) else 0f }
+        /** Shrinks the scale's type until every item has 6dp between it and the next. */
+        private val f = run {
+            val total = raw.sumOf { (a, b) -> maxOf(a, b).toDouble() }.toFloat()
+            val room = inner.value - 6f * (items.size - 1)
+            if (total <= room) 1f else (room / total).coerceAtLeast(0.5f)
+        }
+        private val widths = raw.map { (a, b) -> maxOf(a, b) * f to a * f }
+        /** Too small to read (under three-quarters size): the scale is left out rather than shown tiny. */
+        val small = f < 0.75f
+        val height: Dp = line(baseSp * f) + if (names) line(nameSp * f) + Space.XS else 0.dp
+        val stops: List<Dp> = run {
+            val gap = (inner.value - widths.sumOf { it.first.toDouble() }.toFloat()) / (items.size - 1)
+            var x = 0f
+            widths.mapIndexed { i, (w, time) ->
+                val center = when (i) {
+                    0 -> x + time / 2
+                    items.size - 1 -> x + w - time / 2
+                    else -> x + w / 2
+                }
+                x += w + gap
+                center.dp
+            }
+        }
+
+        @Composable
+        fun Draw() {
+            Row(GlanceModifier.fillMaxWidth()) {
+                items.forEachIndexed { i, item ->
+                    val isNext = item.slot == next && item.time == model.next.time
+                    val color = if (isNext) Accent else Muted
+                    val align = when (i) {
+                        0 -> Alignment.Start
+                        items.size - 1 -> Alignment.End
+                        else -> Alignment.CenterHorizontally
+                    }
+                    Column(horizontalAlignment = align) {
+                        if (names) {
+                            Label(t.name(item.slot), nameSp * f, mono = true, color = color)
+                            Spacer(GlanceModifier.height(Space.XS))
+                        }
+                        Label(timeOf(i), baseSp * f, mono = true, color = color)
+                    }
+                    if (i < items.size - 1) Spacer(GlanceModifier.defaultWeight())
+                }
+            }
+        }
+    }
+
+    /** What matters now and a sunnah fast tomorrow, for the tall sizes. */
     @Composable
-    fun TimeColumns(slots: List<SlotTime>, nameSp: Float, timeSp: Float, gap: Dp = Space.XS, marker: Boolean = true, columns: Int = slots.size) {
+    fun Footer(sp: Float, inner: Dp) {
+        // Only what fits whole: both, else tomorrow's fast, else what matters now, else nothing.
+        val fast = t.fast
+        val nowW = 18f + fit.width(t.now, sp)
+        val fastW = fast?.let { fit.width(it, sp) } ?: 0f
+        val room = inner.value * 0.96f
+        val showNow = nowW <= room && (fast == null || nowW + fastW + 8f <= room || fastW > room)
+        val showFast = fast != null && fastW <= room - (if (showNow) nowW + 8f else 0f)
+        if (!showNow && !showFast) return
+        Spacer(GlanceModifier.height(Space.M))
         Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            slots.forEach { s ->
-                val isNext = s.slot == next
-                Column(GlanceModifier.defaultWeight(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Label(t.name(s.slot), nameSp, semibold = isNext)
-                    Spacer(GlanceModifier.height(gap))
-                    val time = clockText(columnTime(s, marker))
-                    if (isNext) Pill(time, timeSp, padH = 6.dp, padV = 2.dp) else Box(GlanceModifier.padding(vertical = 2.dp)) { Label(time, timeSp) }
-                }
+            if (showNow) {
+                Image(ImageProvider(t.nowIcon), contentDescription = null, modifier = GlanceModifier.size(12.dp), colorFilter = ColorFilter.tint(MutedTint))
+                Spacer(GlanceModifier.width(Space.S + Space.XS))
+                Label(t.now, sp)
             }
-            repeat(columns - slots.size) { Box(GlanceModifier.defaultWeight()) {} }
-        }
-    }
-
-    /** The times as a list, name left and time right; the next row on a white pill. */
-    @Composable
-    fun ColumnScope.TimeList(slots: List<SlotTime>, sp: Float) {
-        slots.forEach { s ->
-            val isNext = s.slot == next
-            val color = if (isNext) OnPill else OnSky
-            Box(GlanceModifier.defaultWeight().fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-                val row = GlanceModifier.fillMaxWidth().padding(horizontal = Space.Row, vertical = Space.XS)
-                Row(if (isNext) GlanceModifier.background(ImageProvider(R.drawable.widget_pill)).then(row) else row, verticalAlignment = Alignment.CenterVertically) {
-                    Label(t.name(s.slot), sp, semibold = isNext, color = color)
-                    Spacer(GlanceModifier.defaultWeight())
-                    Spacer(GlanceModifier.width(6.dp))
-                    Label(clockText(t.time(s.time)), sp, semibold = isNext, color = color)
-                }
+            if (showFast) {
+                Spacer(GlanceModifier.defaultWeight())
+                Label(fast!!, sp, color = Accent)
             }
         }
-    }
-
-    @Composable
-    fun Panel(modifier: GlanceModifier, content: @Composable ColumnScope.() -> Unit) {
-        Column(modifier.background(ImageProvider(R.drawable.widget_panel)).padding(Space.Panel), content = content)
-    }
-}
-
-/** A small round chip with a white icon, before the date and the place. */
-@Composable
-private fun IconChip(@DrawableRes icon: Int, size: Dp = 20.dp) {
-    Box(GlanceModifier.size(size).background(ImageProvider(R.drawable.widget_dot)), contentAlignment = Alignment.Center) {
-        Image(ImageProvider(icon), contentDescription = null, modifier = GlanceModifier.size(12.dp), colorFilter = ColorFilter.tint(White))
-    }
-}
-
-/** A short line on a dark chip, with an icon when there is room: what matters now, or tomorrow's fast. */
-@Composable
-private fun InfoChip(@DrawableRes icon: Int?, text: String, sp: Float, modifier: GlanceModifier = GlanceModifier) {
-    Row(modifier.background(ImageProvider(R.drawable.widget_chip)).padding(horizontal = 10.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-        if (icon != null) {
-            Image(ImageProvider(icon), contentDescription = null, modifier = GlanceModifier.size(14.dp), colorFilter = ColorFilter.tint(White))
-            Spacer(GlanceModifier.width(6.dp))
-        }
-        Label(text, sp, GlanceModifier.defaultWeight(), fill = true)
     }
 }
 
@@ -678,9 +713,9 @@ private fun NoLocation() {
     val size = LocalSize.current
     val d = scale(context)
     val bitmap = remember(size) {
-        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, Corner.value * d)
+        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d)
     }
-    Box(GlanceModifier.fillMaxSize().cornerRadius(Corner).openToday(context), contentAlignment = Alignment.Center) {
+    Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context), contentAlignment = Alignment.Center) {
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
         Label(
             context.getString(R.string.widget_no_location),
@@ -699,11 +734,11 @@ internal fun MovedWidgetContent(newPackage: String) {
     val size = LocalSize.current
     val d = scale(context)
     val bitmap = remember(size) {
-        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, Corner.value * d)
+        SkyPainter.backdrop((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d)
     }
     val open = context.packageManager.getLaunchIntentForPackage(newPackage)
     Box(
-        GlanceModifier.fillMaxSize().cornerRadius(Corner).let { m -> open?.let { m.clickable(actionStartActivity(it)) } ?: m },
+        GlanceModifier.fillMaxSize().cornerRadius(corner(context)).let { m -> open?.let { m.clickable(actionStartActivity(it)) } ?: m },
         contentAlignment = Alignment.Center,
     ) {
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())

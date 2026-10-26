@@ -1,0 +1,532 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T00:00:00Z",
+  "title": "Design System: Adwam home-screen widget",
+  "extensions": {
+    "scope": "Governs the home-screen/lock-screen prayer widget only. App screens: docs/design-tokens.md (Material 3 palettes), not restated here.",
+    "colorMeta": {
+      "accent-signal": {
+        "role": "primary",
+        "displayName": "Signal Yellow",
+        "canonical": "#EEF26B",
+        "androidArgb": "0xFFEEF26B",
+        "tonalRamp": [
+          "oklch(15% 0.157 110.7)",
+          "oklch(26% 0.157 110.7)",
+          "oklch(38% 0.157 110.7)",
+          "oklch(50% 0.157 110.7)",
+          "oklch(62% 0.157 110.7)",
+          "oklch(74% 0.157 110.7)",
+          "oklch(85% 0.157 110.7)",
+          "oklch(95% 0.157 110.7)"
+        ]
+      },
+      "on-sky": {
+        "role": "neutral",
+        "displayName": "On-Sky White",
+        "canonical": "#FFFFFF",
+        "androidArgb": "0xFFFFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "muted-white": {
+        "role": "neutral",
+        "displayName": "Muted White (65%)",
+        "canonical": "#FFFFFFA6",
+        "androidArgb": "0xA6FFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "smoked-card": {
+        "role": "neutral",
+        "displayName": "Smoked Card (66%)",
+        "canonical": "#0E1218A8",
+        "androidArgb": "0xA80E1218",
+        "tonalRamp": [
+          "oklch(15% 0.014 258.4)",
+          "oklch(26% 0.014 258.4)",
+          "oklch(38% 0.014 258.4)",
+          "oklch(50% 0.014 258.4)",
+          "oklch(62% 0.014 258.4)",
+          "oklch(74% 0.014 258.4)",
+          "oklch(85% 0.014 258.4)",
+          "oklch(95% 0.014 258.4)"
+        ]
+      },
+      "card-hairline": {
+        "role": "neutral",
+        "displayName": "Card Hairline (8% white)",
+        "canonical": "#FFFFFF14",
+        "androidArgb": "0x14FFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "header-divider": {
+        "role": "neutral",
+        "displayName": "Header Divider (10% white)",
+        "canonical": "#FFFFFF1A",
+        "androidArgb": "0x1AFFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "bracket-white": {
+        "role": "neutral",
+        "displayName": "Bracket White (85%)",
+        "canonical": "#FFFFFFD9",
+        "androidArgb": "0xD9FFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "track-dash": {
+        "role": "neutral",
+        "displayName": "Track Dash (22% white)",
+        "canonical": "#FFFFFF38",
+        "androidArgb": "0x38FFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "chip-fill": {
+        "role": "primary",
+        "displayName": "Chip Fill (accent at 15%)",
+        "canonical": "#EEF26B26",
+        "androidArgb": "0x26EEF26B",
+        "tonalRamp": [
+          "oklch(15% 0.157 110.7)",
+          "oklch(26% 0.157 110.7)",
+          "oklch(38% 0.157 110.7)",
+          "oklch(50% 0.157 110.7)",
+          "oklch(62% 0.157 110.7)",
+          "oklch(74% 0.157 110.7)",
+          "oklch(85% 0.157 110.7)",
+          "oklch(95% 0.157 110.7)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Next prayer's time; largest in the card. Reference 40sp (4x2); 22-52sp by size class; AM/PM at 0.7x.",
+        "layout": "res/layout/widget_text_medium.xml"
+      },
+      "countdown": {
+        "displayName": "Countdown",
+        "purpose": "Time left in words; always smaller than the numeral. 12-17sp by size class.",
+        "layout": "res/layout/widget_text_medium.xml"
+      },
+      "prayer-name": {
+        "displayName": "Prayer name",
+        "purpose": "Next prayer in the accent. 11-13sp.",
+        "layout": "res/layout/widget_text_semibold.xml"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Crumb, dates, footer. 10-12sp.",
+        "layout": "res/layout/widget_text.xml"
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono caps legends (BERIKUTNYA, TIBA DALAM) 9-9.5sp; Hijri chip 10sp.",
+        "layout": "res/layout/widget_text_mono.xml"
+      },
+      "scale": {
+        "displayName": "Scale",
+        "purpose": "Bar stop times 9sp, names 8.5sp; shrinks to keep 6dp between items, drops below 0.75x.",
+        "layout": "res/layout/widget_text_mono.xml"
+      }
+    },
+    "sky": {
+      "source": "app/src/main/java/id/haho/muslimdaily/widget/SkyPainter.kt (Sky object); colours are Android ARGB",
+      "looks": {
+        "NIGHT": {
+          "key": "fajr - 60 min; isha",
+          "stops": [
+            "#050A1C",
+            "#0B1530",
+            "#141E3A",
+            "#1F2440"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x1FC88C6E",
+          "glowCenter": [
+            0.5,
+            1.15
+          ],
+          "glowRadii": [
+            1.2,
+            0.4
+          ],
+          "stars": 1.0
+        },
+        "PREDAWN": {
+          "key": "fajr",
+          "stops": [
+            "#08122A",
+            "#142450",
+            "#2A3360",
+            "#3A3352"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x26D67850",
+          "glowCenter": [
+            0.25,
+            1.1
+          ],
+          "glowRadii": [
+            0.9,
+            0.55
+          ],
+          "stars": 0.7
+        },
+        "DAWN": {
+          "key": "sunrise - 15 min",
+          "stops": [
+            "#0A1734",
+            "#1C2E5C",
+            "#45406E",
+            "#6E4652"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x66D67850",
+          "glowCenter": [
+            0.25,
+            1.1
+          ],
+          "glowRadii": [
+            0.9,
+            0.55
+          ],
+          "stars": 0.35
+        },
+        "MORNING": {
+          "key": "sunrise + 45 min",
+          "stops": [
+            "#154A8C",
+            "#2462A6",
+            "#3473B0",
+            "#3D78AE"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x24FFF0D2",
+          "glowCenter": [
+            0.18,
+            -0.15
+          ],
+          "glowRadii": [
+            0.8,
+            0.7
+          ],
+          "stars": 0.0
+        },
+        "NOON": {
+          "key": "dhuhr; asr",
+          "stops": [
+            "#0F4282",
+            "#1C5AA2",
+            "#2B6AAE",
+            "#3672AE"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x1AFFFFFF",
+          "glowCenter": [
+            0.5,
+            -0.2
+          ],
+          "glowRadii": [
+            0.9,
+            0.6
+          ],
+          "stars": 0.0
+        },
+        "GOLDEN": {
+          "key": "maghrib - 30 min",
+          "stops": [
+            "#1D3566",
+            "#3D4774",
+            "#6E5260",
+            "#82543F"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x4DE68C46",
+          "glowCenter": [
+            0.85,
+            1.1
+          ],
+          "glowRadii": [
+            0.9,
+            0.55
+          ],
+          "stars": 0.0
+        },
+        "DUSK": {
+          "key": "maghrib + 15 min",
+          "stops": [
+            "#0C1330",
+            "#262654",
+            "#4C3054",
+            "#6A3838"
+          ],
+          "stopPositions": [
+            0,
+            0.42,
+            0.78,
+            1
+          ],
+          "glow": "0x4DE0704A",
+          "glowCenter": [
+            0.85,
+            1.12
+          ],
+          "glowRadii": [
+            0.9,
+            0.5
+          ],
+          "stars": 0.35
+        }
+      },
+      "blend": "linear between consecutive keys",
+      "rim": "1dp stroke, vertical gradient 0x40FFFFFF to 0x0DFFFFFF",
+      "contrast": "white text >= 4.5:1 on every look (SkyContrastTest)"
+    },
+    "shadows": [],
+    "strokes": [
+      {
+        "name": "card-hairline",
+        "value": "1dp #FFFFFF14 inside the card edge"
+      },
+      {
+        "name": "bracket",
+        "value": "1.5dp #FFFFFFD9 round cap; corner arc + 4dp runs, centred in the inset margin"
+      },
+      {
+        "name": "header-divider",
+        "value": "1dp #FFFFFF1A full width"
+      },
+      {
+        "name": "sky-rim",
+        "value": "1dp gradient 0x40FFFFFF to 0x0DFFFFFF"
+      }
+    ],
+    "motion": [
+      {
+        "name": "minute-tick",
+        "value": "exact non-waking RTC alarm on each minute (WidgetTicker)",
+        "purpose": "Countdown stays true; ticks wait while the screen is off."
+      },
+      {
+        "name": "coarse-tick",
+        "value": "10-minute window without exact-alarm permission",
+        "purpose": "Countdown rounded to 10 min and marked '±'."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "columns",
+        "value": "<110dp:1, <195:2, <290:3, <400:4, else 5 (width / fontScale)"
+      },
+      {
+        "name": "rows",
+        "value": "<150dp:1, <250 (<215 at 4+ cols):2, else 3 (height / fontScale)"
+      },
+      {
+        "name": "tight",
+        "value": "1 row and height < 70dp"
+      },
+      {
+        "name": "type-scale-k",
+        "value": "min(w/base, h/base) clamped 1-1.35; base widths 76/164/252/340/428, heights 76/164/252"
+      }
+    ],
+    "behaviour": [
+      "Night track: from Isya until Subuh the bar runs Isya to Subuh (two stops).",
+      "Header keeps today's date after Isya though the next prayer is tomorrow.",
+      "Times, names, countdown, chip and footer never ellipsize; dates and place may (WidgetFitTest).",
+      "Countdown minutes round up ('1 menit' until the prayer)."
+    ]
+  },
+  "components": [
+    {
+      "name": "Instrument Card (4x2 reference)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Smoked card inset 6dp into the sky with hairline and bracket corners; header, next prayer, countdown.",
+      "html": "<div class=\"ds-sky\"><div class=\"ds-card\"><div class=\"ds-head\"><span><span class=\"ds-place\">Jakarta / </span>Sen, 26 Okt</span><span class=\"ds-chip\">12 Jumadilawal</span></div><div class=\"ds-body\"><div><span class=\"ds-mono\">Berikutnya</span><span class=\"ds-name\">Ashar</span><div class=\"ds-time\">14.51</div></div><div><div class=\"ds-mono\" style=\"text-align:right\">Tiba dalam</div><div class=\"ds-cd\">6 jam 25 menit</div></div></div></div></div>",
+      "css": ".ds-sky{position:relative;width:340px;height:164px;border-radius:24px;background:linear-gradient(#154A8C 0%,#2462A6 42%,#3473B0 78%,#3D78AE 100%);font-family:'Google Sans Flex','Google Sans',sans-serif;font-variant-numeric:tabular-nums;color:#fff} .ds-card{position:absolute;inset:6px;border-radius:18px;background:#0E1218A8;box-shadow:inset 0 0 0 1px #FFFFFF14;padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px} .ds-card::before{content:'';position:absolute;inset:-3px;border-radius:21px;border:1.5px solid #FFFFFFD9;-webkit-mask:conic-gradient(#000 0 0) top left/30px 30px no-repeat,conic-gradient(#000 0 0) top right/30px 30px no-repeat,conic-gradient(#000 0 0) bottom left/30px 30px no-repeat,conic-gradient(#000 0 0) bottom right/30px 30px no-repeat;pointer-events:none} .ds-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding-bottom:8px;border-bottom:1px solid #FFFFFF1A} .ds-head .ds-place{color:#FFFFFFA6} .ds-body{display:flex;justify-content:space-between;align-items:flex-end} .ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-name{color:#EEF26B;font-weight:600;font-size:13px;margin-left:6px} .ds-time{font-weight:500;font-size:40px;line-height:1;margin-top:4px} .ds-cd{font-weight:500;font-size:15px;text-align:right;margin-top:4px} .ds-chip{display:inline-block;background:#EEF26B26;color:#EEF26B;font-family:monospace;letter-spacing:.06em;font-size:10px;line-height:1;padding:3px 6px;border-radius:3px}"
+    },
+    {
+      "name": "Hijri Chip",
+      "kind": "chip",
+      "refersTo": "chip-hijri",
+      "description": "The Hijri date: accent mono on a 15% accent fill, 3dp corners.",
+      "html": "<span class=\"ds-chip\">12 Jumadilawal 1448 H</span>",
+      "css": ".ds-chip{display:inline-block;background:#EEF26B26;color:#EEF26B;font-family:monospace;letter-spacing:.06em;font-size:10px;line-height:1;padding:3px 6px;border-radius:3px}"
+    },
+    {
+      "name": "NextLabel",
+      "kind": "custom",
+      "refersTo": "next-name",
+      "description": "Mono muted legend beside the next prayer's name in the accent.",
+      "html": "<div style=\"background:#0E1218;padding:12px\"><span class=\"ds-mono\">Berikutnya</span><span class=\"ds-name\">Shalat Jumat</span></div>",
+      "css": ".ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-name{color:#EEF26B;font-family:'Google Sans Flex',sans-serif;font-weight:600;font-size:13px;margin-left:6px}"
+    },
+    {
+      "name": "Countdown Block",
+      "kind": "custom",
+      "refersTo": "countdown",
+      "description": "TIBA DALAM over the time left in words; smaller than the time; '±' when the tick is coarse.",
+      "html": "<div style=\"background:#0E1218;padding:12px;color:#fff;text-align:right\"><div class=\"ds-mono\">Tiba dalam</div><div class=\"ds-cd\">± 6 jam 30 menit</div></div>",
+      "css": ".ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-cd{font-family:'Google Sans Flex',sans-serif;font-weight:500;font-size:15px;margin-top:4px;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Bar with Scale",
+      "kind": "custom",
+      "refersTo": "bar-fill",
+      "description": "Accent fill up to now, 2dp dashes after; stop times under it with the next in the accent.",
+      "html": "<div style=\"background:#0E1218;padding:12px\"><div class=\"ds-bar\"><div class=\"ds-bar-fill\"></div><div class=\"ds-bar-track\"></div></div><div class=\"ds-scale\"><span>04.12</span><span class=\"ds-next\">11.40</span><span>14.51</span><span>17.49</span><span>18.59</span></div></div>",
+      "css": ".ds-bar{display:flex;height:5px;width:300px;gap:0} .ds-bar-fill{width:22%;background:#EEF26B;border-radius:1px} .ds-bar-track{flex:1;margin-left:3px;background:repeating-linear-gradient(90deg,#FFFFFF38 0 2px,transparent 2px 4px)} .ds-scale{display:flex;justify-content:space-between;width:300px;margin-top:4px;font-family:monospace;letter-spacing:.06em;font-size:9px;color:#FFFFFFA6} .ds-scale .ds-next{color:#EEF26B}"
+    },
+    {
+      "name": "Footer",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "3-row sizes: what matters now (muted icon + white text) and tomorrow's sunnah fast in the accent.",
+      "html": "<div class=\"ds-foot\"><span><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"#FFFFFFA6\"><circle cx=\"12\" cy=\"12\" r=\"5\"/></svg> Dhuha hingga 11.30</span><span class=\"ds-fast\">Besok: Ayyamul Bidh (13–15)</span></div>",
+      "css": ".ds-foot{display:flex;justify-content:space-between;align-items:center;width:320px;background:#0E1218;padding:10px;color:#fff;font-family:'Google Sans Flex',sans-serif;font-size:11px} .ds-foot svg{vertical-align:middle;margin-right:6px} .ds-fast{color:#EEF26B}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument Over the Sky",
+    "overview": "The widget is a dark smoked-glass card set into a sky that changes with the time of day. It reads like a signal meter. One yellow accent says what comes next, a large figure gives its time, a smaller phrase says how long until then, and a bar shows how far the day (or the night) has gone. The sky is the only colour field. The card darkens it enough for every text colour to pass AA, and the sky still shows round the card's edge and faintly through it.\n\nIt is dense but calm. Each size class from 1×1 to 5×3 is put together from the same few parts, and spare room goes to the figures, never to padding. The type keeps two voices apart: Google Sans Flex for the content (numbers, names, the countdown), and the system monospace, letter-spaced and in caps, for the instrument's own labels and the bar's scale. The build rejects the category default: there is no gradient card holding a table of the five times. The times show up only as the bar's scale, and only where there is room.",
+    "keyCharacteristics": [
+      "One accent (`accent-signal`), used only for what is next: the prayer's name, its stop on the scale, the bar's filled part, the Hijri chip, and tomorrow's sunnah fast.",
+      "A smoked card inset from the sky, with a hairline edge and white bracket corners drawn in the margin around it.",
+      "Mono caps labels as instrument legends (\"BERIKUTNYA\", \"TIBA DALAM\") paired with the values they label.",
+      "Figures grow to fill tall cells. Text never ellipsizes where it carries the answer.",
+      "The sky follows the prayer times. The bar runs from Subuh to Isya by day and from Isya to Subuh at night."
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "The accent marks what is next and nothing else. A new element gets the accent only if it points forward in time.",
+        "section": "colors"
+      },
+      {
+        "name": "The Glass Not Paint Rule",
+        "body": "The card is translucent smoke over the sky (`smoked-card`) and never an opaque fill. The sky must stay visible round the card and through it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Values are set in Google Sans Flex and legends in letter-spaced mono. A legend is never sans and a value is never mono, except the scale's times, which are the instrument's own markings.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Ellipsis on the Answer Rule",
+        "body": "Times, prayer names, the countdown, the Hijri chip and footer lines shrink to fit and never end in \"…\". Only dates and the place may shorten. `WidgetFitTest` enforces this for every size, both languages, 12- and 24-hour clocks, through the day, and at large system fonts.",
+        "section": "typography"
+      },
+      {
+        "name": "The Figures Take the Room Rule",
+        "body": "Spare space goes to the time and the countdown, never to wider padding or bigger gaps.",
+        "section": "layout"
+      },
+      {
+        "name": "The Smoke Not Shadow Rule",
+        "body": "Depth comes from the card's translucency and its hairline. No drop shadows and no lifted layers.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** give the accent only to what is next: the name, its scale stop, the bar's fill, the chip, tomorrow's fast.",
+      "**Do** set values in Google Sans Flex with tabular figures and legends in letter-spaced mono caps.",
+      "**Do** shrink type through the fit factor before letting a time, name, countdown, chip or footer line ellipsize, and keep `WidgetFitTest` green.",
+      "**Do** spend spare height on the time (up to 2× on 3-row Card sizes) and the countdown, not on gaps.",
+      "**Do** keep every sky look dark enough for white text at 4.5:1 (`SkyContrastTest`).",
+      "**Do** take every gap and padding from the shared spacing steps so edges line up between sizes."
+    ],
+    "donts": [
+      "**Don't** list the five times as a table or list. They appear only as the bar's scale.",
+      "**Don't** let the countdown reach the size of the time.",
+      "**Don't** draw a sun, moon or clouds in the sky. Text sits anywhere on it.",
+      "**Don't** make the card opaque or add drop shadows. Depth comes from smoke and the hairline.",
+      "**Don't** apply the app's Material 3 palettes or `docs/design-tokens.md` colours to the widget, or the widget's tokens to app screens."
+    ]
+  }
+}
