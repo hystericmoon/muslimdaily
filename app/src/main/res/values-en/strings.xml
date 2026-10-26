@@ -528,9 +528,11 @@
 
     <!-- Widgets -->
     <string name="widget_name">Prayer times</string>
-    <string name="widget_description_picker">The next prayer and today\'s times. Resize it to any size.</string>
-    <string name="widget_next">Next</string>
-    <string name="widget_arrives_in">Starts in</string>
+    <string name="widget_description_picker">The time now, the next prayer and today\'s times. Resize it to any size.</string>
+    <!-- The countdown and the prayer it runs to, e.g. "2 jam 47 menit until Maghrib 17.51". -->
+    <string name="widget_until">%1$s until %2$s</string>
+    <!-- The second line when the countdown is split in two: "until Maghrib 17.51". -->
+    <string name="widget_until_target">until %s</string>
     <string name="widget_in_hm">%1$d hr %2$d min</string>
     <string name="widget_in_h">%d hr</string>
     <string name="widget_in_m">%d min</string>

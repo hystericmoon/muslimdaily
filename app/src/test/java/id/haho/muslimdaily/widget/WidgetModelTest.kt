@@ -15,7 +15,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -92,17 +91,20 @@ class WidgetModelTest {
     }
 
     @Test
-    fun `the sky moves through the day and blends between keyframes`() {
+    fun `the sun shows from sunrise to Maghrib, the moon otherwise`() {
         val d = day()
-        assertEquals(Sky.NIGHT, Sky.at(d.fajr.minus(Duration.ofHours(2)), d))
-        assertEquals(Sky.PREDAWN, Sky.at(d.fajr, d))
-        assertEquals(Sky.NOON, Sky.at(d.dhuhr, d))
-        assertEquals(Sky.NIGHT, Sky.at(d.isha.plusSeconds(3600), d))
-        val between = Sky.at(d.dhuhr.plus(Duration.between(d.dhuhr, d.asr).dividedBy(2)), d)
-        assertEquals(Sky.NOON, between, "Dhuhr to Asr holds the noon sky")
-        val golden = Sky.at(d.maghrib.minus(Duration.ofMinutes(45)), d)
-        assertNotEquals(Sky.NOON, golden)
-        assertNotEquals(Sky.GOLDEN, golden)
+        assertFalse(model(d.fajr).daytime)
+        assertTrue(model(d.sunrise).daytime)
+        assertTrue(model(d.maghrib.minusSeconds(60)).daytime)
+        assertFalse(model(d.maghrib).daytime)
+    }
+
+    @Test
+    fun `the moon's phase follows the synodic month`() {
+        // Full moon 26 October 2026 04:12 UTC, new moon 9 November 2026 07:02 UTC.
+        assertEquals(0.5f, Moon.phase(Instant.parse("2026-10-26T04:12:00Z")), 0.03f)
+        val newMoon = Moon.phase(Instant.parse("2026-11-09T07:02:00Z"))
+        assertTrue(newMoon < 0.03f || newMoon > 0.97f, "new moon was $newMoon")
     }
 
     @Test

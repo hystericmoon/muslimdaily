@@ -44,7 +44,7 @@ fun clockPattern(is24Hour: Boolean): String = when {
 fun isLargeFontScale(): Boolean = androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.5f
 
 /** Formats clock times following the device's 12/24-hour preference, in the app's language style. */
-class TimeFormatter(is24Hour: Boolean) {
+class TimeFormatter(val is24Hour: Boolean) {
     private val formatter = DateTimeFormatter.ofPattern(clockPattern(is24Hour), AppLocale)
     fun format(instant: Instant, zone: ZoneId): String = formatter.format(instant.atZone(zone))
 }

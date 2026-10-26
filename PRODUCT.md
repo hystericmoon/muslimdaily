@@ -20,8 +20,10 @@ rawatib, morning and evening adhkar, and authentic duas from waking to sleeping,
 translation, audio and a memorisation mode. Success is a user who keeps small deeds constant,
 as the name says ("the most constant").
 
-The home-screen widget's job: answer "which prayer is next, and how long until it?" at a glance,
-with today's Gregorian and Hijri date as context.
+The home-screen widget's job: answer "what time is it, which prayer is next, and how long until
+it?" at a glance, with today's Gregorian and Hijri date as context. The large figure is the
+current time; the next prayer's time sits in the countdown line, so the two are never confused
+(owner, 2026-10-26).
 
 ## Positioning
 
@@ -37,16 +39,17 @@ every dua with its source), fully offline, with no account, ads, analytics or ga
   the lock screen where the phone allows it (Pixel-style lock-screen hubs; Samsung's One UI lock
   screen does not list third-party widgets).
 - Widgets are drawn by the launcher from RemoteViews: no custom fonts from the app, no live
-  animation except a system Chronometer, updates only when the app pushes one (an alarm at each
-  prayer time and on settings changes, plus a 30-minute period). Without the exact-alarm
-  permission, alarms can land up to 10 minutes late.
+  animation except system clocks (the widget's current time is a TextClock), updates only
+  when the app pushes one (an alarm at each prayer time and on settings changes, plus a
+  30-minute period). Without the exact-alarm permission, alarms can land up to 10 minutes late.
 
 ## Capabilities and Constraints
 
 - Indonesian is the default language; every string exists in Indonesian and English.
 - On Fridays Dhuhr is shown as Jumu'ah ("Jumat" in Indonesian, which is also the word for Friday).
-- The widget must keep: the time-of-day sky, every size from 1×1 to 5×3, and lock-screen support
-  (owner, 2026-10-25).
+- The widget must keep: every size from 1×1 to 5×3 and lock-screen support (owner, 2026-10-25).
+  The time-of-day sky was replaced by translucent black glass with a sun or moon (owner,
+  2026-10-26).
 
 ## Brand Commitments
 
@@ -57,7 +60,7 @@ every dua with its source), fully offline, with no account, ads, analytics or ga
 
 ## Evidence on Hand
 
-- Screenshot set of every screen and every widget size: `docs/screenshots/` (80–89 are the widget).
+- Screenshot set of every screen and every widget size: `docs/screenshots/` (80–90 are the widget).
 - Brand files: `docs/brand/`.
 - No user research, testimonials or usage data exist; none may be invented.
 

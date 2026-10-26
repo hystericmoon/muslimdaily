@@ -36,8 +36,8 @@ import kotlin.time.Duration.Companion.minutes
 
 /**
  * Every widget size, in Indonesian and English, 24- and 12-hour, through the day (after Isya the
- * bar runs to tomorrow's Subuh) and at larger system fonts: no time, prayer name, countdown,
- * Hijri chip or footer line may end
+ * bar runs to tomorrow's Subuh) and at larger system fonts: no clock, time, prayer name,
+ * countdown, Hijri date or footer line may end
  * in "…", run past its view or the widget, or touch another text. Dates and places may shorten
  * with "…" by design.
  */
@@ -95,12 +95,14 @@ class WidgetFitTest {
         }
         val context = base.createConfigurationContext(config)
         val now = LocalDateTime.of(2026, 10, 23, case.hour, case.minute).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
-        val data = WidgetData(WidgetModels.at(now, TodayPreviewData.settings, PrayerCalculator()), TimeFormatter(case.is24), now)
+        val data = WidgetData(WidgetModels.at(now, TodayPreviewData.settings, PrayerCalculator()), TimeFormatter(case.is24), now, liveClock = false)
         val model = data.model!!
         val text = WidgetText(context, model, data.time, now)
-        // What must always show in full: the times, the prayer names and the countdown.
+        // What must always show in full: the clock, the times, the prayer names and the countdown.
+        val clock = text.time(now)
         val whole = (model.slots.map { text.time(it.time) } + model.slots.map { clockDigits(text.time(it.time)) } + model.slots.map { text.name(it.slot) } +
-            listOf(text.nextNameLong, text.countdown, text.countdownShort, clockDigits(text.time(model.track.stops.first().time)), text.now, text.hijriShort) +
+            listOf(text.nextNameLong, text.countdown, text.countdownShort, clockDigits(text.time(model.track.stops.first().time)), text.now, text.hijriShort, text.hijriLong) +
+            listOf(clock, clockDigits(clock), now.atZone(model.zone).let { "%02d".format(it.hour) }, now.atZone(model.zone).let { "${(it.hour + 11) % 12 + 1}" }, now.atZone(model.zone).let { "%02d".format(it.minute) }, text.target(false), text.untilTarget(true).toString(), text.untilTarget(false).toString()) +
             listOfNotNull(text.fast)).toSet()
 
         val views = Fake(data).compose(context, size = case.size)
