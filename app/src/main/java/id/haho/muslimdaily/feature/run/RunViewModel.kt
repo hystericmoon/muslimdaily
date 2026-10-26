@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.myset.MySetRepository
+import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.data.routine.RoutineRepository
 import id.haho.muslimdaily.data.run.RunItem
@@ -23,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,7 +43,15 @@ data class RunUiState(
     val prefs: ReadingPrefs,
     val autoAdvance: Boolean,
     val haptics: Boolean,
+    /** Duas in "My hifz"; with [fromMemory] their Arabic stays hidden until the page is revealed. */
+    val hifz: Set<String> = emptySet(),
+    val fromMemory: Boolean = false,
+    /** Pages whose text was shown this session; not stored. */
+    val revealed: Set<Int> = emptySet(),
 ) {
+    fun isHidden(page: Int): Boolean =
+        fromMemory && page !in revealed && duas.getOrNull(page)?.id?.let { it in hifz } == true
+
     val done: Int get() = items.indices.count { isDone(it) }
     fun isDone(i: Int): Boolean = counts.getOrElse(i) { 0 } >= items[i].taps
 }
@@ -82,6 +92,7 @@ class RunViewModel @Inject constructor(
     private val sessions: RunSessionRepository,
     private val settings: SettingsRepository,
     private val routines: RoutineRepository,
+    private val reviews: ReviewRepository,
     private val clock: Clock,
 ) : ViewModel() {
     /** An occasion id, or a routine's run key ("routine:<id>"). */
@@ -121,8 +132,14 @@ class RunViewModel @Inject constructor(
                 prefs = prefs,
                 autoAdvance = s.autoAdvance,
                 haptics = s.haptics,
+                hifz = reviews.items().first().map { it.duaId }.toSet(),
+                fromMemory = s.runFromMemory,
             )
-            launch { settings.settings.collect { st -> _state.update { it?.copy(autoAdvance = st.autoAdvance, haptics = st.haptics) } } }
+            launch {
+                settings.settings.collect { st ->
+                    _state.update { it?.copy(autoAdvance = st.autoAdvance, haptics = st.haptics, fromMemory = st.runFromMemory) }
+                }
+            }
         }
     }
 
@@ -182,6 +199,15 @@ class RunViewModel @Inject constructor(
             val (session, duas) = newSession()
             _state.update { it?.copy(duas = duas, items = session.items, counts = session.counts, index = 0, completed = false) }
         }
+    }
+
+    /** Shows the hidden text of a dua recited from memory. Changes no count and no review. */
+    fun reveal(page: Int) {
+        _state.update { it?.copy(revealed = it.revealed + page) }
+    }
+
+    fun setFromMemory(enabled: Boolean) {
+        viewModelScope.launch { settings.update { runFromMemory = enabled } }
     }
 
     fun setAutoAdvance(enabled: Boolean) {

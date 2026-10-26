@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -113,5 +114,33 @@ class RunModeUiTest {
     fun progress_label_shows_position() {
         setUp()
         compose.onNodeWithText("Doa 1 dari 2").assertIsDisplayed()
+    }
+
+    @Test
+    fun a_dua_in_hifz_is_recited_from_memory_until_revealed() {
+        var revealed = -1
+        compose.setContent {
+            var state by remember { mutableStateOf(initial().copy(hifz = setOf("a"), fromMemory = true)) }
+            MuslimDailyTheme {
+                RunScreen(
+                    state,
+                    RunActions(
+                        onTap = { state = RunLogic.tap(state).first },
+                        onReveal = { page ->
+                            revealed = page
+                            state = state.copy(revealed = state.revealed + page)
+                        },
+                    ),
+                )
+            }
+        }
+        compose.onAllNodesWithText("Baca dari hafalan").onFirst().assertIsDisplayed()
+        // Counting still works while the text is hidden.
+        card().performClick()
+        compose.onNodeWithText("1 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("Tampilkan teks").performClick()
+        assertEquals(0, revealed)
+        compose.onAllNodesWithText("Baca dari hafalan").assertCountEquals(0)
+        compose.onNodeWithText("1 dari 3").assertIsDisplayed()
     }
 }

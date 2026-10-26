@@ -151,6 +151,7 @@ class SettingsRepository @Inject constructor(
             reciterId = this[K.reciter] ?: d.reciterId,
             autoAdvance = this[K.autoAdvance] ?: d.autoAdvance,
             haptics = this[K.haptics] ?: d.haptics,
+            runFromMemory = this[K.runFromMemory] ?: d.runFromMemory,
             arabicFont = enumOr(K.arabicFont, d.arabicFont),
             onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
             whatsNewSeen = this[K.whatsNewSeen] ?: d.whatsNewSeen,
@@ -195,6 +196,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var reciterId: String by key(K.reciter, "default")
     var autoAdvance: Boolean by key(K.autoAdvance, true)
     var haptics: Boolean by key(K.haptics, true)
+    var runFromMemory: Boolean by key(K.runFromMemory, true)
     var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
     var onboardingDone: Boolean by key(K.onboardingDone, false)
     var whatsNewSeen: String by key(K.whatsNewSeen, "")
@@ -285,6 +287,7 @@ internal object K {
     val reciter = stringPreferencesKey("reciter")
     val autoAdvance = booleanPreferencesKey("auto_advance")
     val haptics = booleanPreferencesKey("haptics")
+    val runFromMemory = booleanPreferencesKey("run_from_memory")
     val arabicFont = stringPreferencesKey("arabic_font")
     val onboardingDone = booleanPreferencesKey("onboarding_done")
     val whatsNewSeen = stringPreferencesKey("whats_new_seen")

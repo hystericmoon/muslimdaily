@@ -73,6 +73,8 @@ data class RunActions(
     val onPage: (Int) -> Unit = {},
     val onRestart: () -> Unit = {},
     val onAutoAdvance: (Boolean) -> Unit = {},
+    val onFromMemory: (Boolean) -> Unit = {},
+    val onReveal: (Int) -> Unit = {},
     val onClose: () -> Unit = {},
 )
 
@@ -109,6 +111,8 @@ fun RunRoute(onClose: () -> Unit, viewModel: RunViewModel = hiltViewModel()) {
                 onPage = viewModel::goTo,
                 onRestart = viewModel::restart,
                 onAutoAdvance = viewModel::setAutoAdvance,
+                onFromMemory = viewModel::setFromMemory,
+                onReveal = viewModel::reveal,
                 onClose = onClose,
             ),
         )
@@ -181,6 +185,13 @@ private fun RunTopBar(state: RunUiState, pager: PagerState, actions: RunActions)
                         trailingIcon = { Switch(checked = state.autoAdvance, onCheckedChange = null) },
                         onClick = { actions.onAutoAdvance(!state.autoAdvance) },
                     )
+                    if (state.hifz.isNotEmpty()) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.run_from_memory)) },
+                            trailingIcon = { Switch(checked = state.fromMemory, onCheckedChange = null) },
+                            onClick = { actions.onFromMemory(!state.fromMemory) },
+                        )
+                    }
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.run_restart)) },
                         leadingIcon = { Icon(painterResource(R.drawable.ic_restart_alt), null) },
@@ -227,10 +238,33 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                 Modifier.weight(1f).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
             ) {
-                ArabicText(dua.arabic, style = AppTheme.arabic.large(dua.isQuran))
-                DuaTranslations(dua, state.prefs)
+                if (state.isHidden(page)) {
+                    FromMemoryPanel(onReveal = { actions.onReveal(page) })
+                    // The meaning stays as the cue; transliteration would give the Arabic away.
+                    DuaTranslations(dua, state.prefs.copy(transliteration = false))
+                } else {
+                    ArabicText(dua.arabic, style = AppTheme.arabic.large(dua.isQuran))
+                    DuaTranslations(dua, state.prefs)
+                }
             }
             CountArea(done = done, countText = countText, isCurrent = isCurrent, count = count)
+        }
+    }
+}
+
+/** Stands in for the Arabic of a dua in "My hifz": recite it without looking, then check. */
+@Composable
+private fun FromMemoryPanel(onReveal: () -> Unit) {
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+        shape = MaterialTheme.shapes.large,
+        border = androidx.compose.foundation.BorderStroke(AppTheme.dimens.divider, MaterialTheme.colorScheme.outline),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Text(stringResource(R.string.run_from_memory), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+            Text(stringResource(R.string.run_from_memory_body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            GlassOutlinedButton(onClick = onReveal) { Text(stringResource(R.string.run_show_text)) }
         }
     }
 }
