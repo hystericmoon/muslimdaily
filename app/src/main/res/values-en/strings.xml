@@ -834,6 +834,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_0_1">
+        <item>The prayer-times widget no longer has a thick border: its card now fills nearly the whole widget.</item>
+        <item>On taller 4×2 widgets, such as on Samsung phones, the prayer names now show above their times, along with the line below, such as "Dhuha until 11:30".</item>
+    </string-array>
     <string-array name="whats_new_1_0_0">
         <item>Adwam now installs as a new app. The first time you open it, your data moves over from the old one; then allow notifications again and add the widget again.</item>
         <item>The prayer-times widget has a new look: the next prayer and its time stand out, the time left reads in hours and minutes, and a bar shows how far the day has gone.</item>
