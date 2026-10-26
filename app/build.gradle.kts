@@ -25,7 +25,8 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "id.haho.muslimdaily"
+        // Adwam's package since the rename; before 1.0 it was id.haho.muslimdaily (see Handover).
+        applicationId = "id.haho.adwam"
         minSdk = 26
         targetSdk = 37
         versionCode = 29
@@ -185,7 +186,6 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.glance.appwidget)
-    implementation(libs.play.services.wearable)
     implementation(libs.play.services.location)
     implementation(libs.adhan)
     implementation(libs.kotlinx.serialization.json)

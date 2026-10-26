@@ -46,8 +46,7 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
   the date and Hijri date, the place, the day's times, what matters now, a sunnah fast
   tomorrow), a smoked-glass card over a sky that follows the time of day, which
   can sit on the lock screen where the phone allows it; an optional lock-screen next-prayer
-  notification (a Live Update on Android 16); a Quick Settings tile; and a Wear OS tile fed by
-  the phone.
+  notification (a Live Update on Android 16); and a Quick Settings tile.
 * **Nearby mosques**: an optional reminder before each prayer opens a list of mosques and
   mushalla around you from a bundled OpenStreetMap extract (75k places in Indonesia), looked
   up on the device; directions open in your maps app.
@@ -77,7 +76,6 @@ Requirements: JDK 21, Android SDK with platform 37 and build-tools 37.0.0, Pytho
 ./gradlew :app:recordRoborazziDebug   # regenerate docs/screenshots
 ./gradlew :app:lintDebug
 ./gradlew :app:assembleRelease        # minified store build, fully offline
-./gradlew :wear:assembleDebug         # Wear OS tile (pairs with the debug phone build)
 python3 -m unittest discover -s tools # content validator tests
 ```
 

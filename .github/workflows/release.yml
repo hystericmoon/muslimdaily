@@ -55,10 +55,8 @@ jobs:
       - name: Build sideload APK
         if: steps.version.outputs.skip != 'true'
         run: |
-          ./gradlew :app:assembleSideload :wear:assembleDebug
-          cp app/build/outputs/apk/sideload/app-sideload.apk "muslimdaily-${{ steps.version.outputs.version }}.apk"
-          # Optional Wear OS tile, installed on the watch with adb; same package and key as the phone build.
-          cp wear/build/outputs/apk/debug/wear-debug.apk "muslimdaily-wear-${{ steps.version.outputs.version }}.apk"
+          ./gradlew :app:assembleSideload
+          cp app/build/outputs/apk/sideload/app-sideload.apk "adwam-${{ steps.version.outputs.version }}.apk"
       - uses: softprops/action-gh-release@v2
         if: steps.version.outputs.skip != 'true'
         with:
@@ -68,5 +66,5 @@ jobs:
           # A version with a suffix (0.6.0-beta.1) is a pre-release: only the beta channel sees it.
           prerelease: ${{ contains(steps.version.outputs.version, '-') }}
           make_latest: ${{ !contains(steps.version.outputs.version, '-') }}
-          files: muslimdaily-*.apk
+          files: adwam-*.apk
           generate_release_notes: true

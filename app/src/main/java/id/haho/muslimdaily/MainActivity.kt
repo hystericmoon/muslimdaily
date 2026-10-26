@@ -48,6 +48,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import id.haho.muslimdaily.feature.onboarding.OnboardingRoute
 import id.haho.muslimdaily.feature.handover.MovedScreen
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import id.haho.muslimdaily.feature.handover.LegacyImportScreen
+import id.haho.muslimdaily.feature.handover.LegacyImportViewModel
 import id.haho.muslimdaily.data.handover.Handover
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -107,6 +110,13 @@ class MainActivity : ComponentActivity() {
                 GlassBackdrop {
                     movedTo?.let { moved ->
                         MovedScreen(moved)
+                        return@GlassBackdrop
+                    }
+                    // First launch as id.haho.adwam with the previous app installed: bring its data over.
+                    val legacy: LegacyImportViewModel = hiltViewModel()
+                    val legacyStep by legacy.step.collectAsStateWithLifecycle()
+                    if (legacyStep != LegacyImportViewModel.Step.HIDDEN) {
+                        LegacyImportScreen(legacyStep, legacy.legacyPackage, onMove = legacy::move, onFinish = legacy::finish)
                         return@GlassBackdrop
                     }
                     when (onboarding) {

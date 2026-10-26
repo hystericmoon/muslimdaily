@@ -25,6 +25,10 @@ object Handover {
     private const val PREFS = "handover"
     private const val KEY_MOVED_TO = "moved_to"
 
+    /** The package this build takes its data from: the same build of the previous package. */
+    fun legacyPackageFor(packageName: String): String? =
+        if (packageName.startsWith(NEW_BASE)) LEGACY_BASE + packageName.removePrefix(NEW_BASE) else null
+
     /** The new app's package for this build, or null when this build is the new app. */
     fun newPackageFor(packageName: String): String? =
         if (packageName.startsWith(LEGACY_BASE)) NEW_BASE + packageName.removePrefix(LEGACY_BASE) else null

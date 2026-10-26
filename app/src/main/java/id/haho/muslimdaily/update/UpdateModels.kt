@@ -98,7 +98,7 @@ internal fun parseNewestRelease(json: String, currentVersion: String): Available
 private fun installable(release: ReleaseJson, currentVersion: String): AvailableUpdate? {
     if (release.draft) return null
     if (!Versions.isNewer(release.tag, currentVersion)) return null
-    // Releases also carry the Wear OS tile ("muslimdaily-wear-…apk"); the phone must never take it.
+    // Releases up to 0.9.x also carried a Wear OS APK ("…-wear-…apk"); the phone must never take it.
     val apk = release.assets.firstOrNull {
         it.name.endsWith(".apk", ignoreCase = true) && !it.name.contains("-wear-", ignoreCase = true)
     } ?: return null

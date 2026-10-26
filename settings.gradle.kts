@@ -22,5 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MuslimDaily"
 include(":app")
-include(":wear")
 include(":baselineprofile")
