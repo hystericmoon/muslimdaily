@@ -44,7 +44,7 @@ import java.util.Locale
 /**
  * Renders the prayer-times widget through Glance's RemoteViews translation (what launchers get),
  * over a wallpaper-like gradient: every size from 1×1 to 5×3, the 4×2 through the day, at 200%
- * system font, in a short landscape row, and with no location yet. Friday 23 October 2026,
+ * system font, in a short landscape row, Samsung's taller 4×2, and with no location yet. Friday 23 October 2026,
  * Jakarta: Dhuhr is Jumu'ah and tomorrow is the first of the white days.
  */
 @RunWith(AndroidJUnit4::class)
@@ -133,5 +133,7 @@ class WidgetScreenshotTest {
         } finally {
             Locale.setDefault(default)
         }
+        // Samsung's 4×2 is taller than Pixel's but still two rows: the scale's names and the footer fit.
+        render("90-widget-4x2-samsung", DpSize(352.dp, 200.dp), morning)
     }
 }

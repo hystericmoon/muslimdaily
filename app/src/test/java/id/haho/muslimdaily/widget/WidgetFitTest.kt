@@ -65,7 +65,7 @@ class WidgetFitTest {
 
     // The launcher grid's sizes, plus larger cells (tablets, Samsung's 5-column grid) where the type scales up.
     private val widths = listOf(76, 110, 164, 195, 252, 290, 340, 400, 428, 520)
-    private val heights = listOf(56, 76, 150, 164, 215, 230, 250, 252, 330)
+    private val heights = listOf(56, 76, 150, 164, 200, 215, 230, 250, 252, 330)
     private val times = listOf(4 to 45, 8 to 30, 11 to 35, 17 to 30, 19 to 5, 21 to 0, 23 to 50)
     private val indonesian = Locale.forLanguageTag("id-ID")
 
@@ -77,7 +77,7 @@ class WidgetFitTest {
 
     @Test fun english12Hour() = everyTextFits(Locale.ENGLISH, is24 = false)
 
-    // Each locale renders ~1,900 widgets: more than runTest's default minute on a busy machine.
+    // Each locale renders ~2,100 widgets: more than runTest's default minute on a busy machine.
     private fun everyTextFits(locale: Locale, is24: Boolean) = runTest(timeout = 5.minutes) {
         val problems = mutableListOf<String>()
         for ((h, m) in times) for (w in widths) for (ht in heights) {
