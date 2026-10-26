@@ -824,6 +824,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_1_0">
+        <item>Widget jadwal shalat tampil baru: angka besar kini jam sekarang, dan di bawahnya sisa waktu menuju shalat berikutnya beserta waktunya, misalnya \"2 jam 47 menit menuju Maghrib 17.51\".</item>
+        <item>Latarnya kini kaca hitam tembus pandang, dengan matahari di siang hari dan bulan sesuai fasenya malam itu, digambar dari citra NASA.</item>
+        <item>Nama shalat tampil di atas jadwalnya di garis bawah widget, dan tanggal Hijriah kini ditulis seperti tanggal biasa.</item>
+    </string-array>
     <string-array name="whats_new_1_0_1">
         <item>Widget jadwal shalat kini tanpa bingkai tebal: kartunya mengisi hampir seluruh widget.</item>
         <item>Di widget 4×2 yang lebih tinggi, seperti di ponsel Samsung, nama shalat kini tampil di atas jadwalnya, begitu juga baris di bawahnya, misalnya "Dhuha hingga 11.30".</item>
