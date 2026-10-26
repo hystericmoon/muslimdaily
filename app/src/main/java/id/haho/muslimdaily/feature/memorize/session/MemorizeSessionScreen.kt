@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,6 +48,7 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -56,8 +58,10 @@ import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.domain.memorize.FadeLevel
+import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.Leitner
 import id.haho.muslimdaily.domain.memorize.Rating
+import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
@@ -71,6 +75,9 @@ data class MemorizeActions(
     val onRecallGaps: () -> Unit = {},
     val onToggle: () -> Unit = {},
     val onFade: (FadeLevel) -> Unit = {},
+    val onFadeOrder: (FadeOrder) -> Unit = {},
+    val onFirstLetters: (Boolean) -> Unit = {},
+    val onRevealNext: () -> Unit = {},
     val onRate: (Rating) -> Unit = {},
     val onLoops: (Int) -> Unit = {},
     val onPauseMode: (PauseMode) -> Unit = {},
@@ -101,6 +108,9 @@ fun MemorizeSessionRoute(
                 onRecallGaps = viewModel::playRecallWithGaps,
                 onToggle = viewModel::toggle,
                 onFade = viewModel::setFade,
+                onFadeOrder = viewModel::setFadeOrder,
+                onFirstLetters = viewModel::setFirstLetters,
+                onRevealNext = viewModel::revealNext,
                 onRate = viewModel::rate,
                 onLoops = { n -> viewModel.updateSettings(loops = n) },
                 onPauseMode = { m -> viewModel.updateSettings(pauseMode = m) },
@@ -159,7 +169,8 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
                 .padding(AppTheme.dimens.screenGutter),
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
         ) {
-            InfoNote(stringResource(state.step.hintRes()))
+            val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
+            InfoNote(stringResource(hint))
             when (state.step) {
                 Step.LISTEN -> ListenStep(state, actions)
                 Step.BUILD -> BuildStep(state, actions)
@@ -328,8 +339,30 @@ private fun PhrasePicker(label: String, count: Int, selected: Int, onSelect: (In
     }
 }
 
+/** What the dua is for, and on request its meaning: the cue to recite from before any Arabic shows. */
+@Composable
+private fun CueCard(state: MemorizeUiState) {
+    var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
+    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Text(
+                stringResource(R.string.memorize_cue_title),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(state.eventLabel, style = MaterialTheme.typography.titleMedium)
+            if (meaning) DuaTranslations(state.dua, state.reading)
+            TextButton(onClick = { meaning = !meaning }) {
+                Text(stringResource(if (meaning) R.string.memorize_cue_hide_meaning else R.string.memorize_cue_show_meaning))
+            }
+        }
+    }
+}
+
 @Composable
 private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean) {
+    CueCard(state)
     val levels = FadeLevel.entries
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall)
     FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
@@ -341,14 +374,49 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             )
         }
     }
+    if (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM) {
+        Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            FadeOrder.entries.forEach { order ->
+                FilterChip(
+                    selected = state.fadeOrder == order,
+                    onClick = { actions.onFadeOrder(order) },
+                    label = { Text(stringResource(order.labelRes())) },
+                )
+            }
+        }
+    }
+    if (state.fade != FadeLevel.NONE) {
+        FilterChip(
+            selected = state.firstLetters,
+            onClick = { actions.onFirstLetters(!state.firstLetters) },
+            label = { Text(stringResource(R.string.memorize_first_letters)) },
+        )
+    }
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         RecallText(
             words = state.words,
             hidden = state.hiddenWords,
             style = AppTheme.arabic.large(state.dua.isQuran),
             hiddenDescription = pluralStringResource(R.plurals.memorize_hidden_words, state.hiddenWords.size, state.hiddenWords.size),
+            firstLetters = state.firstLetters,
             modifier = Modifier.padding(AppTheme.spacing.xl),
         )
+    }
+    if (state.fade != FadeLevel.NONE) {
+        // Reveal as you go: recite the next word aloud, then show it. TalkBack hears the word shown.
+        val last = state.lastRevealed?.text.orEmpty()
+        GlassOutlinedButton(
+            onClick = actions.onRevealNext,
+            enabled = state.hiddenWords.isNotEmpty(),
+            modifier = Modifier.semantics {
+                liveRegion = LiveRegionMode.Polite
+                if (last.isNotEmpty()) stateDescription = last
+            },
+        ) {
+            Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(AppTheme.dimens.smallIcon))
+            Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = AppTheme.spacing.sm))
+        }
     }
     if (talkBack) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
     GlassTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.segmented && state.hiddenWords.isNotEmpty()) {
@@ -363,6 +431,11 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
         )
     }
     NextStepButton(Step.CHECK, actions)
+}
+
+private fun FadeOrder.labelRes() = when (this) {
+    FadeOrder.RANDOM -> R.string.memorize_fade_random
+    FadeOrder.FROM_END -> R.string.memorize_fade_from_end
 }
 
 @Composable

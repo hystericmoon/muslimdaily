@@ -350,7 +350,16 @@
     <string name="memorize_step_check">Cek</string>
     <string name="memorize_hint_listen">Dengarkan doa lengkap dua kali sambil membaca teksnya.</string>
     <string name="memorize_hint_build">Potongan bertambah satu frasa setiap kali. Setelah tiap putaran, ulangi dengan suara pada jeda.</string>
-    <string name="memorize_hint_recall">Sebagian kata disembunyikan. Bacalah dari ingatan, lalu naikkan tingkatnya.</string>
+    <string name="memorize_hint_recall">Sembunyikan sebagian kata, lalu baca dari ingatan. Buka kata berikutnya bila Anda lupa.</string>
+    <string name="memorize_hint_review">Baca dari ingatan dulu dengan petunjuk di bawah, lalu cek teks lengkapnya.</string>
+    <string name="memorize_cue_title">Petunjuk</string>
+    <string name="memorize_cue_show_meaning">Tampilkan arti</string>
+    <string name="memorize_cue_hide_meaning">Sembunyikan arti</string>
+    <string name="memorize_fade_order">Yang disembunyikan dulu</string>
+    <string name="memorize_fade_random">Acak</string>
+    <string name="memorize_fade_from_end">Dari akhir</string>
+    <string name="memorize_first_letters">Tampilkan huruf awal</string>
+    <string name="memorize_reveal_next">Buka kata berikutnya</string>
     <string name="memorize_hint_check">Buka teks lengkap dan nilai hafalan Anda dengan jujur.</string>
     <string name="memorize_listen_twice">Dengar 2×</string>
     <string name="memorize_restart">Dari awal</string>

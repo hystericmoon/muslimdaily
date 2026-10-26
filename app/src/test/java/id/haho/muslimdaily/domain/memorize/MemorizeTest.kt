@@ -128,4 +128,48 @@ class RecallTest {
         val hidden = Recall.hiddenWords(words, FadeLevel.FULL, dua.id)
         assertEquals(setOf(0, 1, 2), Recall.hiddenPhrases(words, hidden))
     }
+
+    @Test
+    fun `from the end hides the last words first, nested by level`() {
+        val light = Recall.hiddenWords(words, FadeLevel.LIGHT, dua.id, FadeOrder.FROM_END)
+        val medium = Recall.hiddenWords(words, FadeLevel.MEDIUM, dua.id, FadeOrder.FROM_END)
+        assertTrue(words.last().index in light)
+        assertTrue(words.first().index !in medium)
+        assertTrue(medium.containsAll(light))
+        assertEquals((words.size - light.size until words.size).toSet(), light)
+    }
+
+    @Test
+    fun `tokens without a letter are never hidden`() {
+        val ws = listOf(Word(0, "بِكَ", 0), Word(1, "،", 0), Word(2, "وَ", 0))
+        assertEquals(setOf(0, 2), Recall.hiddenWords(ws, FadeLevel.FULL, "x"))
+    }
+
+    @Test
+    fun `next hidden is the first hidden word in reading order`() {
+        assertEquals(words[0], Recall.nextHidden(words, words.indices.toSet()))
+        assertEquals(words[2], Recall.nextHidden(words, setOf(words.lastIndex, 2)))
+        assertEquals(null, Recall.nextHidden(words, emptySet()))
+    }
+
+    @Test
+    fun `first letter cue is the opening letter with its marks`() {
+        // Joining letter: tatweel keeps the joined shape.
+        assertEquals("\u0628\u0650\u0640", Recall.firstLetterCue("\u0628\u0650\u0633\u0652\u0645\u0650"))
+        // Right-joining letter (ra): no tatweel.
+        assertEquals("\u0631\u064E", Recall.firstLetterCue("\u0631\u064E\u0628\u0651\u0650"))
+        // Article: alif + lam + the next letter.
+        assertEquals("\u0627\u0644\u0652\u062D\u064E\u0640", Recall.firstLetterCue("\u0627\u0644\u0652\u062D\u064E\u0645\u0652\u062F\u064F"))
+        // A one-letter word is shown whole, without tatweel.
+        assertEquals("\u0648\u064E", Recall.firstLetterCue("\u0648\u064E"))
+        // No Arabic letter: unchanged.
+        assertEquals("\u06DD", Recall.firstLetterCue("\u06DD"))
+    }
+
+    @Test
+    fun `first letter cue is a prefix of the word apart from tatweel`() {
+        words.forEach { w ->
+            assertTrue(w.text.startsWith(Recall.firstLetterCue(w.text).removeSuffix("\u0640")))
+        }
+    }
 }

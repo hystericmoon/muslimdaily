@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +24,14 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.component.arabicAnnotated
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
 
 /**
  * Recall view. Hidden words become blank boxes exactly as wide as the word they replace, so the
  * line layout never shifts and nothing is shown as faint grey text. TalkBack users get a single
  * description instead of the hidden words; their recall happens by ear (hidden phrases muted).
+ * With [firstLetters] each box starts with the word's first letter as a cue.
  */
 @Composable
 fun RecallText(
@@ -37,6 +40,7 @@ fun RecallText(
     style: TextStyle,
     hiddenDescription: String,
     modifier: Modifier = Modifier,
+    firstLetters: Boolean = false,
 ) {
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -67,6 +71,15 @@ fun RecallText(
                                 .align(androidx.compose.ui.Alignment.Center)
                                 .border(AppTheme.dimens.divider, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
                         ) {}
+                        if (firstLetters) {
+                            Text(
+                                arabicAnnotated(Recall.firstLetterCue(w.text)),
+                                style = style,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1,
+                                modifier = Modifier.align(androidx.compose.ui.Alignment.CenterStart).padding(horizontal = AppTheme.spacing.xs),
+                            )
+                        }
                     }
                 } else {
                     Text(arabicAnnotated(w.text), style = style, color = LocalContentColor.current)

@@ -34,6 +34,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import id.haho.muslimdaily.data.settings.MemorizeSettings
+import id.haho.muslimdaily.domain.memorize.FadeLevel
+import id.haho.muslimdaily.domain.memorize.Recall
+import id.haho.muslimdaily.feature.memorize.session.MemorizeActions
+import id.haho.muslimdaily.feature.memorize.session.MemorizeSessionScreen
+import id.haho.muslimdaily.feature.memorize.session.MemorizeUiState
+import id.haho.muslimdaily.feature.memorize.session.Playing
+import id.haho.muslimdaily.feature.memorize.session.Step
 import java.io.File
 
 /** The shipped content files in content/, so layout is checked against real lengths. */
@@ -146,5 +154,21 @@ class RealContentScreenshotTest {
             }
         }
     }
-}
 
+    /** First-letter cues on real Arabic, so the letter shapes (and the tatweel) can be checked. */
+    @Test
+    fun memorizeFirstLetters() = captureVariants("122-memorize-first-letters") {
+        val d = dua("morning_04")
+        val words = Recall.words(d)
+        MemorizeSessionScreen(
+            MemorizeUiState(
+                dua = d, eventLabel = event("morning").label, step = Step.RECALL, playing = Playing.NONE,
+                playback = PlaybackState(), settings = MemorizeSettings(), fade = FadeLevel.FULL, words = words,
+                hiddenWords = Recall.hiddenWords(words, FadeLevel.FULL, d.id), review = null, rated = null,
+                fromReview = false, nextDueId = null, ab = 0..0, firstLetters = true,
+            ),
+            MemorizeActions(),
+            talkBack = false,
+        )
+    }
+}

@@ -5,6 +5,7 @@ import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.domain.memorize.FadeLevel
+import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.LeitnerState
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
@@ -29,13 +30,21 @@ class MemorizeScreenshotTest {
     private val today = LocalDate.of(2026, 10, 21)
     private val dua = DuaPreviewData.dua("morning_02", 2)
 
-    private fun state(step: Step, fade: FadeLevel = FadeLevel.LIGHT, playing: Playing = Playing.NONE, playback: PlaybackState = PlaybackState()): MemorizeUiState {
+    private fun state(
+        step: Step,
+        fade: FadeLevel = FadeLevel.LIGHT,
+        playing: Playing = Playing.NONE,
+        playback: PlaybackState = PlaybackState(),
+        order: FadeOrder = FadeOrder.RANDOM,
+        firstLetters: Boolean = false,
+        fromReview: Boolean = false,
+    ): MemorizeUiState {
         val words = Recall.words(dua)
         return MemorizeUiState(
             dua = dua, eventLabel = "Dzikir pagi", step = step, playing = playing, playback = playback,
             settings = MemorizeSettings(), fade = fade, words = words,
-            hiddenWords = Recall.hiddenWords(words, fade, dua.id), review = null, rated = null,
-            fromReview = false, nextDueId = null, ab = 0..1,
+            hiddenWords = Recall.hiddenWords(words, fade, dua.id, order), review = null, rated = null,
+            fromReview = fromReview, nextDueId = null, ab = 0..1, fadeOrder = order, firstLetters = firstLetters,
         )
     }
 
@@ -70,5 +79,10 @@ class MemorizeScreenshotTest {
     @Test
     fun check() = captureVariants("53-memorize-check") {
         MemorizeSessionScreen(state(Step.CHECK), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun reviewRecallFirst() = captureVariants("121-memorize-review-cue") {
+        MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.FULL, fromReview = true), MemorizeActions(), talkBack = false)
     }
 }
