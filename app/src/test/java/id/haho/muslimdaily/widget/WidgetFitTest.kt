@@ -6,7 +6,6 @@ import android.graphics.Rect
 import android.text.Layout
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Chronometer
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.compose.ui.unit.DpSize
@@ -37,7 +36,8 @@ import kotlin.time.Duration.Companion.minutes
 
 /**
  * Every widget size, in Indonesian and English, 24- and 12-hour, through the day (after Isya the
- * date reads "Besok · …") and at larger system fonts: no time, prayer name or countdown may end
+ * bar runs to tomorrow's Subuh) and at larger system fonts: no time, prayer name, countdown,
+ * Hijri chip or footer line may end
  * in "…", run past its view or the widget, or touch another text. Dates and places may shorten
  * with "…" by design.
  */
@@ -97,9 +97,11 @@ class WidgetFitTest {
         val now = LocalDateTime.of(2026, 10, 23, case.hour, case.minute).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
         val data = WidgetData(WidgetModels.at(now, TodayPreviewData.settings, PrayerCalculator()), TimeFormatter(case.is24), now)
         val model = data.model!!
-        val text = WidgetText(context, model, data.time)
+        val text = WidgetText(context, model, data.time, now)
         // What must always show in full: the times, the prayer names and the countdown.
-        val whole = (model.slots.map { text.time(it.time) } + model.slots.map { clockDigits(text.time(it.time)) } + model.slots.map { text.name(it.slot) }).toSet()
+        val whole = (model.slots.map { text.time(it.time) } + model.slots.map { clockDigits(text.time(it.time)) } + model.slots.map { text.name(it.slot) } +
+            listOf(text.nextNameLong, text.countdown, text.countdownShort, clockDigits(text.time(model.track.stops.first().time)), text.now, text.hijriShort) +
+            listOfNotNull(text.fast)).toSet()
 
         val views = Fake(data).compose(context, size = case.size)
         val density = context.resources.displayMetrics.density
@@ -115,10 +117,12 @@ class WidgetFitTest {
         val problems = mutableListOf<String>()
         for ((view, rect) in texts) {
             val s = view.text.toString()
-            val mustShow = view is Chronometer || s in whole || whole.any { it.isNotEmpty() && s.startsWith(it) }
+            val mustShow = s in whole || whole.any { it.isNotEmpty() && s.startsWith(it) }
             if (!mustShow) continue
             val ellipsized = view.layout?.let { l -> (0 until l.lineCount).any { l.getEllipsisCount(it) > 0 } } == true
-            val needed = Layout.getDesiredWidth(view.text, view.paint)
+            // A label allowed to wrap (the Hijri date in one-column widgets) needs its widest line.
+            val needed = view.layout?.takeIf { it.lineCount > 1 }?.let { l -> (0 until l.lineCount).maxOf { l.getLineWidth(it) } }
+                ?: Layout.getDesiredWidth(view.text, view.paint)
             val room = view.width - view.totalPaddingLeft - view.totalPaddingRight
             when {
                 ellipsized -> problems += "$case: \"$s\" ends in …"

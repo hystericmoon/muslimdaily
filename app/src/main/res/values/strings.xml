@@ -517,7 +517,16 @@
     <!-- Widgets -->
     <string name="widget_name">Jadwal shalat</string>
     <string name="widget_description_picker">Shalat berikutnya dan jadwal hari ini. Bisa diubah ke ukuran apa pun.</string>
-    <string name="widget_countdown_format">dalam %s</string>
+    <string name="widget_next">Berikutnya</string>
+    <string name="widget_arrives_in">Tiba dalam</string>
+    <string name="widget_in_hm">%1$d jam %2$d menit</string>
+    <string name="widget_in_h">%d jam</string>
+    <string name="widget_in_m">%d menit</string>
+    <string name="widget_in_hm_short">%1$dj %2$dm</string>
+    <string name="widget_in_h_short">%dj</string>
+    <string name="widget_in_m_short">%dm</string>
+    <string name="widget_about">± %s</string>
+    <string name="widget_prayer_jumuah">Shalat Jumat</string>
     <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
     <string name="handover_moved_title">Adwam sudah pindah</string>
     <string name="handover_moved_body">Data Anda sudah ada di aplikasi Adwam yang baru. Aplikasi ini tidak lagi mengirim pengingat, jadi bisa dihapus.</string>
@@ -537,7 +546,6 @@
     <string name="legacy_import_manual_title">Pindahkan lewat cadangan</string>
     <string name="legacy_import_manual_body">Versi aplikasi lama ini tidak bisa memindahkan data secara langsung. Di aplikasi lama, buka Pengaturan › Cadangan dan set saya, lalu ketuk Buat cadangan. Setelah itu, buka menu yang sama di sini dan ketuk Pulihkan dari cadangan.</string>
     <string name="legacy_import_open_old">Buka aplikasi lama</string>
-    <string name="widget_tomorrow">Besok · %s</string>
     <string name="widget_hijri_day">%1$d %2$s</string>
     <string name="widget_now_fajr_ends">Subuh berakhir %s</string>
     <string name="widget_now_prohibited">Waktu terlarang</string>
@@ -545,7 +553,7 @@
     <string name="widget_now_duha">Dhuha hingga %s</string>
     <string name="widget_now_prayer">Waktu %s</string>
     <string name="widget_fast_tomorrow">Besok: %s</string>
-    <string name="widget_a11y_next">Berikutnya %1$s pukul %2$s</string>
+    <string name="widget_a11y_next">Berikutnya %1$s pukul %2$s, tiba dalam %3$s</string>
     <string name="widget_next_description">Shalat berikutnya %1$s pukul %2$s, %3$s</string>
 
     <!-- Pre-prayer and lock-screen notifications -->

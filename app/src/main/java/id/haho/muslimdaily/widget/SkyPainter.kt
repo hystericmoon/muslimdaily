@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
@@ -93,10 +94,21 @@ object Sky {
     }
 }
 
-/** Paints a [SkyLook] as the widget's background bitmap, with rounded corners and a soft rim. */
+/**
+ * Paints a [SkyLook] as the widget's background bitmap, with rounded corners and a soft rim, and
+ * optionally the card the text sits on: smoked glass inset from the edge, so the sky shows as a
+ * frame and through the card, with a hairline edge and bracket corners.
+ */
 object SkyPainter {
 
-    fun paint(widthPx: Int, heightPx: Int, density: Float, look: SkyLook, cornerPx: Float, stars: Boolean = true): Bitmap {
+    /** The card: dark enough that muted text and the accent pass AA on any sky behind it. */
+    const val CARD = 0xA80E1218.toInt()
+    const val ACCENT = 0xFFEEF26B.toInt()
+    private const val CARD_EDGE = 0x14FFFFFF
+    private const val BRACKET = 0xD9FFFFFF.toInt()
+    private const val TRACK = 0x38FFFFFF
+
+    fun paint(widthPx: Int, heightPx: Int, density: Float, look: SkyLook, cornerPx: Float, stars: Boolean = true, cardInsetPx: Float = 0f): Bitmap {
         val w = widthPx.toFloat()
         val h = heightPx.toFloat()
         val bmp = createBitmap(widthPx, heightPx)
@@ -120,7 +132,77 @@ object SkyPainter {
 
         if (stars && look.stars > 0.01f) stars(c, w, h, density, look.stars)
 
-        return roundAndRim(bmp, w, h, density, cornerPx)
+        val framed = roundAndRim(bmp, w, h, density, cornerPx)
+        if (cardInsetPx > 0f) card(Canvas(framed), w, h, density, cardInsetPx, (cornerPx - cardInsetPx).coerceAtLeast(2f * density))
+        return framed
+    }
+
+    private fun card(c: Canvas, w: Float, h: Float, d: Float, inset: Float, corner: Float) {
+        val box = RectF(inset, inset, w - inset, h - inset)
+        c.drawRoundRect(box, corner, corner, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = CARD })
+        val edge = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 1f * d
+            color = CARD_EDGE
+        }
+        c.drawRoundRect(RectF(box.left + d / 2, box.top + d / 2, box.right - d / 2, box.bottom - d / 2), corner, corner, edge)
+        // Brackets: each corner's curve plus a short straight run on both sides, in the margin
+        // between the card and the sky's edge, so they frame the card instead of crowding its text.
+        val bracket = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 1.5f * d
+            strokeCap = Paint.Cap.ROUND
+            color = BRACKET
+        }
+        val run = 4f * d
+        val half = bracket.strokeWidth / 2
+        val out = inset / 2
+        val l = box.left - out + half
+        val t = box.top - out + half
+        val r = box.right + out - half
+        val b = box.bottom + out - half
+        val k = corner + out - half
+        fun arc(cx: Float, cy: Float, start: Float) = RectF(cx - k, cy - k, cx + k, cy + k).let { oval ->
+            Path().apply { arcTo(oval, start, 90f, true) }
+        }
+        listOf(
+            Triple(l + k, t + k, 180f), Triple(r - k, t + k, 270f), Triple(r - k, b - k, 0f), Triple(l + k, b - k, 90f),
+        ).forEach { (cx, cy, start) -> c.drawPath(arc(cx, cy, start), bracket) }
+        c.drawLine(l, t + k, l, t + k + run, bracket)
+        c.drawLine(l + k, t, l + k + run, t, bracket)
+        c.drawLine(r - k - run, t, r - k, t, bracket)
+        c.drawLine(r, t + k, r, t + k + run, bracket)
+        c.drawLine(r, b - k - run, r, b - k, bracket)
+        c.drawLine(r - k - run, b, r - k, b, bracket)
+        c.drawLine(l + k, b, l + k + run, b, bracket)
+        c.drawLine(l, b - k - run, l, b - k, bracket)
+    }
+
+    /**
+     * The progress bar: the accent from the start up to [progress] along [stopsPx] (the x of each
+     * stop, under its label), then a dashed track to the end.
+     */
+    fun bar(widthPx: Int, heightPx: Int, density: Float, stopsPx: FloatArray, progress: Float): Bitmap {
+        val bmp = createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1))
+        val c = Canvas(bmp)
+        val w = widthPx.toFloat()
+        val h = heightPx.toFloat()
+        val pos = progress.coerceIn(0f, 1f) * (stopsPx.size - 1)
+        val i = pos.toInt().coerceAtMost(stopsPx.size - 2)
+        val end = if (progress >= 1f) w else stopsPx[i] + (stopsPx[i + 1] - stopsPx[i]) * (pos - i)
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        val radius = density
+        p.color = ACCENT
+        if (end > 0f) c.drawRoundRect(RectF(0f, 0f, end, h), radius, radius, p)
+        p.color = TRACK
+        val dash = 2f * density
+        val gap = 2f * density
+        var x = end + gap * 1.5f
+        while (x + dash <= w) {
+            c.drawRect(x, 0f, x + dash, h, p)
+            x += dash + gap
+        }
+        return bmp
     }
 
     /** A plain night sky, for a widget with nothing to show yet. */

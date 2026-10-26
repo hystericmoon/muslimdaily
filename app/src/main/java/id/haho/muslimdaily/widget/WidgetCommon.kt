@@ -2,7 +2,6 @@ package id.haho.muslimdaily.widget
 
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -54,29 +53,25 @@ interface WidgetEntryPoint {
 
 /**
  * Everything the widget draws, read once per update. [model] is null until a location is set.
- * [elapsed] is [SystemClock.elapsedRealtime] at [now], so a countdown drawn later (Glance
- * recomposes a live session on resize) still ends at the prayer time.
+ * [precise] says whether [WidgetTicker] can redraw every minute (exact alarms allowed); if not,
+ * the countdown is rounded and marked "±", since it may be up to ten minutes old.
  */
 class WidgetData(
     val model: WidgetModel?,
     val time: TimeFormatter,
     val now: Instant,
-    val elapsed: Long = SystemClock.elapsedRealtime(),
+    val precise: Boolean = true,
 )
-
-/** The chronometer base (in elapsed realtime) that reaches zero at [target], from a [now] read at [elapsedAtNow]. */
-fun chronometerBase(target: Instant, now: Instant, elapsedAtNow: Long): Long = elapsedAtNow + (target.toEpochMilli() - now.toEpochMilli())
 
 suspend fun loadWidgetData(context: Context): WidgetData {
     val deps = EntryPointAccessors.fromApplication(context.applicationContext, WidgetEntryPoint::class.java)
     val settings = deps.settings().current()
-    val elapsed = SystemClock.elapsedRealtime()
     val now = Instant.now(deps.clock())
     return WidgetData(
         model = WidgetModels.at(now, settings, deps.calculator()),
         time = TimeFormatter(DateFormat.is24HourFormat(context)),
         now = now,
-        elapsed = elapsed,
+        precise = WidgetTicker.precise(context),
     )
 }
 
@@ -104,12 +99,14 @@ fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
     ),
 )
 
-/** Text on the sky is white; text on the white pill is the night sky's darkest blue. */
+/** Text on the card: white, a muted white for labels, and the accent for the next prayer. */
 const val OnSky: Int = 0xFFFFFFFF.toInt()
-const val OnPill: Int = 0xFF0B1A3A.toInt()
+const val Muted: Int = 0xA6FFFFFF.toInt()
+const val Accent: Int = SkyPainter.ACCENT
 
 /**
- * A widget label: a small RemoteViews layout, Regular or SemiBold. Launchers inflate it in a
+ * A widget label: a small RemoteViews layout, Regular, Medium, SemiBold or Mono (the system
+ * monospace, for the small caps labels and the bar's scale). Launchers inflate it in a
  * restricted context where TextView cannot load the app's own fonts, so it names a system font
  * instead: Google Sans Flex, the closest to the app's Plus Jakarta Sans, on phones that have it
  * (Pixel and Pixel-based ROMs); elsewhere the name is unknown and the system font is used.
@@ -121,18 +118,19 @@ fun Label(
     sizeSp: Float,
     modifier: GlanceModifier = GlanceModifier,
     semibold: Boolean = false,
+    medium: Boolean = false,
+    mono: Boolean = false,
     color: Int = OnSky,
     maxLines: Int = 1,
     center: Boolean = false,
     /** Take the space [modifier] gives (e.g. a weight) and shorten with "…" instead of growing. */
     fill: Boolean = false,
-    /** At the end of the width [modifier] gives (regular weight only). */
-    end: Boolean = false,
 ) {
     val context = LocalContext.current
     val layout = when {
         semibold -> R.layout.widget_text_semibold
-        end -> R.layout.widget_text_end
+        medium -> R.layout.widget_text_medium
+        mono -> R.layout.widget_text_mono
         else -> R.layout.widget_text
     }
     val views = RemoteViews(context.packageName, layout).apply {
@@ -165,8 +163,11 @@ fun clockParts(time: String, sp: Float): Array<Pair<String, Float>> {
     return arrayOf(time.substring(0, m.range.first) to sp, m.value to sp * MeridiemScale)
 }
 
-/** One line of a layout: its texts side by side at their sizes, plus the fixed padding and gaps between them. */
-class FitLine(val extra: Dp, vararg val parts: Pair<String, Float>)
+/**
+ * One line of a layout: its texts side by side at their sizes, plus the fixed padding and gaps
+ * between them. [mono] are texts on the same line set in the mono label (measured with its font).
+ */
+class FitLine(val extra: Dp, vararg val parts: Pair<String, Float>, val mono: List<Pair<String, Float>> = emptyList())
 
 /**
  * The factor (at most 1) the type must shrink by for every line to fit [width], so a 12-hour
@@ -176,12 +177,19 @@ class FitLine(val extra: Dp, vararg val parts: Pair<String, Float>)
  */
 class TextFit(context: Context) {
     private val metrics = context.resources.displayMetrics
-    private val paint = TextPaint((LayoutInflater.from(context).inflate(R.layout.widget_text_semibold, null) as TextView).paint)
+    private val inflater = LayoutInflater.from(context)
+    private val paint = TextPaint((inflater.inflate(R.layout.widget_text_semibold, null) as TextView).paint)
+    private val monoPaint = TextPaint((inflater.inflate(R.layout.widget_text_mono, null) as TextView).paint)
 
     /** Width in dp, like the widget's size; sp follow the system font size as the label's do. */
-    fun width(text: String, sp: Float): Float {
-        paint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
-        return paint.measureText(text) / metrics.density
+    fun width(text: String, sp: Float): Float = measure(paint, text, sp)
+
+    /** The same, for a mono label (letter-spaced, so measured with its own paint). */
+    fun monoWidth(text: String, sp: Float): Float = measure(monoPaint, text, sp)
+
+    private fun measure(p: TextPaint, text: String, sp: Float): Float {
+        p.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
+        return p.measureText(text) / metrics.density
     }
 
     fun factor(width: Dp, vararg lines: FitLine): Float = lines.minOfOrNull { line ->
@@ -190,7 +198,8 @@ class TextFit(context: Context) {
         // grows more with the system font than large type does, so one ratio is not enough.
         var f = 1f
         repeat(4) {
-            val text = line.parts.sumOf { (s, sp) -> width(s, sp * f).toDouble() }.toFloat()
+            val text = line.parts.sumOf { (s, sp) -> width(s, sp * f).toDouble() }.toFloat() +
+                line.mono.sumOf { (s, sp) -> monoWidth(s, sp * f).toDouble() }.toFloat()
             if (text <= room || text <= 0f) return@minOfOrNull f
             f *= (room / text).coerceAtLeast(0f)
         }
@@ -203,32 +212,10 @@ class TextFit(context: Context) {
     }
 }
 
-/** The next prayer's time on a white pill: marked by shape and weight, not colour alone. */
+/** A small accent chip (the Hijri date): mono text on a faint accent fill. */
 @Composable
-fun Pill(text: CharSequence, sizeSp: Float, padH: Dp = 7.dp, padV: Dp = 0.dp) {
-    Box(GlanceModifier.background(ImageProvider(R.drawable.widget_pill)).padding(horizontal = padH, vertical = padV)) {
-        Label(text, sizeSp, semibold = true, color = OnPill)
+fun Chip(text: CharSequence, sizeSp: Float, modifier: GlanceModifier = GlanceModifier) {
+    Box(modifier.background(ImageProvider(R.drawable.widget_chip)).padding(horizontal = 6.dp, vertical = 3.dp)) {
+        Label(text, sizeSp, mono = true, color = Accent)
     }
-}
-
-/**
- * A live countdown that reaches zero at [base] (see [chronometerBase]). Glance has no chronometer,
- * so this embeds a RemoteViews one; the launcher ticks it every second without waking the app.
- */
-@Composable
-fun Countdown(
-    base: Long,
-    sizeSp: Float,
-    format: String = LocalContext.current.getString(R.string.widget_countdown_format),
-    semibold: Boolean = false,
-    modifier: GlanceModifier = GlanceModifier,
-) {
-    val context = LocalContext.current
-    val views = RemoteViews(context.packageName, if (semibold) R.layout.widget_countdown_semibold else R.layout.widget_countdown).apply {
-        setChronometer(R.id.countdown, base, format, true)
-        setChronometerCountDown(R.id.countdown, true)
-        setTextViewTextSize(R.id.countdown, TypedValue.COMPLEX_UNIT_SP, sizeSp)
-        setTextColor(R.id.countdown, OnSky)
-    }
-    AndroidRemoteViews(views, modifier.wrapContentSize())
 }
