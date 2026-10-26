@@ -15,11 +15,13 @@ import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.memorize.FadeLevel
+import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.LeitnerState
 import id.haho.muslimdaily.domain.memorize.MemorizePlan
 import id.haho.muslimdaily.domain.memorize.Rating
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
+import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.MemorizeSessionRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -52,6 +54,11 @@ data class MemorizeUiState(
     val fromReview: Boolean,
     val nextDueId: String?,
     val ab: IntRange,
+    val fadeOrder: FadeOrder = FadeOrder.RANDOM,
+    val firstLetters: Boolean = false,
+    /** The word shown last by "reveal as you go", announced to TalkBack. */
+    val lastRevealed: Word? = null,
+    val reading: ReadingPrefs = ReadingPrefs(),
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.phrases.isNotEmpty() && dua.phrases.all { it.segment != null }
@@ -69,12 +76,18 @@ class MemorizeSessionViewModel @Inject constructor(
     private val route = savedState.toRoute<MemorizeSessionRoute>()
     val duaId = route.duaId
 
-    private val local = MutableStateFlow(Local())
+    // A review starts with recall (retrieval before restudy): the whole text hidden behind the cue card.
+    private val local = MutableStateFlow(
+        if (route.fromReview) Local(step = Step.RECALL, fade = FadeLevel.FULL) else Local(),
+    )
 
     private data class Local(
         val step: Step = Step.LISTEN,
         val playing: Playing = Playing.NONE,
         val fade: FadeLevel = FadeLevel.LIGHT,
+        val order: FadeOrder = FadeOrder.RANDOM,
+        val firstLetters: Boolean = false,
+        val revealed: List<Int> = emptyList(),
         val rated: LeitnerState? = null,
         val nextDueId: String? = null,
         val ab: IntRange? = null,
@@ -82,12 +95,13 @@ class MemorizeSessionViewModel @Inject constructor(
 
     private val today: LocalDate get() = LocalDate.now(clock)
 
-    private val base = combine(content.dua(duaId), reviews.item(duaId), settingsRepository.settings.map { it.memorize }) { d, r, m ->
-        Triple(d, r, m)
+    private val base = combine(content.dua(duaId), reviews.item(duaId), settingsRepository.settings) { d, r, s ->
+        Triple(d, r, s)
     }
 
-    val state: StateFlow<MemorizeUiState?> = combine(base, local, audio.state) { (dua, review, memorize), l, playback ->
+    val state: StateFlow<MemorizeUiState?> = combine(base, local, audio.state) { (dua, review, settings), l, playback ->
         dua ?: return@combine null
+        val memorize = settings.memorize
         val words = Recall.words(dua)
         val label = content.eventOnce(dua.event)?.label.orEmpty()
         MemorizeUiState(
@@ -99,7 +113,12 @@ class MemorizeSessionViewModel @Inject constructor(
             settings = memorize,
             fade = l.fade,
             words = words,
-            hiddenWords = Recall.hiddenWords(words, l.fade, dua.id),
+            hiddenWords = Recall.hiddenWords(words, l.fade, dua.id, l.order) - l.revealed.toSet(),
+            fadeOrder = l.order,
+            firstLetters = l.firstLetters,
+            lastRevealed = l.revealed.lastOrNull()?.let { words.getOrNull(it) },
+            // Transliteration would give the Arabic away on the cue card.
+            reading = ReadingPrefs(settings.translationMode, transliteration = false),
             review = review,
             rated = l.rated,
             fromReview = route.fromReview,
@@ -135,7 +154,21 @@ class MemorizeSessionViewModel @Inject constructor(
     }
 
     fun setFade(level: FadeLevel) {
-        local.value = local.value.copy(fade = level)
+        local.value = local.value.copy(fade = level, revealed = emptyList())
+    }
+
+    fun setFadeOrder(order: FadeOrder) {
+        local.value = local.value.copy(order = order, revealed = emptyList())
+    }
+
+    fun setFirstLetters(on: Boolean) {
+        local.value = local.value.copy(firstLetters = on)
+    }
+
+    fun revealNext() {
+        val s = state.value ?: return
+        val next = Recall.nextHidden(s.words, s.hiddenWords) ?: return
+        local.value = local.value.copy(revealed = local.value.revealed + next.index)
     }
 
     fun rate(rating: Rating) {

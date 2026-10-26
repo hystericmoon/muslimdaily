@@ -121,6 +121,9 @@ object MemorizePlan {
 /** Recall levels: share of words hidden. */
 enum class FadeLevel(val fraction: Double) { NONE(0.0), LIGHT(0.3), MEDIUM(0.6), FULL(1.0) }
 
+/** Which words go first as the level rises: a stable shuffle, or the last words first (backward chaining). */
+enum class FadeOrder { RANDOM, FROM_END }
+
 /** A word of the Arabic text and the phrase it belongs to. */
 data class Word(val index: Int, val text: String, val phrase: Int)
 
@@ -136,11 +139,56 @@ object Recall {
      * Words hidden at a level. Levels are nested (everything hidden at 30% stays hidden at 60%), and
      * the choice is stable per dua so the same words disappear each time.
      */
-    fun hiddenWords(words: List<Word>, level: FadeLevel, seed: String): Set<Int> {
-        if (level == FadeLevel.NONE || words.isEmpty()) return emptySet()
-        val order = words.indices.shuffled(Random(seed.hashCode()))
-        val n = ceil(words.size * level.fraction).toInt().coerceIn(1, words.size)
-        return order.take(n).toSet()
+    fun hiddenWords(words: List<Word>, level: FadeLevel, seed: String, order: FadeOrder = FadeOrder.RANDOM): Set<Int> {
+        // Tokens without a letter (a lone ، or ۝) stay visible: there is nothing to recall in them.
+        val candidates = words.filter { w -> w.text.any(::isLetter) }.map { it.index }
+        if (level == FadeLevel.NONE || candidates.isEmpty()) return emptySet()
+        val sequence = when (order) {
+            FadeOrder.RANDOM -> candidates.shuffled(Random(seed.hashCode()))
+            FadeOrder.FROM_END -> candidates.reversed()
+        }
+        val n = ceil(candidates.size * level.fraction).toInt().coerceIn(1, candidates.size)
+        return sequence.take(n).toSet()
+    }
+
+    /** The first hidden word in reading order, shown next by "reveal as you go". */
+    fun nextHidden(words: List<Word>, hidden: Set<Int>): Word? = words.firstOrNull { it.index in hidden }
+
+    private const val TATWEEL = 'ـ'
+
+    /** Letters that never join to the following letter, so a cue ending in one needs no tatweel. */
+    private const val RIGHT_JOINING = "ءآأؤإاةدذرزوٱ"
+
+    private fun isLetter(c: Char) = Character.isLetter(c) && Character.UnicodeBlock.of(c) == Character.UnicodeBlock.ARABIC
+
+    private fun isMark(c: Char) = Character.getType(c) == Character.NON_SPACING_MARK.toInt()
+
+    /**
+     * First-letter cue for a hidden word: the word's opening letter with its marks, exactly as in
+     * the source. After the article (ا/ٱ + ل) the next letter is included too, since the article
+     * alone tells nothing. A tatweel keeps the joined shape when more letters follow. Words with no
+     * Arabic letter (e.g. ۝) are returned unchanged.
+     */
+    fun firstLetterCue(word: String): String {
+        val start = word.indexOfFirst(::isLetter).takeIf { it >= 0 } ?: return word
+        // End index (exclusive) of each letter cluster: a letter and the marks that follow it.
+        val clusterEnds = buildList {
+            var i = start
+            while (i < word.length && size < 3) {
+                if (!isLetter(word[i])) break
+                i++
+                while (i < word.length && isMark(word[i])) i++
+                add(i)
+            }
+        }
+        val first = word[start]
+        val article = (first == 'ا' || first == 'ٱ') && clusterEnds.size >= 3 &&
+            word.getOrNull(clusterEnds[0]) == 'ل'
+        val end = if (article) clusterEnds[2] else clusterEnds[0]
+        val cue = word.substring(0, end)
+        val lastLetter = cue.last { isLetter(it) }
+        val more = word.substring(end).any(::isLetter)
+        return if (more && lastLetter !in RIGHT_JOINING) cue + TATWEEL else cue
     }
 
     /** For audio recall: a phrase is muted when at least half of its words are hidden. */
