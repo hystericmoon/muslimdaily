@@ -19,15 +19,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.glance.GlanceModifier
-import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.AndroidRemoteViews
 import androidx.glance.appwidget.action.actionStartActivity
-import androidx.glance.background
 import androidx.glance.currentState
-import androidx.glance.layout.Box
-import androidx.glance.layout.padding
 import androidx.glance.layout.wrapContentSize
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -35,6 +31,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import id.haho.muslimdaily.MainActivity
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
@@ -42,6 +39,8 @@ import id.haho.muslimdaily.notifications.Destination
 import id.haho.muslimdaily.notifications.Notifier
 import java.time.Clock
 import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
@@ -61,6 +60,8 @@ class WidgetData(
     val time: TimeFormatter,
     val now: Instant,
     val precise: Boolean = true,
+    /** The current time as a live TextClock; tests and previews draw it once, at [now]. */
+    val liveClock: Boolean = true,
 )
 
 suspend fun loadWidgetData(context: Context): WidgetData {
@@ -99,13 +100,13 @@ fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
     ),
 )
 
-/** Text on the card: white, a muted white for labels, and the accent for the next prayer. */
+/** Text on the glass: white, a muted white for labels, and the accent for the next prayer. */
 const val OnSky: Int = 0xFFFFFFFF.toInt()
 const val Muted: Int = 0xA6FFFFFF.toInt()
-const val Accent: Int = SkyPainter.ACCENT
+const val Accent: Int = GlassPainter.ACCENT
 
 /**
- * A widget label: a small RemoteViews layout, Regular, Medium, SemiBold or Mono (the system
+ * A widget label: a small RemoteViews layout, Regular, Medium, SemiBold, Bold or Mono (the system
  * monospace, for the small caps labels and the bar's scale). Launchers inflate it in a
  * restricted context where TextView cannot load the app's own fonts, so it names a system font
  * instead: Google Sans Flex, the closest to the app's Plus Jakarta Sans, on phones that have it
@@ -120,6 +121,7 @@ fun Label(
     semibold: Boolean = false,
     medium: Boolean = false,
     mono: Boolean = false,
+    bold: Boolean = false,
     color: Int = OnSky,
     maxLines: Int = 1,
     center: Boolean = false,
@@ -129,6 +131,7 @@ fun Label(
     val context = LocalContext.current
     val layout = when {
         semibold -> R.layout.widget_text_semibold
+        bold -> R.layout.widget_text_bold
         medium -> R.layout.widget_text_medium
         mono -> R.layout.widget_text_mono
         else -> R.layout.widget_text
@@ -180,12 +183,16 @@ class TextFit(context: Context) {
     private val inflater = LayoutInflater.from(context)
     private val paint = TextPaint((inflater.inflate(R.layout.widget_text_semibold, null) as TextView).paint)
     private val monoPaint = TextPaint((inflater.inflate(R.layout.widget_text_mono, null) as TextView).paint)
+    private val boldPaint = TextPaint((inflater.inflate(R.layout.widget_text_bold, null) as TextView).paint)
 
     /** Width in dp, like the widget's size; sp follow the system font size as the label's do. */
     fun width(text: String, sp: Float): Float = measure(paint, text, sp)
 
     /** The same, for a mono label (letter-spaced, so measured with its own paint). */
     fun monoWidth(text: String, sp: Float): Float = measure(monoPaint, text, sp)
+
+    /** The same, for the Bold clock. */
+    fun boldWidth(text: String, sp: Float): Float = measure(boldPaint, text, sp)
 
     private fun measure(p: TextPaint, text: String, sp: Float): Float {
         p.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
@@ -212,10 +219,24 @@ class TextFit(context: Context) {
     }
 }
 
-/** A small accent chip (the Hijri date): mono text on a faint accent fill. */
+/**
+ * The current time in [pattern] (the letters TextClock and java.time share: "HH.mm", "h:mm", "a"),
+ * Bold. [live] makes it a TextClock the launcher keeps current every minute, in [zone]; otherwise
+ * it is drawn once from [now], for tests and the picker preview.
+ */
 @Composable
-fun Chip(text: CharSequence, sizeSp: Float, modifier: GlanceModifier = GlanceModifier) {
-    Box(modifier.background(ImageProvider(R.drawable.widget_chip)).padding(horizontal = 6.dp, vertical = 3.dp)) {
-        Label(text, sizeSp, mono = true, color = Accent)
+fun Clock(pattern: String, sizeSp: Float, zone: ZoneId, now: Instant, live: Boolean, color: Int = OnSky, modifier: GlanceModifier = GlanceModifier) {
+    if (!live) {
+        Label(DateTimeFormatter.ofPattern(pattern, AppLocale).format(now.atZone(zone)), sizeSp, modifier, bold = true, color = color)
+        return
     }
+    val context = LocalContext.current
+    val views = RemoteViews(context.packageName, R.layout.widget_clock).apply {
+        setCharSequence(R.id.text, "setFormat12Hour", pattern)
+        setCharSequence(R.id.text, "setFormat24Hour", pattern)
+        setString(R.id.text, "setTimeZone", zone.id)
+        setTextViewTextSize(R.id.text, TypedValue.COMPLEX_UNIT_SP, sizeSp)
+        setTextColor(R.id.text, color)
+    }
+    AndroidRemoteViews(views, modifier.wrapContentSize())
 }

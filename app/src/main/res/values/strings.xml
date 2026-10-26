@@ -516,9 +516,11 @@
 
     <!-- Widgets -->
     <string name="widget_name">Jadwal shalat</string>
-    <string name="widget_description_picker">Shalat berikutnya dan jadwal hari ini. Bisa diubah ke ukuran apa pun.</string>
-    <string name="widget_next">Berikutnya</string>
-    <string name="widget_arrives_in">Tiba dalam</string>
+    <string name="widget_description_picker">Jam sekarang, shalat berikutnya, dan jadwal hari ini. Bisa diubah ke ukuran apa pun.</string>
+    <!-- The countdown and the prayer it runs to, e.g. "2 jam 47 menit menuju Maghrib 17.51". -->
+    <string name="widget_until">%1$s menuju %2$s</string>
+    <!-- The second line when the countdown is split in two: "menuju Maghrib 17.51". -->
+    <string name="widget_until_target">menuju %s</string>
     <string name="widget_in_hm">%1$d jam %2$d menit</string>
     <string name="widget_in_h">%d jam</string>
     <string name="widget_in_m">%d menit</string>

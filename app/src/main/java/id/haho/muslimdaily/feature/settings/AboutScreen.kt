@@ -46,6 +46,8 @@ private val Licenses = listOf(
     License("Tanzil Quran Text (teks Al-Qur'an)", "Tanzil Project, tanzil.net. Boleh disalin tanpa diubah dengan menyebut sumber.", null),
     License("QuranEnc.com (terjemah Al-Qur'an)", "Terjemah Kementerian Agama RI (indonesian_affairs v1.0.1) dan Saheeh International. Dimuat tanpa diubah dengan menyebut sumber.", null),
     License("OpenStreetMap (data masjid)", "© kontributor OpenStreetMap, Open Database License 1.0", null),
+    License("Bulan di widget: NASA CGI Moon Kit", "NASA's Scientific Visualization Studio, peta warna LRO LROC. Domain publik.", null),
+    License("Matahari di widget: NASA/SDO", "Courtesy of NASA/SDO and the HMI science team.", null),
     License("Jetpack Glance", "Apache License 2.0", null),
     License("adhan-kotlin (Batoul Apps)", "MIT License", null),
     License("AndroidX, Media3, Hilt, kotlinx", "Apache License 2.0", null),

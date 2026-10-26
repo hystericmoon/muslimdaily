@@ -59,7 +59,7 @@ class WidgetScreenshotTest {
 
     private fun data(now: Instant, located: Boolean = true, is24: Boolean = true): WidgetData {
         val settings = TodayPreviewData.settings.let { if (located) it else it.copy(location = null) }
-        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(is24), now)
+        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(is24), now, liveClock = false)
     }
 
     private class Fake(private val body: @androidx.compose.runtime.Composable () -> Unit) : GlanceAppWidget() {

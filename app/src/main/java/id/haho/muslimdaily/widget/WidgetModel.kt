@@ -36,7 +36,10 @@ data class WidgetModel(
     val now: NowLine,
     /** A sunnah fast tomorrow, if any. */
     val fastTomorrow: FastKind?,
-    val sky: SkyLook,
+    /** Between sunrise and Maghrib the widget shows the sun, otherwise the moon. */
+    val daytime: Boolean,
+    /** The moon's phase now, 0 at new moon, 0.5 at full (see [Moon]). */
+    val moonPhase: Float,
     /** The bar under the next prayer: the day's prayers, or the night from Isya to Subuh. */
     val track: Track,
 ) {
@@ -106,7 +109,8 @@ object WidgetModels {
             now = line,
             fastTomorrow = FastingCalendar.day(date.plusDays(1), settings.hijriAdjustment)
                 .sunnah(settings.reminders.fastingWeekly).firstOrNull(),
-            sky = Sky.at(now, today),
+            daytime = !now.isBefore(today.sunrise) && now.isBefore(today.maghrib),
+            moonPhase = Moon.phase(now),
             track = when {
                 now.isBefore(today.fajr) -> night(now, yesterday.isha, today.fajr)
                 isTomorrow -> night(now, today.isha, tomorrow.fajr)
@@ -127,6 +131,21 @@ object WidgetModels {
         val i = prayers.indexOfLast { !it.time.isAfter(now) }.coerceIn(0, prayers.size - 2)
         val progress = (i + fraction(now, prayers[i].time, prayers[i + 1].time)) / (prayers.size - 1)
         return Track(prayers, progress)
+    }
+}
+
+/**
+ * The moon's phase from the mean synodic month, counted from the new moon of 6 January 2000,
+ * 18:14 UTC: within about a day of the true phase, enough to draw how much of it is lit. Drawn
+ * from astronomy, not the Hijri date, so a calendar adjustment never changes the picture.
+ */
+object Moon {
+    private const val SYNODIC_DAYS = 29.530588853
+    private val REFERENCE: Instant = Instant.parse("2000-01-06T18:14:00Z")
+
+    fun phase(at: Instant): Float {
+        val days = Duration.between(REFERENCE, at).seconds / 86_400.0
+        return ((days / SYNODIC_DAYS) % 1.0).let { if (it < 0) it + 1 else it }.toFloat()
     }
 }
 

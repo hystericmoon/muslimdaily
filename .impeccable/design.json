@@ -21,9 +21,9 @@
           "oklch(95% 0.157 110.7)"
         ]
       },
-      "on-sky": {
+      "on-glass": {
         "role": "neutral",
-        "displayName": "On-Sky White",
+        "displayName": "On-Glass White",
         "canonical": "#FFFFFF",
         "androidArgb": "0xFFFFFFFF",
         "tonalRamp": [
@@ -53,27 +53,43 @@
           "oklch(95% 0.000 89.9)"
         ]
       },
-      "smoked-card": {
+      "glass": {
         "role": "neutral",
-        "displayName": "Smoked Card (66%)",
-        "canonical": "#0E1218A8",
-        "androidArgb": "0xA80E1218",
+        "displayName": "Glass (black at 74%)",
+        "canonical": "#000000BD",
+        "androidArgb": "0xBD000000",
         "tonalRamp": [
-          "oklch(15% 0.014 258.4)",
-          "oklch(26% 0.014 258.4)",
-          "oklch(38% 0.014 258.4)",
-          "oklch(50% 0.014 258.4)",
-          "oklch(62% 0.014 258.4)",
-          "oklch(74% 0.014 258.4)",
-          "oklch(85% 0.014 258.4)",
-          "oklch(95% 0.014 258.4)"
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
         ]
       },
-      "card-hairline": {
+      "glass-sheen": {
         "role": "neutral",
-        "displayName": "Card Hairline (8% white)",
-        "canonical": "#FFFFFF14",
-        "androidArgb": "0x14FFFFFF",
+        "displayName": "Glass Sheen (6% white, top left)",
+        "canonical": "#FFFFFF0F",
+        "androidArgb": "0x0FFFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(50% 0.000 89.9)",
+          "oklch(62% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "glass-edge": {
+        "role": "neutral",
+        "displayName": "Glass Edge (40% white at the top)",
+        "canonical": "#FFFFFF66",
+        "androidArgb": "0x66FFFFFF",
         "tonalRamp": [
           "oklch(15% 0.000 89.9)",
           "oklch(26% 0.000 89.9)",
@@ -116,49 +132,28 @@
           "oklch(85% 0.000 89.9)",
           "oklch(95% 0.000 89.9)"
         ]
-      },
-      "chip-fill": {
-        "role": "primary",
-        "displayName": "Chip Fill (accent at 15%)",
-        "canonical": "#EEF26B26",
-        "androidArgb": "0x26EEF26B",
-        "tonalRamp": [
-          "oklch(15% 0.157 110.7)",
-          "oklch(26% 0.157 110.7)",
-          "oklch(38% 0.157 110.7)",
-          "oklch(50% 0.157 110.7)",
-          "oklch(62% 0.157 110.7)",
-          "oklch(74% 0.157 110.7)",
-          "oklch(85% 0.157 110.7)",
-          "oklch(95% 0.157 110.7)"
-        ]
       }
     },
     "typographyMeta": {
-      "numeral": {
-        "displayName": "Numeral",
-        "purpose": "Next prayer's time; largest in the card. Reference 40sp (4x2); 22-52sp by size class; AM/PM at 0.7x.",
-        "layout": "res/layout/widget_text_medium.xml"
+      "clock": {
+        "displayName": "Clock",
+        "purpose": "The time now, a live TextClock; largest on the widget. Reference 38sp (4x2); 22-52sp by size class; 12-hour marker at 0.45x.",
+        "layout": "res/layout/widget_clock.xml (widget_text_bold.xml when drawn static)"
       },
       "countdown": {
-        "displayName": "Countdown",
-        "purpose": "Time left in words; always smaller than the numeral. 12-17sp by size class.",
+        "displayName": "Countdown line",
+        "purpose": "'2 jam 47 menit menuju Maghrib 17.51', the prayer and its time in the accent; one line, else two.",
         "layout": "res/layout/widget_text_medium.xml"
       },
       "prayer-name": {
         "displayName": "Prayer name",
-        "purpose": "Next prayer in the accent. 11-13sp.",
+        "purpose": "The next prayer on 1- and 2-column sizes, in the accent.",
         "layout": "res/layout/widget_text_semibold.xml"
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Crumb, dates, footer. 10-12sp.",
+        "purpose": "Crumb, Gregorian and Hijri dates (same style), footer.",
         "layout": "res/layout/widget_text.xml"
-      },
-      "label": {
-        "displayName": "Label",
-        "purpose": "Mono caps legends (BERIKUTNYA, TIBA DALAM) 9-9.5sp; Hijri chip 10sp.",
-        "layout": "res/layout/widget_text_mono.xml"
       },
       "scale": {
         "displayName": "Scale",
@@ -166,202 +161,15 @@
         "layout": "res/layout/widget_text_mono.xml"
       }
     },
-    "sky": {
-      "source": "app/src/main/java/id/haho/muslimdaily/widget/SkyPainter.kt (Sky object); colours are Android ARGB",
-      "looks": {
-        "NIGHT": {
-          "key": "fajr - 60 min; isha",
-          "stops": [
-            "#050A1C",
-            "#0B1530",
-            "#141E3A",
-            "#1F2440"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x1FC88C6E",
-          "glowCenter": [
-            0.5,
-            1.15
-          ],
-          "glowRadii": [
-            1.2,
-            0.4
-          ],
-          "stars": 1.0
-        },
-        "PREDAWN": {
-          "key": "fajr",
-          "stops": [
-            "#08122A",
-            "#142450",
-            "#2A3360",
-            "#3A3352"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x26D67850",
-          "glowCenter": [
-            0.25,
-            1.1
-          ],
-          "glowRadii": [
-            0.9,
-            0.55
-          ],
-          "stars": 0.7
-        },
-        "DAWN": {
-          "key": "sunrise - 15 min",
-          "stops": [
-            "#0A1734",
-            "#1C2E5C",
-            "#45406E",
-            "#6E4652"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x66D67850",
-          "glowCenter": [
-            0.25,
-            1.1
-          ],
-          "glowRadii": [
-            0.9,
-            0.55
-          ],
-          "stars": 0.35
-        },
-        "MORNING": {
-          "key": "sunrise + 45 min",
-          "stops": [
-            "#154A8C",
-            "#2462A6",
-            "#3473B0",
-            "#3D78AE"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x24FFF0D2",
-          "glowCenter": [
-            0.18,
-            -0.15
-          ],
-          "glowRadii": [
-            0.8,
-            0.7
-          ],
-          "stars": 0.0
-        },
-        "NOON": {
-          "key": "dhuhr; asr",
-          "stops": [
-            "#0F4282",
-            "#1C5AA2",
-            "#2B6AAE",
-            "#3672AE"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x1AFFFFFF",
-          "glowCenter": [
-            0.5,
-            -0.2
-          ],
-          "glowRadii": [
-            0.9,
-            0.6
-          ],
-          "stars": 0.0
-        },
-        "GOLDEN": {
-          "key": "maghrib - 30 min",
-          "stops": [
-            "#1D3566",
-            "#3D4774",
-            "#6E5260",
-            "#82543F"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x4DE68C46",
-          "glowCenter": [
-            0.85,
-            1.1
-          ],
-          "glowRadii": [
-            0.9,
-            0.55
-          ],
-          "stars": 0.0
-        },
-        "DUSK": {
-          "key": "maghrib + 15 min",
-          "stops": [
-            "#0C1330",
-            "#262654",
-            "#4C3054",
-            "#6A3838"
-          ],
-          "stopPositions": [
-            0,
-            0.42,
-            0.78,
-            1
-          ],
-          "glow": "0x4DE0704A",
-          "glowCenter": [
-            0.85,
-            1.12
-          ],
-          "glowRadii": [
-            0.9,
-            0.5
-          ],
-          "stars": 0.35
-        }
-      },
-      "blend": "linear between consecutive keys",
-      "rim": "1dp stroke, vertical gradient 0x40FFFFFF to 0x0DFFFFFF",
-      "contrast": "white text >= 4.5:1 on every look (SkyContrastTest)"
-    },
     "shadows": [],
     "strokes": [
       {
-        "name": "card-hairline",
-        "value": "1dp #FFFFFF14 inside the card edge"
+        "name": "glass-edge",
+        "value": "1dp gradient #FFFFFF66 top to #FFFFFF14 bottom"
       },
       {
         "name": "header-divider",
         "value": "1dp #FFFFFF1A full width"
-      },
-      {
-        "name": "sky-rim",
-        "value": "1dp gradient 0x40FFFFFF to 0x0DFFFFFF"
       }
     ],
     "motion": [
@@ -395,44 +203,36 @@
       }
     ],
     "behaviour": [
+      "The clock is a TextClock in the location's time zone; it is right every minute between updates.",
       "Night track: from Isya until Subuh the bar runs Isya to Subuh (two stops).",
       "Header keeps today's date after Isya though the next prayer is tomorrow.",
-      "Times, names, countdown, chip and footer never ellipsize; dates and place may (WidgetFitTest).",
-      "Countdown minutes round up ('1 menit' until the prayer)."
-    ]
+      "Clock, times, names, countdown, Hijri date and footer never ellipsize; dates and place may (WidgetFitTest).",
+      "Countdown minutes round up ('1 menit' until the prayer).",
+      "Short cards keep the scale's names first: one-line countdown ('Jumat' if needed), clock down to 85%, then names drop."
+    ],
+    "glass": {
+      "source": "widget/GlassPainter.kt",
+      "fill": "#000000BD over the wallpaper",
+      "sheen": "linear, top left to 0.6w,h: 6% -> 2% at 0.4 -> 3% white",
+      "edge": "1dp, 40% white at the top -> 12% at 0.35 -> 8% at the bottom",
+      "contrast": "muted text >= 4.5:1 over a white wallpaper (GlassContrastTest)"
+    },
+    "celestial": {
+      "source": "widget/GlassPainter.kt; res/drawable-nodpi/widget_sun.jpg, widget_moon_map.jpg",
+      "sun": "NASA/SDO HMI continuum photo, limb darkening restored (I = 1 - 0.32(1 - mu)), warmer centre, redder limb, orange glow",
+      "moon": "NASA CGI Moon Kit LROC colour map on a sphere, gamma 1.8, Lommel-Seeliger lighting for the phase, 3% earthshine",
+      "phase": "mean synodic month from the 2000-01-06 18:14 UTC new moon (Moon.phase)",
+      "shown": "sun from sunrise to Maghrib, moon otherwise; Card layouts only"
+    }
   },
   "components": [
     {
-      "name": "Instrument Card (4x2 reference)",
+      "name": "Glass Card (4x2 reference)",
       "kind": "card",
-      "refersTo": "card",
-      "description": "Smoked card inset 1.5dp into the sky with a hairline edge; header, next prayer, countdown.",
-      "html": "<div class=\"ds-sky\"><div class=\"ds-card\"><div class=\"ds-head\"><span><span class=\"ds-place\">Jakarta / </span>Sen, 26 Okt</span><span class=\"ds-chip\">12 Jumadilawal</span></div><div class=\"ds-body\"><div><span class=\"ds-mono\">Berikutnya</span><span class=\"ds-name\">Ashar</span><div class=\"ds-time\">14.51</div></div><div><div class=\"ds-mono\" style=\"text-align:right\">Tiba dalam</div><div class=\"ds-cd\">6 jam 25 menit</div></div></div></div></div>",
-      "css": ".ds-sky{position:relative;width:340px;height:164px;border-radius:24px;background:linear-gradient(#154A8C 0%,#2462A6 42%,#3473B0 78%,#3D78AE 100%);font-family:'Google Sans Flex','Google Sans',sans-serif;font-variant-numeric:tabular-nums;color:#fff} .ds-card{position:absolute;inset:1.5px;border-radius:22.5px;background:#0E1218A8;box-shadow:inset 0 0 0 1px #FFFFFF14;padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px} .ds-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding-bottom:8px;border-bottom:1px solid #FFFFFF1A} .ds-head .ds-place{color:#FFFFFFA6} .ds-body{display:flex;justify-content:space-between;align-items:flex-end} .ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-name{color:#EEF26B;font-weight:600;font-size:13px;margin-left:6px} .ds-time{font-weight:500;font-size:40px;line-height:1;margin-top:4px} .ds-cd{font-weight:500;font-size:15px;text-align:right;margin-top:4px} .ds-chip{display:inline-block;background:#EEF26B26;color:#EEF26B;font-family:monospace;letter-spacing:.06em;font-size:10px;line-height:1;padding:3px 6px;border-radius:3px}"
-    },
-    {
-      "name": "Hijri Chip",
-      "kind": "chip",
-      "refersTo": "chip-hijri",
-      "description": "The Hijri date: accent mono on a 15% accent fill, 3dp corners.",
-      "html": "<span class=\"ds-chip\">12 Jumadilawal 1448 H</span>",
-      "css": ".ds-chip{display:inline-block;background:#EEF26B26;color:#EEF26B;font-family:monospace;letter-spacing:.06em;font-size:10px;line-height:1;padding:3px 6px;border-radius:3px}"
-    },
-    {
-      "name": "NextLabel",
-      "kind": "custom",
-      "refersTo": "next-name",
-      "description": "Mono muted legend beside the next prayer's name in the accent.",
-      "html": "<div style=\"background:#0E1218;padding:12px\"><span class=\"ds-mono\">Berikutnya</span><span class=\"ds-name\">Shalat Jumat</span></div>",
-      "css": ".ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-name{color:#EEF26B;font-family:'Google Sans Flex',sans-serif;font-weight:600;font-size:13px;margin-left:6px}"
-    },
-    {
-      "name": "Countdown Block",
-      "kind": "custom",
-      "refersTo": "countdown",
-      "description": "TIBA DALAM over the time left in words; smaller than the time; '±' when the tick is coarse.",
-      "html": "<div style=\"background:#0E1218;padding:12px;color:#fff;text-align:right\"><div class=\"ds-mono\">Tiba dalam</div><div class=\"ds-cd\">± 6 jam 30 menit</div></div>",
-      "css": ".ds-mono{font-family:monospace;letter-spacing:.06em;font-size:9.5px;color:#FFFFFFA6;text-transform:uppercase} .ds-cd{font-family:'Google Sans Flex',sans-serif;font-weight:500;font-size:15px;margin-top:4px;font-variant-numeric:tabular-nums}"
+      "refersTo": "glass",
+      "description": "Translucent black glass; header, the clock, the countdown line, the sun or moon.",
+      "html": "<div class=\"ds-w\"><div class=\"ds-head\"><span><span class=\"ds-place\">Jakarta / </span>Sen, 26 Okt</span><span>15 Jumadilawal</span></div><div class=\"ds-clock\">15.04</div><div class=\"ds-cd\">2 jam 47 menit menuju <span class=\"ds-acc\">Maghrib 17.51</span></div><div class=\"ds-sun\"></div></div>",
+      "css": ".ds-w{position:relative;width:340px;height:164px;border-radius:24px;background:#000000BD;box-shadow:inset 0 1px 0 #FFFFFF66;font-family:'Google Sans Flex','Google Sans',sans-serif;font-variant-numeric:tabular-nums;color:#fff;padding:12px 14px 14px;box-sizing:border-box;display:flex;flex-direction:column} .ds-head{display:flex;justify-content:space-between;font-size:12px;padding-bottom:8px;border-bottom:1px solid #FFFFFF1A} .ds-place{color:#FFFFFFA6} .ds-clock{font-weight:700;font-size:38px;line-height:1;margin-top:10px} .ds-cd{font-weight:500;font-size:15px;margin-top:2px} .ds-acc{color:#EEF26B} .ds-sun{position:absolute;right:14px;top:52px;width:46px;height:46px;border-radius:50%;background:radial-gradient(#FFF0C0,#F5A030 75%,#D86A1A);box-shadow:0 0 18px #FFB04A80}"
     },
     {
       "name": "Bar with Scale",
@@ -452,14 +252,14 @@
     }
   ],
   "narrative": {
-    "northStar": "The Instrument Over the Sky",
-    "overview": "The widget is a dark smoked-glass card set into a sky that changes with the time of day. It reads like a signal meter. One yellow accent says what comes next, a large figure gives its time, a smaller phrase says how long until then, and a bar shows how far the day (or the night) has gone. The sky is the only colour field. The card darkens it enough for every text colour to pass AA, and the sky still shows round the card's edge and faintly through it.\n\nIt is dense but calm. Each size class from 1×1 to 5×3 is put together from the same few parts, and spare room goes to the figures, never to padding. The type keeps two voices apart: Google Sans Flex for the content (numbers, names, the countdown), and the system monospace, letter-spaced and in caps, for the instrument's own labels and the bar's scale. The build rejects the category default: there is no gradient card holding a table of the five times. The times show up only as the bar's scale, and only where there is room.",
+    "northStar": "A Clock Under Glass",
+    "overview": "The widget is a pane of translucent black glass over the wallpaper. The largest thing on it is the time now, a live clock in bold. Under it one line says how long until the next prayer and names that prayer and its time in yellow. On the right, the sun by day or the moon at its real phase by night. A bar under them shows how far the day (or the night) has gone, with the prayers' names and times as its scale.\n\nThe large figure used to be the next prayer's time, which people read as the current time. Now the clock is the clock, and a prayer time only ever appears with its name beside it.",
     "keyCharacteristics": [
-      "One accent (`accent-signal`), used only for what is next: the prayer's name, its stop on the scale, the bar's filled part, the Hijri chip, and tomorrow's sunnah fast.",
-      "A smoked card inset a hairline (1.5dp) from the sky's edge, with a 1dp hairline of its own. No frame, no corner marks.",
-      "Mono caps labels as instrument legends (\"BERIKUTNYA\", \"TIBA DALAM\") paired with the values they label.",
-      "Figures grow to fill tall cells. Text never ellipsizes where it carries the answer.",
-      "The sky follows the prayer times. The bar runs from Subuh to Isya by day and from Isya to Subuh at night."
+      "Translucent black glass (74%) with a faint sheen and a lit top edge; the wallpaper shows through.",
+      "One accent (`accent-signal`), used only for what is next: the prayer and its time, its scale stop, the bar's fill, tomorrow's fast.",
+      "The current time is a TextClock the launcher keeps.",
+      "The sun and the moon are drawn from NASA imagery, the moon lit for tonight's phase.",
+      "Text never ellipsizes where it carries the answer; it shrinks first."
     ],
     "rules": [
       {
@@ -469,44 +269,43 @@
       },
       {
         "name": "The Glass Not Paint Rule",
-        "body": "The card is translucent smoke over the sky (`smoked-card`) and never an opaque fill. The sky must stay visible round the card and through it.",
+        "body": "The glass is translucent and never opaque; the wallpaper must show through it. Contrast is held by its darkness, measured over a white wallpaper.",
         "section": "colors"
       },
       {
-        "name": "The Two Voices Rule",
-        "body": "Values are set in Google Sans Flex and legends in letter-spaced mono. A legend is never sans and a value is never mono, except the scale's times, which are the instrument's own markings.",
+        "name": "The Clock Is the Clock Rule",
+        "body": "The large figure is always the current time. A prayer time is never shown large or alone: it always sits beside its prayer's name.",
         "section": "typography"
       },
       {
         "name": "The No Ellipsis on the Answer Rule",
-        "body": "Times, prayer names, the countdown, the Hijri chip and footer lines shrink to fit and never end in \"…\". Only dates and the place may shorten. `WidgetFitTest` enforces this for every size, both languages, 12- and 24-hour clocks, through the day, and at large system fonts.",
+        "body": "The clock, times, prayer names, the countdown line, the Hijri date and footer lines shrink to fit and never end in '…'. WidgetFitTest enforces it.",
         "section": "typography"
       },
       {
         "name": "The Figures Take the Room Rule",
-        "body": "Spare space goes to the time and the countdown, never to wider padding or bigger gaps.",
+        "body": "Spare space goes to the clock and the countdown, never to wider padding or bigger gaps.",
         "section": "layout"
       },
       {
-        "name": "The Smoke Not Shadow Rule",
-        "body": "Depth comes from the card's translucency and its hairline. No drop shadows and no lifted layers.",
+        "name": "The Glass Not Shadow Rule",
+        "body": "Depth comes from the glass's tint, sheen and edge. No drop shadows and no lifted layers.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** give the accent only to what is next: the name, its scale stop, the bar's fill, the chip, tomorrow's fast.",
-      "**Do** set values in Google Sans Flex with tabular figures and legends in letter-spaced mono caps.",
-      "**Do** shrink type through the fit factor before letting a time, name, countdown, chip or footer line ellipsize, and keep `WidgetFitTest` green.",
-      "**Do** spend spare height on the time (up to 2× on 3-row Card sizes) and the countdown, not on gaps.",
-      "**Do** keep every sky look dark enough for white text at 4.5:1 (`SkyContrastTest`).",
-      "**Do** take every gap and padding from the shared spacing steps so edges line up between sizes."
+      "Make the large figure the current time, and put every prayer time beside its name.",
+      "Give the accent only to what is next.",
+      "Shrink type through the fit factors before anything that carries the answer ellipsizes; keep WidgetFitTest green.",
+      "Keep the glass dark enough for muted text at 4.5:1 over a white wallpaper (GlassContrastTest).",
+      "Take every gap and padding from the shared spacing steps."
     ],
     "donts": [
-      "**Don't** list the five times as a table or list. They appear only as the bar's scale.",
-      "**Don't** let the countdown reach the size of the time.",
-      "**Don't** draw a sun, moon or clouds in the sky. Text sits anywhere on it.",
-      "**Don't** make the card opaque or add drop shadows. Depth comes from smoke and the hairline.",
-      "**Don't** apply the app's Material 3 palettes or `docs/design-tokens.md` colours to the widget, or the widget's tokens to app screens."
+      "List the five times as a table or list.",
+      "Let the countdown reach the size of the clock.",
+      "Make the glass opaque or add drop shadows.",
+      "Let text run under the sun or the moon.",
+      "Apply the app's Material 3 palettes to the widget, or the widget's tokens to app screens."
     ]
   }
 }

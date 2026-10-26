@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The current time, kept by the launcher itself so it is right every minute between widget
+  updates. Google Sans Flex Bold at its display optical size where the phone has it, the system
+  font in bold elsewhere. The format is set per widget (see Clock).
+-->
+<TextClock xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="google-sans-flex"
+    android:fontFeatureSettings="tnum"
+    android:fontVariationSettings="'wght' 700, 'opsz' 144"
+    android:includeFontPadding="false"
+    android:maxLines="1"
+    android:textColor="#FFFFFFFF"
+    android:textStyle="bold" />
