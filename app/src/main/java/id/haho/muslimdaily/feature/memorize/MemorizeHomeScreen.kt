@@ -77,7 +77,7 @@ class MemorizeHomeViewModel @Inject constructor(
             today = today,
             entries = items.mapNotNull { item ->
                 val dua = byId[item.duaId] ?: return@mapNotNull null
-                HifzEntry(item, dua, labels[dua.event].orEmpty(), Leitner.isDue(item.state, today))
+                HifzEntry(item, dua, labels[dua.event].orEmpty(), !item.notStarted && Leitner.isDue(item.state, today))
             },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
@@ -184,6 +184,12 @@ private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
                         content = MaterialTheme.colorScheme.onPrimary,
                         icon = R.drawable.ic_event_repeat,
                     )
+                    entry.item.notStarted -> Badge(
+                        stringResource(R.string.memorize_not_started),
+                        container = MaterialTheme.colorScheme.secondaryContainer,
+                        content = MaterialTheme.colorScheme.onSecondaryContainer,
+                        icon = R.drawable.ic_record_voice_over,
+                    )
                     entry.item.memorized -> Badge(
                         stringResource(R.string.memorize_memorized),
                         container = AppTheme.colors.completeFill,
@@ -192,12 +198,14 @@ private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
                     )
                     else -> Unit
                 }
-                Badge(
-                    stringResource(R.string.memorize_box_n, entry.item.state.box),
-                    container = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    content = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                if (!entry.due) {
+                if (!entry.item.notStarted) {
+                    Badge(
+                        stringResource(R.string.memorize_box_n, entry.item.state.box),
+                        container = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        content = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                if (!entry.due && !entry.item.notStarted) {
                     Text(
                         stringResource(R.string.memorize_next_on, formatLongDate(entry.item.state.due)),
                         style = MaterialTheme.typography.bodySmall,
