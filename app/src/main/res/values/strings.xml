@@ -836,6 +836,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_2_0">
+        <item>Mengulang hafalan kini dimulai dari ingatan: teks Arab tertutup, dengan petunjuk berupa waktu membacanya dan, bila perlu, artinya. Setelah itu cek teks lengkapnya dan nilai hafalan Anda.</item>
+        <item>Di langkah Ingat, pilih \"Tampilkan huruf awal\" agar setiap kata yang disembunyikan menampilkan huruf pertamanya, sembunyikan kata dari akhir doa, dan ketuk \"Buka kata berikutnya\" saat lupa.</item>
+        <item>Saat membaca dzikir, doa yang sedang Anda hafal tampil tanpa teks Arab agar dibaca dari hafalan. Ketuk \"Tampilkan teks\" untuk mencocokkan; bisa dimatikan di menu.</item>
+    </string-array>
     <string-array name="whats_new_1_1_0">
         <item>Widget jadwal shalat tampil baru: angka besar kini jam sekarang, dan di bawahnya sisa waktu menuju shalat berikutnya beserta waktunya, misalnya \"2 jam 47 menit menuju Maghrib 17.51\".</item>
         <item>Latarnya kini kaca hitam tembus pandang, dengan matahari di siang hari dan bulan sesuai fasenya malam itu, digambar dari citra NASA.</item>
