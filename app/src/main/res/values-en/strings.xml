@@ -327,6 +327,9 @@
     <string name="run_previous">Previous</string>
     <string name="run_next">Next</string>
     <string name="run_auto_advance">Auto-advance</string>
+    <string name="run_from_memory">Recite from memory</string>
+    <string name="run_from_memory_body">This dua is in your memorisation. Recite it without looking, then show the text to check.</string>
+    <string name="run_show_text">Show the text</string>
     <string name="run_restart">Restart</string>
     <string name="run_summary_done">%s complete</string>
     <string name="run_summary_partial">Not all read yet</string>

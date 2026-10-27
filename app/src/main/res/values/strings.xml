@@ -319,6 +319,9 @@
     <string name="run_previous">Sebelumnya</string>
     <string name="run_next">Berikutnya</string>
     <string name="run_auto_advance">Lanjut otomatis</string>
+    <string name="run_from_memory">Baca dari hafalan</string>
+    <string name="run_from_memory_body">Doa ini ada di hafalan Anda. Bacalah tanpa melihat teks, lalu tampilkan untuk mencocokkan.</string>
+    <string name="run_show_text">Tampilkan teks</string>
     <string name="run_restart">Mulai ulang</string>
     <string name="run_summary_done">%s selesai</string>
     <string name="run_summary_partial">Belum semua dibaca</string>

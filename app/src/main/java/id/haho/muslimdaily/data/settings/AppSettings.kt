@@ -104,6 +104,8 @@ data class AppSettings(
     val reciterId: String = "default",
     val autoAdvance: Boolean = true,
     val haptics: Boolean = true,
+    /** Run mode hides the Arabic of duas in "My hifz" until revealed, to recite them from memory. */
+    val runFromMemory: Boolean = true,
     /** The first-launch setup was finished or skipped. */
     val onboardingDone: Boolean = false,
     /** The app version whose "what's new" the reader has seen; blank on a fresh install. */
