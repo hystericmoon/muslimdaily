@@ -47,5 +47,12 @@ class RoutineRepository @Inject constructor(private val db: UserDatabase, privat
         return routine.id
     }
 
+    /** Adds [duaId] at the end of the routine, or takes it out. The routine keeps its name and place. */
+    suspend fun setIncluded(routineId: String, duaId: String, included: Boolean) {
+        val r = routine(routineId) ?: return
+        val ids = if (included) (r.duaIds - duaId) + duaId else r.duaIds - duaId
+        if (ids != r.duaIds) save(r.id, r.name, ids)
+    }
+
     suspend fun delete(id: String) = dao.remove(id)
 }

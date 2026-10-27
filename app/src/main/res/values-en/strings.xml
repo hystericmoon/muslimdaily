@@ -257,6 +257,7 @@
     <string name="dua_virtue">Virtue</string>
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
     <string name="dua_memorize">Memorize</string>
+    <string name="dua_add_to_routine">Add to routine</string>
     <string name="dua_add_to_set">Add to my set</string>
     <string name="dua_remove_from_set">Remove from my set</string>
     <string name="dua_in_set_note">This dua is in your set for this occasion.</string>
@@ -407,6 +408,10 @@
     <string name="memorize_scheduled">Review on %s</string>
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
+    <string name="memorize_remove">Remove</string>
+    <string name="memorize_remove_named">Remove %1$s from My hifz</string>
+    <string name="memorize_remove_title">Remove from My hifz?</string>
+    <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorise it again any time.</string>
     <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_next_step">Continue to %s</string>

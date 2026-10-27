@@ -86,6 +86,7 @@ class RoutineEditViewModel @Inject constructor(
                     val duas = ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(route.fromEvent)), mySets.customizationOnce(route.fromEvent))
                     event?.label.orEmpty() to duas
                 }
+                route.withDua != null -> "" to content.duas(listOf(route.withDua))
                 else -> "" to emptyList()
             }
             _state.value = RoutineEditState(isNew = existing == null, name = name, items = items, categories = categories)

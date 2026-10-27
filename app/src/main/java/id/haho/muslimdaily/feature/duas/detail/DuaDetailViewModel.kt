@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import id.haho.muslimdaily.data.note.NoteRepository
+import id.haho.muslimdaily.data.routine.Routine
+import id.haho.muslimdaily.data.routine.RoutineRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -38,6 +40,8 @@ data class DuaDetailState(
     val inMySet: Boolean,
     /** The reader's own note, if any. */
     val note: String? = null,
+    /** The reader's routines, for "add to routine". */
+    val routines: List<Routine> = emptyList(),
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -49,6 +53,7 @@ class DuaDetailViewModel @Inject constructor(
     private val settings: SettingsRepository,
     private val audio: AudioEngine,
     private val notes: NoteRepository,
+    private val routineRepo: RoutineRepository,
 ) : ViewModel() {
     val duaId: String = savedState.toRoute<DuaDetailRoute>().duaId
 
@@ -80,6 +85,7 @@ class DuaDetailViewModel @Inject constructor(
             )
         }
     }.combine(notes.note(duaId)) { st, note -> st?.copy(note = note) }
+        .combine(routineRepo.routines()) { st, routines -> st?.copy(routines = routines) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun saveNote(text: String) {
@@ -111,6 +117,10 @@ class DuaDetailViewModel @Inject constructor(
             val custom = mySets.customizationOnce(d.event)
             mySets.saveItems(d.event, ActiveSet.withIncluded(canonical, custom, keyOf(d), included))
         }
+    }
+
+    fun setInRoutine(routineId: String, included: Boolean) {
+        viewModelScope.launch { routineRepo.setIncluded(routineId, duaId, included) }
     }
 
     suspend fun contentVersion(): Int = content.contentVersion()
