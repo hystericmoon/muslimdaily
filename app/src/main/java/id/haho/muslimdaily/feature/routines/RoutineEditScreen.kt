@@ -60,6 +60,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.muslimdaily.core.designsystem.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.component.SectionHeader
 import id.haho.muslimdaily.core.designsystem.glass.Glass
@@ -70,6 +71,8 @@ import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
 import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
 import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.model.Dua
+import id.haho.muslimdaily.feature.duas.components.DuaTranslations
+import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 
 class RoutineEditActions(
     val onRename: (String) -> Unit = {},
@@ -326,7 +329,7 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
                 item(key = "none") { InfoNote(stringResource(R.string.search_empty_title), Modifier.padding(gutter)) }
             }
             items(results, key = { "r:" + it.id }) { dua ->
-                PickRow(dua, labels[dua.event].orEmpty(), dua.id in selected) { actions.onToggle(dua) }
+                PickRow(dua, labels[dua.event].orEmpty(), state.prefs, dua.id in selected) { actions.onToggle(dua) }
             }
         } else {
             state.categories.forEach { category ->
@@ -358,7 +361,7 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
                                 }
                                 if (open) {
                                     state.eventDuas[event.id].orEmpty().forEach { dua ->
-                                        PickRow(dua, "", dua.id in selected) { actions.onToggle(dua) }
+                                        PickRow(dua, "", state.prefs, dua.id in selected) { actions.onToggle(dua) }
                                     }
                                 }
                             }
@@ -371,7 +374,7 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
 }
 
 @Composable
-private fun PickRow(dua: Dua, eventLabel: String, checked: Boolean, onToggle: () -> Unit) {
+private fun PickRow(dua: Dua, eventLabel: String, prefs: ReadingPrefs, checked: Boolean, onToggle: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -382,6 +385,21 @@ private fun PickRow(dua: Dua, eventLabel: String, checked: Boolean, onToggle: ()
     ) {
         Checkbox(checked = checked, onCheckedChange = null)
         Spacer(Modifier.width(AppTheme.spacing.md))
-        DuaSummary(null, dua, eventLabel, Modifier.weight(1f))
+        PickSummary(dua, eventLabel, prefs, Modifier.weight(1f))
     }
 }
+
+/** Occasion, the start of the Arabic and the translation (and transliteration, if on): enough to choose by. */
+@Composable
+private fun PickSummary(dua: Dua, eventLabel: String, prefs: ReadingPrefs, modifier: Modifier = Modifier) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+        if (eventLabel.isNotBlank()) {
+            Text(eventLabel, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+        }
+        ArabicText(dua.arabic, style = AppTheme.arabic.body(dua.isQuran), maxLines = PICK_ARABIC_LINES)
+        DuaTranslations(dua, prefs, maxLines = PICK_TRANSLATION_LINES)
+    }
+}
+
+private const val PICK_ARABIC_LINES = 2
+private const val PICK_TRANSLATION_LINES = 2

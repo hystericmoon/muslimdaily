@@ -237,13 +237,13 @@ interface ReviewDao {
     @Query("SELECT * FROM review_items ORDER BY dueEpochDay, duaId")
     fun observeAll(): Flow<List<ReviewItemEntity>>
 
-    @Query("SELECT COUNT(*) FROM review_items WHERE dueEpochDay <= :today")
+    @Query("SELECT COUNT(*) FROM review_items WHERE lastReviewedEpochDay IS NOT NULL AND dueEpochDay <= :today")
     fun observeDueCount(today: Long): Flow<Int>
 
-    @Query("SELECT COUNT(*) FROM review_items WHERE dueEpochDay <= :today")
+    @Query("SELECT COUNT(*) FROM review_items WHERE lastReviewedEpochDay IS NOT NULL AND dueEpochDay <= :today")
     suspend fun dueCount(today: Long): Int
 
-    @Query("SELECT * FROM review_items WHERE dueEpochDay <= :today ORDER BY dueEpochDay, duaId")
+    @Query("SELECT * FROM review_items WHERE lastReviewedEpochDay IS NOT NULL AND dueEpochDay <= :today ORDER BY dueEpochDay, duaId")
     suspend fun due(today: Long): List<ReviewItemEntity>
 
     @Query("SELECT * FROM review_items WHERE duaId = :duaId")

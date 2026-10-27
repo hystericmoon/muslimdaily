@@ -57,6 +57,7 @@ class MemorizeScreenshotTest {
                     HifzEntry(ReviewItem("a", LeitnerState(2, today), today.minusDays(3)), DuaPreviewData.dua("a", 1), "Bangun tidur", due = true),
                     HifzEntry(ReviewItem("b", LeitnerState(5, today.plusDays(21)), today.minusDays(9)), DuaPreviewData.dua("b", 2), "Dzikir pagi", due = false),
                     HifzEntry(ReviewItem("c", LeitnerState(3, today.plusDays(4)), today.minusDays(3)), DuaPreviewData.dua("c", 3), "Sebelum tidur", due = false),
+                    HifzEntry(ReviewItem("d", LeitnerState(1, today), null), DuaPreviewData.dua("d", 1), "Masuk masjid", due = false),
                 ),
             ),
         ) { _, _ -> }

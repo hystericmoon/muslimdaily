@@ -67,6 +67,23 @@ class RoutineScreenshotTest {
         )
     }
 
+    @Test
+    fun pickerSearch() = captureVariants("124-routine-picker-search") {
+        RoutineEditScreen(
+            RoutineEditState(
+                isNew = true,
+                name = "",
+                items = DuaPreviewData.duas.take(1),
+                picking = true,
+                categories = categories,
+                query = "tidur",
+                results = DuaPreviewData.duas,
+            ),
+            onBack = {},
+            actions = RoutineEditActions(),
+        )
+    }
+
     /** The docked bars, as they sit on the bottom navigation. */
     @Test
     @Config(qualifiers = "id-w400dp-h300dp-xhdpi")

@@ -330,6 +330,8 @@
     <string name="run_from_memory">Recite from memory</string>
     <string name="run_from_memory_body">This dua is in your memorisation. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
+    <string name="run_add_to_hifz">Add to My hifz</string>
+    <string name="run_in_hifz">In My hifz</string>
     <string name="run_restart">Restart</string>
     <string name="run_summary_done">%s complete</string>
     <string name="run_summary_partial">Not all read yet</string>
@@ -404,6 +406,7 @@
     </plurals>
     <string name="memorize_scheduled">Review on %s</string>
     <string name="memorize_memorized">Memorized</string>
+    <string name="memorize_not_started">Not started</string>
     <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_next_step">Continue to %s</string>

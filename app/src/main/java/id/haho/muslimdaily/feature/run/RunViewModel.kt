@@ -45,6 +45,8 @@ data class RunUiState(
     val haptics: Boolean,
     /** Duas in "My hifz"; with [fromMemory] their Arabic stays hidden until the page is revealed. */
     val hifz: Set<String> = emptySet(),
+    /** Every dua in "My hifz", including those saved to learn later (not hidden: not learnt yet). */
+    val saved: Set<String> = emptySet(),
     val fromMemory: Boolean = false,
     /** Pages whose text was shown this session; not stored. */
     val revealed: Set<Int> = emptySet(),
@@ -122,6 +124,7 @@ class RunViewModel @Inject constructor(
                 if (duas.size == session.items.size) session to duas else null
             }
             val (session, duas) = resumed ?: newSession()
+            val hifz = reviews.items().first()
             _state.value = RunUiState(
                 eventLabel = label,
                 duas = duas,
@@ -132,7 +135,8 @@ class RunViewModel @Inject constructor(
                 prefs = prefs,
                 autoAdvance = s.autoAdvance,
                 haptics = s.haptics,
-                hifz = reviews.items().first().map { it.duaId }.toSet(),
+                hifz = hifz.filterNot { it.notStarted }.map { it.duaId }.toSet(),
+                saved = hifz.map { it.duaId }.toSet(),
                 fromMemory = s.runFromMemory,
             )
             launch {
@@ -204,6 +208,15 @@ class RunViewModel @Inject constructor(
     /** Shows the hidden text of a dua recited from memory. Changes no count and no review. */
     fun reveal(page: Int) {
         _state.update { it?.copy(revealed = it.revealed + page) }
+    }
+
+    /** Saves the dua on [page] to "My hifz" to learn later. Changes no count. */
+    fun addToHifz(page: Int) {
+        val id = _state.value?.duas?.getOrNull(page)?.id ?: return
+        viewModelScope.launch {
+            reviews.add(id, today)
+            _state.update { it?.copy(saved = it.saved + id) }
+        }
     }
 
     fun setFromMemory(enabled: Boolean) {

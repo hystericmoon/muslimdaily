@@ -75,6 +75,7 @@ data class RunActions(
     val onAutoAdvance: (Boolean) -> Unit = {},
     val onFromMemory: (Boolean) -> Unit = {},
     val onReveal: (Int) -> Unit = {},
+    val onAddToHifz: (Int) -> Unit = {},
     val onClose: () -> Unit = {},
 )
 
@@ -113,6 +114,7 @@ fun RunRoute(onClose: () -> Unit, viewModel: RunViewModel = hiltViewModel()) {
                 onAutoAdvance = viewModel::setAutoAdvance,
                 onFromMemory = viewModel::setFromMemory,
                 onReveal = viewModel::reveal,
+                onAddToHifz = viewModel::addToHifz,
                 onClose = onClose,
             ),
         )
@@ -190,6 +192,16 @@ private fun RunTopBar(state: RunUiState, pager: PagerState, actions: RunActions)
                             text = { Text(stringResource(R.string.run_from_memory)) },
                             trailingIcon = { Switch(checked = state.fromMemory, onCheckedChange = null) },
                             onClick = { actions.onFromMemory(!state.fromMemory) },
+                        )
+                    }
+                    state.duas.getOrNull(pager.currentPage)?.let { dua ->
+                        // Stays open after adding, so the confirmation is seen (and read by TalkBack).
+                        val saved = dua.id in state.saved
+                        DropdownMenuItem(
+                            text = { Text(stringResource(if (saved) R.string.run_in_hifz else R.string.run_add_to_hifz)) },
+                            leadingIcon = { Icon(painterResource(if (saved) R.drawable.ic_check else R.drawable.ic_record_voice_over), null) },
+                            enabled = !saved,
+                            onClick = { actions.onAddToHifz(pager.currentPage) },
                         )
                     }
                     DropdownMenuItem(

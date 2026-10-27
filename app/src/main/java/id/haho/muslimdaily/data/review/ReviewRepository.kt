@@ -13,6 +13,9 @@ import javax.inject.Singleton
 
 data class ReviewItem(val duaId: String, val state: LeitnerState, val lastReviewed: LocalDate?) {
     val memorized: Boolean get() = Leitner.isMemorized(state)
+
+    /** Saved to learn later (e.g. from Run mode) and never rated: not yet in the review queue. */
+    val notStarted: Boolean get() = lastReviewed == null
 }
 
 /** Leitner review boxes for memorised duas. Private, local, and free of streaks. */
@@ -43,6 +46,15 @@ class ReviewRepository @Inject constructor(private val db: UserDatabase) {
             ),
         )
         return next
+    }
+
+    /**
+     * Saves a dua to learn later. It joins the review queue on its first rating; a dua already
+     * saved or being reviewed is left as it is.
+     */
+    suspend fun add(duaId: String, today: LocalDate) {
+        if (dao.item(duaId) != null) return
+        dao.upsert(ReviewItemEntity(duaId, box = 1, dueEpochDay = today.toEpochDay(), lastReviewedEpochDay = null, addedEpochDay = today.toEpochDay()))
     }
 
     suspend fun remove(duaId: String) = dao.delete(duaId)

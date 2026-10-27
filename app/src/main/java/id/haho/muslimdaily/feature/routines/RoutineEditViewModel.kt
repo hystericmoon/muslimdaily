@@ -10,7 +10,9 @@ import id.haho.muslimdaily.core.model.DuaCategory
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.routine.RoutineRepository
+import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.myset.ActiveSet
+import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.RoutineEditRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,6 +35,7 @@ data class RoutineEditState(
     val eventDuas: Map<String, List<Dua>> = emptyMap(),
     val query: String = "",
     val results: List<Dua>? = null,
+    val prefs: ReadingPrefs = ReadingPrefs(),
     val saved: Boolean = false,
 ) {
     val selectedIds: Set<String> get() = items.mapTo(HashSet()) { it.id }
@@ -64,6 +67,7 @@ class RoutineEditViewModel @Inject constructor(
     private val routines: RoutineRepository,
     private val content: ContentRepository,
     private val mySets: MySetRepository,
+    private val settings: SettingsRepository,
 ) : ViewModel() {
     private val route = savedState.toRoute<RoutineEditRoute>()
     private val _state = MutableStateFlow<RoutineEditState?>(null)
@@ -85,6 +89,11 @@ class RoutineEditViewModel @Inject constructor(
                 else -> "" to emptyList()
             }
             _state.value = RoutineEditState(isNew = existing == null, name = name, items = items, categories = categories)
+        }
+        viewModelScope.launch {
+            settings.settings.collect { s ->
+                _state.update { it?.copy(prefs = ReadingPrefs(s.translationMode, s.showTransliteration)) }
+            }
         }
     }
 
