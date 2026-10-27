@@ -3,6 +3,7 @@ package id.haho.muslimdaily.feature.memorize
 import androidx.compose.foundation.layout.Box
 import id.haho.muslimdaily.core.designsystem.glass.enterReveal
 import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
 import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
 import id.haho.muslimdaily.core.designsystem.glass.GlassButton
 import id.haho.muslimdaily.core.designsystem.glass.GlassCard
@@ -18,10 +19,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -52,6 +58,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
@@ -64,7 +71,7 @@ data class MemorizeHomeState(val today: LocalDate, val entries: List<HifzEntry>)
 
 @HiltViewModel
 class MemorizeHomeViewModel @Inject constructor(
-    reviews: ReviewRepository,
+    private val reviews: ReviewRepository,
     content: ContentRepository,
     clock: Clock,
 ) : ViewModel() {
@@ -81,6 +88,11 @@ class MemorizeHomeViewModel @Inject constructor(
             },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    /** Takes a dua out of "My hifz", with its review schedule. The dua itself stays in the library. */
+    fun remove(duaId: String) {
+        viewModelScope.launch { reviews.remove(duaId) }
+    }
 }
 
 @Composable
@@ -100,12 +112,12 @@ fun MemorizeHomeRoute(
             )
         },
     ) {
-        state?.let { MemorizeHomeContent(it, onOpen) }
+        state?.let { MemorizeHomeContent(it, onRemove = viewModel::remove, onOpen = onOpen) }
     }
 }
 
 @Composable
-fun MemorizeHomeContent(state: MemorizeHomeState, onOpen: (String, Boolean) -> Unit) {
+fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {}, onOpen: (String, Boolean) -> Unit) {
     LazyColumn(
         Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxxl * 2),
@@ -130,7 +142,7 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onOpen: (String, Boolean) -> U
                 )
             }
             items(state.entries, key = { it.item.duaId }) { entry ->
-                Box(Modifier.animateItem()) { HifzRow(entry) { onOpen(entry.dua.id, entry.due) } }
+                Box(Modifier.animateItem()) { HifzRow(entry, onRemove = { onRemove(entry.dua.id) }) { onOpen(entry.dua.id, entry.due) } }
             }
         }
         item(key = "note") { InfoNote(stringResource(R.string.memorize_no_streaks)) }
@@ -159,7 +171,8 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
 }
 
 @Composable
-private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
+private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit) {
+    var confirmRemove by remember { mutableStateOf(false) }
     GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
         Column(
             Modifier
@@ -175,6 +188,13 @@ private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
                 )
+                IconButton(onClick = { confirmRemove = true }) {
+                    Icon(
+                        painterResource(R.drawable.ic_close),
+                        stringResource(R.string.memorize_remove_named, entry.eventLabel),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
                 when {
@@ -215,5 +235,16 @@ private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
                 }
             }
         }
+    }
+    if (confirmRemove) {
+        GlassAlertDialog(
+            onDismissRequest = { confirmRemove = false },
+            title = { Text(stringResource(R.string.memorize_remove_title)) },
+            text = { Text(stringResource(R.string.memorize_remove_body)) },
+            confirmButton = {
+                TextButton(onClick = { confirmRemove = false; onRemove() }) { Text(stringResource(R.string.memorize_remove)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.action_cancel)) } },
+        )
     }
 }

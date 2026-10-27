@@ -33,6 +33,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import androidx.compose.ui.semantics.Role
+import androidx.compose.material3.Checkbox
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -62,12 +68,15 @@ data class DuaDetailActions(
     val onMemorize: () -> Unit = {},
     val onSetInMySet: (Boolean) -> Unit = {},
     val onSaveNote: (String) -> Unit = {},
+    val onSetInRoutine: (routineId: String, included: Boolean) -> Unit = { _, _ -> },
+    val onNewRoutine: () -> Unit = {},
 )
 
 @Composable
 fun DuaDetailRoute(
     onBack: () -> Unit,
     onMemorize: (String) -> Unit,
+    onNewRoutine: (String) -> Unit,
     viewModel: DuaDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -113,6 +122,8 @@ fun DuaDetailRoute(
                     onMemorize = { onMemorize(s.dua.id) },
                     onSetInMySet = viewModel::setInMySet,
                     onSaveNote = viewModel::saveNote,
+                    onSetInRoutine = viewModel::setInRoutine,
+                    onNewRoutine = { onNewRoutine(s.dua.id) },
                 ),
             )
         }
@@ -121,6 +132,8 @@ fun DuaDetailRoute(
 
 @Composable
 fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
+    var routineSheet by remember { mutableStateOf(false) }
+    if (routineSheet) RoutineSheet(state, actions) { routineSheet = false }
     val dua = state.dua
     Column(
         Modifier
@@ -181,6 +194,11 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
                 )
                 Spacer(Modifier.width(AppTheme.spacing.sm))
                 Text(stringResource(if (state.inMySet) R.string.dua_remove_from_set else R.string.dua_add_to_set))
+            }
+            GlassOutlinedButton(onClick = { routineSheet = true }) {
+                Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(AppTheme.dimens.smallIcon))
+                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Text(stringResource(R.string.dua_add_to_routine))
             }
         }
         InfoNote(
@@ -244,5 +262,46 @@ private fun NoteCard(note: String?, onSave: (String) -> Unit) {
                 }
             },
         )
+    }
+}
+
+/** The reader's routines with this dua ticked where it is in them, and a new routine that starts with it. */
+@Composable
+private fun RoutineSheet(state: DuaDetailState, actions: DuaDetailActions, onDismiss: () -> Unit) {
+    GlassBottomSheet(onDismissRequest = onDismiss) {
+        Column(Modifier.padding(bottom = AppTheme.spacing.xxl)) {
+            Text(
+                stringResource(R.string.dua_add_to_routine),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm).semantics { heading() },
+            )
+            state.routines.forEach { routine ->
+                val checked = state.dua.id in routine.duaIds
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                        .toggleable(value = checked, role = Role.Checkbox, onValueChange = { actions.onSetInRoutine(routine.id, it) })
+                        .padding(horizontal = AppTheme.dimens.screenGutter),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Checkbox(checked = checked, onCheckedChange = null)
+                    Spacer(Modifier.width(AppTheme.spacing.md))
+                    Text(routine.name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                }
+            }
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                    .clickable(role = Role.Button) { onDismiss(); actions.onNewRoutine() }
+                    .padding(horizontal = AppTheme.dimens.screenGutter),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(painterResource(R.drawable.ic_add), null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(AppTheme.spacing.md))
+                Text(stringResource(R.string.routine_new), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
+            }
+        }
     }
 }
