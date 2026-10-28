@@ -21,9 +21,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withTranslation
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.design.theme.HahoPalette
 import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
-import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
+import id.haho.design.theme.colorSchemeFor
 import id.haho.muslimdaily.core.model.Dua
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -50,7 +50,7 @@ object DuaShareCard {
         dua: Dua,
         title: String,
         source: String,
-        palette: AppPalette,
+        palette: HahoPalette,
         textScale: Float = 1f,
         font: ArabicFont = ArabicFont.NASKH,
     ): Bitmap {
@@ -63,7 +63,7 @@ object DuaShareCard {
             ArabicFont.AMIRI -> if (dua.isQuran) R.font.amiri_quran else R.font.amiri_regular
         }
         val arabicFace = ResourcesCompat.getFont(context, arabicRes) ?: Typeface.SERIF
-        val latinFace = ResourcesCompat.getFont(context, R.font.plus_jakarta_sans) ?: Typeface.SANS_SERIF
+        val latinFace = ResourcesCompat.getFont(context, id.haho.design.R.font.haho_plus_jakarta_sans) ?: Typeface.SANS_SERIF
         val inner = (WIDTH - 2 * PAD - 2 * CARD_PAD).toInt()
 
         fun layout(
@@ -147,7 +147,7 @@ object DuaShareCard {
     }
 
     /** Renders and hands the image to the share sheet, with the source as text alongside. */
-    suspend fun share(context: Context, dua: Dua, title: String, source: String, palette: AppPalette, font: ArabicFont) {
+    suspend fun share(context: Context, dua: Dua, title: String, source: String, palette: HahoPalette, font: ArabicFont) {
         val file = withContext(Dispatchers.Default) {
             val bmp = render(context, dua, title, source, palette, font = font)
             withContext(Dispatchers.IO) {

@@ -7,12 +7,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import com.github.takahirom.roborazzi.captureRoboImage
-import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
-import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
+import id.haho.design.glass.GlassBackdrop
+import id.haho.design.theme.HahoPalette
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.design.theme.ThemeMode
 
-/** The three variants every screen is checked in, matching @ThemePreviews. */
+/** The three variants every screen is checked in, matching @HahoPreviews. */
 enum class Variant(val suffix: String, val mode: ThemeMode, val fontScale: Float) {
     LIGHT("light", ThemeMode.LIGHT, 1f),
     DARK("dark", ThemeMode.DARK, 1f),
@@ -27,7 +27,7 @@ fun captureVariants(name: String, content: @Composable () -> Unit) {
         captureRoboImage("$name-${variant.suffix}.png") {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, variant.fontScale)) {
-                MuslimDailyTheme(themeMode = variant.mode) {
+                AdwamTheme(themeMode = variant.mode) {
                     GlassBackdrop { content() }
                 }
             }
@@ -39,10 +39,10 @@ fun captureVariants(name: String, content: @Composable () -> Unit) {
 fun capturePalettes(name: String, content: @Composable () -> Unit) {
     val context = ApplicationProvider.getApplicationContext<android.content.Context>()
     Settings.System.putString(context.contentResolver, Settings.System.TIME_12_24, "24")
-    AppPalette.entries.forEach { palette ->
+    HahoPalette.entries.forEach { palette ->
         listOf(ThemeMode.LIGHT, ThemeMode.DARK).forEach { mode ->
             captureRoboImage("$name-${palette.name.lowercase()}-${mode.name.lowercase()}.png") {
-                MuslimDailyTheme(themeMode = mode, palette = palette) {
+                AdwamTheme(themeMode = mode, palette = palette) {
                     GlassBackdrop { content() }
                 }
             }

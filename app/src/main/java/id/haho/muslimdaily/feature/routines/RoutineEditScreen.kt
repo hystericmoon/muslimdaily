@@ -59,17 +59,18 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SectionHeader
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.glass.chevronRotation
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
@@ -115,7 +116,7 @@ fun RoutineEditRoute(onBack: () -> Unit, viewModel: RoutineEditViewModel = hiltV
 @Composable
 fun RoutineEditScreen(state: RoutineEditState, onBack: () -> Unit, actions: RoutineEditActions) {
     var confirmDelete by remember { mutableStateOf(false) }
-    AppScreen(
+    AdwamScreen(
         title = stringResource(
             when {
                 state.picking -> R.string.routine_pick_title
@@ -149,16 +150,16 @@ fun RoutineEditScreen(state: RoutineEditState, onBack: () -> Unit, actions: Rout
 
 @Composable
 private fun EditorContent(state: RoutineEditState, actions: RoutineEditActions, onDelete: () -> Unit) {
-    val gutter = AppTheme.dimens.screenGutter
+    val gutter = HahoTheme.dimens.screenGutter
     var order by remember(state.items.map { it.id }) { mutableStateOf(state.items) }
     var draggingId by remember { mutableStateOf<String?>(null) }
     var dragOffset by remember { mutableFloatStateOf(0f) }
     val heights = remember { mutableStateMapOf<String, Int>() }
     val labels = state.eventLabels
 
-    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item(key = "name") {
-            Column(Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 OutlinedTextField(
                     value = state.name,
                     onValueChange = actions.onRename,
@@ -184,7 +185,7 @@ private fun EditorContent(state: RoutineEditState, actions: RoutineEditActions, 
                 dragging = dragging,
                 actions = actions,
                 modifier = Modifier
-                    .animateItem(placementSpec = if (dragging) null else AppTheme.motion.layout())
+                    .animateItem(placementSpec = if (dragging) null else HahoTheme.motion.layout())
                     .zIndex(if (dragging) 1f else 0f)
                     .graphicsLayer { translationY = if (dragging) dragOffset else 0f }
                     .onSizeChanged { heights[dua.id] = it.height },
@@ -217,10 +218,10 @@ private fun EditorContent(state: RoutineEditState, actions: RoutineEditActions, 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.animateItem())
         }
         item(key = "add") {
-            Column(Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.md), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.md), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 GlassTonalButton(onClick = { actions.onPick(true) }, modifier = Modifier.fillMaxWidth()) {
-                    Icon(painterResource(R.drawable.ic_add), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Spacer(Modifier.width(AppTheme.spacing.sm))
+                    Icon(painterResource(R.drawable.ic_add), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
                     Text(stringResource(R.string.routine_add))
                 }
                 GlassButton(onClick = actions.onSave, enabled = state.canSave, modifier = Modifier.fillMaxWidth()) {
@@ -252,16 +253,16 @@ private fun RoutineRow(
 ) {
     val moveUp = stringResource(R.string.customize_move_up)
     val moveDown = stringResource(R.string.customize_move_down)
-    val lift by animateFloatAsState(if (dragging) 1f else 0f, AppTheme.motion.press(), label = "lift")
+    val lift by animateFloatAsState(if (dragging) 1f else 0f, HahoTheme.motion.press(), label = "lift")
     Surface(
         color = if (dragging) Glass.colors.sheet else Color.Transparent,
-        shadowElevation = AppTheme.spacing.sm * lift,
+        shadowElevation = HahoTheme.spacing.sm * lift,
         modifier = modifier,
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                 .semantics {
                     customActions = buildList {
                         if (index > 0) add(CustomAccessibilityAction(moveUp) { actions.onMove(dua.id, -1); true })
@@ -270,10 +271,10 @@ private fun RoutineRow(
                 },
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(handleModifier.size(AppTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
+            Box(handleModifier.size(HahoTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
                 Icon(painterResource(R.drawable.ic_drag_indicator), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            DuaSummary(index + 1, dua, eventLabel, Modifier.weight(1f).padding(vertical = AppTheme.spacing.sm))
+            DuaSummary(index + 1, dua, eventLabel, Modifier.weight(1f).padding(vertical = HahoTheme.spacing.sm))
             IconButton(onClick = { actions.onRemove(dua.id) }) {
                 Icon(painterResource(R.drawable.ic_close), stringResource(R.string.routine_remove))
             }
@@ -284,7 +285,7 @@ private fun RoutineRow(
 /** Number, occasion and the start of the translation: enough to tell duas apart in a list. */
 @Composable
 private fun DuaSummary(number: Int?, dua: Dua, eventLabel: String, modifier: Modifier = Modifier) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxs)) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs)) {
         Text(
             listOfNotNull(number?.let { "$it." }, eventLabel.ifBlank { null }).joinToString(" "),
             style = MaterialTheme.typography.labelLarge,
@@ -301,12 +302,12 @@ private fun DuaSummary(number: Int?, dua: Dua, eventLabel: String, modifier: Mod
 
 @Composable
 private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) {
-    val gutter = AppTheme.dimens.screenGutter
+    val gutter = HahoTheme.dimens.screenGutter
     val selected = state.selectedIds
     val labels = state.eventLabels
-    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item(key = "search") {
-            Column(Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 OutlinedTextField(
                     value = state.query,
                     onValueChange = actions.onSearch,
@@ -344,9 +345,9 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
                                 Row(
                                     Modifier
                                         .fillMaxWidth()
-                                        .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                                        .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                                         .toggleable(value = open, role = Role.Button, onValueChange = { actions.onToggleEvent(event.id) })
-                                        .padding(horizontal = gutter, vertical = AppTheme.spacing.sm),
+                                        .padding(horizontal = gutter, vertical = HahoTheme.spacing.sm),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Column(Modifier.weight(1f)) {
@@ -378,13 +379,13 @@ private fun PickRow(dua: Dua, eventLabel: String, prefs: ReadingPrefs, checked: 
     Row(
         Modifier
             .fillMaxWidth()
-            .heightIn(min = AppTheme.dimens.largeTouchTarget)
+            .heightIn(min = HahoTheme.dimens.largeTouchTarget)
             .toggleable(value = checked, role = Role.Checkbox, onValueChange = { onToggle() })
-            .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(checked = checked, onCheckedChange = null)
-        Spacer(Modifier.width(AppTheme.spacing.md))
+        Spacer(Modifier.width(HahoTheme.spacing.md))
         PickSummary(dua, eventLabel, prefs, Modifier.weight(1f))
     }
 }
@@ -392,11 +393,11 @@ private fun PickRow(dua: Dua, eventLabel: String, prefs: ReadingPrefs, checked: 
 /** Occasion, the start of the Arabic and the translation (and transliteration, if on): enough to choose by. */
 @Composable
 private fun PickSummary(dua: Dua, eventLabel: String, prefs: ReadingPrefs, modifier: Modifier = Modifier) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         if (eventLabel.isNotBlank()) {
             Text(eventLabel, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
         }
-        ArabicText(dua.arabic, style = AppTheme.arabic.body(dua.isQuran), maxLines = PICK_ARABIC_LINES)
+        ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = PICK_ARABIC_LINES)
         DuaTranslations(dua, prefs, maxLines = PICK_TRANSLATION_LINES)
     }
 }

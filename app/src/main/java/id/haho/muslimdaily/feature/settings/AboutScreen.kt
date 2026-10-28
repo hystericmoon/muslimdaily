@@ -1,6 +1,6 @@
 package id.haho.muslimdaily.feature.settings
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.design.glass.GlassAlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,11 +25,11 @@ import id.haho.muslimdaily.R
 import id.haho.muslimdaily.feature.whatsnew.WhatsNew
 import id.haho.muslimdaily.feature.whatsnew.WhatsNewDialog
 import id.haho.muslimdaily.update.Versions
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoRow
-import id.haho.muslimdaily.core.designsystem.component.NavigationRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoRow
+import id.haho.design.component.NavigationRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.theme.HahoTheme
 
 private data class License(val name: String, val detail: String, val asset: String?)
 
@@ -55,7 +55,7 @@ private val Licenses = listOf(
 
 @Composable
 fun AboutRoute(onBack: () -> Unit) {
-    AppScreen(title = stringResource(R.string.settings_about), onBack = onBack) { AboutContent() }
+    AdwamScreen(title = stringResource(R.string.settings_about), onBack = onBack) { AboutContent() }
 }
 
 @Composable
@@ -63,13 +63,13 @@ fun AboutContent() {
     val context = LocalContext.current
     var shown by remember { mutableStateOf<License?>(null) }
     Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom = AppTheme.spacing.xxl),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
     ) {
-        Column(Modifier.padding(AppTheme.dimens.screenGutter), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+        Column(Modifier.padding(HahoTheme.dimens.screenGutter), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
             Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.semantics { heading() })
             Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(stringResource(R.string.about_body), style = AppTheme.reading.bodyLarge)
+            Text(stringResource(R.string.about_body), style = HahoTheme.reading.bodyLarge)
             Text(stringResource(R.string.settings_no_ads), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         var whatsNew by remember { mutableStateOf(false) }

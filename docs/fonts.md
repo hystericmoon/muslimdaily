@@ -2,7 +2,7 @@
 
 | Use | Typeface | Licence | File |
 |---|---|---|---|
-| Latin UI (M3 type scale) | Plus Jakarta Sans (variable, 400–700) | SIL OFL 1.1 | `res/font/plus_jakarta_sans.ttf` |
+| Latin UI (M3 type scale) | Plus Jakarta Sans (variable, 400–700) | SIL OFL 1.1 | haho-design (`haho_plus_jakarta_sans.ttf`) |
 | Arabic duas and Qur'anic text (default) | **Noto Naskh Arabic** (variable) | SIL OFL 1.1 | `res/font/noto_naskh_arabic.ttf` |
 | Arabic, reader's choice | Scheherazade New Regular | SIL OFL 1.1 | `res/font/scheherazade_new.ttf` |
 | Arabic, reader's choice | Amiri Regular / Bold | SIL OFL 1.1 | `res/font/amiri_*.ttf` |

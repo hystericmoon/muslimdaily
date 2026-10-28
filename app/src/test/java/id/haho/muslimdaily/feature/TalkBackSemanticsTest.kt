@@ -17,10 +17,10 @@ import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import id.haho.muslimdaily.core.designsystem.component.CheckRow
-import id.haho.muslimdaily.core.designsystem.component.NavigationRow
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
-import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamCheckRow
+import id.haho.design.component.NavigationRow
+import id.haho.design.component.SegmentedRow
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.feature.today.TodayActions
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
@@ -43,16 +43,16 @@ class TalkBackSemanticsTest {
 
     @Test
     fun `settings rows are buttons, not unselected toggles`() {
-        compose.setContent { MuslimDailyTheme { NavigationRow(title = "Pengingat", summary = "Adzan", onClick = {}) } }
+        compose.setContent { AdwamTheme { NavigationRow(title = "Pengingat", summary = "Adzan", onClick = {}) } }
         compose.onNodeWithText("Pengingat").assert(hasRole(Role.Button)).assert(notSelectable)
     }
 
     @Test
     fun `checklist rows name both states`() {
         compose.setContent {
-            MuslimDailyTheme {
+            AdwamTheme {
                 var checked by remember { mutableStateOf(false) }
-                CheckRow(checked = checked, onCheckedChange = { checked = it }) { Text("Qabliyah") }
+                AdwamCheckRow(checked = checked, onCheckedChange = { checked = it }) { Text("Qabliyah") }
             }
         }
         val row = compose.onNodeWithText("Qabliyah")
@@ -64,7 +64,7 @@ class TalkBackSemanticsTest {
     @Test
     fun `a segmented choice reads its label once`() {
         compose.setContent {
-            MuslimDailyTheme {
+            AdwamTheme {
                 SegmentedRow(title = "Subuh", options = listOf("Mati", "Suara"), selected = "Mati", onSelect = {}, label = { it })
             }
         }
@@ -73,21 +73,21 @@ class TalkBackSemanticsTest {
 
     @Test
     fun `the countdown does not announce itself`() {
-        compose.setContent { MuslimDailyTheme { TodayScreen(TodayPreviewData.ready(), TodayActions()) } }
+        compose.setContent { AdwamTheme { TodayScreen(TodayPreviewData.ready(), TodayActions()) } }
         val live = compose.onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsProperties.LiveRegion), useUnmergedTree = true)
         assertEquals(0, live.fetchSemanticsNodes().size)
     }
 
     @Test
     fun `the location chip says the place once`() {
-        compose.setContent { MuslimDailyTheme { TodayScreen(TodayPreviewData.ready(), TodayActions()) } }
+        compose.setContent { AdwamTheme { TodayScreen(TodayPreviewData.ready(), TodayActions()) } }
         compose.onNode(hasContentDescription("Lokasi: Jakarta")).assert(noText)
     }
 
     @Test
     fun `Isya's end times are one stop`() {
         compose.setContent {
-            MuslimDailyTheme {
+            AdwamTheme {
                 TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 20, 30)), TodayActions(), initiallyExpanded = setOf("ISHA"))
             }
         }

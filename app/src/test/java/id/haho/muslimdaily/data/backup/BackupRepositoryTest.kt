@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.design.theme.HahoPalette
 import id.haho.muslimdaily.data.db.ChecklistEntity
 import id.haho.muslimdaily.data.db.EventItemEntity
 import id.haho.muslimdaily.data.db.EventPrefEntity
@@ -33,7 +33,7 @@ class BackupRepositoryTest {
     @Test
     fun `a backup restores settings, sets, reviews and ticks after everything is wiped`() = runTest {
         settings.update {
-            palette = AppPalette.LAVENDER
+            palette = HahoPalette.LAVENDER
             remFasting = true
             setFastingTime(LocalTime.of(21, 15))
             arabicScale = 1.3f
@@ -47,11 +47,11 @@ class BackupRepositoryTest {
 
         settings.restore(emptyMap())
         db.clearAllTables()
-        assertEquals(AppPalette.TEAL, settings.current().palette)
+        assertEquals(HahoPalette.TEAL, settings.current().palette)
 
         val summary = repo.restore(text)
         val s = settings.current()
-        assertEquals(AppPalette.LAVENDER, s.palette)
+        assertEquals(HahoPalette.LAVENDER, s.palette)
         assertEquals(true, s.reminders.fasting)
         assertEquals(LocalTime.of(21, 15), s.reminders.fastingTime)
         assertEquals(1.3f, s.arabicScale)

@@ -1,12 +1,12 @@
 package id.haho.muslimdaily.feature.memorize
 
 import androidx.compose.foundation.layout.Box
-import id.haho.muslimdaily.core.designsystem.glass.enterReveal
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.GlassExtendedFab
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.enterReveal
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassExtendedFab
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,12 +42,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.component.Badge
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.Badge
+import id.haho.design.component.EmptyState
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.content.ContentRepository
@@ -102,7 +103,7 @@ fun MemorizeHomeRoute(
     viewModel: MemorizeHomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    AppScreen(
+    AdwamScreen(
         title = stringResource(R.string.nav_memorize),
         floatingActionButton = {
             GlassExtendedFab(
@@ -120,8 +121,8 @@ fun MemorizeHomeRoute(
 fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {}, onOpen: (String, Boolean) -> Unit) {
     LazyColumn(
         Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxxl * 2),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        contentPadding = PaddingValues(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, bottom = HahoTheme.spacing.xxxl * 2),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         item(key = "queue") { Box(Modifier.enterReveal(0)) { ReviewQueueCard(state, onOpen) } }
         if (state.entries.isEmpty()) {
@@ -138,7 +139,7 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {
                     stringResource(R.string.memorize_my_hifz),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = AppTheme.spacing.md).semantics { heading() },
+                    modifier = Modifier.padding(top = HahoTheme.spacing.md).semantics { heading() },
                 )
             }
             items(state.entries, key = { it.item.duaId }) { entry ->
@@ -158,7 +159,7 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
         contentColor = Glass.colors.onTinted,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             Text(stringResource(R.string.memorize_review_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
             if (due.isEmpty()) {
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
@@ -177,10 +178,10 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
         Column(
             Modifier
                 .clickable(role = Role.Button, onClickLabel = stringResource(R.string.memorize_open), onClick = onClick)
-                .padding(AppTheme.spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                .padding(HahoTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
         ) {
-            ArabicText(entry.dua.phrases.firstOrNull()?.text ?: entry.dua.arabic, style = AppTheme.arabic.arabicSmall)
+            ArabicText(entry.dua.phrases.firstOrNull()?.text ?: entry.dua.arabic, style = AdwamTheme.arabic.arabicSmall)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     entry.eventLabel,
@@ -196,7 +197,7 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
                     )
                 }
             }
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
                 when {
                     entry.due -> Badge(
                         stringResource(R.string.memorize_due_badge),
@@ -212,8 +213,8 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
                     )
                     entry.item.memorized -> Badge(
                         stringResource(R.string.memorize_memorized),
-                        container = AppTheme.colors.completeFill,
-                        content = AppTheme.colors.onCompleteFill,
+                        container = AdwamTheme.colors.completeFill,
+                        content = AdwamTheme.colors.onCompleteFill,
                         icon = R.drawable.ic_check,
                     )
                     else -> Unit

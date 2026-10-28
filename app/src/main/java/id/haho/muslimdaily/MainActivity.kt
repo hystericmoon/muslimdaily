@@ -1,8 +1,8 @@
 package id.haho.muslimdaily
 
 import id.haho.muslimdaily.BuildConfig
-import id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop
-import id.haho.muslimdaily.core.designsystem.glass.frostWhenOverlayOpen
+import id.haho.design.glass.GlassBackdrop
+import id.haho.design.glass.frostWhenOverlayOpen
 import android.content.Context
 import android.content.Intent
 import id.haho.muslimdaily.core.ui.AppLanguage
@@ -22,14 +22,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.design.glass.GlassAlertDialog
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.data.review.ReviewRepository
@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
             // Once the data has gone to the new Adwam app, this app only points there.
             var movedTo by remember { mutableStateOf(Handover.movedTo(this)) }
             LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { movedTo = Handover.movedTo(this@MainActivity) }
-            MuslimDailyTheme(
+            AdwamTheme(
                 themeMode = settings.themeMode,
                 dynamicColor = settings.dynamicColor,
                 palette = settings.palette,

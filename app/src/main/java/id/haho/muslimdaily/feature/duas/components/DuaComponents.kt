@@ -3,11 +3,11 @@ package id.haho.muslimdaily.feature.duas.components
 import id.haho.muslimdaily.core.ui.AppLocale
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.ripple
-import id.haho.muslimdaily.core.designsystem.glass.pressScale
-import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
-import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
-import id.haho.muslimdaily.core.designsystem.glass.DockedBar
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.pressScale
+import id.haho.design.glass.GlassBottomSheet
+import id.haho.design.glass.GlassIconButton
+import id.haho.design.glass.DockedBar
+import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,8 +42,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.component.Badge
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.Badge
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.SourceRef
 import id.haho.muslimdaily.data.settings.TranslationMode
@@ -73,8 +75,8 @@ fun gradeLabel(dua: Dua): String {
 /** Translations and transliteration below the Arabic, per the reader's settings. */
 @Composable
 fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier, maxLines: Int = Int.MAX_VALUE) {
-    val reading = AppTheme.reading
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+    val reading = HahoTheme.reading
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         if (prefs.transliteration && dua.transliteration.isNotBlank()) {
             Text(
                 dua.transliteration,
@@ -117,7 +119,7 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
             Icon(
                 painterResource(if (dua.grading != null) R.drawable.ic_verified else R.drawable.ic_menu_book),
                 null,
-                Modifier.size(AppTheme.dimens.smallIcon),
+                Modifier.size(HahoTheme.dimens.smallIcon),
             )
         },
         modifier = modifier.semantics { contentDescription = description },
@@ -128,7 +130,7 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
 @Composable
 fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
     GlassBottomSheet(onDismissRequest = onDismiss) {
-        SourceDetails(dua, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl))
+        SourceDetails(dua, Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).padding(bottom = HahoTheme.spacing.xxl))
     }
 }
 
@@ -137,7 +139,7 @@ fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
 fun SourceDetails(dua: Dua, modifier: Modifier = Modifier) {
     Column(
         modifier,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         Text(stringResource(R.string.dua_sources_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
         SheetSection(stringResource(R.string.dua_sources)) {
@@ -145,7 +147,7 @@ fun SourceDetails(dua: Dua, modifier: Modifier = Modifier) {
         }
         if (dua.reference.isNotBlank()) {
             SheetSection(stringResource(R.string.dua_reference)) {
-                Text(dua.reference, style = AppTheme.reading.bodyMedium)
+                Text(dua.reference, style = HahoTheme.reading.bodyMedium)
             }
         }
         if (dua.grading != null) {
@@ -170,7 +172,7 @@ fun SourceDetails(dua: Dua, modifier: Modifier = Modifier) {
 
 @Composable
 private fun SheetSection(title: String, content: @Composable () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         Text(title, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
         content()
     }
@@ -210,16 +212,16 @@ fun DuaCard(
                     role = Role.Button,
                     onClick = onClick,
                 )
-                .padding(AppTheme.dimens.cardPadding),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+                .padding(HahoTheme.dimens.cardPadding),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
         ) {
             header?.invoke()
             // A preview: long texts (e.g. Ayat al-Kursi) are clamped; the detail shows them in full.
-            ArabicText(dua.arabic, style = AppTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
+            ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
             DuaTranslations(dua, prefs, maxLines = CARD_TRANSLATION_LINES)
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
                 dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
                 SourceChip(dua)
@@ -254,7 +256,7 @@ fun PlayerBar(
                 onCheckedChange = onRepeat,
                 enabled = enabled,
                 modifier = Modifier
-                    .size(AppTheme.dimens.largeTouchTarget)
+                    .size(HahoTheme.dimens.largeTouchTarget)
                     .semantics { stateDescription = repeatState },
             ) {
                 Icon(
@@ -266,12 +268,12 @@ fun PlayerBar(
             GlassIconButton(
                 onClick = onToggle,
                 enabled = enabled,
-                modifier = Modifier.size(AppTheme.dimens.playerMainButton),
+                modifier = Modifier.size(AdwamDimens.playerMainButton),
             ) {
                 Icon(
                     painterResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
                     contentDescription = stringResource(if (isPlaying) R.string.player_pause else R.string.player_play),
-                    modifier = Modifier.size(AppTheme.dimens.icon * 1.5f),
+                    modifier = Modifier.size(HahoTheme.dimens.icon * 1.5f),
                 )
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -279,7 +281,7 @@ fun PlayerBar(
                 TextButton(
                     onClick = { speedMenu = true },
                     enabled = enabled,
-                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = AppTheme.dimens.largeTouchTarget * 1.25f, height = AppTheme.dimens.largeTouchTarget),
+                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = HahoTheme.dimens.largeTouchTarget * 1.25f, height = HahoTheme.dimens.largeTouchTarget),
                 ) {
                     Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
                 }

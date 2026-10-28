@@ -38,12 +38,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.InfoRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.InfoRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.glass.GlassButton
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.diagnostics.CrashLog
 import id.haho.muslimdaily.core.diagnostics.ReminderLog
 import id.haho.muslimdaily.core.ui.TimeFormatter
@@ -121,7 +121,7 @@ fun DiagnosticsRoute(onBack: () -> Unit, viewModel: DiagnosticsViewModel = hiltV
     var reload by remember { mutableStateOf(0) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { reload++ }
     androidx.compose.runtime.LaunchedEffect(reload) { state = viewModel.load() }
-    AppScreen(title = stringResource(R.string.diag_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.diag_title), onBack = onBack) {
         state?.let { d ->
             DiagnosticsContent(
                 d = d,
@@ -154,10 +154,10 @@ fun DiagnosticsContent(
     onOpenBattery: () -> Unit = {},
     onClearCrashes: () -> Unit = {},
 ) {
-    val gutter = AppTheme.dimens.screenGutter
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    val gutter = HahoTheme.dimens.screenGutter
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
-            Column(Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.md), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+            Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.md), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 InfoNote(stringResource(R.string.diag_intro), icon = R.drawable.ic_lock)
                 GlassButton(onClick = onSend, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.diag_send)) }
             }
@@ -168,10 +168,10 @@ fun DiagnosticsContent(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) StatusRow(stringResource(R.string.diag_exact), d.exact, onOpenExact)
                 StatusRow(stringResource(R.string.diag_battery), !d.batteryRestricted, onOpenBattery, okText = R.string.diag_battery_free, badText = R.string.diag_battery_restricted)
                 if (d.mutedChannels.isNotEmpty()) {
-                    InfoNote(stringResource(R.string.diag_muted, d.mutedChannels.joinToString()), Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.sm))
+                    InfoNote(stringResource(R.string.diag_muted, d.mutedChannels.joinToString()), Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm))
                 }
                 oemHint(d.manufacturer)?.let {
-                    InfoNote(stringResource(R.string.diag_oem, it), Modifier.padding(horizontal = gutter, vertical = AppTheme.spacing.sm))
+                    InfoNote(stringResource(R.string.diag_oem, it), Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm))
                 }
             }
         }
@@ -208,7 +208,7 @@ fun DiagnosticsContent(
                     summary = d.crashes.firstOrNull()?.let { stringResource(R.string.diag_crash_latest, dateTime(Instant.ofEpochMilli(it.name.removePrefix("crash-").removeSuffix(".txt").toLongOrNull() ?: 0), d.zone, time)) },
                 )
                 if (d.crashes.isNotEmpty()) {
-                    TextButton(onClick = onClearCrashes, modifier = Modifier.padding(horizontal = AppTheme.spacing.sm)) {
+                    TextButton(onClick = onClearCrashes, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
                         Text(stringResource(R.string.diag_clear_crashes))
                     }
                 }
@@ -228,7 +228,7 @@ private fun StatusRow(
     Column {
         InfoRow(title, summary = stringResource(if (ok) okText else badText))
         if (!ok) {
-            TextButton(onClick = onOpen, modifier = Modifier.padding(horizontal = AppTheme.spacing.sm)) {
+            TextButton(onClick = onOpen, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
                 Text(stringResource(R.string.diag_open_settings))
             }
         }

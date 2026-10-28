@@ -25,8 +25,8 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.update.Versions
 
 /**
@@ -79,7 +79,7 @@ fun WhatsNewDialog(releases: List<WhatsNew.Release>, onDismiss: () -> Unit) {
         text = {
             Column(
                 Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
             ) {
                 releases.forEachIndexed { i, release ->
                     if (i > 0) {
@@ -96,9 +96,9 @@ fun WhatsNewDialog(releases: List<WhatsNew.Release>, onDismiss: () -> Unit) {
                                 painterResource(R.drawable.ic_check),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(top = 2.dp).size(AppTheme.dimens.smallIcon),
+                                modifier = Modifier.padding(top = 2.dp).size(HahoTheme.dimens.smallIcon),
                             )
-                            Spacer(Modifier.width(AppTheme.spacing.sm))
+                            Spacer(Modifier.width(HahoTheme.spacing.sm))
                             Text(item, style = MaterialTheme.typography.bodyMedium)
                         }
                     }

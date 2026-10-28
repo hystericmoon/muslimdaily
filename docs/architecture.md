@@ -8,7 +8,7 @@ screenshot tests render.
 ```
 id.haho.muslimdaily   (Kotlin package; the app installs as id.haho.adwam)
 ├── core
-│   ├── designsystem   theme (generated colours, both type scales, tokens), components
+│   ├── designsystem   AdwamTheme over haho-design: Arabic type scale, gold roles, Adwam-only sizes
 │   ├── model          Prayer, Dua, Phrase, Rawatib …
 │   ├── arabic         ArabicNormalizer (search)
 │   └── ui             previews, formatting, report-an-error
@@ -28,6 +28,23 @@ id.haho.muslimdaily   (Kotlin package; the app installs as id.haho.adwam)
 ├── feature            today, duas (library/event/detail/search/customize), run, memorize, settings
 └── navigation         type-safe routes, 4-tab shell, notification deep links
 ```
+
+## Design system: haho-design
+
+Palettes, glass, Plus Jakarta Sans, spacing, motion and the generic components (`HahoScreen`,
+`GlassCard`, settings rows, `CheckRow` …) come from the shared library `id.haho:haho-design`
+(private repo hystericmoon/haho-design, extracted from this app). `AdwamTheme` wraps `HahoTheme`
+and adds what only Adwam has: `ArabicTypography` and the Arabic fonts, `ExtendedColors` (gold
+highlight and count-complete fills), `TierBadge`, `AdwamDimens`, and `AdwamScreen` /
+`AdwamCheckRow`, which pass Adwam's own (Indonesian-default) strings to the library.
+
+- The version is pinned once, `hahoDesign` in `gradle/libs.versions.toml`, and resolved from
+  `mavenLocal()` (group `id.haho` only). On this Mac run `./gradlew publishToMavenLocal` in the
+  haho-design repo at that tag; CI checks out tag `v<hahoDesign>` with the read-only deploy key
+  `HAHO_DESIGN_DEPLOY_KEY` and publishes it to mavenLocal before building.
+- Changes to shared parts go to haho-design (new tag), then bump `hahoDesign` here.
+- Owner-approved dependency (2026-10-28): `com.materialkolor:material-color-utilities` 4.1.1,
+  pulled in by haho-design for seed-colour schemes.
 
 ## Content pipeline
 

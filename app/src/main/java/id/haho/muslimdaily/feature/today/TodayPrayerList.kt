@@ -1,8 +1,8 @@
 package id.haho.muslimdaily.feature.today
 
-import id.haho.muslimdaily.core.designsystem.component.checkRowTitleInset
-import id.haho.muslimdaily.core.designsystem.component.CheckRowAnchor
-import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import id.haho.design.component.checkRowTitleInset
+import id.haho.design.component.CheckRowAnchor
+import id.haho.design.glass.GlassBottomSheet
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.expandVertically
@@ -10,9 +10,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.ui.graphics.Color
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.Glass
+import id.haho.design.glass.chevronRotation
+import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -50,11 +50,12 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.Badge
-import id.haho.muslimdaily.core.designsystem.component.CheckRow
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
+import id.haho.design.component.Badge
+import id.haho.muslimdaily.core.designsystem.component.AdwamCheckRow
+import id.haho.design.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.component.TierBadge
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.core.model.Rawatib
 import id.haho.muslimdaily.core.ui.durationLabel
@@ -136,7 +137,7 @@ private fun PrayerRowView(
     val stateLabel = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)
     val rowBackground by animateColorAsState(
         if (row.isCurrent) Glass.colors.tinted else Color.Transparent,
-        AppTheme.motion.fade(),
+        HahoTheme.motion.fade(),
         label = "rowBackground",
     )
     val contentColor = MaterialTheme.colorScheme.onSurface
@@ -145,7 +146,7 @@ private fun PrayerRowView(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                 .then(
                     if (expandable) {
                         Modifier
@@ -155,12 +156,12 @@ private fun PrayerRowView(
                         Modifier
                     },
                 )
-                .padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.sm),
+                .padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(Modifier.weight(1f).padding(vertical = AppTheme.spacing.md)) {
+            Column(Modifier.weight(1f).padding(vertical = HahoTheme.spacing.md)) {
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                    horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
@@ -195,7 +196,7 @@ private fun PrayerRowView(
                 }
             }
             Text(time.format(row.time, data.zone), style = MaterialTheme.typography.titleLarge, color = contentColor)
-            Box(Modifier.size(AppTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(HahoTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
                 if (expandable) {
                     Icon(
                         painterResource(R.drawable.ic_keyboard_arrow_down),
@@ -209,14 +210,14 @@ private fun PrayerRowView(
         if (expandable) {
             AnimatedVisibility(
                 visible = expanded,
-                enter = expandVertically(AppTheme.motion.layout()) + fadeIn(AppTheme.motion.fade()),
-                exit = shrinkVertically(AppTheme.motion.layout()) + fadeOut(AppTheme.motion.fade()),
+                enter = expandVertically(HahoTheme.motion.layout()) + fadeIn(HahoTheme.motion.fade()),
+                exit = shrinkVertically(HahoTheme.motion.layout()) + fadeOut(HahoTheme.motion.fade()),
             ) {
                 Column {
                     ends?.let { lines ->
                         // One TalkBack stop for all of a prayer's end times.
                         Column(
-                            Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.sm)
+                            Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).padding(bottom = HahoTheme.spacing.sm)
                                 .semantics(mergeDescendants = true) {},
                         ) {
                             lines.forEach {
@@ -253,12 +254,12 @@ private fun Timeline(
     if (steps.isEmpty()) return
     // Sits directly under the prayer row (no inner card): the rail groups the steps, and the
     // checkboxes line up with every other checklist on the screen.
-    Column(Modifier.padding(start = AppTheme.spacing.sm, bottom = AppTheme.spacing.sm)) {
+    Column(Modifier.padding(start = HahoTheme.spacing.sm, bottom = HahoTheme.spacing.sm)) {
         steps.forEachIndexed { i, step ->
             TimelineStepRow(step, data, isFirst = i == 0, isLast = i == steps.lastIndex, onToggle, onShowEvidence)
         }
         if (plan?.showJumuahNote == true) {
-            InfoNote(stringResource(R.string.note_jumuah), Modifier.padding(AppTheme.spacing.md))
+            InfoNote(stringResource(R.string.note_jumuah), Modifier.padding(HahoTheme.spacing.md))
         }
     }
 }
@@ -289,21 +290,21 @@ private fun TimelineStepRow(
     // "Dalil" only when there is evidence to show; an empty sheet is a dead end.
     val hasEvidence = sunnah?.line?.entries?.any { e -> e.evidence.any { it.book.isNotBlank() } } == true
     val hasExtras = notes != null || hasEvidence
-    Column(Modifier.fillMaxWidth().padding(start = AppTheme.spacing.md)) {
+    Column(Modifier.fillMaxWidth().padding(start = HahoTheme.spacing.md)) {
         // Dot, title and checkbox share one line: the step's first line.
         Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
             Rail(isFirst, isLast && !hasExtras, emphasised = step is TimelineStep.Obligatory)
-            CheckRow(
+            AdwamCheckRow(
                 checked = checked,
                 onCheckedChange = { onToggle(key, it) },
-                modifier = Modifier.padding(start = AppTheme.spacing.md, end = AppTheme.spacing.xs),
-                minHeight = AppTheme.dimens.largeTouchTarget,
+                modifier = Modifier.padding(start = HahoTheme.spacing.md, end = HahoTheme.spacing.xs),
+                minHeight = HahoTheme.dimens.largeTouchTarget,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     Modifier.weight(1f).padding(
                         top = checkRowTitleInset(MaterialTheme.typography.titleSmall),
-                        bottom = AppTheme.spacing.sm,
+                        bottom = HahoTheme.spacing.sm,
                     ),
                 ) {
                     when (step) {
@@ -333,19 +334,19 @@ private fun TimelineStepRow(
             Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
                 RailLine(visible = !isLast)
                 // Notes line up with the step title; the text button's own inset does the same for "Dalil".
-                Column(Modifier.weight(1f).padding(start = AppTheme.spacing.xs)) {
+                Column(Modifier.weight(1f).padding(start = HahoTheme.spacing.xs)) {
                     notes?.let {
                         Text(
                             it,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(start = AppTheme.spacing.md - AppTheme.spacing.xs, end = AppTheme.spacing.md),
+                            modifier = Modifier.padding(start = HahoTheme.spacing.md - HahoTheme.spacing.xs, end = HahoTheme.spacing.md),
                         )
                     }
                     if (hasEvidence) {
                         TextButton(onClick = { onShowEvidence(sunnah.line) }) {
-                            Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(AppTheme.dimens.smallIcon))
-                            Text(stringResource(R.string.rawatib_evidence), Modifier.padding(start = AppTheme.spacing.xs))
+                            Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                            Text(stringResource(R.string.rawatib_evidence), Modifier.padding(start = HahoTheme.spacing.xs))
                         }
                     }
                 }
@@ -367,9 +368,9 @@ private fun SunnahLabel(step: TimelineStep.Sunnah) {
         Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
     FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
-        modifier = Modifier.padding(top = AppTheme.spacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+        modifier = Modifier.padding(top = HahoTheme.spacing.xs),
     ) {
         TierBadge(entry.tier)
     }
@@ -392,8 +393,8 @@ private fun rakahText(line: RawatibLine): String? {
 @Composable
 private fun RailLine(visible: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
-    Box(Modifier.fillMaxHeight().width(AppTheme.dimens.timelineDot), contentAlignment = Alignment.Center) {
-        if (visible) Box(Modifier.fillMaxHeight().width(AppTheme.dimens.divider * 2).background(lineColor))
+    Box(Modifier.fillMaxHeight().width(AdwamDimens.timelineDot), contentAlignment = Alignment.Center) {
+        if (visible) Box(Modifier.fillMaxHeight().width(HahoTheme.dimens.divider * 2).background(lineColor))
     }
 }
 
@@ -401,21 +402,21 @@ private fun RailLine(visible: Boolean) {
 private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
     val dotColor = if (emphasised) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-    Column(Modifier.fillMaxHeight().width(AppTheme.dimens.timelineDot), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(Modifier.fillMaxHeight().width(AdwamDimens.timelineDot), horizontalAlignment = Alignment.CenterHorizontally) {
         // Dot centred on the checkbox anchor, i.e. level with the step's title.
         Box(
-            Modifier.height(CheckRowAnchor - AppTheme.dimens.timelineDot / 2).width(AppTheme.dimens.divider * 2)
+            Modifier.height(CheckRowAnchor - AdwamDimens.timelineDot / 2).width(HahoTheme.dimens.divider * 2)
                 .background(if (isFirst) lineColor.copy(alpha = 0f) else lineColor),
         )
-        Box(Modifier.size(AppTheme.dimens.timelineDot).background(dotColor, CircleShape))
-        Box(Modifier.weight(1f).width(AppTheme.dimens.divider * 2).background(if (isLast) lineColor.copy(alpha = 0f) else lineColor))
+        Box(Modifier.size(AdwamDimens.timelineDot).background(dotColor, CircleShape))
+        Box(Modifier.weight(1f).width(HahoTheme.dimens.divider * 2).background(if (isLast) lineColor.copy(alpha = 0f) else lineColor))
     }
 }
 
 @Composable
 private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
     GlassBottomSheet(onDismissRequest = onDismiss) {
-        Column(Modifier.padding(horizontal = AppTheme.dimens.screenGutter).padding(bottom = AppTheme.spacing.xxl)) {
+        Column(Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).padding(bottom = HahoTheme.spacing.xxl)) {
             val entry = line.primary
             Text(
                 stringResource(
@@ -429,18 +430,18 @@ private fun EvidenceSheet(line: RawatibLine, onDismiss: () -> Unit) {
                 modifier = Modifier.semantics { heading() },
             )
             rakahText(line)?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
-            Row(Modifier.padding(vertical = AppTheme.spacing.sm), horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+            Row(Modifier.padding(vertical = HahoTheme.spacing.sm), horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
                 TierBadge(entry.tier)
             }
             val evidence = line.entries.flatMap { it.evidence }.filter { it.book.isNotBlank() }
-            Text(stringResource(R.string.rawatib_evidence), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = AppTheme.spacing.md))
+            Text(stringResource(R.string.rawatib_evidence), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = HahoTheme.spacing.md))
             if (evidence.isEmpty()) {
                 Text(stringResource(R.string.rawatib_evidence_missing), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
                 evidence.forEach { Text("${it.book} ${it.no}".trim(), style = MaterialTheme.typography.bodyMedium) }
             }
             line.entries.mapNotNull(Rawatib::notes).distinct().forEach {
-                Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = AppTheme.spacing.sm))
+                Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = HahoTheme.spacing.sm))
             }
         }
     }
@@ -454,20 +455,20 @@ private fun SunnahWindowRow(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    CheckRow(
+    AdwamCheckRow(
         checked = checked,
         onCheckedChange = onCheckedChange,
-        minHeight = AppTheme.dimens.largeTouchTarget,
-        modifier = Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.xs),
+        minHeight = HahoTheme.dimens.largeTouchTarget,
+        modifier = Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.spacing.xs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             Modifier.weight(1f).padding(
                 top = checkRowTitleInset(MaterialTheme.typography.titleMedium),
-                bottom = AppTheme.spacing.sm,
+                bottom = HahoTheme.spacing.sm,
             ),
         ) {
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.align(Alignment.CenterVertically))
                 Badge(
                     stringResource(R.string.today_now_badge),
@@ -494,7 +495,7 @@ private fun SunnahWindowRow(
 internal fun ProhibitedCard(data: TodayData, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
-        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
             Text(
                 stringResource(R.string.today_prohibited_title),
                 style = MaterialTheme.typography.titleMedium,
@@ -518,13 +519,13 @@ private fun ProhibitedRow(window: TimeWindow, start: String, end: String) {
     Row(
         Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         Icon(
             painterResource(R.drawable.ic_block),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.error,
-            modifier = Modifier.size(AppTheme.dimens.icon),
+            modifier = Modifier.size(HahoTheme.dimens.icon),
         )
         Column(Modifier.weight(1f)) {
             Text(label, style = MaterialTheme.typography.bodyLarge)

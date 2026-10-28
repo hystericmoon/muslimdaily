@@ -1,8 +1,8 @@
 package id.haho.muslimdaily.data.settings
 
 import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
+import id.haho.design.theme.HahoPalette
+import id.haho.design.theme.ThemeMode
 import id.haho.muslimdaily.core.model.Prayer
 import java.time.LocalTime
 
@@ -84,7 +84,7 @@ data class MemorizeSettings(
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val dynamicColor: Boolean = false,
-    val palette: AppPalette = AppPalette.entries.first(),
+    val palette: HahoPalette = HahoPalette.Default,
     /** Frosted glass surfaces. Off gives solid surfaces (lighter on older phones). */
     val glassEffect: Boolean = true,
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,

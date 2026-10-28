@@ -1,10 +1,10 @@
 package id.haho.muslimdaily.feature.duas.customize
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
+import id.haho.design.glass.GlassAlertDialog
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.ui.graphics.Color
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.chevronRotation
+import id.haho.design.glass.Glass
+import id.haho.design.glass.chevronRotation
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,8 +33,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.glass.DockedBar
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.glass.DockedBar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateMapOf
@@ -60,10 +60,11 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.domain.myset.FormChoice
 import id.haho.muslimdaily.domain.myset.ResolvedItem
 import id.haho.muslimdaily.domain.myset.SetItem
@@ -85,7 +86,7 @@ fun CustomizeRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     var confirmReset by remember { mutableStateOf(false) }
-    AppScreen(
+    AdwamScreen(
         title = stringResource(R.string.customize_title, state?.event?.label.orEmpty()),
         onBack = onBack,
         actions = {
@@ -102,8 +103,8 @@ fun CustomizeRoute(
                     modifier = Modifier.weight(1f),
                 )
                 GlassTonalButton(onClick = { onSaveAsRoutine(viewModel.eventId) }) {
-                    Icon(painterResource(R.drawable.ic_bookmark_add), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Spacer(Modifier.width(AppTheme.spacing.sm))
+                    Icon(painterResource(R.drawable.ic_bookmark_add), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
                     Text(stringResource(R.string.event_save_routine), maxLines = 1)
                 }
             }
@@ -148,12 +149,12 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
 
     LazyColumn(
         Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl),
+        contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl),
     ) {
         item(key = "intro") {
             InfoNote(
                 stringResource(R.string.customize_intro),
-                Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
             )
         }
         itemsIndexed(order, key = { _, it -> it.item.key }) { index, resolved ->
@@ -167,7 +168,7 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                 actions = actions,
                 dragging = dragging,
                 modifier = Modifier
-                    .animateItem(placementSpec = if (dragging) null else AppTheme.motion.layout())
+                    .animateItem(placementSpec = if (dragging) null else HahoTheme.motion.layout())
                     .zIndex(if (dragging) 1f else 0f)
                     .graphicsLayer { translationY = if (dragging) dragOffset else 0f }
                     .onSizeChanged { heights[key] = it.height },
@@ -216,10 +217,10 @@ fun CustomizeContent(state: CustomizeUiState, actions: CustomizeActions, initial
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                        .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                         .clickable(role = Role.Button, onClick = { showHidden = !showHidden })
                         .semantics { stateDescription = stateLabel }
-                        .padding(horizontal = AppTheme.dimens.screenGutter),
+                        .padding(horizontal = HahoTheme.dimens.screenGutter),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
@@ -260,10 +261,10 @@ private fun CustomizeRow(
     val key = resolved.item.key
     val moveUp = stringResource(R.string.customize_move_up)
     val moveDown = stringResource(R.string.customize_move_down)
-    val lift by animateFloatAsState(if (dragging) 1f else 0f, AppTheme.motion.press(), label = "lift")
+    val lift by animateFloatAsState(if (dragging) 1f else 0f, HahoTheme.motion.press(), label = "lift")
     Surface(
         color = if (dragging) Glass.colors.sheet else Color.Transparent,
-        shadowElevation = AppTheme.spacing.sm * lift,
+        shadowElevation = HahoTheme.spacing.sm * lift,
         modifier = modifier.graphicsLayer {
             scaleX = 1f + 0.02f * lift
             scaleY = 1f + 0.02f * lift
@@ -273,7 +274,7 @@ private fun CustomizeRow(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                    .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                     .semantics {
                         customActions = buildList {
                             if (index > 0) add(CustomAccessibilityAction(moveUp) { actions.onMove(key, -1); true })
@@ -283,7 +284,7 @@ private fun CustomizeRow(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    handleModifier.size(AppTheme.dimens.minTouchTarget),
+                    handleModifier.size(HahoTheme.dimens.minTouchTarget),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -296,11 +297,11 @@ private fun CustomizeRow(
                     Modifier
                         .weight(1f)
                         .toggleable(value = true, role = Role.Switch, onValueChange = { actions.onToggle(key, false) })
-                        .padding(vertical = AppTheme.spacing.sm),
+                        .padding(vertical = HahoTheme.spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ItemSummary(index, resolved, Modifier.weight(1f))
-                    Switch(checked = true, onCheckedChange = null, modifier = Modifier.padding(horizontal = AppTheme.spacing.md))
+                    Switch(checked = true, onCheckedChange = null, modifier = Modifier.padding(horizontal = HahoTheme.spacing.md))
                 }
             }
             val item = resolved.item
@@ -314,7 +315,7 @@ private fun CustomizeRow(
 @Composable
 private fun ItemSummary(index: Int, resolved: ResolvedItem, modifier: Modifier = Modifier) {
     val dua = resolved.form
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxs)) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs)) {
         Text(
             buildString {
                 append(stringResource(R.string.customize_item_n, index + 1))
@@ -326,7 +327,7 @@ private fun ItemSummary(index: Int, resolved: ResolvedItem, modifier: Modifier =
         )
         ArabicText(
             dua.phrases.firstOrNull()?.text ?: dua.arabic,
-            style = AppTheme.arabic.arabicSmall,
+            style = AdwamTheme.arabic.arabicSmall,
         )
         Text(
             dua.translationId,
@@ -350,7 +351,7 @@ private fun VariantChoices(item: SetItem.Variants, choice: FormChoice?, onChoose
     }
     Column(
         Modifier
-            .padding(start = AppTheme.dimens.minTouchTarget, bottom = AppTheme.spacing.sm)
+            .padding(start = HahoTheme.dimens.minTouchTarget, bottom = HahoTheme.spacing.sm)
             .selectableGroup(),
     ) {
         options.forEach { (option, label) ->
@@ -358,7 +359,7 @@ private fun VariantChoices(item: SetItem.Variants, choice: FormChoice?, onChoose
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .heightIn(min = AppTheme.dimens.minTouchTarget)
+                    .heightIn(min = HahoTheme.dimens.minTouchTarget)
                     .selectable(selected = isSelected, role = Role.RadioButton, onClick = {
                         // Keep the rotation position when re-selecting Rotate.
                         onChoose(if (option is FormChoice.Rotate && choice is FormChoice.Rotate) choice else option)
@@ -366,11 +367,11 @@ private fun VariantChoices(item: SetItem.Variants, choice: FormChoice?, onChoose
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(selected = isSelected, onClick = null)
-                Text(label, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = AppTheme.spacing.sm))
+                Text(label, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = HahoTheme.spacing.sm))
             }
         }
         if (selected is FormChoice.Rotate) {
-            InfoNote(stringResource(R.string.customize_rotate_note), Modifier.padding(end = AppTheme.dimens.screenGutter))
+            InfoNote(stringResource(R.string.customize_rotate_note), Modifier.padding(end = HahoTheme.dimens.screenGutter))
         }
     }
 }
@@ -380,12 +381,12 @@ private fun HiddenRow(resolved: ResolvedItem, onRestore: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
-            .heightIn(min = AppTheme.dimens.largeTouchTarget)
-            .padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.sm),
+            .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+            .padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
-            ArabicText(resolved.form.phrases.firstOrNull()?.text ?: resolved.form.arabic, style = AppTheme.arabic.arabicSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ArabicText(resolved.form.phrases.firstOrNull()?.text ?: resolved.form.arabic, style = AdwamTheme.arabic.arabicSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         TextButton(onClick = onRestore) { Text(stringResource(R.string.customize_restore)) }
     }

@@ -15,7 +15,7 @@ import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.data.run.RunItem
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
@@ -53,7 +53,7 @@ class RunModeUiTest {
     private fun setUp(start: RunUiState = initial()) {
         compose.setContent {
             var state by remember { mutableStateOf(start) }
-            MuslimDailyTheme {
+            AdwamTheme {
                 RunScreen(
                     state,
                     RunActions(
@@ -121,7 +121,7 @@ class RunModeUiTest {
         var revealed = -1
         compose.setContent {
             var state by remember { mutableStateOf(initial().copy(hifz = setOf("a"), fromMemory = true)) }
-            MuslimDailyTheme {
+            AdwamTheme {
                 RunScreen(
                     state,
                     RunActions(

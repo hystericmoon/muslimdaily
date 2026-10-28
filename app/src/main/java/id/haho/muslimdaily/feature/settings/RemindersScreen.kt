@@ -1,10 +1,10 @@
 package id.haho.muslimdaily.feature.settings
 
 import id.haho.muslimdaily.core.ui.clockPattern
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassButton
 import android.Manifest
 import android.content.Intent
 import androidx.core.net.toUri
@@ -46,14 +46,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.NavigationRow
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.component.StepperRow
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.NavigationRow
+import id.haho.design.component.SegmentedRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.component.StepperRow
+import id.haho.design.component.SwitchRow
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.labelRes
@@ -126,7 +126,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
             context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
         }
     }
-    AppScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
         settings?.let { s ->
             RemindersContent(
                 settings = s,
@@ -173,13 +173,13 @@ fun RemindersContent(
     }
     fun inGroup(key: String): (SettingsEditor.() -> Unit) -> Unit = { block -> lastGroup = key; update(block) }
     fun titleFocus(key: String) = Modifier.focusRequester(groupFocus.getValue(key)).focusable()
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         // Stable keys: when a permission card goes away, the groups below keep their identity, so
         // TalkBack's focus stays where it was instead of jumping back to the top.
         item(key = "intro") {
             InfoNote(
                 stringResource(R.string.reminders_intro),
-                Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
             )
         }
         if (!permissions.notifications) {
@@ -192,7 +192,7 @@ fun RemindersContent(
             val update = inGroup("adhan")
             SettingsGroup(stringResource(R.string.reminders_adhan), titleModifier = titleFocus("adhan")) {
                 if (settings.location == null) {
-                    InfoNote(stringResource(R.string.reminders_need_location), Modifier.padding(AppTheme.dimens.screenGutter))
+                    InfoNote(stringResource(R.string.reminders_need_location), Modifier.padding(HahoTheme.dimens.screenGutter))
                 }
                 FIVE_PRAYERS.forEach { prayer ->
                     SegmentedRow(
@@ -211,7 +211,7 @@ fun RemindersContent(
                         },
                     )
                 }
-                InfoNote(stringResource(R.string.reminders_adhan_note), Modifier.padding(AppTheme.dimens.screenGutter))
+                InfoNote(stringResource(R.string.reminders_adhan_note), Modifier.padding(HahoTheme.dimens.screenGutter))
             }
         }
         item(key = "adhkar") {
@@ -253,7 +253,7 @@ fun RemindersContent(
                     onCheckedChange = { v -> update { remOngoing = v } },
                     icon = R.drawable.ic_schedule,
                 )
-                InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(AppTheme.dimens.screenGutter))
+                InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(HahoTheme.dimens.screenGutter))
             }
         }
         item(key = "other") {
@@ -329,11 +329,11 @@ private fun PermissionCard(text: String, action: String, onClick: () -> Unit) {
         color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = Glass.colors.tinted.alpha),
         contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xs),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.xs),
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg)) {
             Text(text, style = MaterialTheme.typography.bodyMedium)
-            GlassButton(onClick = onClick, modifier = Modifier.padding(top = AppTheme.spacing.sm)) { Text(action) }
+            GlassButton(onClick = onClick, modifier = Modifier.padding(top = HahoTheme.spacing.sm)) { Text(action) }
         }
     }
 }

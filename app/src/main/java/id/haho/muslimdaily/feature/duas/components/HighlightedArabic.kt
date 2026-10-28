@@ -20,7 +20,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.withStyle
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Phrase
 import kotlin.math.max
 import kotlin.math.min
@@ -39,7 +41,7 @@ fun HighlightedArabic(
     modifier: Modifier = Modifier,
     color: Color = androidx.compose.material3.LocalContentColor.current,
 ) {
-    val colors = AppTheme.colors
+    val colors = AdwamTheme.colors
     val active = phrases.getOrNull(activePhrase)
     val annotated = remember(text, active, colors) {
         buildAnnotatedString {
@@ -56,9 +58,9 @@ fun HighlightedArabic(
     }
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
     val density = LocalDensity.current
-    val underline = with(density) { AppTheme.dimens.highlightUnderline.toPx() }
-    val radius = with(density) { AppTheme.spacing.xs.toPx() }
-    val padX = with(density) { AppTheme.spacing.xs.toPx() }
+    val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
+    val radius = with(density) { HahoTheme.spacing.xs.toPx() }
+    val padX = with(density) { HahoTheme.spacing.xs.toPx() }
 
     ArabicText(
         text = annotated,

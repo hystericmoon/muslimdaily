@@ -52,6 +52,23 @@ jobs:
       - name: Android SDK 37
         if: steps.version.outputs.skip != 'true'
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
+      # The shared design system (private repo) is built from source into mavenLocal; its version
+      # is pinned once, as hahoDesign in gradle/libs.versions.toml, and checked out at tag v<version>.
+      - name: haho-design version
+        id: haho
+        if: steps.version.outputs.skip != 'true'
+        run: echo "version=$(sed -n 's/^hahoDesign = "\(.*\)"/\1/p' gradle/libs.versions.toml)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.version.outputs.skip != 'true'
+        with:
+          repository: hystericmoon/haho-design
+          ref: v${{ steps.haho.outputs.version }}
+          path: .deps/haho-design
+          ssh-key: ${{ secrets.HAHO_DESIGN_DEPLOY_KEY }}
+      - name: Publish haho-design to mavenLocal
+        if: steps.version.outputs.skip != 'true'
+        working-directory: .deps/haho-design
+        run: ./gradlew publishToMavenLocal --stacktrace
       - name: Build sideload APK
         if: steps.version.outputs.skip != 'true'
         run: |

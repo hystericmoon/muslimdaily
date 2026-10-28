@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.core.ui.PreviewSurface
-import id.haho.muslimdaily.core.ui.ThemePreviews
+import id.haho.design.component.HahoPreviews
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.run.RunItem
 import id.haho.muslimdaily.data.settings.MemorizeSettings
@@ -55,23 +55,23 @@ import id.haho.muslimdaily.feature.today.TodayPreviewData
 import java.time.LocalDate
 
 /*
- * Every screen in light, dark and 200% font scale (@ThemePreviews). The Today previews live next
+ * Every screen in light, dark and 200% font scale (@HahoPreviews). The Today previews live next
  * to TodayScreen. Sample data is structural only; see DuaPreviewData.
  */
 
 private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1)
 private val settings = TodayPreviewData.settings
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun DuaLibraryPreview() = PreviewSurface { DuaLibraryContent(DuaPreviewData.categories, onOpenEvent = {}) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun EventPreview() = PreviewSurface {
     val items = ActiveSet.items(ActiveSet.canonical(DuaPreviewData.duas), Customization())
     EventContent(EventUiState(event, false, false, items, 0, ReadingPrefs()), {}, {}, { _, _ -> }, {})
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun DuaDetailPreview() = PreviewSurface {
     DuaDetailContent(
         DuaDetailState(DuaPreviewData.dua("d", 1, count = 3), event, ReadingPrefs(), PlaybackState(duaId = "d", activePhrase = 1), true),
@@ -79,16 +79,16 @@ private fun DuaDetailPreview() = PreviewSurface {
     )
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun SearchPreview() = PreviewSurface { SearchContent("tes", DuaPreviewData.duas.take(2), ReadingPrefs(), {}, {}, autoFocus = false) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun CustomizePreview() = PreviewSurface {
     val all = ActiveSet.items(ActiveSet.canonical(DuaPreviewData.duas), Customization())
     CustomizeContent(CustomizeUiState(event, all, all, emptyList(), emptyMap(), false), CustomizeActions())
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun RunPreview() = PreviewSurface {
     val duas = DuaPreviewData.duas.take(2)
     RunScreen(
@@ -97,7 +97,7 @@ private fun RunPreview() = PreviewSurface {
     )
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun MemorizeHomePreview() = PreviewSurface {
     val today = LocalDate.of(2026, 10, 21)
     MemorizeHomeContent(
@@ -105,7 +105,7 @@ private fun MemorizeHomePreview() = PreviewSurface {
     ) { _, _ -> }
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun MemorizeSessionPreview() = PreviewSurface {
     val dua = DuaPreviewData.dua("m", 1)
     val words = Recall.words(dua)
@@ -119,37 +119,37 @@ private fun MemorizeSessionPreview() = PreviewSurface {
     )
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun ListenOnlyPreview() = PreviewSurface { ListenOnlyContent(ListenOnlyState(DuaPreviewData.dua("l", 1), PlaybackState()), {}, {}, {}) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun MemorizePickerPreview() = PreviewSurface {
     MemorizePickerContent("", listOf(PickerGroup("Dzikir pagi", DuaPreviewData.duas.take(2))), ReadingPrefs(), {}, {})
 }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun SettingsHomePreview() = PreviewSurface { SettingsHomeContent(settings, SettingsDestinations()) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun PrayerSettingsPreview() = PreviewSurface { PrayerSettingsContent(settings) {} }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun LocationPreview() = PreviewSurface { LocationContent(settings.location, "", emptyList(), false, {}, {}, {}) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun RemindersPreview() = PreviewSurface { RemindersContent(settings, PermissionState(true, false), {}, {}, {}) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun DisplayPreview() = PreviewSurface { DisplaySettingsContent(settings) {} }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun AudioPreview() = PreviewSurface { AudioSettingsContent(settings) {} }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun MySetsDataPreview() = PreviewSurface { MySetsDataContent({}, {}, {}) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun MethodologyPreview() = PreviewSurface { MethodologyContent(3) }
 
-@ThemePreviews @Composable
+@HahoPreviews @Composable
 private fun AboutPreview() = PreviewSurface { AboutContent() }
