@@ -860,6 +860,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_3_0">
+        <item>While reading your adhkar, save a dua to memorise with \"Add to My hifz\" in the menu. It joins My hifz as \"Not started\" for later. You can also remove a dua from My hifz.</item>
+        <item>Add a dua to a routine straight from its page, and pick duas for a routine by their Arabic and translation.</item>
+        <item>The widget now has a see-through grey background and a neater \"PM\". Set its opacity in Settings → Display.</item>
+    </string-array>
     <string-array name="whats_new_1_2_0">
         <item>Reviewing a memorised dua now starts from memory: the Arabic is covered, with a cue of when it is said and, if you need it, its meaning. Then check the full text and rate how it went.</item>
         <item>In the Recall step, turn on \"Show first letters\" so each hidden word shows its first letter, hide words from the end of the dua, and tap \"Show the next word\" when you get stuck.</item>

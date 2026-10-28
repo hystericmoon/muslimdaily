@@ -848,6 +848,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_3_0">
+        <item>Saat membaca dzikir, simpan doa yang ingin dihafal lewat menu \"Tambah ke hafalan\". Doa itu masuk Hafalan saya sebagai \"Belum dipelajari\" untuk dipelajari nanti. Doa juga bisa dihapus dari Hafalan saya.</item>
+        <item>Tambahkan doa ke rangkaian langsung dari halaman doanya, dan cari doa untuk rangkaian dengan melihat teks Arab serta terjemahannya.</item>
+        <item>Widget kini berlatar abu-abu tembus pandang dengan \"PM\" yang lebih rapi. Atur kepekatan latarnya di Pengaturan → Tampilan.</item>
+    </string-array>
     <string-array name="whats_new_1_2_0">
         <item>Mengulang hafalan kini dimulai dari ingatan: teks Arab tertutup, dengan petunjuk berupa waktu membacanya dan, bila perlu, artinya. Setelah itu cek teks lengkapnya dan nilai hafalan Anda.</item>
         <item>Di langkah Ingat, pilih \"Tampilkan huruf awal\" agar setiap kata yang disembunyikan menampilkan huruf pertamanya, sembunyikan kata dari akhir doa, dan ketuk \"Buka kata berikutnya\" saat lupa.</item>
