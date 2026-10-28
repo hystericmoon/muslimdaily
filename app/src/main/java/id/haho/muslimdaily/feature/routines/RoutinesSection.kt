@@ -21,10 +21,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.routine.Routine
 
 /**
@@ -42,11 +42,11 @@ fun RoutinesCard(
     compact: Boolean = false,
 ) {
     GlassCard(modifier.fillMaxWidth()) {
-        Column(Modifier.padding(vertical = AppTheme.spacing.sm)) {
+        Column(Modifier.padding(vertical = HahoTheme.spacing.sm)) {
             if (routines.isEmpty()) {
                 Column(
-                    Modifier.padding(horizontal = AppTheme.dimens.cardPadding, vertical = AppTheme.spacing.sm),
-                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                    Modifier.padding(horizontal = HahoTheme.dimens.cardPadding, vertical = HahoTheme.spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
                 ) {
                     Text(stringResource(R.string.routine_empty_title), style = MaterialTheme.typography.titleMedium)
                     Text(
@@ -55,8 +55,8 @@ fun RoutinesCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     GlassTonalButton(onClick = onNew) {
-                        Icon(painterResource(R.drawable.ic_add), null, Modifier.size(AppTheme.dimens.smallIcon))
-                        Spacer(Modifier.width(AppTheme.spacing.sm))
+                        Icon(painterResource(R.drawable.ic_add), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                        Spacer(Modifier.width(HahoTheme.spacing.sm))
                         Text(stringResource(R.string.routine_new))
                     }
                 }
@@ -67,8 +67,8 @@ fun RoutinesCard(
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .heightIn(min = AppTheme.dimens.largeTouchTarget)
-                        .padding(start = AppTheme.dimens.cardPadding, end = AppTheme.spacing.sm, top = AppTheme.spacing.xs, bottom = AppTheme.spacing.xs),
+                        .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+                        .padding(start = HahoTheme.dimens.cardPadding, end = HahoTheme.spacing.sm, top = HahoTheme.spacing.xs, bottom = HahoTheme.spacing.xs),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(Modifier.weight(1f)) {
@@ -85,17 +85,17 @@ fun RoutinesCard(
                         }
                     }
                     GlassButton(onClick = { onStart(r) }, enabled = r.duaIds.isNotEmpty()) {
-                        Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(AppTheme.dimens.smallIcon))
-                        Spacer(Modifier.width(AppTheme.spacing.xs))
+                        Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                        Spacer(Modifier.width(HahoTheme.spacing.xs))
                         Text(stringResource(R.string.action_start))
                     }
                 }
             }
             if (!compact) {
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                androidx.compose.material3.TextButton(onClick = onNew, modifier = Modifier.padding(horizontal = AppTheme.spacing.sm)) {
-                    Icon(painterResource(R.drawable.ic_add), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Spacer(Modifier.width(AppTheme.spacing.sm))
+                androidx.compose.material3.TextButton(onClick = onNew, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
+                    Icon(painterResource(R.drawable.ic_add), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
                     Text(stringResource(R.string.routine_new))
                 }
             }

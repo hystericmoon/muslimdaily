@@ -2,7 +2,7 @@ package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
+import id.haho.design.component.EmptyState
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config

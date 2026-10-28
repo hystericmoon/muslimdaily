@@ -3,7 +3,7 @@ package id.haho.muslimdaily.screenshots
 import androidx.compose.ui.res.stringResource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.domain.fasting.FastingCalendar
 import id.haho.muslimdaily.feature.fasting.FastingContent
 import id.haho.muslimdaily.feature.fasting.FastingUiState
@@ -26,7 +26,7 @@ class FastingScreenshotTest {
     )
 
     private fun shot(name: String, s: FastingUiState) = captureVariants(name) {
-        AppScreen(title = stringResource(R.string.fasting_title), onBack = {}) { FastingContent(s, {}, {}, {}) }
+        AdwamScreen(title = stringResource(R.string.fasting_title), onBack = {}) { FastingContent(s, {}, {}, {}) }
     }
 
     @Test fun ordinaryMonth() = shot("96-fasting-month", state(LocalDate.of(2026, 10, 21), LocalDate.of(2026, 10, 25)))

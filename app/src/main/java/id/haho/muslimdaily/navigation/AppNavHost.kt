@@ -11,7 +11,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.theme.HahoTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -48,7 +48,7 @@ import id.haho.muslimdaily.feature.fasting.FastingRoute
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     val back: () -> Unit = { navController.popBackStack() }
-    val reduced = AppTheme.motion.reduced
+    val reduced = HahoTheme.motion.reduced
     NavHost(
         navController = navController,
         startDestination = TodayGraph,

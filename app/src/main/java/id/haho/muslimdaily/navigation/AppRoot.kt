@@ -13,8 +13,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.glass.Glass
+import id.haho.design.theme.HahoTheme
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.LocalContentColor
@@ -90,7 +90,7 @@ fun AppRoot(
     val destination = backStack?.destination
     val immersive = immersiveRoutes.any { destination?.hasRoute(it) == true }
 
-    val motion = AppTheme.motion
+    val motion = HahoTheme.motion
     val onSelect: (TopLevelDestination) -> Unit = { target ->
         navController.navigate(target.graph) {
             popUpTo(navController.graph.findStartDestination().id) { saveState = true }
@@ -167,7 +167,7 @@ private fun AppNavigationRail(
                 label = { NavLabel(label) },
                 colors = NavigationRailItemDefaults.colors(indicatorColor = g.tinted),
                 modifier = Modifier
-                    .padding(vertical = AppTheme.spacing.xs)
+                    .padding(vertical = HahoTheme.spacing.xs)
                     .then(if (badgeDescription != null) Modifier.semantics { contentDescription = "$label, $badgeDescription" } else Modifier),
             )
         }
@@ -206,7 +206,7 @@ private fun AppNavigationBar(
                 onClick = { onSelect(item) },
                 icon = {
                     BadgedBox(badge = { if (badge) Badge { Text(reviewDueCount.toString()) } }) {
-                        Crossfade(selected, animationSpec = AppTheme.motion.fade(), label = "navIcon") { on ->
+                        Crossfade(selected, animationSpec = HahoTheme.motion.fade(), label = "navIcon") { on ->
                             Icon(
                                 painter = painterResource(if (on) item.selectedIcon else item.icon),
                                 contentDescription = null,

@@ -14,14 +14,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.RadioGroup
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.component.StepperRow
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.RadioGroup
+import id.haho.design.component.SegmentedRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.component.StepperRow
+import id.haho.design.component.SwitchRow
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
@@ -37,7 +37,7 @@ import java.util.Locale
 @Composable
 fun PrayerSettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.settings_prayer), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.settings_prayer), onBack = onBack) {
         settings?.let { PrayerSettingsContent(it, viewModel::update) }
     }
 }
@@ -45,7 +45,7 @@ fun PrayerSettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltV
 @Composable
 fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
     val calc = settings.calculation
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             SettingsGroup(stringResource(R.string.settings_method)) {
                 RadioGroup(
@@ -77,7 +77,7 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
             SettingsGroup(stringResource(R.string.settings_offsets)) {
                 InfoNote(
                     stringResource(R.string.settings_offsets_note),
-                    Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 )
                 PrayerTimeSlot.entries.forEach { slot ->
                     val key = slot.name.lowercase(Locale.ROOT)
@@ -94,7 +94,7 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
             SettingsGroup(stringResource(R.string.settings_iqamah)) {
                 InfoNote(
                     stringResource(R.string.settings_iqamah_note),
-                    Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 )
                 (FIVE_PRAYERS + Prayer.JUMUAH).forEach { prayer ->
                     MinuteStepper(
@@ -148,7 +148,7 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
             SettingsGroup(stringResource(R.string.settings_windows)) {
                 InfoNote(
                     stringResource(R.string.settings_windows_note),
-                    Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 )
                 MinuteStepper(
                     title = stringResource(R.string.settings_sunrise_rise),

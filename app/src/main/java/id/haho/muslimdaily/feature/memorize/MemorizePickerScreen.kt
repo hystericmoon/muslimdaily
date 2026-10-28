@@ -25,8 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -80,7 +80,7 @@ fun MemorizePickerRoute(onBack: () -> Unit, onPick: (String) -> Unit, viewModel:
     val query by viewModel.query.collectAsStateWithLifecycle()
     val groups by viewModel.groups.collectAsStateWithLifecycle()
     val prefs by viewModel.prefs.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.memorize_pick_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.memorize_pick_title), onBack = onBack) {
         MemorizePickerContent(query, groups, prefs, viewModel::setQuery, onPick)
     }
 }
@@ -96,8 +96,8 @@ fun MemorizePickerContent(
     run {
         LazyColumn(
             Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxl),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+            contentPadding = PaddingValues(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, bottom = HahoTheme.spacing.xxl),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
         ) {
             item {
                 OutlinedTextField(
@@ -116,7 +116,7 @@ fun MemorizePickerContent(
                             group.label,
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(top = AppTheme.spacing.md).semantics { heading() },
+                            modifier = Modifier.padding(top = HahoTheme.spacing.md).semantics { heading() },
                         )
                     }
                 }

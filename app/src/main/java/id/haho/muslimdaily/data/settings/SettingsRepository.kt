@@ -15,8 +15,8 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
+import id.haho.design.theme.HahoPalette
+import id.haho.design.theme.ThemeMode
 import id.haho.muslimdaily.core.model.Prayer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -177,7 +177,7 @@ class SettingsRepository @Inject constructor(
 class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var themeMode: ThemeMode by enumKey(K.theme, ThemeMode.SYSTEM)
     var dynamicColor: Boolean by key(K.dynamicColor, false)
-    var palette: AppPalette by enumKey(K.palette, AppPalette.entries.first())
+    var palette: HahoPalette by enumKey(K.palette, HahoPalette.Default)
     var glassEffect: Boolean by key(K.glassEffect, true)
     var translationMode: TranslationMode by enumKey(K.translation, TranslationMode.INDONESIAN)
     var showTransliteration: Boolean by key(K.transliteration, false)

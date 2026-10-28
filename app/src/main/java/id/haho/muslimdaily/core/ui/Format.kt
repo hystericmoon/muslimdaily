@@ -39,10 +39,6 @@ fun clockPattern(is24Hour: Boolean): String = when {
     else -> if (is24Hour) "HH.mm" else "h.mm a"
 }
 
-/** True at 150% system font and above, where side-by-side controls switch to stacked layouts. */
-@Composable
-fun isLargeFontScale(): Boolean = androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.5f
-
 /** Formats clock times following the device's 12/24-hour preference, in the app's language style. */
 class TimeFormatter(val is24Hour: Boolean) {
     private val formatter = DateTimeFormatter.ofPattern(clockPattern(is24Hour), AppLocale)

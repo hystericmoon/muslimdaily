@@ -33,9 +33,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.EmptyState
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -78,7 +78,7 @@ fun SearchRoute(onBack: () -> Unit, onOpenDua: (String) -> Unit, viewModel: Sear
     val query by viewModel.query.collectAsStateWithLifecycle()
     val results by viewModel.results.collectAsStateWithLifecycle()
     val prefs by viewModel.prefs.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.search_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.search_title), onBack = onBack) {
         SearchContent(query, results, prefs, viewModel::setQuery, onOpenDua)
     }
 }
@@ -96,8 +96,8 @@ fun SearchContent(
     if (autoFocus) LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     LazyColumn(
         Modifier.fillMaxSize().imePadding(),
-        contentPadding = PaddingValues(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, bottom = AppTheme.spacing.xxl),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        contentPadding = PaddingValues(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         item {
             OutlinedTextField(
@@ -131,7 +131,7 @@ fun SearchContent(
                 item {
                     Text(
                         pluralStringResource(R.plurals.search_count, results.size, results.size),
-                        modifier = Modifier.padding(top = AppTheme.spacing.xs).semantics { liveRegion = LiveRegionMode.Polite },
+                        modifier = Modifier.padding(top = HahoTheme.spacing.xs).semantics { liveRegion = LiveRegionMode.Polite },
                     )
                 }
                 items(results, key = { it.id }) { dua -> DuaCard(dua, prefs, onClick = { onOpenDua(dua.id) }, modifier = Modifier.animateItem()) }

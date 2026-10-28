@@ -1,7 +1,7 @@
 package id.haho.muslimdaily.feature.settings.location
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.glass.GlassCard
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,10 +43,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SectionHeader
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.location.City
 import id.haho.muslimdaily.data.location.CityRepository
 import id.haho.muslimdaily.data.location.LocationRepository
@@ -127,7 +127,7 @@ fun LocationRoute(onBack: () -> Unit, viewModel: LocationViewModel = hiltViewMod
         if (granted) viewModel.useGps(onFix) else onFix(LocationRepository.FixResult.NoPermission)
     }
 
-    AppScreen(title = stringResource(R.string.settings_location), onBack = onBack, snackbarHostState = snackbar) {
+    AdwamScreen(title = stringResource(R.string.settings_location), onBack = onBack, snackbarHostState = snackbar) {
         LocationContent(
             current = current,
             query = query,
@@ -150,13 +150,13 @@ fun LocationContent(
     onUseGps: () -> Unit,
     onSelect: (City) -> Unit,
 ) {
-    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             GlassCard(
                 shape = MaterialTheme.shapes.extraLarge,
-                modifier = Modifier.fillMaxWidth().padding(AppTheme.dimens.screenGutter),
+                modifier = Modifier.fillMaxWidth().padding(HahoTheme.dimens.screenGutter),
             ) {
-                Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+                Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
                     Text(stringResource(R.string.location_current), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                     if (current == null) {
                         Text(stringResource(R.string.today_no_location_title), style = MaterialTheme.typography.titleMedium)
@@ -170,12 +170,12 @@ fun LocationContent(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    GlassTonalButton(onClick = onUseGps, enabled = !busy, modifier = Modifier.padding(top = AppTheme.spacing.sm)) {
+                    GlassTonalButton(onClick = onUseGps, enabled = !busy, modifier = Modifier.padding(top = HahoTheme.spacing.sm)) {
                         Icon(painterResource(R.drawable.ic_my_location), null)
-                        Spacer(Modifier.width(AppTheme.spacing.sm))
+                        Spacer(Modifier.width(HahoTheme.spacing.sm))
                         Text(stringResource(if (busy) R.string.location_locating else R.string.today_use_gps))
                     }
-                    InfoNote(stringResource(R.string.location_privacy), Modifier.padding(top = AppTheme.spacing.xs), icon = R.drawable.ic_lock)
+                    InfoNote(stringResource(R.string.location_privacy), Modifier.padding(top = HahoTheme.spacing.xs), icon = R.drawable.ic_lock)
                 }
             }
         }
@@ -194,7 +194,7 @@ fun LocationContent(
                 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter),
             )
         }
         item {
@@ -207,7 +207,7 @@ fun LocationContent(
                     stringResource(R.string.location_no_results),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter),
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
                 )
             }
         }
@@ -225,7 +225,7 @@ fun LocationContent(
                 stringResource(R.string.location_attribution),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(AppTheme.dimens.screenGutter),
+                modifier = Modifier.padding(HahoTheme.dimens.screenGutter),
             )
         }
     }

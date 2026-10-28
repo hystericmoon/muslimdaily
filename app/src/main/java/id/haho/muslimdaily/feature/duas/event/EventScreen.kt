@@ -1,9 +1,9 @@
 package id.haho.muslimdaily.feature.duas.event
 
-import id.haho.muslimdaily.core.designsystem.glass.glassSegmentedColors
-import id.haho.muslimdaily.core.ui.isLargeFontScale
+import id.haho.design.glass.glassSegmentedColors
+import id.haho.design.component.isLargeFontScale
 import androidx.compose.ui.text.style.TextAlign
-import id.haho.muslimdaily.core.designsystem.glass.enterReveal
+import id.haho.design.glass.enterReveal
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -27,9 +27,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.glass.DockedBar
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.glass.DockedBar
+import id.haho.design.glass.GlassButton
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,10 +40,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.EmptyState
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.domain.myset.ResolvedItem
 import id.haho.muslimdaily.domain.myset.SetItem
 import id.haho.muslimdaily.feature.duas.components.DuaCard
@@ -59,7 +59,7 @@ fun EventRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val s = state
-    AppScreen(
+    AdwamScreen(
         title = s?.event?.label.orEmpty(),
         onBack = onBack,
         // Docked on the menu, one row: read now, or adjust which duas and in what order.
@@ -96,11 +96,11 @@ fun EventContent(
     LazyColumn(
         Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            start = AppTheme.dimens.screenGutter,
-            end = AppTheme.dimens.screenGutter,
-            bottom = AppTheme.spacing.xxxl * 2,
+            start = HahoTheme.dimens.screenGutter,
+            end = HahoTheme.dimens.screenGutter,
+            bottom = HahoTheme.spacing.xxxl * 2,
         ),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         // Only when the reader has their own set: say so, and how to change it.
         when {
@@ -144,7 +144,7 @@ fun EventContent(
 
 @Composable
 private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseForm: (String, String) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         Text(
             stringResource(R.string.event_item_position, index + 1, total),
             style = MaterialTheme.typography.labelLarge,
@@ -158,7 +158,7 @@ private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseF
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 item.forms.forEachIndexed { i, form ->
                     FilterChip(
                         selected = form.id == resolved.form.id,
@@ -180,8 +180,8 @@ private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseF
 fun EventActionBar(count: Int, onStart: () -> Unit, onCustomize: () -> Unit) {
     DockedBar {
         GlassButton(onClick = onStart, modifier = Modifier.weight(1f)) {
-            Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(AppTheme.dimens.smallIcon))
-            Spacer(Modifier.width(AppTheme.spacing.sm))
+            Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            Spacer(Modifier.width(HahoTheme.spacing.sm))
             // The count drops at large font sizes so the label fits the row.
             Text(
                 if (isLargeFontScale()) stringResource(R.string.event_start_short) else stringResource(R.string.event_start_all, count),
@@ -190,8 +190,8 @@ fun EventActionBar(count: Int, onStart: () -> Unit, onCustomize: () -> Unit) {
             )
         }
         GlassTonalButton(onClick = onCustomize) {
-            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(AppTheme.dimens.smallIcon))
-            Spacer(Modifier.width(AppTheme.spacing.sm))
+            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            Spacer(Modifier.width(HahoTheme.spacing.sm))
             Text(stringResource(R.string.event_adjust), maxLines = 1)
         }
     }

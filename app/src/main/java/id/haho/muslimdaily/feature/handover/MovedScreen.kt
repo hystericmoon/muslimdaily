@@ -16,9 +16,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.net.toUri
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
+import id.haho.design.component.EmptyState
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassOutlinedButton
 
 /**
  * Shown instead of the app once it has handed its data to the new Adwam app ([newPackage]).

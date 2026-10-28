@@ -1,8 +1,8 @@
 package id.haho.muslimdaily.feature.run
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,7 +63,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import kotlinx.coroutines.launch
 
@@ -125,7 +127,7 @@ fun RunRoute(onClose: () -> Unit, viewModel: RunViewModel = hiltViewModel()) {
 fun RunScreen(state: RunUiState, actions: RunActions) {
     val pageCount = state.items.size + 1
     val pager = rememberPagerState(initialPage = state.index) { pageCount }
-    val motion = AppTheme.motion
+    val motion = HahoTheme.motion
 
     // ViewModel → pager (taps, auto-advance) with spring motion; pager → ViewModel on swipe.
     LaunchedEffect(state.index) {
@@ -140,8 +142,8 @@ fun RunScreen(state: RunUiState, actions: RunActions) {
         HorizontalPager(
             state = pager,
             modifier = Modifier.weight(1f),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = AppTheme.dimens.screenGutter),
-            pageSpacing = AppTheme.spacing.md,
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = HahoTheme.dimens.screenGutter),
+            pageSpacing = HahoTheme.spacing.md,
             key = { if (it < state.items.size) state.items[it].duaId + it else "summary" },
         ) { page ->
             if (page < state.items.size) {
@@ -159,7 +161,7 @@ private fun RunTopBar(state: RunUiState, pager: PagerState, actions: RunActions)
     var menu by remember { mutableStateOf(false) }
     Column {
         Row(
-            Modifier.fillMaxWidth().padding(horizontal = AppTheme.spacing.xs),
+            Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = actions.onClose) {
@@ -217,7 +219,7 @@ private fun RunTopBar(state: RunUiState, pager: PagerState, actions: RunActions)
         }
         LinearProgressIndicator(
             progress = { if (state.items.isEmpty()) 0f else state.done / state.items.size.toFloat() },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
         )
     }
 }
@@ -241,21 +243,21 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
         shape = MaterialTheme.shapes.extraLarge,
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = AppTheme.spacing.sm)
+            .padding(vertical = HahoTheme.spacing.sm)
             .clickable(enabled = isCurrent && !done, onClickLabel = tapLabel, role = Role.Button, onClick = actions.onTap)
             .semantics { stateDescription = stateText },
     ) {
-        Column(Modifier.fillMaxSize().padding(AppTheme.spacing.xl)) {
+        Column(Modifier.fillMaxSize().padding(HahoTheme.spacing.xl)) {
             Column(
                 Modifier.weight(1f).verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
             ) {
                 if (state.isHidden(page)) {
                     FromMemoryPanel(onReveal = { actions.onReveal(page) })
                     // The meaning stays as the cue; transliteration would give the Arabic away.
                     DuaTranslations(dua, state.prefs.copy(transliteration = false))
                 } else {
-                    ArabicText(dua.arabic, style = AppTheme.arabic.large(dua.isQuran))
+                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
                     DuaTranslations(dua, state.prefs)
                 }
             }
@@ -270,10 +272,10 @@ private fun FromMemoryPanel(onReveal: () -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceContainerHighest,
         shape = MaterialTheme.shapes.large,
-        border = androidx.compose.foundation.BorderStroke(AppTheme.dimens.divider, MaterialTheme.colorScheme.outline),
+        border = androidx.compose.foundation.BorderStroke(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outline),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             Text(stringResource(R.string.run_from_memory), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
             Text(stringResource(R.string.run_from_memory_body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             GlassOutlinedButton(onClick = onReveal) { Text(stringResource(R.string.run_show_text)) }
@@ -285,7 +287,7 @@ private fun FromMemoryPanel(onReveal: () -> Unit) {
 @Composable
 private fun CountArea(done: Boolean, countText: String?, isCurrent: Boolean, count: Int) {
     val scale = remember { Animatable(1f) }
-    val motion = AppTheme.motion
+    val motion = HahoTheme.motion
     LaunchedEffect(count) {
         if (count > 0 && !motion.reduced) {
             scale.snapTo(1.15f)
@@ -293,18 +295,18 @@ private fun CountArea(done: Boolean, countText: String?, isCurrent: Boolean, cou
         }
     }
     Column(
-        Modifier.fillMaxWidth().padding(top = AppTheme.spacing.lg),
+        Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.lg),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
     ) {
         if (done) {
             Surface(
                 shape = CircleShape,
-                color = AppTheme.colors.completeFill,
-                contentColor = AppTheme.colors.onCompleteFill,
-                modifier = Modifier.size(AppTheme.dimens.completeDisc),
+                color = AdwamTheme.colors.completeFill,
+                contentColor = AdwamTheme.colors.onCompleteFill,
+                modifier = Modifier.size(AdwamDimens.completeDisc),
             ) {
-                Icon(painterResource(R.drawable.ic_check), contentDescription = null, modifier = Modifier.padding(AppTheme.spacing.md))
+                Icon(painterResource(R.drawable.ic_check), contentDescription = null, modifier = Modifier.padding(HahoTheme.spacing.md))
             }
             Text(stringResource(R.string.run_done), style = MaterialTheme.typography.titleMedium)
         } else if (countText != null) {
@@ -318,7 +320,7 @@ private fun CountArea(done: Boolean, countText: String?, isCurrent: Boolean, cou
             )
             Text(stringResource(R.string.run_tap_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         } else {
-            Spacer(Modifier.height(AppTheme.spacing.sm))
+            Spacer(Modifier.height(HahoTheme.spacing.sm))
             Text(stringResource(R.string.run_tap_read_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
@@ -329,28 +331,28 @@ private fun RunBottomBar(state: RunUiState, pager: PagerState, actions: RunActio
     val scope = rememberCoroutineScope()
     val onCard = pager.currentPage < state.items.size
     Row(
-        Modifier.fillMaxWidth().heightIn(min = AppTheme.dimens.largeTouchTarget).padding(horizontal = AppTheme.spacing.sm),
+        Modifier.fillMaxWidth().heightIn(min = HahoTheme.dimens.largeTouchTarget).padding(horizontal = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
             onClick = { scope.launch { pager.animateScrollToPage(pager.currentPage - 1) } },
             enabled = pager.currentPage > 0,
-            modifier = Modifier.size(AppTheme.dimens.largeTouchTarget),
+            modifier = Modifier.size(HahoTheme.dimens.largeTouchTarget),
         ) {
             Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.run_previous))
         }
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
             if (onCard && state.counts.getOrElse(pager.currentPage) { 0 } > 0) {
                 TextButton(onClick = actions.onUndo) {
-                    Icon(painterResource(R.drawable.ic_remove), null, Modifier.size(AppTheme.dimens.smallIcon))
-                    Text(stringResource(R.string.run_undo), Modifier.padding(start = AppTheme.spacing.xs))
+                    Icon(painterResource(R.drawable.ic_remove), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Text(stringResource(R.string.run_undo), Modifier.padding(start = HahoTheme.spacing.xs))
                 }
             }
         }
         IconButton(
             onClick = { scope.launch { pager.animateScrollToPage(pager.currentPage + 1) } },
             enabled = pager.currentPage < state.items.size,
-            modifier = Modifier.size(AppTheme.dimens.largeTouchTarget),
+            modifier = Modifier.size(HahoTheme.dimens.largeTouchTarget),
         ) {
             Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.run_next))
         }
@@ -361,17 +363,17 @@ private fun RunBottomBar(state: RunUiState, pager: PagerState, actions: RunActio
 private fun SummaryPage(state: RunUiState, actions: RunActions) {
     val all = state.done == state.items.size
     Column(
-        Modifier.fillMaxSize().padding(AppTheme.spacing.xl),
+        Modifier.fillMaxSize().padding(HahoTheme.spacing.xl),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg, Alignment.CenterVertically),
     ) {
         Surface(
             shape = CircleShape,
-            color = if (all) AppTheme.colors.completeFill else MaterialTheme.colorScheme.surfaceContainerHighest,
-            contentColor = if (all) AppTheme.colors.onCompleteFill else MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(AppTheme.dimens.completeDisc * 1.5f),
+            color = if (all) AdwamTheme.colors.completeFill else MaterialTheme.colorScheme.surfaceContainerHighest,
+            contentColor = if (all) AdwamTheme.colors.onCompleteFill else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(AdwamDimens.completeDisc * 1.5f),
         ) {
-            Icon(painterResource(if (all) R.drawable.ic_done_all else R.drawable.ic_format_list_numbered), null, Modifier.padding(AppTheme.spacing.lg))
+            Icon(painterResource(if (all) R.drawable.ic_done_all else R.drawable.ic_format_list_numbered), null, Modifier.padding(HahoTheme.spacing.lg))
         }
         Text(
             if (all) stringResource(R.string.run_summary_done, state.eventLabel) else stringResource(R.string.run_summary_partial),

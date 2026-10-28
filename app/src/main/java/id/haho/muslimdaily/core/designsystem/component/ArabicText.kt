@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.theme.AmiriQuran
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 
 private val ArabicLocale = LocaleList("ar")
 
@@ -33,7 +33,7 @@ private val ArabicLocale = LocaleList("ar")
 fun ArabicText(
     text: String,
     modifier: Modifier = Modifier,
-    style: TextStyle = AppTheme.arabic.arabicBody,
+    style: TextStyle = AdwamTheme.arabic.arabicBody,
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,
@@ -46,7 +46,7 @@ fun ArabicText(
 fun ArabicText(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
-    style: TextStyle = AppTheme.arabic.arabicBody,
+    style: TextStyle = AdwamTheme.arabic.arabicBody,
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,

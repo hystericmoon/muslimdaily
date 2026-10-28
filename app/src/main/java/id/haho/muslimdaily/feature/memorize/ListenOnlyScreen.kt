@@ -1,6 +1,6 @@
 package id.haho.muslimdaily.feature.memorize
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassIconButton
+import id.haho.design.glass.GlassIconButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,8 +35,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.audio.AudioEngine
 import id.haho.muslimdaily.audio.PlaybackState
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -97,25 +99,25 @@ fun ListenOnlyRoute(onClose: () -> Unit, viewModel: ListenOnlyViewModel = hiltVi
 @Composable
 fun ListenOnlyContent(s: ListenOnlyState, onStart: () -> Unit, onToggle: () -> Unit, onClose: () -> Unit) {
     Column(
-        Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(AppTheme.dimens.screenGutter),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xl),
+        Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(HahoTheme.dimens.screenGutter),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xl),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
             Text(stringResource(R.string.memorize_listen_only), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
         }
-        HighlightedArabic(s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AppTheme.arabic.large(s.dua.isQuran))
+        HighlightedArabic(s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AdwamTheme.arabic.large(s.dua.isQuran))
         Column(Modifier.fillMaxWidth().weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
             GlassIconButton(
                 onClick = { if (loaded) onToggle() else onStart() },
                 enabled = s.dua.audio != null,
-                modifier = Modifier.size(AppTheme.dimens.playerMainButton * 1.5f),
+                modifier = Modifier.size(AdwamDimens.playerMainButton * 1.5f),
             ) {
                 Icon(
                     painterResource(if (s.playback.isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
                     stringResource(if (s.playback.isPlaying) R.string.player_pause else R.string.player_play),
-                    Modifier.size(AppTheme.dimens.icon * 2),
+                    Modifier.size(HahoTheme.dimens.icon * 2),
                 )
             }
             Text(
@@ -127,7 +129,7 @@ fun ListenOnlyContent(s: ListenOnlyState, onStart: () -> Unit, onToggle: () -> U
                 },
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = AppTheme.spacing.lg).semantics { liveRegion = LiveRegionMode.Polite },
+                modifier = Modifier.padding(top = HahoTheme.spacing.lg).semantics { liveRegion = LiveRegionMode.Polite },
             )
         }
         InfoNote(stringResource(R.string.memorize_listen_only_note), icon = R.drawable.ic_mobile_off)

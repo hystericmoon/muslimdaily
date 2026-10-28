@@ -14,6 +14,8 @@ Compose, Hilt, Room, DataStore, Glance. Sideloaded through GitHub Releases.
 ## Build and test
 
 ```
+# once per haho-design version (see docs/architecture.md, "Design system"):
+#   cd ../haho-design && git checkout v<hahoDesign> && ./gradlew publishToMavenLocal
 export ANDROID_HOME=/opt/android-sdk
 python -m unittest discover -s tools          # content pipeline
 ./gradlew :app:lintDebug :app:testDebugUnitTest
