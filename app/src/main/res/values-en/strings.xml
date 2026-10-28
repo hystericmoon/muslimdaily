@@ -258,6 +258,10 @@
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
     <string name="dua_memorize">Memorize</string>
     <string name="dua_add_to_routine">Add to routine</string>
+    <string name="dua_full_entry_show">See the full text in the book</string>
+    <string name="dua_full_entry_hide">Hide the full text</string>
+    <string name="dua_full_entry_title">Full text in the book</string>
+    <string name="dua_full_entry_note">Above is only the dua to recite. Here is the full entry as the book prints it, with the hadith wording, notes and repetition counts.</string>
     <string name="dua_add_to_set">Add to my set</string>
     <string name="dua_remove_from_set">Remove from my set</string>
     <string name="dua_in_set_note">This dua is in your set for this occasion.</string>

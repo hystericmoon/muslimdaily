@@ -41,8 +41,10 @@ internal fun DuaEntity.toModel(): Dua {
         grading = if (gradingGrade != null && gradingGrader != null) Grading(gradingGrade, gradingGrader) else null,
         altGradings = ContentJsonFormat.decodeFromString(gradings, altGradingsJson).map { Grading(it.grade, it.grader) },
         virtue = virtueText?.let { Virtue(it, virtueSource.orEmpty()) },
-        audio = audioFile?.let { DuaAudio(it, segs) },
+        audio = audioFile?.let { DuaAudio(it, segs, if (audioStart != null && audioEnd != null) Segment(audioStart, audioEnd) else null) },
         phraseBreaks = ContentJsonFormat.decodeFromString(ints, phraseBreaksJson),
+        arabicFull = arabicFull,
+        translationIdFull = translationIdFull,
     )
 }
 

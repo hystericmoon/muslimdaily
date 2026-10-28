@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
     ],
     // 2: removed draft/review status, added the takhrij reference. Content is re-imported
     // from the bundled assets, so a destructive migration loses nothing.
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -66,6 +66,12 @@ data class DuaEntity(
     val audioFile: String?,
     val segmentsJson: String,
     val phraseBreaksJson: String,
+    /** The book's full entry, when [arabic] is only the words to recite; blank otherwise. */
+    val arabicFull: String = "",
+    val translationIdFull: String = "",
+    /** The dua's part of the audio file, in seconds; null for the whole file. */
+    val audioStart: Double? = null,
+    val audioEnd: Double? = null,
 )
 
 /** Search index. Text columns hold normalised text (see ArabicNormalizer). */

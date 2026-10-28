@@ -118,10 +118,10 @@ class AudioEngine @Inject constructor(
     /** Plays the whole recitation of [dua], optionally starting at a phrase. */
     fun playDua(dua: Dua, speed: Float, fromPhrase: Int = 0, title: String = "") {
         val audio = dua.audio ?: return
-        val startMs = dua.phrases.getOrNull(fromPhrase)?.segment?.startMs ?: 0L
+        val startMs = dua.phrases.getOrNull(fromPhrase)?.segment?.startMs ?: audio.startMs
         playSequence(
             dua,
-            listOf(SequenceItem.Clip(dua.id, audio.file, startMs, C.TIME_END_OF_SOURCE, fromPhrase until dua.phrases.size, title)),
+            listOf(SequenceItem.Clip(dua.id, audio.file, startMs, audio.endMs ?: C.TIME_END_OF_SOURCE, fromPhrase until dua.phrases.size, title)),
             speed,
         )
     }

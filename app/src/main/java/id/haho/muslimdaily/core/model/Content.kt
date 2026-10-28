@@ -11,7 +11,15 @@ data class Segment(val start: Double, val end: Double) {
     val endMs: Long get() = (end * 1000).toLong()
 }
 
-data class DuaAudio(val file: String, val segments: List<Segment>)
+/**
+ * A dua's recitation. [range] is the dua's part of the file when the recording also reads its
+ * context (the hadith wording, a note); playback then covers only that part.
+ */
+data class DuaAudio(val file: String, val segments: List<Segment>, val range: Segment? = null) {
+    val startMs: Long get() = range?.startMs ?: 0L
+    /** Where playback stops, or null for the end of the file. */
+    val endMs: Long? get() = range?.endMs
+}
 
 /** A phrase of the Arabic text. [range] indexes into [Dua.arabic]; [segment] is its audio, if any. */
 data class Phrase(val index: Int, val text: String, val range: IntRange, val segment: Segment?)
@@ -37,6 +45,9 @@ data class Dua(
     val virtue: Virtue?,
     val audio: DuaAudio?,
     val phraseBreaks: List<Int>,
+    /** The book's full entry (with the hadith wording and notes) when [arabic] is only the dua. */
+    val arabicFull: String = "",
+    val translationIdFull: String = "",
 ) {
     val phrases: List<Phrase> by lazy { splitPhrases(arabic, phraseBreaks, audio?.segments.orEmpty()) }
 

@@ -83,6 +83,9 @@ class AlignTest(unittest.TestCase):
         segs = sa.segments(10.0, [sa.Pause(3.0, 4.0), sa.Pause(6.0, 7.0)])
         self.assertEqual(segs, [(0.0, 3.5), (3.5, 6.5), (6.5, 10.0)])
 
+    def test_segments_start_at_the_dua_range(self):
+        self.assertEqual([(2.0, 3.5), (3.5, 5.0)], sa.segments(3.0, [sa.Pause(1.0, 2.0)], offset=2.0))
+
     def test_status(self):
         self.assertEqual(sa.review_status(2, 2, 2), "match")
         self.assertEqual(sa.review_status(1, 5, 1), "close")

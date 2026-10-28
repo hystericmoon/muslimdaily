@@ -32,6 +32,21 @@ class ContentMapperTest {
     }
 
     @Test
+    fun `the full entry and the dua's audio range are kept`() {
+        val bundle = map(listOf(dua("a") { copy(arabicFull = "ccc aaa bbb", translationsFull = mapOf("id" to "uji penuh"), audio = audio!!.copy(range = listOf(0.0, 2.5))) }))
+        val row = bundle.duas.single()
+        assertEquals("ccc aaa bbb", row.arabicFull)
+        assertEquals("uji penuh", row.translationIdFull)
+        assertEquals(0.0 to 2.5, row.audioStart to row.audioEnd)
+    }
+
+    @Test
+    fun `a malformed audio range plays the whole file`() {
+        val row = map(listOf(dua("a") { copy(audio = audio!!.copy(range = listOf(3.0, 1.0))) })).duas.single()
+        assertNull(row.audioStart)
+    }
+
+    @Test
     fun `grading and audio are optional`() {
         val bundle = map(listOf(dua("a") { copy(grading = null, audio = null) }))
         assertEquals(listOf("a"), bundle.duas.map { it.id })

@@ -45,6 +45,9 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `audio_segments` | no | Start-end seconds per phrase, in order: `0.0-1.8; 1.8-3.9; 3.9-6.2`. Count must equal the number of `\|`-separated phrases; otherwise highlighting is off. |
 | `reference` | no | Takhrij as printed in the source (e.g. the footnote), shown under the sources in the app |
 | `notes` | no | Free notes for the team (importer warnings); not shipped |
+| `arabic_full` | no | The book's whole entry, verbatim, when `arabic` holds only the words to recite (see "Dua and context" below). Every word of `arabic` must come from it, in order. Shown in the app under "Lihat teks lengkap di kitab". |
+| `translation_id_full` | no | The same for the Indonesian: the whole translation when `translation_id` holds only the dua's meaning. |
+| `audio_range` | no | Start-end seconds of the dua in the audio file, e.g. `3.20-9.80`, when the recording also reads the context. Playback and memorisation cover only this part; the file is not edited. Segments must lie inside it. |
 
 ### Event codes
 
@@ -117,6 +120,29 @@ from the source by anything other than `|`. Some long Qur'anic passages (e.g. Ay
 have no punctuation inside, so they stay one or two phrases; adding waqf breaks there is a
 content decision. Run this after the final Hisn import, because `import_hisn.py --merge`
 replaces imported rows.
+
+### Dua and context helper
+
+Hisnul Muslim prints many entries as the narration: the hadith wording around the dua ("when one
+of you eats, let him say: …"), notes in [ ] (another form, or when it is said) and repetition
+notes ("three times"). The recitation reads the same text. `tools/split_context.py` proposes the
+words to recite and where they are in the recording; it only leaves words out, never adds or
+changes one (checked for every row, again by `build_content.py`).
+
+```bash
+python3 -I tools/split_context.py suggest        # or --id eating_01
+```
+
+1. Open `build/split/review.html`. Each entry shows the book's text with the proposed dua in
+   green and the context in grey. Tap "Play dua part" to check the recording starts and ends on
+   it. Entries marked ⚑ need a decision: most are hadiths about a dhikr's virtue, where only a
+   person can say which words are the dhikr, or that the entry should stay whole.
+2. In `build/split/review.csv`, set `approved` to `ya` for rows that are right. Fix `arabic`,
+   `audio_range` or `translation_id` there first if needed (words may only be left out).
+3. `python3 -I tools/split_context.py apply`, then `python3 tools/build_content.py`.
+
+Do this before the phrase segments helper: `segment_audio.py` then marks phrases inside the
+dua's audio range only.
 
 ## Imported content: Hisnul Muslim
 

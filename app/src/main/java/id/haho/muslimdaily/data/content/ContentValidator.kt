@@ -39,5 +39,9 @@ internal object ContentValidator {
         return true
     }
 
+    /** The dua's part of the recording, when it is well-formed. */
+    fun rangeUsable(dua: DuaJson): List<Double>? =
+        dua.audio?.range?.takeIf { it.size == 2 && it[0] >= 0 && it[1] > it[0] }
+
     private val AllowedGrades = setOf("sahih", "hasan")
 }

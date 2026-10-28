@@ -63,6 +63,15 @@ class MemorizePlanTest {
     }
 
     @Test
+    fun `with an audio range only the dua's part plays`() {
+        val ranged = dua.copy(audio = dua.audio!!.copy(segments = emptyList(), range = id.haho.muslimdaily.core.model.Segment(2.0, 6.5)))
+        val clip = MemorizePlan.listen(ranged, "").filterIsInstance<SequenceItem.Clip>().first()
+        assertEquals(2000L to 6500L, clip.startMs to clip.endMs)
+        val built = MemorizePlan.build(ranged, settings, "").filterIsInstance<SequenceItem.Clip>().first()
+        assertEquals(2000L to 6500L, built.startMs to built.endMs)
+    }
+
+    @Test
     fun `build grows cumulative chunks with loops and pauses`() {
         val seq = MemorizePlan.build(dua, settings, "")
         val clips = seq.filterIsInstance<SequenceItem.Clip>()

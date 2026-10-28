@@ -16,6 +16,11 @@ Every row ships. Rules enforced (see docs/content-guide.md):
     given) must match the phrases.
   * Phrase boundaries are marked in the Arabic column with "|". They become `phrase_breaks`
     (character offsets into the stored Arabic).
+  * Where a source entry also carries its context (hadith wording, a note, a repetition count),
+    `arabic_full` keeps the entry verbatim and `arabic` holds only the words to recite. Every
+    word of `arabic` must come from `arabic_full`, in order: nothing is written, only left out.
+    `audio_range` is where those words are recited in the audio file. `translation_id_full` does
+    the same for the Indonesian.
 
 Exits with status 1 on any error, so CI and release builds stop.
 
@@ -41,6 +46,9 @@ YES = {"ya", "y", "yes", "true", "1"}
 NO = {"tidak", "t", "no", "n", "false", "0", ""}
 PLACEHOLDER = "[PLACEHOLDER"
 PHRASE_MARK = "|"
+# Brackets and punctuation the book prints around a recitation. A recited part may leave them
+# out (or keep them); every other character must match the full entry.
+FRAME_CHARS = "()[]«»{}.،,:؛“”\"‘’"
 
 
 @dataclass
@@ -80,6 +88,22 @@ def split_phrases(marked: str) -> tuple[str, list[int]]:
             breaks.append(len(text))
         text += part
     return text, breaks
+
+
+def words(text: str) -> list[str]:
+    """The text's words, without the brackets and punctuation around them."""
+    out = []
+    for token in text.replace(PHRASE_MARK, " ").split():
+        token = token.strip(FRAME_CHARS)
+        if token:
+            out.append(token)
+    return out
+
+
+def is_part_of(part: str, full: str) -> bool:
+    """True when every word of [part] appears in [full], in the same order."""
+    it = iter(words(full))
+    return all(any(w == f for f in it) for w in words(part))
 
 
 def parse_segments(value: str) -> list[list[float]]:
@@ -149,6 +173,23 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         if start < last_end - 1e-6 or end <= start:
             report.errors.append(f"{did}: segment {i + 1} ({start}-{end}) overlaps or is out of order")
         last_end = end
+    rng = audio.get("range")
+    if rng:
+        if not audio.get("file"):
+            p("audio_range given without an audio file")
+        if len(rng) != 2 or rng[1] <= rng[0] or rng[0] < 0:
+            report.errors.append(f"{did}: audio_range must look like '3.2-9.8'")
+        elif segments and (segments[0][0] < rng[0] - 1e-6 or segments[-1][1] > rng[1] + 1e-6):
+            report.errors.append(f"{did}: audio segments must lie inside audio_range")
+    full = d.get("arabic_full") or ""
+    if full:
+        if full.replace(PHRASE_MARK, "").strip() == d.get("arabic", "").strip():
+            p("arabic_full is the same as arabic; leave it blank")
+        elif not is_part_of(d.get("arabic", ""), full):
+            report.errors.append(f"{did}: arabic must be words of arabic_full in order (nothing added or changed)")
+    tr_full = (d.get("translations_full") or {}).get("id", "")
+    if tr_full and not is_part_of(d.get("translations", {}).get("id", ""), tr_full):
+        report.errors.append(f"{did}: translation_id must be words of translation_id_full in order")
     phrases = len(d.get("phrase_breaks", [])) + 1
     if segments and phrases != len(segments):
         report.errors.append(f"{did}: {phrases} phrase(s) marked with '|' but {len(segments)} audio segment(s)")
@@ -179,6 +220,16 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
     except ValueError:
         report.errors.append(f"{rid}: audio_segments must look like '0.0-1.8; 1.8-3.9'")
         segments = []
+    audio_range = None
+    if (row.get("audio_range") or "").strip():
+        try:
+            parsed = parse_segments(row["audio_range"])
+            audio_range = parsed[0] if len(parsed) == 1 else []
+        except ValueError:
+            audio_range = []
+        if not audio_range:
+            report.errors.append(f"{rid}: audio_range must look like '3.2-9.8'")
+            audio_range = None
     arabic, breaks = split_phrases(row.get("arabic", ""))
     sources = []
     for n in (1, 2, 3):
@@ -199,11 +250,13 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "order": order,
         "variant_group": (row.get("variant_group") or "").strip() or None,
         "arabic": arabic,
+        **({"arabic_full": full} if (full := (row.get("arabic_full") or "").strip()) else {}),
         "is_quran": parse_bool(row.get("is_quran", ""), f"{rid}: is_quran", report, True),
         "translations": {
             "id": (row.get("translation_id") or "").strip(),
             "en": (row.get("translation_en") or "").strip(),
         },
+        **({"translations_full": {"id": tf}} if (tf := (row.get("translation_id_full") or "").strip()) else {}),
         "transliteration": (row.get("transliteration") or "").strip(),
         "count": count,
         "sources": sources,
@@ -211,7 +264,7 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "grading": {"grade": (row.get("grade") or "").strip().lower(), "grader": (row.get("grader") or "").strip()},
         "alt_gradings": alt,
         "virtue": {"text": virtue_text, "source": (row.get("virtue_source") or "").strip()} if virtue_text else None,
-        "audio": {"file": (row.get("audio_file") or "").strip(), "segments": segments},
+        "audio": {"file": (row.get("audio_file") or "").strip(), "segments": segments, **({"range": audio_range} if audio_range else {})},
         "phrase_breaks": breaks,
     }
 
