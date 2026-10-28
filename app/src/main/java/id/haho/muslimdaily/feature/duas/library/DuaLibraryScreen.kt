@@ -1,7 +1,7 @@
 package id.haho.muslimdaily.feature.duas.library
 
-import id.haho.muslimdaily.core.designsystem.glass.enterReveal
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.enterReveal
+import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,7 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import id.haho.muslimdaily.feature.duas.event.EventViewModel
 import id.haho.muslimdaily.feature.duas.event.EventRoute
-import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.design.glass.Glass
 import androidx.hilt.lifecycle.viewmodel.HiltViewModelFactory
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -57,9 +57,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.SectionHeader
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.DuaCategory
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.data.content.ContentRepository
@@ -106,7 +107,7 @@ fun DuaLibraryRoute(
         var selected by rememberSaveable { mutableStateOf<String?>(null) }
         val shown = selected ?: categories?.firstOrNull()?.events?.firstOrNull()?.id
         val library = @Composable { modifier: Modifier ->
-            AppScreen(
+            AdwamScreen(
                 title = stringResource(R.string.duas_title),
                 modifier = modifier,
                 actions = {
@@ -173,7 +174,7 @@ fun DuaLibraryContent(
     routineActions: RoutineActions = RoutineActions(),
     onOpenEvent: (String) -> Unit,
 ) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         // The user's own routines come first: they are what they open the tab for.
         if (routines != null) {
             item(key = "routines") {
@@ -183,7 +184,7 @@ fun DuaLibraryContent(
                     onStart = routineActions.onStart,
                     onEdit = routineActions.onEdit,
                     onNew = routineActions.onNew,
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter),
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
                 )
             }
         }
@@ -192,7 +193,7 @@ fun DuaLibraryContent(
                 SectionHeader(category.label)
                 GlassCard(
                     shape = MaterialTheme.shapes.extraLarge,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(index),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(index),
                 ) {
                     Column {
                         val timeline = category.id == DAILY
@@ -224,26 +225,26 @@ private fun EventRow(event: DuaEvent, timeline: Boolean, isFirst: Boolean, isLas
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-            .heightIn(min = AppTheme.dimens.largeTouchTarget)
+            .heightIn(min = HahoTheme.dimens.largeTouchTarget)
             .then(if (selected) Modifier.background(Glass.colors.tinted) else Modifier)
             .selectable(selected = selected, role = Role.Button, onClick = onClick)
-            .padding(start = AppTheme.dimens.screenGutter, end = AppTheme.spacing.sm),
+            .padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (timeline) {
             val line = MaterialTheme.colorScheme.outlineVariant
             Column(
-                Modifier.fillMaxHeight().width(AppTheme.dimens.timelineDot),
+                Modifier.fillMaxHeight().width(AdwamDimens.timelineDot),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Box(Modifier.weight(1f).width(AppTheme.dimens.divider * 2).background(if (isFirst) line.copy(alpha = 0f) else line))
-                Box(Modifier.size(AppTheme.dimens.timelineDot).background(MaterialTheme.colorScheme.primary, CircleShape))
-                Box(Modifier.weight(1f).width(AppTheme.dimens.divider * 2).background(if (isLast) line.copy(alpha = 0f) else line))
+                Box(Modifier.weight(1f).width(HahoTheme.dimens.divider * 2).background(if (isFirst) line.copy(alpha = 0f) else line))
+                Box(Modifier.size(AdwamDimens.timelineDot).background(MaterialTheme.colorScheme.primary, CircleShape))
+                Box(Modifier.weight(1f).width(HahoTheme.dimens.divider * 2).background(if (isLast) line.copy(alpha = 0f) else line))
             }
         }
         Column(
-            Modifier.weight(1f).padding(start = if (timeline) AppTheme.spacing.lg else 0.dp, top = AppTheme.spacing.md, bottom = AppTheme.spacing.md),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxs),
+            Modifier.weight(1f).padding(start = if (timeline) HahoTheme.spacing.lg else 0.dp, top = HahoTheme.spacing.md, bottom = HahoTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs),
         ) {
             Text(event.label, style = MaterialTheme.typography.bodyLarge)
             Text(
@@ -256,7 +257,7 @@ private fun EventRow(event: DuaEvent, timeline: Boolean, isFirst: Boolean, isLas
             painterResource(R.drawable.ic_chevron_right),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(AppTheme.spacing.md),
+            modifier = Modifier.padding(HahoTheme.spacing.md),
         )
     }
 }

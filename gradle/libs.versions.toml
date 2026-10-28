@@ -25,6 +25,8 @@ robolectric = "4.17"
 roborazzi = "1.76.0"
 benchmark = "1.5.0"
 uiautomator = "2.4.0"
+# The shared design system; CI checks out the haho-design tag v<this version> (see .github/workflows).
+hahoDesign = "0.1.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -79,6 +81,7 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-junit-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
+haho-design = { module = "id.haho:haho-design", version.ref = "hahoDesign" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

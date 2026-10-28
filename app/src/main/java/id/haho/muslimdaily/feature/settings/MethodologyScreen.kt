@@ -18,13 +18,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.theme.HahoTheme
 
 @Composable
 fun MethodologyRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val version by viewModel.contentVersion.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.settings_methodology), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.settings_methodology), onBack = onBack) {
         MethodologyContent(version)
     }
 }
@@ -32,8 +32,8 @@ fun MethodologyRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltView
 @Composable
 fun MethodologyContent(contentVersion: Int?) {
     Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(AppTheme.dimens.screenGutter),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(HahoTheme.dimens.screenGutter),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
     ) {
         Section(R.string.methodology_scope_title, R.string.methodology_scope_body)
         Section(R.string.methodology_sources_title, R.string.methodology_sources_body)
@@ -42,7 +42,7 @@ fun MethodologyContent(contentVersion: Int?) {
         Section(R.string.methodology_audio_title, R.string.methodology_audio_body)
         Section(R.string.methodology_review_title, R.string.methodology_reviewer)
         Section(R.string.methodology_prayer_title, R.string.methodology_prayer_body)
-        Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+        Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
             Text(stringResource(R.string.methodology_version_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.semantics { heading() })
             Text(stringResource(R.string.methodology_content_version, contentVersion?.toString() ?: "–"), style = MaterialTheme.typography.bodyLarge)
             Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.bodyLarge)
@@ -52,8 +52,8 @@ fun MethodologyContent(contentVersion: Int?) {
 
 @Composable
 private fun Section(title: Int, body: Int) {
-    Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         Text(stringResource(title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.semantics { heading() })
-        Text(stringResource(body), style = AppTheme.reading.bodyLarge)
+        Text(stringResource(body), style = HahoTheme.reading.bodyLarge)
     }
 }

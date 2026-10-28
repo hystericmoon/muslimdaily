@@ -2,7 +2,7 @@ package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.data.mosque.Mosque
 import id.haho.muslimdaily.domain.prayer.NextPrayer
@@ -35,7 +35,7 @@ class MosqueScreenshotTest {
     )
 
     private fun shot(name: String, state: MosqueUiState) = captureVariants(name) {
-        AppScreen(title = stringResource(R.string.mosque_title), onBack = {}) {
+        AdwamScreen(title = stringResource(R.string.mosque_title), onBack = {}) {
             NearbyMosqueContent(state, header, canOpenMaps = true, actions = MosqueActions())
         }
     }

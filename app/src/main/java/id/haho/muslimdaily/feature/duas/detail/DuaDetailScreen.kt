@@ -1,7 +1,7 @@
 package id.haho.muslimdaily.feature.duas.detail
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -20,8 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import id.haho.muslimdaily.data.note.NoteRepository
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.Glass
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
@@ -33,7 +33,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import id.haho.muslimdaily.core.designsystem.glass.GlassBottomSheet
+import id.haho.design.glass.GlassBottomSheet
 import androidx.compose.ui.semantics.Role
 import androidx.compose.material3.Checkbox
 import androidx.compose.foundation.selection.toggleable
@@ -50,9 +50,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.feature.duas.components.gradeLabel
 import id.haho.muslimdaily.feature.duas.components.sourceLabel
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.feature.duas.components.CountBadge
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
@@ -84,7 +85,7 @@ fun DuaDetailRoute(
     val scope = rememberCoroutineScope()
     val s = state
     val title = s?.event?.label.orEmpty()
-    AppScreen(
+    AdwamScreen(
         title = title,
         onBack = onBack,
         actions = {
@@ -139,23 +140,23 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = AppTheme.dimens.screenGutter)
-            .padding(bottom = AppTheme.spacing.xxl),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+            .padding(horizontal = HahoTheme.dimens.screenGutter)
+            .padding(bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
     ) {
         GlassCard(shape = MaterialTheme.shapes.extraLarge) {
-            Column(Modifier.padding(AppTheme.spacing.xl)) {
+            Column(Modifier.padding(HahoTheme.spacing.xl)) {
                 HighlightedArabic(
                     text = dua.arabic,
                     phrases = dua.phrases,
                     activePhrase = state.playback.activePhrase,
-                    style = AppTheme.arabic.large(dua.isQuran),
+                    style = AdwamTheme.arabic.large(dua.isQuran),
                 )
             }
         }
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
         ) {
             dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
             SourceChip(dua)
@@ -163,14 +164,14 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
         DuaTranslations(dua, state.prefs)
         NoteCard(state.note, actions.onSaveNote)
         dua.virtue?.let { virtue ->
-            Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
+            Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
                 Text(
                     stringResource(R.string.dua_virtue),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.semantics { heading() },
                 )
-                Text(virtue.text, style = AppTheme.reading.bodyLarge)
+                Text(virtue.text, style = HahoTheme.reading.bodyLarge)
                 if (virtue.source.isNotBlank()) {
                     Text(virtue.source, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
@@ -178,26 +179,26 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
         }
         if (dua.audio == null) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
         ) {
             GlassOutlinedButton(onClick = actions.onMemorize) {
-                Icon(painterResource(R.drawable.ic_record_voice_over), null, Modifier.size(AppTheme.dimens.smallIcon))
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Icon(painterResource(R.drawable.ic_record_voice_over), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.dua_memorize))
             }
             GlassOutlinedButton(onClick = { actions.onSetInMySet(!state.inMySet) }) {
                 Icon(
                     painterResource(if (state.inMySet) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
                     null,
-                    Modifier.size(AppTheme.dimens.smallIcon),
+                    Modifier.size(HahoTheme.dimens.smallIcon),
                 )
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(if (state.inMySet) R.string.dua_remove_from_set else R.string.dua_add_to_set))
             }
             GlassOutlinedButton(onClick = { routineSheet = true }) {
-                Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(AppTheme.dimens.smallIcon))
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.dua_add_to_routine))
             }
         }
@@ -221,15 +222,15 @@ private fun NoteCard(note: String?, onSave: (String) -> Unit) {
         onClick = { editing = true },
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(Modifier.padding(AppTheme.spacing.lg), verticalAlignment = Alignment.Top) {
-            Icon(painterResource(R.drawable.ic_edit_note), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(AppTheme.dimens.icon))
-            Spacer(Modifier.width(AppTheme.spacing.md))
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxs)) {
+        Row(Modifier.padding(HahoTheme.spacing.lg), verticalAlignment = Alignment.Top) {
+            Icon(painterResource(R.drawable.ic_edit_note), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
+            Spacer(Modifier.width(HahoTheme.spacing.md))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs)) {
                 Text(stringResource(R.string.note_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                 if (note.isNullOrBlank()) {
                     Text(stringResource(R.string.note_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
-                    Text(note, style = AppTheme.reading.bodyLarge)
+                    Text(note, style = HahoTheme.reading.bodyLarge)
                 }
             }
         }
@@ -240,7 +241,7 @@ private fun NoteCard(note: String?, onSave: (String) -> Unit) {
             onDismissRequest = { editing = false },
             title = { Text(stringResource(R.string.note_title)) },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+                Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                     OutlinedTextField(
                         value = text,
                         onValueChange = { text = it.take(NoteRepository.MAX_LENGTH) },
@@ -269,37 +270,37 @@ private fun NoteCard(note: String?, onSave: (String) -> Unit) {
 @Composable
 private fun RoutineSheet(state: DuaDetailState, actions: DuaDetailActions, onDismiss: () -> Unit) {
     GlassBottomSheet(onDismissRequest = onDismiss) {
-        Column(Modifier.padding(bottom = AppTheme.spacing.xxl)) {
+        Column(Modifier.padding(bottom = HahoTheme.spacing.xxl)) {
             Text(
                 stringResource(R.string.dua_add_to_routine),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm).semantics { heading() },
+                modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm).semantics { heading() },
             )
             state.routines.forEach { routine ->
                 val checked = state.dua.id in routine.duaIds
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                        .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                         .toggleable(value = checked, role = Role.Checkbox, onValueChange = { actions.onSetInRoutine(routine.id, it) })
-                        .padding(horizontal = AppTheme.dimens.screenGutter),
+                        .padding(horizontal = HahoTheme.dimens.screenGutter),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Checkbox(checked = checked, onCheckedChange = null)
-                    Spacer(Modifier.width(AppTheme.spacing.md))
+                    Spacer(Modifier.width(HahoTheme.spacing.md))
                     Text(routine.name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
                 }
             }
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .heightIn(min = AppTheme.dimens.largeTouchTarget)
+                    .heightIn(min = HahoTheme.dimens.largeTouchTarget)
                     .clickable(role = Role.Button) { onDismiss(); actions.onNewRoutine() }
-                    .padding(horizontal = AppTheme.dimens.screenGutter),
+                    .padding(horizontal = HahoTheme.dimens.screenGutter),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(painterResource(R.drawable.ic_add), null, tint = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.width(AppTheme.spacing.md))
+                Spacer(Modifier.width(HahoTheme.spacing.md))
                 Text(stringResource(R.string.routine_new), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
             }
         }

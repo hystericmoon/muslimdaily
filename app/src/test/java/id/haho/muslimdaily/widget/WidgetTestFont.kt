@@ -18,6 +18,6 @@ object WidgetTestFont {
         val field = Typeface::class.java.getDeclaredField("sSystemFontMap").apply { isAccessible = true }
         @Suppress("UNCHECKED_CAST")
         val map = field.get(null) as MutableMap<String, Typeface>
-        map[FAMILY] = ResourcesCompat.getFont(context, R.font.plus_jakarta_sans)!!
+        map[FAMILY] = ResourcesCompat.getFont(context, id.haho.design.R.font.haho_plus_jakarta_sans)!!
     }
 }

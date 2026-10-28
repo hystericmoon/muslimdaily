@@ -15,10 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.NavigationRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.NavigationRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.data.settings.AppSettings
@@ -42,7 +42,7 @@ fun SettingsHomeRoute(destinations: SettingsDestinations, viewModel: SettingsVie
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val version by viewModel.contentVersion.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    AppScreen(title = stringResource(R.string.nav_settings)) {
+    AdwamScreen(title = stringResource(R.string.nav_settings)) {
         settings?.let {
             SettingsHomeContent(it, destinations.copy(onReportError = { reportError(context, null, version) }))
         }
@@ -51,7 +51,7 @@ fun SettingsHomeRoute(destinations: SettingsDestinations, viewModel: SettingsVie
 
 @Composable
 fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             SettingsGroup(stringResource(R.string.settings_group_prayer)) {
                 NavigationRow(
@@ -138,7 +138,7 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
                 stringResource(R.string.settings_no_ads),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(AppTheme.dimens.screenGutter),
+                modifier = Modifier.padding(HahoTheme.dimens.screenGutter),
             )
         }
     }

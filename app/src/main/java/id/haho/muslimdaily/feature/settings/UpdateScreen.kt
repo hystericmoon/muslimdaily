@@ -32,14 +32,14 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SettingsGroup
+import id.haho.design.component.SwitchRow
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.update.UpdateStatus
 import id.haho.muslimdaily.update.UpdateUiState
 import id.haho.muslimdaily.update.UpdateViewModel
@@ -62,7 +62,7 @@ fun UpdatesRoute(onBack: () -> Unit) {
     val viewModel = activityUpdateViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    AppScreen(title = stringResource(R.string.update_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.update_title), onBack = onBack) {
         UpdatesContent(
             state,
             UpdateActions(
@@ -79,12 +79,12 @@ fun UpdatesRoute(onBack: () -> Unit) {
 @Composable
 fun UpdatesContent(state: UpdateUiState, actions: UpdateActions) {
     Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom = AppTheme.spacing.xxl),
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom = HahoTheme.spacing.xxl),
     ) {
-        SettingsGroup(null, Modifier.padding(top = AppTheme.spacing.md)) {
+        SettingsGroup(null, Modifier.padding(top = HahoTheme.spacing.md)) {
             Column(
-                Modifier.padding(AppTheme.spacing.lg),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                Modifier.padding(HahoTheme.spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
                 Text(
                     stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME),
@@ -98,7 +98,7 @@ fun UpdatesContent(state: UpdateUiState, actions: UpdateActions) {
                 UpdateStatusBlock(state.status, actions)
             }
         }
-        SettingsGroup(null, Modifier.padding(top = AppTheme.spacing.md)) {
+        SettingsGroup(null, Modifier.padding(top = HahoTheme.spacing.md)) {
             SwitchRow(
                 title = stringResource(R.string.update_auto),
                 summary = stringResource(R.string.update_auto_summary),
@@ -114,7 +114,7 @@ fun UpdatesContent(state: UpdateUiState, actions: UpdateActions) {
         }
         InfoNote(
             stringResource(R.string.update_privacy),
-            Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.md),
+            Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md),
             icon = R.drawable.ic_lock,
         )
     }
@@ -134,7 +134,7 @@ private fun lastCheckedLabel(millis: Long): String =
 /** Status text and the one action that fits it; changes cross-fade. */
 @Composable
 private fun UpdateStatusBlock(status: UpdateStatus, actions: UpdateActions) {
-    val motion = AppTheme.motion
+    val motion = HahoTheme.motion
     AnimatedContent(
         targetState = status,
         contentKey = { it::class },
@@ -142,7 +142,7 @@ private fun UpdateStatusBlock(status: UpdateStatus, actions: UpdateActions) {
         modifier = Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
         label = "updateStatus",
     ) { s ->
-        Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+        Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             when (s) {
                 UpdateStatus.Idle -> GlassButton(onClick = actions.onCheck) { Text(stringResource(R.string.update_check)) }
                 UpdateStatus.Checking -> {
@@ -217,7 +217,7 @@ fun UpdatePromptDialog(state: UpdateUiState, actions: UpdateActions, onDismiss: 
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.update_available, update.version)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 when (status) {
                     is UpdateStatus.Downloading -> DownloadProgress(status.progress)
                     is UpdateStatus.Failed -> Text(stringResource(R.string.update_failed), color = MaterialTheme.colorScheme.error)

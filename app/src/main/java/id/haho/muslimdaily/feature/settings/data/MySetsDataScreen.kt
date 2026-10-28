@@ -1,7 +1,7 @@
 package id.haho.muslimdaily.feature.settings.data
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.glass.GlassButton
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -29,13 +29,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.backup.BackupRepository
-import id.haho.muslimdaily.core.designsystem.glass.GlassAlertDialog
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
+import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassTonalButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -101,7 +101,7 @@ fun MySetsDataRoute(onBack: () -> Unit, viewModel: MySetsDataViewModel = hiltVie
     }
     var confirmRestore by remember { mutableStateOf(false) }
 
-    AppScreen(title = stringResource(R.string.settings_my_sets), onBack = onBack, snackbarHostState = snackbar) {
+    AdwamScreen(title = stringResource(R.string.settings_my_sets), onBack = onBack, snackbarHostState = snackbar) {
         MySetsDataContent(
             onShare = { scope.launch { share(context, viewModel.exportJson()) } },
             onSave = { save.launch(FILE_NAME) },
@@ -138,8 +138,8 @@ fun MySetsDataContent(
 ) {
     run {
         Column(
-            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(AppTheme.dimens.screenGutter),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(HahoTheme.dimens.screenGutter),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
         ) {
             androidx.compose.material3.Text(
                 stringResource(R.string.backup_title),
@@ -150,35 +150,35 @@ fun MySetsDataContent(
             InfoNote(stringResource(R.string.backup_intro))
             GlassButton(onClick = onBackup, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_backup), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.backup_create))
             }
             GlassOutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_settings_backup_restore), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.backup_restore))
             }
             androidx.compose.material3.Text(
                 stringResource(R.string.data_my_sets_title),
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                 color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = AppTheme.spacing.lg).semantics { heading() },
+                modifier = Modifier.padding(top = HahoTheme.spacing.lg).semantics { heading() },
             )
             InfoNote(stringResource(R.string.data_intro))
             // One primary action per screen: the full backup. Sharing a set is secondary.
             GlassTonalButton(onClick = onShare, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_ios_share), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.data_share))
             }
             GlassOutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_download), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.data_save))
             }
             GlassOutlinedButton(onClick = onImport, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_upload), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.data_import))
             }
             InfoNote(stringResource(R.string.data_import_note))

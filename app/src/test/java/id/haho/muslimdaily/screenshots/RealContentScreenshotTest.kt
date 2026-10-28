@@ -1,6 +1,6 @@
 package id.haho.muslimdaily.screenshots
 
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
+import id.haho.design.theme.HahoPalette
 import id.haho.muslimdaily.feature.duas.components.sourceLabel
 import id.haho.muslimdaily.feature.duas.detail.DuaShareCard
 
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.audio.PlaybackState
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.GlassCard
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.DuaCategory
 import id.haho.muslimdaily.core.model.DuaEvent
@@ -126,9 +126,9 @@ class RealContentScreenshotTest {
     fun shareCards() {
         val context = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         for ((name, duaId, palette) in listOf(
-            Triple("69-share-ayat-kursi", "morning_01", AppPalette.TEAL),
-            Triple("69-share-quran-rose", "quran_16", AppPalette.ROSE),
-            Triple("69-share-graded-navy", duas.first { it.grading != null }.id, AppPalette.NAVY),
+            Triple("69-share-ayat-kursi", "morning_01", HahoPalette.TEAL),
+            Triple("69-share-quran-rose", "quran_16", HahoPalette.ROSE),
+            Triple("69-share-graded-navy", duas.first { it.grading != null }.id, HahoPalette.NAVY),
         )) {
             val d = dua(duaId)
             val source = d.sources.joinToString("; ") { sourceLabel(it) } +
@@ -143,11 +143,11 @@ class RealContentScreenshotTest {
     fun arabicFonts() {
         id.haho.muslimdaily.core.designsystem.theme.ArabicFont.entries.forEach { font ->
             com.github.takahirom.roborazzi.captureRoboImage("67-real-font-${font.name.lowercase()}.png") {
-                id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme(themeMode = id.haho.muslimdaily.core.designsystem.theme.ThemeMode.LIGHT, arabicFont = font) {
-                    id.haho.muslimdaily.core.designsystem.glass.GlassBackdrop {
+                id.haho.muslimdaily.core.designsystem.theme.AdwamTheme(themeMode = id.haho.design.theme.ThemeMode.LIGHT, arabicFont = font) {
+                    id.haho.design.glass.GlassBackdrop {
                         androidx.compose.foundation.layout.Column(Modifier.padding(16.dp)) {
-                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("istiftah_05").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AppTheme.arabic.arabicBody)
-                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("quran_01").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AppTheme.arabic.quranBody)
+                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("istiftah_05").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AdwamTheme.arabic.arabicBody)
+                            id.haho.muslimdaily.core.designsystem.component.ArabicText(dua("quran_01").arabic, style = id.haho.muslimdaily.core.designsystem.theme.AdwamTheme.arabic.quranBody)
                         }
                     }
                 }

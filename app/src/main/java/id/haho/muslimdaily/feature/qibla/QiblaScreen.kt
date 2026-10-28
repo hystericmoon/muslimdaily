@@ -42,13 +42,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.EmptyState
+import id.haho.design.component.InfoNote
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.sensor.CompassRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.Qibla
@@ -100,7 +100,7 @@ private const val SPOKEN_STEP = 15
 @Composable
 fun QiblaRoute(onBack: () -> Unit, onOpenLocation: () -> Unit, viewModel: QiblaViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.qibla_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.qibla_title), onBack = onBack) {
         QiblaContent(state, onOpenLocation)
     }
 }
@@ -142,9 +142,9 @@ private fun Ready(state: QiblaUiState.Ready) {
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.lg),
+            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.lg),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
     ) {
         val guidance = when {
             turn == null -> stringResource(R.string.qibla_no_sensor)
@@ -173,7 +173,7 @@ private fun Ready(state: QiblaUiState.Ready) {
             color = if (aligned) Glass.colors.tinted else Glass.colors.card,
             contentColor = if (aligned) Glass.colors.onTinted else MaterialTheme.colorScheme.onSurface,
         ) {
-            Column(Modifier.padding(AppTheme.spacing.lg), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(Modifier.padding(HahoTheme.spacing.lg), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     guidance,
                     style = MaterialTheme.typography.headlineSmall,
@@ -208,7 +208,7 @@ private fun Dial(heading: Double, bearing: Double, aligned: Boolean, modifier: M
         val delta = ((-heading.toFloat() - unwrapped.floatValue) % 360f + 540f) % 360f - 180f
         unwrapped.floatValue += delta
     }
-    val rotation by animateFloatAsState(unwrapped.floatValue, AppTheme.motion.press(), label = "dial")
+    val rotation by animateFloatAsState(unwrapped.floatValue, HahoTheme.motion.press(), label = "dial")
     val colors = MaterialTheme.colorScheme
     val dialFill = Glass.colors.card
     val measurer = rememberTextMeasurer()

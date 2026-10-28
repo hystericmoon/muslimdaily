@@ -33,20 +33,20 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.theme.AppPalette
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
-import id.haho.muslimdaily.core.designsystem.theme.colorSchemeFor
+import id.haho.design.theme.HahoPalette
+import id.haho.design.theme.HahoTheme
+import id.haho.design.theme.colorSchemeFor
 
 @StringRes
-fun AppPalette.labelRes(): Int = when (this) {
-    AppPalette.TEAL -> R.string.palette_teal
-    AppPalette.NAVY -> R.string.palette_navy
-    AppPalette.FOREST -> R.string.palette_forest
-    AppPalette.SLATE -> R.string.palette_slate
-    AppPalette.OLIVE -> R.string.palette_olive
-    AppPalette.ROSE -> R.string.palette_rose
-    AppPalette.LAVENDER -> R.string.palette_lavender
-    AppPalette.PEACH -> R.string.palette_peach
+fun HahoPalette.labelRes(): Int = when (this) {
+    HahoPalette.TEAL -> R.string.palette_teal
+    HahoPalette.NAVY -> R.string.palette_navy
+    HahoPalette.FOREST -> R.string.palette_forest
+    HahoPalette.SLATE -> R.string.palette_slate
+    HahoPalette.OLIVE -> R.string.palette_olive
+    HahoPalette.ROSE -> R.string.palette_rose
+    HahoPalette.LAVENDER -> R.string.palette_lavender
+    HahoPalette.PEACH -> R.string.palette_peach
 }
 
 /**
@@ -57,28 +57,28 @@ fun AppPalette.labelRes(): Int = when (this) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PalettePicker(
-    selected: AppPalette,
+    selected: HahoPalette,
     enabled: Boolean,
-    onSelect: (AppPalette) -> Unit,
+    onSelect: (HahoPalette) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val dark = MaterialTheme.colorScheme.surface.luminance() < 0.5f
     Column(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
     ) {
         Text(stringResource(R.string.display_palette), style = MaterialTheme.typography.bodyLarge)
         // Four equal columns that always span the row: a fixed cell width left the spare width
         // as a gap on the right of wider phones.
         FlowRow(
             Modifier.fillMaxWidth().selectableGroup().alpha(if (enabled) 1f else 0.38f),
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             maxItemsInEachRow = COLUMNS,
         ) {
-            AppPalette.entries.forEach { palette ->
+            HahoPalette.entries.forEach { palette ->
                 Swatch(palette, dark, palette == selected, enabled, Modifier.weight(1f)) { onSelect(palette) }
             }
         }
@@ -96,16 +96,16 @@ private val SwatchSize = 40.dp
 private const val COLUMNS = 4
 
 @Composable
-private fun Swatch(palette: AppPalette, dark: Boolean, selected: Boolean, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun Swatch(palette: HahoPalette, dark: Boolean, selected: Boolean, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val scheme = remember(palette, dark) { colorSchemeFor(palette, dark) }
-    val ring by animateDpAsState(if (selected) 3.dp else 0.dp, AppTheme.motion.fade(), label = "ring")
+    val ring by animateDpAsState(if (selected) 3.dp else 0.dp, HahoTheme.motion.fade(), label = "ring")
     Column(
         modifier
             .clip(MaterialTheme.shapes.medium)
             .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick)
-            .padding(vertical = AppTheme.spacing.xs),
+            .padding(vertical = HahoTheme.spacing.xs),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
     ) {
         Box(
             Modifier

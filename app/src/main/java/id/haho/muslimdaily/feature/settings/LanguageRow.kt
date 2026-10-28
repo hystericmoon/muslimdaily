@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
+import id.haho.design.component.SegmentedRow
 import id.haho.muslimdaily.core.ui.AppLanguage
 
 /** Indonesian / English, each named in its own language so either reader can find theirs. */

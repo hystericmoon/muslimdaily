@@ -17,6 +17,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // haho-design (the shared design system) is published to mavenLocal: on this Mac by
+        // `./gradlew publishToMavenLocal` in the haho-design repo, on CI by the workflows before
+        // the build. Only the id.haho group is resolved from there.
+        mavenLocal {
+            content { includeGroup("id.haho") }
+        }
     }
 }
 

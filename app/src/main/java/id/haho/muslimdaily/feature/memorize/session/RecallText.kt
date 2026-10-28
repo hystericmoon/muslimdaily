@@ -23,7 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.component.arabicAnnotated
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
 
@@ -56,8 +56,8 @@ fun RecallText(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         FlowRow(
             modifier = modifier.fillMaxWidth().then(semanticsModifier),
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
         ) {
             words.forEach { w ->
                 if (w.index in hidden) {
@@ -69,7 +69,7 @@ fun RecallText(
                                 .fillMaxWidth()
                                 .size(width = widths.getValue(w.index), height = lineHeight)
                                 .align(androidx.compose.ui.Alignment.Center)
-                                .border(AppTheme.dimens.divider, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
+                                .border(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
                         ) {}
                         if (firstLetters) {
                             Text(
@@ -77,7 +77,7 @@ fun RecallText(
                                 style = style,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 maxLines = 1,
-                                modifier = Modifier.align(androidx.compose.ui.Alignment.CenterStart).padding(horizontal = AppTheme.spacing.xs),
+                                modifier = Modifier.align(androidx.compose.ui.Alignment.CenterStart).padding(horizontal = HahoTheme.spacing.xs),
                             )
                         }
                     }

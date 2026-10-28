@@ -48,12 +48,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SectionHeader
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassCard
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -156,7 +156,7 @@ class FastingViewModel @Inject constructor(settings: SettingsRepository, clock: 
 @Composable
 fun FastingRoute(onBack: () -> Unit, viewModel: FastingViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.fasting_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.fasting_title), onBack = onBack) {
         state?.let { FastingContent(it, viewModel::previousMonth, viewModel::nextMonth, viewModel::select) }
     }
 }
@@ -168,11 +168,11 @@ fun FastingContent(
     onNext: () -> Unit,
     onSelect: (LocalDate) -> Unit,
 ) {
-    val gutter = AppTheme.dimens.screenGutter
+    val gutter = HahoTheme.dimens.screenGutter
     LazyColumn(
         Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         item { TodayCard(state.today, state.tomorrow, Modifier.padding(horizontal = gutter)) }
         item { MonthCard(state, onPrevious, onNext, onSelect, Modifier.padding(horizontal = gutter)) }
@@ -189,7 +189,7 @@ fun FastingContent(
             }
         }
         item {
-            Column(Modifier.padding(horizontal = gutter), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+            Column(Modifier.padding(horizontal = gutter), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 InfoNote(stringResource(R.string.fasting_hijri_note))
                 InfoNote(stringResource(R.string.fasting_friday_note))
             }
@@ -212,7 +212,7 @@ private fun kindsText(day: FastDay): String {
 @Composable
 private fun TodayCard(today: FastDay, tomorrow: FastDay, modifier: Modifier = Modifier) {
     GlassCard(modifier.fillMaxWidth(), color = Glass.colors.tinted, contentColor = Glass.colors.onTinted) {
-        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
             for ((label, day) in listOf(R.string.fasting_today to today, R.string.fasting_tomorrow to tomorrow)) {
                 Column(Modifier.semantics(mergeDescendants = true) {}) {
                     Text(stringResource(label) + " · " + hijriText(day.hijri), style = MaterialTheme.typography.labelLarge)
@@ -241,7 +241,7 @@ private fun MonthCard(
     val months = stringArrayResource(R.array.hijri_months)
     val range = DateTimeFormatter.ofPattern("d MMM", AppLocale)
     GlassCard(modifier.fillMaxWidth()) {
-        Column(Modifier.padding(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.md)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onPrevious) {
                     Icon(painterResource(R.drawable.ic_chevron_right), stringResource(R.string.fasting_previous_month), Modifier.scale(scaleX = -1f, scaleY = 1f))
@@ -263,7 +263,7 @@ private fun MonthCard(
                 }
             }
             // Week starts on Monday, as Indonesian calendars print it.
-            Row(Modifier.fillMaxWidth().padding(top = AppTheme.spacing.sm)) {
+            Row(Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.sm)) {
                 DayOfWeek.entries.forEach {
                     Text(
                         it.getDisplayName(TextStyle.SHORT, AppLocale),
@@ -286,7 +286,7 @@ private fun MonthCard(
                     repeat(7 - week.size) { Box(Modifier.weight(1f)) }
                 }
             }
-            Legend(Modifier.padding(top = AppTheme.spacing.sm))
+            Legend(Modifier.padding(top = HahoTheme.spacing.sm))
         }
     }
 }
@@ -335,7 +335,7 @@ private fun Dot(color: Color) = Box(Modifier.size(5.dp).clip(CircleShape).backgr
 
 @Composable
 private fun Legend(modifier: Modifier = Modifier) {
-    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md, Alignment.CenterHorizontally)) {
+    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md, Alignment.CenterHorizontally)) {
         for ((color, label) in listOf(
             GoldMark to R.string.fasting_legend_special,
             MaterialTheme.colorScheme.primary to R.string.fasting_legend_weekly,
@@ -352,7 +352,7 @@ private fun Legend(modifier: Modifier = Modifier) {
 @Composable
 private fun DayDetails(day: FastDay, modifier: Modifier = Modifier) {
     GlassCard(modifier.fillMaxWidth()) {
-        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             Text(formatLongDate(day.date), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
             Text(hijriText(day.hijri), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (day.kinds.isEmpty()) {
@@ -378,10 +378,10 @@ private fun UpcomingRow(day: FastDay, onClick: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = AppTheme.spacing.lg, vertical = AppTheme.spacing.md)
+            .padding(horizontal = HahoTheme.spacing.lg, vertical = HahoTheme.spacing.md)
             .semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         Column(Modifier.weight(1f)) {
             val res = LocalResources.current

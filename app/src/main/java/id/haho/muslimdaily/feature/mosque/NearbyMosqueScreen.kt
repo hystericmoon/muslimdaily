@@ -46,17 +46,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.EmptyState
+import id.haho.design.component.InfoNote
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.durationLabel
-import id.haho.muslimdaily.core.ui.isLargeFontScale
+import id.haho.design.component.isLargeFontScale
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.rememberTimeFormatter
 import id.haho.muslimdaily.data.mosque.Mosque
@@ -102,7 +102,7 @@ fun NearbyMosqueRoute(onBack: () -> Unit, viewModel: NearbyMosqueViewModel = hil
         }
     }
     val canSearch = MapsIntents.canHandle(context, MapsIntents.search(0.0, 0.0, query))
-    AppScreen(title = stringResource(R.string.mosque_title), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.mosque_title), onBack = onBack) {
         NearbyMosqueContent(
             state = state,
             header = header,
@@ -134,7 +134,7 @@ fun NearbyMosqueContent(
 ) {
     when (state) {
         MosqueUiState.Locating -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 CircularProgressIndicator()
                 Text(stringResource(R.string.mosque_locating), style = MaterialTheme.typography.bodyMedium)
             }
@@ -178,11 +178,11 @@ fun NearbyMosqueContent(
 
 @Composable
 private fun MosqueList(state: MosqueUiState.Ready, header: MosqueHeader?, canOpenMaps: Boolean, actions: MosqueActions) {
-    val gutter = AppTheme.dimens.screenGutter
+    val gutter = HahoTheme.dimens.screenGutter
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = gutter, end = gutter, bottom = AppTheme.spacing.xxl),
-        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
+        contentPadding = PaddingValues(start = gutter, end = gutter, bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         header?.let { h -> item { NextPrayerCard(h) } }
         item { OriginNote(state.origin, actions) }
@@ -213,7 +213,7 @@ private fun MosqueList(state: MosqueUiState.Ready, header: MosqueHeader?, canOpe
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Icon(painterResource(R.drawable.ic_travel_explore), null)
-                    Spacer(Modifier.width(AppTheme.spacing.sm))
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
                     Text(stringResource(R.string.mosque_search_maps))
                 }
             }
@@ -234,7 +234,7 @@ private fun NextPrayerCard(h: MosqueHeader) {
     val name = stringResource(h.next.prayer.labelRes())
     val left = Duration.between(h.now, h.next.time)
     GlassCard(Modifier.fillMaxWidth(), color = Glass.colors.tinted, contentColor = Glass.colors.onTinted) {
-        Column(Modifier.padding(AppTheme.spacing.lg).semantics(mergeDescendants = true) {}) {
+        Column(Modifier.padding(HahoTheme.spacing.lg).semantics(mergeDescendants = true) {}) {
             Text(stringResource(R.string.today_next), style = MaterialTheme.typography.labelLarge)
             Text(
                 stringResource(R.string.notif_next_prayer_title, name, time.format(h.next.time, h.zone)),
@@ -247,7 +247,7 @@ private fun NextPrayerCard(h: MosqueHeader) {
 
 @Composable
 private fun OriginNote(origin: Origin, actions: MosqueActions) {
-    Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         when (origin) {
             is Origin.Precise -> InfoNote(
                 origin.accuracyMeters?.let { stringResource(R.string.mosque_origin_precise, it) }
@@ -287,20 +287,20 @@ private fun MosqueRow(m: Mosque, actions: MosqueActions) {
     val route: @Composable () -> Unit = {
         GlassTonalButton(onClick = { actions.onDirections(m) }, modifier = Modifier.semantics { contentDescription = routeLabel }) {
             Icon(painterResource(R.drawable.ic_directions_walk), null, Modifier.size(18.dp))
-            Spacer(Modifier.width(AppTheme.spacing.xs))
+            Spacer(Modifier.width(HahoTheme.spacing.xs))
             Text(stringResource(R.string.mosque_route))
         }
     }
-    val padding = Modifier.fillMaxWidth().padding(start = AppTheme.spacing.lg, end = AppTheme.spacing.md, top = AppTheme.spacing.md, bottom = AppTheme.spacing.md)
+    val padding = Modifier.fillMaxWidth().padding(start = HahoTheme.spacing.lg, end = HahoTheme.spacing.md, top = HahoTheme.spacing.md, bottom = HahoTheme.spacing.md)
     if (isLargeFontScale()) {
         // Large text: the button would squeeze the name, so it goes underneath.
-        Column(padding, verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
+        Column(padding, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             details(Modifier)
             route()
         }
     } else {
-        Row(padding, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
-            Icon(painterResource(R.drawable.ic_mosque), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(AppTheme.dimens.icon))
+        Row(padding, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+            Icon(painterResource(R.drawable.ic_mosque), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
             details(Modifier.weight(1f))
             route()
         }

@@ -10,12 +10,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
-import id.haho.muslimdaily.core.designsystem.component.InfoRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.component.StepperRow
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
+import id.haho.design.component.InfoRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.component.StepperRow
+import id.haho.design.component.SwitchRow
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.feature.duas.components.speedLabel
@@ -25,14 +25,14 @@ import kotlin.math.roundToInt
 @Composable
 fun AudioSettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.settings_audio), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.settings_audio), onBack = onBack) {
         settings?.let { AudioSettingsContent(it, viewModel::update) }
     }
 }
 
 @Composable
 fun AudioSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             SettingsGroup(stringResource(R.string.settings_audio_playback)) {
                 val title = stringResource(R.string.settings_audio_speed)

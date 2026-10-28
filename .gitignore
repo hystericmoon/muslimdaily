@@ -22,3 +22,4 @@ keystore.properties
 .impeccable/critique/
 .impeccable/questions/*
 !.impeccable/questions/seeds/
+.deps/

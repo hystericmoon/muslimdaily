@@ -45,12 +45,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SwitchRow
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.feature.settings.LanguageRow
@@ -206,8 +206,8 @@ fun OnboardingScreen(
                 .weight(1f)
                 .widthIn(max = 560.dp)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.xl),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg),
+                .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.xl),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
         ) {
             Text(
                 stringResource(R.string.onboarding_title),
@@ -220,7 +220,7 @@ fun OnboardingScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             if (showLanguage) {
-                GlassCard(Modifier.fillMaxWidth()) { LanguageRow(Modifier.padding(vertical = AppTheme.spacing.sm)) }
+                GlassCard(Modifier.fillMaxWidth()) { LanguageRow(Modifier.padding(vertical = HahoTheme.spacing.sm)) }
             }
 
             Step(R.drawable.ic_my_location, stringResource(R.string.onboarding_location_title), stringResource(R.string.onboarding_location_body)) {
@@ -260,7 +260,7 @@ fun OnboardingScreen(
             Modifier
                 .widthIn(max = 560.dp)
                 .fillMaxWidth()
-                .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.md),
+                .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md),
         ) {
             GlassButton(onClick = actions.onFinish, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.onboarding_start))
@@ -272,9 +272,9 @@ fun OnboardingScreen(
 @Composable
 private fun Step(@DrawableRes icon: Int, title: String, body: String, content: @Composable () -> Unit) {
     GlassCard(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(AppTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                Icon(painterResource(icon), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(AppTheme.dimens.icon))
+        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                Icon(painterResource(icon), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
             }
             Text(body, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

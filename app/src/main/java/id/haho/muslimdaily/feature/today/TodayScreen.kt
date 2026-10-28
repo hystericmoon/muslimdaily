@@ -6,12 +6,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import id.haho.muslimdaily.core.designsystem.glass.enterReveal
-import id.haho.muslimdaily.core.designsystem.glass.Glass
-import id.haho.muslimdaily.core.designsystem.glass.GlassOutlinedButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassTonalButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassButton
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
+import id.haho.design.glass.enterReveal
+import id.haho.design.glass.Glass
+import id.haho.design.glass.GlassOutlinedButton
+import id.haho.design.glass.GlassTonalButton
+import id.haho.design.glass.GlassButton
+import id.haho.design.glass.GlassCard
 import android.Manifest
 import android.content.Intent
 import android.os.Build
@@ -82,13 +82,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.feature.routines.RoutinesCard
-import id.haho.muslimdaily.core.designsystem.component.EmptyState
+import id.haho.design.component.EmptyState
 import id.haho.muslimdaily.core.designsystem.component.bidiIsolate
-import id.haho.muslimdaily.core.designsystem.component.InfoNote
-import id.haho.muslimdaily.core.designsystem.component.SectionHeader
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
+import id.haho.design.component.InfoNote
+import id.haho.design.component.SectionHeader
+import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.PreviewSurface
-import id.haho.muslimdaily.core.ui.ThemePreviews
+import id.haho.design.component.HahoPreviews
 import id.haho.muslimdaily.core.ui.durationLabel
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.core.ui.hijriLabel
@@ -248,7 +248,7 @@ private fun NoLocation(actions: TodayActions) {
         ) {
             GlassButton(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
                 Icon(painterResource(R.drawable.ic_my_location), null)
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.today_use_gps))
             }
             GlassOutlinedButton(onClick = actions.onOpenLocation, modifier = Modifier.fillMaxWidth()) {
@@ -274,7 +274,7 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
     }
     val onExpandToggle: (String) -> Unit = { key -> expanded = if (key in expanded) expanded - key else expanded + key }
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-        val bottom = PaddingValues(bottom = AppTheme.spacing.xxl)
+        val bottom = PaddingValues(bottom = HahoTheme.spacing.xxl)
         if (maxWidth >= TwoPaneWidth) {
             Row(Modifier.widthIn(max = 1280.dp).fillMaxSize()) {
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
@@ -282,13 +282,13 @@ private fun TodayContent(data: TodayData, actions: TodayActions, initiallyExpand
                     otherItems(data, actions)
                 }
                 LazyColumn(Modifier.weight(1f).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
-                    item(key = "pane-top") { Spacer(Modifier.height(AppTheme.spacing.lg)) }
+                    item(key = "pane-top") { Spacer(Modifier.height(HahoTheme.spacing.lg)) }
                     scheduleItems(data, actions, expanded, onExpandToggle, afterNote)
                 }
             }
         } else {
             // The list starts below the status bar, so scrolled content never runs under the clock.
-            LazyColumn(Modifier.widthIn(max = AppTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
+            LazyColumn(Modifier.widthIn(max = HahoTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(), contentPadding = bottom) {
                 glanceItems(data, actions, routines, widgetAlarmNote, headerFocus)
                 scheduleItems(data, actions, expanded, onExpandToggle, afterNote)
                 otherItems(data, actions)
@@ -306,33 +306,33 @@ private fun LazyListScope.glanceItems(
     headerFocus: FocusRequester,
 ) {
     item(key = "header") { Header(data, actions, headerFocus) }
-    item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(0)) }
+    item(key = "next") { NextPrayerCard(data, actions, Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(0)) }
     if (widgetAlarmNote) {
         item(key = "widget-alarms") {
-            WidgetAlarmNote(actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md))
+            WidgetAlarmNote(actions, Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, top = HahoTheme.spacing.md))
         }
     }
     if (data.prohibited.isNotEmpty()) {
         item(key = "prohibited") {
-            ProhibitedCard(data, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+            ProhibitedCard(data, Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, top = HahoTheme.spacing.md).enterReveal(1))
         }
     }
     data.hijriCheck?.let { c ->
         item(key = "hijri") {
-            HijriCheckCard(c, actions.onAnswerHijri, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+            HijriCheckCard(c, actions.onAnswerHijri, Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, top = HahoTheme.spacing.md).enterReveal(1))
         }
     }
     data.ramadan?.let { r ->
         item(key = "ramadan") {
-            RamadanCardView(r, data, { actions.onOpenEvent("iftar") }, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+            RamadanCardView(r, data, { actions.onOpenEvent("iftar") }, Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, top = HahoTheme.spacing.md).enterReveal(1))
         }
     }
     data.travelSuggestionKm?.let { km ->
-        item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(AppTheme.dimens.screenGutter)) }
+        item(key = "travel") { TravelSuggestion(km, data.locationName, actions, Modifier.padding(HahoTheme.dimens.screenGutter)) }
     }
     data.adhkar?.let { card ->
         item(key = "adhkar") {
-            AdhkarCardView(card, data, actions, Modifier.padding(start = AppTheme.dimens.screenGutter, end = AppTheme.dimens.screenGutter, top = AppTheme.spacing.md).enterReveal(1))
+            AdhkarCardView(card, data, actions, Modifier.padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, top = HahoTheme.spacing.md).enterReveal(1))
         }
     }
     if (routines.isNotEmpty()) {
@@ -345,7 +345,7 @@ private fun LazyListScope.glanceItems(
                     onEdit = {},
                     onNew = {},
                     compact = true,
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(1),
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(1),
                 )
             }
         }
@@ -366,13 +366,13 @@ private fun LazyListScope.scheduleItems(
             expanded = expanded,
             onExpandToggle = onExpandToggle,
             onToggle = actions.onToggle,
-            modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter).enterReveal(2),
+            modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(2),
         )
     }
     item(key = "private-note") {
         InfoNote(
             stringResource(R.string.today_private_note),
-            Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+            Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
             icon = R.drawable.ic_lock,
         )
     }
@@ -387,10 +387,10 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
     val locationDescription = stringResource(R.string.today_location_chip, data.locationName)
     Column(
         modifier = modifier.fillMaxWidth().padding(
-            start = AppTheme.dimens.screenGutter,
-            end = AppTheme.dimens.screenGutter,
-            top = AppTheme.spacing.lg,
-            bottom = AppTheme.spacing.md,
+            start = HahoTheme.dimens.screenGutter,
+            end = HahoTheme.dimens.screenGutter,
+            top = HahoTheme.spacing.lg,
+            bottom = HahoTheme.spacing.md,
         ),
     ) {
         Text(
@@ -404,14 +404,14 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-            modifier = Modifier.padding(top = AppTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            modifier = Modifier.padding(top = HahoTheme.spacing.sm),
         ) {
             AssistChip(
                 onClick = actions.onOpenLocation,
                 // The chip's description already names the place; the visible name is not read twice.
                 label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.clearAndSetSemantics {}) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(AppTheme.dimens.smallIcon)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(HahoTheme.dimens.smallIcon)) },
                 modifier = Modifier.semantics { contentDescription = locationDescription },
             )
             FilterChip(
@@ -422,14 +422,14 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                     Icon(
                         painterResource(if (data.travelMode) R.drawable.ic_check else R.drawable.ic_luggage),
                         null,
-                        Modifier.size(AppTheme.dimens.smallIcon),
+                        Modifier.size(HahoTheme.dimens.smallIcon),
                     )
                 },
             )
             AssistChip(
                 onClick = actions.onOpenFasting,
                 label = { Text(stringResource(R.string.fasting_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(AppTheme.dimens.smallIcon)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(HahoTheme.dimens.smallIcon)) },
             )
         }
     }
@@ -447,14 +447,14 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
         color = Glass.colors.tinted,
         contentColor = Glass.colors.onTinted,
     ) {
-        Column(Modifier.padding(AppTheme.dimens.cardPadding)) {
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding)) {
             // The prayer on the left, its time on the right; with large text the time wraps below.
             FlowRow(
                 Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
-                Column(Modifier.padding(end = AppTheme.spacing.md)) {
+                Column(Modifier.padding(end = HahoTheme.spacing.md)) {
                     Text(stringResource(R.string.today_next), style = MaterialTheme.typography.labelLarge)
                     Text(name, style = MaterialTheme.typography.headlineMedium)
                     if (next.isTomorrow) {
@@ -464,7 +464,7 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                 Column(horizontalAlignment = Alignment.End) {
                     Text(clock, style = MaterialTheme.typography.displayMedium)
                     val countdown = stringResource(R.string.countdown_in, durationLabel(next.remaining))
-                    val motion = AppTheme.motion
+                    val motion = HahoTheme.motion
                     AnimatedContent(
                         targetState = countdown,
                         transitionSpec = {
@@ -481,9 +481,9 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
             // Where to face and where to pray it, under the prayer they serve; each as wide as its
             // label, wrapping to a second line when large text needs it.
             FlowRow(
-                Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
                 NextPrayerAction(R.drawable.ic_explore, stringResource(R.string.qibla_open), actions.onOpenQibla)
                 NextPrayerAction(R.drawable.ic_mosque, stringResource(R.string.mosque_open), actions.onOpenMosques)
@@ -497,10 +497,10 @@ private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modi
     GlassTonalButton(
         onClick = onClick,
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.sm),
+        contentPadding = PaddingValues(horizontal = HahoTheme.spacing.md, vertical = HahoTheme.spacing.sm),
     ) {
-        Icon(painterResource(icon), null, Modifier.size(AppTheme.dimens.smallIcon))
-        Spacer(Modifier.width(AppTheme.spacing.sm))
+        Icon(painterResource(icon), null, Modifier.size(HahoTheme.dimens.smallIcon))
+        Spacer(Modifier.width(HahoTheme.spacing.sm))
         Text(label)
     }
 }
@@ -514,14 +514,14 @@ private fun WidgetAlarmNote(actions: TodayActions, modifier: Modifier = Modifier
         color = Glass.colors.tinted,
         contentColor = Glass.colors.onTinted,
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 Icon(painterResource(R.drawable.ic_schedule), null)
                 Text(stringResource(R.string.today_widget_alarm_note), style = MaterialTheme.typography.bodyMedium)
             }
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
-                modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm, Alignment.End),
+                modifier = Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.sm),
             ) {
                 TextButton(onClick = actions.onDismissWidgetAlarms) { Text(stringResource(R.string.today_dismiss)) }
                 GlassTonalButton(onClick = actions.onAllowExactAlarms) { Text(stringResource(R.string.today_widget_alarm_allow)) }
@@ -538,14 +538,14 @@ private fun TravelSuggestion(km: Int, locationName: String, actions: TodayAction
         color = Glass.colors.tinted,
         contentColor = Glass.colors.onTinted,
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 Icon(painterResource(R.drawable.ic_travel_explore), null)
                 Text(stringResource(R.string.today_travel_suggestion, km, bidiIsolate(locationName)), style = MaterialTheme.typography.bodyMedium)
             }
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
-                modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.sm),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm, Alignment.End),
+                modifier = Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.sm),
             ) {
                 TextButton(onClick = actions.onDismissTravel) { Text(stringResource(R.string.today_dismiss)) }
                 TextButton(onClick = actions.onEnableTravelFromSuggestion) {
@@ -570,18 +570,18 @@ private fun AdhkarCardView(card: AdhkarCard, data: TodayData, actions: TodayActi
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.extraLarge,
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+        Column(Modifier.padding(HahoTheme.spacing.lg)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 Surface(
                     shape = CircleShape,
                     color = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.size(AppTheme.dimens.minTouchTarget),
+                    modifier = Modifier.size(HahoTheme.dimens.minTouchTarget),
                 ) {
                     Icon(
                         painterResource(if (isMorning) R.drawable.ic_wb_sunny else R.drawable.ic_wb_twilight),
                         contentDescription = null,
-                        modifier = Modifier.padding(AppTheme.spacing.md),
+                        modifier = Modifier.padding(HahoTheme.spacing.md),
                     )
                 }
                 Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}) {
@@ -596,11 +596,11 @@ private fun AdhkarCardView(card: AdhkarCard, data: TodayData, actions: TodayActi
                     }
                 }
             }
-            InfoNote(stringResource(R.string.note_adhkar_window), Modifier.padding(top = AppTheme.spacing.sm))
+            InfoNote(stringResource(R.string.note_adhkar_window), Modifier.padding(top = HahoTheme.spacing.sm))
             FlowRow(
-                Modifier.fillMaxWidth().padding(top = AppTheme.spacing.md),
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm, Alignment.End),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm),
+                Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.md),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm, Alignment.End),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
                 TextButton(onClick = { actions.onOpenEvent(card.eventId) }) {
                     Text(stringResource(R.string.adhkar_open_list))
@@ -616,7 +616,7 @@ private fun AdhkarCardView(card: AdhkarCard, data: TodayData, actions: TodayActi
 @Composable
 private fun MethodFooter(data: TodayData, onOpenPrayerSettings: () -> Unit) {
     Column(
-        Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.lg),
+        Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.lg),
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
@@ -630,13 +630,13 @@ private fun MethodFooter(data: TodayData, onOpenPrayerSettings: () -> Unit) {
     }
 }
 
-@ThemePreviews
+@HahoPreviews
 @Composable
 private fun TodayPreview() = PreviewSurface {
     TodayScreen(TodayPreviewData.ready(), TodayActions(), initiallyExpanded = setOf("DHUHR"))
 }
 
-@ThemePreviews
+@HahoPreviews
 @Composable
 private fun TodayNoLocationPreview() = PreviewSurface {
     TodayScreen(TodayUiState.NoLocation, TodayActions())
@@ -650,16 +650,16 @@ private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> U
     val time = rememberTimeFormatter()
     val suhur = r.suhurNow(data.now)
     GlassCard(modifier.fillMaxWidth()) {
-        Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(AppTheme.dimens.icon))
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Text(
                     stringResource(R.string.ramadan_day, r.day),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.semantics { heading() },
                 )
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
                 RamadanTime(stringResource(R.string.ramadan_suhur), time.format(r.suhurEnds, data.zone), active = suhur, Modifier.weight(1f))
                 RamadanTime(stringResource(R.string.ramadan_iftar), time.format(r.iftar, data.zone), active = !suhur, Modifier.weight(1f))
             }
@@ -669,8 +669,8 @@ private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> U
                 style = MaterialTheme.typography.titleMedium,
             )
             GlassTonalButton(onClick = onIftarDua) {
-                Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(AppTheme.dimens.smallIcon))
-                Spacer(Modifier.width(AppTheme.spacing.sm))
+                Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.ramadan_iftar_dua))
             }
         }
@@ -683,14 +683,13 @@ private fun RamadanTime(label: String, clock: String, active: Boolean, modifier:
         modifier
             .clip(MaterialTheme.shapes.large)
             .background(if (active) Glass.colors.tinted else androidx.compose.ui.graphics.Color.Transparent)
-            .padding(AppTheme.spacing.md)
+            .padding(HahoTheme.spacing.md)
             .semantics(mergeDescendants = true) {},
     ) {
         Text(label, style = MaterialTheme.typography.labelLarge, color = if (active) Glass.colors.onTinted else MaterialTheme.colorScheme.onSurfaceVariant)
         Text(clock, style = MaterialTheme.typography.headlineMedium, color = if (active) Glass.colors.onTinted else MaterialTheme.colorScheme.onSurface)
     }
 }
-
 
 /** Month start by sidang isbat: one question, two plain answers, and a way to leave it. */
 @Composable
@@ -699,9 +698,9 @@ private fun HijriCheckCard(check: HijriCheck, onAnswer: (HijriCheck, Boolean?) -
     val ending = months[check.month - 1]
     val next = months[check.nextMonth - 1]
     GlassCard(modifier.fillMaxWidth()) {
-        Column(Modifier.padding(AppTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
-                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(AppTheme.dimens.icon))
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Text(
                     stringResource(R.string.hijri_check_title, next),
                     style = MaterialTheme.typography.titleMedium,

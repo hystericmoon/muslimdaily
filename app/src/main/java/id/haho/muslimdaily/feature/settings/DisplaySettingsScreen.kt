@@ -1,7 +1,7 @@
 package id.haho.muslimdaily.feature.settings
 
-import id.haho.muslimdaily.core.designsystem.glass.GlassCard
-import id.haho.muslimdaily.core.designsystem.glass.Glass
+import id.haho.design.glass.GlassCard
+import id.haho.design.glass.Glass
 import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,15 +29,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.AppScreen
+import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.muslimdaily.core.designsystem.component.RadioGroup
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
-import id.haho.muslimdaily.core.designsystem.component.SettingsGroup
-import id.haho.muslimdaily.core.designsystem.component.StepperRow
-import id.haho.muslimdaily.core.designsystem.component.SwitchRow
-import id.haho.muslimdaily.core.designsystem.theme.AppTheme
-import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
+import id.haho.design.component.RadioGroup
+import id.haho.design.component.SegmentedRow
+import id.haho.design.component.SettingsGroup
+import id.haho.design.component.StepperRow
+import id.haho.design.component.SwitchRow
+import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
+import id.haho.design.theme.ThemeMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
@@ -48,7 +49,7 @@ import kotlin.math.roundToInt
 @Composable
 fun DisplaySettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
-    AppScreen(title = stringResource(R.string.settings_display), onBack = onBack) {
+    AdwamScreen(title = stringResource(R.string.settings_display), onBack = onBack) {
         settings?.let { DisplaySettingsContent(it, viewModel::update) }
     }
 }
@@ -65,7 +66,7 @@ private fun Float.step(delta: Float) = (((this + delta) * 10).roundToInt() / 10f
 
 @Composable
 fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = AppTheme.spacing.xxl)) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             SettingsGroup(stringResource(R.string.display_language)) {
                 LanguageRow()
@@ -128,7 +129,7 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     stringResource(R.string.display_size_note),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 )
                 SizePreview()
             }
@@ -191,7 +192,7 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 )
             }
         }
@@ -204,15 +205,14 @@ private fun SizePreview() {
     GlassCard(
         shape = MaterialTheme.shapes.large,
         color = Glass.colors.clear,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
     ) {
-        Column(Modifier.padding(AppTheme.spacing.lg)) {
-            ArabicText(stringResource(R.string.display_sample_arabic), style = AppTheme.arabic.arabicBody)
-            Text(stringResource(R.string.display_sample_translation), style = AppTheme.reading.bodyLarge)
+        Column(Modifier.padding(HahoTheme.spacing.lg)) {
+            ArabicText(stringResource(R.string.display_sample_arabic), style = AdwamTheme.arabic.arabicBody)
+            Text(stringResource(R.string.display_sample_translation), style = HahoTheme.reading.bodyLarge)
         }
     }
 }
-
 
 /**
  * Each option is shown in its own typeface, with the same vocalised sample, so the choice is
@@ -228,11 +228,11 @@ private fun ArabicFontPicker(selected: ArabicFont, scale: Float, onSelect: (Arab
                 Modifier
                     .fillMaxWidth()
                     .selectable(selected = isSelected, role = Role.RadioButton, onClick = { onSelect(font) })
-                    .padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
+                    .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(selected = isSelected, onClick = null)
-                Spacer(Modifier.width(AppTheme.spacing.md))
+                Spacer(Modifier.width(HahoTheme.spacing.md))
                 Column(Modifier.weight(1f)) {
                     Text(font.displayName(), style = MaterialTheme.typography.bodyLarge)
                     Text(

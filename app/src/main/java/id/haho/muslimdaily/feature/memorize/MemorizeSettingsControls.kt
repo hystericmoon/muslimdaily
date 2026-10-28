@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import id.haho.muslimdaily.R
-import id.haho.muslimdaily.core.designsystem.component.SegmentedRow
-import id.haho.muslimdaily.core.designsystem.component.StepperRow
+import id.haho.design.component.SegmentedRow
+import id.haho.design.component.StepperRow
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.feature.duas.components.speedLabel

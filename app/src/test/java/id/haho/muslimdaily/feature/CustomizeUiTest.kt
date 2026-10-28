@@ -13,7 +13,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import id.haho.muslimdaily.core.designsystem.theme.MuslimDailyTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.domain.myset.ActiveSet
 import id.haho.muslimdaily.domain.myset.CustomEntry
 import id.haho.muslimdaily.domain.myset.Customization
@@ -57,7 +57,7 @@ class CustomizeUiTest {
                 custom = c
             }
             val s = state(c)
-            MuslimDailyTheme {
+            AdwamTheme {
                 CustomizeContent(
                     s,
                     CustomizeActions(
