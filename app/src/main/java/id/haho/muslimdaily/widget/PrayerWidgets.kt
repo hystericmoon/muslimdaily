@@ -220,7 +220,7 @@ internal fun PrayerWidgetContent(data: WidgetData) {
     // Built on every composition (cheap), so a language switch shows at the next update.
     val t = WidgetText(context, model, data.time, data.now, data.precise)
     Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context).semantics { contentDescription = t.description }) {
-        GlassBackground()
+        GlassBackground(data.opacity)
         val l = Layout(model, t, grid.scale, grid.tight, size.width, size.height, TextFit(context), context.resources.configuration.fontScale, data.now, data.liveClock)
         when (grid.rows) {
             1 -> when (grid.columns) {
@@ -239,13 +239,13 @@ internal fun PrayerWidgetContent(data: WidgetData) {
 }
 
 @Composable
-private fun GlassBackground() {
+private fun GlassBackground(opacity: Float) {
     val context = LocalContext.current
     val size = LocalSize.current
     val d = scale(context)
     val corner = corner(context)
-    val bitmap = remember(size) {
-        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner.value * d)
+    val bitmap = remember(size, opacity) {
+        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner.value * d, opacity)
     }
     Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
 }
@@ -332,14 +332,19 @@ private class Layout(
         return f
     }
 
-    /** The current time, its 12-hour marker smaller beside it. */
+    /**
+     * The current time, its 12-hour marker smaller and lighter beside it. Both sit on the same
+     * baseline: the row aligns their bottoms, so the marker is raised by the difference in how far
+     * each text reaches below its baseline, measured in this phone's font.
+     */
     @Composable
     fun Now(sp: Float) {
         Row(verticalAlignment = Alignment.Bottom) {
             Clock(t.clockDigitsPattern, sp, model.zone, now, live)
             t.clockMarker?.let {
                 Spacer(GlanceModifier.width(Space.S))
-                Clock(it, sp * MarkerScale, model.zone, now, live, modifier = GlanceModifier.padding(bottom = (sp * 0.08f).dp))
+                val lift = (fit.descent(sp) - fit.descent(sp * MarkerScale)).coerceAtLeast(0f)
+                Clock(it, sp * MarkerScale, model.zone, now, live, modifier = GlanceModifier.padding(bottom = lift.dp), regular = true)
             }
         }
     }

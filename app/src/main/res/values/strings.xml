@@ -509,6 +509,10 @@
     <string name="palette_peach">Persik</string>
     <string name="display_glass">Efek kaca</string>
     <string name="display_glass_summary">Kartu, tombol dan panel tampil seperti kaca buram. Matikan untuk tampilan polos.</string>
+    <string name="display_widget">Widget layar utama</string>
+    <string name="display_widget_opacity">Kepekatan latar</string>
+    <string name="display_widget_opacity_note">Makin rendah, makin tembus pandang wallpaper di belakangnya. Pada %1$d%% atau lebih, teks tetap mudah dibaca di wallpaper apa pun.</string>
+    <string name="display_widget_opacity_low">Di bawah %1$d%%, teks bisa sulit dibaca di wallpaper yang terang.</string>
     <string name="display_dynamic_color_summary">Ikuti warna wallpaper (Android 12+). Mati secara bawaan agar kontras teks tetap terjaga.</string>
 
     <!-- Methodology -->

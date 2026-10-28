@@ -40,6 +40,8 @@ import id.haho.muslimdaily.core.designsystem.theme.AppTheme
 import id.haho.muslimdaily.core.designsystem.theme.ThemeMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
 import id.haho.muslimdaily.data.settings.TranslationMode
 import kotlin.math.roundToInt
 
@@ -54,6 +56,10 @@ fun DisplaySettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hilt
 private const val SCALE_MIN = 0.8f
 private const val SCALE_MAX = 1.8f
 private const val SCALE_STEP = 0.1f
+
+private const val OPACITY_STEP = 0.05f
+
+private fun Float.opacityStep(delta: Float) = (((this + delta) * 20).roundToInt() / 20f).coerceIn(WIDGET_OPACITY_MIN, 1f)
 
 private fun Float.step(delta: Float) = (((this + delta) * 10).roundToInt() / 10f).coerceIn(SCALE_MIN, SCALE_MAX)
 
@@ -161,6 +167,31 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     summary = stringResource(R.string.display_glass_summary),
                     checked = settings.glassEffect,
                     onCheckedChange = { v -> update { glassEffect = v } },
+                )
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.display_widget)) {
+                val title = stringResource(R.string.display_widget_opacity)
+                val opacity = settings.widgetOpacity
+                StepperRow(
+                    title = title,
+                    valueText = "${(opacity * 100).roundToInt()}%",
+                    onDecrement = { update { widgetOpacity = opacity.opacityStep(-OPACITY_STEP) } },
+                    onIncrement = { update { widgetOpacity = opacity.opacityStep(OPACITY_STEP) } },
+                    decrementDescription = stringResource(R.string.settings_decrease, title),
+                    incrementDescription = stringResource(R.string.settings_increase, title),
+                    canDecrement = opacity > WIDGET_OPACITY_MIN,
+                    canIncrement = opacity < 1f,
+                )
+                Text(
+                    stringResource(
+                        if (opacity < WIDGET_OPACITY_DEFAULT) R.string.display_widget_opacity_low else R.string.display_widget_opacity_note,
+                        (WIDGET_OPACITY_DEFAULT * 100).roundToInt(),
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = AppTheme.dimens.screenGutter, vertical = AppTheme.spacing.sm),
                 )
             }
         }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The clock's 12-hour "AM"/"PM", kept by the launcher like widget_clock but Regular, so the
+  marker reads lighter than the digits beside it.
+-->
+<TextClock xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="google-sans-flex"
+    android:fontVariationSettings="'wght' 400"
+    android:includeFontPadding="false"
+    android:maxLines="1"
+    android:textColor="#FFFFFFFF" />

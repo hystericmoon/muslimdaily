@@ -11,47 +11,56 @@ import android.graphics.RectF
 import android.graphics.Shader
 import androidx.core.graphics.createBitmap
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
 import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.floor
 import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
- * Paints the widget's bitmaps: the translucent black glass it sits on, the sun or the moon, and
- * the bar of the day. Launchers can't blur what is behind a widget, so the glass is a dark tint
- * with a faint sheen and a lit top edge; the wallpaper shows through it.
+ * Paints the widget's bitmaps: the translucent glass it sits on, the sun or the moon, and the bar
+ * of the day. Launchers can't blur what is behind a widget, so the glass is a neutral graphite
+ * tint, like the Google search bar's, with a faint sheen and an even hairline edge; the wallpaper
+ * shows through it.
  */
 object GlassPainter {
 
+    /** The glass's colour, without its alpha: Google's dark surface graphite. */
+    private const val GRAPHITE = 0x1F1F1F
+
     /**
-     * The glass: black at 74%. Dark enough that muted text (65% white) still passes AA where the
-     * wallpaper behind is pure white, sheen included (see GlassContrastTest).
+     * The glass at the default opacity (85%): enough that muted text (65% white) still passes AA
+     * where the wallpaper behind is pure white, sheen included (see GlassContrastTest). Readers
+     * can make it lighter in Settings → Display.
      */
-    const val GLASS = 0xBD000000.toInt()
+    val GLASS: Int = withOpacity(WIDGET_OPACITY_DEFAULT)
     const val ACCENT = 0xFFEEF26B.toInt()
     private const val TRACK = 0x38FFFFFF
 
-    fun glass(widthPx: Int, heightPx: Int, density: Float, cornerPx: Float): Bitmap {
+    fun withOpacity(opacity: Float): Int = ((opacity.coerceIn(0f, 1f) * 255).roundToInt() shl 24) or GRAPHITE
+
+    fun glass(widthPx: Int, heightPx: Int, density: Float, cornerPx: Float, opacity: Float = WIDGET_OPACITY_DEFAULT): Bitmap {
         val w = widthPx.toFloat()
         val h = heightPx.toFloat()
         val bmp = createBitmap(widthPx, heightPx)
         val c = Canvas(bmp)
         val box = RectF(0f, 0f, w, h)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
-        p.color = GLASS
+        p.color = withOpacity(opacity)
         c.drawRoundRect(box, cornerPx, cornerPx, p)
         // The sheen: light catching the glass from the top left, fading across it.
         p.shader = LinearGradient(0f, 0f, w * 0.6f, h, intArrayOf(0x0FFFFFFF, 0x05FFFFFF, 0x08FFFFFF), floatArrayOf(0f, 0.4f, 1f), Shader.TileMode.CLAMP)
         c.drawRoundRect(box, cornerPx, cornerPx, p)
-        // The edge: bright along the top, faint at the bottom.
+        // The edge: an even hairline all round, as on the search bar.
         val edge = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
             strokeWidth = 1f * density
-            shader = LinearGradient(0f, 0f, 0f, h, intArrayOf(0x66FFFFFF, 0x1FFFFFFF, 0x14FFFFFF), floatArrayOf(0f, 0.35f, 1f), Shader.TileMode.CLAMP)
+            color = 0x24FFFFFF
         }
         val half = edge.strokeWidth / 2
         c.drawRoundRect(RectF(half, half, w - half, h - half), cornerPx - half, cornerPx - half, edge)
