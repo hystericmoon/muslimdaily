@@ -106,6 +106,8 @@ data class AppSettings(
     val haptics: Boolean = true,
     /** Run mode hides the Arabic of duas in "My hifz" until revealed, to recite them from memory. */
     val runFromMemory: Boolean = true,
+    /** How opaque the home-screen widgets' glass is, 0.4–1. The default keeps text AA over any wallpaper. */
+    val widgetOpacity: Float = WIDGET_OPACITY_DEFAULT,
     /** The first-launch setup was finished or skipped. */
     val onboardingDone: Boolean = false,
     /** The app version whose "what's new" the reader has seen; blank on a fresh install. */
@@ -119,3 +121,6 @@ data class AppSettings(
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )
+
+const val WIDGET_OPACITY_DEFAULT = 0.85f
+const val WIDGET_OPACITY_MIN = 0.4f

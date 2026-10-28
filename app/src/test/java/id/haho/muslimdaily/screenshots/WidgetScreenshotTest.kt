@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.screenshots
 
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -57,9 +59,9 @@ class WidgetScreenshotTest {
 
     private fun at(h: Int, m: Int): Instant = LocalDateTime.of(2026, 10, 23, h, m).atZone(ZoneId.of("Asia/Jakarta")).toInstant()
 
-    private fun data(now: Instant, located: Boolean = true, is24: Boolean = true): WidgetData {
+    private fun data(now: Instant, located: Boolean = true, is24: Boolean = true, opacity: Float = WIDGET_OPACITY_DEFAULT): WidgetData {
         val settings = TodayPreviewData.settings.let { if (located) it else it.copy(location = null) }
-        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(is24), now, liveClock = false)
+        return WidgetData(WidgetModels.at(now, settings, PrayerCalculator()), TimeFormatter(is24), now, liveClock = false, opacity = opacity)
     }
 
     private class Fake(private val body: @androidx.compose.runtime.Composable () -> Unit) : GlanceAppWidget() {
@@ -130,6 +132,8 @@ class WidgetScreenshotTest {
             render("87-widget-5x3-tall-en-12h", DpSize(412.dp, 360.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
             render("88-widget-4x3-tall-en-12h", DpSize(330.dp, 240.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
             render("89-widget-1x3-tall-en-12h", DpSize(84.dp, 240.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
+            // The lightest glass the opacity setting allows, with the 12-hour "PM" on the digits' baseline.
+            render("125-widget-5x2-en-12h-light-glass", DpSize(428.dp, 164.dp), data(at(13, 10), is24 = false, opacity = WIDGET_OPACITY_MIN), locale = Locale.ENGLISH)
         } finally {
             Locale.setDefault(default)
         }

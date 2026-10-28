@@ -521,6 +521,10 @@
     <string name="palette_peach">Peach</string>
     <string name="display_glass">Glass effect</string>
     <string name="display_glass_summary">Cards, buttons and panels look like frosted glass. Turn off for a plain look.</string>
+    <string name="display_widget">Home screen widgets</string>
+    <string name="display_widget_opacity">Background opacity</string>
+    <string name="display_widget_opacity_note">Lower lets more of the wallpaper show through. At %1$d%% or more, text stays easy to read on any wallpaper.</string>
+    <string name="display_widget_opacity_low">Below %1$d%%, text can be hard to read on a light wallpaper.</string>
     <string name="display_dynamic_color_summary">Follow wallpaper colors (Android 12+). Off by default to keep text contrast.</string>
 
     <!-- Methodology -->

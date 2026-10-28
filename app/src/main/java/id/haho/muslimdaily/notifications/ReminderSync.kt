@@ -36,7 +36,7 @@ class ReminderSync @Inject constructor(
         scope.launch {
             // Everything the widgets and the lock-screen notification draw.
             settings.settings
-                .map { listOf(it.location, it.calculation, it.iqamahOffsets, it.palette, it.themeMode, it.reminders.nextPrayerOngoing, it.hijriAdjustment) }
+                .map { listOf(it.location, it.calculation, it.iqamahOffsets, it.palette, it.themeMode, it.reminders.nextPrayerOngoing, it.hijriAdjustment, it.widgetOpacity) }
                 .distinctUntilChanged()
                 .collect { glance.refresh() }
         }

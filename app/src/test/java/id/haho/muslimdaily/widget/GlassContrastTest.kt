@@ -52,6 +52,13 @@ class GlassContrastTest {
     }
 
     @Test
+    fun `the glass takes the opacity the reader set`() {
+        val glass = GlassPainter.glass(200, 100, 1f, cornerPx = 0f, opacity = 0.5f)
+        // The sheen adds a little alpha on top of the tint.
+        assertTrue(Color.alpha(glass.getPixel(100, 50)) in 128..140)
+    }
+
+    @Test
     fun `the glass is cut to round corners`() {
         val glass = GlassPainter.glass(680, 328, 2f, cornerPx = 48f)
         assertEquals(0, Color.alpha(glass.getPixel(0, 0)))

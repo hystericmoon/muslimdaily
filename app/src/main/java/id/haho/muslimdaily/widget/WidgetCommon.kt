@@ -40,6 +40,8 @@ import id.haho.muslimdaily.notifications.Notifier
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
+import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
 import java.time.format.DateTimeFormatter
 
 @EntryPoint
@@ -62,6 +64,8 @@ class WidgetData(
     val precise: Boolean = true,
     /** The current time as a live TextClock; tests and previews draw it once, at [now]. */
     val liveClock: Boolean = true,
+    /** The glass's opacity (see [AppSettings.widgetOpacity]). */
+    val opacity: Float = WIDGET_OPACITY_DEFAULT,
 )
 
 suspend fun loadWidgetData(context: Context): WidgetData {
@@ -73,6 +77,7 @@ suspend fun loadWidgetData(context: Context): WidgetData {
         time = TimeFormatter(DateFormat.is24HourFormat(context)),
         now = now,
         precise = WidgetTicker.precise(context),
+        opacity = settings.widgetOpacity,
     )
 }
 
@@ -194,6 +199,12 @@ class TextFit(context: Context) {
     /** The same, for the Bold clock. */
     fun boldWidth(text: String, sp: Float): Float = measure(boldPaint, text, sp)
 
+    /** How far the clock's text box reaches below its baseline at [sp], in dp (no font padding). */
+    fun descent(sp: Float): Float {
+        boldPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
+        return boldPaint.fontMetrics.descent / metrics.density
+    }
+
     private fun measure(p: TextPaint, text: String, sp: Float): Float {
         p.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
         return p.measureText(text) / metrics.density
@@ -221,17 +232,17 @@ class TextFit(context: Context) {
 
 /**
  * The current time in [pattern] (the letters TextClock and java.time share: "HH.mm", "h:mm", "a"),
- * Bold. [live] makes it a TextClock the launcher keeps current every minute, in [zone]; otherwise
+ * Bold, or Regular when [regular] (the "AM"/"PM" beside the digits). [live] makes it a TextClock the launcher keeps current every minute, in [zone]; otherwise
  * it is drawn once from [now], for tests and the picker preview.
  */
 @Composable
-fun Clock(pattern: String, sizeSp: Float, zone: ZoneId, now: Instant, live: Boolean, color: Int = OnSky, modifier: GlanceModifier = GlanceModifier) {
+fun Clock(pattern: String, sizeSp: Float, zone: ZoneId, now: Instant, live: Boolean, color: Int = OnSky, modifier: GlanceModifier = GlanceModifier, regular: Boolean = false) {
     if (!live) {
-        Label(DateTimeFormatter.ofPattern(pattern, AppLocale).format(now.atZone(zone)), sizeSp, modifier, bold = true, color = color)
+        Label(DateTimeFormatter.ofPattern(pattern, AppLocale).format(now.atZone(zone)), sizeSp, modifier, bold = !regular, color = color)
         return
     }
     val context = LocalContext.current
-    val views = RemoteViews(context.packageName, R.layout.widget_clock).apply {
+    val views = RemoteViews(context.packageName, if (regular) R.layout.widget_clock_regular else R.layout.widget_clock).apply {
         setCharSequence(R.id.text, "setFormat12Hour", pattern)
         setCharSequence(R.id.text, "setFormat24Hour", pattern)
         setString(R.id.text, "setTimeZone", zone.id)
