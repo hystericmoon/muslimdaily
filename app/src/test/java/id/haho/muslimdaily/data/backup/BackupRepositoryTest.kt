@@ -11,6 +11,7 @@ import id.haho.muslimdaily.data.db.EventPrefEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
+import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -26,7 +27,7 @@ class BackupRepositoryTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val db = Room.inMemoryDatabaseBuilder(context, UserDatabase::class.java).allowMainThreadQueries().build()
     private val settings = SettingsRepository(context)
-    private val repo = BackupRepository(settings, MySetRepository(db), db, Clock.systemUTC())
+    private val repo = BackupRepository(settings, MySetRepository(db), db, Clock.systemUTC(), ReviewRepository(db) { emptyMap() })
 
     @After fun close() = db.close()
 

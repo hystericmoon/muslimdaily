@@ -1,11 +1,14 @@
 package id.haho.muslimdaily.data.review
 
+import androidx.room.withTransaction
 import id.haho.muslimdaily.data.db.ReviewItemEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.domain.memorize.Leitner
 import id.haho.muslimdaily.domain.memorize.LeitnerState
 import id.haho.muslimdaily.domain.memorize.Rating
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
@@ -18,27 +21,62 @@ data class ReviewItem(val duaId: String, val state: LeitnerState, val lastReview
     val notStarted: Boolean get() = lastReviewed == null
 }
 
-/** Leitner review boxes for memorised duas. Private, local, and free of streaks. */
+/** Duas with the same Arabic, each id mapped to its group; the first id is the one memorised. */
+fun interface DuaTwins {
+    suspend fun groups(): Map<String, List<String>>
+}
+
+/**
+ * Leitner review boxes for memorised duas. Private, local, and free of streaks.
+ *
+ * Duas with the same text (morning and evening adhkar 1–19, ruku and sujud…) are memorised once:
+ * every call maps an id to the first of its twins, and [link] folds older separate rows into it.
+ */
 @Singleton
-class ReviewRepository @Inject constructor(private val db: UserDatabase) {
+class ReviewRepository @Inject constructor(private val db: UserDatabase, private val twins: DuaTwins) {
     private val dao get() = db.reviewDao()
 
-    fun items(): Flow<List<ReviewItem>> = dao.observeAll().map { list -> list.map { it.toModel() } }
+    private suspend fun key(duaId: String): String = twins.groups()[duaId]?.first() ?: duaId
 
-    fun item(duaId: String): Flow<ReviewItem?> = dao.observeItem(duaId).map { it?.toModel() }
+    /** The id and its twins, for screens that hide or mark a dua being memorised. */
+    suspend fun withTwins(ids: Set<String>): Set<String> {
+        val groups = twins.groups()
+        return ids.flatMap { groups[it] ?: listOf(it) }.toSet()
+    }
 
-    fun dueCount(today: LocalDate): Flow<Int> = dao.observeDueCount(today.toEpochDay())
+    fun items(): Flow<List<ReviewItem>> = flow {
+        link()
+        emitAll(dao.observeAll().map { list -> list.map { it.toModel() } })
+    }
 
-    suspend fun dueCountOnce(today: LocalDate): Int = dao.dueCount(today.toEpochDay())
+    fun item(duaId: String): Flow<ReviewItem?> = flow {
+        link()
+        emitAll(dao.observeItem(key(duaId)).map { it?.toModel() })
+    }
 
-    suspend fun due(today: LocalDate): List<String> = dao.due(today.toEpochDay()).map { it.duaId }
+    fun dueCount(today: LocalDate): Flow<Int> = flow {
+        link()
+        emitAll(dao.observeDueCount(today.toEpochDay()))
+    }
+
+    suspend fun dueCountOnce(today: LocalDate): Int {
+        link()
+        return dao.dueCount(today.toEpochDay())
+    }
+
+    suspend fun due(today: LocalDate): List<String> {
+        link()
+        return dao.due(today.toEpochDay()).map { it.duaId }
+    }
 
     suspend fun rate(duaId: String, rating: Rating, today: LocalDate): LeitnerState {
-        val existing = dao.item(duaId)
+        link()
+        val id = key(duaId)
+        val existing = dao.item(id)
         val next = Leitner.rate(existing?.toModel()?.state, rating, today)
         dao.upsert(
             ReviewItemEntity(
-                duaId = duaId,
+                duaId = id,
                 box = next.box,
                 dueEpochDay = next.due.toEpochDay(),
                 lastReviewedEpochDay = today.toEpochDay(),
@@ -53,11 +91,36 @@ class ReviewRepository @Inject constructor(private val db: UserDatabase) {
      * saved or being reviewed is left as it is.
      */
     suspend fun add(duaId: String, today: LocalDate) {
-        if (dao.item(duaId) != null) return
-        dao.upsert(ReviewItemEntity(duaId, box = 1, dueEpochDay = today.toEpochDay(), lastReviewedEpochDay = null, addedEpochDay = today.toEpochDay()))
+        link()
+        val id = key(duaId)
+        if (dao.item(id) != null) return
+        dao.upsert(ReviewItemEntity(id, box = 1, dueEpochDay = today.toEpochDay(), lastReviewedEpochDay = null, addedEpochDay = today.toEpochDay()))
     }
 
-    suspend fun remove(duaId: String) = dao.delete(duaId)
+    suspend fun remove(duaId: String) {
+        twins.groups()[duaId].orEmpty().plus(duaId).forEach { dao.delete(it) }
+    }
+
+    /**
+     * Folds the rows of twins saved separately (before twins were linked, or from an older backup) into one,
+     * under the first id. The state kept is the one reviewed last: it is the latest evidence of
+     * recall. Nothing changes once every group has a single row.
+     */
+    suspend fun link() {
+        val groups = twins.groups()
+        if (groups.isEmpty()) return
+        val rows = dao.all()
+        val stray = rows.filter { row -> groups[row.duaId]?.first()?.let { it != row.duaId } == true }
+        if (stray.isEmpty()) return
+        db.withTransaction {
+            rows.filter { it.duaId in groups }.groupBy { groups.getValue(it.duaId).first() }.forEach { (id, group) ->
+                if (group.size == 1 && group.single().duaId == id) return@forEach
+                val kept = group.maxWith(compareBy<ReviewItemEntity>({ it.lastReviewedEpochDay ?: Long.MIN_VALUE }, { -it.box }))
+                group.forEach { dao.delete(it.duaId) }
+                dao.upsert(kept.copy(duaId = id, addedEpochDay = group.minOf { it.addedEpochDay }))
+            }
+        }
+    }
 
     private fun ReviewItemEntity.toModel() = ReviewItem(
         duaId = duaId,

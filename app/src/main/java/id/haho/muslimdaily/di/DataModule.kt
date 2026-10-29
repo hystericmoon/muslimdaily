@@ -8,9 +8,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.haho.muslimdaily.data.content.AssetContentSource
+import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.content.ContentSource
 import id.haho.muslimdaily.data.db.ContentDatabase
 import id.haho.muslimdaily.data.db.UserDatabase
+import id.haho.muslimdaily.data.review.DuaTwins
 import java.time.Clock
 import javax.inject.Singleton
 
@@ -37,4 +39,7 @@ object DataModule {
 
     @Provides
     fun contentSource(assets: AssetContentSource): ContentSource = assets
+
+    @Provides
+    fun duaTwins(content: ContentRepository): DuaTwins = DuaTwins { content.twinsOnce() }
 }
