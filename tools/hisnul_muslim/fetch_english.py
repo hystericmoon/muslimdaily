@@ -15,6 +15,7 @@ import argparse
 import csv
 import json
 import re
+import subprocess
 import sys
 import time
 import urllib.request
@@ -32,6 +33,13 @@ UNCLOSED_TITLE = re.compile(r'^(\s*"[^"\n]*?):?\s*$(?=\s*\[)', re.M)
 # checked by hand against the IslamHouse PDF (2025 edition, same numbering). No. 185 is stored
 # the same way but reads "If you are not invited", reversing the hadith, so it is left out.
 MISFILED = {133}
+# Entries the site gets wrong, taken instead from IslamHouse's English PDF ("Fortress of the
+# Muslim", Osoul Foundation 2025, same numbering) on the owner's decision (2026-10-29). Its
+# wording is a revised translation. No. 185 at the site reads "If you are not invited".
+PDF = "https://d1.islamhouse.com/data/en/ih_books/single/en-fortress-of-the-muslim.pdf"
+FROM_PDF = {185}
+ENTRY_MARK = re.compile(r"-(\d+)\s*$")
+FOOTNOTE_END = re.compile(r"\(\d\)$")
 
 
 def get(url: str) -> dict:
@@ -50,6 +58,41 @@ def get(url: str) -> dict:
         return json.loads(UNCLOSED_TITLE.sub(r'\1":', text), strict=False)
 
 
+def pdf_entry(text: str, no: int) -> str | None:
+    """The English of entry [no] in the PDF's text (pdftotext): the Latin lines after the
+    Arabic line that ends "-no", up to the footnote mark "(1)", which is dropped."""
+    lines = text.splitlines()
+    start = next((i for i, l in enumerate(lines) if (m := ENTRY_MARK.search(l)) and int(m.group(1)) == no), None)
+    if start is None:
+        return None
+    out = []
+    for line in lines[start + 1:]:
+        line = line.strip()
+        latin = sum(c.isascii() and c.isalpha() for c in line)
+        if latin < max(8, len(line) // 2):
+            if out:
+                break  # the English ended without a footnote mark
+            continue  # still in the Arabic
+        if line.startswith("\u201c"):
+            continue  # a transliteration in quotes
+        out.append(line)
+        if FOOTNOTE_END.search(line):
+            out[-1] = FOOTNOTE_END.sub("", line)
+            break
+    return " ".join(" ".join(out).split()) or None
+
+
+def from_pdf() -> dict[int, str]:
+    path = CACHE / "fortress-of-the-muslim.pdf"
+    if not path.exists():
+        CACHE.mkdir(parents=True, exist_ok=True)
+        req = urllib.request.Request(PDF, headers={"User-Agent": "MuslimDaily-content-tools"})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            path.write_bytes(r.read())
+    text = subprocess.run(["pdftotext", str(path), "-"], capture_output=True, text=True, check=True).stdout
+    return {no: t for no in FROM_PDF if (t := pdf_entry(text, no))}
+
+
 def english() -> dict[int, str]:
     """Hisn number -> English translation as served."""
     out = {}
@@ -63,8 +106,9 @@ def english() -> dict[int, str]:
         for item in next(iter(chapter.values())):
             field = "LANGUAGE_ARABIC_TRANSLATED_TEXT" if int(item["ID"]) in MISFILED else "TRANSLATED_TEXT"
             text = " ".join(str(item.get(field) or "").split())
-            if text:
+            if text and int(item["ID"]) not in FROM_PDF:
                 out[int(item["ID"])] = text
+    out.update(from_pdf())
     return out
 
 

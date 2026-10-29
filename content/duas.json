@@ -1,5 +1,5 @@
 {
-  "content_version": 21,
+  "content_version": 22,
   "duas": [
     {
       "id": "wake_01",
@@ -9107,7 +9107,7 @@
       "is_quran": false,
       "translations": {
         "id": "Apabila seseorang di antara kamu diundang (makan) hendaklah dipenuhi. Apabila puasa, hendaklah mendoakan (kepada orang yang mengundang). Apabila tidak puasa, hendaklah makan.”",
-        "en": ""
+        "en": "If one of you is invited (to a meal), let him respond. If he is fasting, let him supplicate (i.e., pray for the host), and if he is not fasting, let him eat."
       },
       "transliteration": "Idzā du'iya ahadukum falyujib, fa in kāna shā'iman falyushall, wa in kāna mufthiran falyath'am, wama'nā falyushalli ai falyad'.",
       "count": null,
