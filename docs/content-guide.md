@@ -30,7 +30,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `event` | yes | Event code from the table below |
 | `order` | yes | Position within the event (1, 2, 3 …). Canonical order of the full set. |
 | `variant_group` | no | Same code on rows that are alternative authentic forms of one dhikr (e.g. several istiftah forms). The app shows them as one item with a choice of form. |
-| `arabic` | yes | Full text with complete tashkeel. **Mark phrase boundaries with `\|`.** Each phrase must have one audio segment. Phrases are used for highlighting and for memorisation chunks. |
+| `arabic` | yes | Full text with complete tashkeel. **Mark phrase boundaries with `\|`.** Each phrase must have one audio segment. Phrases are used for highlighting and for memorisation chunks. Keep the book's quotation marks: the build drops one `((…))` or `(…)` pair (and a full stop after it) when it encloses the whole text, and keeps `[…]`, notes in brackets inside the text and `﴿…﴾`. |
 | `is_quran` | yes | `ya` for Qur'anic text (shown in the Qur'an typeface), otherwise `tidak` |
 | `translation_id` | yes | Indonesian translation |
 | `translation_en` | no | English translation |

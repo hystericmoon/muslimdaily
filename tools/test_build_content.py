@@ -158,6 +158,24 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(text, "a bb ccc")
         self.assertEqual(breaks, [2, 5])
 
+    def test_quote_marks_around_the_whole_dua_are_dropped(self):
+        strip = bc.strip_quote_marks
+        self.assertEqual(strip("((a b | c))."), "a b | c")
+        self.assertEqual(strip("( a b )"), "a b")
+        self.assertEqual(strip("([a] b)."), "[a] b")  # words from some narrations stay marked
+        self.assertEqual(strip("((a (x) b))"), "a (x) b")  # a note inside stays
+        # Pairs that don't enclose the whole text are not quote marks around the dua.
+        self.assertEqual(strip("((a)) x ((b))"), "((a)) x ((b))")
+        self.assertEqual(strip("((a)). x"), "((a)). x")
+        self.assertEqual(strip("\ufd3fa\ufd3e"), "\ufd3fa\ufd3e")
+
+    def test_built_arabic_has_no_quote_marks_and_breaks_follow(self):
+        report = self.run_build([dua_row(arabic="((ألف | باء)).")])
+        self.assertTrue(report.ok, report.errors)
+        entry = json.loads((self.tmp / "duas.json").read_text(encoding="utf-8"))["duas"][0]
+        self.assertEqual(entry["arabic"], "ألف باء")
+        self.assertEqual(entry["phrase_breaks"], [4])
+
 
 if __name__ == "__main__":
     unittest.main()
