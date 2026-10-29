@@ -854,6 +854,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_3_1">
+        <item>Di langkah Ingat, teks Arab kini tampil langsung di bawah petunjuk, sebelum pengaturan sembunyi kata.</item>
+        <item>Hafalan kini menunjukkan urutan doa dalam waktunya, misalnya \"Dzikir pagi · 3 dari 19\".</item>
+    </string-array>
     <string-array name="whats_new_1_3_0">
         <item>Saat membaca dzikir, simpan doa yang ingin dihafal lewat menu \"Tambah ke hafalan\". Doa itu masuk Hafalan saya sebagai \"Belum dipelajari\" untuk dipelajari nanti. Doa juga bisa dihapus dari Hafalan saya.</item>
         <item>Tambahkan doa ke rangkaian langsung dari halaman doanya, dan cari doa untuk rangkaian dengan melihat teks Arab serta terjemahannya.</item>
