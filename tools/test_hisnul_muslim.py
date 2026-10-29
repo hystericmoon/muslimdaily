@@ -101,6 +101,17 @@ class FetchEnglishTest(unittest.TestCase):
         raw = '{\n\t"Title": \n\t[\n\t]\n}'
         self.assertEqual(fetch_english.UNCLOSED_TITLE.sub(r'\1":', raw), raw)
 
+    def test_pdf_entry_takes_the_english_after_the_arabic(self):
+        text = "\n".join([
+            "\u0623\u0628\u062a -184", "Other entry.(1)",
+            "\u0623\u0628\u062a\u062b \u062c\u062d -185", "\u064e \u064f",
+            "\u201cTranslit line\u201d.",
+            "First line of the English (a note),", "second line.(1)",
+            "75", "Next chapter",
+        ])
+        self.assertEqual(fetch_english.pdf_entry(text, 185), "First line of the English (a note), second line.")
+        self.assertIsNone(fetch_english.pdf_entry(text, 999))
+
 
 if __name__ == "__main__":
     unittest.main()
