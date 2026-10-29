@@ -1,5 +1,5 @@
 {
-  "content_version": 22,
+  "content_version": 24,
   "duas": [
     {
       "id": "wake_01",
@@ -157,9 +157,65 @@
       "virtue": null,
       "audio": {
         "file": "hisn_004.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            25.39
+          ],
+          [
+            25.39,
+            61.08
+          ],
+          [
+            61.08,
+            80.02
+          ],
+          [
+            80.02,
+            113.6
+          ],
+          [
+            113.6,
+            133.08
+          ],
+          [
+            133.08,
+            203.2
+          ],
+          [
+            203.2,
+            213.32
+          ],
+          [
+            213.32,
+            223.19
+          ],
+          [
+            223.19,
+            258.54
+          ],
+          [
+            258.54,
+            307.75
+          ],
+          [
+            307.75,
+            324.75
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        110,
+        308,
+        404,
+        599,
+        719,
+        1105,
+        1169,
+        1235,
+        1413,
+        1668
+      ]
     },
     {
       "id": "toilet_01",
@@ -613,9 +669,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_016.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            8.24
+          ],
+          [
+            8.24,
+            15.23
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        43
+      ]
     },
     {
       "id": "leave_home_02",
@@ -646,9 +713,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_017.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.74
+          ],
+          [
+            5.74,
+            9.21
+          ],
+          [
+            9.21,
+            12.41
+          ],
+          [
+            12.41,
+            17.76
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        45,
+        87,
+        117
+      ]
     },
     {
       "id": "market_01",
@@ -726,13 +814,14 @@
       "event": "entering_masjid",
       "order": 1,
       "variant_group": null,
-      "arabic": "(يَبْدَأُ بِرِجْلِهِ الْيُمْنَى) ، وَيَقُولُ: ((أَعُوذُ بِاللَّهِ العَظِيمِ، وَبِوَجْهِهِ الْكَرِيمِ، وَسُلْطَانِهِ الْقَدِيمِ، مِنَ الشَّيْطَانِ الرَّجِيمِ)) [بِسْمِ اللَّهِ، وَالصَّلَاةُ] [وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ] ((اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ)).",
+      "arabic": "((أَعُوذُ بِاللَّهِ العَظِيمِ، وَبِوَجْهِهِ الْكَرِيمِ، وَسُلْطَانِهِ الْقَدِيمِ، مِنَ الشَّيْطَانِ الرَّجِيمِ)) [بِسْمِ اللَّهِ، وَالصَّلَاةُ] [وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ] ((اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ))",
+      "arabic_full": "(يَبْدَأُ بِرِجْلِهِ الْيُمْنَى) ، وَيَقُولُ: ((أَعُوذُ بِاللَّهِ العَظِيمِ، وَبِوَجْهِهِ الْكَرِيمِ، وَسُلْطَانِهِ الْقَدِيمِ، مِنَ الشَّيْطَانِ الرَّجِيمِ)) [بِسْمِ اللَّهِ، وَالصَّلَاةُ] [وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ] ((اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ)).",
       "is_quran": false,
       "translations": {
         "id": "“Aku berlindung kepada Allah Yang Maha Agung, dengan wajahNya Yang Mulia dan kekuasaanNya yang abadi, dari setan yang terkutuk. Dengan nama Allah dan semoga shalawat dan salam tercurahkan kepada Rasulullah Ya Allah, bukalah pintu- pintu rahmatMu untukku.”",
         "en": "(I take refuge with Allah, The Supreme and with His Noble Face, and His eternal authority from the accursed devil. In the name of Allah, and prayers and peace be upon the Messenger of Allah. O Allah, open the gates of Your mercy for me.)"
       },
-      "transliteration": "Yabda'u birijlihil-yumnā, wayaqūl: a'ūdzu billāhil-'azhīm, wabiwajhihil-karīm, wasulthānihil-qadīm, minasy-syaithānir-rajīmi [bismillāh, wash-shalāh] [was-salāmu 'alā rasūlillāh]illāhummaftah lī abwāba rahmatik.",
+      "transliteration": "A'ūdzu billāhil-'azhīm, wabiwajhihil-karīm, wasulthānihil-qadīm, minasy-syaithānir-rajīmi [bismillāh, wash-shalāh] [was-salāmu 'alā rasūlillāh]illāhummaftah lī abwāba rahmatik",
       "count": null,
       "sources": [
         {
@@ -749,7 +838,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_020.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.14,
+          26.51
+        ]
       },
       "phrase_breaks": []
     },
@@ -759,7 +852,8 @@
       "event": "leaving_masjid",
       "order": 1,
       "variant_group": null,
-      "arabic": "((يَبْدَأُ بِرِجْلِهِ الْيُسْرَى)) وَيَقُولُ: ((بِسْمِ اللَّهِ وَالصّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِك، اللَّهُمَّ اعْصِمْنِي مِنَ الشَّيْطَانِ الرَّجِيمِ)).",
+      "arabic": "بِسْمِ اللَّهِ وَالصّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِك، اللَّهُمَّ اعْصِمْنِي مِنَ الشَّيْطَانِ الرَّجِيمِ",
+      "arabic_full": "((يَبْدَأُ بِرِجْلِهِ الْيُسْرَى)) وَيَقُولُ: ((بِسْمِ اللَّهِ وَالصّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِك، اللَّهُمَّ اعْصِمْنِي مِنَ الشَّيْطَانِ الرَّجِيمِ)).",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah, semoga sha-lawat dan salam terlimpahkan kepada Rasulullah. Ya Allah, sesungguhnya aku minta kepadaMu dari karuniaMu. Ya Allah, peliharalah aku dari godaan setan yang terkutuk”.",
@@ -782,7 +876,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_021.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          3.34,
+          19.07
+        ]
       },
       "phrase_breaks": []
     },
@@ -1108,9 +1206,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_181.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.59
+          ],
+          [
+            5.59,
+            12.28
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        62
+      ]
     },
     {
       "id": "eating_05",
@@ -1141,9 +1250,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_182.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.45
+          ],
+          [
+            6.45,
+            14.14
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46
+      ]
     },
     {
       "id": "eating_06",
@@ -1174,9 +1294,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_183.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.24
+          ],
+          [
+            7.24,
+            13.18
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        38
+      ]
     },
     {
       "id": "eating_07",
@@ -1388,9 +1519,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_101.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            34.75
+          ],
+          [
+            34.75,
+            86.78
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        251
+      ]
     },
     {
       "id": "sleep_04",
@@ -1735,9 +1877,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_110.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.35
+          ],
+          [
+            4.35,
+            8.02
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        39
+      ]
     },
     {
       "id": "sleep_13",
@@ -1854,9 +2007,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_112.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.1
+          ],
+          [
+            6.1,
+            19.37
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        49
+      ]
     },
     {
       "id": "night_02",
@@ -2862,9 +3026,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_048.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.61
+          ],
+          [
+            6.61,
+            11.57
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        19
+      ]
     },
     {
       "id": "between_sujud_02",
@@ -2899,9 +3074,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_049.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.09
+          ],
+          [
+            11.09,
+            13.01
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        90
+      ]
     },
     {
       "id": "tashahhud_01",
@@ -3749,9 +3935,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_072.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.99
+          ],
+          [
+            5.99,
+            18.96
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        55
+      ]
     },
     {
       "id": "after_salah_08",
@@ -3988,9 +4185,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_119.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            17.48
+          ],
+          [
+            17.48,
+            22.94
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        103
+      ]
     },
     {
       "id": "tilawah_01",
@@ -4021,9 +4229,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_050.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.6
+          ],
+          [
+            5.6,
+            11.86
+          ],
+          [
+            11.86,
+            19.44
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        35,
+        87
+      ]
     },
     {
       "id": "tilawah_02",
@@ -4112,9 +4336,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_075.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.81
+          ],
+          [
+            7.81,
+            74.81
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46
+      ]
     },
     {
       "id": "morning_02",
@@ -4440,9 +4675,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_085.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.05
+          ],
+          [
+            11.05,
+            15.51
+          ],
+          [
+            15.51,
+            21.16
+          ],
+          [
+            21.16,
+            27.95
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        109,
+        149,
+        219
+      ]
     },
     {
       "id": "morning_09",
@@ -4532,7 +4788,8 @@
       "event": "morning",
       "order": 11,
       "variant_group": null,
-      "arabic": "((أَصْبَحْنا عَلَى فِطْرَةِ الْإِسْلاَمِ، وَعَلَى كَلِمَةِ الْإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صلى الله عليه وسلم، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ، حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ الْمُشرِكِينَ)). [وإذا أمسى قال: أمسينا على فطرة الإسلام...]",
+      "arabic": "أَصْبَحْنا عَلَى فِطْرَةِ الْإِسْلاَمِ، وَعَلَى كَلِمَةِ الْإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صلى الله عليه وسلم، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ، حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ الْمُشرِكِينَ",
+      "arabic_full": "((أَصْبَحْنا عَلَى فِطْرَةِ الْإِسْلاَمِ، وَعَلَى كَلِمَةِ الْإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صلى الله عليه وسلم، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ، حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ الْمُشرِكِينَ)). [وإذا أمسى قال: أمسينا على فطرة الإسلام...]",
       "is_quran": false,
       "translations": {
         "id": "“Di waktu pagi kami memegang agama Islam, kalimat ikhlas, agama Nabi kita Muhammad, dan agama ayah kami Ibrahim, yang berdiri di atas jalan yang lurus, muslim dan tidak tergolong orang- orang musyrik.”",
@@ -4555,7 +4812,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_090.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.53,
+          19.53
+        ]
       },
       "phrase_breaks": []
     },
@@ -4678,13 +4939,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_093.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.49,
+            5.39
+          ],
+          [
+            5.39,
+            10.89
+          ]
+        ],
         "range": [
           0.49,
           10.89
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        54
+      ]
     },
     {
       "id": "morning_15",
@@ -4913,9 +5185,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_075.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.81
+          ],
+          [
+            7.81,
+            74.81
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46
+      ]
     },
     {
       "id": "evening_02",
@@ -5241,9 +5524,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_085.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.05
+          ],
+          [
+            11.05,
+            15.51
+          ],
+          [
+            15.51,
+            21.16
+          ],
+          [
+            21.16,
+            27.95
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        109,
+        149,
+        219
+      ]
     },
     {
       "id": "evening_09",
@@ -5479,13 +5783,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_093.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.49,
+            5.39
+          ],
+          [
+            5.39,
+            10.89
+          ]
+        ],
         "range": [
           0.49,
           10.89
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        54
+      ]
     },
     {
       "id": "evening_15",
@@ -5613,13 +5928,14 @@
       "event": "evening",
       "order": 18,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ)) (ثلاثَ مرَّاتٍ إذا أمسى).",
+      "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+      "arabic_full": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ)) (ثلاثَ مرَّاتٍ إذا أمسى).",
       "is_quran": false,
       "translations": {
         "id": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan makhluk yang diciptakanNya. (Dibaca 3 kali pada sore hari).",
         "en": "(I take refuge in Allah’s perfect words from the evil He has created.)(three times in the evening)"
       },
-      "transliteration": "",
+      "transliteration": "A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq",
       "count": 3,
       "sources": [
         {
@@ -5644,7 +5960,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_097.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.47,
+          6.32
+        ]
       },
       "phrase_breaks": []
     },
@@ -6479,9 +6799,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_264.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.73
+          ],
+          [
+            4.73,
+            10.01
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        45
+      ]
     },
     {
       "id": "tasbih_12",
@@ -6516,9 +6847,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_265.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.39
+          ],
+          [
+            3.39,
+            7.14
+          ],
+          [
+            7.14,
+            17.87
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        20,
+        44
+      ]
     },
     {
       "id": "protection_01",
@@ -6549,9 +6896,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_199.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            8.19
+          ],
+          [
+            8.19,
+            16.66
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        87
+      ]
     },
     {
       "id": "protection_02",
@@ -6586,9 +6944,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_203.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            10.58
+          ],
+          [
+            10.58,
+            14.69
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        68
+      ]
     },
     {
       "id": "travel_01",
@@ -6990,13 +7359,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_217.opus",
-        "segments": [],
+        "segments": [
+          [
+            10.97,
+            15.81
+          ],
+          [
+            15.81,
+            21.34
+          ],
+          [
+            21.34,
+            28.45
+          ],
+          [
+            28.45,
+            32.94
+          ],
+          [
+            32.94,
+            35.51
+          ]
+        ],
         "range": [
           10.97,
           35.51
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53,
+        122,
+        178,
+        222
+      ]
     },
     {
       "id": "travel_12",
@@ -7068,9 +7463,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_169.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.68
+          ],
+          [
+            11.68,
+            15.12
+          ],
+          [
+            15.12,
+            18.0
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        56,
+        80
+      ]
     },
     {
       "id": "rain_02",
@@ -7154,9 +7565,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_171.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.98
+          ],
+          [
+            5.98,
+            9.22
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        65
+      ]
     },
     {
       "id": "rain_04",
@@ -7383,9 +7805,35 @@
       "virtue": null,
       "audio": {
         "file": "hisn_167.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.12
+          ],
+          [
+            3.12,
+            5.66
+          ],
+          [
+            5.66,
+            8.84
+          ],
+          [
+            8.84,
+            13.51
+          ],
+          [
+            13.51,
+            16.01
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        40,
+        61,
+        91,
+        141
+      ]
     },
     {
       "id": "new_moon_01",
@@ -7573,9 +8021,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_150.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.88
+          ],
+          [
+            3.88,
+            5.82
+          ],
+          [
+            5.82,
+            13.06
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        24,
+        38
+      ]
     },
     {
       "id": "illness_04",
@@ -8044,9 +8508,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_127.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.12
+          ],
+          [
+            4.12,
+            9.95
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46
+      ]
     },
     {
       "id": "fear_03",
@@ -8176,9 +8651,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_131.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.39
+          ],
+          [
+            3.39,
+            6.73
+          ],
+          [
+            6.73,
+            9.85
+          ],
+          [
+            9.85,
+            16.7
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        32,
+        52,
+        73
+      ]
     },
     {
       "id": "fear_07",
@@ -8516,9 +9012,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_140.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.62
+          ],
+          [
+            7.62,
+            12.39
+          ],
+          [
+            12.39,
+            21.26
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        55,
+        94
+      ]
     },
     {
       "id": "waswas_06",
@@ -8957,9 +9469,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_229.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            13.17
+          ],
+          [
+            13.17,
+            18.48
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        104
+      ]
     },
     {
       "id": "istikharah_01",
@@ -9184,9 +9707,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_186.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.28
+          ],
+          [
+            4.28,
+            10.49
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        16
+      ]
     },
     {
       "id": "marriage_01",
@@ -9221,9 +9755,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_190.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.3
+          ],
+          [
+            3.3,
+            7.87
+          ],
+          [
+            7.87,
+            14.06
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        22,
+        42
+      ]
     },
     {
       "id": "marriage_02",
@@ -9365,9 +9915,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_146.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            19.64
+          ],
+          [
+            19.64,
+            23.16
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        167
+      ]
     },
     {
       "id": "salam_01",
@@ -9787,13 +10348,14 @@
       "event": "manners",
       "order": 6,
       "variant_group": null,
-      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((اللَّهُمَّ فَأَيُّمَا مُؤْمِنٍ سَبَبْتُهُ فَاجْعَلْ ذَلِكَ لَهُ قُرْبَةً إِلَيْكَ يَوْمَ الْقِيَامَةِ)).",
+      "arabic": "اللَّهُمَّ فَأَيُّمَا مُؤْمِنٍ سَبَبْتُهُ فَاجْعَلْ ذَلِكَ لَهُ قُرْبَةً إِلَيْكَ يَوْمَ الْقِيَامَةِ",
+      "arabic_full": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((اللَّهُمَّ فَأَيُّمَا مُؤْمِنٍ سَبَبْتُهُ فَاجْعَلْ ذَلِكَ لَهُ قُرْبَةً إِلَيْكَ يَوْمَ الْقِيَامَةِ)).",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, siapa saja di antara orang mukmin yang kucaci, jadikanlah sebagai sarana yang mendekatkan dirinya kepadaMu di hari Kiamat.”",
         "en": "(O Allah, to any believer whom I have insulted, let that be cause to draw him near to You on the Day of Resurrection.)"
       },
-      "transliteration": "",
+      "transliteration": "Allāhumma fa ayyumā mu'minin sababtuhu faj'al dzālika lahu qurbatan ilaika yaumal-qiyāmah",
       "count": null,
       "sources": [
         {
@@ -9818,7 +10380,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_230.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          3.37,
+          15.15
+        ]
       },
       "phrase_breaks": []
     },
@@ -10158,9 +10724,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_159.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.99
+          ],
+          [
+            5.99,
+            9.46
+          ],
+          [
+            9.46,
+            13.98
+          ],
+          [
+            13.98,
+            19.02
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        64,
+        97,
+        142
+      ]
     },
     {
       "id": "funeral_07",
@@ -10351,9 +10938,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_164.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.09
+          ],
+          [
+            5.09,
+            10.42
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        25
+      ]
     },
     {
       "id": "grave_03",
@@ -10425,9 +11023,35 @@
       "virtue": null,
       "audio": {
         "file": "hisn_233.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            8.88
+          ],
+          [
+            8.88,
+            11.75
+          ],
+          [
+            11.75,
+            15.06
+          ],
+          [
+            15.06,
+            19.16
+          ],
+          [
+            19.16,
+            22.61
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        70,
+        87,
+        102,
+        120
+      ]
     },
     {
       "id": "hajj_02",
@@ -11245,9 +11869,25 @@
       "virtue": null,
       "audio": {
         "file": "quran_14.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.14
+          ],
+          [
+            11.14,
+            21.86
+          ],
+          [
+            21.86,
+            34.25
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        54,
+        107
+      ]
     },
     {
       "id": "quran_15",
@@ -11311,9 +11951,30 @@
       "virtue": null,
       "audio": {
         "file": "quran_16.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.2
+          ],
+          [
+            6.2,
+            13.44
+          ],
+          [
+            13.44,
+            21.26
+          ],
+          [
+            21.26,
+            27.77
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        32,
+        65,
+        104
+      ]
     },
     {
       "id": "quran_17",
@@ -11542,9 +12203,20 @@
       "virtue": null,
       "audio": {
         "file": "quran_23.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            10.11
+          ],
+          [
+            10.11,
+            21.37
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        56
+      ]
     },
     {
       "id": "quran_24",
