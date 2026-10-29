@@ -4,7 +4,14 @@ name: Site
 on:
   push:
     branches: [main]
-    paths: ["site/**", ".github/workflows/pages.yml"]
+    paths:
+      - "site/**"
+      - ".github/workflows/pages.yml"
+      - "tools/site/build_whatsnew.py"
+      # What's new on the site comes from the app's release notes.
+      - "app/src/main/java/id/haho/muslimdaily/feature/whatsnew/WhatsNew.kt"
+      - "app/src/main/res/values/strings.xml"
+      - "app/src/main/res/values-en/strings.xml"
   workflow_dispatch:
 
 permissions:
@@ -24,6 +31,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - run: python3 -I tools/site/build_whatsnew.py site/whatsnew.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
