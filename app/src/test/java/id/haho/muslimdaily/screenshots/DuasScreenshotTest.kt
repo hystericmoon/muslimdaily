@@ -52,6 +52,24 @@ class DuasScreenshotTest {
         )
     }
 
+    /** A dua shown as the words to recite, with the book's full entry opened below it. */
+    @Test
+    fun detailFullEntry() = captureVariants("126-dua-full-entry") {
+        val dua = DuaPreviewData.dua("morning_02", 2)
+        DuaDetailContent(
+            DuaDetailState(
+                // Placeholder text: "an example of the explanation before the text:" + the sample.
+                dua = dua.copy(arabicFull = "مِثَالُ شَرْحٍ قَبْلَ النَّصِّ: ((" + dua.arabic + "))", translationIdFull = "[Contoh keterangan:] " + dua.translationId),
+                event = event,
+                prefs = ReadingPrefs(),
+                playback = PlaybackState(),
+                inMySet = true,
+            ),
+            DuaDetailActions(),
+            fullEntryOpen = true,
+        )
+    }
+
     @Test
     fun search() = captureVariants("23-duas-search") {
         SearchContent("tes", DuaPreviewData.duas.take(2), ReadingPrefs(), {}, {}, autoFocus = false)

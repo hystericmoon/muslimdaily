@@ -133,6 +133,10 @@ internal object ContentMapper {
                 audioFile = d.audio?.file?.takeIf { it.isNotBlank() },
                 segmentsJson = ContentJsonFormat.encodeToString(segmentsSerializer, segments),
                 phraseBreaksJson = ContentJsonFormat.encodeToString(intsSerializer, d.phraseBreaks),
+                arabicFull = d.arabicFull.trim(),
+                translationIdFull = d.translationsFull["id"].orEmpty().trim(),
+                audioStart = ContentValidator.rangeUsable(d)?.get(0),
+                audioEnd = ContentValidator.rangeUsable(d)?.get(1),
             )
         }
         val fts = accepted.map { d ->

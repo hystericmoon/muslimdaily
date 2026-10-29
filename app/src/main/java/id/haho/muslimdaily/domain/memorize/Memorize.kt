@@ -58,7 +58,7 @@ object MemorizePlan {
         val all = dua.phrases.indices
         return buildList {
             repeat(LISTEN_TIMES) { i ->
-                add(SequenceItem.Clip(dua.id, audio.file, 0, androidx.media3.common.C.TIME_END_OF_SOURCE, all, title))
+                add(SequenceItem.Clip(dua.id, audio.file, audio.startMs, audio.endMs ?: androidx.media3.common.C.TIME_END_OF_SOURCE, all, title))
                 if (i < LISTEN_TIMES - 1) add(SequenceItem.Pause(LISTEN_GAP_MS, all, title))
             }
         }
@@ -76,9 +76,13 @@ object MemorizePlan {
         val chunks: List<IntRange> = if (segmented) phrases.indices.map { 0..it } else listOf(phrases.indices)
         return buildList {
             for (chunk in chunks) {
-                val start = if (segmented) phrases[chunk.first].segment!!.startMs else 0L
-                val end = if (segmented) phrases[chunk.last].segment!!.endMs else androidx.media3.common.C.TIME_END_OF_SOURCE
-                val clipMs = if (segmented) end - start else dua.phrases.lastOrNull()?.segment?.endMs ?: 3000L
+                val start = if (segmented) phrases[chunk.first].segment!!.startMs else audio.startMs
+                val end = if (segmented) phrases[chunk.last].segment!!.endMs else audio.endMs ?: androidx.media3.common.C.TIME_END_OF_SOURCE
+                val clipMs = when {
+                    segmented -> end - start
+                    audio.range != null -> audio.range.durationMs
+                    else -> dua.phrases.lastOrNull()?.segment?.endMs ?: 3000L
+                }
                 repeat(settings.loopsPerChunk.coerceIn(1, 10)) {
                     add(SequenceItem.Clip(dua.id, audio.file, start, end, chunk, title))
                     add(SequenceItem.Pause(pauseMs(clipMs, settings), chunk, title))

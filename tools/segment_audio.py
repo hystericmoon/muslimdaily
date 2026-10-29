@@ -207,9 +207,10 @@ def align(arabic: str, spaces: list[int], start: float, end: float, pauses: list
     return pairs
 
 
-def segments(duration: float, pauses: list[Pause]) -> list[tuple[float, float]]:
-    """Contiguous segments split at each pause's midpoint, so one phrase is always active."""
-    cuts = [0.0] + [round(p.mid, 2) for p in pauses] + [round(duration, 2)]
+def segments(duration: float, pauses: list[Pause], offset: float = 0.0) -> list[tuple[float, float]]:
+    """Contiguous segments split at each pause's midpoint, so one phrase is always active.
+    [offset] shifts them to where the dua starts in the file (its audio_range)."""
+    cuts = [round(offset, 2)] + [round(p.mid + offset, 2) for p in pauses] + [round(duration + offset, 2)]
     return list(zip(cuts, cuts[1:]))
 
 
@@ -234,6 +235,12 @@ def review_status(breaks: int, pauses: int, pairs: int) -> str:
 
 def suggest_row(row: dict, samples: list[float]) -> dict:
     arabic = row["arabic"]
+    # With an audio_range (see split_context.py), only the dua's part of the recording counts.
+    offset = 0.0
+    if (row.get("audio_range") or "").strip():
+        a, b = bc.parse_segments(row["audio_range"])[0]
+        samples = samples[int(a * SAMPLE_RATE):int(b * SAMPLE_RATE)]
+        offset = a
     duration = len(samples) / SAMPLE_RATE
     start, end, pauses = find_pauses(loudness(samples))
     spaces = break_candidates(arabic)
@@ -244,7 +251,7 @@ def suggest_row(row: dict, samples: list[float]) -> dict:
         "duration": f"{duration:.2f}", "text_breaks": len(spaces), "audio_pauses": len(pauses),
         "phrases": len(pairs) + 1 if pairs else 1, "status": status, "approved": "",
         "arabic_marked": mark(arabic, [s for s, _ in pairs]) if pairs else "",
-        "audio_segments": format_segments(segments(duration, [p for _, p in pairs])) if pairs else "",
+        "audio_segments": format_segments(segments(duration, [p for _, p in pairs], offset)) if pairs else "",
         "arabic_sha1": sha1(arabic),
     }
 

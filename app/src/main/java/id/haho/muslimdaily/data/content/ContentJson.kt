@@ -27,8 +27,11 @@ internal data class DuaJson(
     val order: Int = 0,
     @SerialName("variant_group") val variantGroup: String? = null,
     val arabic: String = "",
+    /** The book's full entry when [arabic] is only the words to recite (see content guide). */
+    @SerialName("arabic_full") val arabicFull: String = "",
     @SerialName("is_quran") val isQuran: Boolean = false,
     val translations: Map<String, String> = emptyMap(),
+    @SerialName("translations_full") val translationsFull: Map<String, String> = emptyMap(),
     val transliteration: String = "",
     val count: Int? = null,
     val sources: List<SourceRef> = emptyList(),
@@ -47,7 +50,12 @@ internal data class GradingJson(val grade: String = "", val grader: String = "")
 internal data class VirtueJson(val text: String = "", val source: String = "")
 
 @Serializable
-internal data class AudioJson(val file: String = "", val segments: List<List<Double>> = emptyList())
+internal data class AudioJson(
+    val file: String = "",
+    val segments: List<List<Double>> = emptyList(),
+    /** Start and end of the dua in the file, when the recording also reads its context. */
+    val range: List<Double> = emptyList(),
+)
 
 @Serializable
 internal data class RawatibFile(

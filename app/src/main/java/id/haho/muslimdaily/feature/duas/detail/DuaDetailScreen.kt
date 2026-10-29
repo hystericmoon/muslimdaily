@@ -33,6 +33,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import id.haho.muslimdaily.core.model.Dua
+import id.haho.design.glass.chevronRotation
+import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.design.glass.GlassBottomSheet
 import androidx.compose.ui.semantics.Role
 import androidx.compose.material3.Checkbox
@@ -132,7 +135,7 @@ fun DuaDetailRoute(
 }
 
 @Composable
-fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
+fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntryOpen: Boolean = false) {
     var routineSheet by remember { mutableStateOf(false) }
     if (routineSheet) RoutineSheet(state, actions) { routineSheet = false }
     val dua = state.dua
@@ -162,6 +165,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
             SourceChip(dua)
         }
         DuaTranslations(dua, state.prefs)
+        if (dua.arabicFull.isNotBlank()) FullEntry(dua, fullEntryOpen)
         NoteCard(state.note, actions.onSaveNote)
         dua.virtue?.let { virtue ->
             Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
@@ -213,6 +217,43 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions) {
  * The reader's private note: what the dua means to them, when they read it, who taught it.
  * Shown as their own words, apart from the sourced text, and never shared.
  */
+/**
+ * The book's whole entry, for a dua shown as the words to recite only: the hadith wording,
+ * notes and repetition counts around it. Folded away by default; nothing from the book is lost.
+ */
+@Composable
+private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
+    var open by remember { mutableStateOf(initiallyOpen) }
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        TextButton(onClick = { open = !open }) {
+            Icon(painterResource(R.drawable.ic_keyboard_arrow_down), null, Modifier.chevronRotation(open).size(HahoTheme.dimens.smallIcon))
+            Spacer(Modifier.width(HahoTheme.spacing.sm))
+            Text(stringResource(if (open) R.string.dua_full_entry_hide else R.string.dua_full_entry_show))
+        }
+        if (open) {
+            GlassCard(shape = MaterialTheme.shapes.large) {
+                Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                    Text(
+                        stringResource(R.string.dua_full_entry_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(
+                        stringResource(R.string.dua_full_entry_note),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    ArabicText(dua.arabicFull, style = AdwamTheme.arabic.body(dua.isQuran))
+                    if (dua.translationIdFull.isNotBlank()) {
+                        Text(dua.translationIdFull, style = HahoTheme.reading.bodyLarge)
+                    }
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun NoteCard(note: String?, onSave: (String) -> Unit) {
     var editing by remember { mutableStateOf(false) }

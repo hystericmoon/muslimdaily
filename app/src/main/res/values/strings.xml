@@ -253,6 +253,10 @@
     <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
     <string name="dua_memorize">Hafalkan</string>
     <string name="dua_add_to_routine">Tambah ke rangkaian</string>
+    <string name="dua_full_entry_show">Lihat teks lengkap di kitab</string>
+    <string name="dua_full_entry_hide">Sembunyikan teks lengkap</string>
+    <string name="dua_full_entry_title">Teks lengkap di kitab</string>
+    <string name="dua_full_entry_note">Di atas hanya bacaan doanya. Di sini teks lengkapnya seperti tertulis di kitab, termasuk lafal hadis, keterangan dan jumlah bacaan.</string>
     <string name="dua_add_to_set">Tambah ke set saya</string>
     <string name="dua_remove_from_set">Hapus dari set saya</string>
     <string name="dua_in_set_note">Doa ini termasuk dalam set Anda untuk acara ini.</string>

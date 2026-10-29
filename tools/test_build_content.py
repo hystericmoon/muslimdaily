@@ -11,7 +11,7 @@ DUA_COLUMNS = [
     "id", "category", "event", "order", "variant_group", "arabic", "is_quran", "translation_id",
     "translation_en", "transliteration", "count", "source_1_book", "source_1_no", "source_2_book",
     "source_2_no", "source_3_book", "source_3_no", "grade", "grader", "alt_gradings", "virtue_text",
-    "virtue_source", "audio_file", "audio_segments", "reference", "notes",
+    "virtue_source", "audio_file", "audio_segments", "reference", "notes", "arabic_full", "audio_range",
 ]
 RAWATIB_COLUMNS = [
     "id", "prayer", "position", "rakah", "tier", "variant_group", "variant_label", "default_variant",
@@ -136,6 +136,22 @@ class BuildContentTest(unittest.TestCase):
         }])
         report = self.run_build([dua_row()])
         self.assertTrue(any("placeholder" in e for e in report.errors))
+
+    def test_recited_part_of_a_full_entry_builds(self):
+        report = self.run_build([dua_row(arabic_full="((جيم دال ألف باء)) هاء", arabic="ألف | باء", audio_range="0.0-2.0")])
+        self.assertTrue(report.ok, report.errors)
+        d = json.loads((self.tmp / "duas.json").read_text(encoding="utf-8"))["duas"][0]
+        self.assertEqual("((جيم دال ألف باء)) هاء", d["arabic_full"])
+        self.assertEqual([0.0, 2.0], d["audio"]["range"])
+
+    def test_recited_part_may_not_add_or_reorder_words(self):
+        self.assertFalse(self.run_build([dua_row(arabic_full="جيم ألف باء", arabic="ألف | زاي")]).ok)
+        self.assertFalse(self.run_build([dua_row(arabic_full="جيم ألف باء", arabic="باء | ألف")]).ok)
+
+    def test_audio_range_must_hold_the_segments(self):
+        self.assertFalse(self.run_build([dua_row(audio_range="0.5-2.0")]).ok)
+        self.assertFalse(self.run_build([dua_row(audio_range="2.0-1.0")]).ok)
+        self.assertFalse(self.run_build([dua_row(audio_file="", audio_segments="", audio_range="0.0-1.0")]).ok)
 
     def test_split_phrases(self):
         text, breaks = bc.split_phrases(" a |bb| ccc ")
