@@ -135,8 +135,8 @@ class RunViewModel @Inject constructor(
                 prefs = prefs,
                 autoAdvance = s.autoAdvance,
                 haptics = s.haptics,
-                hifz = hifz.filterNot { it.notStarted }.map { it.duaId }.toSet(),
-                saved = hifz.map { it.duaId }.toSet(),
+                hifz = reviews.withTwins(hifz.filterNot { it.notStarted }.map { it.duaId }.toSet()),
+                saved = reviews.withTwins(hifz.map { it.duaId }.toSet()),
                 fromMemory = s.runFromMemory,
             )
             launch {
@@ -215,7 +215,8 @@ class RunViewModel @Inject constructor(
         val id = _state.value?.duas?.getOrNull(page)?.id ?: return
         viewModelScope.launch {
             reviews.add(id, today)
-            _state.update { it?.copy(saved = it.saved + id) }
+            val twins = reviews.withTwins(setOf(id))
+            _state.update { it?.copy(saved = it.saved + twins) }
         }
     }
 

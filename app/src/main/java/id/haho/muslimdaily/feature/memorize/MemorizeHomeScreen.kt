@@ -73,7 +73,7 @@ data class MemorizeHomeState(val today: LocalDate, val entries: List<HifzEntry>)
 @HiltViewModel
 class MemorizeHomeViewModel @Inject constructor(
     private val reviews: ReviewRepository,
-    content: ContentRepository,
+    private val content: ContentRepository,
     clock: Clock,
 ) : ViewModel() {
     private val today = LocalDate.now(clock)
@@ -81,11 +81,15 @@ class MemorizeHomeViewModel @Inject constructor(
     val state: StateFlow<MemorizeHomeState?> = combine(reviews.items(), content.allDuas(), content.categories()) { items, duas, cats ->
         val byId = duas.associateBy { it.id }
         val labels = cats.flatMap { it.events }.associate { it.id to it.label }
+        val twins = content.twinsOnce()
         MemorizeHomeState(
             today = today,
             entries = items.mapNotNull { item ->
                 val dua = byId[item.duaId] ?: return@mapNotNull null
-                HifzEntry(item, dua, labels[dua.event].orEmpty(), !item.notStarted && Leitner.isDue(item.state, today))
+                // One entry stands for its twins too, e.g. "Dzikir pagi · Dzikir petang".
+                val label = (twins[dua.id] ?: listOf(dua.id)).mapNotNull { byId[it]?.event }.distinct()
+                    .mapNotNull { labels[it] }.joinToString(" · ")
+                HifzEntry(item, dua, label, !item.notStarted && Leitner.isDue(item.state, today))
             },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)

@@ -9,6 +9,7 @@ import id.haho.muslimdaily.core.model.Rawatib
 import id.haho.muslimdaily.data.db.ContentDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -76,6 +77,27 @@ class ContentRepository @Inject constructor(
     }
 
     fun allDuas(): Flow<List<Dua>> = afterImport { dao.allDuas().map { list -> list.map { it.toModel() } } }
+
+    @Volatile private var twins: Map<String, List<String>>? = null
+
+    /**
+     * Duas with the same Arabic (morning and evening adhkar, ruku and sujud…), each id mapped to
+     * its group in library order. Ids with no twin are left out. Content only changes with an
+     * update, so the index is built once per process.
+     */
+    suspend fun twinsOnce(): Map<String, List<String>> {
+        twins?.let { return it }
+        importer.ensureImported()
+        val categoryOrder = dao.categories().first().associate { it.id to it.sortOrder }
+        val eventOrder = dao.eventsWithCounts().first().associate { it.id to it.sortOrder }
+        val groups = dao.allDuas().first()
+            .sortedWith(compareBy({ categoryOrder[it.category] ?: Int.MAX_VALUE }, { eventOrder[it.event] ?: Int.MAX_VALUE }, { it.sortOrder }, { it.id }))
+            .groupBy { it.arabic.trim() }
+            .values
+            .filter { it.size > 1 }
+            .map { group -> group.map { it.id } }
+        return groups.flatMap { ids -> ids.map { it to ids } }.toMap().also { twins = it }
+    }
 
     suspend fun search(query: String): List<Dua> {
         importer.ensureImported()
