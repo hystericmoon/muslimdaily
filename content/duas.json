@@ -1,5 +1,5 @@
 {
-  "content_version": 19,
+  "content_version": 20,
   "duas": [
     {
       "id": "wake_01",
@@ -895,13 +895,14 @@
       "event": "adhan",
       "order": 4,
       "variant_group": null,
-      "arabic": "يَقُولُ: ((اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامَاً مَحمُوداً الَّذِي وَعَدْتَهُ، [إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ])).",
+      "arabic": "اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامَاً مَحمُوداً الَّذِي وَعَدْتَهُ، [إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ]",
+      "arabic_full": "يَقُولُ: ((اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامَاً مَحمُوداً الَّذِي وَعَدْتَهُ، [إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ])).",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, Tuhan Pemilik panggilan yang sempurna (adzan) ini dan shalat (wajib) yang didirikan. Berilah Al-Wasilah (derajat di Surga, yang tidak akan diberikan selain kepada Nabi dan fadhilah kepada Muhammad. Dan bangkitkan beliau sehingga bisa menempati maqam terpuji yang telah Engkau janjikan. Sesungguhnya Engkau tidak menyalahi janji”.",
         "en": "‘O Allah, Owner of this perfect call and Owner of this prayer to be performed, bestow upon Muhammad al-waseelah and al-fadeelah and send him upon a praised platform which You have promised him. Verily, You never fail in Your promise.’al-waseelah: A station in paradise.al-fadeelah: A rank above the rest of creation.praised platform: One in which all of creation will praise him on, in order to bring about the account quickly and be relieved from the lengthy standing or the role of intercession."
       },
-      "transliteration": "Yaqūl: Allāhumma rabba hādzihid-da'watit-tāmmah, wash-shalātil-qā'imah, āti muhammadanil-wasīlata wal-fadhīlah, wab'atshu maqāmaan mahmūdanilladzī wa'adtah, [innaka lā tukhliful-mī'ād].",
+      "transliteration": "Allāhumma rabba hādzihid-da'watit-tāmmah, wash-shalātil-qā'imah, āti muhammadanil-wasīlata wal-fadhīlah, wab'atshu maqāmaan mahmūdanilladzī wa'adtah, [innaka lā tukhliful-mī'ād]",
       "count": null,
       "sources": [
         {
@@ -918,7 +919,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_025.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          2.9,
+          21.95
+        ]
       },
       "phrase_breaks": []
     },
@@ -2152,13 +2157,17 @@
       "event": "ruku",
       "order": 1,
       "variant_group": null,
-      "arabic": "((سُبْحانَ رَبِّيَ الْعَظِيمِ)). ثلاث مرَّاتٍ.",
+      "arabic": "سُبْحانَ رَبِّيَ الْعَظِيمِ",
+      "arabic_full": "((سُبْحانَ رَبِّيَ الْعَظِيمِ)). ثلاث مرَّاتٍ.",
       "is_quran": false,
       "translations": {
-        "id": "“Maha Suci Tuhanku yang Maha Agung”. (Dibaca tiga kali).",
+        "id": "Maha Suci Tuhanku yang Maha Agung",
         "en": "(How perfect my Lord is, The Supreme.’(three times))"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Maha Suci Tuhanku yang Maha Agung”. (Dibaca tiga kali)."
+      },
+      "transliteration": "Subhāna rabbiyal-'azhīm",
       "count": 3,
       "sources": [
         {
@@ -2179,7 +2188,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_033.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.41,
+          5.22
+        ]
       },
       "phrase_breaks": []
     },
@@ -2512,13 +2525,14 @@
       "event": "sujud",
       "order": 1,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ رَبِّيَ الأَعْلَى)) ثلاث مرَّاتٍ.",
+      "arabic": "سُبْحَانَ رَبِّيَ الأَعْلَى",
+      "arabic_full": "((سُبْحَانَ رَبِّيَ الأَعْلَى)) ثلاث مرَّاتٍ.",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Tuhanku, Yang Maha Tinggi (dari segala kekurangan dan hal yang tidak layak). Dibaca tiga kali”",
         "en": "(How perfect my Lord is, The Most High.’(three times))"
       },
-      "transliteration": "",
+      "transliteration": "Subhāna rabbiyal-a'lā",
       "count": 3,
       "sources": [
         {
@@ -2539,7 +2553,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_041.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.27,
+          4.76
+        ]
       },
       "phrase_breaks": []
     },
@@ -4174,13 +4192,14 @@
       "event": "morning",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
+      "arabic": "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+      "arabic_full": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” \u0000 (dst.) \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 . \u0000",
         "en": "(O Allah, by your leave we have reached the morning and by Your leave we have reached the evening, by Your leave we live and die and unto You is our resurrection.)[In the evening:](O Allah, by Your leave we have reached the evening and by Your leave we have reached the morning, by Your leave we live and die and unto You is our return.)"
       },
-      "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr.",
+      "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr",
       "count": null,
       "sources": [
         {
@@ -4197,7 +4216,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_078.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.17,
+          12.22
+        ]
       },
       "phrase_breaks": []
     },
@@ -4575,13 +4598,17 @@
       "event": "morning",
       "order": 13,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
+      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ",
+      "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
       "is_quran": false,
       "translations": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000",
+        "id": "Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.",
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)( [ten times or once if lazy])"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
+      },
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr, au",
       "count": 10,
       "sources": [
         {
@@ -4606,7 +4633,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_092.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.01,
+          14.07
+        ]
       },
       "phrase_breaks": []
     },
@@ -4616,13 +4647,17 @@
       "event": "morning",
       "order": 14,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) (مائةَ مرَّةٍ إذا أصبحَ).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+      "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) (مائةَ مرَّةٍ إذا أصبحَ).",
       "is_quran": false,
       "translations": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca seratus kali setiap pagi hari).",
+        "id": "Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.",
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)((one hundred times every day))"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca seratus kali setiap pagi hari)."
+      },
+      "transliteration": "Lā ilāha illallāh, wahdahu lā syarīka lah, lahul-mulku walahul-hamdu wahuwa 'alā kulli syai'in qadīr",
       "count": 100,
       "sources": [
         {
@@ -4643,7 +4678,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_093.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.49,
+          10.89
+        ]
       },
       "phrase_breaks": []
     },
@@ -4653,13 +4692,17 @@
       "event": "morning",
       "order": 15,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ)) (ثلاثَ مرَّاتٍ إذا أصبحَ).",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ",
+      "arabic_full": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ)) (ثلاثَ مرَّاتٍ إذا أصبحَ).",
       "is_quran": false,
       "translations": {
-        "id": "“Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.” (Dibaca tiga kali setiap pagi hari).",
+        "id": "Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.",
         "en": "(How perfect Allah is and I praise Him by the number of His creation and His pleasure, and by the weight of His throne, and the ink of His words.)(three times)"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.” (Dibaca tiga kali setiap pagi hari)."
+      },
+      "transliteration": "Subhānallāhi wabihamdih: 'adada khalqih, waridhā nafsih, wazinata 'arsyih, wamidāda kalimātih",
       "count": 3,
       "sources": [
         {
@@ -4676,7 +4719,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_094.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.27,
+          12.1
+        ]
       },
       "phrase_breaks": []
     },
@@ -4723,13 +4770,14 @@
       "event": "morning",
       "order": 17,
       "variant_group": null,
-      "arabic": "((أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ)) (مِائَةَ مَرَّةٍ فِي الْيَوْمِ).",
+      "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      "arabic_full": "((أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ)) (مِائَةَ مَرَّةٍ فِي الْيَوْمِ).",
       "is_quran": false,
       "translations": {
         "id": "Aku memohon ampun kepada Allah dan bertobat kepadaNya. (Dibaca 100 kali dalam sehari).",
         "en": "‘I seek Allaah’s forgiveness and I turn to Him in repentance.’ [one hundred times a day]"
       },
-      "transliteration": "Astaghfirullāha wa atūbu ilaihi mi'ata marratin fil-yaum.",
+      "transliteration": "Astaghfirullāha wa atūbu ilaih",
       "count": 100,
       "sources": [
         {
@@ -4750,7 +4798,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_096.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.71,
+          4.64
+        ]
       },
       "phrase_breaks": []
     },
@@ -4941,13 +4993,14 @@
       "event": "evening",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
+      "arabic": "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+      "arabic_full": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” \u0000 (dst.) \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 . \u0000",
         "en": "(O Allah, by your leave we have reached the morning and by Your leave we have reached the evening, by Your leave we live and die and unto You is our resurrection.)[In the evening:](O Allah, by Your leave we have reached the evening and by Your leave we have reached the morning, by Your leave we live and die and unto You is our return.)"
       },
-      "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr.",
+      "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr",
       "count": null,
       "sources": [
         {
@@ -4964,7 +5017,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_078.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.17,
+          12.22
+        ]
       },
       "phrase_breaks": []
     },
@@ -5342,13 +5399,17 @@
       "event": "evening",
       "order": 13,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
+      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ",
+      "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
       "is_quran": false,
       "translations": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000",
+        "id": "Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.",
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)( [ten times or once if lazy])"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
+      },
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr, au",
       "count": 10,
       "sources": [
         {
@@ -5373,7 +5434,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_092.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.01,
+          14.07
+        ]
       },
       "phrase_breaks": []
     },
@@ -5383,13 +5448,17 @@
       "event": "evening",
       "order": 14,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) (مائةَ مرَّةٍ إذا أصبحَ).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+      "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) (مائةَ مرَّةٍ إذا أصبحَ).",
       "is_quran": false,
       "translations": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca seratus kali setiap pagi hari).",
+        "id": "Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.",
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)((one hundred times every day))"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca seratus kali setiap pagi hari)."
+      },
+      "transliteration": "Lā ilāha illallāh, wahdahu lā syarīka lah, lahul-mulku walahul-hamdu wahuwa 'alā kulli syai'in qadīr",
       "count": 100,
       "sources": [
         {
@@ -5410,7 +5479,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_093.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.49,
+          10.89
+        ]
       },
       "phrase_breaks": []
     },
@@ -5420,13 +5493,17 @@
       "event": "evening",
       "order": 15,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ)) (ثلاثَ مرَّاتٍ إذا أصبحَ).",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ",
+      "arabic_full": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ)) (ثلاثَ مرَّاتٍ إذا أصبحَ).",
       "is_quran": false,
       "translations": {
-        "id": "“Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.” (Dibaca tiga kali setiap pagi hari).",
+        "id": "Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.",
         "en": "(How perfect Allah is and I praise Him by the number of His creation and His pleasure, and by the weight of His throne, and the ink of His words.)(three times)"
       },
-      "transliteration": "",
+      "translations_full": {
+        "id": "“Maha Suci Allah, aku memujiNya sebanyak makhlukNya, sejauh kerelaanNya, seberat timbangan arasyNya dan sebanyak tinta tulisan kalimatNya.” (Dibaca tiga kali setiap pagi hari)."
+      },
+      "transliteration": "Subhānallāhi wabihamdih: 'adada khalqih, waridhā nafsih, wazinata 'arsyih, wamidāda kalimātih",
       "count": 3,
       "sources": [
         {
@@ -5443,7 +5520,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_094.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.27,
+          12.1
+        ]
       },
       "phrase_breaks": []
     },
@@ -5490,13 +5571,14 @@
       "event": "evening",
       "order": 17,
       "variant_group": null,
-      "arabic": "((أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ)) (مِائَةَ مَرَّةٍ فِي الْيَوْمِ).",
+      "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      "arabic_full": "((أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ)) (مِائَةَ مَرَّةٍ فِي الْيَوْمِ).",
       "is_quran": false,
       "translations": {
         "id": "Aku memohon ampun kepada Allah dan bertobat kepadaNya. (Dibaca 100 kali dalam sehari).",
         "en": "‘I seek Allaah’s forgiveness and I turn to Him in repentance.’ [one hundred times a day]"
       },
-      "transliteration": "Astaghfirullāha wa atūbu ilaihi mi'ata marratin fil-yaum.",
+      "transliteration": "Astaghfirullāha wa atūbu ilaih",
       "count": 100,
       "sources": [
         {
@@ -5517,7 +5599,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_096.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.71,
+          4.64
+        ]
       },
       "phrase_breaks": []
     },
@@ -6876,13 +6962,14 @@
       "event": "travel",
       "order": 11,
       "variant_group": null,
-      "arabic": "يُكَبِّرُ عَلَى كُلِّ شَرَفٍ ثَلاَثَ تَكْبِيرَاتٍ ثُمَّ يَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ))",
+      "arabic_full": "((يُكَبِّرُ عَلَى كُلِّ شَرَفٍ ثَلاَثَ تَكْبِيرَاتٍ ثُمَّ يَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ)).",
       "is_quran": false,
       "translations": {
         "id": "Bertakbir tiga kali, di atas tempat yang tinggi, kemudian membaca: Tiada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya. Bagi-Nya kerajaan dan pujaan. Dia-lah Yang Mahakuasa atas segala sesuatu. Kami kembali dengan bertaubat, beribadah dan memuji kepada Tuhan kami. Allah telah menepati janjiNya, membela hambaNya (Muhammad) dan mengalahkan golongan musuh dengan sendirian”.",
         "en": "(Ibn AAumar reported that the Messenger of Allah on return from a battle or from performing the pilgrimage would say at every high point: (Allah is the greatest, Allah is the greatest, Allah is the greatest.) and then he would say: (None has the right to be worshipped except Allah, alone, without partner. To Him belongs all sovereignty and praise, and He is over all things omnipotent. We return, repent, worship and praise our Lord. Allah fulfilled His promise, aided His Servant, and single-handedly defeated the allies.))"
       },
-      "transliteration": "Yukabbiru 'alā kulli syarafin tsalātsa takbīrātin tsumma yaqūl: lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulk, walahul-hamd, wahuwa 'alā kulli syai'in qadīr, āyibūn, tā'ibūn, 'ābidūn, lirabbinā hāmidūn, shadaqallāhu wa'dah, wanashara 'abdah, wahazamal-ahzāba wahdah",
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulk, walahul-hamd, wahuwa 'alā kulli syai'in qadīr, āyibūn, tā'ibūn, 'ābidūn, lirabbinā hāmidūn, shadaqallāhu wa'dah, wanashara 'abdah, wahazamal-ahzāba wahdah",
       "count": null,
       "sources": [
         {
@@ -6903,7 +6990,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_217.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          10.97,
+          35.51
+        ]
       },
       "phrase_breaks": []
     },
@@ -7372,13 +7463,14 @@
       "event": "illness",
       "order": 2,
       "variant_group": null,
-      "arabic": "((أَسْأَلُ اللَّهَ الْعَظيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفيَكَ)) (سبع مرات).",
+      "arabic": "أَسْأَلُ اللَّهَ الْعَظيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفيَكَ",
+      "arabic_full": "((أَسْأَلُ اللَّهَ الْعَظيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفيَكَ)) (سبع مرات).",
       "is_quran": false,
       "translations": {
         "id": "“Aku mohon kepada Allah Yang Maha Agung, Tuhan yang menguasai arasy yang agung, agar menyembuhkan penyakitmu”",
         "en": "(I ask Allah The Supreme, Lord of the magnificent throne to cure you’.(7times) (he (the sick person) will be cured.))"
       },
-      "transliteration": "",
+      "transliteration": "As'alullāhal-'azhīma rabbal-'arsyil-'azhīmi an yasyfyak",
       "count": null,
       "sources": [
         {
@@ -7399,7 +7491,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_148.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.75,
+          6.29
+        ]
       },
       "phrase_breaks": []
     },
@@ -8275,13 +8371,17 @@
       "event": "waswas",
       "order": 2,
       "variant_group": null,
-      "arabic": "يَقُولُ: ((آمَنْتُ بِاللَّهِ وَرُسُلِهِ",
+      "arabic": "آمَنْتُ بِاللَّهِ وَرُسُلِهِ",
+      "arabic_full": "((يَقُولُ: ((آمَنْتُ بِاللَّهِ وَرُسُلِهِ)).",
       "is_quran": false,
       "translations": {
-        "id": "Hendaklah mengatakan: “Aku beriman kepada Allah dan kebenaran para rasul yang diutus oleh-Nya.”",
+        "id": "Aku beriman kepada Allah dan kebenaran para rasul yang diutus oleh-Nya.",
         "en": "(He should say: (I have believed in Allah and His Messenger.))"
       },
-      "transliteration": "Yaqūl: āmantu billāhi warusulih",
+      "translations_full": {
+        "id": "Hendaklah mengatakan: “Aku beriman kepada Allah dan kebenaran para rasul yang diutus oleh-Nya.”"
+      },
+      "transliteration": "Āmantu billāhi warusulih",
       "count": null,
       "sources": [
         {
@@ -8298,7 +8398,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_134.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.41,
+          3.77
+        ]
       },
       "phrase_breaks": []
     },
