@@ -866,6 +866,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_3_1">
+        <item>In the Recall step, the Arabic now comes right after the cue, before the hiding options.</item>
+        <item>Memorise now shows where a dua sits in its set, e.g. \"Morning adhkar · 3 of 19\".</item>
+    </string-array>
     <string-array name="whats_new_1_3_0">
         <item>While reading your adhkar, save a dua to memorise with \"Add to My hifz\" in the menu. It joins My hifz as \"Not started\" for later. You can also remove a dua from My hifz.</item>
         <item>Add a dua to a routine straight from its page, and pick duas for a routine by their Arabic and translation.</item>
