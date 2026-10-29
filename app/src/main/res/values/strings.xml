@@ -365,6 +365,7 @@
     <string name="memorize_cue_title">Petunjuk</string>
     <string name="memorize_cue_show_meaning">Tampilkan arti</string>
     <string name="memorize_cue_hide_meaning">Sembunyikan arti</string>
+    <string name="memorize_cue_position">Doa %1$d dari %2$d</string>
     <string name="memorize_fade_order">Yang disembunyikan dulu</string>
     <string name="memorize_fade_random">Acak</string>
     <string name="memorize_fade_from_end">Dari akhir</string>

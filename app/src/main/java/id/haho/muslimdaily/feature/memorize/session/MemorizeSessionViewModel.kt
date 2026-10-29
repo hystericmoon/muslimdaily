@@ -11,6 +11,7 @@ import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.review.ReviewRepository
+import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -23,10 +24,14 @@ import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.MemorizeSessionRoute
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -59,6 +64,9 @@ data class MemorizeUiState(
     /** The word shown last by "reveal as you go", announced to TalkBack. */
     val lastRevealed: Word? = null,
     val reading: ReadingPrefs = ReadingPrefs(),
+    /** 1-based place of this dua among its event's duas, and how many there are (e.g. 3 of 19). */
+    val position: Int = 0,
+    val positionOf: Int = 0,
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.phrases.isNotEmpty() && dua.phrases.all { it.segment != null }
@@ -95,11 +103,18 @@ class MemorizeSessionViewModel @Inject constructor(
 
     private val today: LocalDate get() = LocalDate.now(clock)
 
-    private val base = combine(content.dua(duaId), reviews.item(duaId), settingsRepository.settings) { d, r, s ->
-        Triple(d, r, s)
-    }
+    /** The ids of the dua's event, in reading order, for the "3 of 19" cue. */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val siblings = content.dua(duaId)
+        .map { it?.event }
+        .distinctUntilChanged()
+        .flatMapLatest { event -> if (event == null) flowOf(emptyList()) else content.duasForEvent(event).map { list -> list.map { it.id } } }
 
-    val state: StateFlow<MemorizeUiState?> = combine(base, local, audio.state) { (dua, review, settings), l, playback ->
+    private data class Base(val dua: Dua?, val review: ReviewItem?, val settings: AppSettings, val siblings: List<String>)
+
+    private val base = combine(content.dua(duaId), reviews.item(duaId), settingsRepository.settings, siblings, ::Base)
+
+    val state: StateFlow<MemorizeUiState?> = combine(base, local, audio.state) { (dua, review, settings, siblings), l, playback ->
         dua ?: return@combine null
         val memorize = settings.memorize
         val words = Recall.words(dua)
@@ -124,6 +139,8 @@ class MemorizeSessionViewModel @Inject constructor(
             fromReview = route.fromReview,
             nextDueId = l.nextDueId,
             ab = l.ab ?: (0..(dua.phrases.lastIndex.coerceAtLeast(0))),
+            position = siblings.indexOf(dua.id) + 1,
+            positionOf = siblings.size,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
