@@ -871,6 +871,12 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_4_2">
+        <item>21 duas, among them the dhikr of ruku, sujud, the morning and evening adhkar and the dua for entering the masjid, now show only the words to recite. The book\'s full narration stays below them.</item>
+        <item>42 more duas are now split into phrases: the Build step, the A–B loop and highlighting of the phrase being recited now work for them.</item>
+        <item>Every Hisnul Muslim dua now has an English translation.</item>
+        <item>Latin transliteration fixes: where the source leaves out a vowel mark, no transliteration is shown rather than a guess.</item>
+    </string-array>
     <string-array name="whats_new_1_4_1">
         <item>Latin transliteration is now available for most duas, generated from the Arabic text following the Indonesian (Kemenag–Kemendikbud) standard. Turn it on in Settings → Display.</item>
         <item>33 duas, Sayyidul Istighfar among them, are now split into phrases: the Build step, the A–B loop and highlighting of the phrase being recited now work for them.</item>
