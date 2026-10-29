@@ -374,6 +374,7 @@
     <string name="memorize_cue_title">Cue</string>
     <string name="memorize_cue_show_meaning">Show the meaning</string>
     <string name="memorize_cue_hide_meaning">Hide the meaning</string>
+    <string name="memorize_cue_position">Dua %1$d of %2$d</string>
     <string name="memorize_fade_order">Hide first</string>
     <string name="memorize_fade_random">Random</string>
     <string name="memorize_fade_from_end">From the end</string>

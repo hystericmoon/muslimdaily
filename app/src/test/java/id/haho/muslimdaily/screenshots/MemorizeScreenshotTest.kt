@@ -45,6 +45,7 @@ class MemorizeScreenshotTest {
             settings = MemorizeSettings(), fade = fade, words = words,
             hiddenWords = Recall.hiddenWords(words, fade, dua.id, order), review = null, rated = null,
             fromReview = fromReview, nextDueId = null, ab = 0..1, fadeOrder = order, firstLetters = firstLetters,
+            position = 2, positionOf = 19,
         )
     }
 
