@@ -494,7 +494,7 @@
     <string name="display_translation_en">Bahasa Inggris</string>
     <string name="display_translation_both">Keduanya</string>
     <string name="display_transliteration">Transliterasi Latin</string>
-    <string name="display_transliteration_summary">Mati secara bawaan. Bantu membaca, bukan pengganti teks Arab.</string>
+    <string name="display_transliteration_summary">Mati secara bawaan. Dibuat otomatis dari teks Arab menurut pedoman transliterasi Kemenag–Kemendikbud 1987: bantu membaca, bukan pengganti teks Arab.</string>
     <string name="display_text_size">Ukuran teks</string>
     <string name="display_arabic_size">Teks Arab</string>
     <string name="display_translation_size">Terjemahan</string>

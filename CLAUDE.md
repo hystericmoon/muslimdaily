@@ -8,6 +8,8 @@ Compose, Hilt, Room, DataStore, Glance. Sideloaded through GitHub Releases.
 
 - Never write or generate religious content: Arabic, translations, virtues or sources come only
   from `content/source/*.csv` via `tools/build_content.py`. See `docs/content-guide.md`.
+  One exception, approved by the owner: the Latin transliteration is derived from the sourced
+  Arabic by the fixed rules in `tools/transliterate.py` (never written by hand or by a model).
 - Sahih/hasan narrations only. Show a count only where the Sunnah gives one.
 - No gamification (streaks, points, badges). Fully offline. WCAG AA.
 
