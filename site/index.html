@@ -6,9 +6,18 @@
 <title>Adwam: jadwal shalat, dzikir, dan doa harian</title>
 <meta name="description" content="Aplikasi Android gratis untuk jadwal shalat, dzikir pagi dan petang, serta doa Hisnul Muslim dengan sumbernya. Berjalan tanpa internet, tanpa iklan, tanpa akun.">
 <meta name="theme-color" content="#131613">
-<meta property="og:title" content="Adwam">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hystericmoon.github.io/muslimdaily/">
+<meta property="og:site_name" content="Adwam">
+<meta property="og:locale" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Adwam: jadwal shalat, dzikir, dan doa harian">
 <meta property="og:description" content="Jadwal shalat, dzikir, dan doa harian. Tanpa internet, tanpa iklan, tanpa akun.">
-<meta property="og:image" content="brand/adwam-app-icon-512.png">
+<meta property="og:image" content="https://hystericmoon.github.io/muslimdaily/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Adwam: shalat, dzikir, dan doa. Sedikit, tapi setiap hari. Dengan tangkapan layar Hari ini.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="brand/adwam-mark.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -141,6 +150,14 @@ figcaption { font-size: 0.875rem; color: var(--ink-2); margin-top: 0.75rem; max-
 .steps li::before { content: counter(step); font-weight: 800; font-size: 1.25rem; color: var(--accent); font-variant-numeric: tabular-nums; }
 .steps b { color: var(--ink); font-weight: 600; }
 
+/* What's new, from the app's own release notes (whatsnew.json) */
+.news { margin-top: 3rem; max-width: var(--measure); }
+.news[hidden] { display: none; }
+.news h3 { font-size: 1.125rem; font-weight: 700; margin: 0 0 0.75rem; }
+.news ul { margin: 0 0 0.75rem; padding-left: 1.25rem; color: var(--ink-2); display: grid; gap: 0.5rem; }
+.news li::marker { color: var(--accent); }
+.news a { font-weight: 600; }
+
 /* Sources */
 .sources { background: var(--ground-2); padding-block: 5rem; }
 .sources .wrap { display: grid; gap: 3rem; align-items: center; }
@@ -256,6 +273,11 @@ footer .mark { width: 2.5rem; margin-bottom: 1rem; }
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 4h2v9.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17zM5 19h14v2H5z"/></svg>
         <span data-id>Unduh APK</span><span data-en>Download APK</span>
       </a>
+      <section class="news" id="baru" hidden aria-labelledby="baru-title">
+        <h3 id="baru-title"><span data-id>Baru di versi </span><span data-en>New in version </span><span class="js-news-version"></span></h3>
+        <ul class="js-news"></ul>
+        <a href="https://github.com/hystericmoon/muslimdaily/releases"><span data-id>Semua rilis</span><span data-en>All releases</span></a>
+      </section>
     </div>
   </section>
 
@@ -264,7 +286,7 @@ footer .mark { width: 2.5rem; margin-bottom: 1rem; }
       <div class="phone small"><img src="shots/dua.webp" width="560" height="1190" loading="lazy" alt="Ayat Kursi dengan terjemahan, derajat shahih menurut al-Albani, dan rujukannya" data-alt-en="Ayat al-Kursi with its translation, a sahih grading by al-Albani, and its reference"></div>
       <div>
         <h2 id="sumber-title"><span data-id>Setiap doa menyebut sumbernya</span><span data-en>Every dua names its source</span></h2>
-        <p><span data-id>Seluruh Hisnul Muslim, 276 doa dalam 55 keadaan, ditambah 31 doa dari Al-Qur'an. Hampir semuanya dengan tilawah serta terjemah bahasa Indonesia dan Inggris. Setiap doa menampilkan rujukan, takhrij, dan derajatnya. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat.</span><span data-en>All of Hisnul Muslim, 276 duas for 55 occasions, plus 31 supplications from the Qur'an. Nearly all come with a recitation and with Indonesian and English translations. Every dua shows its references, takhrij and grading. Narrations al-Albani graded weak are left out.</span></p>
+        <p><span data-id>Seluruh Hisnul Muslim, 276 doa dalam 55 keadaan, ditambah 31 doa dari Al-Qur'an. Hampir semuanya dengan tilawah serta terjemah bahasa Indonesia dan Inggris, dan sebagian besar dengan transliterasi Latin. Setiap doa menampilkan rujukan, takhrij, dan derajatnya. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat.</span><span data-en>All of Hisnul Muslim, 276 duas for 55 occasions, plus 31 supplications from the Qur'an. Nearly all come with a recitation and with Indonesian and English translations, and most with a Latin transliteration. Every dua shows its references, takhrij and grading. Narrations al-Albani graded weak are left out.</span></p>
         <ul class="promises">
           <li><b><span data-id>Tanpa internet</span><span data-en>Offline</span></b><span data-id>Jadwal, doa, audio, kiblat, dan data masjid tersimpan di ponsel.</span><span data-en>Times, duas, audio, qibla and mosque data are stored on the phone.</span></li>
           <li><b><span data-id>Tanpa akun, iklan, atau analitik</span><span data-en>No account, ads or analytics</span></b><span data-id>Lokasi dan catatan Anda tidak dikirim ke mana pun. <a href="https://github.com/hystericmoon/muslimdaily/blob/main/docs/privacy-policy.md">Kebijakan privasi</a></span><span data-en>Your location and notes are never sent anywhere. <a href="https://github.com/hystericmoon/muslimdaily/blob/main/docs/privacy-policy.md">Privacy policy</a></span></li>
@@ -303,12 +325,25 @@ footer .mark { width: 2.5rem; margin-bottom: 1rem; }
   const root = document.documentElement;
   const btn = document.getElementById("lang");
   const alts = [...document.querySelectorAll("img[data-alt-en]")].map((img) => [img, img.alt]);
+  let news = null;
+  const renderNews = () => {
+    if (!news) return;
+    const list = document.querySelector(".js-news");
+    list.replaceChildren(...news[root.lang === "id" ? "id" : "en"].map((t) => {
+      const li = document.createElement("li");
+      li.textContent = t;
+      return li;
+    }));
+    document.querySelector(".js-news-version").textContent = news.version;
+    document.getElementById("baru").hidden = false;
+  };
   const apply = (lang) => {
     root.lang = lang;
     btn.textContent = lang === "id" ? "EN" : "ID";
     btn.setAttribute("aria-label", lang === "id" ? "Switch to English" : "Ganti ke bahasa Indonesia");
     alts.forEach(([img, id]) => { img.alt = lang === "id" ? id : img.dataset.altEn; });
     document.title = lang === "id" ? "Adwam: jadwal shalat, dzikir, dan doa harian" : "Adwam: prayer times, adhkar and daily duas";
+    renderNews();
   };
   let lang = "id";
   try { lang = localStorage.getItem("lang") || (navigator.language.startsWith("id") ? "id" : "en"); } catch (e) {}
@@ -318,6 +353,12 @@ footer .mark { width: 2.5rem; margin-bottom: 1rem; }
     apply(lang);
     try { localStorage.setItem("lang", lang); } catch (e) {}
   });
+
+  // The latest release's highlights, written for readers (tools/site/build_whatsnew.py).
+  fetch("whatsnew.json")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((releases) => { news = releases && releases[0]; renderNews(); })
+    .catch(() => {});
 
   // Point the buttons straight at the latest APK; the releases page stays the fallback.
   fetch("https://api.github.com/repos/hystericmoon/muslimdaily/releases/latest")
