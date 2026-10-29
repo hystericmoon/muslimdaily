@@ -23,3 +23,6 @@ keystore.properties
 .impeccable/questions/*
 !.impeccable/questions/seeds/
 .deps/
+
+# Generated at deploy by tools/site/build_whatsnew.py
+site/whatsnew.json
