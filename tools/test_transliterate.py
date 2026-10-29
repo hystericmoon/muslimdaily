@@ -35,6 +35,17 @@ class TransliterateTest(unittest.TestCase):
         self.check("أَعوذُ بِكَ", "A'ūdzu bik")
         self.check("أَنتَ", "Ant")
 
+    def test_doubled_letter_without_vowel_gets_none(self):
+        # The book writes السّماء and الصّلاة with the shadda but not the fatha.
+        # Its vowel can't be read off the letters, so no guess.
+        self.assertIsNone(transliterate("فِي السّمَاءِ"))
+        self.assertIsNone(transliterate("وَالصّلَاةُ"))
+        # Before an alif the vowel can only be a fatha.
+        self.check("مِنَ الظّالِمِينَ", "Minazh-zhālimīn")
+
+    def test_joined_jalalah_is_not_capitalised(self):
+        self.check("سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ", "Sami'allāhu liman hamidah")
+
     def test_unreadable_text_gets_none(self):
         # A note with no vowel marks can't be read by the rules: no guess.
         self.assertIsNone(transliterate("ثلاث مرات"))

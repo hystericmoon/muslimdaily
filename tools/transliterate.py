@@ -122,6 +122,11 @@ def vowelled(word: list[Token]) -> bool:
     """A word the rules can read: every consonant carries a mark, except at the end of the word,
     before a letter of length (ما, أعوذ) and the lam of the article."""
     for idx, t in enumerate(word):
+        # A doubled letter whose vowel isn't written (the book's السّماء) can't be read, unless an
+        # alif follows: that is only read after a fatha (القهّار).
+        if (t.has(SHADDA) and not t.vowel and idx < len(word) - 1 and t.letter in CONSONANTS
+                and word[idx + 1].letter != "ا"):
+            return False
         if t.marks & READ_MARKS or t.letter not in CONSONANTS:
             continue
         if idx == len(word) - 1 or word[idx + 1].letter in LONG_LETTERS:
@@ -384,7 +389,7 @@ def transliterate(arabic: str) -> str | None:
     latin = re.sub(r"\s+([,.;:?!\]])", r"\1", latin)
     latin = re.sub(r"([,.;:?!])(?=\S)", r"\1 ", latin)
     latin = re.sub(r"\[\s+", "[", latin)
-    latin = re.sub(r"\ballāh", "Allāh", latin)
+    latin = re.sub(r"(?<![\w'])allāh", "Allāh", latin)  # not when joined: sami'allāhu
     # A capital at the start and after a full stop.
     latin = re.sub(r"(^|[.?!]\s+)([a-zāīū'])", lambda m: m.group(1) + m.group(2).upper(), latin)
     return latin or None
