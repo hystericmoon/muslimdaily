@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adwam: jadwal shalat, dzikir, dan doa harian</title>
+<meta name="description" content="Aplikasi Android gratis untuk jadwal shalat, dzikir pagi dan petang, serta doa Hisnul Muslim dengan sumbernya. Berjalan tanpa internet, tanpa iklan, tanpa akun.">
+<meta name="theme-color" content="#131613">
+<meta property="og:title" content="Adwam">
+<meta property="og:description" content="Jadwal shalat, dzikir, dan doa harian. Tanpa internet, tanpa iklan, tanpa akun.">
+<meta property="og:image" content="brand/adwam-app-icon-512.png">
+<link rel="icon" href="brand/adwam-mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/plus-jakarta-sans.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+:root {
+  /* Forest dark, from haho-design's FOREST palette; the page has no light mode. */
+  --ground: #131613;
+  --ground-2: #191C19;
+  --ink: #E1E3DE;
+  --ink-2: #C1C9BE;
+  --accent: #99D4A2;
+  --link: #99D4A2;
+  --line: #99D4A2;
+  --mark: #81D5CE;
+  --gold: #C9A227;
+  --rule: #333632;
+  --on-accent: #003918;
+  --frame: #2B2F2B;
+  --gutter: 16px;
+  --measure: 34rem;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 "Plus Jakarta Sans", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--link); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(72rem, 100% - 2 * var(--gutter)); margin-inline: auto; }
+@media (min-width: 48rem) { :root { --gutter: 32px; } }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; }
+.lockup { color: var(--mark); display: inline-flex; }
+.lockup svg { height: 2rem; width: auto; }
+.top nav { display: flex; align-items: center; gap: 0.25rem; }
+.top nav a { color: var(--ink-2); text-decoration: none; font-weight: 500; font-size: 0.9375rem; padding: 0.625rem 0.75rem; border-radius: 999px; }
+.top nav a:hover { color: var(--ink); background: var(--ground-2); }
+.lang { font: inherit; font-weight: 600; font-size: 0.875rem; color: var(--ink); background: none; border: 1px solid var(--rule); border-radius: 999px; padding: 0.5rem 0.875rem; min-height: 44px; cursor: pointer; }
+.lang:hover { background: var(--ground-2); }
+@media (max-width: 40rem) { .top nav .opt { display: none; } }
+
+/* Hero */
+.hero { display: grid; gap: 2.5rem; padding-block: 3rem 4rem; align-items: center; }
+@media (min-width: 56rem) { .hero { grid-template-columns: 1.15fr 0.85fr; padding-block: 4.5rem 6rem; } }
+h1 {
+  font-size: clamp(2.375rem, 1.4rem + 4.2vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 1.5rem;
+  max-width: 13ch;
+  text-wrap: balance;
+}
+.lede { font-size: 1.1875rem; color: var(--ink-2); max-width: var(--measure); margin: 0 0 2rem; }
+.lede b { color: var(--ink); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 0.625rem; min-height: 52px; padding: 0 1.5rem; border-radius: 999px; font-weight: 700; font-size: 1rem; text-decoration: none; }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-quiet { color: var(--ink); border: 1px solid var(--rule); }
+.btn-quiet:hover { background: var(--ground-2); }
+.btn svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.meta { margin: 1rem 0 0; font-size: 0.875rem; color: var(--ink-2); }
+
+/* The line: one stroke from the hero down the day, ending at the gold dot. */
+.hero-line { display: block; width: 100%; height: 3.5rem; margin-top: 2.5rem; overflow: visible; }
+.hero-line path { fill: none; stroke: var(--line); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-line path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s cubic-bezier(.6,.05,.2,1) .2s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+}
+
+.phone {
+  justify-self: center;
+  width: min(19rem, 78vw);
+  border-radius: 2.25rem;
+  padding: 0.5rem;
+  background: var(--frame);
+  box-shadow: 0 2rem 4rem -2rem rgb(153 212 162 / 0.28);
+}
+.phone img { border-radius: 1.75rem; width: 100%; aspect-ratio: 560 / 1190; object-fit: cover; object-position: top; background: var(--ground-2); }
+.phone.small { width: min(16rem, 70vw); }
+
+/* Day */
+.day-head { padding-top: 1rem; }
+h2 { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem); line-height: 1.12; letter-spacing: -0.025em; font-weight: 800; margin: 0 0 1rem; text-wrap: balance; }
+.day-head p { color: var(--ink-2); max-width: var(--measure); margin: 0; }
+
+.day { list-style: none; margin: 3rem 0 0; padding: 0; position: relative; }
+.day::before { content: ""; position: absolute; left: 0.6875rem; top: 0.75rem; bottom: 0; width: 6px; border-radius: 3px; background: var(--line); }
+.moment { position: relative; display: grid; gap: 2rem; padding: 0 0 4.5rem 3.5rem; }
+.moment::before { content: ""; position: absolute; left: 0; top: 0.4rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--ground); border: 6px solid var(--line); }
+@media (min-width: 56rem) {
+  .moment { grid-template-columns: 1fr 1fr; align-items: start; padding-left: 5rem; gap: 4rem; }
+  .moment figure { order: 2; }
+}
+.when { display: block; font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+.moment h3 { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); line-height: 1.2; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 1rem; max-width: 22ch; }
+.moment p { margin: 0 0 0.75rem; color: var(--ink-2); max-width: var(--measure); }
+figure { margin: 0; }
+.widget { border-radius: 1.75rem; overflow: hidden; max-width: 28rem; }
+.widget img { width: 100%; }
+figcaption { font-size: 0.875rem; color: var(--ink-2); margin-top: 0.75rem; max-width: 28rem; }
+
+/* The end of the line: install, with the gold dot. */
+.install { position: relative; padding: 0 0 5rem 3.5rem; }
+@media (min-width: 56rem) { .install { padding-left: 5rem; } }
+.install::before { content: ""; position: absolute; left: 0.6875rem; top: -2px; width: 1.5rem; height: calc(2.75rem + 2px); border: 0 solid var(--line); border-left-width: 6px; border-bottom-width: 6px; border-bottom-left-radius: 1.5rem; }
+@media (min-width: 56rem) { .install::before { width: 2.75rem; } }
+.dot { position: absolute; left: calc(0.6875rem + 1.5rem + 3px); top: calc(2.75rem - 6px); width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+@media (min-width: 56rem) { .dot { left: calc(0.6875rem + 2.75rem + 3px); } }
+.install h2 { padding-top: 0.75rem; }
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 1.5rem 0 2rem; display: grid; gap: 1rem; max-width: var(--measure); }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 2.25rem 1fr; gap: 0.75rem; align-items: baseline; color: var(--ink-2); }
+.steps li::before { content: counter(step); font-weight: 800; font-size: 1.25rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.steps b { color: var(--ink); font-weight: 600; }
+
+/* Sources */
+.sources { background: var(--ground-2); padding-block: 5rem; }
+.sources .wrap { display: grid; gap: 3rem; align-items: center; }
+@media (min-width: 56rem) { .sources .wrap { grid-template-columns: 0.8fr 1.2fr; } }
+.sources p { color: var(--ink-2); max-width: var(--measure); }
+.promises { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.25rem; max-width: var(--measure); }
+.promises li { padding-left: 1.25rem; border-left: 3px solid var(--accent); color: var(--ink-2); }
+.promises b { display: block; color: var(--ink); font-weight: 700; }
+
+footer { padding-block: 3rem 4rem; font-size: 0.875rem; color: var(--ink-2); }
+footer .cols { display: grid; gap: 2rem; }
+@media (min-width: 48rem) { footer .cols { grid-template-columns: 1.4fr 1fr; } }
+footer h2 { font-size: 1rem; letter-spacing: 0; margin: 0 0 0.75rem; }
+footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+footer .mark { width: 2.5rem; margin-bottom: 1rem; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: var(--gutter); top: 0.5rem; background: var(--ground); padding: 0.5rem 1rem; z-index: 2; }
+[lang="en"] [data-id], [lang="id"] [data-en] { display: none; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main"><span data-id>Langsung ke isi</span><span data-en>Skip to content</span></a>
+<header class="wrap top">
+  <a class="lockup" href="./" aria-label="Adwam"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 705 174"><path d="M13.46,107.52 L12.16,107.58 L10.86,107.77 L9.58,108.09 L8.57,108.43 L7.36,108.97 L6.28,109.58 L5.20,110.34 L4.38,111.03 L3.51,111.90 L2.67,112.92 L1.93,114.02 L1.42,114.95 L0.89,116.16 L0.50,117.34 L0.20,118.62 L0.06,119.68 L0.00,120.92 L0.06,122.24 L0.20,123.30 L0.50,124.58 L0.91,125.83 L1.45,127.04 L2.06,128.12 L2.82,129.20 L3.51,130.01 L4.44,130.94 L5.40,131.73 L6.50,132.47 L7.43,132.98 L8.64,133.51 L9.89,133.92 L11.10,134.19 L12.16,134.34 L13.46,134.40 L149.54,134.40 L151.45,134.26 L153.14,133.90 L154.93,133.26 L156.46,132.47 L158.33,131.11 L159.23,130.26 L160.09,129.26 L160.85,128.18 L161.39,127.26 L162.29,125.14 L162.82,122.89 L162.95,120.59 L162.85,119.28 L162.64,118.05 L161.95,115.85 L161.03,114.02 L159.72,112.21 L158.27,110.76 L156.46,109.45 L154.93,108.66 L153.07,108.00 L151.53,107.67 L149.23,107.47 L148.15,107.23 L146.99,106.73 L146.07,106.12 L145.07,105.12 L144.38,104.06 L143.91,102.89 L143.66,101.50 L143.65,100.71 L143.78,99.77 L143.98,99.01 L144.35,98.14 L144.76,97.46 L147.77,93.17 L150.37,88.85 L152.37,84.90 L154.35,80.22 L155.78,75.96 L156.87,71.79 L157.67,67.52 L158.24,62.71 L158.51,57.93 L158.45,52.51 L158.27,49.87 L157.99,47.27 L157.18,42.39 L156.13,38.14 L155.40,35.77 L154.58,33.46 L153.67,31.21 L152.66,29.01 L151.57,26.88 L150.39,24.82 L149.13,22.83 L147.44,20.45 L145.87,18.46 L143.97,16.30 L142.22,14.52 L140.12,12.59 L138.20,11.02 L135.93,9.34 L133.87,7.99 L131.45,6.56 L129.28,5.43 L126.72,4.27 L124.45,3.37 L121.79,2.46 L119.45,1.79 L116.70,1.15 L114.30,0.71 L111.30,0.31 L108.46,0.09 L106.00,0.00 L102.90,0.05 L99.99,0.23 L97.53,0.49 L94.51,0.96 L91.52,1.56 L88.74,2.27 L86.42,2.97 L83.57,3.96 L80.78,5.09 L78.20,6.28 L76.06,7.38 L73.46,8.85 L70.93,10.45 L68.01,12.52 L65.53,14.48 L63.27,16.45 L61.11,18.54 L58.64,21.17 L56.59,23.60 L54.75,26.02 L52.69,29.03 L51.10,31.65 L49.63,34.36 L48.28,37.15 L47.06,40.02 L45.98,42.97 L45.03,45.99 L44.22,49.08 L43.56,52.24 L43.14,54.80 L42.79,57.62 L42.51,61.16 L42.39,64.65 L42.44,67.87 L42.57,70.36 L42.90,73.72 L43.39,77.02 L44.05,80.26 L44.86,83.43 L45.84,86.53 L46.96,89.55 L48.14,92.27 L49.55,95.13 L51.26,98.23 L51.71,99.41 L51.91,100.65 L51.85,102.06 L51.53,103.28 L50.99,104.41 L50.01,105.65 L48.77,106.61 L47.49,107.20 L45.94,107.50Z M97.57,100.25 L96.53,100.59 L95.45,100.76 L94.20,100.72 L93.13,100.49 L92.25,100.15 L90.43,99.20 L86.86,97.06 L85.19,95.91 L83.17,94.38 L81.63,93.07 L79.86,91.41 L78.51,89.99 L77.00,88.22 L74.85,85.21 L73.08,82.12 L71.68,78.95 L70.55,75.46 L69.85,72.26 L69.38,68.42 L69.27,64.90 L69.47,61.07 L69.98,57.20 L70.73,53.88 L71.88,50.36 L73.30,47.11 L75.03,43.99 L77.03,41.09 L79.28,38.42 L81.75,35.99 L84.43,33.81 L87.35,31.87 L90.36,30.26 L93.52,28.94 L96.79,27.94 L100.15,27.27 L103.59,26.92 L106.97,26.93 L108.87,27.09 L110.50,27.33 L113.37,28.00 L115.88,28.87 L118.39,30.06 L120.58,31.41 L122.72,33.09 L124.56,34.90 L126.32,37.10 L127.79,39.43 L129.02,41.94 L130.02,44.65 L130.84,47.75 L131.33,50.66 L131.60,53.91 L131.64,57.24 L131.41,60.92 L130.99,64.17 L130.35,67.10 L129.61,69.58 L128.54,72.37 L127.43,74.73 L125.88,77.49 L124.15,80.11 L122.48,82.29 L120.32,84.78 L118.32,86.82 L115.69,89.21 L112.90,91.45 L110.42,93.24 L107.27,95.27 L104.51,96.87 L101.03,98.66Z" fill="currentColor" fill-rule="evenodd"/><path d="M203.28,120.96 L203.21,119.64 L203.02,118.34 L202.70,117.06 L202.26,115.82 L201.69,114.62 L201.01,113.49 L200.23,112.43 L199.34,111.46 L198.37,110.57 L197.31,109.78 L196.18,109.11 L194.98,108.54 L193.74,108.10 L192.46,107.78 L191.16,107.58 L189.84,107.52 L188.52,107.58 L187.22,107.78 L185.94,108.10 L184.70,108.54 L183.50,109.11 L182.37,109.78 L181.31,110.57 L180.34,111.46 L179.45,112.43 L178.66,113.49 L177.99,114.62 L177.42,115.82 L176.98,117.06 L176.66,118.34 L176.46,119.64 L176.40,120.96 L176.46,122.28 L176.66,123.58 L176.98,124.86 L177.42,126.10 L177.99,127.30 L178.66,128.43 L179.45,129.49 L180.34,130.46 L181.31,131.35 L182.37,132.13 L183.50,132.81 L184.70,133.38 L185.94,133.82 L187.22,134.14 L188.52,134.33 L189.84,134.40 L191.16,134.33 L192.46,134.14 L193.74,133.82 L194.98,133.38 L196.18,132.81 L197.31,132.13 L198.37,131.35 L199.34,130.46 L200.23,129.49 L201.01,128.43 L201.69,127.30 L202.26,126.10 L202.70,124.86 L203.02,123.58 L203.21,122.28Z" fill="#C9A227"/><path d="M269.1115142365047 135.98371716477303Q261.5875142365047 135.98371716477303 256.04351423650473 133.47571716477302Q250.4995142365047 130.96771716477303 247.4635142365047 126.28171716477303Q244.4275142365047 121.59571716477302 244.4275142365047 115.39171716477301Q244.4275142365047 109.45171716477302 247.06751423650468 104.76571716477302Q249.7075142365047 100.07971716477303 255.2515142365047 96.91171716477302Q260.7955142365047 93.74371716477302 269.2435142365047 92.42371716477302L292.7395142365047 88.59571716477302V101.79571716477302L272.5435142365047 105.22771716477303Q267.3955142365047 106.15171716477302 264.88751423650467 108.52771716477301Q262.3795142365047 110.90371716477301 262.3795142365047 114.73171716477302Q262.3795142365047 118.42771716477301 265.2175142365047 120.60571716477301Q268.0555142365047 122.78371716477302 272.2795142365047 122.78371716477302Q277.6915142365047 122.78371716477302 281.84951423650466 120.47371716477302Q286.0075142365047 118.16371716477302 288.3175142365047 114.07171716477302Q290.6275142365047 109.97971716477302 290.6275142365047 105.09571716477302V86.61571716477303Q290.6275142365047 81.99571716477303 286.9975142365047 78.89371716477302Q283.3675142365047 75.79171716477302 277.4275142365047 75.79171716477302Q271.8835142365047 75.79171716477302 267.5935142365047 78.76171716477302Q263.3035142365047 81.73171716477302 261.3235142365047 86.61571716477303L247.19951423650468 79.75171716477303Q249.3115142365047 74.07571716477301 253.8655142365047 69.91771716477302Q258.4195142365047 65.75971716477302 264.6235142365047 63.38371716477302Q270.8275142365047 61.00771716477301 278.0875142365047 61.00771716477301Q286.9315142365047 61.00771716477301 293.66351423650474 64.24171716477301Q300.3955142365047 67.47571716477302 304.1575142365047 73.21771716477302Q307.9195142365047 78.95971716477302 307.9195142365047 86.61571716477303V134.39971716477302H291.5515142365047V122.12371716477303L295.2475142365047 121.85971716477302Q292.4755142365047 126.47971716477302 288.64751423650466 129.581717164773Q284.8195142365047 132.68371716477301 279.9355142365047 134.33371716477302Q275.0515142365047 135.98371716477303 269.1115142365047 135.98371716477303ZM353.32751423650467 135.98371716477303Q342.8995142365047 135.98371716477303 334.71551423650465 131.033717164773Q326.5315142365047 126.08371716477302 321.7795142365047 117.50371716477302Q317.0275142365047 108.92371716477302 317.0275142365047 98.49571716477303Q317.0275142365047 87.93571716477302 321.7795142365047 79.48771716477302Q326.5315142365047 71.03971716477302 334.7815142365047 66.02371716477302Q343.0315142365047 61.00771716477301 353.19551423650466 61.00771716477301Q361.3795142365047 61.00771716477301 367.7815142365047 64.24171716477301Q374.1835142365047 67.47571716477302 377.8795142365047 73.28371716477302L375.2395142365047 76.84771716477303V34.475717164773016H392.5315142365047V134.39971716477302H376.1635142365047V120.53971716477302L378.0115142365047 123.97171716477303Q374.31551423650467 129.77971716477302 367.71551423650465 132.88171716477302Q361.1155142365047 135.98371716477303 353.32751423650467 135.98371716477303ZM355.1755142365047 120.14371716477302Q361.1155142365047 120.14371716477302 365.6035142365047 117.37171716477303Q370.0915142365047 114.59971716477303 372.6655142365047 109.71571716477303Q375.2395142365047 104.83171716477302 375.2395142365047 98.49571716477303Q375.2395142365047 92.29171716477302 372.6655142365047 87.34171716477302Q370.0915142365047 82.39171716477301 365.6035142365047 79.61971716477302Q361.1155142365047 76.84771716477303 355.1755142365047 76.84771716477303Q349.3675142365047 76.84771716477303 344.7475142365047 79.68571716477302Q340.1275142365047 82.52371716477302 337.5535142365047 87.34171716477302Q334.9795142365047 92.15971716477301 334.9795142365047 98.49571716477303Q334.9795142365047 104.83171716477302 337.5535142365047 109.71571716477303Q340.1275142365047 114.59971716477303 344.7475142365047 117.37171716477303Q349.3675142365047 120.14371716477302 355.1755142365047 120.14371716477302ZM422.7595142365047 134.39971716477302 398.07551423650466 62.591717164773016H416.29151423650467L434.37551423650467 117.10771716477302L428.03951423650466 116.97571716477302L447.31151423650465 62.591717164773016H462.62351423650466L481.76351423650465 116.97571716477302L475.42751423650463 117.10771716477302L493.5115142365047 62.591717164773016H511.72751423650465L487.0435142365047 134.39971716477302H471.59951423650466L452.06351423650466 77.50771716477303H457.87151423650465L438.07151423650464 134.39971716477302ZM536.4115142365047 135.98371716477303Q528.8875142365047 135.98371716477303 523.3435142365047 133.47571716477302Q517.7995142365047 130.96771716477303 514.7635142365048 126.28171716477303Q511.7275142365047 121.59571716477302 511.7275142365047 115.39171716477301Q511.7275142365047 109.45171716477302 514.3675142365047 104.76571716477302Q517.0075142365047 100.07971716477303 522.5515142365047 96.91171716477302Q528.0955142365046 93.74371716477302 536.5435142365047 92.42371716477302L560.0395142365047 88.59571716477302V101.79571716477302L539.8435142365047 105.22771716477303Q534.6955142365047 106.15171716477302 532.1875142365047 108.52771716477301Q529.6795142365047 110.90371716477301 529.6795142365047 114.73171716477302Q529.6795142365047 118.42771716477301 532.5175142365047 120.60571716477301Q535.3555142365046 122.78371716477302 539.5795142365047 122.78371716477302Q544.9915142365047 122.78371716477302 549.1495142365047 120.47371716477302Q553.3075142365046 118.16371716477302 555.6175142365046 114.07171716477302Q557.9275142365046 109.97971716477302 557.9275142365046 105.09571716477302V86.61571716477303Q557.9275142365046 81.99571716477303 554.2975142365046 78.89371716477302Q550.6675142365046 75.79171716477302 544.7275142365047 75.79171716477302Q539.1835142365047 75.79171716477302 534.8935142365046 78.76171716477302Q530.6035142365047 81.73171716477302 528.6235142365047 86.61571716477303L514.4995142365046 79.75171716477303Q516.6115142365047 74.07571716477301 521.1655142365047 69.91771716477302Q525.7195142365047 65.75971716477302 531.9235142365046 63.38371716477302Q538.1275142365047 61.00771716477301 545.3875142365047 61.00771716477301Q554.2315142365047 61.00771716477301 560.9635142365047 64.24171716477301Q567.6955142365047 67.47571716477302 571.4575142365047 73.21771716477302Q575.2195142365047 78.95971716477302 575.2195142365047 86.61571716477303V134.39971716477302H558.8515142365047V122.12371716477303L562.5475142365046 121.85971716477302Q559.7755142365047 126.47971716477302 555.9475142365047 129.581717164773Q552.1195142365046 132.68371716477301 547.2355142365047 134.33371716477302Q542.3515142365047 135.98371716477303 536.4115142365047 135.98371716477303ZM587.2315142365047 134.39971716477302V62.591717164773016H603.4675142365047V79.22371716477302L601.6195142365048 76.45171716477302Q603.5995142365047 68.66371716477302 609.5395142365046 64.83571716477302Q615.4795142365047 61.00771716477301 623.5315142365047 61.00771716477301Q632.3755142365047 61.00771716477301 639.1075142365047 65.62771716477302Q645.8395142365047 70.24771716477302 647.8195142365047 77.77171716477302L642.9355142365047 78.16771716477302Q646.2355142365047 69.58771716477303 652.8355142365047 65.29771716477302Q659.4355142365047 61.00771716477301 668.0155142365047 61.00771716477301Q675.6715142365047 61.00771716477301 681.6775142365047 64.43971716477301Q687.6835142365047 67.87171716477302 691.1155142365047 74.00971716477301Q694.5475142365048 80.14771716477301 694.5475142365048 88.19971716477302V134.39971716477302H677.2555142365047V92.29171716477302Q677.2555142365047 87.53971716477302 675.5395142365047 84.10771716477302Q673.8235142365047 80.67571716477302 670.7875142365046 78.76171716477302Q667.7515142365047 76.84771716477303 663.3955142365047 76.84771716477303Q659.3035142365047 76.84771716477303 656.1355142365047 78.76171716477302Q652.9675142365047 80.67571716477302 651.2515142365047 84.10771716477302Q649.5355142365047 87.53971716477302 649.5355142365047 92.29171716477302V134.39971716477302H632.2435142365047V92.29171716477302Q632.2435142365047 87.53971716477302 630.5275142365047 84.10771716477302Q628.8115142365048 80.67571716477302 625.7095142365047 78.76171716477302Q622.6075142365047 76.84771716477303 618.3835142365047 76.84771716477303Q614.2915142365047 76.84771716477303 611.1235142365047 78.76171716477302Q607.9555142365047 80.67571716477302 606.2395142365046 84.10771716477302Q604.5235142365048 87.53971716477302 604.5235142365048 92.29171716477302V134.39971716477302Z" fill="currentColor"/></svg></a>
+  <nav aria-label="Utama">
+    <a class="opt" href="#hari"><span data-id>Fitur</span><span data-en>Features</span></a>
+    <a class="opt" href="#sumber"><span data-id>Sumber</span><span data-en>Sources</span></a>
+    <a class="opt" href="https://github.com/hystericmoon/muslimdaily">GitHub</a>
+    <button class="lang" type="button" id="lang" aria-label="Switch to English">EN</button>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="wrap hero">
+    <div>
+      <h1>
+        <span data-id>Shalat, dzikir, dan doa. Sedikit, tapi setiap hari.</span>
+        <span data-en>Prayer, adhkar and duas. A little, every day.</span>
+      </h1>
+      <p class="lede">
+        <span data-id><b>Adwam</b> (أدوم) berarti yang paling konsisten. Jadwal shalat, dzikir pagi dan petang, dan seluruh doa Hisnul Muslim dengan sumbernya, di ponsel Android Anda. Berjalan tanpa internet, tanpa iklan, tanpa akun.</span>
+        <span data-en><b>Adwam</b> (أدوم) means the most constant. Prayer times, morning and evening adhkar, and all of Hisnul Muslim with its sources, on your Android phone. Works offline, with no ads and no account.</span>
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary js-apk" href="https://github.com/hystericmoon/muslimdaily/releases/latest">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 4h2v9.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17zM5 19h14v2H5z"/></svg>
+          <span data-id>Unduh APK</span><span data-en>Download APK</span>
+        </a>
+        <a class="btn btn-quiet" href="#pasang"><span data-id>Cara memasang</span><span data-en>How to install</span></a>
+      </div>
+      <p class="meta"><span class="js-version"></span><span data-id>Android 8.0 atau lebih baru. Gratis dan bersumber terbuka.</span><span data-en>Android 8.0 or later. Free and open source.</span></p>
+      <svg class="hero-line" viewBox="0 0 600 56" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 53 H300 C330 53 342 30 330 14 C318 0 296 6 300 26 C304 46 330 53 360 53 H597"/></svg>
+    </div>
+    <div class="phone"><img src="shots/today.webp" width="560" height="1190" alt="Layar Hari ini: Dzuhur pukul 11.41, tujuh jam lagi, dengan waktu terlarang dan dzikir pagi" data-alt-en="Today screen: Dhuhr at 11.41 in seven hours, with the prohibited time and morning adhkar" fetchpriority="high"></div>
+  </section>
+
+  <section class="wrap" id="hari" aria-labelledby="hari-title">
+    <div class="day-head">
+      <h2 id="hari-title"><span data-id>Satu hari bersama Adwam</span><span data-en>A day with Adwam</span></h2>
+      <p><span data-id>Dari sebelum Subuh sampai sebelum tidur, Adwam menunjukkan apa yang sedang tiba, lalu diam.</span><span data-en>From before Fajr to before sleep, Adwam shows what is due now, then stays out of the way.</span></p>
+    </div>
+    <ol class="day">
+      <li class="moment">
+        <figure class="phone small"><img src="shots/prayers.webp" width="560" height="1190" loading="lazy" alt="Jadwal shalat hari ini dengan qabliyah dan ba'diyah tiap shalat" data-alt-en="Today's prayer times with the qabliyah and ba'diyah of each prayer"></figure>
+        <div>
+          <span class="when">Subuh</span>
+          <h3><span data-id>Waktu shalat berikutnya, dan apa yang mengiringinya</span><span data-en>The next prayer, and what goes with it</span></h3>
+          <p><span data-id>Jadwal Kemenag RI dengan koreksi ketinggian, selisih paling banyak satu menit dari jadwal resmi. Tiap shalat menampilkan qabliyah dan ba'diyah, dengan daftar centang pribadi yang kosong lagi esok hari.</span><span data-en>Kemenag RI times with elevation correction, within a minute of the official schedule. Each prayer shows its qabliyah and ba'diyah, with a private checklist that clears the next day.</span></p>
+        </div>
+      </li>
+      <li class="moment">
+        <figure class="phone small"><img src="shots/run.webp" width="560" height="1190" loading="lazy" alt="Daftar dzikir pagi dengan teks Arab, terjemahan, dan derajat hadits" data-alt-en="Morning adhkar list with Arabic, translation and grading"></figure>
+        <div>
+          <span class="when"><span data-id>Pagi</span><span data-en>Morning</span></span>
+          <h3><span data-id>Dzikir pagi, satu bacaan sekali tampil</span><span data-en>Morning adhkar, one at a time</span></h3>
+          <p><span data-id>Ketuk di mana saja untuk menghitung. Hitungan hanya muncul bila sunnah menyebutkannya. Dengarkan tilawahnya dengan frasa yang sedang dibaca disorot.</span><span data-en>Tap anywhere to count. A count appears only where the Sunnah gives one. Listen along with the phrase being recited highlighted.</span></p>
+        </div>
+      </li>
+      <li class="moment">
+        <figure class="widget"><img src="shots/widget.webp" width="744" height="392" loading="lazy" alt="Widget layar utama: jam, waktu menuju shalat berikutnya, dan jadwal hari ini" data-alt-en="Home screen widget: the time, time until the next prayer, and today's times"></figure>
+        <div>
+          <span class="when"><span data-id>Siang</span><span data-en>Midday</span></span>
+          <h3><span data-id>Sekilas dari layar utama</span><span data-en>At a glance from the home screen</span></h3>
+          <p><span data-id>Satu widget dari 1×1 sampai 5×3 yang menambah detail saat diperbesar. Kiblat dengan arahan putar, dan masjid terdekat dari data yang tersimpan di ponsel.</span><span data-en>One widget from 1×1 to 5×3 that adds detail as it grows. A qibla compass with turn guidance, and nearby mosques from data kept on your phone.</span></p>
+        </div>
+      </li>
+      <li class="moment">
+        <figure class="phone small"><img src="shots/recall.webp" width="560" height="1190" loading="lazy" alt="Langkah Ingat dalam hafalan: sebagian kata tertutup kotak" data-alt-en="The Recall step in memorisation: some words covered by boxes"></figure>
+        <div>
+          <span class="when"><span data-id>Petang</span><span data-en>Evening</span></span>
+          <h3><span data-id>Menghafal doa, tanpa skor</span><span data-en>Memorise a dua, without scores</span></h3>
+          <p><span data-id>Dengar, bangun per frasa, ingat, lalu cek. Ulangan dijadwalkan 1, 3, 7, 14, dan 30 hari kemudian. Tidak ada streak, poin, atau lencana.</span><span data-en>Listen, build phrase by phrase, recall, then check. Reviews come back after 1, 3, 7, 14 and 30 days. No streaks, points or badges.</span></p>
+        </div>
+      </li>
+      <li class="moment">
+        <figure class="phone small"><img src="shots/fasting.webp" width="560" height="1190" loading="lazy" alt="Kalender puasa sunnah bulan Jumadilawal" data-alt-en="Calendar of sunnah fasts for Jumada al-Ula"></figure>
+        <div>
+          <span class="when"><span data-id>Malam</span><span data-en>Night</span></span>
+          <h3><span data-id>Besok puasa sunnah?</span><span data-en>A sunnah fast tomorrow?</span></h3>
+          <p><span data-id>Kalender hijriah puasa sunnah dan hari terlarang, masing-masing dengan dalilnya, dan pengingat sehari sebelumnya. Doa sebelum tidur menutup hari.</span><span data-en>A Hijri calendar of sunnah fasts and forbidden days, each with its evidence, and a reminder the evening before. The duas before sleep close the day.</span></p>
+        </div>
+      </li>
+    </ol>
+    <div class="install" id="pasang">
+      <span class="dot" aria-hidden="true"></span>
+      <h2><span data-id>Pasang Adwam</span><span data-en>Install Adwam</span></h2>
+      <ol class="steps">
+        <li><span><span data-id><b>Unduh APK</b> terbaru dari halaman rilis di GitHub.</span><span data-en><b>Download the latest APK</b> from the GitHub releases page.</span></span></li>
+        <li><span><span data-id><b>Buka berkasnya.</b> Bila Android meminta, izinkan browser Anda memasang aplikasi.</span><span data-en><b>Open the file.</b> If Android asks, allow your browser to install apps.</span></span></li>
+        <li><span><span data-id><b>Selesai.</b> Adwam memberi tahu Anda bila ada versi baru, dan memperbarui dirinya.</span><span data-en><b>Done.</b> Adwam tells you when a new version is out and updates itself.</span></span></li>
+      </ol>
+      <a class="btn btn-primary js-apk" href="https://github.com/hystericmoon/muslimdaily/releases/latest">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 4h2v9.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17zM5 19h14v2H5z"/></svg>
+        <span data-id>Unduh APK</span><span data-en>Download APK</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="sources" id="sumber" aria-labelledby="sumber-title">
+    <div class="wrap">
+      <div class="phone small"><img src="shots/dua.webp" width="560" height="1190" loading="lazy" alt="Ayat Kursi dengan terjemahan, derajat shahih menurut al-Albani, dan rujukannya" data-alt-en="Ayat al-Kursi with its translation, a sahih grading by al-Albani, and its reference"></div>
+      <div>
+        <h2 id="sumber-title"><span data-id>Setiap doa menyebut sumbernya</span><span data-en>Every dua names its source</span></h2>
+        <p><span data-id>Seluruh Hisnul Muslim, 307 doa dalam 55 keadaan, ditambah 31 doa dari Al-Qur'an. Setiap doa menampilkan rujukan, takhrij, dan derajatnya. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat.</span><span data-en>All of Hisnul Muslim, 307 duas for 55 occasions, plus 31 supplications from the Qur'an. Every dua shows its references, takhrij and grading. Narrations al-Albani graded weak are left out.</span></p>
+        <ul class="promises">
+          <li><b><span data-id>Tanpa internet</span><span data-en>Offline</span></b><span data-id>Jadwal, doa, audio, kiblat, dan data masjid tersimpan di ponsel.</span><span data-en>Times, duas, audio, qibla and mosque data are stored on the phone.</span></li>
+          <li><b><span data-id>Tanpa akun, iklan, atau analitik</span><span data-en>No account, ads or analytics</span></b><span data-id>Lokasi dan catatan Anda tidak dikirim ke mana pun. <a href="https://github.com/hystericmoon/muslimdaily/blob/main/docs/privacy-policy.md">Kebijakan privasi</a></span><span data-en>Your location and notes are never sent anywhere. <a href="https://github.com/hystericmoon/muslimdaily/blob/main/docs/privacy-policy.md">Privacy policy</a></span></li>
+          <li><b><span data-id>Terbaca untuk semua</span><span data-en>Readable for everyone</span></b><span data-id>Kontras WCAG AA, huruf hingga 200%, dan TalkBack di setiap layar.</span><span data-en>WCAG AA contrast, text up to 200%, and TalkBack on every screen.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="cols">
+    <div>
+      <img class="mark" src="brand/adwam-mark-dark.svg" alt="" width="40" height="26">
+      <h2><span data-id>Sumber dan kredit</span><span data-en>Sources and credits</span></h2>
+      <ul>
+        <li><span data-id>Hisnul Muslim karya Sa'id bin Ali al-Qahthani. Teks Arab dan tilawah Hamad ad-Duraihim dari hisnmuslim.com, IslamHouse.com.</span><span data-en>Hisnul Muslim by Sa'id bin Ali al-Qahtani. Arabic text and Hamad ad-Duraihim's recitation from hisnmuslim.com, IslamHouse.com.</span></li>
+        <li><span data-id>Teks Al-Qur'an dari Tanzil.net. Terjemah Kementerian Agama RI melalui QuranEnc.com.</span><span data-en>Qur'an text from Tanzil.net. Kemenag RI translation via QuranEnc.com.</span></li>
+        <li><span data-id>Data masjid © kontributor OpenStreetMap (ODbL).</span><span data-en>Mosque data © OpenStreetMap contributors (ODbL).</span></li>
+        <li><span data-id>Huruf Plus Jakarta Sans dan Noto Naskh Arabic, SIL Open Font License.</span><span data-en>Plus Jakarta Sans and Noto Naskh Arabic fonts, SIL Open Font License.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Adwam</h2>
+      <ul>
+        <li><a href="https://github.com/hystericmoon/muslimdaily">GitHub</a></li>
+        <li><a href="https://github.com/hystericmoon/muslimdaily/releases"><span data-id>Semua rilis</span><span data-en>All releases</span></a></li>
+        <li><a href="https://github.com/hystericmoon/muslimdaily/blob/main/docs/privacy-policy.md"><span data-id>Kebijakan privasi</span><span data-en>Privacy policy</span></a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const btn = document.getElementById("lang");
+  const alts = [...document.querySelectorAll("img[data-alt-en]")].map((img) => [img, img.alt]);
+  const apply = (lang) => {
+    root.lang = lang;
+    btn.textContent = lang === "id" ? "EN" : "ID";
+    btn.setAttribute("aria-label", lang === "id" ? "Switch to English" : "Ganti ke bahasa Indonesia");
+    alts.forEach(([img, id]) => { img.alt = lang === "id" ? id : img.dataset.altEn; });
+    document.title = lang === "id" ? "Adwam: jadwal shalat, dzikir, dan doa harian" : "Adwam: prayer times, adhkar and daily duas";
+  };
+  let lang = "id";
+  try { lang = localStorage.getItem("lang") || (navigator.language.startsWith("id") ? "id" : "en"); } catch (e) {}
+  apply(lang);
+  btn.addEventListener("click", () => {
+    lang = root.lang === "id" ? "en" : "id";
+    apply(lang);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  });
+
+  // Point the buttons straight at the latest APK; the releases page stays the fallback.
+  fetch("https://api.github.com/repos/hystericmoon/muslimdaily/releases/latest")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((release) => {
+      const apk = release && release.assets.find((a) => a.name.endsWith(".apk"));
+      if (!apk) return;
+      document.querySelectorAll(".js-apk").forEach((a) => { a.href = apk.browser_download_url; });
+      document.querySelector(".js-version").textContent = `${release.tag_name}. `;
+    })
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>

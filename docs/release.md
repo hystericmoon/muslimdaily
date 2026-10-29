@@ -81,3 +81,12 @@ Notes:
   `app/src/sideload/generated/baselineProfiles/`. `gradle.properties` keeps the app installed
   after the run (Gradle would otherwise uninstall it and its data).
 
+
+## Website
+
+`site/` is the landing page, published to GitHub Pages by `.github/workflows/pages.yml` on every
+merge that touches it (Settings → Pages → Source must be "GitHub Actions"). It is plain HTML with
+no build step and no third-party requests: the font is subset into `site/fonts/`, the lockup is
+inlined from `docs/brand/adwam-lockup-latin.svg`, and the download buttons ask the GitHub API for
+the latest release's APK, falling back to the Releases page. After UI changes, refresh its phone
+shots from `docs/screenshots` with `python tools/site/build_shots.py`.
