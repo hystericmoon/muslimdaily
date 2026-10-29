@@ -854,6 +854,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_4_0">
+        <item>Terjemah bahasa Inggris kini tersedia untuk doa-doa Hisnul Muslim, dari hisnmuslim.com (IslamHouse.com). Pilih bahasanya di Pengaturan → Tampilan.</item>
+        <item>31 doa dari Al-Qur\'an kini bisa didengarkan, dibacakan per ayat oleh Syaikh Maher al-Muaiqly.</item>
+        <item>Doa yang teksnya sama, seperti dzikir pagi dan petang, kini cukup dihafal sekali. Bila sebelumnya tercatat dua kali, yang terakhir diulang yang dipakai.</item>
+    </string-array>
     <string-array name="whats_new_1_3_1">
         <item>Di langkah Ingat, teks Arab kini tampil langsung di bawah petunjuk, sebelum pengaturan sembunyi kata.</item>
         <item>Hafalan kini menunjukkan urutan doa dalam waktunya, misalnya \"Dzikir pagi · 3 dari 19\".</item>
