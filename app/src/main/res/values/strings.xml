@@ -441,7 +441,7 @@
     <string name="settings_audio_playback">Pemutaran</string>
     <string name="settings_audio_speed">Kecepatan bawaan</string>
     <string name="settings_reciter">Qari</string>
-    <string name="settings_reciter_default">Hamad ad-Duraihim (Hisnul Muslim, IslamHouse.com)</string>
+    <string name="settings_reciter_default">Hamad ad-Duraihim (Hisnul Muslim, IslamHouse.com) dan Maher al-Muaiqly (doa dari Al-Qur\'an, Kompleks Percetakan Al-Qur\'an Raja Fahd)</string>
     <string name="settings_run_mode">Mode baca</string>
     <string name="settings_auto_advance_summary">Pindah ke doa berikutnya setelah hitungan selesai.</string>
     <string name="settings_haptics">Getaran</string>
@@ -531,7 +531,7 @@
     <string name="methodology_counts_title">Jumlah bacaan</string>
     <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
     <string name="methodology_audio_title">Audio</string>
-    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah.</string>
+    <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah. Doa dari Al-Qur\'an dibacakan per ayat oleh Syaikh Maher al-Muaiqly (riwayat Hafs), diterbitkan Kompleks Percetakan Al-Qur\'an Raja Fahd (qurancomplex.gov.sa) untuk digunakan secara gratis dalam aplikasi; ayat-ayatnya disambung berurutan tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
     <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dan terjemah bahasa Inggris dari hisnmuslim.com (IslamHouse.com). Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
