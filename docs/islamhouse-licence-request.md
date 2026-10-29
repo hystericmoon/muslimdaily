@@ -6,8 +6,11 @@ went instead of the full letter (the site's FAQ is https://d1.islamhouse.com/htm
 they ask for details, email them the full letter. Keep their reply in this folder as
 `islamhouse-reply-<date>.pdf` and link it from About.
 
-Until a reply arrives, the English translations (point 1 below) and a Play Store release
-(point 2) stay on hold.
+**2026-10-29:** with no reply, the owner chose to ship the English translations (point 1) under
+IslamHouse's published terms, credited to hisnmuslim.com (IslamHouse.com) in About and on the
+site. If IslamHouse or the translator's publisher objects, remove `translation_en` from the Hisn
+rows. The Play Store release (point 2) stays on hold. The English text translates the book's
+full entry, so a row later split with `tools/split_context.py` needs its English checked too.
 
 Why: the app bundles the Hisn al-Muslim recitation by Hamad ad-Duraihim (about 26 MB, Opus) on
 the strength of IslamHouse's FAQ, which allows republishing without changes and with credit. The
