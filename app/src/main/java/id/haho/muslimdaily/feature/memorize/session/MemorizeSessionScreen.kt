@@ -67,6 +67,8 @@ import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
+import androidx.compose.ui.semantics.contentDescription
+import id.haho.muslimdaily.core.designsystem.component.ArabicText
 
 data class MemorizeActions(
     val onStep: (Step) -> Unit = {},
@@ -139,14 +141,26 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
     Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.xs), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = actions.onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.memorize_session_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
-                val subtitle = if (state.positionOf > 1 && state.position > 0) {
+            Column(Modifier.weight(1f).semantics(mergeDescendants = true) { heading() }) {
+                Text(stringResource(R.string.memorize_session_title), style = MaterialTheme.typography.titleMedium)
+                val positioned = state.positionOf > 1 && state.position > 0
+                val subtitle = if (positioned) {
                     stringResource(R.string.memorize_event_position, state.eventLabel, state.position, state.positionOf)
                 } else {
                     state.eventLabel
                 }
-                Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                // "·" is dropped or spelled out by TTS engines; TalkBack hears "Dzikir pagi, doa 3 dari 19".
+                val spoken = if (positioned) {
+                    stringResource(R.string.memorize_event_position_spoken, state.eventLabel, state.position, state.positionOf)
+                } else {
+                    subtitle
+                }
+                Text(
+                    subtitle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.semantics { contentDescription = spoken },
+                )
             }
             IconButton(onClick = actions.onListenOnly, enabled = state.hasAudio) {
                 Icon(painterResource(R.drawable.ic_headphones), stringResource(R.string.memorize_listen_only))
@@ -377,34 +391,41 @@ private fun CueCard(state: MemorizeUiState) {
 @Composable
 private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean) {
     CueCard(state)
+    // Play with gaps needs phrase segments and audio; without them the hints point to the reveal button.
+    val gaps = state.segmented && state.hasAudio
     // The text comes first: it is what the learner recites from. The fade controls tune it below.
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         RecallText(
             words = state.words,
             hidden = state.hiddenWords,
             style = AdwamTheme.arabic.large(state.dua.isQuran),
-            hiddenDescription = pluralStringResource(R.plurals.memorize_hidden_words, state.hiddenWords.size, state.hiddenWords.size),
+            hiddenDescription = pluralStringResource(
+                if (gaps) R.plurals.memorize_hidden_words else R.plurals.memorize_hidden_words_reveal,
+                state.hiddenWords.size,
+                state.hiddenWords.size,
+            ),
             firstLetters = state.firstLetters,
             modifier = Modifier.padding(HahoTheme.spacing.xl),
         )
     }
     if (state.fade != FadeLevel.NONE) {
-        // Reveal as you go: recite the next word aloud, then show it. TalkBack hears the word shown.
+        // Reveal as you go: recite the next word aloud, then show it. The word shown is announced
+        // as Arabic text (a stateDescription can't carry the Arabic locale, so the UI voice would read it).
         val last = state.lastRevealed?.text.orEmpty()
-        GlassOutlinedButton(
-            onClick = actions.onRevealNext,
-            enabled = state.hiddenWords.isNotEmpty(),
-            modifier = Modifier.semantics {
-                liveRegion = LiveRegionMode.Polite
-                if (last.isNotEmpty()) stateDescription = last
-            },
-        ) {
+        GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty()) {
             Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
             Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = HahoTheme.spacing.sm))
         }
+        if (last.isNotEmpty()) {
+            ArabicText(
+                last,
+                style = AdwamTheme.arabic.body(state.dua.isQuran),
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+            )
+        }
     }
     val levels = FadeLevel.entries
-    Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall)
+    Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
     FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         levels.forEach { level ->
             FilterChip(
@@ -415,7 +436,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
         }
     }
     if (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM) {
-        Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
         FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             FadeOrder.entries.forEach { order ->
                 FilterChip(
@@ -433,7 +454,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             label = { Text(stringResource(R.string.memorize_first_letters)) },
         )
     }
-    if (talkBack) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
+    if (talkBack && gaps) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
     // Gaps need phrase segments, like the A–B loop: hidden rather than shown disabled until the audio is marked.
     if (state.segmented) {
         GlassTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.hiddenWords.isNotEmpty()) {

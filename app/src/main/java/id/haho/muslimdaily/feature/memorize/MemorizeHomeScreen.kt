@@ -86,9 +86,10 @@ class MemorizeHomeViewModel @Inject constructor(
             today = today,
             entries = items.mapNotNull { item ->
                 val dua = byId[item.duaId] ?: return@mapNotNull null
-                // One entry stands for its twins too, e.g. "Dzikir pagi · Dzikir petang".
+                // One entry stands for its twins too, e.g. "Dzikir pagi, Dzikir petang" (a comma, so
+                // TalkBack pauses between the two).
                 val label = (twins[dua.id] ?: listOf(dua.id)).mapNotNull { byId[it]?.event }.distinct()
-                    .mapNotNull { labels[it] }.joinToString(" · ")
+                    .mapNotNull { labels[it] }.joinToString(", ")
                 HifzEntry(item, dua, label, !item.notStarted && Leitner.isDue(item.state, today))
             },
         )

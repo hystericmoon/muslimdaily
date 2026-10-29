@@ -366,6 +366,7 @@
     <string name="memorize_cue_show_meaning">Tampilkan arti</string>
     <string name="memorize_cue_hide_meaning">Sembunyikan arti</string>
     <string name="memorize_cue_position">Doa %1$d dari %2$d</string>
+    <string name="memorize_event_position_spoken">%1$s, doa %2$d dari %3$d</string>
     <string name="memorize_event_position">%1$s · %2$d dari %3$d</string>
     <string name="memorize_fade_order">Yang disembunyikan dulu</string>
     <string name="memorize_fade_random">Acak</string>
@@ -390,6 +391,9 @@
     <string name="memorize_fade_percent">%d%%</string>
     <plurals name="memorize_hidden_words">
         <item quantity="other">Teks dengan %d kata disembunyikan. Gunakan Putar dengan jeda untuk berlatih dengan mendengar.</item>
+    </plurals>
+    <plurals name="memorize_hidden_words_reveal">
+        <item quantity="other">Teks dengan %d kata disembunyikan. Gunakan Buka kata berikutnya bila Anda lupa.</item>
     </plurals>
     <string name="memorize_talkback_recall">TalkBack aktif: frasa yang disembunyikan akan dibisukan saat diputar, isi jedanya dari ingatan.</string>
     <string name="memorize_play_with_gaps">Putar dengan jeda</string>
