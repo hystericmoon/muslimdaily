@@ -858,6 +858,12 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_4_1">
+        <item>Transliterasi Latin kini tersedia untuk sebagian besar doa, dibuat otomatis dari teks Arab menurut pedoman Kemenag–Kemendikbud. Nyalakan di Pengaturan → Tampilan.</item>
+        <item>33 doa kini dipotong per frasa, termasuk Sayyidul Istighfar: langkah Bangun, ulang A–B, dan sorotan frasa yang sedang dibaca sudah aktif.</item>
+        <item>Teks Arab doa kini tampil tanpa tanda kutip kitab (( )).</item>
+        <item>Perbaikan untuk pengguna TalkBack di langkah Ingat dan di halaman doa.</item>
+    </string-array>
     <string-array name="whats_new_1_4_0">
         <item>Terjemah bahasa Inggris kini tersedia untuk doa-doa Hisnul Muslim, dari hisnmuslim.com (IslamHouse.com). Pilih bahasanya di Pengaturan → Tampilan.</item>
         <item>31 doa dari Al-Qur\'an kini bisa didengarkan, dibacakan per ayat oleh Syaikh Maher al-Muaiqly.</item>
