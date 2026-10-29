@@ -866,6 +866,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_4_0">
+        <item>English translations are now available for the Hisnul Muslim duas, from hisnmuslim.com (IslamHouse.com). Choose the language in Settings → Display.</item>
+        <item>The 31 duas from the Qur\'an can now be listened to, recited ayah by ayah by Sheikh Maher al-Muaiqly.</item>
+        <item>Duas with the same text, such as the morning and evening adhkar, are now memorised once. If you had saved both, the one you reviewed last is kept.</item>
+    </string-array>
     <string-array name="whats_new_1_3_1">
         <item>In the Recall step, the Arabic now comes right after the cue, before the hiding options.</item>
         <item>Memorise now shows where a dua sits in its set, e.g. \"Morning adhkar · 3 of 19\".</item>
