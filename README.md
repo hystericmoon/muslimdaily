@@ -4,7 +4,7 @@ Adwam (أدوم, formerly Muslim Daily) is a native Android daily Muslim guide u
 morning and evening adhkar, and authentic duas from waking to sleeping, with Arabic text,
 translation, audio and a memorisation mode. Offline-first. No account, no ads, no analytics.
 
-> **Content:** all of Hisnul Muslim (307 duas in 55 events; Indonesian translation and takhrij
+> **Content:** all of Hisnul Muslim (276 duas in 55 events; Indonesian translation and takhrij
 > from the owner's edition, Arabic, English translation and the recitation by Hamad ad-Duraihim from
 > hisnmuslim.com / IslamHouse.com), plus 31 supplications from the Qur'an (Tanzil text,
 > Kemenag translation via QuranEnc.com, recitation by Maher al-Muaiqly from the King Fahd Complex). Every dua shows its source and takhrij. Narrations
