@@ -85,10 +85,21 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
             )
         }
         val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEn.isNotBlank()
-        // Most Hisnul Muslim entries have no licensed English yet; Indonesian stands in rather
-        // than showing the Arabic alone.
+        // The few entries with no English at the source show the Indonesian rather than the Arabic alone.
         val showId = dua.translationId.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)
-        if (showId) Text(dua.translationId, style = reading.bodyLarge, maxLines = maxLines, overflow = TextOverflow.Ellipsis)
+        if (showId) {
+            // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
+            Text(
+                androidx.compose.ui.text.buildAnnotatedString {
+                    pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("id")))
+                    append(dua.translationId)
+                    pop()
+                },
+                style = reading.bodyLarge,
+                maxLines = maxLines,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
             Text(

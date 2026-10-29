@@ -261,7 +261,7 @@
     <string name="dua_full_entry_show">See the full text in the book</string>
     <string name="dua_full_entry_hide">Hide the full text</string>
     <string name="dua_full_entry_title">Full text in the book</string>
-    <string name="dua_full_entry_note">Above is only the dua to recite. Here is the full entry as the book prints it, with the hadith wording, notes and repetition counts.</string>
+    <string name="dua_full_entry_note">The dua shown first is only the words to recite. Here is the full entry as the book prints it, with the hadith wording, notes and repetition counts.</string>
     <string name="dua_add_to_set">Add to my set</string>
     <string name="dua_remove_from_set">Remove from my set</string>
     <string name="dua_in_set_note">This dua is in your set for this occasion.</string>
@@ -333,7 +333,7 @@
     <string name="run_next">Next</string>
     <string name="run_auto_advance">Auto-advance</string>
     <string name="run_from_memory">Recite from memory</string>
-    <string name="run_from_memory_body">This dua is in your memorisation. Recite it without looking, then show the text to check.</string>
+    <string name="run_from_memory_body">This dua is in your memorization. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
     <string name="run_add_to_hifz">Add to My hifz</string>
     <string name="run_in_hifz">In My hifz</string>
@@ -375,6 +375,7 @@
     <string name="memorize_cue_show_meaning">Show the meaning</string>
     <string name="memorize_cue_hide_meaning">Hide the meaning</string>
     <string name="memorize_cue_position">Dua %1$d of %2$d</string>
+    <string name="memorize_event_position_spoken">%1$s, dua %2$d of %3$d</string>
     <string name="memorize_event_position">%1$s · %2$d of %3$d</string>
     <string name="memorize_fade_order">Hide first</string>
     <string name="memorize_fade_random">Random</string>
@@ -401,6 +402,10 @@
         <item quantity="one">Text with %d word hidden. Use Play with gaps to practice by listening.</item>
         <item quantity="other">Text with %d words hidden. Use Play with gaps to practice by listening.</item>
     </plurals>
+    <plurals name="memorize_hidden_words_reveal">
+        <item quantity="one">Text with %d word hidden. Use Show the next word if you get stuck.</item>
+        <item quantity="other">Text with %d words hidden. Use Show the next word if you get stuck.</item>
+    </plurals>
     <string name="memorize_talkback_recall">TalkBack is on: hidden phrases are muted during playback. Fill the gaps from memory.</string>
     <string name="memorize_play_with_gaps">Play with gaps</string>
     <string name="memorize_rate_prompt">How well do you know it?</string>
@@ -417,7 +422,7 @@
     <string name="memorize_remove">Remove</string>
     <string name="memorize_remove_named">Remove %1$s from My hifz</string>
     <string name="memorize_remove_title">Remove from My hifz?</string>
-    <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorise it again any time.</string>
+    <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
     <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_next_step">Continue to %s</string>
@@ -869,21 +874,21 @@
     <string-array name="whats_new_1_4_0">
         <item>English translations are now available for the Hisnul Muslim duas, from hisnmuslim.com (IslamHouse.com). Choose the language in Settings → Display.</item>
         <item>The 31 duas from the Qur\'an can now be listened to, recited ayah by ayah by Sheikh Maher al-Muaiqly.</item>
-        <item>Duas with the same text, such as the morning and evening adhkar, are now memorised once. If you had saved both, the one you reviewed last is kept.</item>
+        <item>Duas with the same text, such as the morning and evening adhkar, are now memorized once. If you had saved both, the one you reviewed last is kept.</item>
     </string-array>
     <string-array name="whats_new_1_3_1">
         <item>In the Recall step, the Arabic now comes right after the cue, before the hiding options.</item>
-        <item>Memorise now shows where a dua sits in its set, e.g. \"Morning adhkar · 3 of 19\".</item>
+        <item>Memorize now shows where a dua sits in its set, e.g. \"Morning adhkar · 3 of 19\".</item>
     </string-array>
     <string-array name="whats_new_1_3_0">
-        <item>While reading your adhkar, save a dua to memorise with \"Add to My hifz\" in the menu. It joins My hifz as \"Not started\" for later. You can also remove a dua from My hifz.</item>
+        <item>While reading your adhkar, save a dua to memorize with \"Add to My hifz\" in the menu. It joins My hifz as \"Not started\" for later. You can also remove a dua from My hifz.</item>
         <item>Add a dua to a routine straight from its page, and pick duas for a routine by their Arabic and translation.</item>
         <item>The widget now has a see-through grey background and a neater \"PM\". Set its opacity in Settings → Display.</item>
     </string-array>
     <string-array name="whats_new_1_2_0">
-        <item>Reviewing a memorised dua now starts from memory: the Arabic is covered, with a cue of when it is said and, if you need it, its meaning. Then check the full text and rate how it went.</item>
+        <item>Reviewing a memorized dua now starts from memory: the Arabic is covered, with a cue of when it is said and, if you need it, its meaning. Then check the full text and rate how it went.</item>
         <item>In the Recall step, turn on \"Show first letters\" so each hidden word shows its first letter, hide words from the end of the dua, and tap \"Show the next word\" when you get stuck.</item>
-        <item>When reading your adhkar, a dua you are memorising appears without its Arabic so you can recite it from memory. Tap \"Show the text\" to check; you can turn this off in the menu.</item>
+        <item>When reading your adhkar, a dua you are memorizing appears without its Arabic so you can recite it from memory. Tap \"Show the text\" to check; you can turn this off in the menu.</item>
     </string-array>
     <string-array name="whats_new_1_1_0">
         <item>The prayer-times widget has a new look: the large figure is now the current time, and under it the time left until the next prayer, with that prayer\'s time, such as \"2 hr 47 min until Maghrib 5:51 PM\".</item>
@@ -908,7 +913,7 @@
         <item>Easier to use with TalkBack: buttons and checklist items are read clearly, including the ones not done yet, and focus no longer jumps back to the top.</item>
     </string-array>
     <string-array name="whats_new_0_8_0">
-        <item>Muslim Daily is now called Adwam (أدوم), meaning “the most constant”. Your content, notes, memorisation and settings stay as they are.</item>
+        <item>Muslim Daily is now called Adwam (أدوم), meaning “the most constant”. Your content, notes, memorization and settings stay as they are.</item>
         <item>A new icon on your home screen, in notifications and on Wear OS. On Android 13 and later it follows your phone’s themed icons.</item>
         <item>If the prayer-times widget is slow to move to the next prayer, Today now shows a note to allow exact alarms.</item>
     </string-array>

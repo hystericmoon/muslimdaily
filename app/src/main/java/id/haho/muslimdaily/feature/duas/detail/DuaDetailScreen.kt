@@ -64,6 +64,12 @@ import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
 import id.haho.muslimdaily.feature.duas.components.SourceChip
 import kotlinx.coroutines.launch
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.withStyle
+import androidx.compose.runtime.saveable.rememberSaveable
 
 data class DuaDetailActions(
     val onTogglePlay: () -> Unit = {},
@@ -214,18 +220,15 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
 }
 
 /**
- * The reader's private note: what the dua means to them, when they read it, who taught it.
- * Shown as their own words, apart from the sourced text, and never shared.
- */
-/**
  * The book's whole entry, for a dua shown as the words to recite only: the hadith wording,
  * notes and repetition counts around it. Folded away by default; nothing from the book is lost.
  */
 @Composable
 private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
-    var open by remember { mutableStateOf(initiallyOpen) }
+    var open by rememberSaveable(dua.id) { mutableStateOf(initiallyOpen) }
+    val stateLabel = stringResource(if (open) R.string.state_expanded else R.string.state_collapsed)
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-        TextButton(onClick = { open = !open }) {
+        TextButton(onClick = { open = !open }, modifier = Modifier.semantics { stateDescription = stateLabel }) {
             Icon(painterResource(R.drawable.ic_keyboard_arrow_down), null, Modifier.chevronRotation(open).size(HahoTheme.dimens.smallIcon))
             Spacer(Modifier.width(HahoTheme.spacing.sm))
             Text(stringResource(if (open) R.string.dua_full_entry_hide else R.string.dua_full_entry_show))
@@ -246,7 +249,11 @@ private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
                     )
                     ArabicText(dua.arabicFull, style = AdwamTheme.arabic.body(dua.isQuran))
                     if (dua.translationIdFull.isNotBlank()) {
-                        Text(dua.translationIdFull, style = HahoTheme.reading.bodyLarge)
+                        // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
+                        Text(
+                            buildAnnotatedString { withStyle(SpanStyle(localeList = LocaleList("id"))) { append(dua.translationIdFull) } },
+                            style = HahoTheme.reading.bodyLarge,
+                        )
                     }
                 }
             }
@@ -254,6 +261,10 @@ private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
     }
 }
 
+/**
+ * The reader's private note: what the dua means to them, when they read it, who taught it.
+ * Shown as their own words, apart from the sourced text, and never shared.
+ */
 @Composable
 private fun NoteCard(note: String?, onSave: (String) -> Unit) {
     var editing by remember { mutableStateOf(false) }
