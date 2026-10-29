@@ -859,7 +859,8 @@
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
     <string-array name="whats_new_1_4_2">
-        <item>16 doa, di antaranya dzikir rukuk, sujud, dan pagi-petang, kini hanya menampilkan lafal yang dibaca. Riwayat lengkapnya dari kitab tetap ada di bawahnya.</item>
+        <item>21 doa, di antaranya dzikir rukuk, sujud, pagi-petang, dan doa masuk masjid, kini hanya menampilkan lafal yang dibaca. Riwayat lengkapnya dari kitab tetap ada di bawahnya.</item>
+        <item>42 doa lagi kini dipotong per frasa: langkah Bangun, ulang A–B, dan sorotan frasa yang sedang dibaca sudah aktif.</item>
         <item>Semua doa Hisnul Muslim kini punya terjemah bahasa Inggris.</item>
         <item>Perbaikan transliterasi Latin: bila harakat di sumber tidak lengkap, transliterasi tidak ditampilkan alih-alih ditebak.</item>
     </string-array>
