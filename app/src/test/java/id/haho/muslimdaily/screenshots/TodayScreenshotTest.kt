@@ -26,6 +26,11 @@ class TodayScreenshotTest {
     }
 
     @Test
+    fun site() = captureSite("127-site-today") {
+        TodayScreen(TodayPreviewData.ready(), TodayActions(), initiallyExpanded = setOf("FAJR", "DHUHR"))
+    }
+
+    @Test
     fun todayFridayZawal() = captureVariants("11-today-friday-zawal") {
         TodayScreen(
             TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 23, 11, 35), checked = emptySet(), progress = emptyMap()),

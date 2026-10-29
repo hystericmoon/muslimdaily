@@ -98,6 +98,21 @@ class RealContentScreenshotTest {
     fun ayatKursi() = detail("62-real-detail-ayat-kursi", "morning_01")
 
     @Test
+    fun site() {
+        captureSite("128-site-morning") {
+            val canonical = ActiveSet.canonical(duas.filter { it.event == "morning" })
+            EventContent(
+                EventUiState(event("morning"), false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs()),
+                {}, {}, { _, _ -> }, {},
+            )
+        }
+        captureSite("129-site-ayat-kursi") {
+            val d = dua("morning_01")
+            DuaDetailContent(DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState(), inMySet = false), DuaDetailActions())
+        }
+    }
+
+    @Test
     fun longestDua() = detail("63-real-detail-longest", duas.maxBy { it.arabic.length }.id)
 
     @Test

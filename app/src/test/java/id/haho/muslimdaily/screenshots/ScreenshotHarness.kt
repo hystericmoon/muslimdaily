@@ -35,6 +35,17 @@ fun captureVariants(name: String, content: @Composable () -> Unit) {
     }
 }
 
+/** A phone shot for the landing page (site/shots), in the site's Forest dark theme. */
+fun captureSite(name: String, content: @Composable () -> Unit) {
+    val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+    Settings.System.putString(context.contentResolver, Settings.System.TIME_12_24, "24")
+    captureRoboImage("$name.png") {
+        AdwamTheme(themeMode = ThemeMode.DARK, palette = HahoPalette.FOREST) {
+            GlassBackdrop { content() }
+        }
+    }
+}
+
 /** Captures [content] once per colour theme in light and dark, at a phone-sized viewport. */
 fun capturePalettes(name: String, content: @Composable () -> Unit) {
     val context = ApplicationProvider.getApplicationContext<android.content.Context>()

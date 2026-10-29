@@ -1,4 +1,4 @@
-"""Crops the app screenshots in docs/screenshots to phone-height images for the site."""
+"""Crops the site's app screenshots (127+ in docs/screenshots, Forest dark) to phone-height images."""
 import pathlib
 import sys
 
@@ -10,12 +10,12 @@ OUT = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "site" / "shots
 
 # name -> (screenshot, crop top and height in px at 800 wide)
 SHOTS = {
-    "today": ("10-today-morning-light.png", 0, 1700),
-    "prayers": ("10-today-morning-light.png", 1500, 1700),
-    "run": ("61-real-morning-light.png", 0, 1700),
-    "dua": ("62-real-detail-ayat-kursi-light.png", 0, 1700),
-    "recall": ("52-memorize-recall-light.png", 0, 1700),
-    "fasting": ("96-fasting-month-light.png", 0, 1700),
+    "today": ("127-site-today.png", 0, 1700),
+    "prayers": ("127-site-today.png", 1500, 1700),
+    "run": ("128-site-morning.png", 0, 1700),
+    "dua": ("129-site-ayat-kursi.png", 0, 1700),
+    "recall": ("130-site-recall.png", 0, 1700),
+    "fasting": ("131-site-fasting.png", 0, 1700),
 }
 WIDGET = "80-widget-4x2.png"
 

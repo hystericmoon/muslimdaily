@@ -29,6 +29,11 @@ class FastingScreenshotTest {
         AdwamScreen(title = stringResource(R.string.fasting_title), onBack = {}) { FastingContent(s, {}, {}, {}) }
     }
 
+    @Test fun site() = captureSite("131-site-fasting") {
+        val s = state(LocalDate.of(2026, 10, 21), LocalDate.of(2026, 10, 25))
+        AdwamScreen(title = stringResource(R.string.fasting_title), onBack = {}) { FastingContent(s, {}, {}, {}) }
+    }
+
     @Test fun ordinaryMonth() = shot("96-fasting-month", state(LocalDate.of(2026, 10, 21), LocalDate.of(2026, 10, 25)))
 
     /** Zulhijah 1448: Arafah, Idul Adha and the tasyriq days. */

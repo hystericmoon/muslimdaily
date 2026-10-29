@@ -79,6 +79,11 @@ class MemorizeScreenshotTest {
     }
 
     @Test
+    fun site() = captureSite("130-site-recall") {
+        MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.MEDIUM), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
     fun check() = captureVariants("53-memorize-check") {
         MemorizeSessionScreen(state(Step.CHECK), MemorizeActions(), talkBack = false)
     }
