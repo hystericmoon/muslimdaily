@@ -141,7 +141,12 @@ fun MemorizeSessionScreen(state: MemorizeUiState, actions: MemorizeActions, talk
             IconButton(onClick = actions.onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
             Column(Modifier.weight(1f)) {
                 Text(stringResource(R.string.memorize_session_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
-                Text(state.eventLabel, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                val subtitle = if (state.positionOf > 1 && state.position > 0) {
+                    stringResource(R.string.memorize_event_position, state.eventLabel, state.position, state.positionOf)
+                } else {
+                    state.eventLabel
+                }
+                Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             IconButton(onClick = actions.onListenOnly, enabled = state.hasAudio) {
                 Icon(painterResource(R.drawable.ic_headphones), stringResource(R.string.memorize_listen_only))
