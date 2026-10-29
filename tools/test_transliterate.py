@@ -1,0 +1,46 @@
+"""The transliteration rules, checked on common phrases whose Indonesian reading is well known."""
+import unittest
+
+from transliterate import transliterate
+
+
+class TransliterateTest(unittest.TestCase):
+    def check(self, arabic: str, latin: str):
+        self.assertEqual(transliterate(arabic), latin)
+
+    def test_basmala_sun_letters_and_joining(self):
+        self.check("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ", "Bismillāhir-rahmānir-rahīm")
+        self.check("الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", "Al-hamdu lillāhi rabbil-'ālamīn")
+
+    def test_letters_and_long_vowels(self):
+        self.check("أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ", "A'ūdzu billāhi minasy-syaithānir-rajīm")
+        self.check("لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ", "Lā haula walā quwwata illā billāh")
+        self.check("لَا إِلَهَ إِلَّا اللَّهُ", "Lā ilāha illallāh")
+
+    def test_pauses_and_hamza(self):
+        self.check(
+            "الْحَمْدُ للَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا، وَإِلَيْهِ النُّشُورُ",
+            "Al-hamdu lillāhilladzī ahyānā ba'da mā amātanā, wa ilaihin-nusyūr",
+        )
+        self.check("اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا", "Allāhumma aghitsnā, Allāhumma aghitsnā")
+
+    def test_uthmani_spelling(self):
+        self.check(
+            "رَبَّنَآ ءَاتِنَا فِى ٱلدُّنْيَا حَسَنَةً وَفِى ٱلْـَٔاخِرَةِ حَسَنَةً وَقِنَا عَذَابَ ٱلنَّارِ ﴿٢٠١﴾",
+            "Rabbanā ātinā fid-dunyā hasanatan wafil-ākhirati hasanatan waqinā 'adzāban-nār",
+        )
+        self.check("قَالَ رَبِّ ٱشْرَحْ لِى صَدْرِى ﴿٢٥﴾", "Qāla rabbisyrah lī shadrī")
+
+    def test_unwritten_sukun_and_long_vowel(self):
+        self.check("أَعوذُ بِكَ", "A'ūdzu bik")
+        self.check("أَنتَ", "Ant")
+
+    def test_unreadable_text_gets_none(self):
+        # A note with no vowel marks can't be read by the rules: no guess.
+        self.assertIsNone(transliterate("ثلاث مرات"))
+        # ...but an unreadable bracketed note is only left out.
+        self.assertEqual(transliterate("سُبْحَانَ اللَّهِ [ثلاثاً]"), "Subhānallāh")
+
+
+if __name__ == "__main__":
+    unittest.main()

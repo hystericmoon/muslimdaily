@@ -507,7 +507,7 @@
     <string name="display_translation_en">English</string>
     <string name="display_translation_both">Both</string>
     <string name="display_transliteration">Latin transliteration</string>
-    <string name="display_transliteration_summary">Off by default. A reading aid, not a replacement for the Arabic text.</string>
+    <string name="display_transliteration_summary">Off by default. Generated from the Arabic text following the Indonesian transliteration standard (Kemenag–Kemendikbud 1987): a reading aid, not a replacement for the Arabic.</string>
     <string name="display_text_size">Text size</string>
     <string name="display_arabic_size">Arabic text</string>
     <string name="display_translation_size">Translation</string>

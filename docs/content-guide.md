@@ -34,7 +34,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `is_quran` | yes | `ya` for Qur'anic text (shown in the Qur'an typeface), otherwise `tidak` |
 | `translation_id` | yes | Indonesian translation |
 | `translation_en` | no | English translation |
-| `transliteration` | no | Latin transliteration (off by default in the app) |
+| `transliteration` | no | Latin transliteration (off by default in the app). Leave it empty: the build derives Indonesian-style Latin from `arabic` with `tools/transliterate.py` (SKB Menag–Mendikbud 1987: ts, dz, sy, sh, dh, th, zh, ' for ع; ā ī ū; ai/au; sun letters; pausal forms). Rows whose Arabic has unvowelled words get none. A value here overrides it, and must come from a source. |
 | `count` | no | Number of repetitions **only if the Sunnah specifies it**. Leave blank otherwise; the app then shows no count. |
 | `source_1_book`, `source_1_no` … `source_3_*` | at least one book | e.g. book `Sahih Muslim`, no `2723`. Up to three sources. |
 | `grade` | no | `sahih` or `hasan` only, where the source states it. Anything else is rejected. |

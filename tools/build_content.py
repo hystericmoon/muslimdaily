@@ -21,6 +21,8 @@ Every row ships. Rules enforced (see docs/content-guide.md):
     word of `arabic` must come from `arabic_full`, in order: nothing is written, only left out.
     `audio_range` is where those words are recited in the audio file. `translation_id_full` does
     the same for the Indonesian.
+  * `transliteration`, when empty, is derived from the Arabic by tools/transliterate.py
+    (Indonesian style); a row the rules can't read gets none.
 
 Exits with status 1 on any error, so CI and release builds stop.
 
@@ -34,6 +36,9 @@ import json
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from transliterate import transliterate  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -281,7 +286,9 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
             "en": (row.get("translation_en") or "").strip(),
         },
         **({"translations_full": {"id": tf}} if (tf := (row.get("translation_id_full") or "").strip()) else {}),
-        "transliteration": (row.get("transliteration") or "").strip(),
+        # A sourced transliteration wins; otherwise the Latin is derived from the Arabic by
+        # tools/transliterate.py (the owner's one exception to the sourced-content rule).
+        "transliteration": (row.get("transliteration") or "").strip() or transliterate(arabic) or "",
         "count": count,
         "sources": sources,
         "reference": (row.get("reference") or "").strip(),
