@@ -25,6 +25,13 @@ CSV_PATH = ROOT / "content/source/duas.csv"
 CACHE = ROOT / "build/hisnmuslim_en"
 INDEX = "https://www.hisnmuslim.com/api/en/husn_en.json"
 HISN_NO = re.compile(r"Hisnul Muslim no\. (\d+)")
+# A chapter title whose closing quote and colon are missing ("What to say …: " then "["), the
+# one malformation seen at the source (chapter 126).
+UNCLOSED_TITLE = re.compile(r'^(\s*"[^"\n]*?):?\s*$(?=\s*\[)', re.M)
+# Entries whose English the site stores in the transliteration field instead of TRANSLATED_TEXT,
+# checked by hand against the IslamHouse PDF (2025 edition, same numbering). No. 185 is stored
+# the same way but reads "If you are not invited", reversing the hadith, so it is left out.
+MISFILED = {133}
 
 
 def get(url: str) -> dict:
@@ -36,7 +43,11 @@ def get(url: str) -> dict:
             path.write_bytes(r.read())
         time.sleep(0.3)  # be gentle with the site
     # Some chapters contain raw tab characters inside strings.
-    return json.loads(path.read_text("utf-8-sig"), strict=False)
+    text = path.read_text("utf-8-sig")
+    try:
+        return json.loads(text, strict=False)
+    except json.JSONDecodeError:
+        return json.loads(UNCLOSED_TITLE.sub(r'\1":', text), strict=False)
 
 
 def english() -> dict[int, str]:
@@ -50,7 +61,8 @@ def english() -> dict[int, str]:
             print(f"skipped chapter {ch['ID']} ({ch['TITLE']}): {e}", file=sys.stderr)
             continue
         for item in next(iter(chapter.values())):
-            text = " ".join(str(item.get("TRANSLATED_TEXT", "")).split())
+            field = "LANGUAGE_ARABIC_TRANSLATED_TEXT" if int(item["ID"]) in MISFILED else "TRANSLATED_TEXT"
+            text = " ".join(str(item.get(field) or "").split())
             if text:
                 out[int(item["ID"])] = text
     return out

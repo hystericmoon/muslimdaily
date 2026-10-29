@@ -1,5 +1,5 @@
 {
-  "content_version": 20,
+  "content_version": 21,
   "duas": [
     {
       "id": "wake_01",
@@ -8301,7 +8301,7 @@
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah kecuali Allah.”",
-        "en": ""
+        "en": "(None has the right to be worshipped except Allah.)"
       },
       "transliteration": "Lā ilāha illallāh!",
       "count": null,
@@ -8338,7 +8338,7 @@
       "is_quran": false,
       "translations": {
         "id": "Berlindung kepada Allah. Maka akan berhenti dari keraguannya",
-        "en": ""
+        "en": "(Say:) I seek refuge in Allah. (Then you should desist from doing what you are in doubt about.)"
       },
       "transliteration": "",
       "count": null,

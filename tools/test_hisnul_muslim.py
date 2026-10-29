@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "hisnul_muslim"))
+import fetch_english  # noqa: E402
 import import_hisn  # noqa: E402
 import weak_appendix  # noqa: E402
 
@@ -88,6 +89,17 @@ class WeakAppendixTest(unittest.TestCase):
         self.assertFalse(found[104]["weak"])
         self.assertEqual(found[104]["count"], "(dibaca 3 kali)")
         self.assertNotIn(5, found)
+
+
+class FetchEnglishTest(unittest.TestCase):
+    def test_unclosed_chapter_title_is_repaired(self):
+        raw = '{\n\t"What to say when you feel frightened: \n\t[\n\t\t{"ID": 245}\n\t]\n}'
+        fixed = fetch_english.UNCLOSED_TITLE.sub(r'\1":', raw)
+        self.assertIn('"What to say when you feel frightened":', fixed)
+
+    def test_well_formed_titles_are_left_alone(self):
+        raw = '{\n\t"Title": \n\t[\n\t]\n}'
+        self.assertEqual(fetch_english.UNCLOSED_TITLE.sub(r'\1":', raw), raw)
 
 
 if __name__ == "__main__":
