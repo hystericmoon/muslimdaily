@@ -1,5 +1,5 @@
 {
-  "content_version": 17,
+  "content_version": 18,
   "duas": [
     {
       "id": "wake_01",
@@ -7,7 +7,7 @@
       "event": "waking_up",
       "order": 1,
       "variant_group": null,
-      "arabic": "( الْحَمْدُ للَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا، وَإِلَيْهِ النُّشُورُ )",
+      "arabic": "الْحَمْدُ للَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا، وَإِلَيْهِ النُّشُورُ",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah, yang membangunkan kami setelah ditidurkanNya dan kepadaNya kami dibangkitkan.”",
@@ -44,7 +44,7 @@
       "event": "waking_up",
       "order": 2,
       "variant_group": null,
-      "arabic": "( لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَريكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، سُبْحَانَ اللَّهِ، وَالْحَمْدُ للَّهِ، وَلاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَلِيِّ الْعَظِيمِ، رَبِّ اغْفرْ لِي ).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَريكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، سُبْحَانَ اللَّهِ، وَالْحَمْدُ للَّهِ، وَلاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَلِيِّ الْعَظِيمِ، رَبِّ اغْفرْ لِي",
       "is_quran": false,
       "translations": {
         "id": "‘Tiada Tuhan yang haq selain Allah, Yang Maha Esa, tiada sekutu bagiNya. BagiNya kerajaan dan pujian. Dia-lah Yang Maha Kuasa atas segala sesuatu. Maha Suci Allah, segala puji bagi Allah, tiada Tuhan yang haq selain Allah, Allah Maha Besar, tiada daya dan kekuatan, kecuali dengan pertolongan Allah Yang Maha Tinggi dan Maha Agung’. ‘Wahai, Tuhanku! Ampunilah dosaku’.",
@@ -81,7 +81,7 @@
       "event": "waking_up",
       "order": 3,
       "variant_group": null,
-      "arabic": "( الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي فِي جَسَدِي، وَرَدَّ عَلَيَّ رُوحِي، وَأَذِنَ لي بِذِكْرِهِ )",
+      "arabic": "الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي فِي جَسَدِي، وَرَدَّ عَلَيَّ رُوحِي، وَأَذِنَ لي بِذِكْرِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah yang telah memberikan kesehatan pada jasadku dan mengembalikan ruhku kepadaku serta mengizinkanku untuk berdzikir kepadaNya.”",
@@ -120,8 +120,8 @@
         ]
       },
       "phrase_breaks": [
-        51,
-        75
+        49,
+        73
       ]
     },
     {
@@ -167,7 +167,7 @@
       "event": "toilet",
       "order": 1,
       "variant_group": null,
-      "arabic": "([بِسْمِ اللَّهِ] اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبائِث).",
+      "arabic": "[بِسْمِ اللَّهِ] اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبائِث",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah. Ya Allah, sesungguhnya aku berlindung kepadaMu dari godaan setan laki-laki dan perempuan”.",
@@ -204,7 +204,7 @@
       "event": "toilet",
       "order": 2,
       "variant_group": null,
-      "arabic": "(غُفْرَانَكَ).",
+      "arabic": "غُفْرَانَكَ",
       "is_quran": false,
       "translations": {
         "id": "“Aku minta ampun kepadaMu”.",
@@ -241,7 +241,7 @@
       "event": "wudu",
       "order": 1,
       "variant_group": null,
-      "arabic": "(بِسْمِ اللَّهِ).",
+      "arabic": "بِسْمِ اللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah (aku berwudhu).",
@@ -282,7 +282,7 @@
       "event": "wudu",
       "order": 2,
       "variant_group": null,
-      "arabic": "(أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ..).",
+      "arabic": "أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ..",
       "is_quran": false,
       "translations": {
         "id": "“Aku bersaksi, bahwa tiada Tuhan yang haq kecuali Allah, Yang Maha Esa dan tiada sekutu bagiNya. Aku bersaksi, bahwa Muhammad adalah hamba dan utusanNya”.",
@@ -315,7 +315,7 @@
       "event": "wudu",
       "order": 3,
       "variant_group": null,
-      "arabic": "(اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ)",
+      "arabic": "اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, jadikanlah aku termasuk orang-orang yang bertaubat dan jadikanlah aku termasuk orang-orang (yang senang) bersuci”.",
@@ -348,7 +348,7 @@
       "event": "wudu",
       "order": 4,
       "variant_group": null,
-      "arabic": "(سُبْحانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتوبُ إِلَيْكَ).",
+      "arabic": "سُبْحانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتوبُ إِلَيْكَ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Engkau, ya Allah, aku memuji kepadaMu. Aku bersaksi, bahwa tiada Tuhan yang haq selain Engkau, aku minta ampun dan bertaubat kepadaMu”.",
@@ -391,8 +391,8 @@
         ]
       },
       "phrase_breaks": [
-        37,
-        77
+        36,
+        76
       ]
     },
     {
@@ -401,7 +401,7 @@
       "event": "dressing",
       "order": 1,
       "variant_group": null,
-      "arabic": "(الْحَمْدُ للَّهِ الَّذِي كَسَانِي هَذَا (الثَّوْبَ) وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّة...)",
+      "arabic": "الْحَمْدُ للَّهِ الَّذِي كَسَانِي هَذَا (الثَّوْبَ) وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّة...",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah yang memberi pakaian ini kepadaku sebagai rezeki daripadaNya tanpa daya dan kekuatan dariku.",
@@ -438,7 +438,7 @@
       "event": "dressing",
       "order": 2,
       "variant_group": null,
-      "arabic": "( اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ كَسَوْتَنِيهِ، أَسْأَلُكَ مِنْ خَيْرِهِ وَخَيْرِ مَا صُنِعَ لَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا صُنِعَ لَهُ).",
+      "arabic": "اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ كَسَوْتَنِيهِ، أَسْأَلُكَ مِنْ خَيْرِهِ وَخَيْرِ مَا صُنِعَ لَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا صُنِعَ لَهُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, hanya milikMu segala puji, Engkaulah yang memberi pakaian ini kepadaku. Aku mohon kepadaMu untuk memperoleh kebaikannya dan kebaikan yang ia diciptakan karenanya. Aku berlindung kepadaMu dari kejahatannya dan kejahatan yang ia diciptakan karenanya”",
@@ -479,7 +479,7 @@
       "event": "dressing",
       "order": 3,
       "variant_group": null,
-      "arabic": "(تُبْلِي وَيُخْلِفُ اللَّهُ تَعَالَى)",
+      "arabic": "تُبْلِي وَيُخْلِفُ اللَّهُ تَعَالَى",
       "is_quran": false,
       "translations": {
         "id": "Kenakanlah sampai lusuh, semoga Allah Ta’ala memberikan gantinya ke-padamu.",
@@ -512,7 +512,7 @@
       "event": "dressing",
       "order": 4,
       "variant_group": null,
-      "arabic": "(اِلْبَسْ جَدِيداً وَعِشْ حَمِيداً وَمُتْ شَهِيداً).",
+      "arabic": "اِلْبَسْ جَدِيداً وَعِشْ حَمِيداً وَمُتْ شَهِيداً",
       "is_quran": false,
       "translations": {
         "id": "“Berpakaianlah yang baru, hiduplah dengan terpuji dan matilah dalam kea-daan syahid”.",
@@ -549,7 +549,7 @@
       "event": "dressing",
       "order": 5,
       "variant_group": null,
-      "arabic": "(بِسْمِ اللَّهِ).",
+      "arabic": "بِسْمِ اللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "Dengan nama Allah (aku meletakkan baju).",
@@ -586,7 +586,7 @@
       "event": "leaving_home",
       "order": 1,
       "variant_group": null,
-      "arabic": "(بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَاَ حَوْلَ وَلَا قُوَّةَ إِلاَّ بِاللَّهِ).",
+      "arabic": "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَاَ حَوْلَ وَلَا قُوَّةَ إِلاَّ بِاللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah (aku keluar). Aku bertawakkal kepadaNya, dan tiada daya dan upaya kecuali karena pertolongan Allah”.",
@@ -623,7 +623,7 @@
       "event": "leaving_home",
       "order": 2,
       "variant_group": null,
-      "arabic": "(اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أَضِلَّ، أَوْ أُضَلَّ، أَوْ أَزِلَّ، أَوْ أُزَلَّ، أَوْ أَظْلِمَ، أَوْ أُظْلَمَ، أَوْ أَجْهَلَ، أَوْ يُجْهَلَ عَلَيَّ).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أَضِلَّ، أَوْ أُضَلَّ، أَوْ أَزِلَّ، أَوْ أُزَلَّ، أَوْ أَظْلِمَ، أَوْ أُظْلَمَ، أَوْ أَجْهَلَ، أَوْ يُجْهَلَ عَلَيَّ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, sesungguhnya aku berlindung kepadaMu, jangan sampai aku sesat atau disesatkan (setan atau orang yang berwatak setan), berbuat kesalahan atau disalahi, menganiaya atau dianiaya (orang), dan berbuat bodoh atau dibodohi”.",
@@ -656,7 +656,7 @@
       "event": "market",
       "order": 1,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لاِ يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لاِ يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
       "is_quran": false,
       "translations": {
         "id": "“Tidak ada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, tiada sekutu bagiNya. BagiNya kerajaan, bagiNya segala pujian. Dia-lah Yang Menghidupkan dan Yang Mematikan. Dia-lah Yang Hidup, tidak akan mati. Di tanganNya kebaikan. Dia-lah Yang Maha kuasa atas segala sesuatu.”",
@@ -862,7 +862,7 @@
       "event": "adhan",
       "order": 3,
       "variant_group": null,
-      "arabic": "((يُصَلِّي عَلَى النَّبِيِّ صلى الله عليه وسلم بَعْدَ فَرَاغِهِ مِنْ إِجَابَةِ الْمُؤَذِّنِ)).",
+      "arabic": "يُصَلِّي عَلَى النَّبِيِّ صلى الله عليه وسلم بَعْدَ فَرَاغِهِ مِنْ إِجَابَةِ الْمُؤَذِّنِ",
       "is_quran": false,
       "translations": {
         "id": "Membaca shalawat kepada Nabi Shallallahu’alaihi wasallam sesudah adzan.",
@@ -928,7 +928,7 @@
       "event": "adhan",
       "order": 5,
       "variant_group": null,
-      "arabic": "((يَدْعُو لِنَفسِهِ بَيْنَ الْأَذَانِ وَالْإِقَامَةِ فَإِنَّ الدُّعَاءَ حِينَئِذٍ لاَ يُرَدُّ)).",
+      "arabic": "يَدْعُو لِنَفسِهِ بَيْنَ الْأَذَانِ وَالْإِقَامَةِ فَإِنَّ الدُّعَاءَ حِينَئِذٍ لاَ يُرَدُّ",
       "is_quran": false,
       "translations": {
         "id": "Berdoa untuk diri sendiri antara adzan dan iqamah, sebab doa pada waktu itu dikabulkan.",
@@ -969,7 +969,7 @@
       "event": "eating",
       "order": 1,
       "variant_group": null,
-      "arabic": "((إِذَا أَكَلَ أَحَدُكُمْ طَعَاماً فَلْيَقُلْ بِسْمِ اللَّهِ، فَإِنْ نَسِيَ فِي أَوَّلِهِ فَلْيَقُلْ بسمِ اللَّهِ فِي أَوَّلِهِ وَآخِرِهِ)).",
+      "arabic": "إِذَا أَكَلَ أَحَدُكُمْ طَعَاماً فَلْيَقُلْ بِسْمِ اللَّهِ، فَإِنْ نَسِيَ فِي أَوَّلِهِ فَلْيَقُلْ بسمِ اللَّهِ فِي أَوَّلِهِ وَآخِرِهِ",
       "is_quran": false,
       "translations": {
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda : “Apabila seseorang di antara kamu memakan makanan, hendaklah membaca: Apabila lupa pada permulaannya, hendaklah membaca:",
@@ -1006,7 +1006,7 @@
       "event": "eating",
       "order": 2,
       "variant_group": null,
-      "arabic": "((مَنْ أَطْعَمَهُ اللَّهُ الطَّعَامَ فَلْيَقُلْ: اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَأَطْعِمْنَا خَيْراً مِنْهُ، وَمَنْ سَقَاهُ اللَّهُ لَبَناً فَلْيَقُلْ اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ)).",
+      "arabic": "مَنْ أَطْعَمَهُ اللَّهُ الطَّعَامَ فَلْيَقُلْ: اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَأَطْعِمْنَا خَيْراً مِنْهُ، وَمَنْ سَقَاهُ اللَّهُ لَبَناً فَلْيَقُلْ اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ",
       "is_quran": false,
       "translations": {
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda : “Barangsiapa yang diberi rezeki oleh Allah berupa makanan, hendaklah membaca: Ya Allah! berilah kami berkah dengan makan itu dan berilah makanan yang lebih baik. Apabila diberi rezeki berupa minuman susu, hendaklah membaca:",
@@ -1039,7 +1039,7 @@
       "event": "eating",
       "order": 3,
       "variant_group": null,
-      "arabic": "((الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا، وَرَزَقَنِيهِ، مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ)).",
+      "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا، وَرَزَقَنِيهِ، مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah yang memberi makan ini kepadaku dan yang memberi rezeki kepadaku tanpa daya dan kekuatanku.”",
@@ -1076,7 +1076,7 @@
       "event": "eating",
       "order": 4,
       "variant_group": null,
-      "arabic": "((الْحَمْدُ لِلَّهِ حَمْداً كَثِيراً طَيِّباً مُبَارَكاً فِيهِ، غَيْرَ [مَكْفِيٍّ وَلاَ ] مُوَدَّعٍ، وَلاَ مُسْتَغْنَىً عَنْهُ رَبَّنَا)).",
+      "arabic": "الْحَمْدُ لِلَّهِ حَمْداً كَثِيراً طَيِّباً مُبَارَكاً فِيهِ، غَيْرَ [مَكْفِيٍّ وَلاَ ] مُوَدَّعٍ، وَلاَ مُسْتَغْنَىً عَنْهُ رَبَّنَا",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah (Aku memujiNya) dengan pujian yang banyak, yang baik dan penuh berkah, yang senantiasa dibutuhkan, diperlukan dan tidak bisa ditinggalkan, ya Tuhan kami.”",
@@ -1113,7 +1113,7 @@
       "event": "eating",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُم، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ)).",
+      "arabic": "اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُم، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah berkah apa yang Engkau rezekikan kepada mereka, ampunilah dan belas kasihanilah mereka.”",
@@ -1146,7 +1146,7 @@
       "event": "eating",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَطْعِمْ مَنْ أَطْعَمَنِي، وَاسْقِ مَنْ سَقَانِي)).",
+      "arabic": "اللَّهُمَّ أَطْعِمْ مَنْ أَطْعَمَنِي، وَاسْقِ مَنْ سَقَانِي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah ganti makanan kepada orang yang memberi makan kepadaku dan berilah minuman kepada orang yang memberi minuman kepadaku.”",
@@ -1179,7 +1179,7 @@
       "event": "eating",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بَارِكْ لَنَا فِي ثَمَرِنَا، وَبَارِكْ لَنَا فِي مَدِينَتِنَا، وَبَارِكْ لَنَا فِي صَاعِنَا، وَبَارِكْ لَنَا فِي مُدِّنَا)).",
+      "arabic": "اللَّهُمَّ بَارِكْ لَنَا فِي ثَمَرِنَا، وَبَارِكْ لَنَا فِي مَدِينَتِنَا، وَبَارِكْ لَنَا فِي صَاعِنَا، وَبَارِكْ لَنَا فِي مُدِّنَا",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah berkah buah-buahan kami, berilah berkah kota kami, berilah berkah gantangan kami (sehingga di antara kami tidak sering mengurangi timbangan) dan berilah berkah mud kami.”",
@@ -1212,7 +1212,7 @@
       "event": "sneezing",
       "order": 1,
       "variant_group": null,
-      "arabic": "((إِذَا عَطَسَ أَحَدُكُم فَلْيَقُلِ الْحَمْدُ لِلَّهِ، وَلْيَقُلْ لَهُ أَخُوهُ أَوْ صَاحِبُهُ: يَرْحَمُكَ اللَّهُ، فَإِذَا قَالَ لَهُ: يَرحَمُكَ اللَّهُ، فَلْيَقُلْ: يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ)).",
+      "arabic": "إِذَا عَطَسَ أَحَدُكُم فَلْيَقُلِ الْحَمْدُ لِلَّهِ، وَلْيَقُلْ لَهُ أَخُوهُ أَوْ صَاحِبُهُ: يَرْحَمُكَ اللَّهُ، فَإِذَا قَالَ لَهُ: يَرحَمُكَ اللَّهُ، فَلْيَقُلْ: يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ",
       "is_quran": false,
       "translations": {
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda : Apabila seseorang di antara kamu bersin, hendaklah mengucapkan: (Segala puji bagi Allah), lantas saudara atau temannya mengucapkan: (Semoga Allah memberi rahmat kepadaMu). Bila teman atau saudaranya mengucapkan demikian, bacalah: (Semoga Allah memberi petunjuk kepadamu dan memperbaiki keadaanmu.)",
@@ -1245,7 +1245,7 @@
       "event": "sneezing",
       "order": 2,
       "variant_group": null,
-      "arabic": "((يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ)).",
+      "arabic": "يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ",
       "is_quran": false,
       "translations": {
         "id": "(Semoga Allah memberi hidayah kepadamu dan memperbaiki hatimu).",
@@ -1393,7 +1393,7 @@
       "event": "sleeping",
       "order": 4,
       "variant_group": null,
-      "arabic": "((بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، فَإِن أَمْسَكْتَ نَفْسِي فارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا، بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ)).",
+      "arabic": "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، فَإِن أَمْسَكْتَ نَفْسِي فارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا، بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Engkau, wahai Tuhanku, aku meletakkan lambungku. Dan dengan namaMu pula aku bangun daripadanya. Apabila Engkau menahan rohku (mati), maka berilah rahmat padanya. Tapi, apabila Engkau melepaskannya, maka peliharalah, sebagaimana Engkau memelihara hamba-hambaMu yang shalih.”",
@@ -1430,7 +1430,7 @@
       "event": "sleeping",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْياهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا. اللَّهُمَّ إِنِّي أَسْأَلُكَ العَافِيَةَ)).",
+      "arabic": "اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْياهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا. اللَّهُمَّ إِنِّي أَسْأَلُكَ العَافِيَةَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya Engkau menciptakan diriku, dan Engkaulah yang akan mematikannya. Mati dan hidupnya hanya milikMu. Apabila Engkau menghidupkannya, maka peliharalah. Apabila Engkau mematikannya, maka ampunilah. Ya Allah! Sesungguhnya aku memohon kepadaMu keselamatan.”",
@@ -1485,10 +1485,10 @@
         ]
       },
       "phrase_breaks": [
-        60,
-        89,
-        122,
-        157
+        58,
+        87,
+        120,
+        155
       ]
     },
     {
@@ -1497,7 +1497,7 @@
       "event": "sleeping",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ)).",
+      "arabic": "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Jauhkanlah aku dari siksaanMu pada hari Engkau membangkitkan hamba-hambaMu.” (Dibaca tiga kali).",
@@ -1530,7 +1530,7 @@
       "event": "sleeping",
       "order": 7,
       "variant_group": null,
-      "arabic": "((بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا)).",
+      "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
       "is_quran": false,
       "translations": {
         "id": "“Dengan namaMu, ya Allah! Aku mati dan hidup.”",
@@ -1567,7 +1567,7 @@
       "event": "sleeping",
       "order": 8,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ (ثلاثاً وثلاثين) وَالْحَمْدُ لِلَّهِ (ثلاثاً وثلاثين) وَاللَّهُ أَكْبَرُ (أربعاً وثلاثينَ))).",
+      "arabic": "سُبْحَانَ اللَّهِ (ثلاثاً وثلاثين) وَالْحَمْدُ لِلَّهِ (ثلاثاً وثلاثين) وَاللَّهُ أَكْبَرُ (أربعاً وثلاثينَ)",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah (33 x), Segala puji bagi Allah (33 x), Allah Maha Besar (33 x).”",
@@ -1604,7 +1604,7 @@
       "event": "sleeping",
       "order": 9,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَرَبَّ الأَرْضِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ، وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيْءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ. اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الآخِرُ فَلَيسَ بَعْدَكَ شَيْءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيْءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيْءٌ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ)).",
+      "arabic": "اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَرَبَّ الأَرْضِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ، وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيْءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ. اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الآخِرُ فَلَيسَ بَعْدَكَ شَيْءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيْءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيْءٌ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, Tuhan yang menguasai langit yang tujuh, Tuhan yang menguasai arasy yang agung, Tuhan kami dan Tuhan segala sesuatu. Tuhan yang membelah butir tumbuh-tumbuhan dan biji buah, Tuhan yang menurunkan kitab Taurat, Injil dan Furqan (Al- Qur’an). Aku berlindung kepadaMu dari kejahatan segala sesuatu yang Engkau memegang ubun-ubunnya. Ya Allah, Engkau-lah yang pertama, sebelumMu tidak ada sesuatu. Engkaulah yang terakhir, setelahMu tidak ada sesuatu. Engkau-lah yang ahir, tidak ada sesuatu di atasMu, Engkau-lah yang Batin, tidak ada sesuatu yang menghalangiMu, lunasilah utang kami dan berilah kami kekayaan hingga terlepas dari kefakiran.”",
@@ -1637,7 +1637,7 @@
       "event": "sleeping",
       "order": 10,
       "variant_group": null,
-      "arabic": "((الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَكَفَانَا، وَآوَانَا، فَكَمْ مِمَّنْ لاَ كَافِيَ لَهُ وَلاَ مُؤْوِيَ)).",
+      "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَكَفَانَا، وَآوَانَا، فَكَمْ مِمَّنْ لاَ كَافِيَ لَهُ وَلاَ مُؤْوِيَ",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah yang memberi makan kami, memberi minum kami, mencukupi kami, dan memberi tempat berteduh. Berapa banyak orang yang tidak mendapatkan siapa yang memberi kecukupan dan tempat berteduh.”",
@@ -1670,7 +1670,7 @@
       "event": "sleeping",
       "order": 11,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ)).",
+      "arabic": "اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, Tuhan yang mengetahui yang ghaib dan yang nyata, Tuhan pencipta langit dan bumi, Tuhan yang menguasai segala sesuatu dan yang merajainya. Aku bersaksi bahwa tiada Tuhan yang berhak disembah kecuali Engkau. Aku berlindung kepadaMu dari kejahatan diriku, kejahatan setan dan balatentaranya, atau aku berbuat kejelekan pada diriku atau aku mendorongnya kepada seorang Muslim.”",
@@ -1703,7 +1703,7 @@
       "event": "sleeping",
       "order": 12,
       "variant_group": null,
-      "arabic": "((يَقْرَأُ ﴿الم﴾ تَنْزِيلَ السَّجْدَة ِ، وَتَبَارَكَ الَّذي بِيَدِهِ الْمُلْكُ)).",
+      "arabic": "يَقْرَأُ ﴿الم﴾ تَنْزِيلَ السَّجْدَة ِ، وَتَبَارَكَ الَّذي بِيَدِهِ الْمُلْكُ",
       "is_quran": true,
       "translations": {
         "id": "Membaca Alif lam mim tanzil As-Sajdah dan Tabaarakal ladzii biyadihil mulku.",
@@ -1740,7 +1740,7 @@
       "event": "sleeping",
       "order": 13,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لاَ مَلْجَأَ وَلاَ مَنْجَا مِنْكَ إِلاَّ إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ)).",
+      "arabic": "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لاَ مَلْجَأَ وَلاَ مَنْجَا مِنْكَ إِلاَّ إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, aku menyerahkan diriku kepadaMu, aku menyerahkan urusanku kepadaMu, aku menghadapkan wajahku kepadaMu, aku menyandarkan punggungku kepadaMu, karena senang (mendapatkan rahmatMu) dan takut pada (siksaanMu, bila melakukan kesalahan). Tidak ada tempat perlindungan dan penyelamatan dari (ancaman)Mu, kecuali kepadaMu. Aku beriman pada kitab yang telah Engkau turunkan, dan (kebenaran) NabiMu yang telah Engkau utus.” Apabila Engkau meninggal dunia (di waktu tidur), maka kamu akan meninggal dunia dengan memegang fitrah (agama Islam).",
@@ -1803,13 +1803,13 @@
         ]
       },
       "phrase_breaks": [
-        42,
-        72,
-        102,
-        133,
-        163,
-        214,
-        254
+        40,
+        70,
+        100,
+        131,
+        161,
+        212,
+        252
       ]
     },
     {
@@ -1818,7 +1818,7 @@
       "event": "night",
       "order": 1,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ الْوَاحِدُ الْقَهّارُ، رَبُّ السَّمَوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا الْعَزيزُ الْغَفَّارُ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ الْوَاحِدُ الْقَهّارُ، رَبُّ السَّمَوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا الْعَزيزُ الْغَفَّارُ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan (yang berhak disembah) kecuali Allah Yang Maha Esa, Maha Perkasa, Tuhan yang menguasai langit dan bumi dan apa yang di antara keduanya, Yang Maha Mulia lagi Maha Pengampun.”",
@@ -1859,7 +1859,7 @@
       "event": "night",
       "order": 2,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ غَضَبِهِ وَعِقَابِهِ، وَشَرِّ عِبَادِهِ، وَمِنْ هَمَزَاتِ الشَّياطِينِ وَأَنْ يَحْضُرُونِ)).",
+      "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ غَضَبِهِ وَعِقَابِهِ، وَشَرِّ عِبَادِهِ، وَمِنْ هَمَزَاتِ الشَّياطِينِ وَأَنْ يَحْضُرُونِ",
       "is_quran": false,
       "translations": {
         "id": "“Aku berlindung dengan kalimat Allah yang sempurna dari kemarahan dan siksaanNya, serta kejahatan hamba-hambaNya, dan dari godaan setan (bisikannya) serta jangan sampai mereka hadir (kepadaku).”",
@@ -1925,7 +1925,7 @@
       "event": "night",
       "order": 4,
       "variant_group": null,
-      "arabic": "((ويَقُومُ يُصَلِّي إِنْ أَرَادَ ذَلِكَ)).",
+      "arabic": "ويَقُومُ يُصَلِّي إِنْ أَرَادَ ذَلِكَ",
       "is_quran": false,
       "translations": {
         "id": "Berdiri dan melakukan shalat, bila mau.",
@@ -1958,7 +1958,7 @@
       "event": "istiftah",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ، اللَّهُمَّ نَقِّنِي مِنْ خَطَايَايَ كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ، اللَّهُمَّ اغْسِلْني مِنْ خَطَايَايَ، بِالثَّلْجِ وَالْماءِ وَالْبَرَدِ)).",
+      "arabic": "اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ، اللَّهُمَّ نَقِّنِي مِنْ خَطَايَايَ كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ، اللَّهُمَّ اغْسِلْني مِنْ خَطَايَايَ، بِالثَّلْجِ وَالْماءِ وَالْبَرَدِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, jauhkan antara aku dan kesalahan-kesalahanku, sebagaimana Engkau menjauhkan antara timur dan barat. Ya Allah, bersihkanlah aku dan kesalahan- kesalahanku, sebagaimana baju putih dibersihkan dari kotoran. Ya Allah, cucilah aku dari kesalahan- kesalahanku dengan salju, air dan air es”.",
@@ -1995,7 +1995,7 @@
       "event": "istiftah",
       "order": 2,
       "variant_group": null,
-      "arabic": "((سُبْحانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلاَ إِلَهَ غَيْرُكَ)).",
+      "arabic": "سُبْحانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلاَ إِلَهَ غَيْرُكَ",
       "is_quran": false,
       "translations": {
         "id": "Maha Suci Engkau ya Allah, aku memujiMu, Maha Berkah akan nama-Mu, Maha Tinggi kekayaan dan kebesaranMu, tiada Ilah yang berhak disembah selain Engkau.",
@@ -2038,9 +2038,9 @@
         ]
       },
       "phrase_breaks": [
-        38,
-        58,
-        78
+        36,
+        56,
+        76
       ]
     },
     {
@@ -2049,7 +2049,7 @@
       "event": "istiftah",
       "order": 3,
       "variant_group": null,
-      "arabic": "((وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَوَاتِ وَالأَرْضَ حَنِيفَاً وَمَا أَنَا مِنَ الْمُشْرِكِينَ، إِنَّ صَلاَتِي، وَنُسُكِي، وَمَحْيَايَ، وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ، لاَ شَرِيكَ لَهُ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ. اللَّهُمَّ أَنْتَ المَلِكُ لاَ إِلَهَ إِلاَّ أَنْتَ، أَنْتَ رَبِّي وَأَنَا عَبْدُكَ، ظَلَمْتُ نَفْسِي وَاعْتَرَفْتُ بِذَنْبِي فَاغْفِرْ لِي ذُنُوبي جَمِيعَاً إِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ. وَاهْدِنِي لِأَحْسَنِ الأَخْلاقِ لاَ يَهْدِي لِأَحْسَنِها إِلاَّ أَنْتَ، وَاصْرِفْ عَنِّي سَيِّئَهَا، لاَ يَصْرِفُ عَنِّي سَيِّئَهَا إِلاَّ أَنْتَ، لَبَّيْكَ وَسَعْدَيْكَ، وَالخَيْرُ كُلُّهُ بِيَـــــــدَيْكَ، وَالشَّـــــرُّ لَيْسَ إِلَيْــــــكَ، أَنَا بِكَ وَإِلَيْكَ، تَبارَكْتَ وَتَعَالَيْتَ، أَسْتَغْفِرُكَ وَأَتوبُ إِلَيْكَ)).",
+      "arabic": "وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَوَاتِ وَالأَرْضَ حَنِيفَاً وَمَا أَنَا مِنَ الْمُشْرِكِينَ، إِنَّ صَلاَتِي، وَنُسُكِي، وَمَحْيَايَ، وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ، لاَ شَرِيكَ لَهُ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ. اللَّهُمَّ أَنْتَ المَلِكُ لاَ إِلَهَ إِلاَّ أَنْتَ، أَنْتَ رَبِّي وَأَنَا عَبْدُكَ، ظَلَمْتُ نَفْسِي وَاعْتَرَفْتُ بِذَنْبِي فَاغْفِرْ لِي ذُنُوبي جَمِيعَاً إِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ. وَاهْدِنِي لِأَحْسَنِ الأَخْلاقِ لاَ يَهْدِي لِأَحْسَنِها إِلاَّ أَنْتَ، وَاصْرِفْ عَنِّي سَيِّئَهَا، لاَ يَصْرِفُ عَنِّي سَيِّئَهَا إِلاَّ أَنْتَ، لَبَّيْكَ وَسَعْدَيْكَ، وَالخَيْرُ كُلُّهُ بِيَـــــــدَيْكَ، وَالشَّـــــرُّ لَيْسَ إِلَيْــــــكَ، أَنَا بِكَ وَإِلَيْكَ، تَبارَكْتَ وَتَعَالَيْتَ، أَسْتَغْفِرُكَ وَأَتوبُ إِلَيْكَ",
       "is_quran": false,
       "translations": {
         "id": "“Aku menghadap kepada Tuhan Pencipta langit dan bumi, dengan memegang agama yang lurus dan aku tidak tergolong orang-orang yang musyrik. Sesungguhnya shalat, ibadah dan hidup serta matiku adalah untuk Allah. Tuhan seru sekalian alam, tiada sekutu bagiNya, dan karena itu, aku diperintah dan aku termasuk orang-orang muslim. Ya Allah, Engkau adalah Raja, tiada Tuhan (yang berhak disembah) kecuali Engkau, engkau Tuhanku dan aku adalah hambaMu. Aku menganiaya diriku, aku mengakui dosaku (yang telah kulakukan). Oleh karena itu ampunilah seluruh dosaku, sesungguhnya tidak akan ada yang mengampuni dosa-dosa, kecuali Engkau. Tunjukkan aku pada akhlak yang terbaik, tidak akan menunjukkan kepadanya kecuali Engkau. Hindarkan aku dari akhlak yang jahat, tidak akan ada yang bisa menjauhkan aku daripadanya, kecuali Engkau. Aku penuhi panggilanMu dengan kegembiraan, seluruh kebaikan di kedua tanganMu, kejelekan tidak dinisbahkan kepadaMu. Aku hidup dengan pertolongan dan rahmatMu, dan kepadaMu (aku kembali). Maha Suci Engkau dan Maha Tinggi. Aku minta ampun dan bertaubat kepadaMu”.",
@@ -2082,7 +2082,7 @@
       "event": "istiftah",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ رَبَّ جِبْرَائِيلَ، وَمِيْكَائِيلَ، وَإِسْرَافِيلَ، فَاطِرَ السَّمَوَاتِ وَالأَرْضِ، عَالِمَ الغَيْبِ وَالشَّهَادَةِ أَنْتَ تَحْكُمُ بَيْنَ عِبَادِكَ فِيمَا كَانُوا فِيهِ يَخْتَلِفُونَ. اهْدِنِي لِمَا اخْتُلِفَ فِيهِ مِنَ الْحَقِّ بِإِذْنِكَ إِنَّكَ تَهْدِي مَنْ تَشَاءُ إِلَى صِرَاطٍ مُسْتَقيمٍ)).",
+      "arabic": "اللَّهُمَّ رَبَّ جِبْرَائِيلَ، وَمِيْكَائِيلَ، وَإِسْرَافِيلَ، فَاطِرَ السَّمَوَاتِ وَالأَرْضِ، عَالِمَ الغَيْبِ وَالشَّهَادَةِ أَنْتَ تَحْكُمُ بَيْنَ عِبَادِكَ فِيمَا كَانُوا فِيهِ يَخْتَلِفُونَ. اهْدِنِي لِمَا اخْتُلِفَ فِيهِ مِنَ الْحَقِّ بِإِذْنِكَ إِنَّكَ تَهْدِي مَنْ تَشَاءُ إِلَى صِرَاطٍ مُسْتَقيمٍ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, Tuhan Jibrail, Mikail dan Israfil. Wahai Pencipta langit dan bumi. Wahai Tuhan yang mengetahui yang ghaib dan nyata. Engkau yang menjatuhkan hukum (untuk memutuskan) apa yang mereka (orang-orang kristen dan yahudi) pertentangkan. Tunjukkanlah aku pada kebenaran apa yang dipertentangkan dengan seizin dariMu. Sesungguhnya Engkau menunjukkan pada jalan yang lurus bagi orang yang Engkau kehendaki”.",
@@ -2115,7 +2115,7 @@
       "event": "istiftah",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لَكَ الْحَمْدُ، أَنْتَ نُورُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ، وَلَكَ الْحَمْدُ أَنْتَ قَيِّمُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ، [وَلَكَ الْحَمْدُ أَنْتَ رَبُّ السَّمَواتِ وَالأَرْضِ وَمَنْ فِيهِنَّ] [وَلَكَ الْحَمْدُ لَكَ مُلْكُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ] [وَلَكَ الْحَمْدُ أَنْتَ مَلِكُ السَّمَوَاتِ وَالأَرْضِ] [وَلَكَ الْحَمْدُ] [أَنْتَ الْحَقُّ، وَوَعْدُكَ الْحَقُّ، وَقَوْلُكَ الْحَقُّ، وَلِقاؤُكَ الْحَقُّ، وَالْجَنَّةُ حَقٌّ، وَالنَّارُ حَقٌّ، وَالنَّبِيُّونَ حَقٌّ، وَمحَمَّدٌ صلى الله عليه وسلم حَقٌّ، وَالسّاعَةُ حَقٌّ] [اللَّهُمَّ لَكَ أَسْلَمتُ، وَعَلَيْكَ تَوَكَّلْتُ، وَبِكَ آمَنْتُ، وَإِلَيْكَ أَنَبْتُ، وَبِكَ خاصَمْتُ، وَإِلَيْكَ حاكَمْتُ. فَاغْفِرْ لِي مَا قَدَّمْتُ، وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ، وَمَا أَعْلَنْتُ] [وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي] [أَنْتَ المُقَدِّمُ، وَأَنْتَ المُؤَخِّرُ لاَ إِلَهَ إِلاَّ أَنْتَ] [أَنْتَ إِلَهِي لاَ إِلَهَ إِلاَّ أَنْتَ] [وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ])).",
+      "arabic": "اللَّهُمَّ لَكَ الْحَمْدُ، أَنْتَ نُورُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ، وَلَكَ الْحَمْدُ أَنْتَ قَيِّمُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ، [وَلَكَ الْحَمْدُ أَنْتَ رَبُّ السَّمَواتِ وَالأَرْضِ وَمَنْ فِيهِنَّ] [وَلَكَ الْحَمْدُ لَكَ مُلْكُ السَّمَوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ] [وَلَكَ الْحَمْدُ أَنْتَ مَلِكُ السَّمَوَاتِ وَالأَرْضِ] [وَلَكَ الْحَمْدُ] [أَنْتَ الْحَقُّ، وَوَعْدُكَ الْحَقُّ، وَقَوْلُكَ الْحَقُّ، وَلِقاؤُكَ الْحَقُّ، وَالْجَنَّةُ حَقٌّ، وَالنَّارُ حَقٌّ، وَالنَّبِيُّونَ حَقٌّ، وَمحَمَّدٌ صلى الله عليه وسلم حَقٌّ، وَالسّاعَةُ حَقٌّ] [اللَّهُمَّ لَكَ أَسْلَمتُ، وَعَلَيْكَ تَوَكَّلْتُ، وَبِكَ آمَنْتُ، وَإِلَيْكَ أَنَبْتُ، وَبِكَ خاصَمْتُ، وَإِلَيْكَ حاكَمْتُ. فَاغْفِرْ لِي مَا قَدَّمْتُ، وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ، وَمَا أَعْلَنْتُ] [وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي] [أَنْتَ المُقَدِّمُ، وَأَنْتَ المُؤَخِّرُ لاَ إِلَهَ إِلاَّ أَنْتَ] [أَنْتَ إِلَهِي لاَ إِلَهَ إِلاَّ أَنْتَ] [وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ]",
       "is_quran": false,
       "translations": {
         "id": "Apabila Nabi Shallallahu’alaihi wasallam shalat Tahajud di waktu malam, beliau membaca: “Ya, Allah! BagiMu segala puji, Engkau cahaya langit dan bumi serta seisinya. BagiMu segala puji, Engkau yang mengurusi langit dan bumi serta seisinya. BagiMu segala puji, Engkau Tuhan yang menguasai langit dan bumi serta seisinya. BagiMu segala puji dan bagi-Mu kerajaan langit dan bumi serta seisi-nya. BagiMu segala puji, Engkau benar, janjiMu benar, firmanMu benar, bertemu denganMu benar, Surga adalah benar (ada), Neraka adalah benar (ada), (terutusnya) para nabi adalah benar, (terutusnya) Muhammad adalah benar (dariMu), kejadian hari Kiamat adalah benar. Ya Allah, kepadaMu aku menyerah, kepadaMu aku bertawakal, kepadaMu aku beriman, kepadaMu aku kembali (bertaubat), dengan pertolonganMu aku berdebat (kepada orang-orang kafir), kepadaMu (dan dengan ajaran-Mu) aku menjatuhkan hukum. Oleh karena itu, ampunilah dosaku yang telah lewat dan yang akan datang. Engkaulah yang mendahulukan dan mengakhirkan, tiada Tuhan yang hak disembah kecuali Engkau, Engkau adalah Tuhanku, tidak ada Tuhan yang hak disembah kecuali Engkau”.",
@@ -2189,7 +2189,7 @@
       "event": "ruku",
       "order": 2,
       "variant_group": null,
-      "arabic": "((سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي)).",
+      "arabic": "سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Engkau, ya Allah! Tuhanku, dan dengan pujiMu. Ya Allah! Ampunilah dosaku.”",
@@ -2228,7 +2228,7 @@
         ]
       },
       "phrase_breaks": [
-        48
+        46
       ]
     },
     {
@@ -2237,7 +2237,7 @@
       "event": "ruku",
       "order": 3,
       "variant_group": null,
-      "arabic": "((سُبُّوُحٌ، قُدُّوسٌ، رَبُّ المَلاَئِكَةِ وَالرُّوحِ)).",
+      "arabic": "سُبُّوُحٌ، قُدُّوسٌ، رَبُّ المَلاَئِكَةِ وَالرُّوحِ",
       "is_quran": false,
       "translations": {
         "id": "“Engkau, Tuhan Yang Maha Suci (dari kekurangan dan hal yang tidak layak bagi kebesaranMu), Maha Agung, Tuhan malaikat dan Jibril.”",
@@ -2274,7 +2274,7 @@
       "event": "ruku",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لَكَ رَكَعْتُ، وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، خَشَعَ لَكَ سَمْعِي، وَبَصَرِي، وَمُخِّي، وَعَــــظْمِي، وَعَصَبِي، [وَمَا استَقَلَّتْ بِهِ قَدَمِي])).",
+      "arabic": "اللَّهُمَّ لَكَ رَكَعْتُ، وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، خَشَعَ لَكَ سَمْعِي، وَبَصَرِي، وَمُخِّي، وَعَــــظْمِي، وَعَصَبِي، [وَمَا استَقَلَّتْ بِهِ قَدَمِي]",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, untukMu aku ruku’. KepadaMu aku beriman, kepadaMu aku menyerah. Pendengaranku, penglihatanku, otakku, tulangku, sarafku dan apa yang berdiri di atas dua tapak kakiku, telah merunduk dengan khusyuk kepadaMu.”",
@@ -2315,7 +2315,7 @@
       "event": "ruku",
       "order": 5,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ)).",
+      "arabic": "سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ",
       "is_quran": false,
       "translations": {
         "id": "Maha Suci (Allah) Yang memiliki Keperkasaan, Kerajaan, Kebesaran dan Keagungan.",
@@ -2356,7 +2356,7 @@
       "event": "itidal",
       "order": 1,
       "variant_group": null,
-      "arabic": "((سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ)).",
+      "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah mendengar pujian orang yang memujiNya.”",
@@ -2389,7 +2389,7 @@
       "event": "itidal",
       "order": 2,
       "variant_group": null,
-      "arabic": "((رَبَّنَا وَلَكَ الْحَمْدُ، حَمْداً كَثيراً طَيِّباً مُبارَكاً فِيهِ)).",
+      "arabic": "رَبَّنَا وَلَكَ الْحَمْدُ، حَمْداً كَثيراً طَيِّباً مُبارَكاً فِيهِ",
       "is_quran": false,
       "translations": {
         "id": "“Wahai Tuhan kami, bagiMu segala puji, aku memujiMu dengan pujian yang banyak, yang baik dan penuh dengan berkah.”",
@@ -2424,7 +2424,7 @@
         ]
       },
       "phrase_breaks": [
-        29
+        27
       ]
     },
     {
@@ -2433,7 +2433,7 @@
       "event": "itidal",
       "order": 3,
       "variant_group": null,
-      "arabic": "((مِلْءَ السَّمَوَاتِ وَمِلْءَ الأَرْضِ، وَمَا بَيْنَهُمَا، وَمِلْءَ مَا شِئْتَ مِنْ شَيءٍ بَعْدُ. أَهلَ الثَّناءِ وَالْمَجْدِ، أَحَقُّ مَا قَالَ الْعَبْدُ، وَكُلُّنَا لَكَ عَبْدٌ. اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الجَدِّ مِنْكَ الجَدُّ)).",
+      "arabic": "مِلْءَ السَّمَوَاتِ وَمِلْءَ الأَرْضِ، وَمَا بَيْنَهُمَا، وَمِلْءَ مَا شِئْتَ مِنْ شَيءٍ بَعْدُ. أَهلَ الثَّناءِ وَالْمَجْدِ، أَحَقُّ مَا قَالَ الْعَبْدُ، وَكُلُّنَا لَكَ عَبْدٌ. اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الجَدِّ مِنْكَ الجَدُّ",
       "is_quran": false,
       "translations": {
         "id": "(Aku memujiMu dengan) pujian sepenuh langit dan sepenuh bumi, sepenuh apa yang di antara keduanya, sepenuh apa yang Engkau kehendaki setelah itu. Wahai Tuhan yang layak dipuji dan diagungkan, Yang paling berhak dikatakan oleh seorang hamba dan kami seluruhnya adalah hambaMu. Ya Allah tidak ada yang dapat menghalangi apa yang Engkau berikan dan tidak ada pula yang dapat memberi apa yang Engkau halangi, tidak bermanfaat kekayaan bagi orang yang memilikinya (kecuali iman dan amal shalihnya), hanya dariMu kekayaan itu.",
@@ -2496,14 +2496,14 @@
         ]
       },
       "phrase_breaks": [
-        41,
-        60,
-        99,
-        128,
-        157,
-        181,
-        222,
-        253
+        39,
+        58,
+        97,
+        126,
+        155,
+        179,
+        220,
+        251
       ]
     },
     {
@@ -2549,7 +2549,7 @@
       "event": "sujud",
       "order": 2,
       "variant_group": null,
-      "arabic": "((سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي)).",
+      "arabic": "سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Engkau. Ya Allah, Tuhan kami, aku memujiMu. Ya Allah, ampunilah dosaku.”",
@@ -2588,7 +2588,7 @@
         ]
       },
       "phrase_breaks": [
-        48
+        46
       ]
     },
     {
@@ -2597,7 +2597,7 @@
       "event": "sujud",
       "order": 3,
       "variant_group": null,
-      "arabic": "((سُبوحٌ، قُدُّوسٌ، رَبُّ الْمَلَائِكَةِ وَالرُّوحِ)).",
+      "arabic": "سُبوحٌ، قُدُّوسٌ، رَبُّ الْمَلَائِكَةِ وَالرُّوحِ",
       "is_quran": false,
       "translations": {
         "id": "“Engkau Tuhan Yang Maha Suci, Maha Agung, Tuhan para malaikat dan Jibril.”",
@@ -2630,7 +2630,7 @@
       "event": "sujud",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لَكَ سَجَدْتُ وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَصَوَّرَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ، تَبَارَكَ اللَّهُ أَحْسنُ الْخَالِقينَ)).",
+      "arabic": "اللَّهُمَّ لَكَ سَجَدْتُ وَبِكَ آمَنْتُ، وَلَكَ أَسْلَمْتُ، سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَصَوَّرَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ، تَبَارَكَ اللَّهُ أَحْسنُ الْخَالِقينَ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, untukMulah aku bersujud, kepadaMulah aku beriman, kepadaMu aku menyerahkan diri, wajahku bersujud kepada Tuhan yang menciptakannya, yang membentuk rupanya, yang membelah (memberikan) pendengarannya, penglihatannya, Maha Suci Allah sebaik baik Pencipta.",
@@ -2667,7 +2667,7 @@
       "event": "sujud",
       "order": 5,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ)).",
+      "arabic": "سُبْحَانَ ذِي الْجَبَرُوتِ، وَالْمَلَكُوتِ، وَالْكِبْرِيَاءِ، وَالْعَظَمَةِ",
       "is_quran": false,
       "translations": {
         "id": "Maha suci Tuhan yang memiliki Keperkasaan, Kerajaan, Kebesaran dan Keagungan.",
@@ -2708,7 +2708,7 @@
       "event": "sujud",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ: دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ، وَعَلاَنِيَّتَهُ وَسِرَّهُ)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ: دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ، وَعَلاَنِيَّتَهُ وَسِرَّهُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, ampunilah seluruh dosaku yang kecil dan besar, yang telah lewat dan yang akan datang, yang kulakukan dengan terang- terangan dan yang tersembunyi.”",
@@ -2751,9 +2751,9 @@
         ]
       },
       "phrase_breaks": [
-        42,
-        61,
-        84
+        40,
+        59,
+        82
       ]
     },
     {
@@ -2762,7 +2762,7 @@
       "event": "sujud",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقوبَتِكَ، وَأَعُوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقوبَتِكَ، وَأَعُوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, sesungguhnya aku berlindung kepadaMu dengan keridhaanMu (agar selamat) dari kebencianMu, dan dengan keselamatanMu (agar terhindar) dari siksaanMu. Aku tidak membatasi pujian kepadaMu. Engkau (dengan kebesaran dan keagunganMu) adalah sebagaimana pujianMu kepada diriMu.”",
@@ -2809,10 +2809,10 @@
         ]
       },
       "phrase_breaks": [
-        53,
-        87,
-        110,
-        140
+        51,
+        85,
+        108,
+        138
       ]
     },
     {
@@ -2821,7 +2821,7 @@
       "event": "between_sujud",
       "order": 1,
       "variant_group": null,
-      "arabic": "((رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي)).",
+      "arabic": "رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي",
       "is_quran": false,
       "translations": {
         "id": "“Wahai Tuhanku, ampunilah dosaku, wahai Tuhanku, ampunilah dosaku.”",
@@ -2854,7 +2854,7 @@
       "event": "between_sujud",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَاجْبُرْنِي، وَعَافِنِي، وَارْزُقْنِي، وَارْفَعْنِي)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَاجْبُرْنِي، وَعَافِنِي، وَارْزُقْنِي، وَارْفَعْنِي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, ampunilah dosaku, berilah rahmat kepadaku, tunjukkanlah aku (ke jalan yang benar), cukupkanlah aku, selamatkan aku (tubuh sehat dan keluarga terhindar dari musibah), berilah aku rezeki (yang halal) dan angkatlah derajatku.”",
@@ -2891,7 +2891,7 @@
       "event": "tashahhud",
       "order": 1,
       "variant_group": null,
-      "arabic": "((التَّحِيَّاتُ لِلَّهِ، وَالصَّلَواتُ، وَالطَّيِّباتُ، السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ. أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسولُهُ)).",
+      "arabic": "التَّحِيَّاتُ لِلَّهِ، وَالصَّلَواتُ، وَالطَّيِّباتُ، السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ. أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسولُهُ",
       "is_quran": false,
       "translations": {
         "id": "“Segala penghormatan hanya milik Allah, juga segala pengagungan dan kebaikan. Semoga kesejahteraan terlimpahkan kepadamu, wahai Nabi, begitu juga rahmat dan berkahNya. Kesejahteraan semoga terlimpahkan kepada kita dan hamba-hamba Allah yang shalih. Aku bersaksi bahwa tiada Tuhan yang hak disembah selain Allah dan aku bersaksi bahwa Muhammad adalah hamba dan utusanNya.”",
@@ -2928,7 +2928,7 @@
       "event": "tashahhud",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيتَ عَلَى إِبْرَاهِيمَ، وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ)).",
+      "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيتَ عَلَى إِبْرَاهِيمَ، وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, berilah rahmat kepada Muhammad dan keluarganya, sebagaimana Engkau telah memberikan rahmat kepada Ibrahim dan keluarganya. Sesungguhnya Engkau Maha Terpuji dan Maha Agung. Berilah berkah kepada Muhammad dan keluarganya (termasuk anak dan istri atau umatnya), sebagaimana Engkau telah memberi berkah kepada Ibrahim dan keluarganya. Sesungguhnya Engkau Maha Terpuji dan Maha Agung.”",
@@ -2961,7 +2961,7 @@
       "event": "tashahhud",
       "order": 3,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى أَزْوَاجِهِ وَذُرِّيَّتِهِ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ. وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى أَزْواجِهِ وَذُرِّيَّتِهِ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ. إِنَّكَ حَمِيدٌ مَجِيدٌ)).",
+      "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى أَزْوَاجِهِ وَذُرِّيَّتِهِ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ. وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى أَزْواجِهِ وَذُرِّيَّتِهِ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ. إِنَّكَ حَمِيدٌ مَجِيدٌ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, berilah rahmat kepada Muhammad, istri-istri dan keturunannya, sebagaimana Engkau telah memberikan rahmat kepada keluarga Ibrahim. Berilah berkah kepada Muhammad, istri- istri dan keturunannya, sebagaimana Engkau telah memberkahi kepada keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji dan Maha Agung.”",
@@ -2998,7 +2998,7 @@
       "event": "tashahhud",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُــمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ جَهَنَّمَ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ)).",
+      "arabic": "اللَّهُــمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ جَهَنَّمَ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, Sesungguhnya aku berlindung kepadaMu dari siksaan kubur, siksa neraka Jahanam, fitnah kehidupan dan setelah mati, serta dari kejahatan fitnah Almasih Dajjal.”",
@@ -3035,7 +3035,7 @@
       "event": "tashahhud",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَأَعوذُ بِكَ مِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ، وَأَعوذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ. اللَّهُمَّ إِنِّي أَعوذُ بِكَ مِنَ الْمَأْثَمِ وَالْمَغْرَمِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَأَعوذُ بِكَ مِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ، وَأَعوذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ. اللَّهُمَّ إِنِّي أَعوذُ بِكَ مِنَ الْمَأْثَمِ وَالْمَغْرَمِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu dari siksa kubur. Aku berlindung kepadaMu dari fitnah Almasih Dajjal. Aku berlindung kepadaMu dari fitnah kehidupan dan sesudah mati. Ya Allah, Sesungguhnya aku berlindung kepadaMu dari perbuatan dosa dan kerugian.”",
@@ -3082,9 +3082,9 @@
         ]
       },
       "phrase_breaks": [
-        56,
-        108,
-        161
+        54,
+        106,
+        159
       ]
     },
     {
@@ -3093,7 +3093,7 @@
       "event": "tashahhud",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْماً كَثِيراً، وَلاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ وَارْحَمْنِي، إِنَّكَ أَنْتَ الغَفورُ الرَّحيمُ)).",
+      "arabic": "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْماً كَثِيراً، وَلاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ وَارْحَمْنِي، إِنَّكَ أَنْتَ الغَفورُ الرَّحيمُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku banyak menganiaya diriku, dan tidak ada yang mengampuni dosa-dosa kecuali Engkau. Oleh karena itu, ampunilah dosa-dosaku dan berilah rahmat kepadaku. Sesungguhnya Engkau Maha Pengampun dan Maha Penyayang.”",
@@ -3140,9 +3140,9 @@
         ]
       },
       "phrase_breaks": [
-        55,
-        95,
-        148
+        53,
+        93,
+        146
       ]
     },
     {
@@ -3151,7 +3151,7 @@
       "event": "tashahhud",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِي مَا قَدَّمْتُ، وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ، وَمَا أَعْلَنْتُ، وَمَا أَسْرَفْتُ، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي. أَنْتَ الْمُقَدِّمُ، وَأَنْتَ الْمُؤَخِّرُ لاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِي مَا قَدَّمْتُ، وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ، وَمَا أَعْلَنْتُ، وَمَا أَسْرَفْتُ، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي. أَنْتَ الْمُقَدِّمُ، وَأَنْتَ الْمُؤَخِّرُ لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah! Ampunilah aku akan (dosaku) yang aku lewatkan dan yang aku akhirkan, apa yang aku rahasiakan dan yang kutampakkan, yang aku lakukan secara berlebihan, serta apa yang Engkau lebih mengetahui dari pada aku, Engkau yang mendahulukan dan mengakhirkan, tidak ada Ilah yang berhak disembah kecuali Engkau.",
@@ -3184,7 +3184,7 @@
       "event": "tashahhud",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ، وَشُكْرِكَ، وَحُسْنِ عِبادَتِكَ)).",
+      "arabic": "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ، وَشُكْرِكَ، وَحُسْنِ عِبادَتِكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah pertolongan kepadaku untuk menyebut namaMu, syukur kepadaMu dan ibadah yang baik untukMu.”",
@@ -3221,7 +3221,7 @@
       "event": "tashahhud",
       "order": 9,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْبُخْلِ، وَأَعوذُ بِكَ مِنَ الْجُبْنِ، وَأَعُوذُ بِكَ مِنْ أَنْ أُرَدَّ إِلَى أَرْذَلِ الْعُمُرِ، وَأَعُوذُ بِكَ مِنْ فِتْنَةِ الدُّنْيَا وَعَذَابِ الْقَبْرِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْبُخْلِ، وَأَعوذُ بِكَ مِنَ الْجُبْنِ، وَأَعُوذُ بِكَ مِنْ أَنْ أُرَدَّ إِلَى أَرْذَلِ الْعُمُرِ، وَأَعُوذُ بِكَ مِنْ فِتْنَةِ الدُّنْيَا وَعَذَابِ الْقَبْرِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu dari bakhil, aku berlindung kepadaMu dari penakut, aku berlindung kepadaMu dari dikembalikan ke usia yang terhina, dan aku berlindung kepadaMu dari fitnah dunia dan siksa kubur.”",
@@ -3264,9 +3264,9 @@
         ]
       },
       "phrase_breaks": [
-        49,
-        79,
-        138
+        47,
+        77,
+        136
       ]
     },
     {
@@ -3275,7 +3275,7 @@
       "event": "tashahhud",
       "order": 10,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu, agar dimasukkan ke Surga dan aku berlindung kepadaMu dari Neraka.”",
@@ -3308,7 +3308,7 @@
       "event": "tashahhud",
       "order": 11,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ بِعِلْمِكَ الغَيْبَ وَقُدْرَتِكَ عَلَى الْخَلقِ أَحْيِنِي مَا عَلِمْتَ الْحَيَاةَ خَيْراً لِي، وَتَوَفَّنِي إِذَا عَلِمْتَ الْوَفَاةَ خَيْراً لِي، اللَّهُمَّ إِنِّي أَسْأَلُكَ خَشْيَتَكَ فِي الْغَيْبِ وَالشَّهَادَةِ، وَأَسْأَلُكَ كَلِمَةَ الْحَقِّ فِي الرِّضَا وَالْغَضَبِ، وَأَسْأَلُكَ الْقَصْدَ فِي الْغِنَى وَالْفَقْرِ، وَأَسْأَلُكَ نَعِيماً لاَ يَنْفَدُ، وَأَسْأَلُكَ قُرَّةَ عَيْنٍ لاَ تَنْقَطِعُ، وَأَسْأَلُكَ الرِّضَا بَعْدَ الْقَضَاءِ، وَأَسْــــأَلُكَ بَرْدَ الْعَيْشِ بَعْدَ الْمَوْتِ، وَأَسْأَلُكَ لَذَّةَ النَّظَرِ إِلَى وَجْهِكَ، وَالشَّوْقَ إِلَى لِقائِكَ فِي غَيرِ ضَرَّاءَ مُضِرَّةٍ، وَلاَ فِتْنَةٍ مُضِلَّةٍ، اللَّهُمَّ زَيِّنَا بِزِينَةِ الإِيمَانِ، وَاجْعَلْنَا هُدَاةً مُهْتَدِينَ)).",
+      "arabic": "اللَّهُمَّ بِعِلْمِكَ الغَيْبَ وَقُدْرَتِكَ عَلَى الْخَلقِ أَحْيِنِي مَا عَلِمْتَ الْحَيَاةَ خَيْراً لِي، وَتَوَفَّنِي إِذَا عَلِمْتَ الْوَفَاةَ خَيْراً لِي، اللَّهُمَّ إِنِّي أَسْأَلُكَ خَشْيَتَكَ فِي الْغَيْبِ وَالشَّهَادَةِ، وَأَسْأَلُكَ كَلِمَةَ الْحَقِّ فِي الرِّضَا وَالْغَضَبِ، وَأَسْأَلُكَ الْقَصْدَ فِي الْغِنَى وَالْفَقْرِ، وَأَسْأَلُكَ نَعِيماً لاَ يَنْفَدُ، وَأَسْأَلُكَ قُرَّةَ عَيْنٍ لاَ تَنْقَطِعُ، وَأَسْأَلُكَ الرِّضَا بَعْدَ الْقَضَاءِ، وَأَسْــــأَلُكَ بَرْدَ الْعَيْشِ بَعْدَ الْمَوْتِ، وَأَسْأَلُكَ لَذَّةَ النَّظَرِ إِلَى وَجْهِكَ، وَالشَّوْقَ إِلَى لِقائِكَ فِي غَيرِ ضَرَّاءَ مُضِرَّةٍ، وَلاَ فِتْنَةٍ مُضِلَّةٍ، اللَّهُمَّ زَيِّنَا بِزِينَةِ الإِيمَانِ، وَاجْعَلْنَا هُدَاةً مُهْتَدِينَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, dengan ilmuMu atas yang gaib dan dengan kemahakuasa-anMu atas seluruh makhluk, perpanjanglah hidupku, bila Engkau mengetahui bahwa kehidupan selanjutnya lebih baik bagiku. Dan matikan aku dengan segera, bila Engkau mengetahui bahwa kematian lebih baik bagiku. Ya Allah, sesungguhnya aku mohon kepadaMu agar aku takut kepadaMu dalam keadaan sembunyi (sepi) atau ramai. Aku mohon kepadaMu, agar dapat berpegang dengan kalimat hak di waktu rela atau marah. Aku minta kepadaMu, agar aku bisa melaksanakan kesederhanaan dalam keadaan kaya atau fakir, aku mohon kepadaMu agar diberi nikmat yang tidak habis dan aku minta kepadaMu, agar diberi penyejuk mata yang tak putus. Aku mohon kepadaMu agar aku dapat rela setelah qadhaMu (turun pada kehidupanku). Aku mohon kepadaMu kehidupan yang menyenangkan setelah aku meninggal dunia. Aku mohon kepadaMu kenikmatan memandang wajahMu (di Surga), rindu bertemu denganMu tanpa penderitaan yang membahayakan dan fitnah yang menyesatkan. Ya Allah, hiasilah kami dengan keimanan dan jadikanlah kami sebagai penunjuk jalan (lurus) yang memperoleh bimbingan dariMu.”",
@@ -3345,7 +3345,7 @@
       "event": "tashahhud",
       "order": 12,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ يَا أَللَّهُ بِأَنَّكَ الْوَاحِدُ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يولَدْ، وَلَمْ يَكنْ لَهُ كُفُواً أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِّيمُ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ يَا أَللَّهُ بِأَنَّكَ الْوَاحِدُ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يولَدْ، وَلَمْ يَكنْ لَهُ كُفُواً أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِّيمُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu, ya Allah! Dengan bersaksi bahwa Engkau adalah Tuhan Yang Maha Esa, Maha Tunggal tidak membutuhkan sesuatu, tapi segala sesuatu butuh kepadaMu, tidak beranak dan tidak diperanakkan (tidak punya ibu dan bapak), tidak ada seorang pun yang menyamaiMu, aku mohon kepadaMu agar mengampuni dosa-dosaku. Sesungguhnya Engkau Maha Pengampun dan Maha Penyayang.”",
@@ -3392,8 +3392,8 @@
         ]
       },
       "phrase_breaks": [
-        120,
-        154
+        118,
+        152
       ]
     },
     {
@@ -3402,7 +3402,7 @@
       "event": "tashahhud",
       "order": 13,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ لَا إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ، الْمَنَّانُ، يَا بَدِيعَ السَّمَوَاتِ وَالْأَرْضِ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ لَا إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ، الْمَنَّانُ، يَا بَدِيعَ السَّمَوَاتِ وَالْأَرْضِ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Aku mohon kepadaMu. Sesungguhnya bagiMu segala pujian, tiada Tuhan (yang hak disembah) kecuali Engkau Yang Maha Esa, tiada sekutu bagiMu, Maha Pemberi nikmat, Pencipta langit dan bumi tanpa contoh sebelumnya. Wahai Tuhan Yang Maha Agung dan Maha Pemurah, wahai Tuhan Yang Hidup, wahai Tuhan yang mengurusi segala sesuatu, sesungguhnya aku mohon kepadaMu agar dimasukkan ke Surga dan aku berlindung kepadaMu dari siksa Neraka.”",
@@ -3435,7 +3435,7 @@
       "event": "tashahhud",
       "order": 14,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّي أَشْهَدُ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُواً أَحَدٌ)) .",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّي أَشْهَدُ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُواً أَحَدٌ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, aku mohon kepadaMu dengan bersaksi, bahwa Engkau adalah Allah, tiada Tuhan (yang berhak disembah) kecuali Engkau, Maha Esa, tidak membutuhkan sesuatu tapi segala sesuatu butuh kepadaMu, tidak beranak dan tidak diperanakkan, tidak seorang pun yang menyamaiNya, (sesungguhnya aku mohon kepadaMu).”",
@@ -3468,7 +3468,7 @@
       "event": "after_salah",
       "order": 1,
       "variant_group": null,
-      "arabic": "((أَسْتَغْفِرُ اللَّهَ (ثَلاَثَاً) اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ)).",
+      "arabic": "أَسْتَغْفِرُ اللَّهَ (ثَلاَثَاً) اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ",
       "is_quran": false,
       "translations": {
         "id": "“Aku minta ampun kepada Allah,” (dibaca tiga kali). Lantas membaca: “Ya Allah, Engkau pemberi keselamatan, dan dariMu keselamatan, Maha Suci Engkau, wahai Tuhan Yang Pemilik Keagungan dan Kemuliaan.”",
@@ -3501,7 +3501,7 @@
       "event": "after_salah",
       "order": 2,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ [ثلاثاً]، اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الْجَدِّ مِنْكَ الجَدُّ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ [ثلاثاً]، اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ، وَلاَ مُعْطِيَ لِمَا مَنَعْتَ، وَلاَ يَنْفَعُ ذَا الْجَدِّ مِنْكَ الجَدُّ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya puji dan bagi-Nya kerajaan. Dia Maha Kuasa atas segala sesuatu. Ya Allah, tidak ada yang mencegah apa yang Engkau berikan dan tidak ada yang memberi apa yang Engkau cegah. Tidak berguna kekayaan dan kemuliaan itu bagi pemiliknya (selain iman dan amal shalihnya). Hanya dari-Mu kekayaan dan kemuliaan.”",
@@ -3552,10 +3552,10 @@
         ]
       },
       "phrase_breaks": [
-        55,
-        131,
-        172,
-        203
+        53,
+        129,
+        170,
+        201
       ]
     },
     {
@@ -3564,7 +3564,7 @@
       "event": "after_salah",
       "order": 3,
       "variant_group": null,
-      "arabic": "((لَا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ، وَلاَ نَعْبُدُ إِلاَّ إِيَّاهُ, لَهُ النِّعْمَةُ وَلَهُ الْفَضْلُ وَلَهُ الثَّنَاءُ الْحَسَنُ، لَا إِلَهَ إِلاَّ اللَّهُ مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الكَافِرُونَ)).",
+      "arabic": "لَا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ، وَلاَ نَعْبُدُ إِلاَّ إِيَّاهُ, لَهُ النِّعْمَةُ وَلَهُ الْفَضْلُ وَلَهُ الثَّنَاءُ الْحَسَنُ، لَا إِلَهَ إِلاَّ اللَّهُ مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الكَافِرُونَ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan (yang berhak disembah) kecuali Allah, Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan pujaan. Dia Mahakuasa atas segala sesuatu. Tidak ada daya dan kekuatan kecuali (dengan pertolongan) Allah. Tiada Tuhan (yang hak disembah) kecuali Allah. Kami tidak menyembah kecuali kepadaNya. Bagi-Nya nikmat, anugerah dan pujaan yang baik. Tiada Tuhan (yang hak disembah) kecuali Allah, dengan memurnikan ibadah kepadaNya, sekalipun orang-orang kafir sama benci.”",
@@ -3597,7 +3597,7 @@
       "event": "after_salah",
       "order": 4,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَاللَّهُ أَكْبَرُ (ثلاثاً وثلاثين) لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
+      "arabic": "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَاللَّهُ أَكْبَرُ (ثلاثاً وثلاثين) لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah, segala puji bagi Allah. Dan Allah Maha Besar. (Tiga puluh tiga kali). Tidak ada Tuhan (yang hak disembah) kecuali Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan. BagiNya pujaan. Dia-lah Yang Mahakuasa atas segala sesuatu.”",
@@ -3778,7 +3778,7 @@
       "event": "witr",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ؛ فَإِنَّكَ تَقْضِي وَلاَ يُقْضَى عَلَيْكَ، إِنَّهُ لاَ يَذِلُّ مَنْ وَالَيْتَ، [وَلاَ يَعِزُّ مَنْ عَادَيْتَ]، تَبارَكْتَ رَبَّنا وَتَعَالَيْتَ)).",
+      "arabic": "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ؛ فَإِنَّكَ تَقْضِي وَلاَ يُقْضَى عَلَيْكَ، إِنَّهُ لاَ يَذِلُّ مَنْ وَالَيْتَ، [وَلاَ يَعِزُّ مَنْ عَادَيْتَ]، تَبارَكْتَ رَبَّنا وَتَعَالَيْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah aku petunjuk sebagaimana orang yang telah Engkau beri petunjuk, berilah aku perlindungan (dari penyakit dan apa yang tidak disukai) sebagaimana orang yang telah Engkau lindungi, sayangilah aku sebagaimana orang yang telah Engkau sayangi. Berilah berkah apa yang Engkau berikan kepadaku, jauhkan aku dari kejelekan apa yang Engkau takdirkan, sesungguhnya Engkau yang menjatuhkan qadha, dan tidak ada orang yang memberikan hukuman kepadaMu. Sesungguhnya orang yang Engkau bela tidak akan terhina, dan orang yang Engkau musuhi tidak akan mulia. Maha Suci Engkau, wahai Tuhan kami dan Maha Tinggi Engkau.”",
@@ -3849,14 +3849,14 @@
         ]
       },
       "phrase_breaks": [
-        40,
-        70,
-        104,
-        137,
-        165,
-        207,
-        243,
-        275
+        38,
+        68,
+        102,
+        135,
+        163,
+        205,
+        241,
+        273
       ]
     },
     {
@@ -3865,7 +3865,7 @@
       "event": "witr",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ، وَأَعُــــوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ، وَأَعُــــوذُ بِكَ مِنْكَ، لاَ أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya, Allah, sesungguhnya aku berlindung dengan kerelaanMu dari kemarahanMu, dan dengan keselamatanMu dari siksaMu. Aku berlindung kepadaMu dari ancamanMu. Aku tidak mampu menghitung pujian dan sanjungan kepadaMu, Engkau adalah sebagaimana yang Engkau sanjungkan kepada diriMu sendiri.”",
@@ -3902,7 +3902,7 @@
       "event": "witr",
       "order": 3,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِيَّاكَ نعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَى وَنَحْفِدُ، نَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ بِالكَافِرِينَ مُلْحَقٌ. اللَّهُمَّ إِنَّا نَسْتَعينُكَ، وَنَسْتَغْفِرُكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ، وَلاَ نَكْفُرُكَ، وَنُؤْمِنُ بِكَ، وَنَخْضَعُ لَكَ، وَنَخْلَعُ مَنْ يَكْفرُكَ)).",
+      "arabic": "اللَّهُمَّ إِيَّاكَ نعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَى وَنَحْفِدُ، نَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ بِالكَافِرِينَ مُلْحَقٌ. اللَّهُمَّ إِنَّا نَسْتَعينُكَ، وَنَسْتَغْفِرُكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ، وَلاَ نَكْفُرُكَ، وَنُؤْمِنُ بِكَ، وَنَخْضَعُ لَكَ، وَنَخْلَعُ مَنْ يَكْفرُكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! KepadaMu kami menyembah. UntukMu kami melakukan shalat dan sujud. KepadaMu kami berusaha dan melayani. Kami mengharapkan rahmatMu, kami takut pada siksaanMu. Sesungguhnya siksaanMu akan menimpa pada orang- orang kafir. Ya, Allah! Kami minta pertolongan dan minta ampun kepadaMu, kami memuji kebaikanMu, kami tidak ingkar kepada-Mu, kami beriman kepadaMu, kami tunduk padaMu dan berpisah pada orang yang kufur kepadaMu.”",
@@ -3980,7 +3980,7 @@
       "event": "tilawah",
       "order": 1,
       "variant_group": null,
-      "arabic": "((سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ، ﴿فَتَبارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ﴾)).",
+      "arabic": "سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ، ﴿فَتَبارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ﴾",
       "is_quran": true,
       "translations": {
         "id": "Bersujud wajahku kepada Tuhan yang menciptakannya, yang membelah pendengaran dan penglihatannya dengan Daya dan KekuatanNya, Maha Suci Allah sebaik-baik Pencipta.",
@@ -4013,7 +4013,7 @@
       "event": "tilawah",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْراً، وَضَعْ عَنِّي بِهَا وِزْراً، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْراً، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ)).",
+      "arabic": "اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْراً، وَضَعْ عَنِّي بِهَا وِزْراً، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْراً، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, tulislah untukku dengan sujudku pahala di sisiMu dan ampunilah dengannya akan dosaku, serta jadikanlah simpanan untukku di sisiMu dan terimalah sujudku sebagaimana Engkau telah menerimanya dari hambaMu Dawud.",
@@ -4060,9 +4060,9 @@
         ]
       },
       "phrase_breaks": [
-        49,
-        78,
-        113
+        47,
+        76,
+        111
       ]
     },
     {
@@ -4207,7 +4207,7 @@
       "event": "morning",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Engkau adalah Tuhanku, tidak ada Tuhan yang berhak disembah kecuali Engkau, Engkaulah yang menciptakan aku. Aku adalah hambaMu. Aku akan setia pada perjanjianku denganMu semampuku. Aku berlindung kepadaMu dari kejelekan yang kuperbuat. Aku mengakui nikmatMu kepadaku dan aku mengakui dosaku, oleh karena itu, ampunilah aku. Sesungguhnya tiada yang mengampuni dosa kecuali Engkau.”",
@@ -4258,11 +4258,11 @@
         ]
       },
       "phrase_breaks": [
-        53,
-        83,
-        134,
-        172,
-        207
+        51,
+        81,
+        132,
+        170,
+        205
       ]
     },
     {
@@ -4271,7 +4271,7 @@
       "event": "morning",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore). \u0000 \u0000 \u0000",
@@ -4338,13 +4338,13 @@
         ]
       },
       "phrase_breaks": [
-        35,
-        68,
-        101,
-        127,
-        174,
-        186,
-        224
+        33,
+        66,
+        99,
+        125,
+        172,
+        184,
+        222
       ]
     },
     {
@@ -4353,7 +4353,7 @@
       "event": "morning",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيَايَ وَأَهْلِي، وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَينِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيَايَ وَأَهْلِي، وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَينِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku memohon kebajikan dan keselamatan di dunia dan akhirat. Ya Allah, sesungguhnya aku memohon kebajikan dan keselamatan dalam agama, dunia, keluarga dan hartaku. Ya Allah, tutupilah auratku (aib dan sesuatu yang tidak layak dilihat orang) dan tenteramkanlah aku dari rasa takut. Ya Allah! Peliharalah aku dari muka, belakang, kanan, kiri dan atasku. Aku berlindung dengan kebesaranMu, agar aku tidak disambar dari bawahku (oleh ulat atau bumi pecah yang membuat aku jatuh dan lain-lain).”",
@@ -4390,7 +4390,7 @@
       "event": "morning",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشَرَكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ)).",
+      "arabic": "اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشَرَكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Yang Maha Mengetahui yang ghaib dan yang nyata, wahai Tuhan pencipta langit dan bumi, Tuhan segala sesuatu dan yang merajainya. Aku bersaksi bahwa tidak ada Tuhan yang hak kecuali Engkau. Aku berlindung kepadaMu dari kejahatan diriku, setan dan balatentaranya, dan aku (berlindung kepadaMu) dari berbuat kejelekan terhadap diriku atau menyeretnya kepada seorang muslim.”",
@@ -4427,7 +4427,7 @@
       "event": "morning",
       "order": 9,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلاَ فِي السّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ)).",
+      "arabic": "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلاَ فِي السّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah yang bila disebut, segala sesuatu di bumi dan langit tidak akan berbahaya, Dia-lah Yang Maha Mendengar lagi Maha Mengetahui.” (Dibaca tiga kali).",
@@ -4468,7 +4468,7 @@
       "event": "morning",
       "order": 10,
       "variant_group": null,
-      "arabic": "((يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغيثُ أَصْلِحْ لِي شَأْنِيَ كُلَّهُ وَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ)).",
+      "arabic": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغيثُ أَصْلِحْ لِي شَأْنِيَ كُلَّهُ وَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ",
       "is_quran": false,
       "translations": {
         "id": "“Wahai Tuhan Yang Maha Hidup, wahai Tuhan Yang Berdiri Sendiri (tidak butuh segala sesuatu), dengan rahmat-Mu aku minta pertolongan, perbaikilah segala urusanku dan jangan diserahkan kepadaku sekalipun sekejap mata (tanpa mendapat pertolongan dariMu).”",
@@ -4542,7 +4542,7 @@
       "event": "morning",
       "order": 12,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ)).",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah, aku memujiNya.” (Dibaca seratus kali).",
@@ -4801,7 +4801,7 @@
       "event": "morning",
       "order": 19,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ)).",
+      "arabic": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad. (Dibaca 10 kali).",
@@ -4974,7 +4974,7 @@
       "event": "evening",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنوبَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Engkau adalah Tuhanku, tidak ada Tuhan yang berhak disembah kecuali Engkau, Engkaulah yang menciptakan aku. Aku adalah hambaMu. Aku akan setia pada perjanjianku denganMu semampuku. Aku berlindung kepadaMu dari kejelekan yang kuperbuat. Aku mengakui nikmatMu kepadaku dan aku mengakui dosaku, oleh karena itu, ampunilah aku. Sesungguhnya tiada yang mengampuni dosa kecuali Engkau.”",
@@ -5025,11 +5025,11 @@
         ]
       },
       "phrase_breaks": [
-        53,
-        83,
-        134,
-        172,
-        207
+        51,
+        81,
+        132,
+        170,
+        205
       ]
     },
     {
@@ -5038,7 +5038,7 @@
       "event": "evening",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore). \u0000 \u0000 \u0000",
@@ -5105,13 +5105,13 @@
         ]
       },
       "phrase_breaks": [
-        35,
-        68,
-        101,
-        127,
-        174,
-        186,
-        224
+        33,
+        66,
+        99,
+        125,
+        172,
+        184,
+        222
       ]
     },
     {
@@ -5120,7 +5120,7 @@
       "event": "evening",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيَايَ وَأَهْلِي، وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَينِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيَايَ وَأَهْلِي، وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَينِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku memohon kebajikan dan keselamatan di dunia dan akhirat. Ya Allah, sesungguhnya aku memohon kebajikan dan keselamatan dalam agama, dunia, keluarga dan hartaku. Ya Allah, tutupilah auratku (aib dan sesuatu yang tidak layak dilihat orang) dan tenteramkanlah aku dari rasa takut. Ya Allah! Peliharalah aku dari muka, belakang, kanan, kiri dan atasku. Aku berlindung dengan kebesaranMu, agar aku tidak disambar dari bawahku (oleh ulat atau bumi pecah yang membuat aku jatuh dan lain-lain).”",
@@ -5157,7 +5157,7 @@
       "event": "evening",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشَرَكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ)).",
+      "arabic": "اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشَرَكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Yang Maha Mengetahui yang ghaib dan yang nyata, wahai Tuhan pencipta langit dan bumi, Tuhan segala sesuatu dan yang merajainya. Aku bersaksi bahwa tidak ada Tuhan yang hak kecuali Engkau. Aku berlindung kepadaMu dari kejahatan diriku, setan dan balatentaranya, dan aku (berlindung kepadaMu) dari berbuat kejelekan terhadap diriku atau menyeretnya kepada seorang muslim.”",
@@ -5194,7 +5194,7 @@
       "event": "evening",
       "order": 9,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلاَ فِي السّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ)).",
+      "arabic": "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلاَ فِي السّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah yang bila disebut, segala sesuatu di bumi dan langit tidak akan berbahaya, Dia-lah Yang Maha Mendengar lagi Maha Mengetahui.” (Dibaca tiga kali).",
@@ -5235,7 +5235,7 @@
       "event": "evening",
       "order": 10,
       "variant_group": null,
-      "arabic": "((يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغيثُ أَصْلِحْ لِي شَأْنِيَ كُلَّهُ وَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ)).",
+      "arabic": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغيثُ أَصْلِحْ لِي شَأْنِيَ كُلَّهُ وَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ",
       "is_quran": false,
       "translations": {
         "id": "“Wahai Tuhan Yang Maha Hidup, wahai Tuhan Yang Berdiri Sendiri (tidak butuh segala sesuatu), dengan rahmat-Mu aku minta pertolongan, perbaikilah segala urusanku dan jangan diserahkan kepadaku sekalipun sekejap mata (tanpa mendapat pertolongan dariMu).”",
@@ -5309,7 +5309,7 @@
       "event": "evening",
       "order": 12,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ وَبِحَمْدِهِ)).",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah, aku memujiNya.” (Dibaca seratus kali).",
@@ -5568,7 +5568,7 @@
       "event": "evening",
       "order": 19,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ)).",
+      "arabic": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad. (Dibaca 10 kali).",
@@ -6181,7 +6181,7 @@
       "event": "tasbih",
       "order": 6,
       "variant_group": null,
-      "arabic": "((مَنْ قَالَ: سُبْحَانَ اللَّهِ الْعَظِيمِ وَبِحَمْدِهِ غُرِسَتْ لَهُ نَخْلَةٌ فِي الْجَنَّةِ)).",
+      "arabic": "مَنْ قَالَ: سُبْحَانَ اللَّهِ الْعَظِيمِ وَبِحَمْدِهِ غُرِسَتْ لَهُ نَخْلَةٌ فِي الْجَنَّةِ",
       "is_quran": false,
       "translations": {
         "id": "“Barangsiapa yang membaca: Subhaanallaahi ‘azhiim wabihamdih, maka ditanam untuknya sebatang pohon kurma di Surga.”",
@@ -6362,7 +6362,7 @@
       "event": "tasbih",
       "order": 11,
       "variant_group": null,
-      "arabic": "((إِنَّ أَفْضَلَ الدُّعَاءِ الْحَمْدُ لِلَّهِ، وَأَفْضَلَ الذِّكْرِ لاَ إِلَهَ إِلاَّ اللَّهُ)).",
+      "arabic": "إِنَّ أَفْضَلَ الدُّعَاءِ الْحَمْدُ لِلَّهِ، وَأَفْضَلَ الذِّكْرِ لاَ إِلَهَ إِلاَّ اللَّهُ",
       "is_quran": false,
       "translations": {
         "id": "Sesungguhnya doa yang terbaik adalah membaca: Alhamdulillaah. Sedang dzikir yang terbaik adalah: Laa Ilaaha Illallaah.”",
@@ -6473,7 +6473,7 @@
       "event": "protection",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أُشْرِكَ بِكَ وَأَنَا أَعْلَمُ، وَأَسْتَغْفِرُكَ لِمَا لاَ أَعْلَمُ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أُشْرِكَ بِكَ وَأَنَا أَعْلَمُ، وَأَسْتَغْفِرُكَ لِمَا لاَ أَعْلَمُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu, agar tidak menyekutukan kepadaMu, sedang aku mengetahuinya dan minta ampun terhadap apa yang tidak aku ketahui.”",
@@ -6510,7 +6510,7 @@
       "event": "travel",
       "order": 1,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ، وَالْحَمْدُ للَّهِ ﴿سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ﴾، ((الْحَمْدُ لِلَّهِ، الْحَمْدُ لِلَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، سُبْحَانَكَ اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي؛ فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ)).",
+      "arabic": "بِسْمِ اللَّهِ، وَالْحَمْدُ للَّهِ ﴿سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ﴾، ((الْحَمْدُ لِلَّهِ، الْحَمْدُ لِلَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، سُبْحَانَكَ اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي؛ فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ",
       "is_quran": true,
       "translations": {
         "id": "“Dengan nama Allah, segala puji bagi Allah, Maha Suci Tuhan yang menundukkan kendaraan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya. Dan sesungguhnya kami akan kembali kepada Tuhan kami (di hari Kiamat). Segala puji bagi Allah (3x), Maha Suci Engkau, ya Allah! Sesungguhnya aku menganiaya diriku, maka ampunilah aku. Sesungguhnya tidak ada yang mengampuni dosa-dosa kecuali Engkau.”",
@@ -6580,7 +6580,7 @@
       "event": "travel",
       "order": 3,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَمَا أَظْلَلْنَ، وَرَبَّ الأَرَضِينَ السَّبْعِ وَمَا أَقْلَلْنَ، وَرَبَّ الشَّياطِينِ وَمَا أَضْلَلْنَ، وَرَبَّ الرِّيَاحِ وَمَا ذَرَيْنَ، أَسْأَلُكَ خَيْرَ هَذِهِ الْقَرْيَةِ، وَخَيْرَ أَهْلِهَا، وَخَيْرَ مَا فِيهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ أَهْلِهَا، وَشَرِّ مَا فِيهَا)).",
+      "arabic": "اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَمَا أَظْلَلْنَ، وَرَبَّ الأَرَضِينَ السَّبْعِ وَمَا أَقْلَلْنَ، وَرَبَّ الشَّياطِينِ وَمَا أَضْلَلْنَ، وَرَبَّ الرِّيَاحِ وَمَا ذَرَيْنَ، أَسْأَلُكَ خَيْرَ هَذِهِ الْقَرْيَةِ، وَخَيْرَ أَهْلِهَا، وَخَيْرَ مَا فِيهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ أَهْلِهَا، وَشَرِّ مَا فِيهَا",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, Tuhan tujuh langit dan apa yang dinaunginya, Tuhan penguasa tujuh bumi dan apa yang di atasnya, Tuhan yang menguasai setan-setan dan apa yang mereka sesatkan, Tuhan yang menguasai angin dan apa yang diterbangkannya. Aku mohon kepadaMu kebaikan desa ini, kebaikan penduduknya dan apa yang ada di dalamnya. Aku berlindung kepadaMu dari kejelekan desa ini, kejelekan penduduknya dan apa yang ada di dalamnya.”",
@@ -6621,7 +6621,7 @@
       "event": "travel",
       "order": 4,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ)).",
+      "arabic": "بِسْمِ اللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah.”",
@@ -6654,7 +6654,7 @@
       "event": "travel",
       "order": 5,
       "variant_group": null,
-      "arabic": "((أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لاَ تَضِيعُ وَدَائِعُهُ)).",
+      "arabic": "أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لاَ تَضِيعُ وَدَائِعُهُ",
       "is_quran": false,
       "translations": {
         "id": "“Aku menitipkan kamu kepada Allah yang tidak akan hilang titipan-Nya.”",
@@ -6691,7 +6691,7 @@
       "event": "travel",
       "order": 6,
       "variant_group": null,
-      "arabic": "(( أَسْتَوْدِعُ اللَّهَ دِينَكَ، وَأَمَانَتَكَ، وَخَوَاتِيمَ عَمَلِكَ)).",
+      "arabic": "أَسْتَوْدِعُ اللَّهَ دِينَكَ، وَأَمَانَتَكَ، وَخَوَاتِيمَ عَمَلِكَ",
       "is_quran": false,
       "translations": {
         "id": "“Aku menitipkan agamamu, amanatmu dan perbuatanmu yang terakhir kepada Allah.”",
@@ -6728,7 +6728,7 @@
       "event": "travel",
       "order": 7,
       "variant_group": null,
-      "arabic": "((زَوَّدَكَ اللَّهُ التَّقْوَى، وَغَفَرَ ذَنْبَكَ، وَيَسَّرَ لَكَ الخَيْرَ حَيْثُ ما كُنْتَ)).",
+      "arabic": "زَوَّدَكَ اللَّهُ التَّقْوَى، وَغَفَرَ ذَنْبَكَ، وَيَسَّرَ لَكَ الخَيْرَ حَيْثُ ما كُنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah memberi bekal taqwa kepadamu, mengampuni dosamu dan memudahkan kebaikan kepadamu di mana saja kamu berada.”",
@@ -6767,8 +6767,8 @@
         ]
       },
       "phrase_breaks": [
-        32,
-        51
+        30,
+        49
       ]
     },
     {
@@ -6810,7 +6810,7 @@
       "event": "travel",
       "order": 9,
       "variant_group": null,
-      "arabic": "((سَمَّعَ سَامِعٌ بِحَمْدِ اللَّهِ، وَحُسْنِ بَلاَئِهِ عَلَيْنَا، رَبَّنَا صاحِبْنَا، وَأَفْضِلْ عَلَيْنَا، عَائِذاً بِاللَّهِ مِنَ النَّارِ)).",
+      "arabic": "سَمَّعَ سَامِعٌ بِحَمْدِ اللَّهِ، وَحُسْنِ بَلاَئِهِ عَلَيْنَا، رَبَّنَا صاحِبْنَا، وَأَفْضِلْ عَلَيْنَا، عَائِذاً بِاللَّهِ مِنَ النَّارِ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga ada yang memperdengarkan puji kami kepada Allah (atas nikmat) dan cobaanNya yang baik bagi kami. Wahai Tuhan kami, temanilah kami (peliharalah kami) dan berilah karunia kepada kami dengan berlindung kepada Allah dari api Neraka.”",
@@ -6843,7 +6843,7 @@
       "event": "travel",
       "order": 10,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ)).",
+      "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
       "is_quran": false,
       "translations": {
         "id": "“Aku berlindung dengan kalimat-kalimat Allah yang sempurna, dari kejahatan apa yang diciptakanNya.”",
@@ -6876,7 +6876,7 @@
       "event": "travel",
       "order": 11,
       "variant_group": null,
-      "arabic": "((يُكَبِّرُ عَلَى كُلِّ شَرَفٍ ثَلاَثَ تَكْبِيرَاتٍ ثُمَّ يَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ)).",
+      "arabic": "يُكَبِّرُ عَلَى كُلِّ شَرَفٍ ثَلاَثَ تَكْبِيرَاتٍ ثُمَّ يَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنا حَامِدُونَ، صَدَقَ اللَّهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزابَ وَحْدَهُ",
       "is_quran": false,
       "translations": {
         "id": "Bertakbir tiga kali, di atas tempat yang tinggi, kemudian membaca: Tiada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya. Bagi-Nya kerajaan dan pujaan. Dia-lah Yang Mahakuasa atas segala sesuatu. Kami kembali dengan bertaubat, beribadah dan memuji kepada Tuhan kami. Allah telah menepati janjiNya, membela hambaNya (Muhammad) dan mengalahkan golongan musuh dengan sendirian”.",
@@ -6954,7 +6954,7 @@
       "event": "rain",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اسْقِنَا غَيْثاً مُغِيثاً مَرِيئاً مَرِيعاً، نَافِعاً غَيْرَ ضَارٍّ، عَاجِلاً غَيْرَ آجِلٍ)).",
+      "arabic": "اللَّهُمَّ اسْقِنَا غَيْثاً مُغِيثاً مَرِيئاً مَرِيعاً، نَافِعاً غَيْرَ ضَارٍّ، عَاجِلاً غَيْرَ آجِلٍ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah kami hujan yang merata, menyegarkan tubuh dan menyuburkan tanaman, bermanfaat, tidak membahayakan. Kami mohon hujan secepatnya, tidak ditunda- tunda.”",
@@ -6987,7 +6987,7 @@
       "event": "rain",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا)).",
+      "arabic": "اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah kami hujan. Ya Allah, turunkan hujan pada kami. Ya Allah! Hujanilah kami,”",
@@ -7030,8 +7030,8 @@
         ]
       },
       "phrase_breaks": [
-        24,
-        46
+        22,
+        44
       ]
     },
     {
@@ -7040,7 +7040,7 @@
       "event": "rain",
       "order": 3,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اسْقِ عِبَادَكَ، وَبَهَائِمَكَ، وَانْشُرْ رَحْمَتَكَ، وَأَحْيِي بَلَدَكَ الْمَيِّتَ)).",
+      "arabic": "اللَّهُمَّ اسْقِ عِبَادَكَ، وَبَهَائِمَكَ، وَانْشُرْ رَحْمَتَكَ، وَأَحْيِي بَلَدَكَ الْمَيِّتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Berilah hujan kepada hamba-hambaMu, ternak- ternakMu, berilah rahmatMu dengan merata, dan suburkan tanahMu yang tandus.”",
@@ -7073,7 +7073,7 @@
       "event": "rain",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ صَيِّباً نَافِعاً)).",
+      "arabic": "اللَّهُمَّ صَيِّباً نَافِعاً",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Turunkanlah hujan yang bermanfaat (untuk manusia, tanaman dan binatang).”",
@@ -7106,7 +7106,7 @@
       "event": "rain",
       "order": 5,
       "variant_group": null,
-      "arabic": "((مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ)).",
+      "arabic": "مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Kita diberi hujan karena karunia dan rahmat Allah.”",
@@ -7143,7 +7143,7 @@
       "event": "rain",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الآكَامِ وَالظِّرَابِ، وَبُطُونِ الْأَوْدِيَةِ، وَمَنَابِتِ الشَّجَرِ)).",
+      "arabic": "اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الآكَامِ وَالظِّرَابِ، وَبُطُونِ الْأَوْدِيَةِ، وَمَنَابِتِ الشَّجَرِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Hujanilah di sekitar kami, jangan kepada kami. Ya, Allah! Berilah hujan ke daratan tinggi, beberapa anak bukit perut lembah dan beberapa tanah yang menumbuhkan pepohonan.”",
@@ -7180,7 +7180,7 @@
       "event": "thunder",
       "order": 1,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ الَّذِي يُسَبِّحُ الرَّعْدُ بِحَمْدِهِ وَالْمَلاَئِكةُ مِنْ خِيفَتِهِ)).",
+      "arabic": "سُبْحَانَ الَّذِي يُسَبِّحُ الرَّعْدُ بِحَمْدِهِ وَالْمَلاَئِكةُ مِنْ خِيفَتِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah yang halilintar bertasbih dengan memujiNya, begitu juga para malaikat, karena takut kepadaNya.” Doa Meminta Hujan dam Menghentikan Hujan",
@@ -7213,7 +7213,7 @@
       "event": "wind",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْــــــأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْــــــأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan angin ini, dan aku berlindung kepadaMu dari kejelekannya.”",
@@ -7256,7 +7256,7 @@
         ]
       },
       "phrase_breaks": [
-        48
+        46
       ]
     },
     {
@@ -7265,7 +7265,7 @@
       "event": "wind",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا فِيهَا، وَخَيْرَ مَا أُرْسِلَتْ بِهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا فِيهَا، وَشَرِّ مَا أُرْسِلَتْ بِهِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا فِيهَا، وَخَيْرَ مَا أُرْسِلَتْ بِهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا فِيهَا، وَشَرِّ مَا أُرْسِلَتْ بِهِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan angin (ribut ini), kebaikan apa yang di dalamnya dan kebaikan tujuan angin dihembuskan. Aku berlindung kepadaMu dari kejahatan angin ini, kejahatan apa yang di dalamnya dan kejahatan tujuan angin dihembuskan.”",
@@ -7302,7 +7302,7 @@
       "event": "new_moon",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُ أَكْبَرُ، اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْأَمْنِ وَالْإِيمَانِ، وَالسَّلاَمَةِ وَالْإِسْلاَمِ، وَالتَّوْفِيقِ لِمَا تُحِبُّ رَبَّنَا وَتَرْضَى، رَبُّنَا وَرَبُّكَ اللَّهُ)).",
+      "arabic": "اللَّهُ أَكْبَرُ، اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْأَمْنِ وَالْإِيمَانِ، وَالسَّلاَمَةِ وَالْإِسْلاَمِ، وَالتَّوْفِيقِ لِمَا تُحِبُّ رَبَّنَا وَتَرْضَى، رَبُّنَا وَرَبُّكَ اللَّهُ",
       "is_quran": false,
       "translations": {
         "id": "“Allah Maha Besar. Ya Allah! Tampakkan bulan tanggal satu itu kepada kami dengan membawa keamanan dan keimanan, keselamatan dan Islam serta mendapat taufik untuk menjalankan apa yang Engkau senang dan rela. Tuhan kami dan Tuhanmu (wahai bulan sabit) adalah Allah.”",
@@ -7339,7 +7339,7 @@
       "event": "illness",
       "order": 1,
       "variant_group": null,
-      "arabic": "((لاَ بأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ)).",
+      "arabic": "لاَ بأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
       "is_quran": false,
       "translations": {
         "id": "“Tidak mengapa, semoga sakitmu ini membuat dosamu bersih, insya Allah.”",
@@ -7450,7 +7450,7 @@
       "event": "illness",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَأَلْحِقْنِي بِالرَّفِيقِ الْأَعْلَى)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَأَلْحِقْنِي بِالرَّفِيقِ الْأَعْلَى",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah, ampunilah dosaku, berilah rahmat kepadaku dan pertemukan aku dengan Kekasih Yang Maha Tinggi.”",
@@ -7487,7 +7487,7 @@
       "event": "illness",
       "order": 5,
       "variant_group": null,
-      "arabic": "((جَعَلَ النَّبِيُّ صلى الله عليه وسلم عِنْدَ مَوْتِهِ يُدْخِلُ يَدَيْهِ فِي الْمَاءِ فَيَمْسَحُ بِهِمَا وَجْهَهُ، وَيَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ إِنَّ لِلْمَوْتِ سَكَرَاتٍ)).",
+      "arabic": "جَعَلَ النَّبِيُّ صلى الله عليه وسلم عِنْدَ مَوْتِهِ يُدْخِلُ يَدَيْهِ فِي الْمَاءِ فَيَمْسَحُ بِهِمَا وَجْهَهُ، وَيَقُولُ: لاَ إِلَهَ إِلاَّ اللَّهُ إِنَّ لِلْمَوْتِ سَكَرَاتٍ",
       "is_quran": false,
       "translations": {
         "id": "Nabi Shallallahu’alaihi wasallam memasukkan kedua tangannya ke dalam air, lalu diusapkan ke wajahnya dan beliau bersabda: “Tiada Tuhan yang berhak disembah selain Allah, sesungguhnya mati itu mempunyai sekarat.”",
@@ -7520,7 +7520,7 @@
       "event": "illness",
       "order": 6,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ لَهُ المُلْكُ وَلَهُ الْحَمْدُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ لَهُ المُلْكُ وَلَهُ الْحَمْدُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah selain Allah, Allah Maha Besar. Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya, tidak ada Tuhan yang berhak disembah selain Allah, bagiNya kerajaan dan bagiNya pujian. Tidak ada Tuhan yang berhak disembah kecuali Allah. Tidak ada daya dan kekuatan, kecuali dengan pertolongan Allah.”",
@@ -7571,10 +7571,10 @@
         ]
       },
       "phrase_breaks": [
-        48,
-        84,
-        137,
-        195
+        46,
+        82,
+        135,
+        193
       ]
     },
     {
@@ -7583,7 +7583,7 @@
       "event": "distress",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي عَبْدُكَ، ابْنُ عَبْدِكَ، ابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُــــلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَداً مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ القُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلاَءَ حُزْنِي، وَذَهَابَ هَمِّي)).",
+      "arabic": "اللَّهُمَّ إِنِّي عَبْدُكَ، ابْنُ عَبْدِكَ، ابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُــــلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَداً مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ القُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلاَءَ حُزْنِي، وَذَهَابَ هَمِّي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku adalah hambaMu, anak hambaMu (Adam) dan anak hamba perempuanMu (Hawa). Ubun- ubunku di tanganMu, keputusan-Mu berlaku padaku, qadhaMu kepadaku adalah adil. Aku mohon kepadaMu dengan setiap nama (baik) yang telah Engkau gunakan untuk diriMu, yang Engkau turunkan dalam kitabMu, Engkau ajarkan kepada seseorang dari makhlukMu atau yang Engkau khususkan untuk diriMu dalam ilmu ghaib di sisiMu, hendaknya Engkau jadikan Al-Qur’an sebagai penenteram hatiku, cahaya di dadaku, pelenyap duka dan kesedihanku.”",
@@ -7616,7 +7616,7 @@
       "event": "distress",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu dari (hal yang) menyedihkan dan menyusahkan, lemah dan malas, bakhil dan penakut, lilitan hutang dan penindasan orang.”",
@@ -7659,9 +7659,9 @@
         ]
       },
       "phrase_breaks": [
-        60,
-        85,
-        110
+        58,
+        83,
+        108
       ]
     },
     {
@@ -7670,7 +7670,7 @@
       "event": "distress",
       "order": 3,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ الْعَظِيمُ الْحَلِيمُ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ السَّمَوَاتِ وَرَبُّ الْأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ الْعَظِيمُ الْحَلِيمُ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ السَّمَوَاتِ وَرَبُّ الْأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah selain Allah Yang Maha Agung dan Maha Pengampun. Tiada Tuhan yang berhak disembah selain Allah, Tuhan yang menguasai arasy, yang Maha Agung. Tiada Tuhan yang berhak disembah selain Allah, Tuhan yang menguasai langit dan bumi. Tuhan Yang menguasai arasy, lagi Maha Mulia.”",
@@ -7707,7 +7707,7 @@
       "event": "distress",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ رَحْمَتَكَ أَرْجُو، فَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ، وَأَصْلِحْ لِي شَأْنِي كُلَّهُ، لاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ رَحْمَتَكَ أَرْجُو، فَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ، وَأَصْلِحْ لِي شَأْنِي كُلَّهُ، لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Aku mengharapkan (mendapat) rahmatMu, oleh karena itu, jangan Engkau biarkan diriku sekejap mata (tanpa pertolongan atau rahmat dariMu). Perbaikilah seluruh urusanku, tiada Tuhan yang berhak disembah selain Engkau.”",
@@ -7744,7 +7744,7 @@
       "event": "distress",
       "order": 5,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظّالِمِينَ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظّالِمِينَ",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah selain Engkau. Maha Suci Engkau. Sesungguhnya aku tergolong orang-orang yang zhalim.” \u0000",
@@ -7781,7 +7781,7 @@
       "event": "distress",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُ اللَّهُ رَبِّي لاَ أُشْرِكُ بِهِ شَيْئاً)).",
+      "arabic": "اللَّهُ اللَّهُ رَبِّي لاَ أُشْرِكُ بِهِ شَيْئاً",
       "is_quran": false,
       "translations": {
         "id": "“Allah-Allah adalah Tuhanku. Aku tidak menyekutukanNya dengan sesuatu.”",
@@ -7814,7 +7814,7 @@
       "event": "distress",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لاَ سَهْلَ إِلاَّ مَا جَعَلْتَهُ سَهْلاً، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلاً)).",
+      "arabic": "اللَّهُمَّ لاَ سَهْلَ إِلاَّ مَا جَعَلْتَهُ سَهْلاً، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلاً",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah! Tidak ada kemudahan kecuali apa yang Engkau jadikan mudah. Sedang yang susah bisa Engkau jadikan mudah, apabila Engkau menghendakinya.”",
@@ -7851,7 +7851,7 @@
       "event": "anger",
       "order": 1,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ)).",
+      "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
       "is_quran": false,
       "translations": {
         "id": "“Aku berlindung kepada Allah dan setan yang terkutuk.”",
@@ -7888,7 +7888,7 @@
       "event": "fear",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِم، وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ)).",
+      "arabic": "اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِم، وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku menjadikan Engkau di leher mereka (agar kekuatan mereka tidak berdaya dalam berhadapan dengan kami). Dan aku berlindung kepadaMu dari kejelekan mereka.”",
@@ -7921,7 +7921,7 @@
       "event": "fear",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ أَنْتَ عَضُدِي، وَأَنْتَ نَصِيرِي، بِكَ أَحُولُ وَبِكَ أَصُولُ، وَبِكَ أُقاتِلُ)).",
+      "arabic": "اللَّهُمَّ أَنْتَ عَضُدِي، وَأَنْتَ نَصِيرِي، بِكَ أَحُولُ وَبِكَ أَصُولُ، وَبِكَ أُقاتِلُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Engkau adalah lenganku (pertolonganMu yang kuandalkan dalam menghadapi lawanku). Engkau adalah pembelaku. Dengan pertolongan-Mu aku menang, dengan pertolongan-Mu aku menyergap dan dengan pertolonganMu aku berperang.”",
@@ -7958,7 +7958,7 @@
       "event": "fear",
       "order": 3,
       "variant_group": null,
-      "arabic": "((حَسْبُنا اللَّهُ وَنِعْمَ الْوَكِيلُ)).",
+      "arabic": "حَسْبُنا اللَّهُ وَنِعْمَ الْوَكِيلُ",
       "is_quran": false,
       "translations": {
         "id": "”Cukuplah Allah bagi kami. Dan Dia-lah, Tuhan yang paling tepat dipasrahi (dalam menghadapi segala urusan).”",
@@ -7991,7 +7991,7 @@
       "event": "fear",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ ربَّ السَّمَوَاتِ السَّبْعِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، كُنْ لِي جَاراً مِنْ فُلاَنِ بْنِ فُلاَنٍ، وَأَحْزَابِهِ مِنْ خَلاَئِقِكَ، أَنْ يَفْرُطَ عَلَيَّ أَحَدٌ مِنْهُمْ أَوْ يَطْغَى، عَزَّ جَارُكَ، وَجَلَّ ثَنَاؤُكَ، وَلاَ إِلَهَ إِلاَّ أَنْتَ)).",
+      "arabic": "اللَّهُمَّ ربَّ السَّمَوَاتِ السَّبْعِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، كُنْ لِي جَاراً مِنْ فُلاَنِ بْنِ فُلاَنٍ، وَأَحْزَابِهِ مِنْ خَلاَئِقِكَ، أَنْ يَفْرُطَ عَلَيَّ أَحَدٌ مِنْهُمْ أَوْ يَطْغَى، عَزَّ جَارُكَ، وَجَلَّ ثَنَاؤُكَ، وَلاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, Tuhan Penguasa tujuh langit, Tuhan Penguasa ‘Arsy yang agung. Jadilah Engkau pelindung bagiku dari Fulan bin Fulan, dan para kelompoknya dari makhlukMu. Jangan ada seorang pun dari mereka menyakitiku atau melampaui batas terhadapku. Sungguh kuat perlindunganMu, dan agunglah pujiMu. Tiada Tuhan yang berhak disembah selain Engkau.",
@@ -8057,7 +8057,7 @@
       "event": "fear",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ مُنْزِلَ الْكِتَابِ، سَرِيعَ الْحِسَابِ، اهْزِمِ الأَحْزَابَ، اللَّهُمَّ اهزِمْهُمْ وَزَلْزِلْهُمْ)).",
+      "arabic": "اللَّهُمَّ مُنْزِلَ الْكِتَابِ، سَرِيعَ الْحِسَابِ، اهْزِمِ الأَحْزَابَ، اللَّهُمَّ اهزِمْهُمْ وَزَلْزِلْهُمْ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, yang menurunkan Kitab Suci, yang menghisab perbuatan manusia dengan cepat. Ya Allah, cerai beraikanlah golongan musuh dan goncang-kan mereka.",
@@ -8090,7 +8090,7 @@
       "event": "fear",
       "order": 7,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اكْفِنِيهِمْ بِمَا شِئْتَ)).",
+      "arabic": "اللَّهُمَّ اكْفِنِيهِمْ بِمَا شِئْتَ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, cukupilah aku dalam menghadapi mereka dengan apa yang Engkau kehendaki.",
@@ -8123,7 +8123,7 @@
       "event": "fear",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لاَ طَيْرَ إِلاَّ طَيْرُكَ، وَلاَ خَيْرَ إِلاَّ خَيْرُكَ، وَلاَ إِلَهَ غَيْرُكَ)).",
+      "arabic": "اللَّهُمَّ لاَ طَيْرَ إِلاَّ طَيْرُكَ، وَلاَ خَيْرَ إِلاَّ خَيْرُكَ، وَلاَ إِلَهَ غَيْرُكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Tidak ada kesialan kecuali kesialan yang Engkau tentukan, dan Tidak ada kebaikan kecuali kebaikanMu, serta tiada Ilah (yang berhak disembah) selain Engkau.”",
@@ -8160,7 +8160,7 @@
       "event": "fear",
       "order": 9,
       "variant_group": null,
-      "arabic": "((إِذَا رَأَى أَحَدُكُم مِنْ أَخِيهِ، أَوْ مِنْ نَفْسِهِ، أَوْ مِنْ مَالِهِ مَا يُعْجِبُهُ [فَلْيَدْعُ لَهُ بِالْبَرَكَةِ] فَإِنَّ الْعَيْنَ حَقٌّ)).",
+      "arabic": "إِذَا رَأَى أَحَدُكُم مِنْ أَخِيهِ، أَوْ مِنْ نَفْسِهِ، أَوْ مِنْ مَالِهِ مَا يُعْجِبُهُ [فَلْيَدْعُ لَهُ بِالْبَرَكَةِ] فَإِنَّ الْعَيْنَ حَقٌّ",
       "is_quran": false,
       "translations": {
         "id": "Apabila seseorang di antara kamu melihat dari saudaranya, diri atau hartanya yang mengherankan, maka hendaklah mendoakan berkah kepadanya. Sesungguhnya ‘ain (kena mata) itu adalah benar.",
@@ -8201,7 +8201,7 @@
       "event": "fear",
       "order": 10,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ!)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ!",
       "is_quran": false,
       "translations": {
         "id": "“Tiada Tuhan yang berhak disembah kecuali Allah.”",
@@ -8238,7 +8238,7 @@
       "event": "waswas",
       "order": 1,
       "variant_group": null,
-      "arabic": "((يَسْتَعِيذُ بِاللَّهِ و يَنْتَهِي عَمَّا شك فِيهِ)).",
+      "arabic": "يَسْتَعِيذُ بِاللَّهِ و يَنْتَهِي عَمَّا شك فِيهِ",
       "is_quran": false,
       "translations": {
         "id": "Berlindung kepada Allah. Maka akan berhenti dari keraguannya",
@@ -8275,7 +8275,7 @@
       "event": "waswas",
       "order": 2,
       "variant_group": null,
-      "arabic": "((يَقُولُ: ((آمَنْتُ بِاللَّهِ وَرُسُلِهِ)).",
+      "arabic": "يَقُولُ: ((آمَنْتُ بِاللَّهِ وَرُسُلِهِ",
       "is_quran": false,
       "translations": {
         "id": "Hendaklah mengatakan: “Aku beriman kepada Allah dan kebenaran para rasul yang diutus oleh-Nya.”",
@@ -8308,7 +8308,7 @@
       "event": "waswas",
       "order": 3,
       "variant_group": null,
-      "arabic": "((يَقْرَأُ قَوْلَهُ تَعَالَى: ﴿هُوَ الْأوَّلُ وَالْآخِرُ وَالظّاهِرُ وَالْباطِنُ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ﴾)).",
+      "arabic": "يَقْرَأُ قَوْلَهُ تَعَالَى: ﴿هُوَ الْأوَّلُ وَالْآخِرُ وَالظّاهِرُ وَالْباطِنُ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ﴾",
       "is_quran": true,
       "translations": {
         "id": "Hendaklah membaca firman Allah Ta’ala: Dia-lah yang Awal (Allah telah ada sebelum segala sesuatu ada), yang Akhir (Di saat segala sesuatu telah hancur, Allah masih tetap kekal), yang dhahir (Dia-lah yang nyata, sebab banyak bukti yang menyatakan adanya Allah), yang Bathin (tidak ada sesuatu yang bisa menghalangiNya. Allah lebih dekat kepada hambaNya daripada mereka pada dirinya). Dia-lah Yang Maha Mengetahui atas segala sesuatu.” (Surat Al Hadid, 57 : 3)",
@@ -8343,7 +8343,7 @@
         ]
       },
       "phrase_breaks": [
-        30
+        28
       ]
     },
     {
@@ -8352,7 +8352,7 @@
       "event": "waswas",
       "order": 4,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ، وَاتْفُلْ عَلَى يَسَارِكَ (ثلاثاً))).",
+      "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ، وَاتْفُلْ عَلَى يَسَارِكَ (ثلاثاً)",
       "is_quran": false,
       "translations": {
         "id": "(membaca: A’udzu billahi minas syaithanir rajim), artinya : \"aku berlindung kepada Allah dari godaan syaitan yang terkutuk\". lantas meludahlah ke kirimu, tiga kali.”",
@@ -8385,7 +8385,7 @@
       "event": "waswas",
       "order": 5,
       "variant_group": null,
-      "arabic": "((مَا مِنْ عَبْدٍ يُذنِبُ ذَنْباً فَيُحْسِنُ الطُّهُورَ، ثُمَّ يَقُومُ فَيُصَلِّي رَكْعَتَيْنِ، ثُمَّ يَسْتَغْفِرُ اللَّهَ إِلاَّ غَفَرَ اللَّهُ لَهُ)).",
+      "arabic": "مَا مِنْ عَبْدٍ يُذنِبُ ذَنْباً فَيُحْسِنُ الطُّهُورَ، ثُمَّ يَقُومُ فَيُصَلِّي رَكْعَتَيْنِ، ثُمَّ يَسْتَغْفِرُ اللَّهَ إِلاَّ غَفَرَ اللَّهُ لَهُ",
       "is_quran": false,
       "translations": {
         "id": "Tidaklah ada seorang hamba berbuat suatu dosa, lantas berwudhu dengan sempurna kemudian berdiri untuk melakukan shalat dua ra’kaat, kemudian membaca istighfar kecuali pasti diampuni dosanya.",
@@ -8422,7 +8422,7 @@
       "event": "waswas",
       "order": 6,
       "variant_group": null,
-      "arabic": "((الْاسْتِعَاذَةُ بِاللَّهِ مِنْهُ)).",
+      "arabic": "الْاسْتِعَاذَةُ بِاللَّهِ مِنْهُ",
       "is_quran": false,
       "translations": {
         "id": "Minta perlindungan kepada Allah dari setan (dengan membaca: A’udzu billahi minas syaithanir rajim). artinya, \"aku berlindung kepada Allah dari godaan syaitan yang terkutuk\"",
@@ -8459,7 +8459,7 @@
       "event": "waswas",
       "order": 7,
       "variant_group": null,
-      "arabic": "((الْأَذَانُ)).",
+      "arabic": "الْأَذَانُ",
       "is_quran": false,
       "translations": {
         "id": "Membaca adzan.",
@@ -8496,7 +8496,7 @@
       "event": "waswas",
       "order": 8,
       "variant_group": null,
-      "arabic": "((الْأَذْكَارُ وَقِرَاءَةُ الْقُرْآنِ)).",
+      "arabic": "الْأَذْكَارُ وَقِرَاءَةُ الْقُرْآنِ",
       "is_quran": false,
       "translations": {
         "id": "Membaca dzikir tertentu yang sudah diterangkan dalam hadits dan membaca Al-Qur’an",
@@ -8529,7 +8529,7 @@
       "event": "debt",
       "order": 1,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اكْفِنِي بِحَلاَلِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكِ عَمَّنْ سِوَاكَ)).",
+      "arabic": "اللَّهُمَّ اكْفِنِي بِحَلاَلِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكِ عَمَّنْ سِوَاكَ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Cukupilah aku dengan rezekiMu yang halal (hingga aku terhindar) dari yang haram. Perkayalah aku dengan karuniaMu (hingga aku tidak minta) kepada selainMu.”",
@@ -8562,7 +8562,7 @@
       "event": "debt",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku berlindung kepadaMu dari (hal yang) menyedihkan dan menyusahkan, lemah dan malas, bakhil dan penakut, lilitan hutang dan penindasan orang.”",
@@ -8605,9 +8605,9 @@
         ]
       },
       "phrase_breaks": [
-        60,
-        85,
-        110
+        58,
+        83,
+        108
       ]
     },
     {
@@ -8616,7 +8616,7 @@
       "event": "news",
       "order": 1,
       "variant_group": null,
-      "arabic": "((قَدَرُ اللَّهُ وَمَا شَاءَ فَعَلَ)).",
+      "arabic": "قَدَرُ اللَّهُ وَمَا شَاءَ فَعَلَ",
       "is_quran": false,
       "translations": {
         "id": "“Allah sudah mentakdirkan sesuatu yang dikehendaki dan dilakukan.”",
@@ -8649,7 +8649,7 @@
       "event": "news",
       "order": 2,
       "variant_group": null,
-      "arabic": "((إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي، وَأَخْلِفْ لِي خَيْرَاً مِنْهَا)).",
+      "arabic": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي، وَأَخْلِفْ لِي خَيْرَاً مِنْهَا",
       "is_quran": false,
       "translations": {
         "id": "“Sesungguhnya kami milik Allah dan kepadaNya kami akan kembali (di hari Kiamat). Ya Allah! Berilah pahala kepadaku dan gantilah untukku dengan yang lebih baik (dari musibahku).”",
@@ -8682,7 +8682,7 @@
       "event": "news",
       "order": 3,
       "variant_group": null,
-      "arabic": "((الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي مِمَّا ابْتَلاَكَ بِهِ، وَفَضَّلَنِي عَلَى كَثِيرٍ مِمَّنْ خَلَقَ تَفْضِيلاً)).",
+      "arabic": "الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي مِمَّا ابْتَلاَكَ بِهِ، وَفَضَّلَنِي عَلَى كَثِيرٍ مِمَّنْ خَلَقَ تَفْضِيلاً",
       "is_quran": false,
       "translations": {
         "id": "“Segala puji bagi Allah yang menyelamatkan aku dari sesuatu yang Allah memberi cobaan kepadamu. Dan Allah telah memberi kemuliaan kepadaku, melebihi orang banyak.”",
@@ -8719,7 +8719,7 @@
       "event": "news",
       "order": 4,
       "variant_group": null,
-      "arabic": "((كَانَ النَّبيُّ صلى الله عليه وسلم إِذَا أَتَاهُ أَمْرٌ يَسُرُّهُ أَوْ يُسَرُّ بِهِ خَرَّ سَاجِداً شُكْراً لِلَّهِ تَبَارَكَ وَتَعَالَى)).",
+      "arabic": "كَانَ النَّبيُّ صلى الله عليه وسلم إِذَا أَتَاهُ أَمْرٌ يَسُرُّهُ أَوْ يُسَرُّ بِهِ خَرَّ سَاجِداً شُكْراً لِلَّهِ تَبَارَكَ وَتَعَالَى",
       "is_quran": false,
       "translations": {
         "id": "Nabi Shallallahu’alaihi wasallam apabila ada sesuatu yang menggembirakan atau menyenangkannya, beliau bersujud, karena syukur kepada Allah Yang Maha Suci dan Maha Tinggi.",
@@ -8756,7 +8756,7 @@
       "event": "news",
       "order": 5,
       "variant_group": null,
-      "arabic": "((ضَعْ يَدَكَ عَلَى الَّذِي تَألَّمَ مِنْ جَسَدِكَ وَقُلْ: بِسْمِ اللَّهِ، ثَلاَثاً، وَقُلْ سَبْعَ مَرَّاتٍ: أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ)).",
+      "arabic": "ضَعْ يَدَكَ عَلَى الَّذِي تَألَّمَ مِنْ جَسَدِكَ وَقُلْ: بِسْمِ اللَّهِ، ثَلاَثاً، وَقُلْ سَبْعَ مَرَّاتٍ: أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ",
       "is_quran": false,
       "translations": {
         "id": "Letakkan tanganmu pada tubuhmu yang terasa sakit, dan bacalah: “Bismillaah tiga kali, lalu bacalah tujuh kali: (Aku berlindung kepada Allah dan kekuasaanNya dari kejahatan sesuatu yang aku jumpai dan yang aku takuti.)",
@@ -8789,7 +8789,7 @@
       "event": "animals",
       "order": 1,
       "variant_group": null,
-      "arabic": "((إِذَا سَمِعْتُمْ صِيَاحَ الدِّيَكَةِ فَاسْأَلُوا اللَّهَ مِنْ فَضْلِهِ؛ فَإِنَّهَا رَأَتْ مَلَكاً وَإِذَا سَمِعْتُمْ نَهِيقَ الْحِمَارِ فَتَعَوَّذُوا بِاللَّهِ مِنَ الشَّيطَانِ؛ فَإِنَّهُ رَأَى شَيْطَاناً)).",
+      "arabic": "إِذَا سَمِعْتُمْ صِيَاحَ الدِّيَكَةِ فَاسْأَلُوا اللَّهَ مِنْ فَضْلِهِ؛ فَإِنَّهَا رَأَتْ مَلَكاً وَإِذَا سَمِعْتُمْ نَهِيقَ الْحِمَارِ فَتَعَوَّذُوا بِاللَّهِ مِنَ الشَّيطَانِ؛ فَإِنَّهُ رَأَى شَيْطَاناً",
       "is_quran": false,
       "translations": {
         "id": "Apabila kamu mendengar ayam jago berkokok, mintalah anugerah kepada Allah, sesungguhnya ia melihat malaikat. Tapi apabila engkau mendengar keledai meringkik, mintalah perlindungan kepada Allah dari gangguan setan, sesungguhnya ia melihat setan.",
@@ -8826,7 +8826,7 @@
       "event": "animals",
       "order": 2,
       "variant_group": null,
-      "arabic": "((إِذَا سَمِعْتُمْ نُبَاحَ الْكِلاَبِ وَنَهِيقَ الْحَمِيرِ بِاللَّيْلِ فَتَعَوَّذُوا بِاللَّهِ مِنْهُنَّ؛ فَإِنَّهُنَّ يَرَيْنَ مَا لاَ تَرَوْنَ)).",
+      "arabic": "إِذَا سَمِعْتُمْ نُبَاحَ الْكِلاَبِ وَنَهِيقَ الْحَمِيرِ بِاللَّيْلِ فَتَعَوَّذُوا بِاللَّهِ مِنْهُنَّ؛ فَإِنَّهُنَّ يَرَيْنَ مَا لاَ تَرَوْنَ",
       "is_quran": false,
       "translations": {
         "id": "Apabila kamu mendengar anjing menggonggong dan mendengar keledai meringkik, mintalah perlindungan kepada Allah. Sesungguhnya mereka melihat apa yang tidak kamu lihat.",
@@ -8896,7 +8896,7 @@
       "event": "iftar",
       "order": 1,
       "variant_group": null,
-      "arabic": "((ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ)).",
+      "arabic": "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ",
       "is_quran": false,
       "translations": {
         "id": "“Telah hilang rasa haus, dan urat-urat telah basah serta pahala akan tetap, insya Allah.”",
@@ -8933,7 +8933,7 @@
       "event": "iftar",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Sesungguhnya aku memohon kepadaMu dengan rahmatMu yang meliputi segala sesuatu, supaya memberi ampunan atasku.”",
@@ -8966,7 +8966,7 @@
       "event": "iftar",
       "order": 3,
       "variant_group": null,
-      "arabic": "((أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلاَئِكَةُ)).",
+      "arabic": "أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلاَئِكَةُ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga orang-orang yang berpuasa berbuka di sisimu dan orang-orang yang baik makan makananmu, serta malaikat mendoakannya, agar kamu mendapat rahmat.”",
@@ -9053,7 +9053,7 @@
       "event": "fasting_manners",
       "order": 2,
       "variant_group": null,
-      "arabic": "((إِنِّي صَائِمٌ، إِنِّي صَائِمٌ)).",
+      "arabic": "إِنِّي صَائِمٌ، إِنِّي صَائِمٌ",
       "is_quran": false,
       "translations": {
         "id": "Sesungguhnya aku sedang berpuasa. Sesungguhnya aku sedang berpuasa.",
@@ -9090,7 +9090,7 @@
       "event": "marriage",
       "order": 1,
       "variant_group": null,
-      "arabic": "((بَارَكَ اللَّهُ لَكَ، وَبَارَكَ عَلَيْكَ، وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ)).",
+      "arabic": "بَارَكَ اللَّهُ لَكَ، وَبَارَكَ عَلَيْكَ، وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah memberi berkah kepadamu dan atasmu serta mengumpulkan kamu berdua (pengantin laki-laki dan perempuan) dalam kebaikan.”",
@@ -9168,7 +9168,7 @@
       "event": "marriage",
       "order": 3,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ، اللَّهُمَّ جَنِّبْنَا الشَّيْطَانَ، وَجَنِّبِ الشَّيْطَانَ مَا رَزَقْتَنَا)).",
+      "arabic": "بِسْمِ اللَّهِ، اللَّهُمَّ جَنِّبْنَا الشَّيْطَانَ، وَجَنِّبِ الشَّيْطَانَ مَا رَزَقْتَنَا",
       "is_quran": false,
       "translations": {
         "id": "“Dengan Nama Allah, Ya Allah! Jauhkan kami dari setan, dan jauhkan setan untuk mengganggu apa yang Engkau rezekikan kepada kami.”",
@@ -9308,7 +9308,7 @@
       "event": "salam",
       "order": 2,
       "variant_group": null,
-      "arabic": "((ثَلاَثٌ مَنْ جَمَعَهُنَّ فَقَدْ جَمَعَ الْإِيمَانَ: الْإِنْصَافُ مِنْ نَفْسِكَ، وَبَذْلُ السَّلاَمِ لِلْعَالَمِ، وَالْإِنْفَاقُ مِنَ الإِقْتَارِ)).",
+      "arabic": "ثَلاَثٌ مَنْ جَمَعَهُنَّ فَقَدْ جَمَعَ الْإِيمَانَ: الْإِنْصَافُ مِنْ نَفْسِكَ، وَبَذْلُ السَّلاَمِ لِلْعَالَمِ، وَالْإِنْفَاقُ مِنَ الإِقْتَارِ",
       "is_quran": false,
       "translations": {
         "id": "“Ada tiga perkara, barangsiapa yang bisa mengerjakannya, maka sungguh telah mengumpulkan keimanan: 1. Berlaku adil terhadap diri sendiri; 2. Menyebarkan salam ke seluruh penduduk dunia; 3. Berinfak dalam keadaan fakir.”",
@@ -9355,9 +9355,9 @@
         ]
       },
       "phrase_breaks": [
-        54,
-        82,
-        115
+        52,
+        80,
+        113
       ]
     },
     {
@@ -9403,7 +9403,7 @@
       "event": "salam",
       "order": 4,
       "variant_group": null,
-      "arabic": "((إذَا سَلَّمَ عَلَيْكُمْ أَهْلُ الْكِتَابِ فَقُولُوا: وَعَلَيْكُمْ)).",
+      "arabic": "إذَا سَلَّمَ عَلَيْكُمْ أَهْلُ الْكِتَابِ فَقُولُوا: وَعَلَيْكُمْ",
       "is_quran": false,
       "translations": {
         "id": "“Apabila ahli kitab mengucapkan salam kepadamu, jawablah: Wa 'alaikum.”",
@@ -9440,7 +9440,7 @@
       "event": "gathering",
       "order": 1,
       "variant_group": null,
-      "arabic": "((عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ)).",
+      "arabic": "عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ",
       "is_quran": false,
       "translations": {
         "id": "Dari Ibnu Umar katanya adalah pernah dihitung bacaan Rasulullah Shallallahu’alaihi wasallam dalam satu majlis seratus kali sebelum beliau berdiri, yaitu: “Wahai Tuhanku! Ampunilah aku dan terimalah taubatku, sesungguhnya Engkau Maha Menerima taubat lagi Maha Pengampun.”",
@@ -9477,7 +9477,7 @@
       "event": "gathering",
       "order": 2,
       "variant_group": null,
-      "arabic": "((سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ)).",
+      "arabic": "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Engkau, ya Allah, aku memujiMu. Aku bersaksi bahwa tiada Tuhan yang berhak disembah kecuali Engkau, aku minta ampun dan bertaubat kepada- Mu.”",
@@ -9510,7 +9510,7 @@
       "event": "manners",
       "order": 1,
       "variant_group": null,
-      "arabic": "((جَزَاكَ اللَّهُ خَيْراً)).",
+      "arabic": "جَزَاكَ اللَّهُ خَيْراً",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah membalasmu dengan kebaikan”",
@@ -9543,7 +9543,7 @@
       "event": "manners",
       "order": 2,
       "variant_group": null,
-      "arabic": "((أَحَبَّكَ الَّذِي أَحْبَبْتَنِي لَهُ)).",
+      "arabic": "أَحَبَّكَ الَّذِي أَحْبَبْتَنِي لَهُ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah mencintai kamu yang cinta kepadaku karenaNya.”",
@@ -9576,7 +9576,7 @@
       "event": "manners",
       "order": 3,
       "variant_group": null,
-      "arabic": "((بَارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ)).",
+      "arabic": "بَارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah memberkahimu dalam keluarga dan hartamu.”",
@@ -9609,7 +9609,7 @@
       "event": "manners",
       "order": 4,
       "variant_group": null,
-      "arabic": "((بارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ، إِنَّمَا جَزَاءُ السَّلَفِ الْحَمْدُ وَالأَدَاءُ)).",
+      "arabic": "بارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ، إِنَّمَا جَزَاءُ السَّلَفِ الْحَمْدُ وَالأَدَاءُ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah memberikan berkah kepadamu dalam keluarga dan hartamu. Sesungguhnya balasan meminjami adalah pujian dan pembayaran.”",
@@ -9650,7 +9650,7 @@
       "event": "manners",
       "order": 5,
       "variant_group": null,
-      "arabic": "((وَفِيكَ بَارَكَ اللَّهُ)).",
+      "arabic": "وَفِيكَ بَارَكَ اللَّهُ",
       "is_quran": false,
       "translations": {
         "id": "“Semoga Allah juga melimpahkan berkah kepadamu.”",
@@ -9757,7 +9757,7 @@
       "event": "manners",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ لاَ تُؤَاخِذْنِي بِمَا يَقُولُونَ، وَاغْفِرْ لِي مَا لاَ يَعْلَمُونَ، [وَاجْعَلْنِي خَيْراً مِمَّا يَظُّنُّونَ])).",
+      "arabic": "اللَّهُمَّ لاَ تُؤَاخِذْنِي بِمَا يَقُولُونَ، وَاغْفِرْ لِي مَا لاَ يَعْلَمُونَ، [وَاجْعَلْنِي خَيْراً مِمَّا يَظُّنُّونَ]",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, semoga Engkau tidak menghukumku karena apa yang mereka katakan. Ampunilah aku atas apa yang tidak mereka ketahui. [Dan jadikanlah aku lebih baik daripada yang mereka perkirakan].",
@@ -9790,7 +9790,7 @@
       "event": "funeral",
       "order": 1,
       "variant_group": null,
-      "arabic": "((مَنْ كَانَ آخِرُ كَلاَمِهِ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ)).",
+      "arabic": "مَنْ كَانَ آخِرُ كَلاَمِهِ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ",
       "is_quran": false,
       "translations": {
         "id": "Barangsiapa yang akhir perkataannya adalah: Laa ilaaha illallaah, akan masuk Surga. Ketika akan meninggal dunia maka si sakit hendaknya diajarkan kalimat \"Laa Ilaaha Illallah\".",
@@ -9823,7 +9823,7 @@
       "event": "funeral",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِفُلاَنٍ (بِاسْمِهِ) وَارْفَعْ دَرَجَتَهُ فِي الْمَهْدِيِّينَ، وَاخْلُفْهُ فِي عَقِبِهِ فِي الْغَابِرِينَ، وَاغْفِرْ لَنَا وَلَهُ يَا رَبَّ الْعَالَمِينَ، وَافْسَحْ لَهُ فِي قَبْرِهِ، وَنَوِّرْ لَهُ فِيهِ)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِفُلاَنٍ (بِاسْمِهِ) وَارْفَعْ دَرَجَتَهُ فِي الْمَهْدِيِّينَ، وَاخْلُفْهُ فِي عَقِبِهِ فِي الْغَابِرِينَ، وَاغْفِرْ لَنَا وَلَهُ يَا رَبَّ الْعَالَمِينَ، وَافْسَحْ لَهُ فِي قَبْرِهِ، وَنَوِّرْ لَهُ فِيهِ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Ampunilah si Fulan (hendaklah menyebut namanya), angkatlah derajatnya bersama orang-orang yang mendapat petunjuk, berilah penggantinya bagi orang-orang yang ditinggalkan sesudahnya. Dan ampunilah kami dan dia, wahai Tuhan, seru sekalian alam. Lebarkan kuburannya dan berilah penerangan di dalamnya.”",
@@ -9856,7 +9856,7 @@
       "event": "funeral",
       "order": 3,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَعَافِهِ، وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ، وَوَسِّعْ مُدْخَلَهُ، وَاغْسِلْهُ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ، وَنَقِّهِ مِنَ الْخَطَايَا كَمَا نَقَّيْتَ الثَّوْبَ الأَبْيَضَ مِنَ الدَّنَسِ، وَأَبْدِلْهُ دَاراً خَيْراً مِنْ دَارِهِ، وَأَهْلاً خَيْراً مِنْ أَهْلِهِ، وَزَوْجَاً خَيْراً مِنْ زَوْجِهِ، وَأَدْخِلْهُ الْجَنَّةَ، وَأَعِذْهُ مِنْ عَذَابِ القَبْرِ [وَعَذَابِ النَّارِ])).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَعَافِهِ، وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ، وَوَسِّعْ مُدْخَلَهُ، وَاغْسِلْهُ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ، وَنَقِّهِ مِنَ الْخَطَايَا كَمَا نَقَّيْتَ الثَّوْبَ الأَبْيَضَ مِنَ الدَّنَسِ، وَأَبْدِلْهُ دَاراً خَيْراً مِنْ دَارِهِ، وَأَهْلاً خَيْراً مِنْ أَهْلِهِ، وَزَوْجَاً خَيْراً مِنْ زَوْجِهِ، وَأَدْخِلْهُ الْجَنَّةَ، وَأَعِذْهُ مِنْ عَذَابِ القَبْرِ [وَعَذَابِ النَّارِ]",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Ampunilah dia (mayat) berilah rahmat kepadanya, selamatkanlah dia (dari beberapa hal yang tidak disukai), maafkanlah dia dan tempatkanlah di tempat yang mulia (Surga), luaskan kuburannya, mandikan dia dengan air salju dan air es. Bersihkan dia dari segala kesalahan, sebagaimana Engkau membersihkan baju yang putih dari kotoran, berilah rumah yang lebih baik dari rumahnya (di dunia), berilah keluarga (atau istri di Surga) yang lebih baik daripada keluarganya (di dunia), istri (atau suami) yang lebih baik daripada istrinya (atau suaminya), dan masukkan dia ke Surga, jagalah dia dari siksa kubur dan Neraka.”",
@@ -9889,7 +9889,7 @@
       "event": "funeral",
       "order": 4,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لِحَيِّنَا وَمَيِّتِنَا، وَشَاهِدِنَا وَغَائِبِنَا، وَصَغِيرِنَا وَكَبيرِنَا، وَذَكَرِنَا وَأُنْثَانَا. اللَّهُمَّ مَنْ أَحْيَيْتَهُ مِنَّا فَأَحْيِهِ عَلَى الْإِسْلاَمِ، وَمَنْ تَوَفَّيْتَهُ مِنَّا فَتَوَفَّهُ عَلَى الإِيمَانِ، اللَّهُمَّ لاَ تَحْرِمْنَا أَجْرَهُ، وَلاَ تُضِلَّنَا بَعْدَهُ)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لِحَيِّنَا وَمَيِّتِنَا، وَشَاهِدِنَا وَغَائِبِنَا، وَصَغِيرِنَا وَكَبيرِنَا، وَذَكَرِنَا وَأُنْثَانَا. اللَّهُمَّ مَنْ أَحْيَيْتَهُ مِنَّا فَأَحْيِهِ عَلَى الْإِسْلاَمِ، وَمَنْ تَوَفَّيْتَهُ مِنَّا فَتَوَفَّهُ عَلَى الإِيمَانِ، اللَّهُمَّ لاَ تَحْرِمْنَا أَجْرَهُ، وَلاَ تُضِلَّنَا بَعْدَهُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Ampunilah kepada orang yang hidup di antara kami dan yang mati, orang yang hadir di antara kami dan yang tidak hadir, laki-laki maupun perempuan. Ya Allah! Orang yang Engkau hidupkan di antara kami, hidupkan dengan memegang ajaran Islam, dan orang yang Engkau matikan di antara kami, maka matikan dengan memegang keimanan. Ya Allah! Jangan menghalangi kami untuk tidak memperoleh pahalanya dan jangan sesatkan kami sepeninggalnya.”",
@@ -9952,13 +9952,13 @@
         ]
       },
       "phrase_breaks": [
-        46,
-        73,
-        99,
-        125,
-        192,
-        250,
-        287
+        44,
+        71,
+        97,
+        123,
+        190,
+        248,
+        285
       ]
     },
     {
@@ -9967,7 +9967,7 @@
       "event": "funeral",
       "order": 5,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ إِنَّ فُلاَنَ بْنَ فُلاَنٍ فِي ذِمَّتِكَ، وَحَبْلِ جِوَارِكَ، فَقِهِ مِنْ فِتْنَةِ الْقَبْرِ، وَعَذَابِ النَّارِ، وَأَنْتَ أَهْلُ الْوَفَاءِ وَالْحَقِّ، فَاغْفِرْ لَهُ وَارْحَمْهُ إِنَّكَ أَنْتَ الغَفُورُ الرَّحيمُ)).",
+      "arabic": "اللَّهُمَّ إِنَّ فُلاَنَ بْنَ فُلاَنٍ فِي ذِمَّتِكَ، وَحَبْلِ جِوَارِكَ، فَقِهِ مِنْ فِتْنَةِ الْقَبْرِ، وَعَذَابِ النَّارِ، وَأَنْتَ أَهْلُ الْوَفَاءِ وَالْحَقِّ، فَاغْفِرْ لَهُ وَارْحَمْهُ إِنَّكَ أَنْتَ الغَفُورُ الرَّحيمُ",
       "is_quran": false,
       "translations": {
         "id": "“Ya, Allah! Sesungguhnya Fulan bin Fulan dalam tanggunganMu dan tali perlindunganMu. Peliharalah dia dari fitnah kubur dan siksa Neraka. Engkau adalah Maha Setia dan Maha Benar. Ampunilah dan belas kasihanilah dia. Sesungguhnya Engkau, Tuhan Yang Maha Pengampun lagi Penyayang.”",
@@ -10018,11 +10018,11 @@
         ]
       },
       "phrase_breaks": [
-        55,
-        75,
-        107,
-        127,
-        166
+        53,
+        73,
+        105,
+        125,
+        164
       ]
     },
     {
@@ -10031,7 +10031,7 @@
       "event": "funeral",
       "order": 6,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ عَبْدُكَ وَابْنُ أَمَتِكَ احْتَاجَ إِلَى رَحْمَتِكَ، وَأَنْتَ غَنِيٌّ عَنْ عَذَابِهِ، إِنْ كَانَ مُحْسِناً فَزِدْ فِي حَسَنَاتِهِ، وَإِنْ كَانَ مُسِيئاً فَتَجَاوَزْ عَنْهُ)).",
+      "arabic": "اللَّهُمَّ عَبْدُكَ وَابْنُ أَمَتِكَ احْتَاجَ إِلَى رَحْمَتِكَ، وَأَنْتَ غَنِيٌّ عَنْ عَذَابِهِ، إِنْ كَانَ مُحْسِناً فَزِدْ فِي حَسَنَاتِهِ، وَإِنْ كَانَ مُسِيئاً فَتَجَاوَزْ عَنْهُ",
       "is_quran": false,
       "translations": {
         "id": "Ya, Allah, ini hambaMu, anak hambaMu perempuan (Hawa), membutuhkan rahmatMu, sedang Engkau tidak membutuhkan untuk menyiksanya, jika ia berbuat baik tambahkanlah dalam amalan baiknya, dan jika dia orang yang salah, lewatkanlah dari kesalahan-nya.",
@@ -10105,7 +10105,7 @@
       "event": "funeral",
       "order": 8,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اجْعَلْهُ لَنَا فَرَطاً، وَسَلَفاً، وَأَجْراً)).",
+      "arabic": "اللَّهُمَّ اجْعَلْهُ لَنَا فَرَطاً، وَسَلَفاً، وَأَجْراً",
       "is_quran": false,
       "translations": {
         "id": "“Ya Allah! Jadikan kematian anak ini sebagai simpanan pahala dan amal baik serta pahala buat kami.”",
@@ -10183,7 +10183,7 @@
       "event": "grave",
       "order": 1,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ وَعَلَى سُنَّةِ رَسُولِ اللَّهِ)).",
+      "arabic": "بِسْمِ اللَّهِ وَعَلَى سُنَّةِ رَسُولِ اللَّهِ",
       "is_quran": false,
       "translations": {
         "id": "Bismillaahi wa ‘alaa sunnati Rasulillaah. artinya, \"Dengan nama Allah dan di atas petunjuk Rasulullah\"",
@@ -10216,7 +10216,7 @@
       "event": "grave",
       "order": 2,
       "variant_group": null,
-      "arabic": "((اللَّهُمَّ اغْفِرْ لَهُ، اللَّهُمَّ ثَبِّتْهُ)).",
+      "arabic": "اللَّهُمَّ اغْفِرْ لَهُ، اللَّهُمَّ ثَبِّتْهُ",
       "is_quran": false,
       "translations": {
         "id": "Ya Allah, ampunilah dia, ya Allah teguhkanlah dia.",
@@ -10257,7 +10257,7 @@
       "event": "grave",
       "order": 3,
       "variant_group": null,
-      "arabic": "((السَّلاَمُ عَلَيْكُمْ أَهْلَ الدِّيَارِ، مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لاَحِقُونَ، [وَيَرْحَمُ اللَّهُ الْمُسْتَقدِمِينَ مِنَّا وَالْمُسْتأْخِرِينَ] أَسْاَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ)).",
+      "arabic": "السَّلاَمُ عَلَيْكُمْ أَهْلَ الدِّيَارِ، مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لاَحِقُونَ، [وَيَرْحَمُ اللَّهُ الْمُسْتَقدِمِينَ مِنَّا وَالْمُسْتأْخِرِينَ] أَسْاَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ",
       "is_quran": false,
       "translations": {
         "id": "Semoga kesejahteraan untukmu, wahai penduduk kampung (Barzakh) dari orang-orang mukmin dan muslim. Sesungguhnya kami –insya Allah- akan menyusulkan, kami mohon kepada Allah untuk kami dan kamu, agar diberi keselamatan (dari apa yang tidak diinginkan).",
@@ -10294,7 +10294,7 @@
       "event": "hajj",
       "order": 1,
       "variant_group": null,
-      "arabic": "((لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ، وَالنِّعْمَةَ، لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ)).",
+      "arabic": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ، وَالنِّعْمَةَ، لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ",
       "is_quran": false,
       "translations": {
         "id": "Aku memenuhi panggilanMu, ya Allah aku memenuhi panggilanMu. Aku memenuhi panggilanMu, tiada sekutu bagiMu, aku memenuhi panggilanMu. Sesungguhnya pujaan dan nikmat adalah milikMu, begitu juga kerajaan, tiada sekutu bagiMu.",
@@ -10331,7 +10331,7 @@
       "event": "hajj",
       "order": 2,
       "variant_group": null,
-      "arabic": "((طَافَ النَّبيُّ صلى الله عليه وسلم بِالْبَيْتِ عَلَى بَعِيرٍ كُلَّمَا أَتَى الرُّكْنَ أَشَارَ إِلَيْهِ بِشَيْءٍ عِنْدَهُ وَكَبَّرَ)).",
+      "arabic": "طَافَ النَّبيُّ صلى الله عليه وسلم بِالْبَيْتِ عَلَى بَعِيرٍ كُلَّمَا أَتَى الرُّكْنَ أَشَارَ إِلَيْهِ بِشَيْءٍ عِنْدَهُ وَكَبَّرَ",
       "is_quran": false,
       "translations": {
         "id": "Nabi Shallallahu’alaihi wasallam melakukan tawaf di Baitullah, di atas unta, setiap datang ke rukun aswad (tiang Ka’bah yang terdapat hajar aswad), beliau memberi isyarat dengan sesuatu yang dipegangnya dan bertakbir.",
@@ -10368,7 +10368,7 @@
       "event": "hajj",
       "order": 3,
       "variant_group": null,
-      "arabic": "((﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ﴾)).",
+      "arabic": "﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ﴾",
       "is_quran": true,
       "translations": {
         "id": "“Wahai Tuhan kami! Berilah kami kebaikan di dunia dan kebaikan di akhirat, dan jauhkan kami dari siksaan api Neraka.”",
@@ -10508,7 +10508,7 @@
       "event": "hajj",
       "order": 7,
       "variant_group": null,
-      "arabic": "((يُكَبِّرُ كُلَّمَا رَمَى بِحَصَاةٍ عِنْدَ الْجِمَارِ الثَّلاَثِ، ثُمَّ يَتَقَدَّمُ، ويَقِفُ يَدْعُو مُسْتَقْبِلَ الْقِبلَةِ، رَافِعاً يَدَيْهِ بَعْدَ الْجَمْرَةِ الْأُولَى وَالثَّانِيَةِ. أَمَّا جَمْرَةُ الْعَقَبَةِ فَيَرْمِيهَا وَيُكَبِّرُ عِنْدَ كُلِّ حَصَاةٍ وَيَنْصَرِفُ وَلاَ يَقِفُ عِنْدَهَا)).",
+      "arabic": "يُكَبِّرُ كُلَّمَا رَمَى بِحَصَاةٍ عِنْدَ الْجِمَارِ الثَّلاَثِ، ثُمَّ يَتَقَدَّمُ، ويَقِفُ يَدْعُو مُسْتَقْبِلَ الْقِبلَةِ، رَافِعاً يَدَيْهِ بَعْدَ الْجَمْرَةِ الْأُولَى وَالثَّانِيَةِ. أَمَّا جَمْرَةُ الْعَقَبَةِ فَيَرْمِيهَا وَيُكَبِّرُ عِنْدَ كُلِّ حَصَاةٍ وَيَنْصَرِفُ وَلاَ يَقِفُ عِنْدَهَا",
       "is_quran": false,
       "translations": {
         "id": "Rasulullah Shallallahu’alaihi wasallam bertakbir pada setiap melempar tiga Jumrah dengan batu kecil, kemudian beliau maju dan berdiri untuk berdoa dengan menghadap kiblat dan mengangkat kedua tangannya setelah melempar Jumrah yang pertama dan kedua. Adapun untuk Jumrah Aqabah, beliau melempar dan bertakbir, dan beliau tidak berdiri di situ, tapi langsung pergi.”",
@@ -10541,7 +10541,7 @@
       "event": "hajj",
       "order": 8,
       "variant_group": null,
-      "arabic": "((سُبْحَانَ اللَّهِ!)).",
+      "arabic": "سُبْحَانَ اللَّهِ!",
       "is_quran": false,
       "translations": {
         "id": "“Maha Suci Allah.”",
@@ -10578,7 +10578,7 @@
       "event": "hajj",
       "order": 9,
       "variant_group": null,
-      "arabic": "((اللَّهُ أَكْبَرُ!)).",
+      "arabic": "اللَّهُ أَكْبَرُ!",
       "is_quran": false,
       "translations": {
         "id": "“Allah Maha Besar.”",
@@ -10611,7 +10611,7 @@
       "event": "qurban",
       "order": 1,
       "variant_group": null,
-      "arabic": "((بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ [اللَّهُمَّ مِنْكَ وَلَكَ] اللَّهُمَّ تَقَبَّلْ مِنِّي)).",
+      "arabic": "بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ [اللَّهُمَّ مِنْكَ وَلَكَ] اللَّهُمَّ تَقَبَّلْ مِنِّي",
       "is_quran": false,
       "translations": {
         "id": "“Dengan nama Allah, (aku menyembelih), Allah Maha Besar. Ya Allah! (ternak ini) dariMu (nikmat yang Engkau berikan, dan kami sembelih) untukMu. Ya Allah! Terimalah kurban ini dariku.”",
@@ -10652,7 +10652,7 @@
       "event": "qurban",
       "order": 2,
       "variant_group": null,
-      "arabic": "((أَعُوذُ بكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لاَ يُجَاوِزُهُنَّ بَرٌّ وَلاَ فَاجِرٌ: مِنْ شَرِّ مَا خَلَقَ، وَبَرَأَ وَذَرَأَ، وَمِنْ شَرِّ مَا يَنْزِلُ مِنَ السَّمَاءِ، وَمِنْ شَرِّ مَا يَعْرُجُ فيهَا، وَمِنْ شَرِّ مَا ذَرَأَ فِي الْأَرْضِ، وَمِنْ شَرِّ مَا يَخْرُجُ مِنْهَا، وَمِنْ شَرِّ فِتَنِ اللَّيْلِ وَالنَّهَارِ، وَمِنْ شَرِّ كُلِّ طَارِقٍ إِلاَّ طَارِقاً يَطْرُقُ بِخَيْرٍ يَا رَحْمَنُ)).",
+      "arabic": "أَعُوذُ بكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لاَ يُجَاوِزُهُنَّ بَرٌّ وَلاَ فَاجِرٌ: مِنْ شَرِّ مَا خَلَقَ، وَبَرَأَ وَذَرَأَ، وَمِنْ شَرِّ مَا يَنْزِلُ مِنَ السَّمَاءِ، وَمِنْ شَرِّ مَا يَعْرُجُ فيهَا، وَمِنْ شَرِّ مَا ذَرَأَ فِي الْأَرْضِ، وَمِنْ شَرِّ مَا يَخْرُجُ مِنْهَا، وَمِنْ شَرِّ فِتَنِ اللَّيْلِ وَالنَّهَارِ، وَمِنْ شَرِّ كُلِّ طَارِقٍ إِلاَّ طَارِقاً يَطْرُقُ بِخَيْرٍ يَا رَحْمَنُ",
       "is_quran": false,
       "translations": {
         "id": "“Aku berlindung dengan kalimat-kalimat Allah yang sempurna, yang tidak akan diterobos oleh orang baik dan orang durhaka, dari kejahatan apa yang diciptakan dan dijadikanNya, dari kejahatan apa yang turun dari langit dan yang naik ke dalamnya, dari kejahatan yang tumbuh di bumi dan yang keluar daripadanya, dari kejahatan fitnah-fitnah malam dan siang, serta dari kejahatan- kejahatan yang datang (di waktu malam) kecuali dengan tujuan baik, wahai Tuhan Yang Maha Pengasih.”",

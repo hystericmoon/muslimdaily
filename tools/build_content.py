@@ -74,6 +74,30 @@ def parse_bool(value: str, where: str, report: Report, strict: bool) -> bool:
     return False
 
 
+def strip_quote_marks(text: str) -> str:
+    """Drops the book's quotation marks around a whole dua for display: one outer "((...))" or
+    "(...)" pair, with a full stop after it. Only a pair that encloses the whole text is
+    removed; "[...]" (words in some narrations), notes in brackets inside the text and
+    Qur'anic ﴿...﴾ stay. The CSV keeps the entry as the book prints it."""
+    t = text.strip()
+    if t.endswith("."):
+        t = t[:-1].rstrip()
+    for opening, closing in (("((", "))"), ("(", ")")):
+        if not (t.startswith(opening) and t.endswith(closing)) or len(t) <= 2 * len(opening):
+            continue
+        depth = 0
+        for i, ch in enumerate(t):
+            depth += {"(": 1, ")": -1}.get(ch, 0)
+            if i >= len(opening) - 1 and depth < len(opening) and i < len(t) - len(closing):
+                break  # the opening bracket closes before the end: not a wrapper
+        else:
+            inner = t[len(opening):-len(closing)].strip()
+            if inner.startswith(PHRASE_MARK) or inner.endswith(PHRASE_MARK):
+                break
+            return inner
+    return text.strip()
+
+
 def split_phrases(marked: str) -> tuple[str, list[int]]:
     """Removes '|' markers and returns (arabic, phrase_breaks).
 
@@ -230,7 +254,7 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         if not audio_range:
             report.errors.append(f"{rid}: audio_range must look like '3.2-9.8'")
             audio_range = None
-    arabic, breaks = split_phrases(row.get("arabic", ""))
+    arabic, breaks = split_phrases(strip_quote_marks(row.get("arabic", "")))
     sources = []
     for n in (1, 2, 3):
         book = (row.get(f"source_{n}_book") or "").strip()
