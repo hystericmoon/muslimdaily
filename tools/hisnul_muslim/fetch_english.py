@@ -3,8 +3,9 @@
     python3 -I tools/hisnul_muslim/fetch_english.py --dry-run   # report coverage only
     python3 -I tools/hisnul_muslim/fetch_english.py --apply     # write content/source/duas.csv
 
-NOT APPLIED YET. hisnmuslim.com names no translator or licence for the English text, so it
-stays out of the app until IslamHouse confirms the use (docs/islamhouse-licence-request.md).
+Applied 2026-10-29 on the owner's decision, credited to hisnmuslim.com (IslamHouse.com) in
+About, under IslamHouse's published terms (republish unchanged, with the source named). The site
+names no translator; see docs/islamhouse-licence-request.md.
 
 Entries are keyed by the book's standard number, the same number each CSV row records in
 `notes` ("Hisnul Muslim no. N"). The text is taken unchanged apart from collapsing whitespace;
@@ -81,7 +82,7 @@ def main() -> int:
     print(f"{len(en)} English entries; would fill {filled} rows, {missing} without a match")
     if args.apply:
         with CSV_PATH.open("w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=fields)
+            w = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
             w.writeheader()
             w.writerows(rows)
         print(f"Wrote {CSV_PATH}; now run tools/build_content.py and credit the source in About.")
