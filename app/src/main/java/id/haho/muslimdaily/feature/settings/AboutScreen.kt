@@ -58,8 +58,9 @@ fun AboutRoute(onBack: () -> Unit) {
     AdwamScreen(title = stringResource(R.string.settings_about), onBack = onBack) { AboutContent() }
 }
 
+/** [versionName] is a parameter so screenshots stay the same when the version changes. */
 @Composable
-fun AboutContent() {
+fun AboutContent(versionName: String = BuildConfig.VERSION_NAME) {
     val context = LocalContext.current
     var shown by remember { mutableStateOf<License?>(null) }
     Column(
@@ -68,7 +69,7 @@ fun AboutContent() {
     ) {
         Column(Modifier.padding(HahoTheme.dimens.screenGutter), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
             Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.semantics { heading() })
-            Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.methodology_app_version, versionName), color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.about_body), style = HahoTheme.reading.bodyLarge)
             Text(stringResource(R.string.settings_no_ads), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -82,7 +83,7 @@ fun AboutContent() {
             )
         }
         if (whatsNew) {
-            WhatsNewDialog(WhatsNew.releases.filter { !Versions.isNewer(it.version, BuildConfig.VERSION_NAME) }.take(3)) { whatsNew = false }
+            WhatsNewDialog(WhatsNew.releases.filter { !Versions.isNewer(it.version, versionName) }.take(3)) { whatsNew = false }
         }
         SettingsGroup(stringResource(R.string.about_licenses)) {
             Licenses.forEach { license ->
