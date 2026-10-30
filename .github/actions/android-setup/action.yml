@@ -17,7 +17,8 @@ runs:
     - uses: gradle/actions/setup-gradle@v4
     - name: Android SDK 37
       shell: bash
-      run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
+      # pipefail is on in composite actions; yes ends with a broken pipe once sdkmanager is done.
+      run: (yes || true) | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
     - name: haho-design version
       id: haho
       shell: bash
