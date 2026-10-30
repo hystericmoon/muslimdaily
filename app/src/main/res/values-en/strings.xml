@@ -95,6 +95,7 @@
     <string name="today_no_location_body">Set a location to show prayer times. The location is stored only on this device.</string>
     <string name="today_use_gps">Use current location</string>
     <string name="today_pick_city">Choose city</string>
+    <string name="today_adhkar_header">Daily adhkar</string>
     <string name="today_travel_suggestion">Your device is about %1$d km from %2$s. Update the location or turn on travel mode?</string>
     <string name="today_update_location">Update location</string>
     <string name="today_enable_travel">Travel mode</string>
@@ -256,6 +257,7 @@
     </plurals>
     <string name="dua_virtue">Virtue</string>
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
+    <string name="audio_failed">The audio couldn\'t be played. Try again; if it keeps failing, report it from the dua\'s page.</string>
     <string name="dua_memorize">Memorize</string>
     <string name="dua_add_to_routine">Add to routine</string>
     <string name="dua_full_entry_show">See the full text in the book</string>
@@ -732,7 +734,8 @@
     <string name="onboarding_location_title">Location</string>
     <string name="onboarding_location_body">Used on this device to calculate prayer times and the qibla direction. Your location is never sent anywhere.</string>
     <string name="onboarding_location_use">Use my location</string>
-    <string name="onboarding_location_later">Or choose your city later on the Today screen.</string>
+    <string name="onboarding_location_later">You can also set it later on the Today screen.</string>
+    <string name="onboarding_text_size_body">Set the size of the Arabic and the translation so they are comfortable to read.</string>
     <string name="onboarding_location_finding">Finding your location…</string>
     <string name="onboarding_location_denied">Location permission wasn\'t given. You can still choose a city by hand.</string>
     <string name="onboarding_location_set">Location: %1$s</string>

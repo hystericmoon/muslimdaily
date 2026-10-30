@@ -270,6 +270,13 @@ private fun PlayRow(isPlaying: Boolean, enabled: Boolean, startLabel: String, on
 private fun ListenStep(state: MemorizeUiState, actions: MemorizeActions) {
     ArabicCard(state)
     if (!state.hasAudio) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
+    if (state.playback.failed) {
+        InfoNote(
+            stringResource(R.string.audio_failed),
+            Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+            icon = R.drawable.ic_volume_off,
+        )
+    }
     PlayRow(
         isPlaying = state.playback.isPlaying,
         enabled = state.hasAudio,

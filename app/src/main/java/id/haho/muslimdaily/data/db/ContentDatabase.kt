@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.Flow
     ],
     // 2: removed draft/review status, added the takhrij reference. Content is re-imported
     // from the bundled assets, so a destructive migration loses nothing. 5: the full English
-    // entry (translation_en_full).
-    version = 5,
+    // entry (translation_en_full). 6: sources in the search index.
+    version = 6,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -86,6 +86,8 @@ data class DuaFtsEntity(
     val translationEn: String,
     val transliteration: String,
     val eventLabel: String,
+    /** Source books and numbers, so "bukhari" or "muslim 2723" finds a dua. */
+    val sources: String,
 )
 
 @Entity(tableName = "rawatib")

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -27,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,13 +51,17 @@ import id.haho.design.component.InfoNote
 import id.haho.design.component.SwitchRow
 import id.haho.design.glass.GlassButton
 import id.haho.design.glass.GlassCard
+import id.haho.design.glass.GlassOutlinedButton
 import id.haho.design.glass.GlassTonalButton
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.feature.settings.LanguageRow
+import id.haho.muslimdaily.feature.settings.TextSizeRows
+import id.haho.muslimdaily.feature.settings.location.LocationRoute
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.notifications.Notifier
 import id.haho.muslimdaily.notifications.ReminderScheduler
@@ -99,6 +105,10 @@ class OnboardingViewModel @Inject constructor(
                 remEvening = on
             }
         }
+    }
+
+    fun updateSettings(block: SettingsEditor.() -> Unit) {
+        viewModelScope.launch { settings.update(block) }
     }
 
     fun finish() {
@@ -152,6 +162,14 @@ fun OnboardingRoute(viewModel: OnboardingViewModel = hiltViewModel()) {
         }
     }
 
+    // Choosing a city by hand, for anyone who'd rather not share their location.
+    var pickingCity by rememberSaveable { mutableStateOf(false) }
+    if (pickingCity) {
+        BackHandler { pickingCity = false }
+        LocationRoute(onBack = { pickingCity = false })
+        return
+    }
+
     val s = settings ?: return
     OnboardingScreen(
         settings = s,
@@ -160,6 +178,8 @@ fun OnboardingRoute(viewModel: OnboardingViewModel = hiltViewModel()) {
         locationMessage = locationMessage?.let { stringResource(it) },
         actions = OnboardingActions(
             onUseLocation = { locationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION) },
+            onPickCity = { pickingCity = true },
+            onUpdateSettings = viewModel::updateSettings,
             onPrayerReminders = { on -> if (on) enable(viewModel::setPrayerReminders) else viewModel.setPrayerReminders(false) },
             onAdhkarReminders = { on -> if (on) enable(viewModel::setAdhkarReminders) else viewModel.setAdhkarReminders(false) },
             onAllowExact = {
@@ -176,6 +196,8 @@ fun OnboardingRoute(viewModel: OnboardingViewModel = hiltViewModel()) {
 
 class OnboardingActions(
     val onUseLocation: () -> Unit = {},
+    val onPickCity: () -> Unit = {},
+    val onUpdateSettings: (SettingsEditor.() -> Unit) -> Unit = {},
     val onPrayerReminders: (Boolean) -> Unit = {},
     val onAdhkarReminders: (Boolean) -> Unit = {},
     val onAllowExact: () -> Unit = {},
@@ -231,8 +253,16 @@ fun OnboardingScreen(
                     GlassTonalButton(onClick = actions.onUseLocation, modifier = Modifier.fillMaxWidth()) {
                         Text(stringResource(R.string.onboarding_location_use))
                     }
+                    GlassOutlinedButton(onClick = actions.onPickCity, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.today_pick_city))
+                    }
                     InfoNote(locationMessage ?: stringResource(R.string.onboarding_location_later))
                 }
+            }
+
+            // Readers who need larger Arabic set it before their first dua, not after finding Settings.
+            Step(R.drawable.ic_text_fields, stringResource(R.string.display_text_size), stringResource(R.string.onboarding_text_size_body)) {
+                TextSizeRows(settings, actions.onUpdateSettings)
             }
 
             Step(R.drawable.ic_notifications, stringResource(R.string.onboarding_reminders_title), stringResource(R.string.onboarding_reminders_body)) {

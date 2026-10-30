@@ -527,19 +527,27 @@ private fun ProhibitedRow(window: TimeWindow, start: String, end: String) {
             tint = MaterialTheme.colorScheme.error,
             modifier = Modifier.size(HahoTheme.dimens.icon),
         )
-        Column(Modifier.weight(1f)) {
-            Text(label, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                stringResource(R.string.window_range, start, end),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+        // The badge flows under the label when the text is large, rather than squeezing it.
+        FlowRow(
+            Modifier.weight(1f),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column {
+                Text(label, style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    stringResource(R.string.window_range, start, end),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Badge(
+                stringResource(R.string.today_now_badge),
+                container = Glass.colors.alert,
+                content = Glass.colors.onAlert,
             )
         }
-        Badge(
-            stringResource(R.string.today_now_badge),
-            container = Glass.colors.alert,
-            content = Glass.colors.onAlert,
-        )
     }
 }
 

@@ -148,6 +148,7 @@ internal object ContentMapper {
                 translationEn = ArabicNormalizer.normalize(d.translations["en"].orEmpty()),
                 transliteration = ArabicNormalizer.normalize(d.transliteration),
                 eventLabel = ArabicNormalizer.normalize(eventLabels[d.event].orEmpty()),
+                sources = ArabicNormalizer.normalize(d.sources.joinToString(" ") { "${it.book} ${it.no}" }),
             )
         }
         val rawatibRows = rawatib.rawatib.mapIndexed { i, r ->

@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.today
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -215,7 +217,7 @@ fun TodayScreen(
     Box(Modifier.fillMaxSize()) {
         when (state) {
             TodayUiState.Loading -> Unit
-            TodayUiState.NoLocation -> NoLocation(actions)
+            TodayUiState.NoLocation -> NoLocation(actions, routines)
             is TodayUiState.Ready -> TodayContent(state.data, actions, initiallyExpanded, routines, widgetAlarmNote)
         }
         SnackbarHost(snackbarHostState, Modifier.align(Alignment.BottomCenter))
@@ -236,25 +238,70 @@ private fun rememberEntryFocus(): FocusRequester {
     return requester
 }
 
+/**
+ * Without a location there are no prayer times, but the adhkar and routines don't need one, so
+ * they stay reachable below the request for a location.
+ */
 @Composable
-private fun NoLocation(actions: TodayActions) {
+private fun NoLocation(actions: TodayActions, routines: List<Routine>) {
     val titleFocus = rememberEntryFocus()
-    Column(Modifier.fillMaxSize().statusBarsPadding(), verticalArrangement = Arrangement.Center) {
-        EmptyState(
-            icon = R.drawable.ic_location_on,
-            title = stringResource(R.string.today_no_location_title),
-            body = stringResource(R.string.today_no_location_body),
-            titleModifier = Modifier.focusRequester(titleFocus).focusable(),
-        ) {
-            GlassButton(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
-                Icon(painterResource(R.drawable.ic_my_location), null)
-                Spacer(Modifier.width(HahoTheme.spacing.sm))
-                Text(stringResource(R.string.today_use_gps))
-            }
-            GlassOutlinedButton(onClick = actions.onOpenLocation, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.today_pick_city))
+    LazyColumn(
+        Modifier.widthIn(max = HahoTheme.dimens.maxContentWidth).fillMaxSize().statusBarsPadding(),
+        contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl),
+    ) {
+        item(key = "location") {
+            EmptyState(
+                icon = R.drawable.ic_location_on,
+                title = stringResource(R.string.today_no_location_title),
+                body = stringResource(R.string.today_no_location_body),
+                titleModifier = Modifier.focusRequester(titleFocus).focusable(),
+            ) {
+                GlassButton(onClick = actions.onUseGps, modifier = Modifier.fillMaxWidth()) {
+                    Icon(painterResource(R.drawable.ic_my_location), null)
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
+                    Text(stringResource(R.string.today_use_gps))
+                }
+                GlassOutlinedButton(onClick = actions.onOpenLocation, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.today_pick_city))
+                }
             }
         }
+        item(key = "adhkar") {
+            Column {
+                SectionHeader(stringResource(R.string.today_adhkar_header))
+                Column(
+                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                ) {
+                    AdhkarStartButton(R.string.adhkar_morning, R.drawable.ic_wb_sunny) { actions.onStartAdhkar(TodayStateBuilder.MORNING) }
+                    AdhkarStartButton(R.string.adhkar_evening, R.drawable.ic_wb_twilight) { actions.onStartAdhkar(TodayStateBuilder.EVENING) }
+                }
+            }
+        }
+        if (routines.isNotEmpty()) {
+            item(key = "routines") {
+                Column {
+                    SectionHeader(stringResource(R.string.today_routines))
+                    RoutinesCard(
+                        routines = routines,
+                        onStart = actions.onStartRoutine,
+                        onEdit = {},
+                        onNew = {},
+                        compact = true,
+                        modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AdhkarStartButton(@StringRes label: Int, @DrawableRes icon: Int, onClick: () -> Unit) {
+    GlassOutlinedButton(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+        Icon(painterResource(icon), null)
+        Spacer(Modifier.width(HahoTheme.spacing.sm))
+        Text(stringResource(label))
     }
 }
 
