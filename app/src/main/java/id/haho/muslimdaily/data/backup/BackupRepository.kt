@@ -9,6 +9,7 @@ import id.haho.muslimdaily.data.db.RoutineEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.review.ReviewRepository
+import id.haho.muslimdaily.data.myset.SetsToRoutines
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
@@ -31,6 +32,7 @@ class BackupRepository @Inject constructor(
     private val db: UserDatabase,
     private val clock: Clock,
     private val reviews: ReviewRepository,
+    private val setsToRoutines: SetsToRoutines,
 ) {
     @Serializable
     data class Setting(val type: String, val value: String)
@@ -112,6 +114,8 @@ class BackupRepository @Inject constructor(
             }.also {
                 // An older backup can hold morning and evening twins as two rows.
                 reviews.link()
+                // And occasions customised before Sesuaikan became routines.
+                setsToRoutines.run()
                 // Settings last: they trigger alarm rescheduling and widget redraws.
                 settings.restore(file.settings.mapValues { (_, s) -> s.type to s.value })
             }

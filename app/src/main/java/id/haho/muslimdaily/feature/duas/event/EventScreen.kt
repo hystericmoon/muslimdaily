@@ -70,7 +70,6 @@ fun EventRoute(
     /** Null in the list-detail pane, where there is nothing to go back to. */
     onBack: (() -> Unit)?,
     onOpenDua: (String) -> Unit,
-    onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
     /** The routine editor, for a new routine that starts with this dua. */
     onNewRoutine: (String) -> Unit = {},
@@ -124,13 +123,12 @@ fun EventRoute(
         title = s?.event?.label.orEmpty(),
         onBack = onBack,
         snackbarHostState = snackbar,
-        // Docked on the menu, one row: read now, or adjust which duas and in what order.
+        // Docked on the menu: read the occasion's duas one after another.
         bottomBar = {
             if (s != null && s.items.isNotEmpty()) {
                 EventActionBar(
                     count = s.items.size,
                     onStart = { onStart(viewModel.eventId) },
-                    onCustomize = { onCustomize(viewModel.eventId) },
                 )
             }
         },
@@ -138,10 +136,8 @@ fun EventRoute(
         if (s != null) {
             EventContent(
                 state = s,
-                onUseMySet = viewModel::setUseMySet,
                 onOpenDua = onOpenDua,
                 onChooseForm = viewModel::chooseForm,
-                onCustomize = { onCustomize(viewModel.eventId) },
                 onAddToHifz = viewModel::addToHifz,
                 onRemoveFromHifz = viewModel::removeFromHifz,
                 onBookmark = onBookmark,
@@ -153,10 +149,8 @@ fun EventRoute(
 @Composable
 fun EventContent(
     state: EventUiState,
-    onUseMySet: (Boolean) -> Unit,
     onOpenDua: (String) -> Unit,
     onChooseForm: (group: String, duaId: String) -> Unit,
-    onCustomize: () -> Unit,
     onAddToHifz: (String) -> Unit = {},
     onRemoveFromHifz: (String) -> Unit = {},
     onBookmark: (String) -> Unit = {},
@@ -184,25 +178,6 @@ fun EventContent(
         ),
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
-        // Only when the reader has their own set: say so, and how to change it.
-        when {
-            state.customized && state.useMySet -> item(key = "my-set") {
-                InfoNote(
-                    if (state.hiddenCount > 0) {
-                        androidx.compose.ui.res.pluralStringResource(R.plurals.event_my_set_hidden, state.hiddenCount, state.hiddenCount)
-                    } else {
-                        stringResource(R.string.event_my_set_active)
-                    },
-                )
-            }
-            state.customized -> item(key = "my-set-off") {
-                FlowRow(verticalArrangement = Arrangement.Center) {
-                    InfoNote(stringResource(R.string.event_my_set_off), Modifier.align(Alignment.CenterVertically))
-                    TextButton(onClick = { onUseMySet(true) }) { Text(stringResource(R.string.event_my_set_use)) }
-                }
-            }
-            else -> Unit
-        }
         if (state.items.isEmpty()) {
             item(key = "empty") {
                 EmptyState(
@@ -310,7 +285,7 @@ private fun HifzButton(inHifz: Boolean, onClick: () -> Unit, modifier: Modifier 
 }
 
 @Composable
-fun EventActionBar(count: Int, onStart: () -> Unit, onCustomize: () -> Unit) {
+fun EventActionBar(count: Int, onStart: () -> Unit) {
     DockedBar {
         GlassButton(onClick = onStart, modifier = Modifier.weight(1f)) {
             Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(HahoTheme.dimens.smallIcon))
@@ -321,11 +296,6 @@ fun EventActionBar(count: Int, onStart: () -> Unit, onCustomize: () -> Unit) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-        }
-        GlassTonalButton(onClick = onCustomize) {
-            Icon(painterResource(R.drawable.ic_tune), null, Modifier.size(HahoTheme.dimens.smallIcon))
-            Spacer(Modifier.width(HahoTheme.spacing.sm))
-            Text(stringResource(R.string.event_adjust), maxLines = 1)
         }
     }
 }

@@ -149,7 +149,6 @@ fun DuaLibraryRoute(
     onOpenEvent: (String) -> Unit,
     onSearch: () -> Unit,
     onOpenDua: (String) -> Unit = {},
-    onCustomize: (String) -> Unit = {},
     onStart: (String) -> Unit = {},
     /** Routine editor: (routine id or null for new, occasion to pre-fill from or null). */
     onRoutine: (String?, String?) -> Unit = { _, _ -> },
@@ -209,7 +208,7 @@ fun DuaLibraryRoute(
                 VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 Box(Modifier.weight(0.58f)) {
                     // One view model per occasion, keyed like the EventRoute destination would be.
-                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart, onNewRoutineWith) }
+                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onStart, onNewRoutineWith) }
                 }
             }
         } else {
@@ -222,7 +221,6 @@ fun DuaLibraryRoute(
 private fun EventPane(
     eventId: String,
     onOpenDua: (String) -> Unit,
-    onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
     onNewRoutine: (String) -> Unit,
 ) {
@@ -236,7 +234,7 @@ private fun EventPane(
         factory = HiltViewModelFactory(LocalContext.current, defaults.defaultViewModelProviderFactory),
         extras = extras,
     )
-    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, onNewRoutine = onNewRoutine, viewModel = vm)
+    EventRoute(onBack = null, onOpenDua = onOpenDua, onStart = onStart, onNewRoutine = onNewRoutine, viewModel = vm)
 }
 
 /**

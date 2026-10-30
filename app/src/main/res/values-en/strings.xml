@@ -183,8 +183,8 @@
     <string name="settings_display_summary">Translation, transliteration, text size, theme</string>
     <string name="settings_audio">Audio and memorization</string>
     <string name="settings_audio_summary">Speed, repetition, pauses</string>
-    <string name="settings_my_sets">Backup and my sets</string>
-    <string name="settings_my_sets_summary">Back up all data, export or import sets</string>
+    <string name="settings_my_sets">Backup</string>
+    <string name="settings_my_sets_summary">Back up and restore all your data</string>
     <string name="settings_methodology">Methodology</string>
     <string name="settings_methodology_summary">Sources and hadith grading policy</string>
     <string name="settings_report">Report an error</string>
@@ -262,10 +262,6 @@
     <string name="dua_full_entry_hide">Hide the full text</string>
     <string name="dua_full_entry_title">Full text in the book</string>
     <string name="dua_full_entry_note">The dua shown first is only the words to recite. Here is the full entry as the book prints it, with the hadith wording, notes and repetition counts.</string>
-    <string name="dua_add_to_set">Add to my set</string>
-    <string name="dua_remove_from_set">Remove from my set</string>
-    <string name="dua_in_set_note">This dua is in your set for this occasion.</string>
-    <string name="dua_not_in_set_note">This dua is hidden from your set. The full set still includes it.</string>
     <string name="player_play">Play</string>
     <string name="player_pause">Pause</string>
     <string name="player_repeat">Repeat</string>
@@ -298,23 +294,6 @@
     <string name="report_no_email_app">No email app found.</string>
 
     <!-- Customize -->
-    <string name="customize_title">Customize: %s</string>
-    <string name="customize_reset">Reset</string>
-    <string name="customize_reset_title">Return to the full set?</string>
-    <string name="customize_reset_body">The order, hidden duas and chosen forms will be cleared.</string>
-    <string name="customize_intro">Turn a dua off to hide it, drag the handle to reorder. The full set stays available.</string>
-    <string name="customize_item_n">Dua %d</string>
-    <plurals name="customize_forms">
-        <item quantity="one">%d form</item>
-        <item quantity="other">%d forms</item>
-    </plurals>
-    <plurals name="customize_hidden">
-        <item quantity="one">Hidden (%d)</item>
-        <item quantity="other">Hidden (%d)</item>
-    </plurals>
-    <string name="customize_restore">Show</string>
-    <string name="customize_rotate">Rotate each session</string>
-    <string name="customize_rotate_note">Each time a session ends, the next form is used.</string>
     <string name="customize_move_up">Move up</string>
     <string name="customize_move_down">Move down</string>
 
@@ -348,15 +327,7 @@
     <string name="run_private_note">Counts are only used to resume today\'s session. No history or statistics.</string>
 
     <!-- My sets data -->
-    <string name="data_intro">Save your set choices to a file as a backup or to use on another device.</string>
-    <string name="data_share">Share file</string>
-    <string name="data_save">Save to file</string>
-    <string name="data_import">Import from file</string>
-    <string name="data_import_note">Importing replaces the set settings for the occasions in the file.</string>
-    <string name="data_saved">File saved.</string>
     <string name="data_failed">Couldn\'t save the file.</string>
-    <string name="data_imported">%d occasions imported.</string>
-    <string name="data_import_failed">The file can\'t be read.</string>
 
     <!-- Memorize -->
     <string name="memorize_session_title">Memorize</string>
@@ -735,7 +706,6 @@
     <string name="backup_restore_confirm_title">Restore backup?</string>
     <string name="backup_restore_confirm_body">Settings, my sets, memorization and checklist on this phone will be replaced with the backup contents.</string>
     <string name="backup_restore_choose">Choose file</string>
-    <string name="data_my_sets_title">My set</string>
 
     <!-- Quick Settings tile -->
     <string name="tile_next_prayer">Next prayer</string>
@@ -824,7 +794,6 @@
     <string name="crash_prompt_send">Send report</string>
     <string name="crash_prompt_later">Later</string>
     <string name="event_start_all">Start reading (%1$d duas)</string>
-    <string name="event_save_routine">Make a routine</string>
     <string name="library_tab_mine">My duas</string>
     <string name="library_tab_all">All duas</string>
     <string name="library_browse_all">See all duas</string>
@@ -847,7 +816,6 @@
     <string name="bookmark_added">Added to %1$s</string>
     <string name="bookmark_removed">Removed from %1$s</string>
     <string name="bookmark_change">Change</string>
-    <string name="routine_section">My routines</string>
     <string name="routine_empty_title">Make your own routine</string>
     <string name="routine_empty_body">Tap the bookmark on any dua to save it to a routine, then read them one after another like the morning and evening adhkar.</string>
     <string name="routine_new">New routine</string>
@@ -880,15 +848,6 @@
     <string name="display_font_naskh">The clearest on phone screens. Default.</string>
     <string name="display_font_scheherazade">Large, well-spaced vowel marks, easy to read slowly.</string>
     <string name="display_font_amiri">Classical book style. Qur\'anic verses use Amiri Quran.</string>
-    <string name="event_adjust">Adjust</string>
-    <string name="event_my_set_active">Using my set.</string>
-    <plurals name="event_my_set_hidden">
-        <item quantity="one">Using my set: %d dua hidden.</item>
-        <item quantity="other">Using my set: %d duas hidden.</item>
-    </plurals>
-    <string name="event_my_set_off">My set is saved but not in use.</string>
-    <string name="event_my_set_use">Use it</string>
-    <string name="customize_routine_hint">Want a separate routine, with duas from elsewhere too?</string>
     <string name="event_start_short">Start reading</string>
     <string name="update_beta">Join the beta</string>
     <string name="update_beta_summary">Get beta versions early to try them. They may still have bugs; report them through Feedback and diagnostics.</string>

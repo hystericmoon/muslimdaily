@@ -18,5 +18,5 @@ class SettingsScreenshotTest {
     @Test fun display() = captureVariants("45-settings-display") { DisplaySettingsContent(TodayPreviewData.settings) {} }
     @Test fun methodology() = captureVariants("46-settings-methodology") { MethodologyContent(3) }
     @Test fun about() = captureVariants("47-settings-about") { AboutContent() }
-    @Test fun mySetsData() = captureVariants("48-settings-mysets-data") { MySetsDataContent({}, {}, {}) }
+    @Test fun mySetsData() = captureVariants("48-settings-mysets-data") { MySetsDataContent() }
 }

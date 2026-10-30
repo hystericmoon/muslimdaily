@@ -18,7 +18,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import id.haho.muslimdaily.feature.duas.customize.CustomizeRoute
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailRoute
 import id.haho.muslimdaily.feature.duas.event.EventRoute
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryRoute
@@ -84,7 +83,6 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenEvent = { navController.navigate(EventRoute(it)) },
                     onSearch = { navController.navigate(SearchRoute) },
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
-                    onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
                     onRoutine = { id, fromEvent -> navController.navigate(RoutineEditRoute(id, fromEvent)) },
                     onNewRoutineWith = { navController.navigate(RoutineEditRoute(withDua = it)) },
@@ -98,7 +96,6 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 EventRoute(
                     onBack = back,
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
-                    onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
                     onNewRoutine = { navController.navigate(RoutineEditRoute(withDua = it)) },
                 )
@@ -109,9 +106,6 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onMemorize = { navController.navigate(MemorizeSessionRoute(it)) },
                     onNewRoutine = { navController.navigate(RoutineEditRoute(withDua = it)) },
                 )
-            }
-            composable<CustomizeRoute> {
-                CustomizeRoute(onBack = back, onSaveAsRoutine = { navController.navigate(RoutineEditRoute(fromEvent = it)) })
             }
             composable<RunRoute> { RunRoute(onClose = back) }
         }

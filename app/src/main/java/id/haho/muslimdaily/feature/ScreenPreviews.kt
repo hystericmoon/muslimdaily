@@ -15,9 +15,6 @@ import id.haho.muslimdaily.domain.myset.ActiveSet
 import id.haho.muslimdaily.domain.myset.Customization
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
-import id.haho.muslimdaily.feature.duas.customize.CustomizeActions
-import id.haho.muslimdaily.feature.duas.customize.CustomizeContent
-import id.haho.muslimdaily.feature.duas.customize.CustomizeUiState
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailActions
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailContent
 import id.haho.muslimdaily.feature.duas.detail.DuaDetailState
@@ -68,25 +65,19 @@ private fun DuaLibraryPreview() = PreviewSurface { DuaLibraryContent(DuaPreviewD
 @HahoPreviews @Composable
 private fun EventPreview() = PreviewSurface {
     val items = ActiveSet.items(ActiveSet.canonical(DuaPreviewData.duas), Customization())
-    EventContent(EventUiState(event, false, false, items, 0, ReadingPrefs()), {}, {}, { _, _ -> }, {})
+    EventContent(EventUiState(event, items, ReadingPrefs()), {}, { _, _ -> })
 }
 
 @HahoPreviews @Composable
 private fun DuaDetailPreview() = PreviewSurface {
     DuaDetailContent(
-        DuaDetailState(DuaPreviewData.dua("d", 1, count = 3), event, ReadingPrefs(), PlaybackState(duaId = "d", activePhrase = 1), true),
+        DuaDetailState(DuaPreviewData.dua("d", 1, count = 3), event, ReadingPrefs(), PlaybackState(duaId = "d", activePhrase = 1)),
         DuaDetailActions(),
     )
 }
 
 @HahoPreviews @Composable
 private fun SearchPreview() = PreviewSurface { SearchContent("tes", DuaPreviewData.duas.take(2), ReadingPrefs(), {}, {}, autoFocus = false) }
-
-@HahoPreviews @Composable
-private fun CustomizePreview() = PreviewSurface {
-    val all = ActiveSet.items(ActiveSet.canonical(DuaPreviewData.duas), Customization())
-    CustomizeContent(CustomizeUiState(event, all, all, emptyList(), emptyMap(), false), CustomizeActions())
-}
 
 @HahoPreviews @Composable
 private fun RunPreview() = PreviewSurface {
@@ -146,7 +137,7 @@ private fun DisplayPreview() = PreviewSurface { DisplaySettingsContent(settings)
 private fun AudioPreview() = PreviewSurface { AudioSettingsContent(settings) {} }
 
 @HahoPreviews @Composable
-private fun MySetsDataPreview() = PreviewSurface { MySetsDataContent({}, {}, {}) }
+private fun MySetsDataPreview() = PreviewSurface { MySetsDataContent() }
 
 @HahoPreviews @Composable
 private fun MethodologyPreview() = PreviewSurface { MethodologyContent(3) }

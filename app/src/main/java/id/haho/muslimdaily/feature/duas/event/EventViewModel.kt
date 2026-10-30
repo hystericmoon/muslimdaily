@@ -31,11 +31,8 @@ import javax.inject.Inject
 
 data class EventUiState(
     val event: DuaEvent?,
-    val useMySet: Boolean,
-    val customized: Boolean,
-    /** Items in reading order. In My set, disabled items are left out. */
+    /** Items in reading order: the full set, in the forms the reader picked. */
     val items: List<ResolvedItem>,
-    val hiddenCount: Int,
     val prefs: ReadingPrefs,
     /** Duas in "My hifz" (with their twins). */
     val hifz: Set<String> = emptySet(),
@@ -67,22 +64,11 @@ class EventViewModel @Inject constructor(
     }.combine(routines.routines()) { st, list -> st.copy(routines = list) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
-    private fun build(event: DuaEvent?, canonical: List<id.haho.muslimdaily.domain.myset.SetItem>, custom: Customization, prefs: ReadingPrefs): EventUiState {
-        val all = if (custom.useMySet) ActiveSet.items(canonical, custom) else ActiveSet.items(canonical, custom.copy(entries = emptyList()))
-        val shown = if (custom.useMySet) all.filter { it.enabled } else all
-        return EventUiState(
-            event = event,
-            useMySet = custom.useMySet,
-            customized = custom.entries.isNotEmpty(),
-            items = shown,
-            hiddenCount = all.size - shown.size,
-            prefs = prefs,
-        )
-    }
+    private fun build(event: DuaEvent?, canonical: List<id.haho.muslimdaily.domain.myset.SetItem>, custom: Customization, prefs: ReadingPrefs) =
+        // Only the form choices count: an occasion always reads its full set (routines are the
+        // reader's own lists).
+        EventUiState(event = event, items = ActiveSet.items(canonical, custom.copy(useMySet = false, entries = emptyList())), prefs = prefs)
 
-    fun setUseMySet(useMySet: Boolean) {
-        viewModelScope.launch { mySets.setUseMySet(eventId, useMySet) }
-    }
 
     /** Saves a dua to "My hifz" to learn later, as Run mode does. */
     fun addToHifz(duaId: String) {
