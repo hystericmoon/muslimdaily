@@ -826,9 +826,17 @@
         <item quantity="other">+%d doa lainnya</item>
     </plurals>
     <string name="event_in_hifz">Di hafalan</string>
+    <string name="routine_default_name">Doa saya</string>
+    <string name="bookmark_label">Simpan ke rangkaian</string>
+    <string name="bookmark_state_saved">ada di rangkaian</string>
+    <string name="bookmark_state_not_saved">belum di rangkaian</string>
+    <!-- After a bookmark: "Ditambahkan ke Doa saya". -->
+    <string name="bookmark_added">Ditambahkan ke %1$s</string>
+    <string name="bookmark_removed">Dihapus dari %1$s</string>
+    <string name="bookmark_change">Ubah</string>
     <string name="routine_section">Rangkaian saya</string>
     <string name="routine_empty_title">Buat rangkaian sendiri</string>
-    <string name="routine_empty_body">Pilih doa dari mana saja, atur urutannya, lalu baca berurutan seperti dzikir pagi dan petang.</string>
+    <string name="routine_empty_body">Ketuk penanda pada doa mana pun untuk menyimpannya ke rangkaian, lalu baca berurutan seperti dzikir pagi dan petang.</string>
     <string name="routine_new">Buat rangkaian</string>
     <string name="routine_new_title">Rangkaian baru</string>
     <string name="routine_edit_title">Ubah rangkaian</string>

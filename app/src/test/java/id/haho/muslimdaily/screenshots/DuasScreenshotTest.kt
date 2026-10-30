@@ -38,6 +38,20 @@ class DuasScreenshotTest {
         )
     }
 
+    /** The first dua saved to a routine, the second in My hifz. */
+    @Test
+    fun eventSaved() = captureVariants("133-duas-event-saved") {
+        val canonical = ActiveSet.canonical(DuaPreviewData.duas)
+        EventContent(
+            EventUiState(
+                event, false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs(),
+                hifz = setOf("morning_02"),
+                routines = listOf(id.haho.muslimdaily.data.routine.Routine("1", "Doa saya", listOf("morning_01"))),
+            ),
+            {}, {}, { _, _ -> }, {},
+        )
+    }
+
     @Test
     fun detailPlaying() = captureVariants("22-dua-detail-playing") {
         DuaDetailContent(

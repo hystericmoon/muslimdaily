@@ -87,6 +87,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
                     onRoutine = { id, fromEvent -> navController.navigate(RoutineEditRoute(id, fromEvent)) },
+                    onNewRoutineWith = { navController.navigate(RoutineEditRoute(withDua = it)) },
                 )
             }
             composable<RoutineEditRoute> { RoutineEditRoute(onBack = back) }
@@ -99,6 +100,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenDua = { navController.navigate(DuaDetailRoute(it)) },
                     onCustomize = { navController.navigate(CustomizeRoute(it)) },
                     onStart = { navController.navigate(RunRoute(it)) },
+                    onNewRoutine = { navController.navigate(RoutineEditRoute(withDua = it)) },
                 )
             }
             composable<DuaDetailRoute> {
