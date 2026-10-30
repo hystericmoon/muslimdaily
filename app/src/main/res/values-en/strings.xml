@@ -861,6 +861,12 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_5_0">
+        <item>The Duas page now has two tabs: My duas for your routines and All duas for the full library. Categories open in place, and routine cards show their first three duas.</item>
+        <item>Save a dua to your routines straight from its card, and tap Memorize to add it to My hifz.</item>
+        <item>Customize is replaced by routines: duas you had customized are now routines named after their occasion. In Settings, Backup and my sets is now just Backup.</item>
+        <item>Feedback and diagnostics now records when the prayer-times widget last refreshed, to help us fix a countdown that falls behind on some phones.</item>
+    </string-array>
     <string-array name="whats_new_1_4_2">
         <item>21 duas, among them the dhikr of ruku, sujud, the morning and evening adhkar and the dua for entering the masjid, now show only the words to recite. The book\'s full narration stays below them.</item>
         <item>42 more duas are now split into phrases: the Build step, the A–B loop and highlighting of the phrase being recited now work for them.</item>

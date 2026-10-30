@@ -849,6 +849,12 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_5_0">
+        <item>Halaman Doa kini punya dua tab: Doa saya untuk rangkaian Anda, Semua doa untuk seluruh pustaka. Kategori terbuka di tempat, dan kartu rangkaian menampilkan tiga doa pertamanya.</item>
+        <item>Simpan doa langsung dari kartunya ke rangkaian Anda, dan tekan Hafalkan untuk menambahkannya ke Hafalan saya.</item>
+        <item>Sesuaikan diganti rangkaian: doa yang pernah Anda sesuaikan kini menjadi rangkaian bernama sesuai waktunya. Di Pengaturan, Cadangan dan set saya kini cukup bernama Cadangan.</item>
+        <item>Masukan dan diagnosa kini mencatat kapan widget waktu shalat terakhir diperbarui, untuk membantu kami memperbaiki hitung mundur yang tertinggal di sebagian ponsel.</item>
+    </string-array>
     <string-array name="whats_new_1_4_2">
         <item>21 doa, di antaranya dzikir rukuk, sujud, pagi-petang, dan doa masuk masjid, kini hanya menampilkan lafal yang dibaca. Riwayat lengkapnya dari kitab tetap ada di bawahnya.</item>
         <item>42 doa lagi kini dipotong per frasa: langkah Bangun, ulang A–B, dan sorotan frasa yang sedang dibaca sudah aktif.</item>
