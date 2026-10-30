@@ -863,6 +863,15 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_7_0">
+        <item>Doa kini tampil satu frasa per baris, sehingga tampak di mana berhenti dan di mana melanjutkan. Ketuk sebuah frasa untuk memutar bacaan mulai dari situ.</item>
+        <item>Catatan kitab dalam kurung, seperti keterangan waktu atau jumlah bacaan, kini tampil lebih kecil dan lebih redup agar tidak terbaca sebagai bagian doa.</item>
+        <item>Enam doa dari Hisnul Muslim kini hanya memuat lafal yang dibaca, sehingga transliterasi Latinnya juga tampil. Teks lengkap dari kitab tetap ada di bawah doa.</item>
+        <item>Tanpa lokasi, layar Hari ini tetap menampilkan dzikir pagi, dzikir petang, dan rangkaian Anda.</item>
+        <item>Saat pertama membuka aplikasi, Anda bisa memilih kota sendiri dan mengatur ukuran tulisan Arab dan terjemah.</item>
+        <item>Pencarian mendahulukan nama waktu dan transliterasi, dan kini bisa mencari nama kitab sumber, misalnya Bukhari.</item>
+        <item>Bila audio gagal diputar, aplikasi kini memberi tahu Anda.</item>
+    </string-array>
     <string-array name="whats_new_1_6_0">
         <item>Kategori baru, Doa dari As-Sunnah: 16 doa sahih dan hasan yang tidak ada di Hisnul Muslim, seperti Yā muqallibal-qulūb, doa memohon perbaikan agama, dunia, dan akhirat, serta doa berlindung dari hilangnya nikmat. Sumbernya HadeethEnc.com, dan hadis utuhnya ada di bawah setiap doa.</item>
         <item>Teks lengkap di kitab kini juga tampil dalam bahasa Inggris bila Anda memilih terjemah bahasa Inggris.</item>
