@@ -85,6 +85,11 @@ class DuaDetailViewModel @Inject constructor(
         }
     }
 
+    fun playFrom(phrase: Int, title: String) {
+        val s = state.value ?: return
+        audio.playDua(s.dua, s.playback.speed, fromPhrase = phrase, title = title)
+    }
+
     fun setSpeed(speed: Float) {
         audio.setSpeed(speed)
         viewModelScope.launch { settings.update { audioSpeed = speed } }

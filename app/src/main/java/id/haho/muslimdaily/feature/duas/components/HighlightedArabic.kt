@@ -1,5 +1,19 @@
 package id.haho.muslimdaily.feature.duas.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import id.haho.muslimdaily.R
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -99,4 +113,63 @@ fun HighlightedArabic(
                 }
             },
     )
+}
+
+/**
+ * One phrase per line, so the reader sees where to pause and where to continue (the book's
+ * stop/continue cues). The phrase being recited gets the gold fill and underline; with
+ * [onPlayFrom], a phrase that has its own audio segment plays from there when tapped. Falls back
+ * to [HighlightedArabic] when the dua is a single phrase.
+ */
+@Composable
+fun PhraseLines(
+    text: String,
+    phrases: List<Phrase>,
+    activePhrase: Int,
+    style: TextStyle,
+    modifier: Modifier = Modifier,
+    onPlayFrom: ((Int) -> Unit)? = null,
+) {
+    if (phrases.size < 2) {
+        HighlightedArabic(text, phrases, activePhrase, style, modifier)
+        return
+    }
+    val colors = AdwamTheme.colors
+    val density = LocalDensity.current
+    val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
+    val playLabel = stringResource(R.string.dua_play_from_phrase)
+    val nowState = stringResource(R.string.dua_phrase_reciting)
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+        phrases.forEach { phrase ->
+            val active = phrase.index == activePhrase
+            val playable = onPlayFrom != null && phrase.segment != null
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(HahoTheme.spacing.xs))
+                    .drawBehind {
+                        if (!active) return@drawBehind
+                        drawRect(colors.highlightFill)
+                        drawRect(colors.highlightIndicator, topLeft = Offset(0f, size.height - underline), size = Size(size.width, underline))
+                    }
+                    .then(
+                        if (playable) {
+                            Modifier.clickable(onClickLabel = playLabel, role = Role.Button) { onPlayFrom?.invoke(phrase.index) }
+                        } else {
+                            Modifier
+                        },
+                    )
+                    .then(if (active) Modifier.semantics { stateDescription = nowState } else Modifier)
+                    .heightIn(min = HahoTheme.dimens.minTouchTarget)
+                    .padding(horizontal = HahoTheme.spacing.xs),
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                ArabicText(
+                    phrase.text,
+                    style = style,
+                    color = if (active) colors.onHighlightFill else androidx.compose.material3.LocalContentColor.current,
+                )
+            }
+        }
+    }
 }
