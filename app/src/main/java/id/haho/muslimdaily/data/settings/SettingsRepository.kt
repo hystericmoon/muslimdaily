@@ -154,6 +154,7 @@ class SettingsRepository @Inject constructor(
             runFromMemory = this[K.runFromMemory] ?: d.runFromMemory,
             widgetOpacity = (this[K.widgetOpacity] ?: d.widgetOpacity).coerceIn(WIDGET_OPACITY_MIN, 1f),
             arabicFont = enumOr(K.arabicFont, d.arabicFont),
+            duaLibraryTab = this[K.duaLibraryTab] ?: d.duaLibraryTab,
             onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
             whatsNewSeen = this[K.whatsNewSeen] ?: d.whatsNewSeen,
             elevationChecked = this[K.elevationChecked] ?: false,
@@ -200,6 +201,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var runFromMemory: Boolean by key(K.runFromMemory, true)
     var widgetOpacity: Float by key(K.widgetOpacity, WIDGET_OPACITY_DEFAULT)
     var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
+    var duaLibraryTab: String by key(K.duaLibraryTab, "")
     var onboardingDone: Boolean by key(K.onboardingDone, false)
     var whatsNewSeen: String by key(K.whatsNewSeen, "")
     var elevationChecked: Boolean by key(K.elevationChecked, false)
@@ -292,6 +294,7 @@ internal object K {
     val runFromMemory = booleanPreferencesKey("run_from_memory")
     val widgetOpacity = floatPreferencesKey("widget_opacity")
     val arabicFont = stringPreferencesKey("arabic_font")
+    val duaLibraryTab = stringPreferencesKey("dua_library_tab")
     val onboardingDone = booleanPreferencesKey("onboarding_done")
     val whatsNewSeen = stringPreferencesKey("whats_new_seen")
     val elevationChecked = booleanPreferencesKey("elevation_checked")

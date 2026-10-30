@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryContent
+import id.haho.muslimdaily.feature.duas.library.LibraryTab
 import id.haho.muslimdaily.feature.routines.RoutineEditActions
 import id.haho.muslimdaily.feature.routines.RoutineEditScreen
 import id.haho.muslimdaily.feature.routines.RoutineEditState
@@ -36,7 +37,20 @@ class RoutineScreenshotTest {
             routines = listOf(
                 Routine("1", "Berangkat kerja", listOf("morning_01", "morning_02", "v1")),
                 Routine("2", "Sebelum tidur", listOf("morning_01")),
+                Routine("3", "Dzikir pagi", DuaPreviewData.duas.map { it.id }),
             ),
+            previews = DuaPreviewData.duas.associateBy { it.id },
+        ) {}
+    }
+
+    /** The library tab: one category open, listing its occasions. */
+    @Test
+    fun libraryAllOpen() = captureVariants("132-library-all-open") {
+        DuaLibraryContent(
+            categories,
+            routines = listOf(Routine("1", "Berangkat kerja", listOf("morning_01"))),
+            tab = LibraryTab.ALL,
+            expanded = setOf(categories.first().id),
         ) {}
     }
 

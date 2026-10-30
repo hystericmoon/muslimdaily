@@ -108,6 +108,8 @@ data class AppSettings(
     val runFromMemory: Boolean = true,
     /** How opaque the home-screen widgets' glass is, 0.4–1. The default keeps text AA over any wallpaper. */
     val widgetOpacity: Float = WIDGET_OPACITY_DEFAULT,
+    /** The Duas page's last tab, "mine" or "all"; blank until one is chosen (see DuaLibraryRoute). */
+    val duaLibraryTab: String = "",
     /** The first-launch setup was finished or skipped. */
     val onboardingDone: Boolean = false,
     /** The app version whose "what's new" the reader has seen; blank on a fresh install. */

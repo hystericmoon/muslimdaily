@@ -814,6 +814,18 @@
     <string name="crash_prompt_later">Nanti</string>
     <string name="event_start_all">Mulai baca (%1$d doa)</string>
     <string name="event_save_routine">Jadikan rangkaian</string>
+    <string name="library_tab_mine">Doa saya</string>
+    <string name="library_tab_all">Semua doa</string>
+    <string name="library_browse_all">Lihat semua doa</string>
+    <string name="library_expand_category">buka kategori</string>
+    <string name="library_collapse_category">tutup kategori</string>
+    <plurals name="library_event_count">
+        <item quantity="other">%d momen</item>
+    </plurals>
+    <plurals name="routine_more">
+        <item quantity="other">+%d doa lainnya</item>
+    </plurals>
+    <string name="event_in_hifz">Di hafalan</string>
     <string name="routine_section">Rangkaian saya</string>
     <string name="routine_empty_title">Buat rangkaian sendiri</string>
     <string name="routine_empty_body">Pilih doa dari mana saja, atur urutannya, lalu baca berurutan seperti dzikir pagi dan petang.</string>
