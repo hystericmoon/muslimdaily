@@ -71,7 +71,7 @@ class RealContentScreenshotTest {
     private fun detail(name: String, id: String) = captureVariants(name) {
         val d = dua(id)
         DuaDetailContent(
-            DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState(), inMySet = false),
+            DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState()),
             DuaDetailActions(),
         )
     }
@@ -89,8 +89,8 @@ class RealContentScreenshotTest {
     fun morningEvent() = captureVariants("61-real-morning") {
         val canonical = ActiveSet.canonical(duas.filter { it.event == "morning" })
         EventContent(
-            EventUiState(event("morning"), false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs()),
-            {}, {}, { _, _ -> }, {},
+            EventUiState(event("morning"), ActiveSet.items(canonical, Customization()), ReadingPrefs()),
+            {}, { _, _ -> },
         )
     }
 
@@ -102,13 +102,13 @@ class RealContentScreenshotTest {
         captureSite("128-site-morning") {
             val canonical = ActiveSet.canonical(duas.filter { it.event == "morning" })
             EventContent(
-                EventUiState(event("morning"), false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs()),
-                {}, {}, { _, _ -> }, {},
+                EventUiState(event("morning"), ActiveSet.items(canonical, Customization()), ReadingPrefs()),
+                {}, { _, _ -> },
             )
         }
         captureSite("129-site-ayat-kursi") {
             val d = dua("morning_01")
-            DuaDetailContent(DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState(), inMySet = false), DuaDetailActions())
+            DuaDetailContent(DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState()), DuaDetailActions())
         }
     }
 
@@ -125,8 +125,8 @@ class RealContentScreenshotTest {
     fun quranEvent() = captureVariants("66-real-quran-ease") {
         val canonical = ActiveSet.canonical(duas.filter { it.event == "quran_ease" })
         EventContent(
-            EventUiState(event("quran_ease"), false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs()),
-            {}, {}, { _, _ -> }, {},
+            EventUiState(event("quran_ease"), ActiveSet.items(canonical, Customization()), ReadingPrefs()),
+            {}, { _, _ -> },
         )
     }
 

@@ -25,7 +25,7 @@ id.haho.muslimdaily   (Kotlin package; the app installs as id.haho.adwam)
 │   └── memorize       Leitner, MemorizePlan (audio sequences), Recall (word fade)
 ├── audio              AudioEngine (shared ExoPlayer), PlaybackService (MediaSession)
 ├── notifications      ReminderPlanner, ReminderScheduler, receivers, Notifier
-├── feature            today, duas (library/event/detail/search/customize), run, memorize, settings
+├── feature            today, duas (library/event/detail/search), routines, run, memorize, settings
 └── navigation         type-safe routes, 4-tab shell, notification deep links
 ```
 
@@ -58,7 +58,7 @@ APK assets ──ContentImporter (checksum)──▶ Room content.db (+ FTS4) �
 * Three gates: the Python validator (authoring), the Gradle `ContentAssetsTask` (release
   build), and `ContentValidator` at import (defence in depth).
 * Re-import happens when the files' checksum changes (content version bump or new build).
-* `content.db` is disposable and excluded from backup; `user.db` (My set, sessions, checklist,
+* `content.db` is disposable and excluded from backup; `user.db` (routines, form choices, sessions, checklist,
   review boxes) and settings are backed up. User data references content by stable ids.
 
 ### Content packs (future)

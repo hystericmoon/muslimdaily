@@ -87,7 +87,7 @@ Leave the phone idle (screen off, unplugged) for at least one full prayer cycle.
 | 7.2 | English, open a Hisn dua | Indonesian translation is shown (no English yet); Qur'anic duas show English. |
 | 7.3 | Tablet or unfolded foldable | Navigation rail at the side; Today in two columns at ≥ 840dp; dua library list-detail. |
 | 7.4 | Fold/unfold while on a dua occasion | No crash; state kept. |
-| 7.5 | Export a backup, clear data, restore | Settings, My set, memorization and checklist return. |
+| 7.5 | Export a backup, clear data, restore | Settings, routines, memorization and checklist return. |
 | 7.6 | 29 Sya'ban after Maghrib (or set the phone's date) | Isbat card appears; answering adjusts the Hijri date and the card does not return. |
 
 ## 8. TalkBack

@@ -72,7 +72,6 @@ data class DuaDetailActions(
     val onSpeed: (Float) -> Unit = {},
     val onRepeat: (Boolean) -> Unit = {},
     val onMemorize: () -> Unit = {},
-    val onSetInMySet: (Boolean) -> Unit = {},
     val onSaveNote: (String) -> Unit = {},
     val onSetInRoutine: (routineId: String, included: Boolean) -> Unit = { _, _ -> },
     val onNewRoutine: () -> Unit = {},
@@ -126,7 +125,6 @@ fun DuaDetailRoute(
                 state = s,
                 actions = DuaDetailActions(
                     onMemorize = { onMemorize(s.dua.id) },
-                    onSetInMySet = viewModel::setInMySet,
                     onSaveNote = viewModel::saveNote,
                     onSetInRoutine = viewModel::setInRoutine,
                     onNewRoutine = { onNewRoutine(s.dua.id) },
@@ -193,25 +191,18 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                 Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.dua_memorize))
             }
-            GlassOutlinedButton(onClick = { actions.onSetInMySet(!state.inMySet) }) {
+            GlassOutlinedButton(onClick = { routineSheet = true }) {
+                // The same bookmark as on the occasion page: filled once the dua is in a routine.
+                val saved = state.routines.any { state.dua.id in it.duaIds }
                 Icon(
-                    painterResource(if (state.inMySet) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
+                    painterResource(if (saved) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
                     null,
                     Modifier.size(HahoTheme.dimens.smallIcon),
                 )
                 Spacer(Modifier.width(HahoTheme.spacing.sm))
-                Text(stringResource(if (state.inMySet) R.string.dua_remove_from_set else R.string.dua_add_to_set))
-            }
-            GlassOutlinedButton(onClick = { routineSheet = true }) {
-                Icon(painterResource(R.drawable.ic_format_list_numbered), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.dua_add_to_routine))
             }
         }
-        InfoNote(
-            stringResource(if (state.inMySet) R.string.dua_in_set_note else R.string.dua_not_in_set_note),
-            Modifier.fillMaxWidth(),
-        )
     }
 }
 

@@ -33,8 +33,8 @@ class DuasScreenshotTest {
     fun event() = captureVariants("21-duas-event") {
         val canonical = ActiveSet.canonical(DuaPreviewData.duas)
         EventContent(
-            EventUiState(event, false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs()),
-            {}, {}, { _, _ -> }, {},
+            EventUiState(event, ActiveSet.items(canonical, Customization()), ReadingPrefs()),
+            {}, { _, _ -> },
         )
     }
 
@@ -44,11 +44,11 @@ class DuasScreenshotTest {
         val canonical = ActiveSet.canonical(DuaPreviewData.duas)
         EventContent(
             EventUiState(
-                event, false, false, ActiveSet.items(canonical, Customization()), 0, ReadingPrefs(),
+                event, ActiveSet.items(canonical, Customization()), ReadingPrefs(),
                 hifz = setOf("morning_02"),
                 routines = listOf(id.haho.muslimdaily.data.routine.Routine("1", "Doa saya", listOf("morning_01"))),
             ),
-            {}, {}, { _, _ -> }, {},
+            {}, { _, _ -> },
         )
     }
 
@@ -60,7 +60,6 @@ class DuasScreenshotTest {
                 event = event,
                 prefs = ReadingPrefs(TranslationMode.BOTH, transliteration = true),
                 playback = PlaybackState(duaId = "morning_02", isPlaying = true, activePhrase = 1),
-                inMySet = true,
             ),
             DuaDetailActions(),
         )
@@ -77,7 +76,6 @@ class DuasScreenshotTest {
                 event = event,
                 prefs = ReadingPrefs(),
                 playback = PlaybackState(),
-                inMySet = true,
             ),
             DuaDetailActions(),
             fullEntryOpen = true,

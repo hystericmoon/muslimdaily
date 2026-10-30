@@ -20,7 +20,7 @@ set; "Implemented" means built to the rule but needs a device pass with TalkBack
 | Timing adjustable (2.2.1) | Auto-advance toggle (run mode menu and settings); memorize pauses auto or manual; no timeouts | Implemented |
 | Reduced motion | `ANIMATOR_DURATION_SCALE == 0` → all springs snap; only count tap and card advance animate | Implemented |
 | Recall without vision | Hidden words are blank boxes of the word's width (never faint text); TalkBack hears one description and uses "Putar dengan jeda" (hidden phrases muted) | Implemented |
-| Drag alternatives (2.5.7) | Customize rows expose "Pindah ke atas / bawah" accessibility actions; hide via the row switch | Verified (UI test) |
+| Drag alternatives (2.5.7) | Routine editor rows expose "Pindah ke atas / bawah" accessibility actions | To verify (the UI test went with Sesuaikan) |
 | Keyboard / switch access | All actions are standard clickable/toggleable/selectable nodes | Implemented |
 
 ## Known gaps for the device pass

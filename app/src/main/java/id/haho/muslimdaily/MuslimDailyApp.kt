@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import id.haho.muslimdaily.data.myset.SetsToRoutines
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -20,6 +21,7 @@ class MuslimDailyApp : Application(), Configuration.Provider {
     @Inject lateinit var workerFactory: HiltWorkerFactory
     @Inject lateinit var reminderSync: ReminderSync
     @Inject lateinit var locations: LocationRepository
+    @Inject lateinit var setsToRoutines: SetsToRoutines
 
     override fun onCreate() {
         super.onCreate()
@@ -28,6 +30,8 @@ class MuslimDailyApp : Application(), Configuration.Provider {
         reminderSync.start()
         CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
             runCatching { locations.backfillElevation() }
+            // Occasions customised with the removed Sesuaikan become routines (once).
+            runCatching { setsToRoutines.run() }
         }
     }
 

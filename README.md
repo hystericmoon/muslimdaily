@@ -32,8 +32,8 @@ Every screen is captured in light, dark and 200% font in [docs/screenshots](docs
   result and adjusts the Hijri date.
 * **Duas**: categories → events → duas, FTS search across Arabic (tashkeel-insensitive),
   Indonesian and English, source and grading sheet, virtue, audio with phrase highlighting.
-* **My set**: full canonical set by default; opt-in customisation (hide, reorder, choose or
-  rotate variant forms), export/import as JSON.
+* **Routines** ("Doa saya"): the reader's own ordered lists, read through with Mulai. A
+  bookmark on any dua adds it; each occasion always shows its full set, in the forms chosen.
 * **Run mode**: one card at a time, tap anywhere to count, haptics, optional auto-advance,
   resumes after interruption.
 * **Memorize**: Listen ×2, Build (cumulative chunks with repeat-aloud pauses), Recall

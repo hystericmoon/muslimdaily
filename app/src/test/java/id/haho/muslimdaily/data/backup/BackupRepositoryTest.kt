@@ -10,7 +10,14 @@ import id.haho.muslimdaily.data.db.EventItemEntity
 import id.haho.muslimdaily.data.db.EventPrefEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
 import id.haho.muslimdaily.data.db.UserDatabase
+import id.haho.muslimdaily.data.content.AssetContentSource
+import id.haho.muslimdaily.data.content.ContentImporter
+import id.haho.muslimdaily.data.content.ContentRepository
+import id.haho.muslimdaily.data.db.ContentDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
+import id.haho.muslimdaily.data.myset.SetsToRoutines
+import id.haho.muslimdaily.data.routine.RoutineRepository
+import kotlinx.coroutines.flow.first
 import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import kotlinx.coroutines.test.runTest
@@ -26,10 +33,19 @@ import kotlin.test.assertFailsWith
 class BackupRepositoryTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val db = Room.inMemoryDatabaseBuilder(context, UserDatabase::class.java).allowMainThreadQueries().build()
+    private val contentDb = Room.inMemoryDatabaseBuilder(context, ContentDatabase::class.java).allowMainThreadQueries().build()
+    private val content = ContentRepository(contentDb, ContentImporter(AssetContentSource(context), contentDb))
     private val settings = SettingsRepository(context)
-    private val repo = BackupRepository(settings, MySetRepository(db), db, Clock.systemUTC(), ReviewRepository(db) { emptyMap() })
+    private val routines = RoutineRepository(db, Clock.systemUTC())
+    private val repo = BackupRepository(
+        settings, MySetRepository(db), db, Clock.systemUTC(), ReviewRepository(db) { emptyMap() },
+        SetsToRoutines(db, content, MySetRepository(db), routines),
+    )
 
-    @After fun close() = db.close()
+    @After fun close() {
+        db.close()
+        contentDb.close()
+    }
 
     @Test
     fun `a backup restores settings, sets, reviews and ticks after everything is wiped`() = runTest {
@@ -56,7 +72,12 @@ class BackupRepositoryTest {
         assertEquals(true, s.reminders.fasting)
         assertEquals(LocalTime.of(21, 15), s.reminders.fastingTime)
         assertEquals(1.3f, s.arabicScale)
-        assertEquals(true, db.mySetDao().allPrefs().single().useMySet)
+        // The old backup's morning set (first dua hidden) comes back as a routine.
+        val routine = routines.routines().first().single()
+        assertEquals(content.eventOnce("morning")!!.label, routine.name)
+        assertEquals(false, "morning_01" in routine.duaIds)
+        assertEquals(true, "morning_02" in routine.duaIds)
+        assertEquals(emptyList(), db.mySetDao().allPrefs())
         assertEquals(3, db.reviewDao().item("wake_01")!!.box)
         assertEquals(listOf(ChecklistEntity(20_000, "fard:FAJR")), db.checklistDao().all())
         assertEquals(1, summary.reviews)

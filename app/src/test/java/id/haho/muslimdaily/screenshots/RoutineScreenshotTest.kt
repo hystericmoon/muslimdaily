@@ -103,7 +103,7 @@ class RoutineScreenshotTest {
     @Config(qualifiers = "id-w400dp-h300dp-xhdpi")
     fun dockedBars() = captureVariants("114-docked-bars") {
         androidx.compose.foundation.layout.Column {
-            id.haho.muslimdaily.feature.duas.event.EventActionBar(count = 8, onStart = {}, onCustomize = {})
+            id.haho.muslimdaily.feature.duas.event.EventActionBar(count = 8, onStart = {})
             androidx.compose.foundation.layout.Spacer(androidx.compose.ui.Modifier.height(24.dp))
             id.haho.muslimdaily.feature.duas.components.PlayerBar(
                 isPlaying = true, speed = 1f, repeat = false, enabled = true,
@@ -126,7 +126,7 @@ class RoutineScreenshotTest {
             id.haho.muslimdaily.feature.duas.detail.DuaDetailState(
                 DuaPreviewData.duas.first(), null,
                 id.haho.muslimdaily.feature.duas.components.ReadingPrefs(),
-                id.haho.muslimdaily.audio.PlaybackState(), inMySet = true,
+                id.haho.muslimdaily.audio.PlaybackState(),
                 note = "Dibaca bersama anak-anak setiap pagi sebelum berangkat sekolah.",
             ),
             id.haho.muslimdaily.feature.duas.detail.DuaDetailActions(),

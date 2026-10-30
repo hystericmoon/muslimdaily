@@ -180,8 +180,8 @@
     <string name="settings_display_summary">Terjemahan, transliterasi, ukuran teks, tema</string>
     <string name="settings_audio">Audio dan hafalan</string>
     <string name="settings_audio_summary">Kecepatan, pengulangan, jeda</string>
-    <string name="settings_my_sets">Cadangan dan set saya</string>
-    <string name="settings_my_sets_summary">Cadangkan semua data, ekspor atau impor set</string>
+    <string name="settings_my_sets">Cadangan</string>
+    <string name="settings_my_sets_summary">Cadangkan dan pulihkan semua data Anda</string>
     <string name="settings_methodology">Metodologi</string>
     <string name="settings_methodology_summary">Sumber dan kebijakan derajat hadits</string>
     <string name="settings_report">Laporkan kesalahan</string>
@@ -257,10 +257,6 @@
     <string name="dua_full_entry_hide">Sembunyikan teks lengkap</string>
     <string name="dua_full_entry_title">Teks lengkap di kitab</string>
     <string name="dua_full_entry_note">Di atas hanya bacaan doanya. Di sini teks lengkapnya seperti tertulis di kitab, termasuk lafal hadis, keterangan dan jumlah bacaan.</string>
-    <string name="dua_add_to_set">Tambah ke set saya</string>
-    <string name="dua_remove_from_set">Hapus dari set saya</string>
-    <string name="dua_in_set_note">Doa ini termasuk dalam set Anda untuk acara ini.</string>
-    <string name="dua_not_in_set_note">Doa ini disembunyikan dari set Anda. Set lengkap tetap memuatnya.</string>
     <string name="player_play">Putar</string>
     <string name="player_pause">Jeda</string>
     <string name="player_repeat">Ulangi</string>
@@ -292,21 +288,6 @@
     <string name="report_no_email_app">Tidak ada aplikasi email.</string>
 
     <!-- Customize -->
-    <string name="customize_title">Sesuaikan: %s</string>
-    <string name="customize_reset">Atur ulang</string>
-    <string name="customize_reset_title">Kembali ke set lengkap?</string>
-    <string name="customize_reset_body">Urutan, doa yang disembunyikan, dan pilihan bentuk akan dihapus.</string>
-    <string name="customize_intro">Matikan doa untuk menyembunyikannya, seret pegangan untuk mengubah urutan. Set lengkap tetap tersedia.</string>
-    <string name="customize_item_n">Doa %d</string>
-    <plurals name="customize_forms">
-        <item quantity="other">%d bentuk</item>
-    </plurals>
-    <plurals name="customize_hidden">
-        <item quantity="other">Tersembunyi (%d)</item>
-    </plurals>
-    <string name="customize_restore">Tampilkan</string>
-    <string name="customize_rotate">Bergantian tiap sesi</string>
-    <string name="customize_rotate_note">Setiap kali sesi selesai, bentuk berikutnya yang dipakai.</string>
     <string name="customize_move_up">Pindah ke atas</string>
     <string name="customize_move_down">Pindah ke bawah</string>
 
@@ -339,15 +320,7 @@
     <string name="run_private_note">Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik.</string>
 
     <!-- My sets data -->
-    <string name="data_intro">Simpan pilihan set saya ke file untuk cadangan atau untuk dipakai di perangkat lain.</string>
-    <string name="data_share">Bagikan file</string>
-    <string name="data_save">Simpan ke file</string>
-    <string name="data_import">Impor dari file</string>
-    <string name="data_import_note">Impor menggantikan pengaturan set pada acara yang ada di dalam file.</string>
-    <string name="data_saved">File tersimpan.</string>
     <string name="data_failed">Gagal menyimpan file.</string>
-    <string name="data_imported">%d acara diimpor.</string>
-    <string name="data_import_failed">File tidak dapat dibaca.</string>
 
     <!-- Memorize -->
     <string name="memorize_session_title">Hafalan</string>
@@ -722,7 +695,6 @@
     <string name="backup_restore_confirm_title">Pulihkan cadangan?</string>
     <string name="backup_restore_confirm_body">Pengaturan, set saya, hafalan, dan ceklis di ponsel ini akan diganti dengan isi cadangan.</string>
     <string name="backup_restore_choose">Pilih berkas</string>
-    <string name="data_my_sets_title">Set saya</string>
 
     <!-- Quick Settings tile -->
     <string name="tile_next_prayer">Shalat berikutnya</string>
@@ -813,7 +785,6 @@
     <string name="crash_prompt_send">Kirim laporan</string>
     <string name="crash_prompt_later">Nanti</string>
     <string name="event_start_all">Mulai baca (%1$d doa)</string>
-    <string name="event_save_routine">Jadikan rangkaian</string>
     <string name="library_tab_mine">Doa saya</string>
     <string name="library_tab_all">Semua doa</string>
     <string name="library_browse_all">Lihat semua doa</string>
@@ -834,7 +805,6 @@
     <string name="bookmark_added">Ditambahkan ke %1$s</string>
     <string name="bookmark_removed">Dihapus dari %1$s</string>
     <string name="bookmark_change">Ubah</string>
-    <string name="routine_section">Rangkaian saya</string>
     <string name="routine_empty_title">Buat rangkaian sendiri</string>
     <string name="routine_empty_body">Ketuk penanda pada doa mana pun untuk menyimpannya ke rangkaian, lalu baca berurutan seperti dzikir pagi dan petang.</string>
     <string name="routine_new">Buat rangkaian</string>
@@ -866,14 +836,6 @@
     <string name="display_font_naskh">Paling jelas di layar ponsel. Bawaan.</string>
     <string name="display_font_scheherazade">Harakat besar dan renggang, mudah dibaca perlahan.</string>
     <string name="display_font_amiri">Gaya kitab klasik. Ayat Al-Qur\'an memakai Amiri Quran.</string>
-    <string name="event_adjust">Sesuaikan</string>
-    <string name="event_my_set_active">Memakai set saya.</string>
-    <plurals name="event_my_set_hidden">
-        <item quantity="other">Memakai set saya: %d doa disembunyikan.</item>
-    </plurals>
-    <string name="event_my_set_off">Set saya tersimpan tetapi tidak dipakai.</string>
-    <string name="event_my_set_use">Pakai</string>
-    <string name="customize_routine_hint">Ingin rangkaian terpisah, dengan doa dari tempat lain juga?</string>
     <string name="event_start_short">Mulai baca</string>
     <string name="update_beta">Ikut uji coba (beta)</string>
     <string name="update_beta_summary">Dapatkan versi beta lebih awal untuk dicoba. Versi ini bisa masih punya kesalahan; laporkan lewat Masukan dan diagnosa.</string>

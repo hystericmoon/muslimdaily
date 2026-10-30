@@ -10,10 +10,7 @@ import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.data.content.ContentRepository
-import id.haho.muslimdaily.data.myset.MySetRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
-import id.haho.muslimdaily.domain.myset.ActiveSet
-import id.haho.muslimdaily.domain.myset.SetItem
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.DuaDetailRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,8 +21,6 @@ import id.haho.muslimdaily.data.note.NoteRepository
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.data.routine.RoutineRepository
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -37,7 +32,6 @@ data class DuaDetailState(
     val event: DuaEvent?,
     val prefs: ReadingPrefs,
     val playback: PlaybackState,
-    val inMySet: Boolean,
     /** The reader's own note, if any. */
     val note: String? = null,
     /** The reader's routines, for "add to routine". */
@@ -49,7 +43,6 @@ data class DuaDetailState(
 class DuaDetailViewModel @Inject constructor(
     savedState: SavedStateHandle,
     private val content: ContentRepository,
-    private val mySets: MySetRepository,
     private val settings: SettingsRepository,
     private val audio: AudioEngine,
     private val notes: NoteRepository,
@@ -59,13 +52,6 @@ class DuaDetailViewModel @Inject constructor(
 
     private val dua: Flow<Dua?> = content.dua(duaId)
 
-    private val inMySet: Flow<Boolean> = dua.filterNotNull().flatMapLatest { d ->
-        combine(content.duasForEvent(d.event), mySets.customization(d.event)) { duas, custom ->
-            val key = keyOf(d)
-            ActiveSet.items(ActiveSet.canonical(duas), custom).firstOrNull { it.item.key == key }?.enabled ?: true
-        }
-    }
-
     private val event: Flow<DuaEvent?> = dua.flatMapLatest { d -> d?.let { content.event(it.event) } ?: flowOf(null) }
 
     val state: StateFlow<DuaDetailState?> = combine(
@@ -73,15 +59,13 @@ class DuaDetailViewModel @Inject constructor(
         event,
         settings.settings,
         audio.state,
-        inMySet,
-    ) { d, e, s, playback, included ->
+    ) { d, e, s, playback ->
         d?.let {
             DuaDetailState(
                 dua = it,
                 event = e,
                 prefs = ReadingPrefs(s.translationMode, s.showTransliteration),
                 playback = if (playback.duaId == it.id) playback else PlaybackState(speed = s.audioSpeed, repeat = playback.repeat),
-                inMySet = included,
             )
         }
     }.combine(notes.note(duaId)) { st, note -> st?.copy(note = note) }
@@ -91,8 +75,6 @@ class DuaDetailViewModel @Inject constructor(
     fun saveNote(text: String) {
         viewModelScope.launch { notes.save(duaId, text) }
     }
-
-    private fun keyOf(d: Dua) = d.variantGroup?.let { SetItem.groupKey(it) } ?: d.id
 
     fun togglePlay(title: String) {
         val s = state.value ?: return
@@ -109,15 +91,6 @@ class DuaDetailViewModel @Inject constructor(
     }
 
     fun setRepeat(repeat: Boolean) = audio.setRepeat(repeat)
-
-    fun setInMySet(included: Boolean) {
-        val d = state.value?.dua ?: return
-        viewModelScope.launch {
-            val canonical = ActiveSet.canonical(content.duasForEvent(d.event).first())
-            val custom = mySets.customizationOnce(d.event)
-            mySets.saveItems(d.event, ActiveSet.withIncluded(canonical, custom, keyOf(d), included))
-        }
-    }
 
     fun setInRoutine(routineId: String, included: Boolean) {
         viewModelScope.launch { routineRepo.setIncluded(routineId, duaId, included) }

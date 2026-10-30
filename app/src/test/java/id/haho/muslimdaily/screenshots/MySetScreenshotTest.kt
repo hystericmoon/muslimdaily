@@ -7,10 +7,6 @@ import id.haho.muslimdaily.domain.myset.Customization
 import id.haho.muslimdaily.domain.myset.FormChoice
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
-import id.haho.muslimdaily.feature.duas.customize.CustomizeActions
-import id.haho.muslimdaily.feature.duas.customize.CustomizeContent
-import id.haho.muslimdaily.feature.duas.customize.CustomizeRules
-import id.haho.muslimdaily.feature.duas.customize.CustomizeUiState
 import id.haho.muslimdaily.feature.run.RunActions
 import id.haho.muslimdaily.feature.run.RunScreen
 import id.haho.muslimdaily.feature.run.RunUiState
@@ -24,20 +20,6 @@ import org.robolectric.annotation.GraphicsMode
 @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
 class MySetScreenshotTest {
     private val duas = DuaPreviewData.duas + DuaPreviewData.dua("morning_05", 5) + DuaPreviewData.dua("morning_06", 6)
-
-    @Test
-    fun customize() = captureVariants("30-myset-customize") {
-        val canonical = ActiveSet.canonical(duas)
-        val all0 = ActiveSet.items(canonical, Customization())
-        val entries = CustomizeRules.setEnabled(all0, "morning_05", false)
-        val custom = Customization(true, entries, mapOf("g" to FormChoice.Rotate(0)))
-        val all = ActiveSet.items(canonical, custom)
-        CustomizeContent(
-            CustomizeUiState(null, all, all.filter { it.enabled }, all.filterNot { it.enabled }, custom.choices, true),
-            CustomizeActions(),
-            initiallyShowHidden = true,
-        )
-    }
 
     private fun run(index: Int, counts: List<Int>) = RunUiState(
         eventLabel = "Dzikir pagi",
