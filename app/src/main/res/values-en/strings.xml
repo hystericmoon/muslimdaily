@@ -875,6 +875,15 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_7_0">
+        <item>Duas now show one phrase per line, so you can see where to pause and where to continue. Tap a phrase to play the recitation from there.</item>
+        <item>The book\'s notes in brackets, such as when to say a dua or how many times, now appear smaller and dimmer so they don\'t read as part of the dua.</item>
+        <item>Six duas from Hisn al-Muslim now hold only the words you recite, so their Latin transliteration shows too. The full text from the book is still below the dua.</item>
+        <item>Without a location, the Today screen still shows the morning and evening adhkar and your routines.</item>
+        <item>When you first open the app, you can choose your city yourself and set the size of the Arabic and the translation.</item>
+        <item>Search puts the occasion\'s name and the transliteration first, and now finds source books such as Bukhari.</item>
+        <item>If audio fails to play, the app now tells you.</item>
+    </string-array>
     <string-array name="whats_new_1_6_0">
         <item>A new category, Duas from the Sunnah: 16 sahih and hasan duas that are not in Hisn al-Muslim, such as Yā muqallibal-qulūb, the dua for setting right one\'s religion, world and Hereafter, and seeking refuge from the loss of blessings. They come from HadeethEnc.com, with the whole hadith under each dua.</item>
         <item>The full text from the source now also shows in English when you choose the English translation.</item>

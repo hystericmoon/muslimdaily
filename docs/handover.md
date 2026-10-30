@@ -23,26 +23,21 @@ Decisions only the owner can make (details in the body of #83):
   10× one; after_salah_06 English has no translation of Ayat al-Kursi; adhan_02 English
   "His salve". Also HadeethEnc no. 5491 and 6163 (from an earlier session).
 - Which cue layout besides A: the A/B/C prototype is at
-  https://claude.ai/artifact/7sXgDbssoA1zWgF9WeWm6F (A is built, in #84).
+  https://claude.ai/artifact/7sXgDbssoA1zWgF9WeWm6F (A shipped in 1.7.0).
 
-## In flight (merge without asking once CI is green)
+## Shipped
 
-- #84 Reading view: one phrase per line, tap a phrase to play from it, muted book notes.
-  Main merged in after #82; its screenshots are re-recorded on CI.
-
-Merged: #82 (Today without a location, onboarding city picker and text size, 200% fixes,
-audio error message, search ranking with content DB v6), #83 (6 Hisnul Muslim rows reduced to
-the recited words, after_salah_06 Indonesian), #85 (ATF checks in `AccessibilityChecksTest`;
-add new screens to it).
-
-None of these bump the version. When they are in, ship a minor release (1.7.0) with a
-What's New entry; say the version before merging (it publishes a release).
+1.7.0 (versionCode 41): #82 Today without a location, onboarding city picker and text size,
+200% fixes, audio error message, search ranking (content DB v6); #83 six Hisnul Muslim rows
+reduced to the recited words; #84 reading view (one phrase per line, tap to play from a
+phrase, muted book notes); #85 ATF checks in `AccessibilityChecksTest` (add new screens to it);
+#86 this file.
 
 ## Open work, in order
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. After #84: memorise in focus mode (layout C), if the owner picks it.
+1. Memorise in focus mode (layout C), if the owner picks it.
 2. Audio ranges for the 6 rows in #83 and the ~22 clips longer than their text: needs listening
    in `build/split/review.html` (`python3 -I tools/split_context.py suggest`).
 3. 58 rows with an empty `source_1_no`: the book gives no number; sunnah.com returns 403 from
