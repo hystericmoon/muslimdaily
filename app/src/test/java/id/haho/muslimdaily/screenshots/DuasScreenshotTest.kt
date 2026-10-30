@@ -40,7 +40,7 @@ class DuasScreenshotTest {
 
     /** The first dua saved to a routine, the second in My hifz. */
     @Test
-    fun eventSaved() = captureVariants("128-duas-event-saved") {
+    fun eventSaved() = captureVariants("133-duas-event-saved") {
         val canonical = ActiveSet.canonical(DuaPreviewData.duas)
         EventContent(
             EventUiState(
