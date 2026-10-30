@@ -53,8 +53,11 @@ jobs:
       - name: Publish haho-design to mavenLocal
         working-directory: .deps/haho-design
         run: ./gradlew publishToMavenLocal --stacktrace
-      - name: Lint, unit and UI tests (Robolectric)
-        run: ./gradlew :app:lintDebug :app:testDebugUnitTest --stacktrace
+      # verifyRoborazziDebug runs the unit tests and compares every screenshot with
+      # docs/screenshots. Those are recorded on this runner by the Screenshots workflow; after a
+      # UI change, run it on the branch (Actions → Screenshots → Run workflow).
+      - name: Lint, unit and UI tests (Robolectric), screenshots compared
+        run: ./gradlew :app:lintDebug :app:verifyRoborazziDebug --stacktrace
       - name: Debug and release builds
         run: ./gradlew :app:assembleDebug :app:assembleRelease :app:assembleSideload
       - uses: actions/upload-artifact@v4
@@ -64,6 +67,7 @@ jobs:
           path: |
             app/build/reports/
             app/build/test-results/
+            app/build/outputs/roborazzi/
       - uses: actions/upload-artifact@v4
         with:
           name: apks

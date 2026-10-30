@@ -21,9 +21,13 @@ Compose, Hilt, Room, DataStore, Glance. Sideloaded through GitHub Releases.
 export ANDROID_HOME=/opt/android-sdk
 python -m unittest discover -s tools          # content pipeline
 ./gradlew :app:lintDebug :app:testDebugUnitTest
-./gradlew :app:recordRoborazziDebug           # refresh docs/screenshots after UI changes
 ```
 
+- Screenshots in `docs/screenshots` are recorded on CI's Linux runner, and CI fails when a render
+  no longer matches. After a UI change, run the **Screenshots** workflow on your branch (Actions →
+  Screenshots → Run workflow, or `gh workflow run screenshots.yml --ref <branch>`): it commits the
+  new shots and re-runs CI. Shots recorded locally (`recordRoborazziDebug`) differ in fonts and
+  anti-aliasing, so use them to preview only and never commit them.
 - Screenshot tests run on Robolectric pinned to Indonesian (`id-rID`); new shots are
   numbered 100+ in `RoutineScreenshotTest`.
 - Every new string goes in both `values/strings.xml` (Indonesian, default) and
