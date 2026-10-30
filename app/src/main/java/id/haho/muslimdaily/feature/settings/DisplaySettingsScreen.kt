@@ -103,35 +103,7 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
         }
         item {
             SettingsGroup(stringResource(R.string.display_text_size)) {
-                val arabicTitle = stringResource(R.string.display_arabic_size)
-                StepperRow(
-                    title = arabicTitle,
-                    valueText = "${(settings.arabicScale * 100).roundToInt()}%",
-                    onDecrement = { update { arabicScale = settings.arabicScale.step(-SCALE_STEP) } },
-                    onIncrement = { update { arabicScale = settings.arabicScale.step(SCALE_STEP) } },
-                    decrementDescription = stringResource(R.string.settings_decrease, arabicTitle),
-                    incrementDescription = stringResource(R.string.settings_increase, arabicTitle),
-                    canDecrement = settings.arabicScale > SCALE_MIN,
-                    canIncrement = settings.arabicScale < SCALE_MAX,
-                )
-                val translationTitle = stringResource(R.string.display_translation_size)
-                StepperRow(
-                    title = translationTitle,
-                    valueText = "${(settings.translationScale * 100).roundToInt()}%",
-                    onDecrement = { update { translationScale = settings.translationScale.step(-SCALE_STEP) } },
-                    onIncrement = { update { translationScale = settings.translationScale.step(SCALE_STEP) } },
-                    decrementDescription = stringResource(R.string.settings_decrease, translationTitle),
-                    incrementDescription = stringResource(R.string.settings_increase, translationTitle),
-                    canDecrement = settings.translationScale > SCALE_MIN,
-                    canIncrement = settings.translationScale < SCALE_MAX,
-                )
-                Text(
-                    stringResource(R.string.display_size_note),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
-                )
-                SizePreview()
+                TextSizeRows(settings, update)
             }
         }
         item {
@@ -200,6 +172,40 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
 }
 
 /** Live sample using the current Arabic and reading scales (applied by the theme). */
+/** Arabic and translation size steppers with a live sample; also offered during onboarding. */
+@Composable
+fun TextSizeRows(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
+    val arabicTitle = stringResource(R.string.display_arabic_size)
+    StepperRow(
+        title = arabicTitle,
+        valueText = "${(settings.arabicScale * 100).roundToInt()}%",
+        onDecrement = { update { arabicScale = settings.arabicScale.step(-SCALE_STEP) } },
+        onIncrement = { update { arabicScale = settings.arabicScale.step(SCALE_STEP) } },
+        decrementDescription = stringResource(R.string.settings_decrease, arabicTitle),
+        incrementDescription = stringResource(R.string.settings_increase, arabicTitle),
+        canDecrement = settings.arabicScale > SCALE_MIN,
+        canIncrement = settings.arabicScale < SCALE_MAX,
+    )
+    val translationTitle = stringResource(R.string.display_translation_size)
+    StepperRow(
+        title = translationTitle,
+        valueText = "${(settings.translationScale * 100).roundToInt()}%",
+        onDecrement = { update { translationScale = settings.translationScale.step(-SCALE_STEP) } },
+        onIncrement = { update { translationScale = settings.translationScale.step(SCALE_STEP) } },
+        decrementDescription = stringResource(R.string.settings_decrease, translationTitle),
+        incrementDescription = stringResource(R.string.settings_increase, translationTitle),
+        canDecrement = settings.translationScale > SCALE_MIN,
+        canIncrement = settings.translationScale < SCALE_MAX,
+    )
+    Text(
+        stringResource(R.string.display_size_note),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
+    )
+    SizePreview()
+}
+
 @Composable
 private fun SizePreview() {
     GlassCard(

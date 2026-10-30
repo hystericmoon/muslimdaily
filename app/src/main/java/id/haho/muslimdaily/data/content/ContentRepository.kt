@@ -7,6 +7,7 @@ import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.core.model.Fard
 import id.haho.muslimdaily.core.model.Rawatib
 import id.haho.muslimdaily.data.db.ContentDatabase
+import id.haho.muslimdaily.data.db.DuaEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -99,10 +100,20 @@ class ContentRepository @Inject constructor(
         return groups.flatMap { ids -> ids.map { it to ids } }.toMap().also { twins = it }
     }
 
+    /**
+     * Matches in the occasion's name come first, then in the transliteration (how people
+     * remember a dua: "ayat kursi", "sayyidul istighfar"), then anywhere else.
+     */
     suspend fun search(query: String): List<Dua> {
         importer.ensureImported()
         val fts = ArabicNormalizer.toFtsQuery(query) ?: return emptyList()
-        return dao.search(fts).map { it.toModel() }
+        val ranked = LinkedHashMap<String, DuaEntity>()
+        for (column in SEARCH_TIERS) {
+            val scoped = if (column == null) fts else fts.split(' ').joinToString(" ") { "$column:$it" }
+            dao.search(scoped).forEach { ranked.putIfAbsent(it.id, it) }
+            if (ranked.size >= SEARCH_LIMIT) break
+        }
+        return ranked.values.take(SEARCH_LIMIT).map { it.toModel() }
     }
 
     fun rawatib(): Flow<List<Rawatib>> = afterImport { dao.rawatib().map { list -> list.map { it.toModel() } } }
@@ -111,3 +122,8 @@ class ContentRepository @Inject constructor(
 
     suspend fun contentVersion(): Int = importer.contentVersion()
 }
+
+private const val SEARCH_LIMIT = 100
+
+/** FTS columns searched first, in order; null is every column. */
+private val SEARCH_TIERS = listOf("eventLabel", "transliteration", null)

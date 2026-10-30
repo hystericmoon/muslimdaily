@@ -93,6 +93,7 @@
     <string name="today_no_location_body">Atur lokasi untuk menampilkan jadwal shalat. Lokasi hanya disimpan di perangkat ini.</string>
     <string name="today_use_gps">Gunakan lokasi saat ini</string>
     <string name="today_pick_city">Pilih kota</string>
+    <string name="today_adhkar_header">Dzikir harian</string>
     <string name="today_travel_suggestion">Perangkat Anda sekitar %1$d km dari %2$s. Perbarui lokasi atau aktifkan mode safar?</string>
     <string name="today_update_location">Perbarui lokasi</string>
     <string name="today_enable_travel">Mode safar</string>
@@ -251,6 +252,7 @@
     </plurals>
     <string name="dua_virtue">Keutamaan</string>
     <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
+    <string name="audio_failed">Audio tidak dapat diputar. Coba lagi; bila tetap gagal, laporkan dari halaman doa.</string>
     <string name="dua_memorize">Hafalkan</string>
     <string name="dua_add_to_routine">Tambah ke rangkaian</string>
     <string name="dua_full_entry_show">Lihat teks lengkap di kitab</string>
@@ -721,7 +723,8 @@
     <string name="onboarding_location_title">Lokasi</string>
     <string name="onboarding_location_body">Dipakai untuk menghitung waktu shalat dan arah kiblat di perangkat ini. Lokasi tidak pernah dikirim ke mana pun.</string>
     <string name="onboarding_location_use">Gunakan lokasi saya</string>
-    <string name="onboarding_location_later">Atau pilih kota sendiri nanti di layar Hari ini.</string>
+    <string name="onboarding_location_later">Bisa juga diatur nanti di layar Hari ini.</string>
+    <string name="onboarding_text_size_body">Atur ukuran tulisan Arab dan terjemah agar nyaman dibaca.</string>
     <string name="onboarding_location_finding">Mencari lokasi…</string>
     <string name="onboarding_location_denied">Izin lokasi tidak diberikan. Anda tetap bisa memilih kota secara manual.</string>
     <string name="onboarding_location_set">Lokasi: %1$s</string>

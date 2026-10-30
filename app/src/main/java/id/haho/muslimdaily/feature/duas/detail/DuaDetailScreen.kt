@@ -61,6 +61,8 @@ import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.feature.duas.components.SourceChip
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.launch
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.buildAnnotatedString
@@ -91,9 +93,15 @@ fun DuaDetailRoute(
     val scope = rememberCoroutineScope()
     val s = state
     val title = s?.event?.label.orEmpty()
+    // A clip that can't be played says so; the snackbar sits above the player and is announced.
+    val snackbar = remember { SnackbarHostState() }
+    val failedMessage = stringResource(R.string.audio_failed)
+    val failed = s?.playback?.failed == true
+    LaunchedEffect(failed) { if (failed) snackbar.showSnackbar(failedMessage) }
     AdwamScreen(
         title = title,
         onBack = onBack,
+        snackbarHostState = snackbar,
         actions = {
             if (s != null) {
                 val source = buildString {
