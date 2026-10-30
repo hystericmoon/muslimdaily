@@ -7,14 +7,12 @@ to check it.
 
 Last updated: 31 Oct 2026, after the "Now / Next" roadmap session.
 
-## Waiting on the owner
+## Decisions waiting on the owner
 
-| PR | What | Why it waits |
-|---|---|---|
-| #83 | Content: the recited words alone for 6 Hisnul Muslim rows (adhan_02, marriage_02, gathering_01, hajj_05, tasbih_01, tasbih_09), after_salah_06 Indonesian | Shipped religious content. Its body lists every row left out and why |
-| #85 | Accessibility Test Framework checks (`roborazzi-accessibility-check`, test only) | New dependency |
+Nothing waits on approval. #83 (content) and #85 (accessibility checks) were approved and
+merged on 31 Oct.
 
-Decisions only the owner can make (details in #83):
+Decisions only the owner can make (details in the body of #83):
 
 - Hadiths about a virtue that sit in the library as duas (shalawat_01–05, salam_01/03,
   istighfar_01/02/04/05/06, illness_06, travel_09, night_03, tasbih_05): show them as virtue
@@ -33,7 +31,9 @@ Decisions only the owner can make (details in #83):
   Main merged in after #82; its screenshots are re-recorded on CI.
 
 Merged: #82 (Today without a location, onboarding city picker and text size, 200% fixes,
-audio error message, search ranking with content DB v6).
+audio error message, search ranking with content DB v6), #83 (6 Hisnul Muslim rows reduced to
+the recited words, after_salah_06 Indonesian), #85 (ATF checks in `AccessibilityChecksTest`;
+add new screens to it).
 
 None of these bump the version. When they are in, ship a minor release (1.7.0) with a
 What's New entry; say the version before merging (it publishes a release).
