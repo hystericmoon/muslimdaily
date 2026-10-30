@@ -29,10 +29,11 @@ Decisions only the owner can make (details in #83):
 
 ## In flight (merge without asking once CI is green)
 
-- #82 Today without a location, onboarding city picker and text size, 200% fixes, audio error
-  message, search ranking (content DB v6). Screenshots workflow was started on the branch.
 - #84 Reading view: one phrase per line, tap a phrase to play from it, muted book notes.
-  Stacked on #82: merge #82 first, then update #84 from main.
+  Main merged in after #82; its screenshots are re-recorded on CI.
+
+Merged: #82 (Today without a location, onboarding city picker and text size, 200% fixes,
+audio error message, search ranking with content DB v6).
 
 None of these bump the version. When they are in, ship a minor release (1.7.0) with a
 What's New entry; say the version before merging (it publishes a release).
