@@ -13,6 +13,16 @@ class LeitnerTest {
     private val today = LocalDate.of(2026, 10, 21)
 
     @Test
+    fun `a routine recital counts only when due, and needing the text is always a lapse`() {
+        val due = LeitnerState(3, today)
+        val later = LeitnerState(3, today.plusDays(5))
+        assertEquals(Rating.EASY, Leitner.ratingFromRoutine(due, knew = true, today))
+        assertEquals(null, Leitner.ratingFromRoutine(later, knew = true, today))
+        assertEquals(Rating.AGAIN, Leitner.ratingFromRoutine(due, knew = false, today))
+        assertEquals(Rating.AGAIN, Leitner.ratingFromRoutine(later, knew = false, today))
+    }
+
+    @Test
     fun `first rating places the dua in box 1 or 2`() {
         assertEquals(LeitnerState(2, today.plusDays(3)), Leitner.rate(null, Rating.EASY, today))
         assertEquals(LeitnerState(1, today.plusDays(1)), Leitner.rate(null, Rating.HARD, today))

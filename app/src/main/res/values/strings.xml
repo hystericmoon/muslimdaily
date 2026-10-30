@@ -308,6 +308,9 @@
     <string name="run_from_memory">Baca dari hafalan</string>
     <string name="run_from_memory_body">Doa ini ada di hafalan Anda. Bacalah tanpa melihat teks, lalu tampilkan untuk mencocokkan.</string>
     <string name="run_show_text">Tampilkan teks</string>
+    <string name="run_recall_prompt">Hafal tanpa melihat teks?</string>
+    <string name="run_recall_knew">Hafal</string>
+    <string name="run_recall_needed">Perlu lihat teks</string>
     <string name="run_add_to_hifz">Tambah ke hafalan</string>
     <string name="run_in_hifz">Ada di Hafalan saya</string>
     <string name="run_restart">Mulai ulang</string>

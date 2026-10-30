@@ -2,6 +2,7 @@ package id.haho.muslimdaily.feature.run
 
 import id.haho.design.glass.GlassOutlinedButton
 import id.haho.design.glass.GlassButton
+import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.design.glass.GlassCard
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.clickable
@@ -77,6 +78,7 @@ data class RunActions(
     val onAutoAdvance: (Boolean) -> Unit = {},
     val onFromMemory: (Boolean) -> Unit = {},
     val onReveal: (Int) -> Unit = {},
+    val onRecall: (Int, Boolean) -> Unit = { _, _ -> },
     val onAddToHifz: (Int) -> Unit = {},
     val onClose: () -> Unit = {},
 )
@@ -116,6 +118,7 @@ fun RunRoute(onClose: () -> Unit, viewModel: RunViewModel = hiltViewModel()) {
                 onAutoAdvance = viewModel::setAutoAdvance,
                 onFromMemory = viewModel::setFromMemory,
                 onReveal = viewModel::reveal,
+                onRecall = viewModel::recall,
                 onAddToHifz = viewModel::addToHifz,
                 onClose = onClose,
             ),
@@ -257,6 +260,17 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                     // The meaning stays as the cue; transliteration would give the Arabic away.
                     DuaTranslations(dua, state.prefs.copy(transliteration = false))
                 } else {
+                    if (state.asksRecall(page)) {
+                        RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
+                    }
+                    state.recalled[page]?.let { due ->
+                        Text(
+                            stringResource(R.string.memorize_scheduled, formatLongDate(due)),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                        )
+                    }
                     ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
                     DuaTranslations(dua, state.prefs)
                 }
@@ -279,6 +293,18 @@ private fun FromMemoryPanel(onReveal: () -> Unit) {
             Text(stringResource(R.string.run_from_memory), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
             Text(stringResource(R.string.run_from_memory_body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             GlassOutlinedButton(onClick = onReveal) { Text(stringResource(R.string.run_show_text)) }
+        }
+    }
+}
+
+/** After the text of a dua recited from memory is shown: did the recitation hold without it? */
+@Composable
+private fun RecallCheck(onAnswer: (Boolean) -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        Text(stringResource(R.string.run_recall_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+        Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_knew)) }
+            GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_needed)) }
         }
     }
 }

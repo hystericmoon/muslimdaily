@@ -15,6 +15,7 @@ import id.haho.muslimdaily.data.run.RunItem
 import id.haho.muslimdaily.data.run.RunSession
 import id.haho.muslimdaily.data.run.RunSessionRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
+import id.haho.muslimdaily.domain.memorize.Leitner
 import id.haho.muslimdaily.domain.myset.ActiveSet
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.RunRoute
@@ -50,7 +51,13 @@ data class RunUiState(
     val fromMemory: Boolean = false,
     /** Pages whose text was shown this session; not stored. */
     val revealed: Set<Int> = emptySet(),
+    /** Pages recited from memory and answered "knew it / needed the text", with the next review date. */
+    val recalled: Map<Int, LocalDate> = emptyMap(),
 ) {
+    /** Recited from memory and checked, but not yet answered. */
+    fun asksRecall(page: Int): Boolean =
+        fromMemory && page in revealed && page !in recalled && duas.getOrNull(page)?.id?.let { it in hifz } == true
+
     fun isHidden(page: Int): Boolean =
         fromMemory && page !in revealed && duas.getOrNull(page)?.id?.let { it in hifz } == true
 
@@ -208,6 +215,20 @@ class RunViewModel @Inject constructor(
     /** Shows the hidden text of a dua recited from memory. Changes no count and no review. */
     fun reveal(page: Int) {
         _state.update { it?.copy(revealed = it.revealed + page) }
+    }
+
+    /**
+     * After checking a dua recited from memory: knowing it counts as a review when the dua is due,
+     * needing the text sends it back to box 1. Changes no count.
+     */
+    fun recall(page: Int, knew: Boolean) {
+        val id = _state.value?.duas?.getOrNull(page)?.id ?: return
+        viewModelScope.launch {
+            val current = reviews.item(id).first()?.state ?: return@launch
+            val rating = Leitner.ratingFromRoutine(current, knew, today)
+            val next = if (rating != null) reviews.rate(id, rating, today) else current
+            _state.update { it?.copy(recalled = it.recalled + (page to next.due)) }
+        }
     }
 
     /** Saves the dua on [page] to "My hifz" to learn later. Changes no count. */
