@@ -46,7 +46,7 @@ OUT_DIR = ROOT / "build/split"
 
 REVIEW_FIELDS = [
     "id", "event", "audio_file", "duration", "rule", "confidence", "approved",
-    "arabic", "audio_range", "translation_id", "arabic_full", "translation_id_full", "source_sha1",
+    "arabic", "audio_range", "translation_id", "translation_en", "arabic_full", "translation_id_full", "source_sha1",
 ]
 
 HARAKAT = re.compile(r"[ً-ٰٟـ]")
@@ -260,6 +260,7 @@ def suggest_row(row: dict, samples: list[float] | None) -> dict | None:
         "arabic": part,
         "audio_range": propose_range(full, part, samples) if samples else "",
         "translation_id": tr_part if tr_part != tr else "",
+        "translation_en": "",
         "arabic_full": full, "translation_id_full": tr if tr_part != tr else "",
         "source_sha1": source_sha1(row),
     }
@@ -344,7 +345,7 @@ def apply(review: Path = OUT_DIR / "review.csv", duas: Path = sa.DUAS) -> tuple[
     """Copies approved rows into duas.csv. Returns (applied ids, problems)."""
     _, reviewed, _ = sa.read_csv(review)
     fields, rows, newline = sa.read_csv(duas)
-    for column in ("arabic_full", "translation_id_full", "audio_range"):
+    for column in ("arabic_full", "translation_id_full", "translation_en_full", "audio_range"):
         if column not in fields:
             fields.append(column)
             for row in rows:
@@ -367,6 +368,9 @@ def apply(review: Path = OUT_DIR / "review.csv", duas: Path = sa.DUAS) -> tuple[
         if r["translation_id"] and not bc.is_part_of(r["translation_id"], target["translation_id"]):
             problems.append(f"{r['id']}: translation_id must be words of the full translation, in order")
             continue
+        if r.get("translation_en") and not bc.text_part_of(r["translation_en"], target["translation_en"]):
+            problems.append(f"{r['id']}: translation_en must be words of the full translation, in order")
+            continue
         if r["audio_range"]:
             try:
                 ok = len(bc.parse_segments(r["audio_range"])) == 1
@@ -381,6 +385,9 @@ def apply(review: Path = OUT_DIR / "review.csv", duas: Path = sa.DUAS) -> tuple[
         if r["translation_id"]:
             target["translation_id_full"] = target["translation_id"]
             target["translation_id"] = r["translation_id"]
+        if r.get("translation_en"):
+            target["translation_en_full"] = target["translation_en"]
+            target["translation_en"] = r["translation_en"]
         applied.append(r["id"])
     if applied:
         sa.write_csv(duas, fields, rows, newline)

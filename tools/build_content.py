@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -135,6 +136,13 @@ def is_part_of(part: str, full: str) -> bool:
     return all(any(w == f for f in it) for w in words(part))
 
 
+def text_part_of(part: str, full: str) -> bool:
+    """is_part_of for a translation, whose words run into brackets and quotes ("says:‘And"):
+    every word of [part] appears in [full], in order."""
+    it = iter(re.findall(r"\w+", full))
+    return all(any(w == f for f in it) for w in re.findall(r"\w+", part))
+
+
 def parse_segments(value: str) -> list[list[float]]:
     """'0.0-1.8; 1.8-3.9' -> [[0.0, 1.8], [1.8, 3.9]]."""
     segments = []
@@ -217,7 +225,7 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         elif not is_part_of(d.get("arabic", ""), full):
             report.errors.append(f"{did}: arabic must be words of arabic_full in order (nothing added or changed)")
     for lang, tr_full in (d.get("translations_full") or {}).items():
-        if not is_part_of(d.get("translations", {}).get(lang, ""), tr_full):
+        if not text_part_of(d.get("translations", {}).get(lang, ""), tr_full):
             report.errors.append(f"{did}: translation_{lang} must be words of translation_{lang}_full in order")
     phrases = len(d.get("phrase_breaks", [])) + 1
     if segments and phrases != len(segments):

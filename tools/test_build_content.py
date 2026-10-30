@@ -177,5 +177,14 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(entry["phrase_breaks"], [4])
 
 
+class TextPartOfTest(unittest.TestCase):
+    def test_words_run_into_quotes(self):
+        self.assertTrue(bc.text_part_of("And I too bear witness", "one says:‘And I too bear witness’"))
+
+    def test_order_and_words_must_match(self):
+        self.assertFalse(bc.text_part_of("witness bear", "bear witness"))
+        self.assertFalse(bc.text_part_of("bear testimony", "bear witness"))
+
+
 if __name__ == "__main__":
     unittest.main()
