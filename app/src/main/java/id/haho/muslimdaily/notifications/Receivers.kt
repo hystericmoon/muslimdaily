@@ -11,6 +11,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.AndroidEntryPoint
 import id.haho.muslimdaily.core.diagnostics.ReminderLog
+import id.haho.muslimdaily.core.diagnostics.WidgetLog
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.bidiIsolate
 import id.haho.muslimdaily.core.model.Prayer
@@ -51,7 +52,9 @@ class ReminderReceiver : BroadcastReceiver() {
         val type = intent.getStringExtra(ReminderScheduler.EXTRA_TYPE)?.let { runCatching { ReminderType.valueOf(it) }.getOrNull() } ?: return
         val silent = intent.getBooleanExtra(ReminderScheduler.EXTRA_SILENT, false)
         val due = intent.getLongExtra(ReminderScheduler.EXTRA_DUE, 0L)
-        if (type != ReminderType.REFRESH && due > 0) {
+        if (type == ReminderType.REFRESH && due > 0) {
+            WidgetLog.prayer(context, Instant.ofEpochMilli(due), Instant.now(clock))
+        } else if (due > 0) {
             ReminderLog.record(
                 context,
                 ReminderLog.Entry(type.name, Instant.ofEpochMilli(due), Instant.now(clock), scheduler.canScheduleExact()),

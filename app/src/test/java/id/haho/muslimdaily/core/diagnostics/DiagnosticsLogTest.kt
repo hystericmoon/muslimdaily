@@ -22,6 +22,21 @@ class DiagnosticsLogTest {
         CrashLog.clear(context)
         context.getSharedPreferences("reminder_log", Context.MODE_PRIVATE).edit().clear().commit()
         context.getSharedPreferences("crash_log", Context.MODE_PRIVATE).edit().clear().commit()
+        context.getSharedPreferences("widget_log", Context.MODE_PRIVATE).edit().clear().commit()
+    }
+
+    @Test
+    fun `widget log keeps every prayer-time redraw but only late minute ticks`() {
+        val due = Instant.parse("2026-10-30T04:40:00Z")
+        assertNull(WidgetLog.lastDrawn(context))
+        WidgetLog.tick(context, due, due.plusSeconds(90))
+        WidgetLog.tick(context, due, due.plusSeconds(79 * 60))
+        WidgetLog.prayer(context, due, due.plusSeconds(2))
+        WidgetLog.drawn(context, due.plusSeconds(3))
+        val entries = WidgetLog.entries(context)
+        assertEquals(listOf(WidgetLog.Kind.PRAYER, WidgetLog.Kind.TICK), entries.map { it.kind })
+        assertEquals(Duration.ofMinutes(79), entries.last().late)
+        assertEquals(due.plusSeconds(3), WidgetLog.lastDrawn(context))
     }
 
     @Test

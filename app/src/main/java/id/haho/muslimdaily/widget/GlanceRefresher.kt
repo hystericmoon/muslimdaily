@@ -5,6 +5,7 @@ import android.text.format.DateFormat
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import dagger.hilt.android.qualifiers.ApplicationContext
+import id.haho.muslimdaily.core.diagnostics.WidgetLog
 import id.haho.muslimdaily.data.handover.Handover
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
@@ -55,5 +56,6 @@ class GlanceRefresher @Inject constructor(
                 widget.update(context, id)
             }
         }
+        WidgetLog.drawn(context, Instant.ofEpochMilli(stamp))
     }
 }

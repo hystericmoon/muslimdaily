@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.settings.diagnostics
 
+import android.app.usage.UsageStatsManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -46,6 +47,7 @@ import id.haho.design.glass.GlassButton
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.diagnostics.CrashLog
 import id.haho.muslimdaily.core.diagnostics.ReminderLog
+import id.haho.muslimdaily.core.diagnostics.WidgetLog
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -55,6 +57,7 @@ import id.haho.muslimdaily.notifications.PlannedReminder
 import id.haho.muslimdaily.notifications.ReminderPlanner
 import id.haho.muslimdaily.notifications.ReminderScheduler
 import id.haho.muslimdaily.notifications.ReminderType
+import id.haho.muslimdaily.widget.isWidgetPlaced
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.Clock
@@ -76,7 +79,14 @@ data class Diagnostics(
     val crashes: List<File>,
     val zone: ZoneId,
     val manufacturer: String,
+    /** Null when no prayer-times widget is placed. */
+    val widget: WidgetDiagnostics? = null,
+    /** Android's app standby bucket (API 28+), e.g. 40 = rare; null where unknown. */
+    val standbyBucket: Int? = null,
 )
+
+/** When the widget last redrew and its late redraws, newest first (see [WidgetLog]). */
+data class WidgetDiagnostics(val lastDrawn: Instant?, val log: List<WidgetLog.Entry>)
 
 @HiltViewModel
 class DiagnosticsViewModel @Inject constructor(
@@ -103,6 +113,8 @@ class DiagnosticsViewModel @Inject constructor(
             crashes = CrashLog.files(context),
             zone = zone,
             manufacturer = Build.MANUFACTURER.lowercase(),
+            widget = if (isWidgetPlaced(context)) WidgetDiagnostics(WidgetLog.lastDrawn(context), WidgetLog.entries(context)) else null,
+            standbyBucket = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) context.getSystemService(UsageStatsManager::class.java)?.appStandbyBucket else null,
         )
     }
 
@@ -201,6 +213,9 @@ fun DiagnosticsContent(
                 }
             }
         }
+        d.widget?.let { w ->
+            item { WidgetGroup(w, d.zone, time) }
+        }
         item {
             SettingsGroup(stringResource(R.string.diag_crashes)) {
                 InfoRow(
@@ -214,6 +229,28 @@ fun DiagnosticsContent(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun WidgetGroup(w: WidgetDiagnostics, zone: ZoneId, time: TimeFormatter) {
+    SettingsGroup(stringResource(R.string.diag_widget)) {
+        InfoRow(
+            stringResource(R.string.diag_widget_drawn),
+            summary = w.lastDrawn?.let { dateTime(it, zone, time) } ?: stringResource(R.string.diag_widget_never),
+        )
+        val prayer = w.log.filter { it.kind == WidgetLog.Kind.PRAYER }
+        if (prayer.isEmpty()) {
+            InfoRow(stringResource(R.string.diag_widget_prayer), summary = stringResource(R.string.diag_widget_none))
+        } else {
+            prayer.take(5).forEach { e ->
+                InfoRow(stringResource(R.string.diag_widget_prayer), summary = stringResource(R.string.diag_fired_at, dateTime(e.due, zone, time), lateLabel(e.late)))
+            }
+        }
+        w.log.filter { it.kind == WidgetLog.Kind.TICK }.take(3).forEach { e ->
+            InfoRow(stringResource(R.string.diag_widget_gap), summary = stringResource(R.string.diag_widget_gap_span, dateTime(e.due, zone, time), time.format(e.fired, zone)))
+        }
+        InfoNote(stringResource(R.string.diag_widget_note), Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm))
     }
 }
 
@@ -296,6 +333,12 @@ fun diagnosticsText(context: Context, d: Diagnostics): String {
         d.planned.take(8).forEach { appendLine("  ${it.type}  ${dt(it.at)}") }
         appendLine("Recently fired (due → late):")
         d.fired.take(15).forEach { appendLine("  ${it.type}  ${dt(it.due)}  +${it.late.seconds}s  exact=${it.exact}") }
+        d.standbyBucket?.let { appendLine("Standby bucket: $it") }
+        d.widget?.let { w ->
+            appendLine("Widget last drawn: ${w.lastDrawn?.let { dt(it) } ?: "never"}")
+            appendLine("Widget redraws (due → late):")
+            w.log.take(15).forEach { appendLine("  ${it.kind}  ${dt(it.due)}  +${it.late.seconds}s") }
+        }
         appendLine("Crash reports: ${d.crashes.size}")
     }
 }
