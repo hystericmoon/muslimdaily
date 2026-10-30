@@ -1,0 +1,43 @@
+name: Android setup
+description: >
+  JDK 21, Gradle, Android SDK 37 and the shared design system (haho-design) in mavenLocal.
+  haho-design is a private repo built from source at tag v<hahoDesign> (gradle/libs.versions.toml);
+  the published artifact is cached per version, so it is only built when the version changes.
+inputs:
+  haho-design-key:
+    description: Deploy key for hystericmoon/haho-design
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: "21"
+    - uses: gradle/actions/setup-gradle@v4
+    - name: Android SDK 37
+      shell: bash
+      # pipefail is on in composite actions; yes ends with a broken pipe once sdkmanager is done.
+      run: (yes || true) | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
+    - name: haho-design version
+      id: haho
+      shell: bash
+      run: echo "version=$(sed -n 's/^hahoDesign = "\(.*\)"/\1/p' gradle/libs.versions.toml)" >> "$GITHUB_OUTPUT"
+    - name: haho-design from cache
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository/id/haho
+        key: haho-design-${{ steps.haho.outputs.version }}
+    - if: steps.cache.outputs.cache-hit != 'true'
+      uses: actions/checkout@v4
+      with:
+        repository: hystericmoon/haho-design
+        ref: v${{ steps.haho.outputs.version }}
+        path: .deps/haho-design
+        ssh-key: ${{ inputs.haho-design-key }}
+    - name: Publish haho-design to mavenLocal
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      working-directory: .deps/haho-design
+      run: ./gradlew publishToMavenLocal --stacktrace

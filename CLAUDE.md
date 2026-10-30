@@ -26,7 +26,8 @@ python -m unittest discover -s tools          # content pipeline
 - Screenshots in `docs/screenshots` are recorded on CI's Linux runner, and CI fails when a render
   no longer matches. After a UI change, run the **Screenshots** workflow on your branch (Actions →
   Screenshots → Run workflow, or `gh workflow run screenshots.yml --ref <branch>`): it commits the
-  new shots and re-runs CI. Shots recorded locally (`recordRoborazziDebug`) differ in fonts and
+  new shots and re-runs CI. Start it right after pushing a UI change instead of waiting for CI to
+  fail. Shots recorded locally (`recordRoborazziDebug`) differ in fonts and
   anti-aliasing, so use them to preview only and never commit them.
 - Screenshot tests run on Robolectric pinned to Indonesian (`id-rID`); new shots are
   numbered 100+ in `RoutineScreenshotTest`.
@@ -41,6 +42,8 @@ python -m unittest discover -s tools          # content pipeline
 
 ## Release
 
+- Releases are stable by default (owner's choice): minor version for new features, patch for
+  fixes; beta only when the owner asks. Say which version you will ship before merging.
 - Bump `versionCode` and `versionName` in `app/build.gradle.kts`; merging to main publishes a
   GitHub Release when `versionName` changes. A name with `-` (e.g. `0.6.1-beta.1`) is a
   pre-release for the beta channel. See `docs/release.md`, `docs/beta.md`.
