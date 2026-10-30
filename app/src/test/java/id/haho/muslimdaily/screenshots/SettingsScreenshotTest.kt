@@ -16,7 +16,7 @@ import org.robolectric.annotation.GraphicsMode
 @Config(qualifiers = "id-w400dp-h1400dp-xhdpi")
 class SettingsScreenshotTest {
     @Test fun display() = captureVariants("45-settings-display") { DisplaySettingsContent(TodayPreviewData.settings) {} }
-    @Test fun methodology() = captureVariants("46-settings-methodology") { MethodologyContent(3) }
-    @Test fun about() = captureVariants("47-settings-about") { AboutContent() }
+    @Test fun methodology() = captureVariants("46-settings-methodology") { MethodologyContent(3, versionName = "1.0.0") }
+    @Test fun about() = captureVariants("47-settings-about") { AboutContent(versionName = "1.0.0") }
     @Test fun mySetsData() = captureVariants("48-settings-mysets-data") { MySetsDataContent() }
 }

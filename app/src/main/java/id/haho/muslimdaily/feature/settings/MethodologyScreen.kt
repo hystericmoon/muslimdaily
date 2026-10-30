@@ -30,7 +30,7 @@ fun MethodologyRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltView
 }
 
 @Composable
-fun MethodologyContent(contentVersion: Int?) {
+fun MethodologyContent(contentVersion: Int?, versionName: String = BuildConfig.VERSION_NAME) {
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(HahoTheme.dimens.screenGutter),
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
@@ -45,7 +45,7 @@ fun MethodologyContent(contentVersion: Int?) {
         Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
             Text(stringResource(R.string.methodology_version_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.semantics { heading() })
             Text(stringResource(R.string.methodology_content_version, contentVersion?.toString() ?: "–"), style = MaterialTheme.typography.bodyLarge)
-            Text(stringResource(R.string.methodology_app_version, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.methodology_app_version, versionName), style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
