@@ -45,7 +45,7 @@ class RoutineScreenshotTest {
 
     /** The library tab: one category open, listing its occasions. */
     @Test
-    fun libraryAllOpen() = captureVariants("127-library-all-open") {
+    fun libraryAllOpen() = captureVariants("132-library-all-open") {
         DuaLibraryContent(
             categories,
             routines = listOf(Routine("1", "Berangkat kerja", listOf("morning_01"))),
