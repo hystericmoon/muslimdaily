@@ -46,4 +46,9 @@ class MySetScreenshotTest {
     fun runFromMemory() = captureVariants("123-run-from-memory") {
         RunScreen(run(1, listOf(1, 0, 0)).copy(hifz = setOf(duas[1].id), fromMemory = true), RunActions())
     }
+
+    @Test
+    fun runRecallCheck() = captureVariants("134-run-recall-check") {
+        RunScreen(run(1, listOf(1, 0, 0)).copy(hifz = setOf(duas[1].id), fromMemory = true, revealed = setOf(1)), RunActions())
+    }
 }

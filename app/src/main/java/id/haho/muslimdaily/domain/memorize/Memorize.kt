@@ -33,6 +33,17 @@ object Leitner {
 
     fun isDue(state: LeitnerState, today: LocalDate): Boolean = !state.due.isAfter(today)
 
+    /**
+     * A dua recited from memory in a routine counts as a review only when it is due: daily
+     * recitation would otherwise climb a box a day. Needing the text is a lapse whenever it
+     * happens. Null when the schedule stays as it is.
+     */
+    fun ratingFromRoutine(current: LeitnerState, knew: Boolean, today: LocalDate): Rating? = when {
+        !knew -> Rating.AGAIN
+        isDue(current, today) -> Rating.EASY
+        else -> null
+    }
+
     /** Reached the last box: shown as memorised in "My hifz". */
     fun isMemorized(state: LeitnerState): Boolean = state.box >= TOP_BOX
 }

@@ -314,6 +314,9 @@
     <string name="run_from_memory">Recite from memory</string>
     <string name="run_from_memory_body">This dua is in your memorization. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
+    <string name="run_recall_prompt">Did you know it without the text?</string>
+    <string name="run_recall_knew">I knew it</string>
+    <string name="run_recall_needed">I needed the text</string>
     <string name="run_add_to_hifz">Add to My hifz</string>
     <string name="run_in_hifz">In My hifz</string>
     <string name="run_restart">Restart</string>
