@@ -11,6 +11,10 @@ Compose, Hilt, Room, DataStore, Glance. Sideloaded through GitHub Releases.
   One exception, approved by the owner: the Latin transliteration is derived from the sourced
   Arabic by the fixed rules in `tools/transliterate.py` (never written by hand or by a model).
 - Sahih/hasan narrations only. Show a count only where the Sunnah gives one.
+- The owner has no reviewer: check every imported row yourself (grade, not a duplicate, a dua
+  the reader says, translations matching the Arabic) and leave out any row that fails, with the
+  reason in the importer. Never fix a source's text by hand. See "Checking imported content" in
+  `docs/content-guide.md`.
 - No gamification (streaks, points, badges). Fully offline. WCAG AA.
 
 ## Build and test

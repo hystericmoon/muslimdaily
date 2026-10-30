@@ -45,6 +45,7 @@ internal fun DuaEntity.toModel(): Dua {
         phraseBreaks = ContentJsonFormat.decodeFromString(ints, phraseBreaksJson),
         arabicFull = arabicFull,
         translationIdFull = translationIdFull,
+        translationEnFull = translationEnFull,
     )
 }
 

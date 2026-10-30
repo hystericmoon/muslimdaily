@@ -511,15 +511,15 @@
     <string name="methodology_scope_title">Cakupan</string>
     <string name="methodology_scope_body">Hanya Al-Qur\'an dan Sunnah yang sahih atau hasan, di atas manhaj salaf. Tidak ada doa atau amalan tanpa dalil.</string>
     <string name="methodology_sources_title">Sumber</string>
-    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim, ditambah doa-doa dari Al-Qur\'an. Setiap doa mencantumkan kitab dan nomor hadits atau surah dan ayatnya, dapat dilihat dengan mengetuk label sumber.</string>
+    <string name="methodology_sources_body">Rujukan dasar adalah Hisnul Muslim, ditambah doa-doa dari Al-Qur\'an dan doa-doa sahih dari As-Sunnah yang tidak dimuat Hisnul Muslim. Setiap doa mencantumkan kitab dan nomor hadits atau surah dan ayatnya, dapat dilihat dengan mengetuk label sumber.</string>
     <string name="methodology_grading_title">Kebijakan derajat</string>
-    <string name="methodology_grading_body">Derajat ditampilkan bila disebutkan dalam takhrij kitab sumber, beserta siapa yang menilai. Riwayat yang dinilai lemah oleh Syaikh al-Albani tidak dimuat.</string>
+    <string name="methodology_grading_body">Derajat ditampilkan bila disebutkan dalam takhrij kitab sumber, beserta siapa yang menilai. Riwayat yang dinilai lemah oleh Syaikh al-Albani tidak dimuat. Doa dari As-Sunnah hanya dimuat bila HadeethEnc.com menilainya sahih atau hasan.</string>
     <string name="methodology_counts_title">Jumlah bacaan</string>
     <string name="methodology_counts_body">Hitungan hanya ditampilkan bila disebutkan dalam Sunnah. Tidak ada target buatan, runtunan, lencana, atau statistik ibadah.</string>
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah. Doa dari Al-Qur\'an dibacakan per ayat oleh Syaikh Maher al-Muaiqly (riwayat Hafs), diterbitkan Kompleks Percetakan Al-Qur\'an Raja Fahd (qurancomplex.gov.sa) untuk digunakan secara gratis dalam aplikasi; ayat-ayatnya disambung berurutan tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
-    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dan terjemah bahasa Inggris dari hisnmuslim.com (IslamHouse.com), dan untuk satu entri yang salah cetak di situs itu, dari edisi bahasa Inggris IslamHouse (Fortress of the Muslim, 2025). Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Setiap doa menampilkan sumber dan takhrijnya.</string>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dan terjemah bahasa Inggris dari hisnmuslim.com (IslamHouse.com), dan untuk satu entri yang salah cetak di situs itu, dari edisi bahasa Inggris IslamHouse (Fortress of the Muslim, 2025). Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Doa dari As-Sunnah di luar Hisnul Muslim diambil dari HadeethEnc.com (Ensiklopedia Hadis Terjemah): teks Arab, derajat, dan terjemah bahasa Indonesia dan Inggris, dimuat tanpa diubah. Lafal doa ditampilkan di atas, dan hadis utuhnya di bawah. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
     <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI, termasuk koreksi ketinggian tempat untuk terbit dan Maghrib, dan dapat disesuaikan. Diuji terhadap jadwal resmi Kemenag untuk 16 kota di WIB, WITA dan WIT: selisih paling banyak 1 menit. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>
@@ -858,6 +858,13 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_6_0">
+        <item>Kategori baru, Doa dari As-Sunnah: 16 doa sahih dan hasan yang tidak ada di Hisnul Muslim, seperti Yā muqallibal-qulūb, doa memohon perbaikan agama, dunia, dan akhirat, serta doa berlindung dari hilangnya nikmat. Sumbernya HadeethEnc.com, dan hadis utuhnya ada di bawah setiap doa.</item>
+        <item>Teks lengkap di kitab kini juga tampil dalam bahasa Inggris bila Anda memilih terjemah bahasa Inggris.</item>
+        <item>Transliterasi Latin lebih rapi: lafal Allah yang ditulis tanpa syaddah kini terbaca, min sebelum al- dibaca minal-, dan akhir kalimat memakai bentuk waqaf.</item>
+        <item>Hafalan: tekan Selesai membaca setelah menghafal tanpa melihat. Bila Anda tidak membuka satu kata pun, petunjuk memudar satu tahap dengan sendirinya; bila banyak kata dibuka, petunjuk kembali.</item>
+        <item>Saat menjalankan rangkaian, doa yang Anda baca dari hafalan kini dihitung sebagai murajaah bila sudah waktunya diulang.</item>
+    </string-array>
     <string-array name="whats_new_1_5_0">
         <item>Halaman Doa kini punya dua tab: Doa saya untuk rangkaian Anda, Semua doa untuk seluruh pustaka. Kategori terbuka di tempat, dan kartu rangkaian menampilkan tiga doa pertamanya.</item>
         <item>Simpan doa langsung dari kartunya ke rangkaian Anda, dan tekan Hafalkan untuk menambahkannya ke Hafalan saya.</item>

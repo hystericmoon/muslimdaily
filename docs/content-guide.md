@@ -47,6 +47,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `notes` | no | Free notes for the team (importer warnings); not shipped |
 | `arabic_full` | no | The book's whole entry, verbatim, when `arabic` holds only the words to recite (see "Dua and context" below). Every word of `arabic` must come from it, in order. Shown in the app under "Lihat teks lengkap di kitab". |
 | `translation_id_full` | no | The same for the Indonesian: the whole translation when `translation_id` holds only the dua's meaning. |
+| `translation_en_full` | no | The same for the English. Shown instead of the Indonesian when the reader chose English. |
 | `audio_range` | no | Start-end seconds of the dua in the audio file, e.g. `3.20-9.80`, when the recording also reads the context. Playback and memorisation cover only this part; the file is not edited. Segments must lie inside it. |
 
 ### Event codes
@@ -64,6 +65,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `death` | `funeral`, `condolence`, `grave` |
 | `hajj` | `hajj`, `qurban` |
 | `quran` | `quran_forgiveness`, `quran_goodness`, `quran_ease`, `quran_family` |
+| `sunnah` | `sunnah_heart`, `sunnah_goodness`, `sunnah_refuge` |
 
 New events are added in `content/taxonomy.json` (ask the developer).
 
@@ -166,6 +168,35 @@ The rows in `duas.csv` (24 events) and the full sheet `content/source/import/his
   on purpose: `entering_home` (Hisn no. 18 is graded weak) and `drinking` (no Hisn chapter).
   Filling them needs another sahih or hasan source.
 
-Imported rows ship as they are; there is no review step. To re-run:
+Imported rows ship as they are; there is no review step.
+
+## Imported content: HadeethEnc (duas from the Sunnah)
+
+Category `sunnah` holds sahih and hasan duas that Hisnul Muslim does not carry, from
+HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths, the IslamHouse family). The
+snapshot `content/source/import/hadeethenc.json` keeps each hadith as downloaded (Arabic, grade,
+takhrij, Indonesian and English); `tools/hadeethenc/import_hadeethenc.py` turns it into the
+`sunnah_NN` rows (`--fetch` downloads a new snapshot).
+
+* **Licence**: republish "without modification, addition, or deletion", publisher and source
+  credited (About screen and `reference`). So the whole hadith stays verbatim in `arabic_full`,
+  `translation_id_full` and `translation_en_full`; `arabic` and the translations hold only the
+  dua, a span cut from that text. The Arabic span gets `|` after each comma: no word changes.
+* **Grade**: HadeethEnc's own (grader `HadeethEnc`); anything but sahih or hasan stops the import.
+* **What is imported** is listed in the tool's `SELECTED`, and what was left out, with the
+  reason, in `EXCLUDED`.
+
+## Checking imported content
+
+The owner has no reviewer, so every imported row is checked when it is imported, and the
+checks are recorded in the importer:
+
+1. The grade is sahih or hasan, as stated by the source.
+2. The dua is not already in the app (compare the Arabic with `arabic` and `arabic_full`).
+3. It is a dua the reader says, not an instruction about one.
+4. The Indonesian and the English translate the same Arabic, completely.
+
+A row that fails any check is left out, with the reason in the importer. It is never
+corrected or completed by hand. To re-run:
 `python3 tools/hisnul_muslim/import_hisn.py --pdf <file> --merge`. It replaces the previously
 imported rows of the mapped events, so make hand edits after the final import.

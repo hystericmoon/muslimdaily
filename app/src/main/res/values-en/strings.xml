@@ -522,15 +522,15 @@
     <string name="methodology_scope_title">Scope</string>
     <string name="methodology_scope_body">Only the Qur\'an and the Sunnah that is sahih or hasan, upon the manhaj of the salaf. No duas or practices without evidence.</string>
     <string name="methodology_sources_title">Sources</string>
-    <string name="methodology_sources_body">The base reference is Hisn al-Muslim, plus duas from the Qur\'an. Each dua lists the book and hadith number, or the surah and ayah, which you can see by tapping the source label.</string>
+    <string name="methodology_sources_body">The base reference is Hisn al-Muslim, plus duas from the Qur\'an and authentic duas from the Sunnah that Hisn al-Muslim does not include. Each dua lists the book and hadith number, or the surah and ayah, which you can see by tapping the source label.</string>
     <string name="methodology_grading_title">Grading policy</string>
-    <string name="methodology_grading_body">Grades are shown when stated in the takhrij of the source book, along with who graded them. Narrations graded weak by Shaykh al-Albani are not included.</string>
+    <string name="methodology_grading_body">Grades are shown when stated in the takhrij of the source book, along with who graded them. Narrations graded weak by Shaykh al-Albani are not included. Duas from the Sunnah are only included when HadeethEnc.com grades them sahih or hasan.</string>
     <string name="methodology_counts_title">Recitation counts</string>
     <string name="methodology_counts_body">Counts are shown only when stated in the Sunnah. No artificial targets, streaks, badges or worship statistics.</string>
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Only clear recitation, with no music, melodic intros or sound effects. The Hisn al-Muslim dhikr and dua audio is recited by Hamad ad-Duraihim, published by IslamHouse.com, and included unaltered. The duas from the Qur\'an are recited ayah by ayah by Sheikh Maher al-Muaiqly (Hafs), published by the King Fahd Glorious Qur\'an Printing Complex (qurancomplex.gov.sa) for free use in apps; the ayahs are joined in order, unaltered.</string>
     <string name="methodology_review_title">Content sources</string>
-    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text and English translation from hisnmuslim.com (IslamHouse.com), and for one entry the site misprints, from IslamHouse\'s English edition (Fortress of the Muslim, 2025). Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) and, in English, Saheeh International, via QuranEnc.com. Each dua shows its source and takhrij.</string>
+    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text and English translation from hisnmuslim.com (IslamHouse.com), and for one entry the site misprints, from IslamHouse\'s English edition (Fortress of the Muslim, 2025). Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) and, in English, Saheeh International, via QuranEnc.com. Duas from the Sunnah beyond Hisn al-Muslim come from HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths): Arabic text, grading, and Indonesian and English translations, included unaltered. The words of the dua are shown on top, and the whole hadith below. Each dua shows its source and takhrij.</string>
     <string name="methodology_prayer_title">Prayer times</string>
     <string name="methodology_prayer_body">The default calculation follows Kemenag RI, including its elevation correction for sunrise and Maghrib, and can be adjusted. Tested against Kemenag\'s official schedule for 16 cities across WIB, WITA and WIT: at most 1 minute apart. Imsak time is not shown.</string>
     <string name="methodology_version_title">Version</string>
@@ -870,6 +870,13 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_6_0">
+        <item>A new category, Duas from the Sunnah: 16 sahih and hasan duas that are not in Hisn al-Muslim, such as Yā muqallibal-qulūb, the dua for setting right one\'s religion, world and Hereafter, and seeking refuge from the loss of blessings. They come from HadeethEnc.com, with the whole hadith under each dua.</item>
+        <item>The full text from the source now also shows in English when you choose the English translation.</item>
+        <item>Tidier Latin transliteration: the name of Allah written without its shadda now reads, min before al- reads minal-, and the ends of phrases take their pausal form.</item>
+        <item>Memorization: tap Done reciting after reciting without looking. If you revealed no word, the hints fade one stage on their own; if you revealed many, a hint comes back.</item>
+        <item>When running a routine, a dua you recite from memory now counts as a review when it is due.</item>
+    </string-array>
     <string-array name="whats_new_1_5_0">
         <item>The Duas page now has two tabs: My duas for your routines and All duas for the full library. Categories open in place, and routine cards show their first three duas.</item>
         <item>Save a dua to your routines straight from its card, and tap Memorize to add it to My hifz.</item>

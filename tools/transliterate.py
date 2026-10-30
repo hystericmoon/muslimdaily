@@ -107,6 +107,15 @@ def tokenize(text: str) -> list:
                 if b.letter == "ا" and (b.marks & {FATHA, SHADDA}) and not a.vowel and not a.has(SUKUN):
                     a.marks |= b.marks & {FATHA, SHADDA}
                     b.marks -= {FATHA, SHADDA}
+    # The name Allah is often printed without the marks on its doubled lam (اللهِ، اللهُمَّ، لِلهِ):
+    # it is always read as the full form اللَّه.
+    for item in out:
+        if isinstance(item, list):
+            m = re.fullmatch(r"([وفب]?)(ال|ٱل|ل)لهم?", skeleton(item))
+            if m:
+                lam = item[len(m.group(1)) + len(m.group(2))]
+                if not lam.marks:
+                    lam.marks |= {SHADDA, FATHA}
     return out
 
 
@@ -241,7 +250,8 @@ def render(word: list[Token], at_pause: bool, joined: bool) -> str:
                     third = word[2] if n > 2 else None
                     out.append("u" if third is not None and third.vowel == "u" else "i")
             elif prev is not None and prev.has(FATHATAN):
-                pass
+                if last and at_pause and out and out[-1].endswith("an"):
+                    out[-1] = out[-1][:-2] + "ā"  # the pausal form: خَيْرًا -> khairā
             elif out and out[-1].endswith("a") and not prev.has(SUKUN):
                 out[-1] = out[-1][:-1] + "ā"
             elif out and out[-1].endswith("ū"):
@@ -285,6 +295,8 @@ def render(word: list[Token], at_pause: bool, joined: bool) -> str:
             v = t.vowel or ("i" if t.letter == "إ" else "a" if t.letter == "أ" else "")
             if t.has(DAGGER_ALIF) or t.has(MADDAH):
                 v = "ā"
+            if last and at_pause and v in ("a", "i", "u", "an", "in", "un"):
+                v = ""  # the pausal form: السَّمَاءِ -> samā'
             if i == 0 or (out and out[-1].endswith("-")):
                 out.append(v)
             elif i == 1 and prev.letter in PREFIXES and prev.vowel:
@@ -379,6 +391,8 @@ def transliterate(arabic: str) -> str | None:
                 tail = pieces[-1]
                 if tail[-1:] in "āīū":
                     tail = tail[:-1] + {"ā": "a", "ī": "i", "ū": "u"}[tail[-1]]
+                elif re.search(r"(?:^|[ -]|\b(?:wa|fa))min$", tail):
+                    tail += "a"  # min + al- -> minal-
                 elif tail[-1:] not in "aiu":
                     tail += "i"
                 pieces[-1] = tail

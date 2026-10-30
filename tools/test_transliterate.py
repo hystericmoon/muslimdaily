@@ -43,6 +43,24 @@ class TransliterateTest(unittest.TestCase):
         # Before an alif the vowel can only be a fatha.
         self.check("مِنَ الظّالِمِينَ", "Minazh-zhālimīn")
 
+    def test_name_of_allah_without_its_marks(self):
+        # Printed without the shadda and fatha on the doubled lam, it reads as the full form.
+        self.check("اللهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى", "Allāhumma innī as'alukal-hudā")
+        self.check("بِسْمِ اللهِ", "Bismillāh")
+        self.check("الْحَمْدُ لِلهِ", "Al-hamdu lillāh")
+        # Only that word: a bare lam elsewhere still can't be read.
+        self.assertIsNone(transliterate("ثلاث مرات"))
+
+    def test_helping_vowel_of_min_is_a(self):
+        # The book may print the sukun of min; read on into the article it takes a fatha.
+        self.check("مِنْ الْخَيْرِ", "Minal-khair")
+        self.check("وَمِنْ الشَّرِّ", "Waminasy-syarr")
+        self.check("عَنْ الْخَيْرِ", "'anil-khair")
+
+    def test_pausal_form_of_hamza_and_tanwin(self):
+        self.check("مِنَ السَّمَاءِ، وَالْأَرْضِ", "Minas-samā', wal-ardh")
+        self.check("لَكَ الْحَمْدُ حَمْدًا كَثِيرًا", "Lakal-hamdu hamdan katsīrā")
+
     def test_joined_jalalah_is_not_capitalised(self):
         self.check("سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ", "Sami'allāhu liman hamidah")
 
