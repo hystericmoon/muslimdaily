@@ -333,7 +333,7 @@
     <string name="memorize_step_check">Cek</string>
     <string name="memorize_hint_listen">Dengarkan doa lengkap dua kali sambil membaca teksnya.</string>
     <string name="memorize_hint_build">Potongan bertambah satu frasa setiap kali. Setelah tiap putaran, ulangi dengan suara pada jeda.</string>
-    <string name="memorize_hint_recall">Sembunyikan sebagian kata, lalu baca dari ingatan. Buka kata berikutnya bila Anda lupa.</string>
+    <string name="memorize_hint_recall">Baca dari ingatan, buka kata berikutnya bila lupa, lalu tekan Selesai membaca. Bila lancar tanpa bantuan, lebih banyak kata disembunyikan.</string>
     <string name="memorize_hint_review">Baca dari ingatan dulu dengan petunjuk di bawah, lalu cek teks lengkapnya.</string>
     <string name="memorize_cue_title">Petunjuk</string>
     <string name="memorize_cue_show_meaning">Tampilkan arti</string>
@@ -346,6 +346,12 @@
     <string name="memorize_fade_from_end">Dari akhir</string>
     <string name="memorize_first_letters">Tampilkan huruf awal</string>
     <string name="memorize_reveal_next">Buka kata berikutnya</string>
+    <string name="memorize_recited">Selesai membaca</string>
+    <string name="memorize_stage">Tahap %1$d dari %2$d</string>
+    <string name="memorize_attempt_up">Lebih banyak kata kini disembunyikan.</string>
+    <string name="memorize_attempt_same">Coba sekali lagi dengan petunjuk yang sama.</string>
+    <string name="memorize_attempt_down">Sebagian petunjuk dikembalikan untuk percobaan berikutnya.</string>
+    <string name="memorize_attempt_done">Anda membacanya tanpa petunjuk. Lanjutkan ke Cek.</string>
     <string name="memorize_hint_check">Buka teks lengkap dan nilai hafalan Anda dengan jujur.</string>
     <string name="memorize_listen_twice">Dengar 2×</string>
     <string name="memorize_restart">Dari awal</string>
