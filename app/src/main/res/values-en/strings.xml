@@ -799,6 +799,15 @@
     <string name="diag_crash_count">%1$d reports saved</string>
     <string name="diag_crash_latest">Latest: %1$s</string>
     <string name="diag_clear_crashes">Delete reports</string>
+    <string name="diag_widget">Prayer-times widget</string>
+    <string name="diag_widget_drawn">Last updated</string>
+    <string name="diag_widget_never">Never</string>
+    <string name="diag_widget_prayer">Update at prayer time</string>
+    <string name="diag_widget_none">None recorded yet</string>
+    <string name="diag_widget_gap">Minute update delayed</string>
+    <!-- When the minute update was due, and when it came: "Thu 29 Oct, 11:16 to 12:34". -->
+    <string name="diag_widget_gap_span">%1$s to %2$s</string>
+    <string name="diag_widget_note">The widget\'s clock is always right. The countdown and the next prayer are updated by the app; if the update at prayer time comes late or not at all, the phone is stopping the app in the background.</string>
     <string name="diag_type_adhan">%1$s adhan</string>
     <string name="diag_type_morning">Morning adhkar</string>
     <string name="diag_type_evening">Evening adhkar</string>

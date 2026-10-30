@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import dagger.hilt.android.AndroidEntryPoint
+import id.haho.muslimdaily.core.diagnostics.WidgetLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.time.Instant
 import javax.inject.Inject
 
 /**
@@ -36,20 +38,23 @@ object WidgetTicker {
         }
         val now = System.currentTimeMillis()
         if (precise(context)) {
-            alarms.setExact(AlarmManager.RTC, (now / MINUTE_MS + 1) * MINUTE_MS, pending)
+            val at = (now / MINUTE_MS + 1) * MINUTE_MS
+            alarms.setExact(AlarmManager.RTC, at, pendingIntent(context, due = at))
         } else {
-            alarms.setWindow(AlarmManager.RTC, now + MINUTE_MS, COARSE_MS, pending)
+            // Due at the end of the window, so the diagnostics count only lateness beyond it.
+            alarms.setWindow(AlarmManager.RTC, now + MINUTE_MS, COARSE_MS, pendingIntent(context, due = now + MINUTE_MS + COARSE_MS))
         }
     }
 
-    private fun pendingIntent(context: Context): PendingIntent = PendingIntent.getBroadcast(
+    private fun pendingIntent(context: Context, due: Long = 0L): PendingIntent = PendingIntent.getBroadcast(
         context,
         REQUEST_CODE,
-        Intent(context, WidgetTickReceiver::class.java),
+        Intent(context, WidgetTickReceiver::class.java).putExtra(EXTRA_DUE, due),
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )
 
     private const val REQUEST_CODE = 9100
+    internal const val EXTRA_DUE = "due"
 }
 
 private val tickScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -59,6 +64,8 @@ class WidgetTickReceiver : BroadcastReceiver() {
     @Inject lateinit var glance: GlanceRefresher
 
     override fun onReceive(context: Context, intent: Intent) {
+        val due = intent.getLongExtra(WidgetTicker.EXTRA_DUE, 0L)
+        if (due > 0) WidgetLog.tick(context, Instant.ofEpochMilli(due), Instant.now())
         val pending = goAsync()
         tickScope.launch {
             try {

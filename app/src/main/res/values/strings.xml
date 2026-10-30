@@ -788,6 +788,15 @@
     <string name="diag_crash_count">%1$d laporan tersimpan</string>
     <string name="diag_crash_latest">Terakhir: %1$s</string>
     <string name="diag_clear_crashes">Hapus laporan</string>
+    <string name="diag_widget">Widget waktu shalat</string>
+    <string name="diag_widget_drawn">Terakhir diperbarui</string>
+    <string name="diag_widget_never">Belum pernah</string>
+    <string name="diag_widget_prayer">Pembaruan saat waktu shalat</string>
+    <string name="diag_widget_none">Belum tercatat</string>
+    <string name="diag_widget_gap">Pembaruan per menit tertunda</string>
+    <!-- When the minute update was due, and when it came: "Kam 29 Okt, 11.16 sampai 12.34". -->
+    <string name="diag_widget_gap_span">%1$s sampai %2$s</string>
+    <string name="diag_widget_note">Jam di widget selalu tepat. Hitung mundur dan waktu shalat berikutnya diperbarui oleh aplikasi; bila pembaruan saat waktu shalat terlambat atau tidak ada, ponsel menghentikan aplikasi di latar belakang.</string>
     <string name="diag_type_adhan">Adzan %1$s</string>
     <string name="diag_type_morning">Dzikir pagi</string>
     <string name="diag_type_evening">Dzikir petang</string>
