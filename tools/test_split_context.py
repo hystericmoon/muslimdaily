@@ -73,7 +73,8 @@ class ApplyTest(unittest.TestCase):
         with self.duas.open("w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=DUA_COLUMNS)
             w.writeheader()
-            w.writerow(dua_row(id="a", arabic="قال: ((ألف باء))", audio_segments="", translation_id="Ia berkata: “satu dua”"))
+            w.writerow(dua_row(id="a", arabic="قال: ((ألف باء))", audio_segments="", translation_id="Ia berkata: “satu dua”",
+                               translation_en="He said:‘one two’"))
 
     def review(self, **over):
         _, rows, _ = sc.sa.read_csv(self.duas)
@@ -94,6 +95,18 @@ class ApplyTest(unittest.TestCase):
     def test_apply_refuses_added_words_and_skips_unapproved(self):
         self.assertEqual(([], []), self.review())
         applied, problems = self.review(approved="ya", arabic="((ألف زاي))")
+        self.assertEqual([], applied)
+        self.assertTrue(problems)
+
+    def test_apply_cuts_the_english_too(self):
+        applied, problems = self.review(approved="ya", translation_en="one two")
+        self.assertEqual((["a"], []), (applied, problems))
+        _, rows, _ = sc.sa.read_csv(self.duas)
+        self.assertEqual("one two", rows[0]["translation_en"])
+        self.assertEqual("He said:‘one two’", rows[0]["translation_en_full"])
+
+    def test_apply_refuses_english_that_is_not_in_the_source(self):
+        applied, problems = self.review(approved="ya", translation_en="one three")
         self.assertEqual([], applied)
         self.assertTrue(problems)
 

@@ -1,5 +1,5 @@
 {
-  "content_version": 27,
+  "content_version": 29,
   "duas": [
     {
       "id": "wake_01",
@@ -927,13 +927,18 @@
       "event": "adhan",
       "order": 2,
       "variant_group": null,
-      "arabic": "يَقُولُ: ((وَأَنَا أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ، رَضِيتُ بِاللَّهِ رَبَّاً، وَبِمُحَمَّدٍ رَسُولاً، وَبِالْإِسْلاَمِ دِينَاً)) ((يَقُولُ ذَلِكَ عَقِبَ تَشَهُّدِ الْمُؤَذِّنِ)).",
+      "arabic": "وَأَنَا أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ، رَضِيتُ بِاللَّهِ رَبَّاً، وَبِمُحَمَّدٍ رَسُولاً، وَبِالْإِسْلاَمِ دِينَاً",
+      "arabic_full": "يَقُولُ: ((وَأَنَا أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ، رَضِيتُ بِاللَّهِ رَبَّاً، وَبِمُحَمَّدٍ رَسُولاً، وَبِالْإِسْلاَمِ دِينَاً)) ((يَقُولُ ذَلِكَ عَقِبَ تَشَهُّدِ الْمُؤَذِّنِ)).",
       "is_quran": false,
       "translations": {
+        "id": "Aku bersaksi, bahwa tiada Tuhan yang haq selain Allah, Yang Maha Esa, tidak ada sekutu bagiNya dan sesungguhnya Muhammad adalah hamba dan utusanNya. Aku rela Allah sebagai Tuhan, Muhammad sebagai Rasul dan Islam sebagai agama (yang benar).",
+        "en": "And I too bear witness that none has the right to be worshipped except Allah, alone, without partner, and that Muhammad is His salve and Messenger. I am pleased with Allah as a Lord, and Muhammad as a Messenger and Islam as a religion."
+      },
+      "translations_full": {
         "id": "“Aku bersaksi, bahwa tiada Tuhan yang haq selain Allah, Yang Maha Esa, tidak ada sekutu bagiNya dan sesungguhnya Muhammad adalah hamba dan utusanNya. Aku rela Allah sebagai Tuhan, Muhammad sebagai Rasul dan Islam sebagai agama (yang benar). (Dibaca setelah muadzin membaca syahadat).",
         "en": "Immediately following the declaration of faith called by the mu-aththin, one says:‘And I too bear witness that none has the right to be worshipped except Allah, alone, without partner, and that Muhammad is His salve and Messenger. I am pleased with Allah as a Lord, and Muhammad as a Messenger and Islam as a religion.’"
       },
-      "transliteration": "Yaqūl: wa anā asyhadu an lā ilāha illallāhu wahdahu lā syarīka lahu wa anna muhammadan 'abduhu warasūluh, radhītu billāhi rabbaā, wabimuhammadin rasūlā, wabil-islāmi dīnaan yaqūlu dzālika 'aqiba tasyahhudil-mu'adzdzin.",
+      "transliteration": "Wa anā asyhadu an lā ilāha illallāhu wahdahu lā syarīka lahu wa anna muhammadan 'abduhu warasūluh, radhītu billāhi rabbaā, wabimuhammadin rasūlā, wabil-islāmi dīnaā",
       "count": null,
       "sources": [
         {
@@ -3874,8 +3879,11 @@
       "arabic": "﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾ عَقِبَ كلِّ صَلاَةٍ.",
       "is_quran": true,
       "translations": {
-        "id": "Membaca ayat Kursi setiap selesai shalat (fardhu). “Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia Yang Hidup kekal lagi terus menerus mengurus (makhluk-Nya); tidak mengantuk dan tidak tidur. Kepunyaan-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafa´at di sisi Allah tanpa izin-Nya? Allah mengetahui apa-apa yang di hadapan mereka dan di belakang mereka, dan mereka tidak mengetahui apa-apa dari ilmu Allah melainkan apa yang dikehendaki-Nya. Kursi Allah meliputi langit dan bumi. Dan Allah tidak merasa berat memelihara keduanya, dan Allah Maha Tinggi lagi Maha Besar.” (Al-Baqarah, 2 : 255)",
+        "id": "“Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia Yang Hidup kekal lagi terus menerus mengurus (makhluk-Nya); tidak mengantuk dan tidak tidur. Kepunyaan-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafa´at di sisi Allah tanpa izin-Nya? Allah mengetahui apa-apa yang di hadapan mereka dan di belakang mereka, dan mereka tidak mengetahui apa-apa dari ilmu Allah melainkan apa yang dikehendaki-Nya. Kursi Allah meliputi langit dan bumi. Dan Allah tidak merasa berat memelihara keduanya, dan Allah Maha Tinggi lagi Maha Besar.” (Al-Baqarah, 2 : 255)",
         "en": "It is also from the Sunnah to recite Aayat ul-Kursee after each prayer:[Soorah al-Baqarah, Aayah 255]"
+      },
+      "translations_full": {
+        "id": "Membaca ayat Kursi setiap selesai shalat (fardhu). “Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia Yang Hidup kekal lagi terus menerus mengurus (makhluk-Nya); tidak mengantuk dan tidak tidur. Kepunyaan-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafa´at di sisi Allah tanpa izin-Nya? Allah mengetahui apa-apa yang di hadapan mereka dan di belakang mereka, dan mereka tidak mengetahui apa-apa dari ilmu Allah melainkan apa yang dikehendaki-Nya. Kursi Allah meliputi langit dan bumi. Dan Allah tidak merasa berat memelihara keduanya, dan Allah Maha Tinggi lagi Maha Besar.” (Al-Baqarah, 2 : 255)"
       },
       "transliteration": "",
       "count": null,
@@ -6410,13 +6418,18 @@
       "event": "tasbih",
       "order": 1,
       "variant_group": null,
-      "arabic": "قَالَ صلى الله عليه وسلم مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ فِي يَوْمٍ مِائَةَ مَرَّةٍ حُطَّتْ خَطَايَاهُ وَلَوْ كَانَتْ مِثْلَ زَبَدِ الْبَحْر)).",
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+      "arabic_full": "قَالَ صلى الله عليه وسلم مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ فِي يَوْمٍ مِائَةَ مَرَّةٍ حُطَّتْ خَطَايَاهُ وَلَوْ كَانَتْ مِثْلَ زَبَدِ الْبَحْر)).",
       "is_quran": false,
       "translations": {
+        "id": "Maha Suci Allah dan aku memujiNya",
+        "en": "How perfect Allah is and I praise Him."
+      },
+      "translations_full": {
         "id": "Nabi Shallallahu’alaihi wasallam bersabda: Barangsiapa yang membaca: “Maha Suci Allah dan aku memujiNya” dalam sehari seratus kali, maka kesalahannya dihapus sekalipun seperti buih air laut.”",
         "en": "(Whoever says:(How perfect Allah is and I praise Him.) a hundred times during the day, his sins are wiped away, even if they are like the foam of the sea.)"
       },
-      "transliteration": "",
+      "transliteration": "Subhānallāhi wabihamdih",
       "count": 100,
       "sources": [
         {
@@ -6694,13 +6707,18 @@
       "event": "tasbih",
       "order": 9,
       "variant_group": null,
-      "arabic": "جَاءَ أَعْرَابِيٌّ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم فَقَالَ: عَلِّمْنِي كَلاماً أَقُولُهُ: قَالَ: ((قُلْ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، اللَّهُ أَكْبَرُ كَبِيراً، وَالْحَمْدُ لِلَّهِ كَثِيراً، سُبْحَانَ اللَّهِ رَبِّ العَالَمِينَ، لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَزِيزِ الْحَكِيمِ)) قَالَ: فَهَؤُلاَءِ لِرَبِّي، فَمَا لِي؟ قَالَ: ((قُلْ: اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَارْزُقْنِي)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، اللَّهُ أَكْبَرُ كَبِيراً، وَالْحَمْدُ لِلَّهِ كَثِيراً، سُبْحَانَ اللَّهِ رَبِّ العَالَمِينَ، لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَزِيزِ الْحَكِيمِ اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَارْزُقْنِي",
+      "arabic_full": "جَاءَ أَعْرَابِيٌّ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم فَقَالَ: عَلِّمْنِي كَلاماً أَقُولُهُ: قَالَ: ((قُلْ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، اللَّهُ أَكْبَرُ كَبِيراً، وَالْحَمْدُ لِلَّهِ كَثِيراً، سُبْحَانَ اللَّهِ رَبِّ العَالَمِينَ، لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ الْعَزِيزِ الْحَكِيمِ)) قَالَ: فَهَؤُلاَءِ لِرَبِّي، فَمَا لِي؟ قَالَ: ((قُلْ: اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَارْزُقْنِي)).",
       "is_quran": false,
       "translations": {
+        "id": "Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya. Allah Maha Besar. Segala puji bagi Allah yang banyak. Maha Suci Allah, Tuhan sekalian alam dan tiada kekuatan kecuali dengan pertolongan Allah Yang Maha Mulia lagi Maha Bijaksana. Ya Allah! Ampunilah aku, belas kasihanilah aku, berilah petunjuk kepadaku dan berilah rezeki kepadaku.",
+        "en": "None has the right to be worshipped except Allah, alone without partener. Allah is most great and much praise is for Allah. How perfect Allah is, Lord of the worlds. There is no might nor power except with Allah, The Exalted in might, The Wise. O Allah, forgive me, have mercy upon me, guide me and grant me sustenance."
+      },
+      "translations_full": {
         "id": "Seorang Arab Badui datang kepada Rasulullah Shallallahu'alaihi wasallam, lalu berkata: ‘Ajari aku dzikir untuk aku baca!’ Rasul Shallallahu’alaihi wasallam bersabda: ‘Katakanlah: Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tiada sekutu bagiNya. Allah Maha Besar. Segala puji bagi Allah yang banyak. Maha Suci Allah, Tuhan sekalian alam dan tiada kekuatan kecuali dengan pertolongan Allah Yang Maha Mulia lagi Maha Bijaksana.’ Orang Badui itu berkata: ‘Kalimat itu untuk Tuhanku, mana yang untukku?’ Rasul bersabda: ‘Katakanlah: Ya Allah! Ampunilah aku, belas kasihanilah aku, berilah petunjuk kepadaku dan berilah rezeki kepadaku.”",
         "en": "(SaAAd Ibn Abee Waqqas narrated that a man came to the Messenger of Allah and said to him: ‘Teach me something which I should say?’ He said: ‘Say: (None has the right to be worshipped except Allah, alone without partener. Allah is most great and much praise is for Allah. How perfect Allah is, Lord of the worlds. There is no might nor power except with Allah, The Exalted in might, The Wise.) the man then said: ‘These are for my Lord, and what is for me?’ He replied: ‘Say:(O Allah, forgive me, have mercy upon me, guide me and grant me sustenance.))"
       },
-      "transliteration": "",
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, Allāhu akbaru kabīrā, wal-hamdu lillāhi katsīrā, subhānallāhi rabbil-'ālamīn, lā haula walā quwwata illā billāhil-'azīzil-hakīmillāhummaghfir lī, warhamnī, wahdinī, warzuqnī",
       "count": null,
       "sources": [
         {
@@ -9781,13 +9799,18 @@
       "event": "marriage",
       "order": 2,
       "variant_group": null,
-      "arabic": "إِذَا تَزَوَّجَ أَحَدُكُمُ امْرَأَةً، أَوْ إِذَا اشْتَرَى خَادِماً فَلْيَقُلْ: ((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا جَبَلْتَهَا عَلَيْهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا جَبَلْتَهَا عَلَيْهِ، وَإِذَا اشْتَرَى بَعِيراً فَلْيَأْخُذْ بِذِرْوَةِ سَنَامِهِ وَلْيَقُلْ مِثْلَ ذَلِكَ)).",
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا جَبَلْتَهَا عَلَيْهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا جَبَلْتَهَا عَلَيْهِ",
+      "arabic_full": "إِذَا تَزَوَّجَ أَحَدُكُمُ امْرَأَةً، أَوْ إِذَا اشْتَرَى خَادِماً فَلْيَقُلْ: ((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا جَبَلْتَهَا عَلَيْهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا جَبَلْتَهَا عَلَيْهِ، وَإِذَا اشْتَرَى بَعِيراً فَلْيَأْخُذْ بِذِرْوَةِ سَنَامِهِ وَلْيَقُلْ مِثْلَ ذَلِكَ)).",
       "is_quran": false,
       "translations": {
+        "id": "Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya. Dan aku mohon perlindungan kepadaMu dari kejelekan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya.",
+        "en": "O Allah, I ask You for the goodness within her and the goodness that you have made her inclined towards, and I take refuge with You from the evil within her and the evil that you have made her inclined towards."
+      },
+      "translations_full": {
         "id": "Apabila seseorang di antara kamu kawin dengan seorang perempuan atau membeli pembantu, hendaklah mengucapkan: Ya Allah! Sesungguhnya aku mohon kepadaMu kebaikan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya. Dan aku mohon perlindungan kepadaMu dari kejelekan perempuan atau pembantu ini dan apa yang telah Engkau ciptakan dalam wataknya. Apabila membeli unta, hendaklah memegang puncak punuknya, lalu mengucapkan seperti itu.”",
         "en": "(when you marry a woman or buy a maidservant, you should say:(O Allah, I ask You for the goodness within her and the goodness that you have made her inclined towards, and I take refuge with You from the evil within her and the evil that you have made her inclined towards.))(and if you buy a camel, then you should take hold of it’s hump and say likewise.)"
       },
-      "transliteration": "Idzā tazawwaja ahadukumumra'ah, au idzasytarā khādiman falyaqul: Allāhumma innī as'aluka khairahā, wakhaira mā jabaltahā 'alaih, wa a'ūdzu bika min syarrihā, wasyarri mā jabaltahā 'alaih, wa idzasytarā ba'īran falya'akhudz bidzirwati sanāmihi walyaqul mitsla dzālik.",
+      "transliteration": "Allāhumma innī as'aluka khairahā, wakhaira mā jabaltahā 'alaih, wa a'ūdzu bika min syarrihā, wasyarri mā jabaltahā 'alaih",
       "count": null,
       "sources": [
         {
@@ -10105,13 +10128,18 @@
       "event": "gathering",
       "order": 1,
       "variant_group": null,
-      "arabic": "عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ",
+      "arabic": "رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ",
+      "arabic_full": "((عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ)).",
       "is_quran": false,
       "translations": {
+        "id": "Wahai Tuhanku! Ampunilah aku dan terimalah taubatku, sesungguhnya Engkau Maha Menerima taubat lagi Maha Pengampun.",
+        "en": "O my Lord, forgive me and turn towards me (to accept my repentance). Verily You are The Oft-Returning. The Oft-Forgiving."
+      },
+      "translations_full": {
         "id": "Dari Ibnu Umar katanya adalah pernah dihitung bacaan Rasulullah Shallallahu’alaihi wasallam dalam satu majlis seratus kali sebelum beliau berdiri, yaitu: “Wahai Tuhanku! Ampunilah aku dan terimalah taubatku, sesungguhnya Engkau Maha Menerima taubat lagi Maha Pengampun.”",
         "en": "(Ibn AAumar said: It would be counted that the Messenger of Allah would say one hundred times at any one sitting before getting up: (O my Lord, forgive me and turn towards me (to accept my repentance). Verily You are The Oft-Returning. The Oft-Forgiving.))"
       },
-      "transliteration": "",
+      "transliteration": "Rabbighfir lī, watub 'alayy, innaka antat-tawwābul-ghafūr",
       "count": null,
       "sources": [
         {
@@ -11170,13 +11198,18 @@
       "event": "hajj",
       "order": 5,
       "variant_group": null,
-      "arabic": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ، وَخَيْرُ مَا قُلْتُ أَنَا وَالنَّبيُّونَ مِنْ قَبْلِي: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+      "arabic_full": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ، وَخَيْرُ مَا قُلْتُ أَنَا وَالنَّبيُّونَ مِنْ قَبْلِي: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).",
       "is_quran": false,
       "translations": {
+        "id": "Tiada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, Tiada sekutu bagiNya. BagiNya kerajaan dan pujian. Dialah Yang Mahakuasa atas segala sesuatu.",
+        "en": "None has the right to be worshipped except Allah, alone, without partner. To Him belongs all praise and sovereignty and He is over all things omnipotent."
+      },
+      "translations_full": {
         "id": "Nabi Shallallahu’alaihi wasallam bersabda: Doa yang terbaik (yang mustajab) adalah di hari Arafah, dan sebaik-baiknya apa yang aku dan para nabi baca, adalah: (Tiada Tuhan yang berhak disembah selain Allah, Yang Maha Esa, Tiada sekutu bagiNya. BagiNya kerajaan dan pujian. Dialah Yang Mahakuasa atas segala sesuatu.)",
         "en": "(The best of supplications is the supplication on the day of AAarafah and the best which I and the Prophets before me have said (is): (None has the right to be worshipped except Allah, alone, without partner. To Him belongs all praise and sovereignty and He is over all things omnipotent.))"
       },
-      "transliteration": "",
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamdu wahuwa 'alā kulli syai'in qadīr",
       "count": null,
       "sources": [
         {
