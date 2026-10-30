@@ -67,4 +67,11 @@ is mergeable, without asking. Ask first only when the PR carries a risk:
 - it adds a permission, network access or a new third-party dependency,
 - a review comment or a test result you could not resolve is still open.
 
+## Sessions
+
+One session at a time. Start by reading `docs/handover.md`; before you stop, or when the
+conversation is getting long, update it (open PRs, what waits on the owner, decisions, facts
+that took time to find) and merge it with your PR or on its own, so the next session starts
+from it.
+
 More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
