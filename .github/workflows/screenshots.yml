@@ -23,25 +23,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: echo "Run this on a feature branch; main only takes merged PRs." && exit 1
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: ./.github/actions/android-setup
         with:
-          distribution: temurin
-          java-version: "21"
-      - uses: gradle/actions/setup-gradle@v4
-      - name: Android SDK 37
-        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "build-tools;37.0.0" > /dev/null
-      - name: haho-design version
-        id: haho
-        run: echo "version=$(sed -n 's/^hahoDesign = "\(.*\)"/\1/p' gradle/libs.versions.toml)" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
-        with:
-          repository: hystericmoon/haho-design
-          ref: v${{ steps.haho.outputs.version }}
-          path: .deps/haho-design
-          ssh-key: ${{ secrets.HAHO_DESIGN_DEPLOY_KEY }}
-      - name: Publish haho-design to mavenLocal
-        working-directory: .deps/haho-design
-        run: ./gradlew publishToMavenLocal --stacktrace
+          haho-design-key: ${{ secrets.HAHO_DESIGN_DEPLOY_KEY }}
       - name: Record
         run: ./gradlew :app:recordRoborazziDebug --stacktrace
       - name: Commit the shots
