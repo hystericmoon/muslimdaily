@@ -267,6 +267,8 @@
     <string name="player_play">Play</string>
     <string name="player_pause">Pause</string>
     <string name="player_repeat">Repeat</string>
+    <string name="dua_play_from_phrase">Play from this phrase</string>
+    <string name="dua_phrase_reciting">Being recited</string>
     <string name="player_speed">Speed %s</string>
     <string name="state_enabled">on</string>
     <string name="state_disabled">off</string>

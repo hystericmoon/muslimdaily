@@ -43,6 +43,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
+import id.haho.muslimdaily.core.designsystem.component.withBookNotes
 import id.haho.design.component.Badge
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
@@ -77,6 +78,8 @@ fun gradeLabel(dua: Dua): String {
 @Composable
 fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier, maxLines: Int = Int.MAX_VALUE) {
     val reading = HahoTheme.reading
+    // The translator's glosses in brackets read as asides: smaller, secondary colour.
+    val noteColor = MaterialTheme.colorScheme.onSurfaceVariant
     Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         if (prefs.transliteration && dua.transliteration.isNotBlank()) {
             Text(
@@ -91,11 +94,14 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         if (showId) {
             // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
             Text(
-                androidx.compose.ui.text.buildAnnotatedString {
-                    pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("id")))
-                    append(dua.translationId)
-                    pop()
-                },
+                withBookNotes(
+                    androidx.compose.ui.text.buildAnnotatedString {
+                        pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("id")))
+                        append(dua.translationId)
+                        pop()
+                    },
+                    noteColor,
+                ),
                 style = reading.bodyLarge,
                 maxLines = maxLines,
                 overflow = TextOverflow.Ellipsis,
@@ -104,11 +110,14 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
             Text(
-                androidx.compose.ui.text.buildAnnotatedString {
-                    pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("en")))
-                    append(dua.translationEn)
-                    pop()
-                },
+                withBookNotes(
+                    androidx.compose.ui.text.buildAnnotatedString {
+                        pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("en")))
+                        append(dua.translationEn)
+                        pop()
+                    },
+                    noteColor,
+                ),
                 style = reading.bodyLarge,
                 color = if (showId) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
                 maxLines = maxLines,

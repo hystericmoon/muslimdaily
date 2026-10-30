@@ -57,7 +57,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.feature.duas.components.CountBadge
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
-import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
+import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.feature.duas.components.SourceChip
@@ -76,6 +76,7 @@ data class DuaDetailActions(
     val onSpeed: (Float) -> Unit = {},
     val onRepeat: (Boolean) -> Unit = {},
     val onMemorize: () -> Unit = {},
+    val onPlayFrom: (phrase: Int) -> Unit = {},
     val onSaveNote: (String) -> Unit = {},
     val onSetInRoutine: (routineId: String, included: Boolean) -> Unit = { _, _ -> },
     val onNewRoutine: () -> Unit = {},
@@ -135,6 +136,7 @@ fun DuaDetailRoute(
                 state = s,
                 actions = DuaDetailActions(
                     onMemorize = { onMemorize(s.dua.id) },
+                    onPlayFrom = { viewModel.playFrom(it, title) },
                     onSaveNote = viewModel::saveNote,
                     onSetInRoutine = viewModel::setInRoutine,
                     onNewRoutine = { onNewRoutine(s.dua.id) },
@@ -159,11 +161,12 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
     ) {
         GlassCard(shape = MaterialTheme.shapes.extraLarge) {
             Column(Modifier.padding(HahoTheme.spacing.xl)) {
-                HighlightedArabic(
+                PhraseLines(
                     text = dua.arabic,
                     phrases = dua.phrases,
                     activePhrase = state.playback.activePhrase,
                     style = AdwamTheme.arabic.large(dua.isQuran),
+                    onPlayFrom = if (dua.audio != null) actions.onPlayFrom else null,
                 )
             }
         }

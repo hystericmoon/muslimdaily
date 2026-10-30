@@ -262,6 +262,8 @@
     <string name="player_play">Putar</string>
     <string name="player_pause">Jeda</string>
     <string name="player_repeat">Ulangi</string>
+    <string name="dua_play_from_phrase">Putar dari frasa ini</string>
+    <string name="dua_phrase_reciting">Sedang dibaca</string>
     <string name="player_speed">Kecepatan %s</string>
     <string name="state_enabled">aktif</string>
     <string name="state_disabled">mati</string>
