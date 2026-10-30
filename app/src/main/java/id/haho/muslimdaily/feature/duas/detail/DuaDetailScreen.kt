@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import id.haho.muslimdaily.data.note.NoteRepository
+import id.haho.muslimdaily.data.settings.TranslationMode
 import id.haho.design.glass.GlassAlertDialog
 import id.haho.design.glass.Glass
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -58,6 +59,7 @@ import id.haho.muslimdaily.feature.duas.components.CountBadge
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
+import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.feature.duas.components.SourceChip
 import kotlinx.coroutines.launch
 import androidx.compose.ui.semantics.stateDescription
@@ -165,7 +167,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             SourceChip(dua)
         }
         DuaTranslations(dua, state.prefs)
-        if (dua.arabicFull.isNotBlank()) FullEntry(dua, fullEntryOpen)
+        if (dua.arabicFull.isNotBlank()) FullEntry(dua, state.prefs, fullEntryOpen)
         NoteCard(state.note, actions.onSaveNote)
         dua.virtue?.let { virtue ->
             Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
@@ -211,7 +213,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
  * notes and repetition counts around it. Folded away by default; nothing from the book is lost.
  */
 @Composable
-private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
+private fun FullEntry(dua: Dua, prefs: ReadingPrefs, initiallyOpen: Boolean) {
     var open by rememberSaveable(dua.id) { mutableStateOf(initiallyOpen) }
     val stateLabel = stringResource(if (open) R.string.state_expanded else R.string.state_collapsed)
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
@@ -235,10 +237,18 @@ private fun FullEntry(dua: Dua, initiallyOpen: Boolean) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     ArabicText(dua.arabicFull, style = AdwamTheme.arabic.body(dua.isQuran))
-                    if (dua.translationIdFull.isNotBlank()) {
+                    // The same languages as the translation above it.
+                    val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEnFull.isNotBlank()
+                    if (dua.translationIdFull.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)) {
                         // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
                         Text(
                             buildAnnotatedString { withStyle(SpanStyle(localeList = LocaleList("id"))) { append(dua.translationIdFull) } },
+                            style = HahoTheme.reading.bodyLarge,
+                        )
+                    }
+                    if (showEn) {
+                        Text(
+                            buildAnnotatedString { withStyle(SpanStyle(localeList = LocaleList("en"))) { append(dua.translationEnFull) } },
                             style = HahoTheme.reading.bodyLarge,
                         )
                     }

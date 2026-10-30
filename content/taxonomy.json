@@ -148,6 +148,17 @@
         { "id": "quran_ease", "label": "Ilmu, kemudahan, dan perlindungan", "label_en": "Knowledge, ease and protection", "order": 3 },
         { "id": "quran_family", "label": "Orang tua, keluarga, dan keturunan", "label_en": "Parents, family and children", "order": 4 }
       ]
+    },
+    {
+      "id": "sunnah",
+      "label": "Doa dari As-Sunnah",
+      "label_en": "Duas from the Sunnah",
+      "order": 12,
+      "events": [
+        { "id": "sunnah_heart", "label": "Keteguhan hati dan petunjuk", "label_en": "Steadfastness and guidance", "order": 1 },
+        { "id": "sunnah_goodness", "label": "Ampunan dan segala kebaikan", "label_en": "Forgiveness and all that is good", "order": 2 },
+        { "id": "sunnah_refuge", "label": "Memohon perlindungan", "label_en": "Seeking refuge", "order": 3 }
+      ]
     }
   ]
 }

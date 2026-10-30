@@ -19,8 +19,8 @@ Every row ships. Rules enforced (see docs/content-guide.md):
   * Where a source entry also carries its context (hadith wording, a note, a repetition count),
     `arabic_full` keeps the entry verbatim and `arabic` holds only the words to recite. Every
     word of `arabic` must come from `arabic_full`, in order: nothing is written, only left out.
-    `audio_range` is where those words are recited in the audio file. `translation_id_full` does
-    the same for the Indonesian.
+    `audio_range` is where those words are recited in the audio file. `translation_id_full` and
+    `translation_en_full` do the same for the translations.
   * `transliteration`, when empty, is derived from the Arabic by tools/transliterate.py
     (Indonesian style); a row the rules can't read gets none.
 
@@ -53,7 +53,7 @@ PLACEHOLDER = "[PLACEHOLDER"
 PHRASE_MARK = "|"
 # Brackets and punctuation the book prints around a recitation. A recited part may leave them
 # out (or keep them); every other character must match the full entry.
-FRAME_CHARS = "()[]«»{}.،,:؛“”\"‘’"
+FRAME_CHARS = "()[]«»{}.،,:؛“”\"‘’'"
 
 
 @dataclass
@@ -216,9 +216,9 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
             p("arabic_full is the same as arabic; leave it blank")
         elif not is_part_of(d.get("arabic", ""), full):
             report.errors.append(f"{did}: arabic must be words of arabic_full in order (nothing added or changed)")
-    tr_full = (d.get("translations_full") or {}).get("id", "")
-    if tr_full and not is_part_of(d.get("translations", {}).get("id", ""), tr_full):
-        report.errors.append(f"{did}: translation_id must be words of translation_id_full in order")
+    for lang, tr_full in (d.get("translations_full") or {}).items():
+        if not is_part_of(d.get("translations", {}).get(lang, ""), tr_full):
+            report.errors.append(f"{did}: translation_{lang} must be words of translation_{lang}_full in order")
     phrases = len(d.get("phrase_breaks", [])) + 1
     if segments and phrases != len(segments):
         report.errors.append(f"{did}: {phrases} phrase(s) marked with '|' but {len(segments)} audio segment(s)")
@@ -285,7 +285,9 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
             "id": (row.get("translation_id") or "").strip(),
             "en": (row.get("translation_en") or "").strip(),
         },
-        **({"translations_full": {"id": tf}} if (tf := (row.get("translation_id_full") or "").strip()) else {}),
+        **({"translations_full": tf} if (tf := {
+            lang: text for lang in ("id", "en") if (text := (row.get(f"translation_{lang}_full") or "").strip())
+        }) else {}),
         # A sourced transliteration wins; otherwise the Latin is derived from the Arabic by
         # tools/transliterate.py (the owner's one exception to the sourced-content rule).
         "transliteration": (row.get("transliteration") or "").strip() or transliterate(arabic) or "",

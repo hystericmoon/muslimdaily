@@ -22,8 +22,9 @@ import kotlinx.coroutines.flow.Flow
         RawatibEntity::class, FardEntity::class, CityEntity::class, CityFtsEntity::class, MetaEntity::class,
     ],
     // 2: removed draft/review status, added the takhrij reference. Content is re-imported
-    // from the bundled assets, so a destructive migration loses nothing.
-    version = 4,
+    // from the bundled assets, so a destructive migration loses nothing. 5: the full English
+    // entry (translation_en_full).
+    version = 5,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -69,6 +70,7 @@ data class DuaEntity(
     /** The book's full entry, when [arabic] is only the words to recite; blank otherwise. */
     val arabicFull: String = "",
     val translationIdFull: String = "",
+    val translationEnFull: String = "",
     /** The dua's part of the audio file, in seconds; null for the whole file. */
     val audioStart: Double? = null,
     val audioEnd: Double? = null,

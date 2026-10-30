@@ -33,10 +33,11 @@ class ContentMapperTest {
 
     @Test
     fun `the full entry and the dua's audio range are kept`() {
-        val bundle = map(listOf(dua("a") { copy(arabicFull = "ccc aaa bbb", translationsFull = mapOf("id" to "uji penuh"), audio = audio!!.copy(range = listOf(0.0, 2.5))) }))
+        val bundle = map(listOf(dua("a") { copy(arabicFull = "ccc aaa bbb", translationsFull = mapOf("id" to "uji penuh", "en" to "full test"), audio = audio!!.copy(range = listOf(0.0, 2.5))) }))
         val row = bundle.duas.single()
         assertEquals("ccc aaa bbb", row.arabicFull)
         assertEquals("uji penuh", row.translationIdFull)
+        assertEquals("full test", row.translationEnFull)
         assertEquals(0.0 to 2.5, row.audioStart to row.audioEnd)
     }
 

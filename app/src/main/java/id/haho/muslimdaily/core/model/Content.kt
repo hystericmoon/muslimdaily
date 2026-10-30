@@ -48,6 +48,7 @@ data class Dua(
     /** The book's full entry (with the hadith wording and notes) when [arabic] is only the dua. */
     val arabicFull: String = "",
     val translationIdFull: String = "",
+    val translationEnFull: String = "",
 ) {
     val phrases: List<Phrase> by lazy { splitPhrases(arabic, phraseBreaks, audio?.segments.orEmpty()) }
 
