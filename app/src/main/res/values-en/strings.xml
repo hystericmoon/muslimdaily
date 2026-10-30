@@ -343,7 +343,7 @@
     <string name="memorize_step_check">Check</string>
     <string name="memorize_hint_listen">Listen to the full dua twice while reading the text.</string>
     <string name="memorize_hint_build">The segment grows by one phrase each time. After each loop, repeat it aloud during the pause.</string>
-    <string name="memorize_hint_recall">Hide some of the words, then recite from memory. Show the next word if you get stuck.</string>
+    <string name="memorize_hint_recall">Recite from memory, show the next word if you get stuck, then tap Done reciting. When you recite without help, more words are hidden.</string>
     <string name="memorize_hint_review">Recite from memory first, using the cue below, then check the full text.</string>
     <string name="memorize_cue_title">Cue</string>
     <string name="memorize_cue_show_meaning">Show the meaning</string>
@@ -356,6 +356,12 @@
     <string name="memorize_fade_from_end">From the end</string>
     <string name="memorize_first_letters">Show first letters</string>
     <string name="memorize_reveal_next">Show the next word</string>
+    <string name="memorize_recited">Done reciting</string>
+    <string name="memorize_stage">Stage %1$d of %2$d</string>
+    <string name="memorize_attempt_up">More words are hidden now.</string>
+    <string name="memorize_attempt_same">Try once more with the same hints.</string>
+    <string name="memorize_attempt_down">Some hints are back for the next try.</string>
+    <string name="memorize_attempt_done">You recited it with no hints. Continue to Check.</string>
     <string name="memorize_hint_check">Reveal the full text and rate your memorization honestly.</string>
     <string name="memorize_listen_twice">Listen 2×</string>
     <string name="memorize_restart">From the start</string>

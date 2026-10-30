@@ -59,6 +59,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.PauseMode
+import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.Leitner
@@ -82,6 +83,7 @@ data class MemorizeActions(
     val onFadeOrder: (FadeOrder) -> Unit = {},
     val onFirstLetters: (Boolean) -> Unit = {},
     val onRevealNext: () -> Unit = {},
+    val onFinishRecital: () -> Unit = {},
     val onRate: (Rating) -> Unit = {},
     val onLoops: (Int) -> Unit = {},
     val onPauseMode: (PauseMode) -> Unit = {},
@@ -115,6 +117,7 @@ fun MemorizeSessionRoute(
                 onFadeOrder = viewModel::setFadeOrder,
                 onFirstLetters = viewModel::setFirstLetters,
                 onRevealNext = viewModel::revealNext,
+                onFinishRecital = viewModel::finishRecital,
                 onRate = viewModel::rate,
                 onLoops = { n -> viewModel.updateSettings(loops = n) },
                 onPauseMode = { m -> viewModel.updateSettings(pauseMode = m) },
@@ -424,6 +427,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             )
         }
     }
+    RecitalCheck(state, actions)
     val levels = FadeLevel.entries
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
     FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
@@ -470,6 +474,35 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
         )
     }
     NextStepButton(Step.CHECK, actions)
+}
+
+/** Ends a recital: the hints fade, stay or come back depending on the words revealed (vanishing cues). */
+@Composable
+private fun RecitalCheck(state: MemorizeUiState, actions: MemorizeActions) {
+    if (state.stage >= 1) {
+        Text(
+            stringResource(R.string.memorize_stage, state.stage, FadeLadder.LAST),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+    GlassButton(onClick = actions.onFinishRecital, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.memorize_recited))
+    }
+    state.attempt?.let { outcome ->
+        Text(
+            stringResource(
+                when (outcome) {
+                    FadeLadder.Outcome.UP -> R.string.memorize_attempt_up
+                    FadeLadder.Outcome.SAME -> R.string.memorize_attempt_same
+                    FadeLadder.Outcome.DOWN -> R.string.memorize_attempt_down
+                    FadeLadder.Outcome.DONE -> R.string.memorize_attempt_done
+                },
+            ),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+    }
 }
 
 private fun FadeOrder.labelRes() = when (this) {

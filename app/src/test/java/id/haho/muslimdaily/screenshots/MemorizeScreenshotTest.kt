@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.settings.MemorizeSettings
+import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.LeitnerState
@@ -76,6 +77,15 @@ class MemorizeScreenshotTest {
     @Test
     fun recall() = captureVariants("52-memorize-recall") {
         MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.MEDIUM), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun recallAfterRecital() = captureVariants("135-memorize-recall-faded") {
+        MemorizeSessionScreen(
+            state(Step.RECALL, fade = FadeLevel.FULL).copy(firstLetters = true, attempt = FadeLadder.Outcome.UP),
+            MemorizeActions(),
+            talkBack = false,
+        )
     }
 
     @Test

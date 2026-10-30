@@ -15,6 +15,7 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.data.settings.SettingsRepository
+import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.LeitnerState
@@ -63,6 +64,8 @@ data class MemorizeUiState(
     val firstLetters: Boolean = false,
     /** The word shown last by "reveal as you go", announced to TalkBack. */
     val lastRevealed: Word? = null,
+    /** How the last recital moved the hints, until the next one or a manual change. */
+    val attempt: FadeLadder.Outcome? = null,
     val reading: ReadingPrefs = ReadingPrefs(),
     /** 1-based place of this dua among its event's duas, and how many there are (e.g. 3 of 19). */
     val position: Int = 0,
@@ -70,6 +73,7 @@ data class MemorizeUiState(
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.phrases.isNotEmpty() && dua.phrases.all { it.segment != null }
+    val stage: Int get() = FadeLadder.stageOf(fade, firstLetters)
 }
 
 @HiltViewModel
@@ -96,6 +100,7 @@ class MemorizeSessionViewModel @Inject constructor(
         val order: FadeOrder = FadeOrder.RANDOM,
         val firstLetters: Boolean = false,
         val revealed: List<Int> = emptyList(),
+        val attempt: FadeLadder.Outcome? = null,
         val rated: LeitnerState? = null,
         val nextDueId: String? = null,
         val ab: IntRange? = null,
@@ -132,6 +137,7 @@ class MemorizeSessionViewModel @Inject constructor(
             fadeOrder = l.order,
             firstLetters = l.firstLetters,
             lastRevealed = l.revealed.lastOrNull()?.let { words.getOrNull(it) },
+            attempt = l.attempt,
             // Transliteration would give the Arabic away on the cue card.
             reading = ReadingPrefs(settings.translationMode, transliteration = false),
             review = review,
@@ -171,15 +177,31 @@ class MemorizeSessionViewModel @Inject constructor(
     }
 
     fun setFade(level: FadeLevel) {
-        local.value = local.value.copy(fade = level, revealed = emptyList())
+        local.value = local.value.copy(fade = level, revealed = emptyList(), attempt = null)
     }
 
     fun setFadeOrder(order: FadeOrder) {
-        local.value = local.value.copy(order = order, revealed = emptyList())
+        local.value = local.value.copy(order = order, revealed = emptyList(), attempt = null)
     }
 
     fun setFirstLetters(on: Boolean) {
-        local.value = local.value.copy(firstLetters = on)
+        local.value = local.value.copy(firstLetters = on, attempt = null)
+    }
+
+    /** The learner finished reciting: the words they had to reveal decide how far the hints fade. */
+    fun finishRecital() {
+        val s = state.value ?: return
+        val revealed = local.value.revealed.size
+        val outcome = FadeLadder.outcome(s.stage, revealed, s.hiddenWords.size + revealed)
+        val stage = FadeLadder.STAGES[FadeLadder.next(s.stage, outcome)]
+        audio.stop()
+        local.value = local.value.copy(
+            fade = stage.fade,
+            firstLetters = stage.firstLetters,
+            revealed = emptyList(),
+            attempt = outcome,
+            playing = Playing.NONE,
+        )
     }
 
     fun revealNext() {

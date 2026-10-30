@@ -192,3 +192,29 @@ class RecallTest {
         }
     }
 }
+
+class FadeLadderTest {
+    @Test
+    fun `a recital with no reveals fades a stage, and finishes at the last`() {
+        assertEquals(FadeLadder.Outcome.UP, FadeLadder.outcome(1, revealed = 0, hidden = 5))
+        assertEquals(2, FadeLadder.next(1, FadeLadder.Outcome.UP))
+        assertEquals(FadeLadder.Outcome.DONE, FadeLadder.outcome(FadeLadder.LAST, revealed = 0, hidden = 9))
+    }
+
+    @Test
+    fun `a few reveals keep the stage, many bring a hint back but never below 30 percent`() {
+        assertEquals(FadeLadder.Outcome.SAME, FadeLadder.outcome(3, revealed = 3, hidden = 9))
+        assertEquals(FadeLadder.Outcome.DOWN, FadeLadder.outcome(3, revealed = 4, hidden = 9))
+        assertEquals(2, FadeLadder.next(3, FadeLadder.Outcome.DOWN))
+        assertEquals(FadeLadder.Outcome.SAME, FadeLadder.outcome(1, revealed = 5, hidden = 5))
+    }
+
+    @Test
+    fun `manual choices map onto stages`() {
+        assertEquals(0, FadeLadder.stageOf(FadeLevel.NONE, firstLetters = true))
+        assertEquals(2, FadeLadder.stageOf(FadeLevel.MEDIUM, firstLetters = true))
+        assertEquals(3, FadeLadder.stageOf(FadeLevel.FULL, firstLetters = true))
+        assertEquals(4, FadeLadder.stageOf(FadeLevel.FULL, firstLetters = false))
+        FadeLadder.STAGES.forEachIndexed { i, s -> assertEquals(i, FadeLadder.stageOf(s.fade, s.firstLetters)) }
+    }
+}
