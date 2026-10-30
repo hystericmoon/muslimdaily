@@ -862,6 +862,8 @@
         <item>Kategori baru, Doa dari As-Sunnah: 16 doa sahih dan hasan yang tidak ada di Hisnul Muslim, seperti Yā muqallibal-qulūb, doa memohon perbaikan agama, dunia, dan akhirat, serta doa berlindung dari hilangnya nikmat. Sumbernya HadeethEnc.com, dan hadis utuhnya ada di bawah setiap doa.</item>
         <item>Teks lengkap di kitab kini juga tampil dalam bahasa Inggris bila Anda memilih terjemah bahasa Inggris.</item>
         <item>Transliterasi Latin lebih rapi: lafal Allah yang ditulis tanpa syaddah kini terbaca, min sebelum al- dibaca minal-, dan akhir kalimat memakai bentuk waqaf.</item>
+        <item>Hafalan: tekan Selesai membaca setelah menghafal tanpa melihat. Bila Anda tidak membuka satu kata pun, petunjuk memudar satu tahap dengan sendirinya; bila banyak kata dibuka, petunjuk kembali.</item>
+        <item>Saat menjalankan rangkaian, doa yang Anda baca dari hafalan kini dihitung sebagai murajaah bila sudah waktunya diulang.</item>
     </string-array>
     <string-array name="whats_new_1_5_0">
         <item>Halaman Doa kini punya dua tab: Doa saya untuk rangkaian Anda, Semua doa untuk seluruh pustaka. Kategori terbuka di tempat, dan kartu rangkaian menampilkan tiga doa pertamanya.</item>

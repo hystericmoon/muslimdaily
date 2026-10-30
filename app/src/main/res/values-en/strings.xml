@@ -874,6 +874,8 @@
         <item>A new category, Duas from the Sunnah: 16 sahih and hasan duas that are not in Hisn al-Muslim, such as Yā muqallibal-qulūb, the dua for setting right one\'s religion, world and Hereafter, and seeking refuge from the loss of blessings. They come from HadeethEnc.com, with the whole hadith under each dua.</item>
         <item>The full text from the source now also shows in English when you choose the English translation.</item>
         <item>Tidier Latin transliteration: the name of Allah written without its shadda now reads, min before al- reads minal-, and the ends of phrases take their pausal form.</item>
+        <item>Memorization: tap Done reciting after reciting without looking. If you revealed no word, the hints fade one stage on their own; if you revealed many, a hint comes back.</item>
+        <item>When running a routine, a dua you recite from memory now counts as a review when it is due.</item>
     </string-array>
     <string-array name="whats_new_1_5_0">
         <item>The Duas page now has two tabs: My duas for your routines and All duas for the full library. Categories open in place, and routine cards show their first three duas.</item>
