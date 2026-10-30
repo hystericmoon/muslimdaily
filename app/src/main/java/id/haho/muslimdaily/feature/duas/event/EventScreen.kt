@@ -31,6 +31,12 @@ import id.haho.design.glass.GlassTonalButton
 import id.haho.design.glass.DockedBar
 import id.haho.design.glass.GlassButton
 import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.AlertDialog
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import id.haho.design.glass.GlassOutlinedButton
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -80,6 +86,8 @@ fun EventRoute(
                 onOpenDua = onOpenDua,
                 onChooseForm = viewModel::chooseForm,
                 onCustomize = { onCustomize(viewModel.eventId) },
+                onAddToHifz = viewModel::addToHifz,
+                onRemoveFromHifz = viewModel::removeFromHifz,
             )
         }
     }
@@ -92,7 +100,22 @@ fun EventContent(
     onOpenDua: (String) -> Unit,
     onChooseForm: (group: String, duaId: String) -> Unit,
     onCustomize: () -> Unit,
+    onAddToHifz: (String) -> Unit = {},
+    onRemoveFromHifz: (String) -> Unit = {},
 ) {
+    // Removing drops the dua's review schedule, so it is confirmed as on the Hafalan page.
+    var confirmRemove by rememberSaveable { mutableStateOf<String?>(null) }
+    confirmRemove?.let { id ->
+        AlertDialog(
+            onDismissRequest = { confirmRemove = null },
+            title = { Text(stringResource(R.string.memorize_remove_title)) },
+            text = { Text(stringResource(R.string.memorize_remove_body)) },
+            confirmButton = {
+                TextButton(onClick = { confirmRemove = null; onRemoveFromHifz(id) }) { Text(stringResource(R.string.memorize_remove)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmRemove = null }) { Text(stringResource(R.string.action_cancel)) } },
+        )
+    }
     LazyColumn(
         Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
@@ -136,6 +159,13 @@ fun EventContent(
                 prefs = state.prefs,
                 onClick = { onOpenDua(resolved.form.id) },
                 header = { ItemHeader(index, state.items.size, resolved, onChooseForm) },
+                footer = {
+                    val id = resolved.form.id
+                    HifzButton(
+                        inHifz = id in state.hifz,
+                        onClick = { if (id in state.hifz) confirmRemove = id else onAddToHifz(id) },
+                    )
+                },
                 modifier = Modifier.animateItem().enterReveal(index),
             )
         }
@@ -173,6 +203,25 @@ private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseF
                 }
             }
         }
+    }
+}
+
+/** Adds the dua to "My hifz", or once there, says so (tapping again offers to remove it). */
+@Composable
+private fun HifzButton(inHifz: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val content: @Composable RowScope.() -> Unit = {
+        Icon(
+            painterResource(if (inHifz) R.drawable.ic_check else R.drawable.ic_record_voice_over),
+            null,
+            Modifier.size(HahoTheme.dimens.smallIcon),
+        )
+        Spacer(Modifier.width(HahoTheme.spacing.sm))
+        Text(stringResource(if (inHifz) R.string.event_in_hifz else R.string.dua_memorize), maxLines = 1)
+    }
+    if (inHifz) {
+        GlassTonalButton(onClick = onClick, modifier = modifier) { content() }
+    } else {
+        GlassOutlinedButton(onClick = onClick, modifier = modifier) { content() }
     }
 }
 

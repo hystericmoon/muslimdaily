@@ -5,6 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.haho.muslimdaily.data.review.ReviewRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.mapLatest
+import java.time.Clock
+import java.time.LocalDate
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.myset.MySetRepository
@@ -30,14 +35,19 @@ data class EventUiState(
     val items: List<ResolvedItem>,
     val hiddenCount: Int,
     val prefs: ReadingPrefs,
+    /** Duas in "My hifz" (with their twins). */
+    val hifz: Set<String> = emptySet(),
 )
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class EventViewModel @Inject constructor(
     savedState: SavedStateHandle,
     content: ContentRepository,
     private val mySets: MySetRepository,
     settings: SettingsRepository,
+    private val reviews: ReviewRepository,
+    private val clock: Clock,
 ) : ViewModel() {
     val eventId: String = savedState.toRoute<EventRoute>().eventId
 
@@ -46,8 +56,9 @@ class EventViewModel @Inject constructor(
         content.duasForEvent(eventId),
         mySets.customization(eventId),
         settings.settings,
-    ) { event, duas, custom, s ->
-        build(event, ActiveSet.canonical(duas), custom, ReadingPrefs(s.translationMode, s.showTransliteration))
+        reviews.items().mapLatest { items -> reviews.withTwins(items.map { it.duaId }.toSet()) },
+    ) { event, duas, custom, s, hifz ->
+        build(event, ActiveSet.canonical(duas), custom, ReadingPrefs(s.translationMode, s.showTransliteration)).copy(hifz = hifz)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private fun build(event: DuaEvent?, canonical: List<id.haho.muslimdaily.domain.myset.SetItem>, custom: Customization, prefs: ReadingPrefs): EventUiState {
@@ -65,6 +76,16 @@ class EventViewModel @Inject constructor(
 
     fun setUseMySet(useMySet: Boolean) {
         viewModelScope.launch { mySets.setUseMySet(eventId, useMySet) }
+    }
+
+    /** Saves a dua to "My hifz" to learn later, as Run mode does. */
+    fun addToHifz(duaId: String) {
+        viewModelScope.launch { reviews.add(duaId, LocalDate.now(clock)) }
+    }
+
+    /** Takes a dua out of "My hifz", with its review schedule (the page asks first). */
+    fun removeFromHifz(duaId: String) {
+        viewModelScope.launch { reviews.remove(duaId) }
     }
 
     fun chooseForm(group: String, duaId: String) {

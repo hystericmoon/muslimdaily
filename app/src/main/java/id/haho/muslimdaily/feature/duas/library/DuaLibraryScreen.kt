@@ -3,6 +3,31 @@ package id.haho.muslimdaily.feature.duas.library
 import id.haho.design.glass.enterReveal
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import id.haho.design.glass.chevronRotation
+import id.haho.muslimdaily.core.model.Dua
+import id.haho.muslimdaily.data.settings.SettingsRepository
+import id.haho.muslimdaily.feature.routines.ROUTINE_PREVIEW_ROWS
+import id.haho.muslimdaily.feature.routines.RoutineCard
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,7 +83,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
-import id.haho.design.component.SectionHeader
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.DuaCategory
@@ -72,12 +96,43 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class DuaLibraryViewModel @Inject constructor(content: ContentRepository, routines: RoutineRepository) : ViewModel() {
+class DuaLibraryViewModel @Inject constructor(
+    content: ContentRepository,
+    routines: RoutineRepository,
+    private val settings: SettingsRepository,
+) : ViewModel() {
     val categories: StateFlow<List<DuaCategory>?> = content.categories()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-    val routines: StateFlow<List<Routine>> = routines.routines()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+    val routines: StateFlow<List<Routine>?> = routines.routines()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    /** The first duas of each routine, shown on its card. */
+    val previews: StateFlow<Map<String, Dua>> = routines.routines()
+        .mapLatest { list -> content.duas(list.flatMap { it.duaIds.take(ROUTINE_PREVIEW_ROWS) }.distinct()).associateBy { it.id } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
+
+    /** The tab used last; blank until the reader picks one. */
+    val savedTab: StateFlow<String?> = settings.settings.map { it.duaLibraryTab }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    fun saveTab(tab: LibraryTab) {
+        viewModelScope.launch { settings.update { duaLibraryTab = tab.key } }
+    }
+}
+
+/** The Duas page's two tabs: the reader's routines, and the whole library. */
+enum class LibraryTab(val key: String) {
+    MINE("mine"),
+    ALL("all"),
+    ;
+
+    companion object {
+        /** The tab used last, or with none chosen yet, the routines once there are any. */
+        fun initial(saved: String?, hasRoutines: Boolean): LibraryTab =
+            entries.firstOrNull { it.key == saved } ?: if (hasRoutines) MINE else ALL
+    }
 }
 
 class RoutineActions(
@@ -102,6 +157,10 @@ fun DuaLibraryRoute(
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
     val routines by viewModel.routines.collectAsStateWithLifecycle()
+    val previews by viewModel.previews.collectAsStateWithLifecycle()
+    val savedTab by viewModel.savedTab.collectAsStateWithLifecycle()
+    var chosenTab by rememberSaveable { mutableStateOf<LibraryTab?>(null) }
+    var expanded by rememberSaveable { mutableStateOf(emptyList<String>()) }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val twoPane = maxWidth >= ListDetailWidth
         var selected by rememberSaveable { mutableStateOf<String?>(null) }
@@ -116,16 +175,27 @@ fun DuaLibraryRoute(
                     }
                 },
             ) {
-                categories?.let {
+                val c = categories
+                val r = routines
+                // Wait for the routines and the saved tab, so the page doesn't open on one tab and jump.
+                if (c != null && r != null && savedTab != null) {
                     DuaLibraryContent(
-                        it,
+                        c,
                         selectedId = if (twoPane) shown else null,
-                        routines = routines,
+                        routines = r,
                         routineActions = RoutineActions(
-                            onStart = { r -> onStart(r.runKey) },
-                            onEdit = { r -> onRoutine(r.id, null) },
+                            onStart = { routine -> onStart(routine.runKey) },
+                            onEdit = { routine -> onRoutine(routine.id, null) },
                             onNew = { onRoutine(null, null) },
                         ),
+                        previews = previews,
+                        tab = chosenTab ?: LibraryTab.initial(savedTab, r.isNotEmpty()),
+                        onTab = { tab ->
+                            chosenTab = tab
+                            viewModel.saveTab(tab)
+                        },
+                        expanded = expanded.toSet(),
+                        onToggleCategory = { id -> expanded = if (id in expanded) expanded - id else expanded + id },
                         onOpenEvent = if (twoPane) { id -> selected = id } else onOpenEvent,
                     )
                 }
@@ -166,48 +236,179 @@ private fun EventPane(
     EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, viewModel = vm)
 }
 
+/**
+ * The Duas page. With [routines] (null in previews of the library alone) it has two tabs: the
+ * reader's routines, and the library, where each category opens in place to list its occasions.
+ */
 @Composable
 fun DuaLibraryContent(
     categories: List<DuaCategory>,
     selectedId: String? = null,
     routines: List<Routine>? = null,
     routineActions: RoutineActions = RoutineActions(),
+    previews: Map<String, Dua> = emptyMap(),
+    tab: LibraryTab = LibraryTab.initial(null, !routines.isNullOrEmpty()),
+    onTab: (LibraryTab) -> Unit = {},
+    expanded: Set<String> = emptySet(),
+    onToggleCategory: (String) -> Unit = {},
     onOpenEvent: (String) -> Unit,
 ) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
-        // The user's own routines come first: they are what they open the tab for.
+    Column(Modifier.fillMaxSize()) {
         if (routines != null) {
-            item(key = "routines") {
-                SectionHeader(stringResource(R.string.routine_section))
-                RoutinesCard(
-                    routines = routines,
-                    onStart = routineActions.onStart,
-                    onEdit = routineActions.onEdit,
-                    onNew = routineActions.onNew,
-                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+            PrimaryTabRow(
+                selectedTabIndex = tab.ordinal,
+                containerColor = Color.Transparent,
+                divider = { HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant) },
+            ) {
+                LibraryTab.entries.forEach { t ->
+                    Tab(
+                        selected = t == tab,
+                        onClick = { onTab(t) },
+                        text = { Text(stringResource(if (t == LibraryTab.MINE) R.string.library_tab_mine else R.string.library_tab_all), maxLines = 1) },
+                        selectedContentColor = MaterialTheme.colorScheme.primary,
+                        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+        if (routines != null && tab == LibraryTab.MINE) {
+            MyRoutines(routines, previews, routineActions, onBrowse = { onTab(LibraryTab.ALL) })
+        } else {
+            Categories(categories, selectedId, expanded, onToggleCategory, onOpenEvent)
+        }
+    }
+}
+
+@Composable
+private fun MyRoutines(routines: List<Routine>, previews: Map<String, Dua>, actions: RoutineActions, onBrowse: () -> Unit) {
+    val gutter = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter)
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(top = HahoTheme.spacing.md, bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
+    ) {
+        if (routines.isEmpty()) {
+            item(key = "empty") {
+                Column(gutter, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                    RoutinesCard(routines = routines, onStart = actions.onStart, onEdit = actions.onEdit, onNew = actions.onNew)
+                    TextButton(onClick = onBrowse) { Text(stringResource(R.string.library_browse_all)) }
+                }
+            }
+        } else {
+            itemsIndexed(routines, key = { _, r -> r.id }) { index, r ->
+                RoutineCard(
+                    routine = r,
+                    previews = previews,
+                    onStart = { actions.onStart(r) },
+                    onEdit = { actions.onEdit(r) },
+                    modifier = gutter.enterReveal(index),
+                )
+            }
+            item(key = "new") {
+                TextButton(onClick = actions.onNew, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
+                    Icon(painterResource(R.drawable.ic_add), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Spacer(Modifier.width(HahoTheme.spacing.sm))
+                    Text(stringResource(R.string.routine_new))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Categories(
+    categories: List<DuaCategory>,
+    selectedId: String?,
+    expanded: Set<String>,
+    onToggle: (String) -> Unit,
+    onOpenEvent: (String) -> Unit,
+) {
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(top = HahoTheme.spacing.md, bottom = HahoTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
+    ) {
+        categories.forEachIndexed { index, category ->
+            item(key = category.id) {
+                CategoryCard(
+                    category = category,
+                    expanded = category.id in expanded,
+                    selectedId = selectedId,
+                    onToggle = { onToggle(category.id) },
+                    onOpenEvent = onOpenEvent,
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(index),
                 )
             }
         }
-        categories.forEachIndexed { index, category ->
-            item(key = category.id) {
-                SectionHeader(category.label)
-                GlassCard(
-                    shape = MaterialTheme.shapes.extraLarge,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = HahoTheme.dimens.screenGutter).enterReveal(index),
+    }
+}
+
+/** A category that opens in place, like a prayer row on Today, to list its occasions. */
+@Composable
+private fun CategoryCard(
+    category: DuaCategory,
+    expanded: Boolean,
+    selectedId: String?,
+    onToggle: () -> Unit,
+    onOpenEvent: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val toggleLabel = stringResource(if (expanded) R.string.library_collapse_category else R.string.library_expand_category)
+    val stateLabel = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)
+    val headerBackground by animateColorAsState(
+        if (expanded) Glass.colors.tinted else Color.Transparent,
+        HahoTheme.motion.fade(),
+        label = "categoryHeader",
+    )
+    GlassCard(shape = MaterialTheme.shapes.extraLarge, modifier = modifier.fillMaxWidth()) {
+        Column {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(headerBackground)
+                    .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+                    .clickable(onClickLabel = toggleLabel, role = Role.Button, onClick = onToggle)
+                    .semantics { stateDescription = stateLabel }
+                    .padding(start = HahoTheme.dimens.screenGutter, end = HahoTheme.spacing.sm),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(
+                    Modifier.weight(1f).padding(vertical = HahoTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs),
                 ) {
-                    Column {
-                        val timeline = category.id == DAILY
-                        category.events.forEachIndexed { i, event ->
-                            if (i > 0 && !timeline) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                            EventRow(
-                                event = event,
-                                timeline = timeline,
-                                isFirst = i == 0,
-                                isLast = i == category.events.lastIndex,
-                                selected = event.id == selectedId,
-                                onClick = { onOpenEvent(event.id) },
-                            )
-                        }
+                    Text(category.label, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                    Text(
+                        pluralStringResource(R.plurals.library_event_count, category.events.size, category.events.size),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Box(Modifier.size(HahoTheme.dimens.minTouchTarget), contentAlignment = Alignment.Center) {
+                    Icon(
+                        painterResource(R.drawable.ic_keyboard_arrow_down),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.chevronRotation(expanded),
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = expanded,
+                enter = expandVertically(HahoTheme.motion.layout()) + fadeIn(HahoTheme.motion.fade()),
+                exit = shrinkVertically(HahoTheme.motion.layout()) + fadeOut(HahoTheme.motion.fade()),
+            ) {
+                Column {
+                    val timeline = category.id == DAILY
+                    category.events.forEachIndexed { i, event ->
+                        if (i == 0 || !timeline) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                        EventRow(
+                            event = event,
+                            timeline = timeline,
+                            isFirst = i == 0,
+                            isLast = i == category.events.lastIndex,
+                            selected = event.id == selectedId,
+                            onClick = { onOpenEvent(event.id) },
+                        )
                     }
                 }
             }

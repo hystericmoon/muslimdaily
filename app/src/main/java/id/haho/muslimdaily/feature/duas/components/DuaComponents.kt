@@ -11,6 +11,7 @@ import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -208,6 +209,8 @@ fun DuaCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     header: (@Composable () -> Unit)? = null,
+    /** An action at the end of the source row, e.g. "Hafalkan" on an occasion's page. */
+    footer: (@Composable RowScope.() -> Unit)? = null,
 ) {
     val press = remember { MutableInteractionSource() }
     GlassCard(
@@ -230,12 +233,16 @@ fun DuaCard(
             // A preview: long texts (e.g. Ayat al-Kursi) are clamped; the detail shows them in full.
             ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
             DuaTranslations(dua, prefs, maxLines = CARD_TRANSLATION_LINES)
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-            ) {
-                dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
-                SourceChip(dua)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                FlowRow(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                ) {
+                    dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
+                    SourceChip(dua)
+                }
+                footer?.invoke(this)
             }
         }
     }

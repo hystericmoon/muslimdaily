@@ -825,6 +825,20 @@
     <string name="crash_prompt_later">Later</string>
     <string name="event_start_all">Start reading (%1$d duas)</string>
     <string name="event_save_routine">Make a routine</string>
+    <string name="library_tab_mine">My duas</string>
+    <string name="library_tab_all">All duas</string>
+    <string name="library_browse_all">See all duas</string>
+    <string name="library_expand_category">open category</string>
+    <string name="library_collapse_category">close category</string>
+    <plurals name="library_event_count">
+        <item quantity="one">%d occasion</item>
+        <item quantity="other">%d occasions</item>
+    </plurals>
+    <plurals name="routine_more">
+        <item quantity="one">+%d more dua</item>
+        <item quantity="other">+%d more duas</item>
+    </plurals>
+    <string name="event_in_hifz">In My hifz</string>
     <string name="routine_section">My routines</string>
     <string name="routine_empty_title">Make your own routine</string>
     <string name="routine_empty_body">Pick duas from anywhere, set their order, then read them one after another like the morning and evening adhkar.</string>
