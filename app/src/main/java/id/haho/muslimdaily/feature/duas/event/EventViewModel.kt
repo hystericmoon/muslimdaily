@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.data.review.ReviewRepository
+import id.haho.muslimdaily.data.routine.Routine
+import id.haho.muslimdaily.data.routine.RoutineRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 import java.time.Clock
@@ -37,6 +39,8 @@ data class EventUiState(
     val prefs: ReadingPrefs,
     /** Duas in "My hifz" (with their twins). */
     val hifz: Set<String> = emptySet(),
+    /** The reader's routines, for the bookmark on each dua. */
+    val routines: List<Routine> = emptyList(),
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -48,6 +52,7 @@ class EventViewModel @Inject constructor(
     settings: SettingsRepository,
     private val reviews: ReviewRepository,
     private val clock: Clock,
+    private val routines: RoutineRepository,
 ) : ViewModel() {
     val eventId: String = savedState.toRoute<EventRoute>().eventId
 
@@ -59,7 +64,8 @@ class EventViewModel @Inject constructor(
         reviews.items().mapLatest { items -> reviews.withTwins(items.map { it.duaId }.toSet()) },
     ) { event, duas, custom, s, hifz ->
         build(event, ActiveSet.canonical(duas), custom, ReadingPrefs(s.translationMode, s.showTransliteration)).copy(hifz = hifz)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+    }.combine(routines.routines()) { st, list -> st.copy(routines = list) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private fun build(event: DuaEvent?, canonical: List<id.haho.muslimdaily.domain.myset.SetItem>, custom: Customization, prefs: ReadingPrefs): EventUiState {
         val all = if (custom.useMySet) ActiveSet.items(canonical, custom) else ActiveSet.items(canonical, custom.copy(entries = emptyList()))
@@ -86,6 +92,15 @@ class EventViewModel @Inject constructor(
     /** Takes a dua out of "My hifz", with its review schedule (the page asks first). */
     fun removeFromHifz(duaId: String) {
         viewModelScope.launch { reviews.remove(duaId) }
+    }
+
+    /** The first bookmark, with no routine yet: makes one named [name] that holds the dua. */
+    fun startRoutine(name: String, duaId: String) {
+        viewModelScope.launch { routines.save(null, name, listOf(duaId)) }
+    }
+
+    fun setInRoutine(routineId: String, duaId: String, included: Boolean) {
+        viewModelScope.launch { routines.setIncluded(routineId, duaId, included) }
     }
 
     fun chooseForm(group: String, duaId: String) {

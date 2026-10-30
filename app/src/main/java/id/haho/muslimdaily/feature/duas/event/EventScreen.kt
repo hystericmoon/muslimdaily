@@ -31,6 +31,17 @@ import id.haho.design.glass.GlassTonalButton
 import id.haho.design.glass.DockedBar
 import id.haho.design.glass.GlassButton
 import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.stateDescription
+import id.haho.muslimdaily.feature.routines.RoutineSheet
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.mutableStateOf
@@ -61,13 +72,58 @@ fun EventRoute(
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
+    /** The routine editor, for a new routine that starts with this dua. */
+    onNewRoutine: (String) -> Unit = {},
     viewModel: EventViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val s = state
+    val snackbar = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val resources = LocalContext.current.resources
+    var sheetFor by rememberSaveable { mutableStateOf<String?>(null) }
+    sheetFor?.let { id ->
+        RoutineSheet(
+            duaId = id,
+            routines = s?.routines.orEmpty(),
+            onSetIncluded = { routineId, included -> viewModel.setInRoutine(routineId, id, included) },
+            onNew = { onNewRoutine(id) },
+            onDismiss = { sheetFor = null },
+        )
+    }
+    // With no routine the first bookmark makes "Doa saya"; with one it toggles there and says
+    // where (Ubah opens the picker); with several it asks which.
+    val onBookmark: (String) -> Unit = bookmark@{ id ->
+        val routines = s?.routines ?: return@bookmark
+        val message = when (routines.size) {
+            0 -> {
+                val name = resources.getString(R.string.routine_default_name)
+                viewModel.startRoutine(name, id)
+                resources.getString(R.string.bookmark_added, name)
+            }
+            1 -> {
+                val r = routines.single()
+                val included = id !in r.duaIds
+                viewModel.setInRoutine(r.id, id, included)
+                resources.getString(if (included) R.string.bookmark_added else R.string.bookmark_removed, r.name)
+            }
+            else -> {
+                sheetFor = id
+                null
+            }
+        }
+        if (message != null) {
+            scope.launch {
+                snackbar.currentSnackbarData?.dismiss()
+                val result = snackbar.showSnackbar(message, actionLabel = resources.getString(R.string.bookmark_change), duration = SnackbarDuration.Short)
+                if (result == SnackbarResult.ActionPerformed) sheetFor = id
+            }
+        }
+    }
     AdwamScreen(
         title = s?.event?.label.orEmpty(),
         onBack = onBack,
+        snackbarHostState = snackbar,
         // Docked on the menu, one row: read now, or adjust which duas and in what order.
         bottomBar = {
             if (s != null && s.items.isNotEmpty()) {
@@ -88,6 +144,7 @@ fun EventRoute(
                 onCustomize = { onCustomize(viewModel.eventId) },
                 onAddToHifz = viewModel::addToHifz,
                 onRemoveFromHifz = viewModel::removeFromHifz,
+                onBookmark = onBookmark,
             )
         }
     }
@@ -102,7 +159,9 @@ fun EventContent(
     onCustomize: () -> Unit,
     onAddToHifz: (String) -> Unit = {},
     onRemoveFromHifz: (String) -> Unit = {},
+    onBookmark: (String) -> Unit = {},
 ) {
+    val saved = remember(state.routines) { state.routines.flatMap { it.duaIds }.toSet() }
     // Removing drops the dua's review schedule, so it is confirmed as on the Hafalan page.
     var confirmRemove by rememberSaveable { mutableStateOf<String?>(null) }
     confirmRemove?.let { id ->
@@ -158,7 +217,10 @@ fun EventContent(
                 dua = resolved.form,
                 prefs = state.prefs,
                 onClick = { onOpenDua(resolved.form.id) },
-                header = { ItemHeader(index, state.items.size, resolved, onChooseForm) },
+                header = {
+                    val id = resolved.form.id
+                    ItemHeader(index, state.items.size, resolved, onChooseForm, saved = id in saved, onBookmark = { onBookmark(id) })
+                },
                 footer = {
                     val id = resolved.form.id
                     HifzButton(
@@ -173,14 +235,36 @@ fun EventContent(
 }
 
 @Composable
-private fun ItemHeader(index: Int, total: Int, resolved: ResolvedItem, onChooseForm: (String, String) -> Unit) {
+private fun ItemHeader(
+    index: Int,
+    total: Int,
+    resolved: ResolvedItem,
+    onChooseForm: (String, String) -> Unit,
+    saved: Boolean = false,
+    onBookmark: () -> Unit = {},
+) {
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
-        Text(
-            stringResource(R.string.event_item_position, index + 1, total),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.semantics { heading() },
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.event_item_position, index + 1, total),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.weight(1f).semantics { heading() },
+            )
+            // A toggle that says whether the dua is in a routine; the snackbar or sheet says which.
+            val savedLabel = stringResource(if (saved) R.string.bookmark_state_saved else R.string.bookmark_state_not_saved)
+            IconToggleButton(
+                checked = saved,
+                onCheckedChange = { onBookmark() },
+                modifier = Modifier.semantics { stateDescription = savedLabel },
+            ) {
+                Icon(
+                    painterResource(if (saved) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
+                    contentDescription = stringResource(R.string.bookmark_label),
+                    tint = if (saved) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         val item = resolved.item
         if (item is SetItem.Variants) {
             Text(

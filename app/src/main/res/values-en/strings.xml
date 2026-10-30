@@ -839,9 +839,17 @@
         <item quantity="other">+%d more duas</item>
     </plurals>
     <string name="event_in_hifz">In My hifz</string>
+    <string name="routine_default_name">My duas</string>
+    <string name="bookmark_label">Save to routine</string>
+    <string name="bookmark_state_saved">in a routine</string>
+    <string name="bookmark_state_not_saved">not in a routine</string>
+    <!-- After a bookmark: "Added to My duas". -->
+    <string name="bookmark_added">Added to %1$s</string>
+    <string name="bookmark_removed">Removed from %1$s</string>
+    <string name="bookmark_change">Change</string>
     <string name="routine_section">My routines</string>
     <string name="routine_empty_title">Make your own routine</string>
-    <string name="routine_empty_body">Pick duas from anywhere, set their order, then read them one after another like the morning and evening adhkar.</string>
+    <string name="routine_empty_body">Tap the bookmark on any dua to save it to a routine, then read them one after another like the morning and evening adhkar.</string>
     <string name="routine_new">New routine</string>
     <string name="routine_new_title">New routine</string>
     <string name="routine_edit_title">Edit routine</string>

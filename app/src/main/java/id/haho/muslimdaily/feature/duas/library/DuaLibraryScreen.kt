@@ -153,6 +153,8 @@ fun DuaLibraryRoute(
     onStart: (String) -> Unit = {},
     /** Routine editor: (routine id or null for new, occasion to pre-fill from or null). */
     onRoutine: (String?, String?) -> Unit = { _, _ -> },
+    /** The routine editor for a new routine that starts with this dua (from a bookmark). */
+    onNewRoutineWith: (String) -> Unit = {},
     viewModel: DuaLibraryViewModel = hiltViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
@@ -207,7 +209,7 @@ fun DuaLibraryRoute(
                 VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 Box(Modifier.weight(0.58f)) {
                     // One view model per occasion, keyed like the EventRoute destination would be.
-                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart) }
+                    if (shown != null) key(shown) { EventPane(shown, onOpenDua, onCustomize, onStart, onNewRoutineWith) }
                 }
             }
         } else {
@@ -222,6 +224,7 @@ private fun EventPane(
     onOpenDua: (String) -> Unit,
     onCustomize: (String) -> Unit,
     onStart: (String) -> Unit,
+    onNewRoutine: (String) -> Unit,
 ) {
     val owner = checkNotNull(LocalViewModelStoreOwner.current)
     val defaults = owner as HasDefaultViewModelProviderFactory
@@ -233,7 +236,7 @@ private fun EventPane(
         factory = HiltViewModelFactory(LocalContext.current, defaults.defaultViewModelProviderFactory),
         extras = extras,
     )
-    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, viewModel = vm)
+    EventRoute(onBack = null, onOpenDua = onOpenDua, onCustomize = onCustomize, onStart = onStart, onNewRoutine = onNewRoutine, viewModel = vm)
 }
 
 /**
