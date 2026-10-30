@@ -13,6 +13,16 @@ class LeitnerTest {
     private val today = LocalDate.of(2026, 10, 21)
 
     @Test
+    fun `a routine recital counts only when due, and needing the text is always a lapse`() {
+        val due = LeitnerState(3, today)
+        val later = LeitnerState(3, today.plusDays(5))
+        assertEquals(Rating.EASY, Leitner.ratingFromRoutine(due, knew = true, today))
+        assertEquals(null, Leitner.ratingFromRoutine(later, knew = true, today))
+        assertEquals(Rating.AGAIN, Leitner.ratingFromRoutine(due, knew = false, today))
+        assertEquals(Rating.AGAIN, Leitner.ratingFromRoutine(later, knew = false, today))
+    }
+
+    @Test
     fun `first rating places the dua in box 1 or 2`() {
         assertEquals(LeitnerState(2, today.plusDays(3)), Leitner.rate(null, Rating.EASY, today))
         assertEquals(LeitnerState(1, today.plusDays(1)), Leitner.rate(null, Rating.HARD, today))
@@ -180,5 +190,31 @@ class RecallTest {
         words.forEach { w ->
             assertTrue(w.text.startsWith(Recall.firstLetterCue(w.text).removeSuffix("\u0640")))
         }
+    }
+}
+
+class FadeLadderTest {
+    @Test
+    fun `a recital with no reveals fades a stage, and finishes at the last`() {
+        assertEquals(FadeLadder.Outcome.UP, FadeLadder.outcome(1, revealed = 0, hidden = 5))
+        assertEquals(2, FadeLadder.next(1, FadeLadder.Outcome.UP))
+        assertEquals(FadeLadder.Outcome.DONE, FadeLadder.outcome(FadeLadder.LAST, revealed = 0, hidden = 9))
+    }
+
+    @Test
+    fun `a few reveals keep the stage, many bring a hint back but never below 30 percent`() {
+        assertEquals(FadeLadder.Outcome.SAME, FadeLadder.outcome(3, revealed = 3, hidden = 9))
+        assertEquals(FadeLadder.Outcome.DOWN, FadeLadder.outcome(3, revealed = 4, hidden = 9))
+        assertEquals(2, FadeLadder.next(3, FadeLadder.Outcome.DOWN))
+        assertEquals(FadeLadder.Outcome.SAME, FadeLadder.outcome(1, revealed = 5, hidden = 5))
+    }
+
+    @Test
+    fun `manual choices map onto stages`() {
+        assertEquals(0, FadeLadder.stageOf(FadeLevel.NONE, firstLetters = true))
+        assertEquals(2, FadeLadder.stageOf(FadeLevel.MEDIUM, firstLetters = true))
+        assertEquals(3, FadeLadder.stageOf(FadeLevel.FULL, firstLetters = true))
+        assertEquals(4, FadeLadder.stageOf(FadeLevel.FULL, firstLetters = false))
+        FadeLadder.STAGES.forEachIndexed { i, s -> assertEquals(i, FadeLadder.stageOf(s.fade, s.firstLetters)) }
     }
 }

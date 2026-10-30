@@ -33,6 +33,17 @@ object Leitner {
 
     fun isDue(state: LeitnerState, today: LocalDate): Boolean = !state.due.isAfter(today)
 
+    /**
+     * A dua recited from memory in a routine counts as a review only when it is due: daily
+     * recitation would otherwise climb a box a day. Needing the text is a lapse whenever it
+     * happens. Null when the schedule stays as it is.
+     */
+    fun ratingFromRoutine(current: LeitnerState, knew: Boolean, today: LocalDate): Rating? = when {
+        !knew -> Rating.AGAIN
+        isDue(current, today) -> Rating.EASY
+        else -> null
+    }
+
     /** Reached the last box: shown as memorised in "My hifz". */
     fun isMemorized(state: LeitnerState): Boolean = state.box >= TOP_BOX
 }
@@ -124,6 +135,49 @@ object MemorizePlan {
 
 /** Recall levels: share of words hidden. */
 enum class FadeLevel(val fraction: Double) { NONE(0.0), LIGHT(0.3), MEDIUM(0.6), FULL(1.0) }
+
+/**
+ * Vanishing cues: the hints fade stage by stage as recall holds. 0 is the full text; stages 1–4 hide
+ * 30% and 60% of the words, then all words with first letters, then all words.
+ */
+object FadeLadder {
+    data class Stage(val fade: FadeLevel, val firstLetters: Boolean)
+
+    val STAGES = listOf(
+        Stage(FadeLevel.NONE, false),
+        Stage(FadeLevel.LIGHT, false),
+        Stage(FadeLevel.MEDIUM, false),
+        Stage(FadeLevel.FULL, true),
+        Stage(FadeLevel.FULL, false),
+    )
+    val LAST = STAGES.lastIndex
+
+    enum class Outcome { UP, SAME, DOWN, DONE }
+
+    /** The stage a manual choice sits on; first letters only count once every word is hidden. */
+    fun stageOf(fade: FadeLevel, firstLetters: Boolean): Int = when (fade) {
+        FadeLevel.NONE -> 0
+        FadeLevel.LIGHT -> 1
+        FadeLevel.MEDIUM -> 2
+        FadeLevel.FULL -> if (firstLetters) 3 else 4
+    }
+
+    /**
+     * After a recital at [stage]: with no word revealed the hints fade a stage (DONE at the last);
+     * up to a third of the hidden words revealed keeps the stage; more brings a hint back.
+     */
+    fun outcome(stage: Int, revealed: Int, hidden: Int): Outcome = when {
+        revealed == 0 -> if (stage >= LAST) Outcome.DONE else Outcome.UP
+        revealed * 3 <= hidden || stage <= 1 -> Outcome.SAME
+        else -> Outcome.DOWN
+    }
+
+    fun next(stage: Int, outcome: Outcome): Int = when (outcome) {
+        Outcome.UP -> (stage + 1).coerceAtMost(LAST)
+        Outcome.DOWN -> (stage - 1).coerceAtLeast(1)
+        Outcome.SAME, Outcome.DONE -> stage
+    }
+}
 
 /** Which words go first as the level rises: a stable shuffle, or the last words first (backward chaining). */
 enum class FadeOrder { RANDOM, FROM_END }
