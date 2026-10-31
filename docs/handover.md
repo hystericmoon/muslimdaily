@@ -5,10 +5,19 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, after 1.7.0 shipped. All earlier Adwam sessions were read and
-archived; everything still open from them is below.
+Last updated: 31 Oct 2026, during the session after 1.7.0 (#89 open). All earlier Adwam
+sessions were read and archived; everything still open from them is below.
 
 ## Decisions waiting on the owner
+
+- **Listening review** (items 3, 4, 5 below and the virtue-hadith question):
+  https://claude.ai/artifact/GzK5Sa2Z61nSEtgDmZcSGy. 34 dua-part proposals (from
+  `split_context.py suggest`, count-note rows left out) and 86 phrase-break proposals (from
+  `segment_audio.py suggest`, status match/close/partial, rows waiting on a split left out).
+  Answers are in its `reviews` collection (`ArtifactData list`), one doc per `<split|seg>__<id>`
+  with `verdict` ok / fix / virtue / later, `note` and the row's `sha`. Apply only `ok` rows whose
+  sha still matches; ask before merging (shipped content). Regenerate the page from
+  fresh suggestions if `duas.csv` changes first.
 
 - **Virtue hadiths shown as duas** (shalawat_01–05, salam_01/03, istighfar_01/02/04/05/06,
   illness_06, travel_09, night_03, tasbih_05): show them as virtue cards instead? Details in
@@ -44,7 +53,7 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
 1. Memorise in focus mode (layout C), once the owner picks it.
-2. Mark missed words in Memorise's Cek step (the next Memorise idea after #79/#80).
+2. Mark missed words in Memorise's Cek step: #89 (open). Merge when CI is green.
 3. Phrase marks (`|`) for the rest: 87 of 323 rows have them. Batch 2 rows that failed the
    timing check need listening (`tools/segment_audio.py`).
 4. Dua/context splits: about 39 of the original 66 proposals are unapplied; 37 Hisn rows still
@@ -56,7 +65,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    cloud sessions, so this needs a session that can reach it, or the owner.
 7. Device passes (need the owner's phone, see Devices): `docs/talkback-checklist.md` T1–T12
    and widget QA `docs/device-qa.md` §5 (5.1–5.4c); no results recorded yet.
-8. Delete the 9 merged `claude/*` branches left on origin (and this session's merged ones).
+8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
+   auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
+   permission rule.
 
 Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05, news_05);
 1.7.0 shows them muted.
@@ -68,6 +79,8 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   `arabic` still carries unvowelled narration (صلى الله عليه وسلم) or basmalah.
 - The English "( 1 )" / "[Soorah …]" are mostly verse numbers and surah headings in the Qur'an
   translations: information, not junk.
+- sunnah.com and api.sunnah.com return 403 from cloud sessions (checked 31 Oct); hadeethenc.com
+  answers 200.
 - `split_context.py` proposals are often wrong (it only drops the narrator); check every row.
   Values are cut from the source between anchors, never typed: see #83's approach.
 - Empty occasions (entering_home, drinking) are already hidden in the library.
