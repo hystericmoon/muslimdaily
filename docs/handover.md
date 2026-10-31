@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, night (1.9.0 released; widget pass recorded; #106 fixed in #109, #107 open). All earlier Adwam
+Last updated: 31 Oct 2026, late night (1.10.0 released: content cleanup, #107 fixed). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -141,15 +141,16 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    cloud sessions; a Mac session can reach sunnah.com.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
    widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
-   launcher. TalkBack T1–T12: skipped by the owner (31 Oct); the Redmi has no working audio,
-   so a later pass belongs on `qa_api37_profile`.
-   Filed from it: #106, fixed by #109 (merged 31 Oct, not released: the first city import
-   now survives a keystroke and shows "Menyiapkan daftar kota…"; add it to What's New with
-   the next release), and #107, open (Android 8–11 widget picker shows two identical
-   entries; options in the issue, owner's call).
-8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
-   auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
-   permission rule.
+   launcher. All three can run on emulators on the Mac (an Android 16 QPR2+ Pixel image for
+   5.4c; install 1.5.0, place the old widget, upgrade, for 5.4; Lawnchair from its GitHub
+   releases for a third-party launcher), told to the owner 31 Oct. TalkBack T1–T12: skipped
+   by the owner (31 Oct); a later pass belongs on `qa_api37_profile`.
+   Filed from it: #106 (fixed by #109) and #107 (fixed by #112: the old receiver is disabled
+   below Android 12, owner's choice); both shipped in 1.10.0.
+8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
+   (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
+   turn on "Automatically delete head branches" in the repo settings and delete the leftover
+   once by hand.
 
 Not to do: the Wear OS app (decided by the owner, 31 Oct). The module is already gone from the
 repo; don't bring it back or plan Wear work.
