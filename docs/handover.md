@@ -104,6 +104,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    Indonesian note (`\x00 \x00 …`). They render under the dua. Strip control characters in
    the importer/build (not by hand); shipped content, so ask before merging.
 
+Not to do: the Wear OS app (decided by the owner, 31 Oct). The module is already gone from the
+repo; don't bring it back or plan Wear work.
+
 Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05, news_05);
 1.7.0 shows them muted.
 
