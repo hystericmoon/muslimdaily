@@ -30,8 +30,10 @@ itself, not from guessed pauses. Venv:
     (a gap of at least MIN_GAP between the two words) and both phrases last at least
     MIN_PHRASE. A segment boundary is the middle of that gap.
 
-A row is applied only when every word is timed, the mean confidence is at least MIN_MEAN and
-no word is below MIN_WORD, so a recording that does not match its text is never cut. Rows that
+A row is applied only when every word is timed, the mean confidence is at least MIN_MEAN and the
+words a cut rests on (first, last, either side of a break) are at least MIN_EDGE, so a recording
+that does not match its text is never cut. A row whose Arabic already has phrase marks (set by
+hand, e.g. one per surah) keeps them; only their times are computed. Rows that
 fail are listed with the reason in review.csv. `apply` refuses rows whose Arabic changed since
 the timings (sha1).
 """
@@ -56,10 +58,11 @@ OUT_DIR = ROOT / "build/align"
 MODEL = "jonatasgrosman/wav2vec2-large-xlsr-53-arabic"
 
 MIN_MEAN = 0.70   # mean word confidence for a row to be cut automatically
-MIN_WORD = 0.15   # no single word below this
+MIN_EDGE = 0.50   # the words a cut rests on (first, last, either side of a break)
 MIN_GAP = 0.18    # seconds between two words for a phrase break there
 MIN_PHRASE = 1.0  # seconds; shorter phrases are merged into the next
 EDGE_PAD = 0.25   # seconds kept before the first and after the last word, at most
+UNREAD = 0.25     # mean confidence below which words outside the dua are not in the recording
 EXTRA = 1.0       # recording beyond the words (seconds) that makes a range worth setting
 
 HARAKAT = re.compile("[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed\u0640]")
@@ -70,7 +73,8 @@ REVIEW_FIELDS = ["id", "status", "reason", "mean", "min", "audio_range", "phrase
 
 
 def words_of(text: str) -> list[str]:
-    return [w for w in text.replace("|", " ").split() if w.strip()]
+    # "،" ":" "؛" run straight into the next word in some entries ("حسد﴾،بسم"); they end a word.
+    return [w for w in re.sub(r"([،:؛])(?=\w)", r"\1 ", text.replace("|", " ")).split() if w.strip()]
 
 
 def letters(word: str) -> str:
@@ -78,7 +82,8 @@ def letters(word: str) -> str:
 
 
 def sha1(text: str) -> str:
-    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:12]
+    """Of the text's words, so phrase marks and spacing do not count as a change."""
+    return hashlib.sha1(" ".join(words_of(text)).encode("utf-8")).hexdigest()[:12]
 
 
 # ---------------------------------------------------------------- step 1: timings (model)
@@ -198,13 +203,31 @@ def propose(row: dict, entry: dict) -> dict:
     scores = [t[2] for t in own]
     mean = sum(scores) / len(scores)
     out["mean"], out["min"] = f"{mean:.2f}", f"{min(scores):.2f}"
-    if mean < MIN_MEAN or min(scores) < MIN_WORD:
-        out["reason"] = f"low confidence (mean {mean:.2f}, min {min(scores):.2f}): the recording may not match"
+    # A clip boundary rests on the first and last word, a phrase break on the two words around it;
+    # those must be sure. A single unsure word elsewhere moves nothing.
+    first, last = span[0], span[-1]
+    others_before = [t[2] for t in timed[:first] if t]
+    others_after = [t[2] for t in timed[last + 1:] if t]
+    # Words the recording does not read (a note it skips) are squeezed in at near-zero confidence:
+    # then that side of the dua is the end of the file, and the dua's own edge words beside them
+    # are dragged down too, so their score says nothing.
+    unread_after = bool(others_after) and sum(others_after) / len(others_after) < UNREAD
+    unread_before = bool(others_before) and sum(others_before) / len(others_before) < UNREAD
+    sure_first = scores[0] >= MIN_EDGE or not others_before or unread_before
+    sure_last = scores[-1] >= MIN_EDGE or not others_after or unread_after
+    if unread_after or unread_before:
+        own_sure = [t[2] for t in own[1 if unread_before else 0:len(own) - (3 if unread_after else 0)]]
+        mean = sum(own_sure) / len(own_sure) if own_sure else 0.0
+        out["mean"] = f"{mean:.2f}"
+    # For a dhikr of three words or fewer an average says little; its two sure edges are enough.
+    if (mean < MIN_MEAN and len(scores) > 3) or not (sure_first and sure_last):
+        out["reason"] = f"low confidence (mean {mean:.2f}, edges {scores[0]:.2f}/{scores[-1]:.2f}): the recording may not match"
         return out
     # clip range
-    first, last = span[0], span[-1]
-    before = next((timed[i][1] for i in range(first - 1, -1, -1) if timed[i]), 0.0)
-    after = next((timed[i][0] for i in range(last + 1, len(timed)) if timed[i]), entry["duration"])
+    before = 0.0 if unread_before else next((timed[i][1] for i in range(first - 1, -1, -1) if timed[i]), 0.0)
+    after = entry["duration"] if unread_after else next((timed[i][0] for i in range(last + 1, len(timed)) if timed[i]), entry["duration"])
+    if unread_after:  # the dua runs to the end of the recording
+        timed = [*timed[:last], [timed[last][0], entry["duration"] - EDGE_PAD, timed[last][2]], *timed[last + 1:]]
     a = max(before, timed[first][0] - EDGE_PAD, (before + timed[first][0]) / 2 if first > 0 else 0.0)
     b = min(after, timed[last][1] + EDGE_PAD, (timed[last][1] + after) / 2 if after < entry["duration"] else entry["duration"])
     a, b = round(max(0.0, a), 2), round(b, 2)
@@ -213,7 +236,10 @@ def propose(row: dict, entry: dict) -> dict:
     rng = f"{a:.2f}-{b:.2f}" if (has_range or full or extra > EXTRA) else ""
     seg_from, seg_to = (a, b) if rng else (0.0, entry["duration"])
     # phrase breaks: existing punctuation, with a pause at it
-    spaces = sa.break_candidates(arabic)
+    fixed = "|" in row["arabic"]
+    spaces = bc.split_phrases(row["arabic"])[1] if fixed else sa.break_candidates(arabic)
+    if fixed:  # split_phrases gives where phrases start; the space is just before
+        spaces = [b - 1 for b in spaces]
     # word index ending before each space
     ends_at, pos = {}, 0
     for wi, w in enumerate(arabic.split(" ")):
@@ -234,18 +260,21 @@ def propose(row: dict, entry: dict) -> dict:
         if prv is None or prv < 0 or nxt not in to_timed:
             continue
         gap_a, gap_b = to_timed[prv][1], to_timed[nxt][0]
-        if gap_b - gap_a < MIN_GAP:
-            continue
+        sure = min(to_timed[prv][2], to_timed[nxt][2]) >= MIN_EDGE
         cut = round((gap_a + gap_b) / 2, 2)
-        if cut - last_cut < MIN_PHRASE:
+        if fixed:
+            if not sure:
+                out["reason"] = "a hand-set phrase break sits on an unsure word"
+                return out
+        elif gap_b - gap_a < MIN_GAP or not sure or cut - last_cut < MIN_PHRASE:
             continue
         chosen.append(s); bounds.append(cut); last_cut = cut
-    if bounds and seg_to - bounds[-1] < MIN_PHRASE:
+    if bounds and not fixed and seg_to - bounds[-1] < MIN_PHRASE:
         chosen.pop(); bounds.pop()
     out["audio_range"] = rng
     if chosen:
         edges = [seg_from] + bounds + [seg_to]
-        out["arabic_marked"] = sa.mark(arabic, chosen)
+        out["arabic_marked"] = row["arabic"] if fixed else sa.mark(arabic, chosen)
         out["audio_segments"] = "; ".join(f"{x:.2f}-{y:.2f}" for x, y in zip(edges, edges[1:]))
     out["phrases"] = str(len(chosen) + 1)
     out["status"] = "ok"

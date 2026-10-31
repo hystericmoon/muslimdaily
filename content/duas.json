@@ -1,5 +1,5 @@
 {
-  "content_version": 37,
+  "content_version": 38,
   "duas": [
     {
       "id": "wake_01",
@@ -34,9 +34,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_001.opus",
-        "segments": []
+        "segments": [
+          [
+            1.67,
+            11.08
+          ],
+          [
+            11.08,
+            13.15
+          ]
+        ],
+        "range": [
+          1.67,
+          13.15
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        59
+      ]
     },
     {
       "id": "wake_02",
@@ -71,9 +86,59 @@
       "virtue": null,
       "audio": {
         "file": "hisn_002.opus",
-        "segments": []
+        "segments": [
+          [
+            0.55,
+            5.67
+          ],
+          [
+            5.67,
+            8.87
+          ],
+          [
+            8.87,
+            12.59
+          ],
+          [
+            12.59,
+            14.92
+          ],
+          [
+            14.92,
+            17.43
+          ],
+          [
+            17.43,
+            20.71
+          ],
+          [
+            20.71,
+            23.01
+          ],
+          [
+            23.01,
+            29.04
+          ],
+          [
+            29.04,
+            30.81
+          ]
+        ],
+        "range": [
+          0.55,
+          30.81
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        52,
+        85,
+        120,
+        139,
+        159,
+        188,
+        207,
+        274
+      ]
     },
     {
       "id": "wake_03",
@@ -250,7 +315,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_010.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.17,
+          11.54
+        ]
       },
       "phrase_breaks": []
     },
@@ -287,7 +356,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_011.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.95,
+          6.39
+        ]
       },
       "phrase_breaks": []
     },
@@ -328,7 +401,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_012.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.45,
+          8.66
+        ]
       },
       "phrase_breaks": []
     },
@@ -394,7 +471,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_014.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.99,
+          6.64
+        ]
       },
       "phrase_breaks": []
     },
@@ -484,7 +565,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_005.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.07,
+          14.19
+        ]
       },
       "phrase_breaks": []
     },
@@ -525,9 +610,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_006.opus",
-        "segments": []
+        "segments": [
+          [
+            1.13,
+            9.77
+          ],
+          [
+            9.77,
+            14.87
+          ],
+          [
+            14.87,
+            19.71
+          ]
+        ],
+        "range": [
+          1.13,
+          19.71
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        48,
+        99
+      ]
     },
     {
       "id": "dress_03",
@@ -558,7 +663,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_007.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.4,
+          9.7
+        ]
       },
       "phrase_breaks": []
     },
@@ -595,7 +704,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_008.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.43,
+          6.36
+        ]
       },
       "phrase_breaks": []
     },
@@ -632,7 +745,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_009.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.8,
+          7.02
+        ]
       },
       "phrase_breaks": []
     },
@@ -776,9 +893,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_209.opus",
-        "segments": []
+        "segments": [
+          [
+            5.71,
+            10.89
+          ],
+          [
+            10.89,
+            14.11
+          ],
+          [
+            14.11,
+            16.71
+          ],
+          [
+            16.71,
+            19.73
+          ],
+          [
+            19.73,
+            23.99
+          ]
+        ],
+        "range": [
+          5.71,
+          23.99
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53,
+        87,
+        106,
+        132
+      ]
     },
     {
       "id": "to_masjid_01",
@@ -809,9 +956,134 @@
       "virtue": null,
       "audio": {
         "file": "hisn_019.opus",
-        "segments": []
+        "segments": [
+          [
+            0.91,
+            8.92
+          ],
+          [
+            8.92,
+            12.57
+          ],
+          [
+            12.57,
+            15.79
+          ],
+          [
+            15.79,
+            18.91
+          ],
+          [
+            18.91,
+            21.99
+          ],
+          [
+            21.99,
+            24.85
+          ],
+          [
+            24.85,
+            27.91
+          ],
+          [
+            27.91,
+            31.12
+          ],
+          [
+            31.12,
+            33.98
+          ],
+          [
+            33.98,
+            36.96
+          ],
+          [
+            36.96,
+            40.44
+          ],
+          [
+            40.44,
+            43.44
+          ],
+          [
+            43.44,
+            46.41
+          ],
+          [
+            46.41,
+            49.28
+          ],
+          [
+            49.28,
+            52.66
+          ],
+          [
+            52.66,
+            56.02
+          ],
+          [
+            56.02,
+            59.8
+          ],
+          [
+            59.8,
+            63.08
+          ],
+          [
+            63.08,
+            66.13
+          ],
+          [
+            66.13,
+            69.45
+          ],
+          [
+            69.45,
+            77.32
+          ],
+          [
+            77.32,
+            83.35
+          ],
+          [
+            83.35,
+            86.22
+          ],
+          [
+            86.22,
+            92.8
+          ]
+        ],
+        "range": [
+          0.91,
+          92.8
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        40,
+        63,
+        85,
+        107,
+        130,
+        153,
+        177,
+        201,
+        225,
+        248,
+        278,
+        301,
+        322,
+        344,
+        365,
+        394,
+        424,
+        446,
+        466,
+        488,
+        556,
+        599,
+        617
+      ]
     },
     {
       "id": "enter_masjid_01",
@@ -843,13 +1115,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_020.opus",
-        "segments": [],
+        "segments": [
+          [
+            5.37,
+            8.07
+          ],
+          [
+            8.07,
+            10.92
+          ],
+          [
+            10.92,
+            13.97
+          ],
+          [
+            13.97,
+            18.7
+          ],
+          [
+            18.7,
+            26.52
+          ]
+        ],
         "range": [
-          5.14,
-          26.51
+          5.37,
+          26.52
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        31,
+        56,
+        82,
+        130
+      ]
     },
     {
       "id": "leave_masjid_01",
@@ -881,13 +1179,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_021.opus",
-        "segments": [],
+        "segments": [
+          [
+            5.45,
+            11.2
+          ],
+          [
+            11.2,
+            15.06
+          ],
+          [
+            15.06,
+            19.03
+          ]
+        ],
         "range": [
-          3.34,
-          19.07
+          5.45,
+          19.03
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        63,
+        106
+      ]
     },
     {
       "id": "adhan_01",
@@ -922,9 +1236,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_022.opus",
-        "segments": []
+        "segments": [
+          [
+            5.95,
+            14.57
+          ],
+          [
+            14.57,
+            18.26
+          ]
+        ],
+        "range": [
+          5.95,
+          18.26
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        112
+      ],
       "kind": "hadith"
     },
     {
@@ -961,9 +1290,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_023.opus",
-        "segments": []
+        "segments": [
+          [
+            0.79,
+            10.71
+          ],
+          [
+            10.71,
+            13.53
+          ],
+          [
+            13.53,
+            16.31
+          ],
+          [
+            16.31,
+            18.76
+          ]
+        ],
+        "range": [
+          0.79,
+          18.76
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        115,
+        142,
+        166
+      ]
     },
     {
       "id": "adhan_03",
@@ -994,7 +1348,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_024.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.81,
+          6.96
+        ]
       },
       "phrase_breaks": [],
       "kind": "hadith"
@@ -1029,13 +1387,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_025.opus",
-        "segments": [],
+        "segments": [
+          [
+            3.51,
+            6.86
+          ],
+          [
+            6.86,
+            9.44
+          ],
+          [
+            9.44,
+            13.82
+          ],
+          [
+            13.82,
+            18.67
+          ],
+          [
+            18.67,
+            21.94
+          ]
+        ],
         "range": [
-          2.9,
-          21.95
+          3.51,
+          21.94
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        49,
+        76,
+        120,
+        172
+      ]
     },
     {
       "id": "adhan_05",
@@ -1074,7 +1458,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_026.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.77,
+          7.61
+        ]
       },
       "phrase_breaks": []
     },
@@ -1116,7 +1504,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_178.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.84,
+          7.83
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -1161,7 +1553,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_178.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          11.86,
+          14.97
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -1202,7 +1598,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_179.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.31,
+          9.86
+        ]
       },
       "phrase_breaks": []
     },
@@ -1240,7 +1640,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_179.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          14.82,
+          19.29
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -1280,9 +1684,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_180.opus",
-        "segments": []
+        "segments": [
+          [
+            1.63,
+            10.35
+          ],
+          [
+            10.35,
+            11.87
+          ],
+          [
+            11.87,
+            15.9
+          ]
+        ],
+        "range": [
+          1.63,
+          15.9
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        45,
+        60
+      ]
     },
     {
       "id": "eating_04",
@@ -1449,9 +1873,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_187.opus",
-        "segments": []
+        "segments": [
+          [
+            2.19,
+            10.36
+          ],
+          [
+            10.36,
+            14.18
+          ],
+          [
+            14.18,
+            17.7
+          ],
+          [
+            17.7,
+            20.97
+          ]
+        ],
+        "range": [
+          2.19,
+          20.97
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        40,
+        74,
+        104
+      ]
     },
     {
       "id": "sneeze_01",
@@ -1487,7 +1936,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_188.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.6,
+          6.73
+        ]
       },
       "phrase_breaks": []
     },
@@ -1525,7 +1978,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_188.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          11.39,
+          12.99
+        ]
       },
       "phrase_breaks": []
     },
@@ -1566,7 +2023,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_189.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.37,
+          10.06
+        ]
       },
       "phrase_breaks": []
     },
@@ -1608,7 +2069,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_099.opus",
-        "segments": []
+        "segments": [
+          [
+            10.66,
+            30.49
+          ],
+          [
+            30.49,
+            60.19
+          ],
+          [
+            60.19,
+            98.54
+          ]
+        ],
+        "range": [
+          10.66,
+          98.54
+        ]
       },
       "phrase_breaks": [
         135,
@@ -1735,9 +2213,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_102.opus",
-        "segments": []
+        "segments": [
+          [
+            0.41,
+            3.5
+          ],
+          [
+            3.5,
+            6.0
+          ],
+          [
+            6.0,
+            9.45
+          ],
+          [
+            9.45,
+            12.21
+          ],
+          [
+            12.21,
+            15.67
+          ]
+        ],
+        "range": [
+          0.41,
+          15.67
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        35,
+        54,
+        92,
+        127
+      ]
     },
     {
       "id": "sleep_05",
@@ -1838,7 +2346,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_104.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.59,
+          4.84
+        ]
       },
       "phrase_breaks": []
     },
@@ -1917,7 +2429,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_106.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.55,
+          2.15
+        ]
       },
       "phrase_breaks": []
     },
@@ -1959,7 +2475,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_106.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.31,
+          7.11
+        ]
       },
       "phrase_breaks": []
     },
@@ -2001,7 +2521,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_106.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          10.67,
+          12.4
+        ]
       },
       "phrase_breaks": []
     },
@@ -2034,9 +2558,60 @@
       "virtue": null,
       "audio": {
         "file": "hisn_107.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.29
+          ],
+          [
+            5.29,
+            9.04
+          ],
+          [
+            9.04,
+            12.51
+          ],
+          [
+            12.51,
+            17.77
+          ],
+          [
+            17.77,
+            24.54
+          ],
+          [
+            24.54,
+            29.52
+          ],
+          [
+            29.52,
+            34.27
+          ],
+          [
+            34.27,
+            38.85
+          ],
+          [
+            38.85,
+            43.69
+          ],
+          [
+            43.69,
+            48.9
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        88,
+        119,
+        148,
+        204,
+        269,
+        323,
+        365,
+        411,
+        456
+      ]
     },
     {
       "id": "sleep_10",
@@ -2067,9 +2642,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_108.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.49
+          ],
+          [
+            4.49,
+            6.58
+          ],
+          [
+            6.58,
+            8.64
+          ],
+          [
+            8.64,
+            13.98
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        50,
+        62,
+        73
+      ]
     },
     {
       "id": "sleep_11",
@@ -2100,9 +2696,40 @@
       "virtue": null,
       "audio": {
         "file": "hisn_109.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.0
+          ],
+          [
+            7.0,
+            10.39
+          ],
+          [
+            10.39,
+            14.69
+          ],
+          [
+            14.69,
+            20.0
+          ],
+          [
+            20.0,
+            23.57
+          ],
+          [
+            23.57,
+            26.96
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        77,
+        109,
+        149,
+        219,
+        259
+      ]
     },
     {
       "id": "sleep_12",
@@ -2317,9 +2944,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_113.opus",
-        "segments": []
+        "segments": [
+          [
+            8.05,
+            14.17
+          ],
+          [
+            14.17,
+            16.72
+          ],
+          [
+            16.72,
+            21.38
+          ]
+        ],
+        "range": [
+          8.05,
+          21.38
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        68,
+        87
+      ]
     },
     {
       "id": "night_03",
@@ -2384,7 +3031,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_115.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.83,
+          4.34
+        ]
       },
       "phrase_breaks": []
     },
@@ -2421,9 +3072,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_027.opus",
-        "segments": []
+        "segments": [
+          [
+            5.97,
+            13.82
+          ],
+          [
+            13.82,
+            21.63
+          ],
+          [
+            21.63,
+            25.04
+          ],
+          [
+            25.04,
+            27.84
+          ]
+        ],
+        "range": [
+          5.97,
+          27.84
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        97,
+        186,
+        224
+      ]
     },
     {
       "id": "istiftah_02",
@@ -2508,9 +3184,89 @@
       "virtue": null,
       "audio": {
         "file": "hisn_029.opus",
-        "segments": []
+        "segments": [
+          [
+            1.15,
+            9.21
+          ],
+          [
+            9.21,
+            17.06
+          ],
+          [
+            17.06,
+            23.47
+          ],
+          [
+            23.47,
+            28.8
+          ],
+          [
+            28.8,
+            31.94
+          ],
+          [
+            31.94,
+            42.91
+          ],
+          [
+            42.91,
+            50.79
+          ],
+          [
+            50.79,
+            54.27
+          ],
+          [
+            54.27,
+            59.64
+          ],
+          [
+            59.64,
+            62.86
+          ],
+          [
+            62.86,
+            66.51
+          ],
+          [
+            66.51,
+            69.52
+          ],
+          [
+            69.52,
+            72.12
+          ],
+          [
+            72.12,
+            75.58
+          ],
+          [
+            75.58,
+            78.94
+          ]
+        ],
+        "range": [
+          1.15,
+          78.94
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        102,
+        182,
+        248,
+        301,
+        333,
+        452,
+        525,
+        554,
+        600,
+        624,
+        662,
+        701,
+        724,
+        750
+      ]
     },
     {
       "id": "istiftah_04",
@@ -2541,9 +3297,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_030.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.11
+          ],
+          [
+            6.11,
+            10.03
+          ],
+          [
+            10.03,
+            19.71
+          ],
+          [
+            19.71,
+            29.96
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        63,
+        96,
+        197
+      ]
     },
     {
       "id": "istiftah_05",
@@ -2581,9 +3358,110 @@
       "virtue": null,
       "audio": {
         "file": "hisn_032.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            2.99
+          ],
+          [
+            2.99,
+            8.23
+          ],
+          [
+            8.23,
+            16.06
+          ],
+          [
+            16.06,
+            39.87
+          ],
+          [
+            39.87,
+            42.31
+          ],
+          [
+            42.31,
+            44.73
+          ],
+          [
+            44.73,
+            47.5
+          ],
+          [
+            47.5,
+            50.2
+          ],
+          [
+            50.2,
+            52.61
+          ],
+          [
+            52.61,
+            55.27
+          ],
+          [
+            55.27,
+            59.95
+          ],
+          [
+            59.95,
+            64.69
+          ],
+          [
+            64.69,
+            67.56
+          ],
+          [
+            67.56,
+            70.14
+          ],
+          [
+            70.14,
+            72.64
+          ],
+          [
+            72.64,
+            75.12
+          ],
+          [
+            75.12,
+            77.68
+          ],
+          [
+            77.68,
+            80.59
+          ],
+          [
+            80.59,
+            81.89
+          ],
+          [
+            81.89,
+            96.39
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        27,
+        81,
+        154,
+        390,
+        411,
+        432,
+        453,
+        473,
+        491,
+        514,
+        551,
+        598,
+        622,
+        638,
+        659,
+        676,
+        697,
+        726,
+        743
+      ]
     },
     {
       "id": "ruku_01",
@@ -2625,8 +3503,8 @@
         "file": "hisn_033.opus",
         "segments": [],
         "range": [
-          0.41,
-          5.22
+          5.25,
+          7.7
         ]
       },
       "phrase_breaks": []
@@ -2712,9 +3590,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_035.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            2.13
+          ],
+          [
+            2.13,
+            3.77
+          ],
+          [
+            3.77,
+            6.11
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        11,
+        21
+      ]
     },
     {
       "id": "ruku_04",
@@ -2753,9 +3647,44 @@
       "virtue": null,
       "audio": {
         "file": "hisn_036.opus",
-        "segments": []
+        "segments": [
+          [
+            0.03,
+            2.27
+          ],
+          [
+            2.27,
+            4.76
+          ],
+          [
+            4.76,
+            7.2
+          ],
+          [
+            7.2,
+            9.23
+          ],
+          [
+            9.23,
+            13.05
+          ],
+          [
+            13.05,
+            15.99
+          ]
+        ],
+        "range": [
+          0.03,
+          15.99
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        26,
+        42,
+        61,
+        82,
+        129
+      ]
     },
     {
       "id": "ruku_05",
@@ -2794,7 +3723,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_037.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.59,
+          6.37
+        ]
       },
       "phrase_breaks": []
     },
@@ -2827,7 +3760,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_038.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.38,
+          7.79
+        ]
       },
       "phrase_breaks": []
     },
@@ -2993,8 +3930,8 @@
         "file": "hisn_041.opus",
         "segments": [],
         "range": [
-          0.27,
-          4.76
+          4.81,
+          7.23
         ]
       },
       "phrase_breaks": []
@@ -3076,9 +4013,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_043.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            1.88
+          ],
+          [
+            1.88,
+            3.18
+          ],
+          [
+            3.18,
+            6.06
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        8,
+        18
+      ]
     },
     {
       "id": "sujud_04",
@@ -3113,9 +4066,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_044.opus",
-        "segments": []
+        "segments": [
+          [
+            0.85,
+            5.24
+          ],
+          [
+            5.24,
+            7.62
+          ],
+          [
+            7.62,
+            10.48
+          ],
+          [
+            10.48,
+            11.97
+          ],
+          [
+            11.97,
+            19.15
+          ]
+        ],
+        "range": [
+          0.85,
+          19.15
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        41,
+        60,
+        95,
+        108
+      ]
     },
     {
       "id": "sujud_05",
@@ -3154,7 +4137,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_045.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.69,
+          6.36
+        ]
       },
       "phrase_breaks": []
     },
@@ -3401,9 +4388,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_052.opus",
-        "segments": []
+        "segments": [
+          [
+            6.82,
+            9.11
+          ],
+          [
+            9.11,
+            12.88
+          ],
+          [
+            12.88,
+            18.76
+          ],
+          [
+            18.76,
+            24.4
+          ],
+          [
+            24.4,
+            32.95
+          ]
+        ],
+        "range": [
+          6.82,
+          32.95
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        23,
+        54,
+        128,
+        188
+      ]
     },
     {
       "id": "tashahhud_02",
@@ -3434,9 +4451,45 @@
       "virtue": null,
       "audio": {
         "file": "hisn_053.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            11.3
+          ],
+          [
+            11.3,
+            14.02
+          ],
+          [
+            14.02,
+            19.77
+          ],
+          [
+            19.77,
+            23.01
+          ],
+          [
+            23.01,
+            28.77
+          ],
+          [
+            28.77,
+            34.3
+          ],
+          [
+            34.3,
+            37.33
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        34,
+        57,
+        118,
+        143,
+        201,
+        262
+      ]
     },
     {
       "id": "tashahhud_03",
@@ -3471,9 +4524,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_054.opus",
-        "segments": []
+        "segments": [
+          [
+            0.69,
+            6.21
+          ],
+          [
+            6.21,
+            10.34
+          ],
+          [
+            10.34,
+            16.09
+          ],
+          [
+            16.09,
+            20.23
+          ],
+          [
+            20.23,
+            22.91
+          ]
+        ],
+        "range": [
+          0.69,
+          22.91
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        69,
+        109,
+        170,
+        210
+      ]
     },
     {
       "id": "tashahhud_04",
@@ -3508,9 +4591,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_055.opus",
-        "segments": []
+        "segments": [
+          [
+            8.45,
+            12.65
+          ],
+          [
+            12.65,
+            15.95
+          ],
+          [
+            15.95,
+            19.9
+          ],
+          [
+            19.9,
+            23.58
+          ]
+        ],
+        "range": [
+          8.45,
+          23.58
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        57,
+        83,
+        124
+      ]
     },
     {
       "id": "tashahhud_05",
@@ -3657,9 +4765,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_058.opus",
-        "segments": []
+        "segments": [
+          [
+            0.57,
+            4.98
+          ],
+          [
+            4.98,
+            8.79
+          ],
+          [
+            8.79,
+            10.93
+          ],
+          [
+            10.93,
+            14.93
+          ],
+          [
+            14.93,
+            22.06
+          ]
+        ],
+        "range": [
+          0.57,
+          22.06
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        55,
+        91,
+        109,
+        144
+      ]
     },
     {
       "id": "tashahhud_08",
@@ -3694,7 +4832,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_059.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.03,
+          5.92
+        ]
       },
       "phrase_breaks": []
     },
@@ -3818,9 +4960,79 @@
       "virtue": null,
       "audio": {
         "file": "hisn_062.opus",
-        "segments": []
+        "segments": [
+          [
+            0.19,
+            10.43
+          ],
+          [
+            10.43,
+            16.0
+          ],
+          [
+            16.0,
+            21.66
+          ],
+          [
+            21.66,
+            26.77
+          ],
+          [
+            26.77,
+            31.49
+          ],
+          [
+            31.49,
+            35.05
+          ],
+          [
+            35.05,
+            39.25
+          ],
+          [
+            39.25,
+            43.63
+          ],
+          [
+            43.63,
+            48.12
+          ],
+          [
+            48.12,
+            58.35
+          ],
+          [
+            58.35,
+            62.08
+          ],
+          [
+            62.08,
+            66.54
+          ],
+          [
+            66.54,
+            69.99
+          ]
+        ],
+        "range": [
+          0.19,
+          69.99
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        106,
+        158,
+        228,
+        285,
+        334,
+        370,
+        414,
+        455,
+        507,
+        611,
+        637,
+        679
+      ]
     },
     {
       "id": "tashahhud_12",
@@ -3908,9 +5120,30 @@
       "virtue": null,
       "audio": {
         "file": "hisn_064.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            9.58
+          ],
+          [
+            9.58,
+            11.92
+          ],
+          [
+            11.92,
+            19.01
+          ],
+          [
+            19.01,
+            28.0
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        104,
+        117,
+        189
+      ]
     },
     {
       "id": "tashahhud_14",
@@ -3979,7 +5212,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_066.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.17,
+          4.59
+        ]
       },
       "phrase_breaks": []
     },
@@ -4017,9 +5254,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_066.opus",
-        "segments": []
+        "segments": [
+          [
+            13.0,
+            16.51
+          ],
+          [
+            16.51,
+            20.26
+          ]
+        ],
+        "range": [
+          13.0,
+          20.26
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        51
+      ]
     },
     {
       "id": "after_salah_02",
@@ -4113,9 +5365,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_068.opus",
-        "segments": []
+        "segments": [
+          [
+            0.95,
+            11.61
+          ],
+          [
+            11.61,
+            18.78
+          ],
+          [
+            18.78,
+            27.45
+          ],
+          [
+            27.45,
+            35.08
+          ]
+        ],
+        "range": [
+          0.95,
+          35.08
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        121,
+        191,
+        286
+      ]
     },
     {
       "id": "after_salah_04",
@@ -4151,9 +5428,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_069.opus",
-        "segments": []
+        "segments": [
+          [
+            0.27,
+            2.09
+          ],
+          [
+            2.09,
+            4.46
+          ],
+          [
+            4.46,
+            6.29
+          ]
+        ],
+        "range": [
+          0.27,
+          6.29
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        19,
+        40
+      ]
     },
     {
       "id": "after_salah_10",
@@ -4189,9 +5486,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_069.opus",
-        "segments": []
+        "segments": [
+          [
+            13.36,
+            18.13
+          ],
+          [
+            18.13,
+            23.2
+          ]
+        ],
+        "range": [
+          13.36,
+          23.2
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53
+      ]
     },
     {
       "id": "after_salah_05",
@@ -4231,7 +5543,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_070.opus",
-        "segments": []
+        "segments": [
+          [
+            0.01,
+            19.87
+          ],
+          [
+            19.87,
+            49.56
+          ],
+          [
+            49.56,
+            87.93
+          ]
+        ],
+        "range": [
+          0.01,
+          87.93
+        ]
       },
       "phrase_breaks": [
         136,
@@ -4277,9 +5606,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_071.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            56.04
+          ],
+          [
+            56.04,
+            58.88
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        396
+      ],
       "translations_from": {
         "en": "row:morning_01"
       }
@@ -4372,9 +5712,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_073.opus",
-        "segments": []
+        "segments": [
+          [
+            1.15,
+            4.62
+          ],
+          [
+            4.62,
+            7.23
+          ],
+          [
+            7.23,
+            13.14
+          ]
+        ],
+        "range": [
+          1.15,
+          13.14
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        48,
+        68
+      ]
     },
     {
       "id": "witr_01",
@@ -4496,9 +5856,35 @@
       "virtue": null,
       "audio": {
         "file": "hisn_117.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            4.26
+          ],
+          [
+            4.26,
+            8.5
+          ],
+          [
+            8.5,
+            10.89
+          ],
+          [
+            10.89,
+            13.91
+          ],
+          [
+            13.91,
+            17.87
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        51,
+        86,
+        113,
+        143
+      ]
     },
     {
       "id": "witr_03",
@@ -4533,9 +5919,74 @@
       "virtue": null,
       "audio": {
         "file": "hisn_118.opus",
-        "segments": []
+        "segments": [
+          [
+            0.73,
+            3.32
+          ],
+          [
+            3.32,
+            6.65
+          ],
+          [
+            6.65,
+            10.02
+          ],
+          [
+            10.02,
+            12.5
+          ],
+          [
+            12.5,
+            15.24
+          ],
+          [
+            15.24,
+            20.17
+          ],
+          [
+            20.17,
+            24.73
+          ],
+          [
+            24.73,
+            27.81
+          ],
+          [
+            27.81,
+            30.03
+          ],
+          [
+            30.03,
+            32.0
+          ],
+          [
+            32.0,
+            33.77
+          ],
+          [
+            33.77,
+            36.29
+          ]
+        ],
+        "range": [
+          0.73,
+          36.29
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        29,
+        57,
+        88,
+        108,
+        129,
+        170,
+        220,
+        250,
+        268,
+        285,
+        302
+      ]
     },
     {
       "id": "witr_04",
@@ -4776,9 +6227,80 @@
       "virtue": null,
       "audio": {
         "file": "hisn_076.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.68
+          ],
+          [
+            5.68,
+            9.08
+          ],
+          [
+            9.08,
+            12.11
+          ],
+          [
+            12.11,
+            15.57
+          ],
+          [
+            15.57,
+            19.98
+          ],
+          [
+            19.98,
+            25.09
+          ],
+          [
+            25.09,
+            29.7
+          ],
+          [
+            29.7,
+            33.44
+          ],
+          [
+            33.44,
+            38.52
+          ],
+          [
+            38.52,
+            44.67
+          ],
+          [
+            44.67,
+            49.65
+          ],
+          [
+            49.65,
+            54.94
+          ],
+          [
+            54.94,
+            64.61
+          ],
+          [
+            64.61,
+            90.78
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        23,
+        51,
+        71,
+        100,
+        135,
+        158,
+        192,
+        215,
+        250,
+        293,
+        327,
+        350,
+        401
+      ]
     },
     {
       "id": "morning_03",
@@ -4810,9 +6332,54 @@
       "virtue": null,
       "audio": {
         "file": "hisn_077.opus",
-        "segments": []
+        "segments": [
+          [
+            0.75,
+            4.22
+          ],
+          [
+            4.22,
+            6.62
+          ],
+          [
+            6.62,
+            11.72
+          ],
+          [
+            11.72,
+            17.34
+          ],
+          [
+            17.34,
+            23.46
+          ],
+          [
+            23.46,
+            29.34
+          ],
+          [
+            29.34,
+            35.15
+          ],
+          [
+            35.15,
+            40.68
+          ]
+        ],
+        "range": [
+          0.75,
+          40.68
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        43,
+        64,
+        116,
+        183,
+        254,
+        326,
+        379
+      ]
     },
     {
       "id": "morning_04",
@@ -4847,13 +6414,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_078.opus",
-        "segments": [],
+        "segments": [
+          [
+            1.03,
+            3.59
+          ],
+          [
+            3.59,
+            6.1
+          ],
+          [
+            6.1,
+            7.83
+          ],
+          [
+            7.83,
+            11.52
+          ]
+        ],
         "range": [
-          1.17,
-          12.22
+          1.03,
+          11.52
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        29,
+        50,
+        66
+      ]
     },
     {
       "id": "morning_05",
@@ -5038,9 +6626,55 @@
       "virtue": null,
       "audio": {
         "file": "hisn_084.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.95
+          ],
+          [
+            5.95,
+            10.06
+          ],
+          [
+            10.06,
+            14.65
+          ],
+          [
+            14.65,
+            17.93
+          ],
+          [
+            17.93,
+            21.32
+          ],
+          [
+            21.32,
+            25.91
+          ],
+          [
+            25.91,
+            29.45
+          ],
+          [
+            29.45,
+            31.69
+          ],
+          [
+            31.69,
+            35.92
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        82,
+        137,
+        181,
+        212,
+        232,
+        290,
+        324,
+        340
+      ]
     },
     {
       "id": "morning_08",
@@ -5141,7 +6775,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_086.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.15,
+          10.88
+        ]
       },
       "phrase_breaks": []
     },
@@ -5182,7 +6820,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_088.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.81,
+          14.4
+        ]
       },
       "phrase_breaks": []
     },
@@ -5219,13 +6861,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_090.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.39,
+            4.09
+          ],
+          [
+            4.09,
+            7.51
+          ],
+          [
+            7.51,
+            13.63
+          ],
+          [
+            13.63,
+            22.96
+          ]
+        ],
         "range": [
-          0.53,
-          19.53
+          0.39,
+          22.96
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        40,
+        71,
+        126
+      ]
     },
     {
       "id": "morning_12",
@@ -5260,7 +6923,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_091.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.01,
+          2.68
+        ]
       },
       "phrase_breaks": []
     },
@@ -5306,13 +6973,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_092.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.0,
+            4.78
+          ],
+          [
+            4.78,
+            7.95
+          ],
+          [
+            7.95,
+            10.96
+          ]
+        ],
         "range": [
-          0.01,
-          11.71
+          0.0,
+          10.96
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53,
+        86
+      ]
     },
     {
       "id": "morning_14",
@@ -5405,13 +7088,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_094.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.15,
+            2.83
+          ],
+          [
+            2.83,
+            4.84
+          ],
+          [
+            4.84,
+            6.98
+          ],
+          [
+            6.98,
+            9.13
+          ],
+          [
+            9.13,
+            11.51
+          ]
+        ],
         "range": [
-          0.27,
-          12.1
+          0.15,
+          11.51
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        32,
+        49,
+        67,
+        86
+      ]
     },
     {
       "id": "morning_16",
@@ -5449,9 +7158,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_095.opus",
-        "segments": []
+        "segments": [
+          [
+            0.47,
+            3.9
+          ],
+          [
+            3.9,
+            6.55
+          ],
+          [
+            6.55,
+            11.08
+          ]
+        ],
+        "range": [
+          0.47,
+          11.08
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        47,
+        67
+      ]
     },
     {
       "id": "morning_17",
@@ -5492,8 +7221,8 @@
         "file": "hisn_096.opus",
         "segments": [],
         "range": [
-          0.71,
-          4.64
+          0.59,
+          3.78
         ]
       },
       "phrase_breaks": []
@@ -5534,7 +7263,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_098.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.55,
+          4.52
+        ]
       },
       "phrase_breaks": []
     },
@@ -5615,9 +7348,80 @@
       "virtue": null,
       "audio": {
         "file": "hisn_076.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.68
+          ],
+          [
+            5.68,
+            9.08
+          ],
+          [
+            9.08,
+            12.11
+          ],
+          [
+            12.11,
+            15.57
+          ],
+          [
+            15.57,
+            19.98
+          ],
+          [
+            19.98,
+            25.09
+          ],
+          [
+            25.09,
+            29.7
+          ],
+          [
+            29.7,
+            33.44
+          ],
+          [
+            33.44,
+            38.52
+          ],
+          [
+            38.52,
+            44.67
+          ],
+          [
+            44.67,
+            49.65
+          ],
+          [
+            49.65,
+            54.94
+          ],
+          [
+            54.94,
+            64.61
+          ],
+          [
+            64.61,
+            90.78
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        23,
+        51,
+        71,
+        100,
+        135,
+        158,
+        192,
+        215,
+        250,
+        293,
+        327,
+        350,
+        401
+      ]
     },
     {
       "id": "evening_03",
@@ -5649,9 +7453,54 @@
       "virtue": null,
       "audio": {
         "file": "hisn_077.opus",
-        "segments": []
+        "segments": [
+          [
+            0.75,
+            4.22
+          ],
+          [
+            4.22,
+            6.62
+          ],
+          [
+            6.62,
+            11.72
+          ],
+          [
+            11.72,
+            17.34
+          ],
+          [
+            17.34,
+            23.46
+          ],
+          [
+            23.46,
+            29.34
+          ],
+          [
+            29.34,
+            35.15
+          ],
+          [
+            35.15,
+            40.68
+          ]
+        ],
+        "range": [
+          0.75,
+          40.68
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        43,
+        64,
+        116,
+        183,
+        254,
+        326,
+        379
+      ],
       "footnote": "[ وإذا أمسى قال: أمسينا وأمسى الملك للَّه] [وإذا أمسى قال: رب أسألك خير ما في هذه الليلة، وخير ما بعدها، وأعوذ بك من شر ما في هذه الليلة، وشر ما بعدها.]"
     },
     {
@@ -5687,13 +7536,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_078.opus",
-        "segments": [],
+        "segments": [
+          [
+            1.03,
+            3.59
+          ],
+          [
+            3.59,
+            6.1
+          ],
+          [
+            6.1,
+            7.83
+          ],
+          [
+            7.83,
+            11.52
+          ]
+        ],
         "range": [
-          1.17,
-          12.22
+          1.03,
+          11.52
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        29,
+        50,
+        66
+      ]
     },
     {
       "id": "evening_05",
@@ -5878,9 +7748,55 @@
       "virtue": null,
       "audio": {
         "file": "hisn_084.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.95
+          ],
+          [
+            5.95,
+            10.06
+          ],
+          [
+            10.06,
+            14.65
+          ],
+          [
+            14.65,
+            17.93
+          ],
+          [
+            17.93,
+            21.32
+          ],
+          [
+            21.32,
+            25.91
+          ],
+          [
+            25.91,
+            29.45
+          ],
+          [
+            29.45,
+            31.69
+          ],
+          [
+            31.69,
+            35.92
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        82,
+        137,
+        181,
+        212,
+        232,
+        290,
+        324,
+        340
+      ]
     },
     {
       "id": "evening_08",
@@ -5981,7 +7897,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_086.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.15,
+          10.88
+        ]
       },
       "phrase_breaks": []
     },
@@ -6022,7 +7942,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_088.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.81,
+          14.4
+        ]
       },
       "phrase_breaks": []
     },
@@ -6059,9 +7983,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_090.opus",
-        "segments": []
+        "segments": [
+          [
+            0.39,
+            4.09
+          ],
+          [
+            4.09,
+            7.51
+          ],
+          [
+            7.51,
+            13.63
+          ],
+          [
+            13.63,
+            22.96
+          ]
+        ],
+        "range": [
+          0.39,
+          22.96
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        40,
+        71,
+        126
+      ],
       "footnote": "[وإذا أمسى قال: أمسينا على فطرة الإسلام...]"
     },
     {
@@ -6097,7 +8046,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_091.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.01,
+          2.68
+        ]
       },
       "phrase_breaks": []
     },
@@ -6143,13 +8096,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_092.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.0,
+            4.78
+          ],
+          [
+            4.78,
+            7.95
+          ],
+          [
+            7.95,
+            10.96
+          ]
+        ],
         "range": [
-          0.01,
-          11.71
+          0.0,
+          10.96
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53,
+        86
+      ]
     },
     {
       "id": "evening_14",
@@ -6242,13 +8211,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_094.opus",
-        "segments": [],
+        "segments": [
+          [
+            0.15,
+            2.83
+          ],
+          [
+            2.83,
+            4.84
+          ],
+          [
+            4.84,
+            6.98
+          ],
+          [
+            6.98,
+            9.13
+          ],
+          [
+            9.13,
+            11.51
+          ]
+        ],
         "range": [
-          0.27,
-          12.1
+          0.15,
+          11.51
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        32,
+        49,
+        67,
+        86
+      ]
     },
     {
       "id": "evening_17",
@@ -6289,8 +8284,8 @@
         "file": "hisn_096.opus",
         "segments": [],
         "range": [
-          0.71,
-          4.64
+          0.59,
+          3.78
         ]
       },
       "phrase_breaks": []
@@ -6337,7 +8332,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_097.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.27,
+          5.4
+        ]
       },
       "phrase_breaks": []
     },
@@ -6377,7 +8376,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_098.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.55,
+          4.52
+        ]
       },
       "phrase_breaks": []
     },
@@ -6410,9 +8413,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_219.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            7.42
+          ],
+          [
+            7.42,
+            14.13
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        37
+      ],
       "kind": "hadith"
     },
     {
@@ -6448,9 +8462,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_220.opus",
-        "segments": []
+        "segments": [
+          [
+            0.33,
+            3.36
+          ],
+          [
+            3.36,
+            8.91
+          ],
+          [
+            8.91,
+            13.24
+          ]
+        ],
+        "range": [
+          0.33,
+          13.24
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28,
+        79
+      ],
       "kind": "hadith"
     },
     {
@@ -6486,9 +8520,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_221.opus",
-        "segments": []
+        "segments": [
+          [
+            1.05,
+            4.06
+          ],
+          [
+            4.06,
+            8.83
+          ]
+        ],
+        "range": [
+          1.05,
+          8.83
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6524,7 +8573,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_222.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.65,
+          12.07
+        ]
       },
       "phrase_breaks": [],
       "kind": "hadith"
@@ -6558,9 +8611,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_223.opus",
-        "segments": []
+        "segments": [
+          [
+            0.81,
+            3.64
+          ],
+          [
+            3.64,
+            12.91
+          ]
+        ],
+        "range": [
+          0.81,
+          12.91
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6592,9 +8660,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_248.opus",
-        "segments": []
+        "segments": [
+          [
+            3.69,
+            7.34
+          ],
+          [
+            7.34,
+            14.98
+          ]
+        ],
+        "range": [
+          3.69,
+          14.98
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        42
+      ],
       "kind": "hadith"
     },
     {
@@ -6626,9 +8709,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_249.opus",
-        "segments": []
+        "segments": [
+          [
+            1.03,
+            4.05
+          ],
+          [
+            4.05,
+            12.72
+          ]
+        ],
+        "range": [
+          1.03,
+          12.72
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6673,7 +8771,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_250.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.5,
+          11.81
+        ]
       },
       "phrase_breaks": []
     },
@@ -6714,9 +8816,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_251.opus",
-        "segments": []
+        "segments": [
+          [
+            0.67,
+            3.56
+          ],
+          [
+            3.56,
+            15.34
+          ]
+        ],
+        "range": [
+          0.67,
+          15.34
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6748,9 +8865,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_252.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.28
+          ],
+          [
+            3.28,
+            11.02
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6790,9 +8918,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_253.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            2.88
+          ],
+          [
+            2.88,
+            12.12
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28
+      ],
       "kind": "hadith"
     },
     {
@@ -6833,7 +8972,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_254.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          10.76,
+          12.91
+        ]
       },
       "phrase_breaks": []
     },
@@ -6874,7 +9017,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_255.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.0,
+          14.2
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -6919,9 +9066,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_256.opus",
-        "segments": []
+        "segments": [
+          [
+            13.55,
+            16.25
+          ],
+          [
+            16.25,
+            18.75
+          ]
+        ],
+        "range": [
+          13.55,
+          18.75
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        32
+      ],
       "translations_from": {
         "id": "none"
       }
@@ -6960,9 +9122,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_257.opus",
-        "segments": []
+        "segments": [
+          [
+            5.19,
+            8.06
+          ],
+          [
+            8.06,
+            11.8
+          ]
+        ],
+        "range": [
+          5.19,
+          11.8
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        40
+      ],
       "translations_from": {
         "id": "hadeethenc:6211"
       }
@@ -6996,9 +9173,35 @@
       "virtue": null,
       "audio": {
         "file": "hisn_258.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            3.4
+          ],
+          [
+            3.4,
+            16.87
+          ],
+          [
+            16.87,
+            18.21
+          ],
+          [
+            18.21,
+            21.18
+          ],
+          [
+            21.18,
+            26.93
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28,
+        175,
+        182,
+        215
+      ],
       "kind": "hadith"
     },
     {
@@ -7039,7 +9242,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_259.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.06,
+          6.9
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -7084,7 +9291,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_260.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          17.14,
+          20.44
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -7120,9 +9331,44 @@
       "virtue": null,
       "audio": {
         "file": "hisn_261.opus",
-        "segments": []
+        "segments": [
+          [
+            0.63,
+            3.56
+          ],
+          [
+            3.56,
+            7.22
+          ],
+          [
+            7.22,
+            9.34
+          ],
+          [
+            9.34,
+            11.46
+          ],
+          [
+            11.46,
+            15.82
+          ],
+          [
+            15.82,
+            19.19
+          ]
+        ],
+        "range": [
+          0.63,
+          19.19
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28,
+        73,
+        92,
+        113,
+        162
+      ],
       "kind": "hadith"
     },
     {
@@ -7200,9 +9446,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_263.opus",
-        "segments": []
+        "segments": [
+          [
+            0.71,
+            10.66
+          ],
+          [
+            10.66,
+            12.54
+          ],
+          [
+            12.54,
+            14.08
+          ],
+          [
+            14.08,
+            15.49
+          ],
+          [
+            15.49,
+            18.07
+          ]
+        ],
+        "range": [
+          0.71,
+          18.07
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        136,
+        162,
+        176,
+        188
+      ]
     },
     {
       "id": "tasbih_11",
@@ -7435,9 +9711,74 @@
       "virtue": null,
       "audio": {
         "file": "hisn_206.opus",
-        "segments": []
+        "segments": [
+          [
+            2.27,
+            6.87
+          ],
+          [
+            6.87,
+            11.97
+          ],
+          [
+            11.97,
+            18.61
+          ],
+          [
+            18.61,
+            23.64
+          ],
+          [
+            23.64,
+            26.17
+          ],
+          [
+            26.17,
+            28.29
+          ],
+          [
+            28.29,
+            30.4
+          ],
+          [
+            30.4,
+            32.51
+          ],
+          [
+            32.51,
+            34.52
+          ],
+          [
+            34.52,
+            36.82
+          ],
+          [
+            36.82,
+            41.59
+          ],
+          [
+            41.59,
+            45.48
+          ]
+        ],
+        "range": [
+          2.27,
+          45.48
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        16,
+        35,
+        105,
+        146,
+        167,
+        186,
+        205,
+        223,
+        241,
+        259,
+        321
+      ]
     },
     {
       "id": "travel_02",
@@ -7468,9 +9809,89 @@
       "virtue": null,
       "audio": {
         "file": "hisn_207.opus",
-        "segments": []
+        "segments": [
+          [
+            6.82,
+            11.07
+          ],
+          [
+            11.07,
+            17.64
+          ],
+          [
+            17.64,
+            22.62
+          ],
+          [
+            22.62,
+            28.88
+          ],
+          [
+            28.88,
+            32.34
+          ],
+          [
+            32.34,
+            38.52
+          ],
+          [
+            38.52,
+            42.26
+          ],
+          [
+            42.26,
+            45.53
+          ],
+          [
+            45.53,
+            50.13
+          ],
+          [
+            50.13,
+            53.08
+          ],
+          [
+            53.08,
+            57.43
+          ],
+          [
+            57.43,
+            61.98
+          ],
+          [
+            61.98,
+            63.61
+          ],
+          [
+            63.61,
+            65.79
+          ],
+          [
+            65.79,
+            68.44
+          ]
+        ],
+        "range": [
+          6.82,
+          68.44
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        54,
+        125,
+        165,
+        237,
+        267,
+        337,
+        381,
+        410,
+        467,
+        490,
+        540,
+        581,
+        593,
+        616
+      ]
     },
     {
       "id": "travel_03",
@@ -7509,9 +9930,59 @@
       "virtue": null,
       "audio": {
         "file": "hisn_208.opus",
-        "segments": []
+        "segments": [
+          [
+            0.51,
+            10.22
+          ],
+          [
+            10.22,
+            15.21
+          ],
+          [
+            15.21,
+            19.75
+          ],
+          [
+            19.75,
+            23.63
+          ],
+          [
+            23.63,
+            28.28
+          ],
+          [
+            28.28,
+            30.9
+          ],
+          [
+            30.9,
+            33.57
+          ],
+          [
+            33.57,
+            35.19
+          ],
+          [
+            35.19,
+            37.24
+          ]
+        ],
+        "range": [
+          0.51,
+          37.24
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        58,
+        106,
+        145,
+        180,
+        238,
+        259,
+        289,
+        308
+      ]
     },
     {
       "id": "travel_05",
@@ -7542,7 +10013,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_210.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.54,
+          6.7
+        ]
       },
       "phrase_breaks": []
     },
@@ -7579,7 +10054,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_211.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.64,
+          10.9
+        ]
       },
       "phrase_breaks": []
     },
@@ -7616,7 +10095,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_212.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.49,
+          10.8
+        ]
       },
       "phrase_breaks": []
     },
@@ -7698,9 +10181,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_214.opus",
-        "segments": []
+        "segments": [
+          [
+            4.01,
+            6.67
+          ],
+          [
+            6.67,
+            10.47
+          ],
+          [
+            10.47,
+            13.58
+          ]
+        ],
+        "range": [
+          4.01,
+          13.58
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        28,
+        65
+      ],
       "kind": "hadith"
     },
     {
@@ -7732,9 +10235,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_215.opus",
-        "segments": []
+        "segments": [
+          [
+            0.87,
+            10.8
+          ],
+          [
+            10.8,
+            13.35
+          ],
+          [
+            13.35,
+            15.34
+          ],
+          [
+            15.34,
+            17.85
+          ]
+        ],
+        "range": [
+          0.87,
+          17.85
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        64,
+        84,
+        106
+      ]
     },
     {
       "id": "travel_11",
@@ -7765,7 +10293,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_216.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          7.1,
+          12.45
+        ]
       },
       "phrase_breaks": []
     },
@@ -7883,7 +10415,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_218.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          12.35,
+          16.89
+        ]
       },
       "phrase_breaks": []
     },
@@ -7929,7 +10465,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_218.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          23.22,
+          26.48
+        ]
       },
       "phrase_breaks": []
     },
@@ -8108,7 +10648,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_172.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.15,
+          8.32
+        ]
       },
       "phrase_breaks": []
     },
@@ -8145,7 +10689,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_173.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.24,
+          8.59
+        ]
       },
       "phrase_breaks": []
     },
@@ -8182,9 +10730,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_174.opus",
-        "segments": []
+        "segments": [
+          [
+            5.35,
+            8.85
+          ],
+          [
+            8.85,
+            15.26
+          ]
+        ],
+        "range": [
+          5.35,
+          15.26
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        41
+      ]
     },
     {
       "id": "thunder_01",
@@ -8215,7 +10778,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_168.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.54,
+          13.04
+        ]
       },
       "phrase_breaks": []
     },
@@ -8367,9 +10934,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_175.opus",
-        "segments": []
+        "segments": [
+          [
+            4.87,
+            7.11
+          ],
+          [
+            7.11,
+            12.41
+          ],
+          [
+            12.41,
+            15.86
+          ],
+          [
+            15.86,
+            20.65
+          ],
+          [
+            20.65,
+            23.53
+          ]
+        ],
+        "range": [
+          4.87,
+          23.53
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        18,
+        76,
+        107,
+        156
+      ]
     },
     {
       "id": "illness_01",
@@ -8440,8 +11037,8 @@
         "file": "hisn_148.opus",
         "segments": [],
         "range": [
-          0.75,
-          6.29
+          0.57,
+          5.6
         ]
       },
       "phrase_breaks": []
@@ -8492,9 +11089,35 @@
       "virtue": null,
       "audio": {
         "file": "hisn_149.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            5.73
+          ],
+          [
+            5.73,
+            13.58
+          ],
+          [
+            13.58,
+            17.35
+          ],
+          [
+            17.35,
+            24.07
+          ],
+          [
+            24.07,
+            31.94
+          ]
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        37,
+        129,
+        168,
+        247
+      ],
       "kind": "hadith"
     },
     {
@@ -8584,7 +11207,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_151.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          11.44,
+          17.51
+        ]
       },
       "phrase_breaks": []
     },
@@ -8685,9 +11312,84 @@
       "virtue": null,
       "audio": {
         "file": "hisn_120.opus",
-        "segments": []
+        "segments": [
+          [
+            0.61,
+            8.25
+          ],
+          [
+            8.25,
+            10.3
+          ],
+          [
+            10.3,
+            13.26
+          ],
+          [
+            13.26,
+            16.24
+          ],
+          [
+            16.24,
+            19.43
+          ],
+          [
+            19.43,
+            22.75
+          ],
+          [
+            22.75,
+            25.74
+          ],
+          [
+            25.74,
+            29.07
+          ],
+          [
+            29.07,
+            33.19
+          ],
+          [
+            33.19,
+            37.91
+          ],
+          [
+            37.91,
+            41.95
+          ],
+          [
+            41.95,
+            44.35
+          ],
+          [
+            44.35,
+            46.94
+          ],
+          [
+            46.94,
+            49.13
+          ]
+        ],
+        "range": [
+          0.61,
+          49.13
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        44,
+        60,
+        81,
+        103,
+        127,
+        167,
+        192,
+        225,
+        265,
+        319,
+        360,
+        377,
+        396
+      ]
     },
     {
       "id": "distress_02",
@@ -8776,9 +11478,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_122.opus",
-        "segments": []
+        "segments": [
+          [
+            5.71,
+            10.83
+          ],
+          [
+            10.83,
+            16.76
+          ],
+          [
+            16.76,
+            25.95
+          ]
+        ],
+        "range": [
+          5.71,
+          25.95
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        49,
+        103
+      ]
     },
     {
       "id": "distress_04",
@@ -8813,9 +11535,25 @@
       "virtue": null,
       "audio": {
         "file": "hisn_123.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            6.13
+          ],
+          [
+            6.13,
+            9.78
+          ],
+          [
+            9.78,
+            12.9
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        78,
+        110
+      ]
     },
     {
       "id": "distress_05",
@@ -8883,7 +11621,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_125.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.19,
+          6.14
+        ]
       },
       "phrase_breaks": []
     },
@@ -8920,9 +11662,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_139.opus",
-        "segments": []
+        "segments": [
+          [
+            6.6,
+            11.26
+          ],
+          [
+            11.26,
+            15.78
+          ]
+        ],
+        "range": [
+          6.6,
+          15.78
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53
+      ]
     },
     {
       "id": "anger_01",
@@ -8957,7 +11714,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_193.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.98,
+          8.24
+        ]
       },
       "phrase_breaks": []
     },
@@ -8990,9 +11751,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_126.opus",
-        "segments": []
+        "segments": [
+          [
+            10.7,
+            14.4
+          ],
+          [
+            14.4,
+            17.54
+          ]
+        ],
+        "range": [
+          10.7,
+          17.54
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        45
+      ]
     },
     {
       "id": "fear_02",
@@ -9071,7 +11847,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_128.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.0,
+          3.1
+        ]
       },
       "phrase_breaks": []
     },
@@ -9104,9 +11884,50 @@
       "virtue": null,
       "audio": {
         "file": "hisn_129.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            9.76
+          ],
+          [
+            9.76,
+            12.54
+          ],
+          [
+            12.54,
+            16.43
+          ],
+          [
+            16.43,
+            19.36
+          ],
+          [
+            19.36,
+            24.39
+          ],
+          [
+            24.39,
+            26.75
+          ],
+          [
+            26.75,
+            29.43
+          ],
+          [
+            29.43,
+            33.1
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        40,
+        70,
+        113,
+        145,
+        197,
+        212,
+        231
+      ]
     },
     {
       "id": "fear_05",
@@ -9142,9 +11963,69 @@
       "virtue": null,
       "audio": {
         "file": "hisn_130.opus",
-        "segments": []
+        "segments": [
+          [
+            0.63,
+            2.7
+          ],
+          [
+            2.7,
+            6.97
+          ],
+          [
+            6.97,
+            11.97
+          ],
+          [
+            11.97,
+            24.12
+          ],
+          [
+            24.12,
+            26.88
+          ],
+          [
+            26.88,
+            30.65
+          ],
+          [
+            30.65,
+            33.59
+          ],
+          [
+            33.59,
+            37.29
+          ],
+          [
+            37.29,
+            40.79
+          ],
+          [
+            40.79,
+            43.27
+          ],
+          [
+            43.27,
+            46.08
+          ]
+        ],
+        "range": [
+          0.63,
+          46.08
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        18,
+        58,
+        101,
+        235,
+        264,
+        305,
+        331,
+        374,
+        407,
+        428
+      ]
     },
     {
       "id": "fear_06",
@@ -9266,9 +12147,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_205.opus",
-        "segments": []
+        "segments": [
+          [
+            5.25,
+            8.54
+          ],
+          [
+            8.54,
+            12.32
+          ],
+          [
+            12.32,
+            15.04
+          ]
+        ],
+        "range": [
+          5.25,
+          15.04
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        39,
+        69
+      ]
     },
     {
       "id": "fear_09",
@@ -9307,9 +12208,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_244.opus",
-        "segments": []
+        "segments": [
+          [
+            5.38,
+            9.1
+          ],
+          [
+            9.1,
+            17.25
+          ]
+        ],
+        "range": [
+          5.38,
+          17.25
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        56
+      ],
       "kind": "hadith"
     },
     {
@@ -9345,7 +12261,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_245.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.27,
+          7.08
+        ]
       },
       "phrase_breaks": []
     },
@@ -9382,7 +12302,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_133.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          2.35,
+          9.7
+        ]
       },
       "phrase_breaks": []
     },
@@ -9421,8 +12345,8 @@
         "file": "hisn_134.opus",
         "segments": [],
         "range": [
-          1.41,
-          3.77
+          1.0,
+          3.44
         ]
       },
       "phrase_breaks": []
@@ -9461,7 +12385,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_135.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          3.6,
+          10.17
+        ]
       },
       "phrase_breaks": []
     },
@@ -9499,7 +12427,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_138.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.37,
+          9.58
+        ]
       },
       "phrase_breaks": []
     },
@@ -9694,9 +12626,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_136.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            9.62
+          ],
+          [
+            9.62,
+            14.0
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        48
+      ]
     },
     {
       "id": "debt_02",
@@ -9781,7 +12724,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_144.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.47,
+          10.8
+        ]
       },
       "phrase_breaks": []
     },
@@ -9814,9 +12761,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_154.opus",
-        "segments": []
+        "segments": [
+          [
+            0.15,
+            10.58
+          ],
+          [
+            10.58,
+            13.81
+          ],
+          [
+            13.81,
+            16.06
+          ]
+        ],
+        "range": [
+          0.15,
+          16.06
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        45,
+        82
+      ]
     },
     {
       "id": "news_03",
@@ -9851,9 +12818,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_194.opus",
-        "segments": []
+        "segments": [
+          [
+            5.61,
+            10.12
+          ],
+          [
+            10.12,
+            14.78
+          ]
+        ],
+        "range": [
+          5.61,
+          14.78
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        60
+      ]
     },
     {
       "id": "news_04",
@@ -9927,7 +12909,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_243.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          8.74,
+          9.84
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -9968,7 +12954,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_243.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          13.71,
+          19.01
+        ]
       },
       "phrase_breaks": []
     },
@@ -10005,9 +12995,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_228.opus",
-        "segments": []
+        "segments": [
+          [
+            4.81,
+            9.64
+          ],
+          [
+            9.64,
+            18.95
+          ],
+          [
+            18.95,
+            24.29
+          ]
+        ],
+        "range": [
+          4.81,
+          24.29
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        72,
+        178
+      ],
       "kind": "hadith"
     },
     {
@@ -10088,9 +13098,104 @@
       "virtue": null,
       "audio": {
         "file": "hisn_074.opus",
-        "segments": []
+        "segments": [
+          [
+            3.95,
+            7.87
+          ],
+          [
+            7.87,
+            18.85
+          ],
+          [
+            18.85,
+            20.8
+          ],
+          [
+            20.8,
+            28.26
+          ],
+          [
+            28.26,
+            30.6
+          ],
+          [
+            30.6,
+            34.62
+          ],
+          [
+            34.62,
+            38.01
+          ],
+          [
+            38.01,
+            41.56
+          ],
+          [
+            41.56,
+            45.2
+          ],
+          [
+            45.2,
+            48.17
+          ],
+          [
+            48.17,
+            51.68
+          ],
+          [
+            51.68,
+            65.69
+          ],
+          [
+            65.69,
+            75.47
+          ],
+          [
+            75.47,
+            85.72
+          ],
+          [
+            85.72,
+            95.12
+          ],
+          [
+            95.12,
+            100.47
+          ],
+          [
+            100.47,
+            106.18
+          ],
+          [
+            106.18,
+            113.21
+          ]
+        ],
+        "range": [
+          3.95,
+          113.21
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        59,
+        199,
+        208,
+        297,
+        313,
+        357,
+        388,
+        426,
+        461,
+        488,
+        517,
+        661,
+        739,
+        850,
+        950,
+        1014,
+        1081
+      ]
     },
     {
       "id": "iftar_01",
@@ -10125,9 +13230,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_176.opus",
-        "segments": []
+        "segments": [
+          [
+            5.84,
+            9.77
+          ],
+          [
+            9.77,
+            12.78
+          ]
+        ],
+        "range": [
+          5.84,
+          12.78
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        41
+      ]
     },
     {
       "id": "iftar_02",
@@ -10158,7 +13278,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_177.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.0,
+          6.24
+        ]
       },
       "phrase_breaks": []
     },
@@ -10191,9 +13315,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_184.opus",
-        "segments": []
+        "segments": [
+          [
+            5.53,
+            8.54
+          ],
+          [
+            8.54,
+            11.9
+          ],
+          [
+            11.9,
+            15.08
+          ]
+        ],
+        "range": [
+          5.53,
+          15.08
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        35,
+        70
+      ]
     },
     {
       "id": "fasting_01",
@@ -10393,9 +13537,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_191.opus",
-        "segments": []
+        "segments": [
+          [
+            11.27,
+            16.63
+          ],
+          [
+            16.63,
+            19.48
+          ],
+          [
+            19.48,
+            21.92
+          ]
+        ],
+        "range": [
+          11.27,
+          21.92
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        75,
+        105
+      ]
     },
     {
       "id": "marriage_03",
@@ -10430,9 +13594,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_192.opus",
-        "segments": []
+        "segments": [
+          [
+            1.21,
+            7.22
+          ],
+          [
+            7.22,
+            12.66
+          ]
+        ],
+        "range": [
+          1.21,
+          12.66
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        16
+      ]
     },
     {
       "id": "children_01",
@@ -10463,9 +13642,59 @@
       "virtue": null,
       "audio": {
         "file": "hisn_145.opus",
-        "segments": []
+        "segments": [
+          [
+            7.84,
+            11.18
+          ],
+          [
+            11.18,
+            13.93
+          ],
+          [
+            13.93,
+            16.48
+          ],
+          [
+            16.48,
+            19.12
+          ],
+          [
+            19.12,
+            23.01
+          ],
+          [
+            23.01,
+            26.83
+          ],
+          [
+            26.83,
+            29.65
+          ],
+          [
+            29.65,
+            32.35
+          ],
+          [
+            32.35,
+            34.57
+          ]
+        ],
+        "range": [
+          7.84,
+          34.57
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46,
+        69,
+        89,
+        111,
+        160,
+        203,
+        230,
+        259
+      ]
     },
     {
       "id": "children_02",
@@ -10501,9 +13730,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_146.opus",
-        "segments": []
+        "segments": [
+          [
+            12.8,
+            19.3
+          ],
+          [
+            19.3,
+            22.21
+          ]
+        ],
+        "range": [
+          12.8,
+          22.21
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        78
+      ]
     },
     {
       "id": "salam_01",
@@ -10538,9 +13782,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_224.opus",
-        "segments": []
+        "segments": [
+          [
+            3.49,
+            7.26
+          ],
+          [
+            7.26,
+            11.52
+          ],
+          [
+            11.52,
+            15.57
+          ],
+          [
+            15.57,
+            21.31
+          ],
+          [
+            21.31,
+            24.17
+          ]
+        ],
+        "range": [
+          3.49,
+          24.17
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        42,
+        89,
+        125,
+        191
+      ],
       "kind": "hadith"
     },
     {
@@ -10635,9 +13909,34 @@
       "virtue": null,
       "audio": {
         "file": "hisn_226.opus",
-        "segments": []
+        "segments": [
+          [
+            0.37,
+            3.75
+          ],
+          [
+            3.75,
+            12.25
+          ],
+          [
+            12.25,
+            14.44
+          ],
+          [
+            14.44,
+            22.55
+          ]
+        ],
+        "range": [
+          0.37,
+          22.55
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        60,
+        142,
+        165
+      ],
       "kind": "hadith"
     },
     {
@@ -10678,7 +13977,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_227.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          8.92,
+          10.14
+        ]
       },
       "phrase_breaks": [],
       "translations_from": {
@@ -10723,9 +14026,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_195.opus",
-        "segments": []
+        "segments": [
+          [
+            14.82,
+            16.03
+          ],
+          [
+            16.03,
+            17.24
+          ],
+          [
+            17.24,
+            20.35
+          ]
+        ],
+        "range": [
+          14.82,
+          20.35
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        19,
+        35
+      ]
     },
     {
       "id": "gathering_02",
@@ -10756,9 +14079,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_196.opus",
-        "segments": []
+        "segments": [
+          [
+            3.16,
+            6.5
+          ],
+          [
+            6.5,
+            10.91
+          ],
+          [
+            10.91,
+            14.15
+          ]
+        ],
+        "range": [
+          3.16,
+          14.15
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        37,
+        77
+      ]
     },
     {
       "id": "manners_01",
@@ -10792,7 +14135,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_198.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.14,
+          8.28
+        ]
       },
       "phrase_breaks": []
     },
@@ -10825,7 +14172,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_200.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          6.16,
+          9.05
+        ]
       },
       "phrase_breaks": []
     },
@@ -10858,7 +14209,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_201.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.98,
+          8.44
+        ]
       },
       "phrase_breaks": []
     },
@@ -10899,9 +14254,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_202.opus",
-        "segments": []
+        "segments": [
+          [
+            5.13,
+            9.29
+          ],
+          [
+            9.29,
+            14.33
+          ]
+        ],
+        "range": [
+          5.13,
+          14.33
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        44
+      ]
     },
     {
       "id": "manners_05",
@@ -10935,7 +14305,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_204.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.87,
+          7.38
+        ]
       },
       "phrase_breaks": []
     },
@@ -10979,8 +14353,8 @@
         "file": "hisn_230.opus",
         "segments": [],
         "range": [
-          3.37,
-          15.15
+          7.5,
+          15.35
         ]
       },
       "phrase_breaks": []
@@ -11019,9 +14393,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_231.opus",
-        "segments": []
+        "segments": [
+          [
+            14.77,
+            18.42
+          ],
+          [
+            18.42,
+            22.17
+          ],
+          [
+            22.17,
+            28.47
+          ]
+        ],
+        "range": [
+          14.77,
+          28.47
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        39,
+        77
+      ]
     },
     {
       "id": "manners_08",
@@ -11052,9 +14446,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_232.opus",
-        "segments": []
+        "segments": [
+          [
+            0.11,
+            10.18
+          ],
+          [
+            10.18,
+            13.99
+          ],
+          [
+            13.99,
+            17.73
+          ]
+        ],
+        "range": [
+          0.11,
+          17.73
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        46,
+        81
+      ]
     },
     {
       "id": "funeral_01",
@@ -11119,9 +14533,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_155.opus",
-        "segments": []
+        "segments": [
+          [
+            0.09,
+            14.23
+          ],
+          [
+            14.23,
+            18.68
+          ],
+          [
+            18.68,
+            23.89
+          ],
+          [
+            23.89,
+            26.79
+          ],
+          [
+            26.79,
+            29.11
+          ]
+        ],
+        "range": [
+          0.09,
+          29.11
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        83,
+        127,
+        175,
+        204
+      ]
     },
     {
       "id": "funeral_03",
@@ -11152,9 +14596,65 @@
       "virtue": null,
       "audio": {
         "file": "hisn_156.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            8.86
+          ],
+          [
+            8.86,
+            10.8
+          ],
+          [
+            10.8,
+            15.21
+          ],
+          [
+            15.21,
+            17.97
+          ],
+          [
+            17.97,
+            22.47
+          ],
+          [
+            22.47,
+            29.46
+          ],
+          [
+            29.46,
+            33.45
+          ],
+          [
+            33.45,
+            36.69
+          ],
+          [
+            36.69,
+            40.15
+          ],
+          [
+            40.15,
+            42.77
+          ],
+          [
+            42.77,
+            47.31
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        37,
+        48,
+        85,
+        107,
+        155,
+        235,
+        277,
+        310,
+        344,
+        369
+      ]
     },
     {
       "id": "funeral_04",
@@ -11389,9 +14889,74 @@
       "virtue": null,
       "audio": {
         "file": "hisn_160.opus",
-        "segments": []
+        "segments": [
+          [
+            6.57,
+            12.37
+          ],
+          [
+            12.37,
+            16.83
+          ],
+          [
+            16.83,
+            19.65
+          ],
+          [
+            19.65,
+            23.18
+          ],
+          [
+            23.18,
+            26.01
+          ],
+          [
+            26.01,
+            29.64
+          ],
+          [
+            29.64,
+            33.52
+          ],
+          [
+            33.52,
+            37.9
+          ],
+          [
+            37.9,
+            44.66
+          ],
+          [
+            44.66,
+            47.35
+          ],
+          [
+            47.35,
+            48.76
+          ],
+          [
+            48.76,
+            55.08
+          ]
+        ],
+        "range": [
+          6.57,
+          55.08
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        55,
+        111,
+        132,
+        173,
+        202,
+        241,
+        281,
+        321,
+        396,
+        431,
+        447
+      ]
     },
     {
       "id": "funeral_08",
@@ -11430,9 +14995,20 @@
       "virtue": null,
       "audio": {
         "file": "hisn_161.opus",
-        "segments": []
+        "segments": [
+          [
+            0.0,
+            2.94
+          ],
+          [
+            2.94,
+            5.09
+          ]
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        36
+      ]
     },
     {
       "id": "condolence_01",
@@ -11467,9 +15043,44 @@
       "virtue": null,
       "audio": {
         "file": "hisn_162.opus",
-        "segments": []
+        "segments": [
+          [
+            4.77,
+            7.05
+          ],
+          [
+            7.05,
+            9.53
+          ],
+          [
+            9.53,
+            14.3
+          ],
+          [
+            14.3,
+            18.52
+          ],
+          [
+            18.52,
+            20.66
+          ],
+          [
+            20.66,
+            27.34
+          ]
+        ],
+        "range": [
+          4.77,
+          27.34
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        27,
+        47,
+        92,
+        123,
+        137
+      ]
     },
     {
       "id": "grave_01",
@@ -11500,7 +15111,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_163.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.28,
+          9.84
+        ]
       },
       "phrase_breaks": []
     },
@@ -11589,9 +15204,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_165.opus",
-        "segments": []
+        "segments": [
+          [
+            1.21,
+            10.49
+          ],
+          [
+            10.49,
+            15.45
+          ],
+          [
+            15.45,
+            25.44
+          ]
+        ],
+        "range": [
+          1.21,
+          25.44
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        79,
+        126
+      ]
     },
     {
       "id": "hajj_01",
@@ -11689,7 +15324,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_234.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          4.4,
+          13.44
+        ]
       },
       "phrase_breaks": [],
       "kind": "hadith"
@@ -11734,7 +15373,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_235.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.39,
+          16.25
+        ]
       },
       "phrase_breaks": []
     },
@@ -11772,9 +15415,44 @@
       "virtue": null,
       "audio": {
         "file": "hisn_236.opus",
-        "segments": []
+        "segments": [
+          [
+            32.32,
+            36.66
+          ],
+          [
+            36.66,
+            41.81
+          ],
+          [
+            41.81,
+            45.49
+          ],
+          [
+            45.49,
+            47.61
+          ],
+          [
+            47.61,
+            49.45
+          ],
+          [
+            49.45,
+            52.0
+          ]
+        ],
+        "range": [
+          32.32,
+          52.0
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        53,
+        120,
+        156,
+        175,
+        194
+      ]
     },
     {
       "id": "hajj_10",
@@ -11810,9 +15488,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_236.opus",
-        "segments": []
+        "segments": [
+          [
+            10.84,
+            15.09
+          ],
+          [
+            15.09,
+            18.47
+          ]
+        ],
+        "range": [
+          10.84,
+          18.47
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        54
+      ]
     },
     {
       "id": "hajj_05",
@@ -11848,7 +15541,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_237.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          11.2,
+          21.48
+        ]
       },
       "phrase_breaks": []
     },
@@ -11881,9 +15578,29 @@
       "virtue": null,
       "audio": {
         "file": "hisn_238.opus",
-        "segments": []
+        "segments": [
+          [
+            0.35,
+            13.94
+          ],
+          [
+            13.94,
+            14.97
+          ],
+          [
+            14.97,
+            24.67
+          ]
+        ],
+        "range": [
+          0.35,
+          24.67
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        137,
+        149
+      ],
       "kind": "hadith"
     },
     {
@@ -11915,9 +15632,39 @@
       "virtue": null,
       "audio": {
         "file": "hisn_239.opus",
-        "segments": []
+        "segments": [
+          [
+            0.33,
+            10.38
+          ],
+          [
+            10.38,
+            12.58
+          ],
+          [
+            12.58,
+            16.27
+          ],
+          [
+            16.27,
+            20.89
+          ],
+          [
+            20.89,
+            30.37
+          ]
+        ],
+        "range": [
+          0.33,
+          30.37
+        ]
       },
-      "phrase_breaks": [],
+      "phrase_breaks": [
+        65,
+        84,
+        125,
+        188
+      ],
       "kind": "hadith"
     },
     {
@@ -12027,7 +15774,11 @@
       "virtue": null,
       "audio": {
         "file": "hisn_246.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          5.38,
+          13.35
+        ]
       },
       "phrase_breaks": []
     },
@@ -12064,9 +15815,54 @@
       "virtue": null,
       "audio": {
         "file": "hisn_247.opus",
-        "segments": []
+        "segments": [
+          [
+            6.7,
+            14.57
+          ],
+          [
+            14.57,
+            18.69
+          ],
+          [
+            18.69,
+            22.16
+          ],
+          [
+            22.16,
+            25.55
+          ],
+          [
+            25.55,
+            28.67
+          ],
+          [
+            28.67,
+            31.95
+          ],
+          [
+            31.95,
+            35.78
+          ],
+          [
+            35.78,
+            42.77
+          ]
+        ],
+        "range": [
+          6.7,
+          42.77
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        88,
+        130,
+        173,
+        206,
+        245,
+        280,
+        324
+      ]
     },
     {
       "id": "quran_01",
@@ -12097,7 +15893,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_01.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.59,
+          16.16
+        ]
       },
       "phrase_breaks": []
     },
@@ -12130,7 +15930,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_02.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.93,
+          21.86
+        ]
       },
       "phrase_breaks": []
     },
@@ -12163,7 +15967,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_03.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.53,
+          25.18
+        ]
       },
       "phrase_breaks": []
     },
@@ -12229,7 +16037,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_05.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.65,
+          16.33
+        ]
       },
       "phrase_breaks": []
     },
@@ -12262,7 +16074,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_06.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.93,
+          36.78
+        ]
       },
       "phrase_breaks": []
     },
@@ -12328,7 +16144,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_08.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.07,
+          21.98
+        ]
       },
       "phrase_breaks": []
     },
@@ -12361,7 +16181,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_09.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.23,
+          18.19
+        ]
       },
       "phrase_breaks": []
     },
@@ -12394,9 +16218,24 @@
       "virtue": null,
       "audio": {
         "file": "quran_10.opus",
-        "segments": []
+        "segments": [
+          [
+            0.25,
+            18.23
+          ],
+          [
+            18.23,
+            45.69
+          ]
+        ],
+        "range": [
+          0.25,
+          45.69
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        139
+      ]
     },
     {
       "id": "quran_11",
@@ -12427,7 +16266,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_11.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.47,
+          19.79
+        ]
       },
       "phrase_breaks": []
     },
@@ -12460,7 +16303,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_12.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.63,
+          17.83
+        ]
       },
       "phrase_breaks": []
     },
@@ -12493,9 +16340,24 @@
       "virtue": null,
       "audio": {
         "file": "quran_13.opus",
-        "segments": []
+        "segments": [
+          [
+            0.67,
+            17.49
+          ],
+          [
+            17.49,
+            27.42
+          ]
+        ],
+        "range": [
+          0.67,
+          27.42
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        99
+      ]
     },
     {
       "id": "quran_14",
@@ -12575,7 +16437,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_15.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.03,
+          19.5
+        ]
       },
       "phrase_breaks": []
     },
@@ -12662,7 +16528,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_17.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.61,
+          20.14
+        ]
       },
       "phrase_breaks": []
     },
@@ -12695,7 +16565,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_18.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.71,
+          16.88
+        ]
       },
       "phrase_breaks": []
     },
@@ -12728,7 +16602,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_19.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.47,
+          16.79
+        ]
       },
       "phrase_breaks": []
     },
@@ -12761,7 +16639,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_20.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          1.05,
+          22.13
+        ]
       },
       "phrase_breaks": []
     },
@@ -12794,7 +16676,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_21.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.65,
+          15.34
+        ]
       },
       "phrase_breaks": []
     },
@@ -12827,7 +16713,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_22.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.83,
+          16.13
+        ]
       },
       "phrase_breaks": []
     },
@@ -12904,7 +16794,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_24.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.77,
+          11.71
+        ]
       },
       "phrase_breaks": []
     },
@@ -12937,9 +16831,24 @@
       "virtue": null,
       "audio": {
         "file": "quran_25.opus",
-        "segments": []
+        "segments": [
+          [
+            0.59,
+            16.07
+          ],
+          [
+            16.07,
+            27.74
+          ]
+        ],
+        "range": [
+          0.59,
+          27.74
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        87
+      ]
     },
     {
       "id": "quran_26",
@@ -12970,7 +16879,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_26.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.61,
+          17.15
+        ]
       },
       "phrase_breaks": []
     },
@@ -13036,7 +16949,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_28.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.91,
+          16.74
+        ]
       },
       "phrase_breaks": []
     },
@@ -13069,7 +16986,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_29.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.69,
+          5.7
+        ]
       },
       "phrase_breaks": []
     },
@@ -13102,7 +17023,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_30.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.69,
+          38.1
+        ]
       },
       "phrase_breaks": []
     },
@@ -13135,7 +17060,11 @@
       "virtue": null,
       "audio": {
         "file": "quran_31.opus",
-        "segments": []
+        "segments": [],
+        "range": [
+          0.93,
+          72.91
+        ]
       },
       "phrase_breaks": []
     },

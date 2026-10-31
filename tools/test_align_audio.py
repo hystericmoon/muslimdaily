@@ -28,10 +28,23 @@ class ProposeTest(unittest.TestCase):
         self.assertEqual(("ok", "1.75-3.85"), (out["status"], out["audio_range"]))
 
     def test_a_recording_that_does_not_match_is_not_cut(self):
-        text = "ألف باء جيم"
-        out = aa.propose({"id": "t", "arabic": text}, entry(text, [[0, 1, .9], [1, 2, .05], [2, 3, .9]]))
+        text = "ألف باء جيم دال هاء"
+        poor = [[0, 1, .9], [1, 2, .1], [2, 3, .2], [3, 4, .3], [4, 5, .9]]
+        out = aa.propose({"id": "t", "arabic": text}, entry(text, poor))
         self.assertEqual("fail", out["status"])
         self.assertIn("low confidence", out["reason"])
+
+    def test_an_unsure_edge_next_to_read_words_is_not_cut(self):
+        full = "ألف باء جيم دال"
+        words = [[0, 1, .9], [1, 2, .2], [2, 3, .9], [3, 4, .9]]
+        out = aa.propose({"id": "t", "arabic": "باء جيم", "arabic_full": full}, entry(full, words))
+        self.assertEqual("fail", out["status"])
+
+    def test_a_short_dhikr_at_the_start_needs_only_sure_edges(self):
+        full = "ألف باء ثلاثا جيم دال"
+        words = [[0.5, 2.5, .2], [2.6, 3.0, .9], [3.1, 6.0, .7], [7.0, 7.5, .9], [7.6, 8.0, .9]]
+        out = aa.propose({"id": "t", "arabic": "ألف باء", "arabic_full": full}, entry(full, words))
+        self.assertEqual(("ok", "0.25-3.05"), (out["status"], out["audio_range"]))
 
     def test_changed_text_is_refused(self):
         out = aa.propose({"id": "t", "arabic": "ألف باء"}, entry("ألف جيم", [[0, 1, .9], [1, 2, .9]]))
