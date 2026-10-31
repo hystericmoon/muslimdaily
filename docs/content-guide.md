@@ -49,6 +49,9 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `translation_id_full` | no | The same for the Indonesian: the whole translation when `translation_id` holds only the dua's meaning. |
 | `translation_en_full` | no | The same for the English. Shown instead of the Indonesian when the reader chose English. |
 | `audio_range` | no | Start-end seconds of the dua in the audio file, e.g. `3.20-9.80`, when the recording also reads the context. Playback and memorisation cover only this part; the file is not edited. Segments must lie inside it. |
+| `kind` | no | `hadith` for an entry with nothing to recite (a virtue hadith, an instruction): the app shows it as a reading card, without counter, memorisation or routines. Blank for a dua. Set by `tools/clean_entries.py`. |
+| `footnote` | no | Another wording the book gives as a note (the evening form of a morning dhikr), cut verbatim from `arabic_full`; shown under the dua as "Catatan kitab". |
+| `translation_id_from`, `translation_en_from` | no | Where the translation was taken from when it is not the entry's own: `row:<id>` (the same Arabic translated elsewhere in the same book) or `hadeethenc:<id>` (a hadith in the HadeethEnc snapshot). The build checks the translation is words of that source, in order. `none` for the Indonesian means no source has it: the row has only English, which the app shows. |
 
 ### Event codes
 
@@ -185,6 +188,32 @@ takhrij, Indonesian and English); `tools/hadeethenc/import_hadeethenc.py` turns 
 * **Grade**: HadeethEnc's own (grader `HadeethEnc`); anything but sahih or hasan stops the import.
 * **What is imported** is listed in the tool's `SELECTED`, and what was left out, with the
   reason, in `EXCLUDED`.
+
+## Only what the reader says (31 Oct 2026)
+
+Owner's instruction: every row holds just the dua or dhikr, with its Indonesian and English
+translation, Latin and audio; no narration, no instruction, no note. `tools/clean_entries.py`
+applies it to the Hisnul Muslim entries and lists every decision with its reason:
+
+1. A row is one contiguous run of words of the entry, cut verbatim (marks matched in any order,
+   the source's characters kept). The whole entry stays in `arabic_full` / `translation_*_full`.
+2. One row per saying: an entry with several sayings (food and milk, the sneezer and the one who
+   answers, "three times … then …") becomes one row each, with its own count and audio range. The
+   first keeps the entry's id; later parts get new ids.
+3. Translations are cut the same way. Where the book prints only a transliteration, the
+   translation comes from the same Arabic elsewhere in the book or from HadeethEnc
+   (`translation_*_from`); never written.
+4. An entry with nothing to recite is `kind` `hadith` (a reading card).
+5. The evening wording given as a note goes to `footnote`.
+6. A row the book files under the other time of day is removed from that list.
+7. Repetition and time notes inside a translation ("(Dibaca tiga kali)", "(three times)") are cut;
+   the count badge shows the count.
+
+Audio: `tools/align_audio.py` times every written word in its recording (CTC forced alignment
+with a wav2vec2 Arabic model; timings in `tools/align/word_timings.json`) and from that sets
+`audio_range` and the phrase breaks: a break only at existing punctuation where the reciter
+pauses. A row is cut only when every word is aligned with good confidence; the others are listed
+in `build/align/review.csv`. Rows that already had phrase marks keep them.
 
 ## Checking imported content
 

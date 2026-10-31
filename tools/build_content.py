@@ -54,7 +54,7 @@ PLACEHOLDER = "[PLACEHOLDER"
 PHRASE_MARK = "|"
 # Brackets and punctuation the book prints around a recitation. A recited part may leave them
 # out (or keep them); every other character must match the full entry.
-FRAME_CHARS = "()[]«»{}.،,:؛“”\"‘’'"
+FRAME_CHARS = "()[]«»{}﴿﴾.،,:؛“”\"‘’'"
 
 
 @dataclass
@@ -172,11 +172,40 @@ def split_phrases(marked: str) -> tuple[str, list[int]]:
 def words(text: str) -> list[str]:
     """The text's words, without the brackets and punctuation around them."""
     out = []
-    for token in text.replace(PHRASE_MARK, " ").split():
+    # "،" ":" "؛" run straight into the next word in some entries ("فيهما:بسم"); they end a word.
+    for token in re.sub(r"([،:؛])(?=\w)", r"\1 ", text.replace(PHRASE_MARK, " ")).split():
         token = token.strip(FRAME_CHARS)
         if token:
             out.append(token)
     return out
+
+
+KINDS = {"", "hadith"}
+HADEETHENC = Path(__file__).resolve().parent.parent / "content/source/import/hadeethenc.json"
+
+
+def check_taken(duas: list[dict], report: Report) -> None:
+    """A translation taken from elsewhere must be words of that source, in order."""
+    by_id = {d["id"]: d for d in duas}
+    snapshot = None
+    for d in duas:
+        for lang, src in (d.get("translations_from") or {}).items():
+            if src == "none":
+                continue
+            kind, _, ref = src.partition(":")
+            text = d["translations"].get(lang, "")
+            if kind == "row":
+                other = by_id.get(ref)
+                base = other["translations"].get(lang, "") if other else None
+            else:
+                if snapshot is None:
+                    snapshot = json.loads(HADEETHENC.read_text(encoding="utf-8")).get("hadeeths", {})
+                h = snapshot.get(ref, {}).get(lang)
+                base = (h.get("hadeeth") if isinstance(h, dict) else h) if h else None
+            if base is None:
+                report.errors.append(f"{d['id']}: translation_{lang}_from {src} not found")
+            elif not text_part_of(text, base):
+                report.errors.append(f"{d['id']}: translation_{lang} must be words of {src} in order")
 
 
 def is_part_of(part: str, full: str) -> bool:
@@ -263,7 +292,8 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
 
     if is_blank_or_placeholder(d.get("arabic")):
         p("Arabic text is missing or a placeholder")
-    if is_blank_or_placeholder(d.get("translations", {}).get("id")):
+    no_id = (d.get("translations_from") or {}).get("id") == "none"  # no source has it; English shown
+    if not no_id and is_blank_or_placeholder(d.get("translations", {}).get("id")):
         p("Indonesian translation is missing or a placeholder")
     if not any((s.get("book") or "").strip() for s in d.get("sources", [])):
         p("at least one source (book) is required")
@@ -300,7 +330,20 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
             p("arabic_full is the same as arabic; leave it blank")
         elif not is_part_of(d.get("arabic", ""), full):
             report.errors.append(f"{did}: arabic must be words of arabic_full in order (nothing added or changed)")
+    if d.get("kind", "") not in KINDS:
+        report.errors.append(f"{did}: kind must be one of {sorted(KINDS)}")
+    if d.get("footnote") and not is_part_of(d["footnote"], full):
+        report.errors.append(f"{did}: footnote must be words of arabic_full")
+    taken = d.get("translations_from") or {}
+    for lang, src in taken.items():
+        if src == "none":
+            if lang != "id" or d["translations"].get("id") or not d["translations"].get("en"):
+                report.errors.append(f"{did}: translation_id_from 'none' needs an empty Indonesian and an English")
+        elif not re.fullmatch(r"(row|hadeethenc):[\w.-]+", src):
+            report.errors.append(f"{did}: translation_{lang}_from must be 'row:<id>', 'hadeethenc:<id>' or 'none'")
     for lang, tr_full in (d.get("translations_full") or {}).items():
+        if lang in taken:
+            continue  # checked against its own source in check_taken()
         if not text_part_of(d.get("translations", {}).get(lang, ""), tr_full):
             report.errors.append(f"{did}: translation_{lang} must be words of translation_{lang}_full in order")
     phrases = len(d.get("phrase_breaks", [])) + 1
@@ -383,6 +426,14 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "virtue": {"text": virtue_text, "source": (row.get("virtue_source") or "").strip()} if virtue_text else None,
         "audio": {"file": (row.get("audio_file") or "").strip(), "segments": segments, **({"range": audio_range} if audio_range else {})},
         "phrase_breaks": breaks,
+        # "hadith": nothing to recite (a virtue hadith, an instruction); shown as a reading card.
+        **({"kind": kind} if (kind := (row.get("kind") or "").strip()) else {}),
+        # Another wording the book gives as a note (the evening form), cut from arabic_full.
+        **({"footnote": fn} if (fn := (row.get("footnote") or "").strip()) else {}),
+        # Where a translation was taken from: "row:<id>" (same book) or "hadeethenc:<id>".
+        **({"translations_from": tfrom} if (tfrom := {
+            lang: src for lang in ("id", "en") if (src := (row.get(f"translation_{lang}_from") or "").strip())
+        }) else {}),
     }
 
 
@@ -459,6 +510,7 @@ def build(duas_csv: Path, rawatib_csv: Path, out_dir: Path, audio_dir: Path, rep
         seen.add(d["id"])
         validate_dua(d, taxonomy, audio_dir, report)
         duas.append(d)
+    check_taken(duas, report)
     cat_order = {c: i for i, c in enumerate(taxonomy)}
     event_order = {e: i for events in taxonomy.values() for i, e in enumerate(events)}
     duas.sort(key=lambda d: (cat_order.get(d["category"], 99), event_order.get(d["event"], 99), d["order"], d["id"]))
@@ -494,6 +546,7 @@ def check(out_dir: Path, audio_dir: Path, report: Report) -> None:
     data = json.loads((out_dir / "duas.json").read_text(encoding="utf-8"))
     for d in data.get("duas", []):
         validate_dua(d, taxonomy, audio_dir, report)
+    check_taken(data.get("duas", []), report)
 
 
 def main(argv: list[str] | None = None) -> int:

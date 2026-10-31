@@ -120,8 +120,16 @@ def fetch_one(lang: str, hid: int) -> dict:
     raise AssertionError("unreachable")
 
 
+# Kept in the snapshot only as the source of a translation for a Hisnul Muslim row whose book
+# prints the dua in transliteration (tools/clean_entries.py, `translation_id_from`); not imported.
+TRANSLATION_ONLY = {
+    6211: "Indonesian of subhanallah, walhamdulillah, wa la ilaha illallah, wallahu akbar (tasbih_04)",
+    6273: "Indonesian of la hawla wa la quwwata illa billah (tasbih_07)",
+}
+
+
 def fetch() -> None:
-    ids = sorted({s[0] for s in SELECTED} | set(EXCLUDED))
+    ids = sorted({s[0] for s in SELECTED} | set(EXCLUDED) | set(TRANSLATION_ONLY))
     hadeeths = {str(hid): {lang: fetch_one(lang, hid) for lang in LANG_FIELDS} for hid in ids}
     snapshot = {
         "source": "HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths), https://hadeethenc.com",

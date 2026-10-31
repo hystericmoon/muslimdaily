@@ -96,7 +96,8 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        val showEn = prefs.translation != TranslationMode.INDONESIAN && dua.translationEn.isNotBlank()
+        // The few entries with no Indonesian at any source (translation_id_from "none") show the English.
+        val showEn = dua.translationEn.isNotBlank() && (prefs.translation != TranslationMode.INDONESIAN || dua.translationId.isBlank())
         // The few entries with no English at the source show the Indonesian rather than the Arabic alone.
         val showId = dua.translationId.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)
         if (showId) {

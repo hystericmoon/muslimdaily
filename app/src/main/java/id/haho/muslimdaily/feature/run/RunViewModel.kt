@@ -127,7 +127,7 @@ class RunViewModel @Inject constructor(
             val resumed = sessions.load(eventId, today)?.takeIf { session ->
                 routineIds == null || session.items.map { it.duaId } == routineIds
             }?.let { session ->
-                val duas = content.duas(session.items.map { it.duaId })
+                val duas = content.duas(session.items.map { it.duaId }).filter { it.isRecitable }
                 if (duas.size == session.items.size) session to duas else null
             }
             val (session, duas) = resumed ?: newSession()
@@ -158,10 +158,10 @@ class RunViewModel @Inject constructor(
         val duas = if (routineId != null) {
             // The routine's own order; a dua removed from the content since is skipped.
             val ids = routines.routine(routineId)?.duaIds.orEmpty()
-            val byId = content.duas(ids).associateBy { it.id }
+            val byId = content.duas(ids).filter { it.isRecitable }.associateBy { it.id }
             ids.mapNotNull { byId[it] }
         } else {
-            ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(eventId)), mySets.customizationOnce(eventId))
+            ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(eventId).filter { it.isRecitable }), mySets.customizationOnce(eventId))
         }
         val session = RunSession(
             eventId = eventId,

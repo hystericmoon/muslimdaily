@@ -196,13 +196,14 @@ fun EventContent(
                     val id = resolved.form.id
                     ItemHeader(index, state.items.size, resolved, onChooseForm, saved = id in saved, onBookmark = { onBookmark(id) })
                 },
-                footer = {
+                // A reading card (a virtue hadith) has nothing to memorise.
+                footer = if (!resolved.form.isRecitable) null else ({
                     val id = resolved.form.id
                     HifzButton(
                         inHifz = id in state.hifz,
                         onClick = { if (id in state.hifz) confirmRemove = id else onAddToHifz(id) },
                     )
-                },
+                }),
                 modifier = Modifier.animateItem().enterReveal(index),
             )
         }
@@ -221,11 +222,16 @@ private fun ItemHeader(
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                stringResource(R.string.event_item_position, index + 1, total),
+                if (resolved.form.isRecitable) {
+                    stringResource(R.string.event_item_position, index + 1, total)
+                } else {
+                    stringResource(R.string.event_item_reading_card, index + 1, total)
+                },
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(1f).semantics { heading() },
             )
+            if (!resolved.form.isRecitable) return@Row
             // A toggle that says whether the dua is in a routine; the snackbar or sheet says which.
             val savedLabel = stringResource(if (saved) R.string.bookmark_state_saved else R.string.bookmark_state_not_saved)
             IconToggleButton(
