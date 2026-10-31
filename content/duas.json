@@ -1,5 +1,5 @@
 {
-  "content_version": 32,
+  "content_version": 33,
   "duas": [
     {
       "id": "wake_01",
@@ -505,7 +505,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "4020"
         },
         {
           "book": "At-Tirmidzi",
@@ -2747,7 +2747,7 @@
       "sources": [
         {
           "book": "Al-Bukhari",
-          "no": ""
+          "no": "794"
         },
         {
           "book": "Muslim",
@@ -3495,7 +3495,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "792"
         }
       ],
       "reference": "HR. Abu Dawud dan lihat di Shahih Ibnu Majah 2/328. (Hisnul Muslim no. 61)",
@@ -3565,7 +3565,7 @@
       "sources": [
         {
           "book": "An-Nasai",
-          "no": ""
+          "no": "1301"
         },
         {
           "book": "lafazh hadits menurut riwayatnya",
@@ -6137,7 +6137,7 @@
       "sources": [
         {
           "book": "An-Nasa’i",
-          "no": ""
+          "no": "1282"
         },
         {
           "book": "Al-Hakim",
@@ -6314,7 +6314,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3579"
         },
         {
           "book": "An-Nasa’i",
@@ -6848,8 +6848,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Ahmad no. 513 menurut penertiban Ahmad Syakir",
-          "no": ""
+          "book": "Ahmad",
+          "no": "no. 513 menurut penertiban Ahmad Syakir"
         },
         {
           "book": "sanadnya shahih",
@@ -7941,7 +7941,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "2083"
         },
         {
           "book": "Abu Dawud",
@@ -8075,8 +8075,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Al-Bukhari 8/144 dalam hadits terdapat keterangan siwak",
-          "no": ""
+          "book": "Al-Bukhari",
+          "no": "8/144 dalam hadits terdapat keterangan siwak"
         }
       ],
       "reference": "HR. Al-Bukhari 8/144 dengan Fathul Bari dalam hadits terdapat keterangan siwak. (Hisnul Muslim no. 151)",
@@ -8402,8 +8402,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Ibnu Hibban dalam kitab Shahih-nya no. 2427 (Mawaarid)",
-          "no": ""
+          "book": "Ibnu Hibban dalam kitab Shahih-nya",
+          "no": "no. 2427 (Mawaarid)"
         },
         {
           "book": "Ibnus Sunni",
@@ -9140,8 +9140,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Muslim 1/539)",
-          "no": ""
+          "book": "Muslim",
+          "no": "1/539"
         }
       ],
       "reference": "Rasul Shallallahu'alaihi wasallam bersabda: “Jangan jadikan rumah-rumahmu sebagai kuburan. Sesungguhnya setan lari dari rumah yang dibacakan Surah Al- Baqarah di dalamnya.” (HR. Muslim 1/539). Sebagian hal yang dapat mengusir setan adalah bacaan dan zikir di waktu pagi dan sore (yang dilakukan oleh Rasul Shallallahu'alaihi wasallam), bacaan akan tidur dan bangun daripadanya, masuk dan keluar dari rumah, masuk masjid dan keluar daripadanya, membaca ayat Kursi ketika akan tidur, dua ayat yang terakhir dari surah Al-Baqarah dan orang yang membaca: Laa ilaaha illallaah, wahdahu laa syariikalah, lahul mulku walahul hamdu wahuwa ‘alaa kulli syai-in qadiir, seratus kali, maka akan menjadi benteng dari setan pada hari itu. Begitu juga adzan. (Hisnul Muslim no. 143)",
@@ -10144,7 +10144,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3434"
         },
         {
           "book": "Imam hadis lain",
@@ -10676,7 +10676,7 @@
       "sources": [
         {
           "book": "Ibnu Majah",
-          "no": ""
+          "no": "1499"
         }
       ],
       "reference": "HR. Ibnu Majah. Lihat Shahih Ibnu Majah 1/251 dan Abu Dawud 3/211. (Hisnul Muslim no. 158)",
@@ -10912,8 +10912,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Abu Dawud 3/314 dengan sanad yang shahih",
-          "no": ""
+          "book": "Abu Dawud",
+          "no": "3/314 dengan sanad yang shahih"
         }
       ],
       "reference": "HR. Abu Dawud 3/314 dengan sanad yang shahih. Untuk Imam Ahmad meriwayatkan sebagai berikut: “Bismillaah wa ‘alaa millati Rasulillaah”, sedang sanadnya shahih. (Hisnul Muslim no. 163)",
@@ -11214,7 +11214,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "950"
         }
       ],
       "reference": "HR. At-Tirmidzi dan lihat Shahih At-Tirmidzi 3/ 184. Al-Albani menyatakan, hadits tersebut adalah hasan. Lihat pula Al-Ahaditsush Shahihah lil-Albani 4/6. (Hisnul Muslim no. 237)",
@@ -11423,8 +11423,8 @@
       "count": null,
       "sources": [
         {
-          "book": "Ahmad 3/419 dengan sanad yang shahih",
-          "no": ""
+          "book": "Ahmad",
+          "no": "3/419 dengan sanad yang shahih"
         },
         {
           "book": "Ibnus Sunni",
@@ -12738,7 +12738,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "1510"
         },
         {
           "book": "At-Tirmidzi",
@@ -13131,7 +13131,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "1554"
         },
         {
           "book": "An-Nasai",
@@ -13181,7 +13181,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "1543"
         },
         {
           "book": "At-Tirmidzi",
@@ -13230,7 +13230,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "1547"
         },
         {
           "book": "An-Nasai",
