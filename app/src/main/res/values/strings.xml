@@ -383,6 +383,17 @@
     </plurals>
     <string name="memorize_talkback_recall">TalkBack aktif: frasa yang disembunyikan akan dibisukan saat diputar, isi jedanya dari ingatan.</string>
     <string name="memorize_play_with_gaps">Putar dengan jeda</string>
+    <string name="memorize_mark_missed">Kata yang terlewat</string>
+    <string name="memorize_mark_missed_hint">Ketuk kata yang tadi terlewat atau keliru saat Anda membaca. Ketuk lagi untuk membatalkan.</string>
+    <plurals name="memorize_practise_missed">
+        <item quantity="other">Latih %d kata ini</item>
+    </plurals>
+    <string name="memorize_suggested_in_days">Disarankan · %1$s</string>
+    <string name="memorize_practising">Hanya kata yang Anda tandai yang disembunyikan. Pilih tingkat petunjuk untuk kembali ke latihan biasa.</string>
+    <string name="memorize_practice_done">Semua kata yang terlewat sudah Anda ingat.</string>
+    <plurals name="memorize_practice_left">
+        <item quantity="other">%d kata masih perlu dibuka. Coba sekali lagi.</item>
+    </plurals>
     <string name="memorize_rate_prompt">Seberapa lancar hafalan Anda?</string>
     <string name="memorize_rate_again">Ulangi lagi</string>
     <string name="memorize_rate_hard">Sulit</string>

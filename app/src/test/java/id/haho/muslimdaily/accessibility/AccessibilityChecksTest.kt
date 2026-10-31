@@ -31,6 +31,14 @@ import id.haho.muslimdaily.feature.today.TodayActions
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
 import id.haho.muslimdaily.feature.today.TodayUiState
+import id.haho.muslimdaily.data.settings.MemorizeSettings
+import id.haho.muslimdaily.domain.memorize.FadeLevel
+import id.haho.muslimdaily.domain.memorize.Recall
+import id.haho.muslimdaily.feature.memorize.session.MemorizeActions
+import id.haho.muslimdaily.feature.memorize.session.MemorizeSessionScreen
+import id.haho.muslimdaily.feature.memorize.session.MemorizeUiState
+import id.haho.muslimdaily.feature.memorize.session.Playing
+import id.haho.muslimdaily.feature.memorize.session.Step
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -89,6 +97,20 @@ class AccessibilityChecksTest {
                 haptics = true,
             ),
             RunActions(),
+        )
+    }
+
+    @Test fun memorizeCheck() = check { MemorizeSessionScreen(memorizeCheckState(), MemorizeActions(), talkBack = false) }
+
+    @Test fun memorizeCheckDark() = check(ThemeMode.DARK) { MemorizeSessionScreen(memorizeCheckState(), MemorizeActions(), talkBack = false) }
+
+    private fun memorizeCheckState(): MemorizeUiState {
+        val dua = DuaPreviewData.dua("morning_02", 2)
+        val words = Recall.words(dua)
+        return MemorizeUiState(
+            dua = dua, eventLabel = "Dzikir pagi", step = Step.CHECK, playing = Playing.NONE, playback = PlaybackState(),
+            settings = MemorizeSettings(), fade = FadeLevel.LIGHT, words = words, hiddenWords = emptySet(), review = null,
+            rated = null, fromReview = false, nextDueId = null, ab = 0..1, missedWords = setOf(1),
         )
     }
 

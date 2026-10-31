@@ -59,6 +59,14 @@ class LeitnerTest {
         assertTrue(Leitner.isDue(LeitnerState(2, today.minusDays(4)), today))
         assertTrue(!Leitner.isDue(LeitnerState(2, today.plusDays(1)), today))
     }
+
+    @Test
+    fun `missed words suggest a rating`() {
+        assertEquals(Rating.EASY, Leitner.suggestedRating(missed = 0, words = 9))
+        assertEquals(Rating.HARD, Leitner.suggestedRating(missed = 3, words = 9))
+        assertEquals(Rating.AGAIN, Leitner.suggestedRating(missed = 4, words = 9))
+        assertEquals(null, Leitner.suggestedRating(missed = 0, words = 0))
+    }
 }
 
 class MemorizePlanTest {

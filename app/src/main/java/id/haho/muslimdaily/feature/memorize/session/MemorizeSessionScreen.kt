@@ -64,6 +64,7 @@ import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.Leitner
 import id.haho.muslimdaily.domain.memorize.Rating
+import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.speedLabel
@@ -85,6 +86,8 @@ data class MemorizeActions(
     val onRevealNext: () -> Unit = {},
     val onFinishRecital: () -> Unit = {},
     val onRate: (Rating) -> Unit = {},
+    val onToggleMissed: (Int) -> Unit = {},
+    val onPractiseMissed: () -> Unit = {},
     val onLoops: (Int) -> Unit = {},
     val onPauseMode: (PauseMode) -> Unit = {},
     val onPauseSeconds: (Int) -> Unit = {},
@@ -119,6 +122,8 @@ fun MemorizeSessionRoute(
                 onRevealNext = viewModel::revealNext,
                 onFinishRecital = viewModel::finishRecital,
                 onRate = viewModel::rate,
+                onToggleMissed = viewModel::toggleMissed,
+                onPractiseMissed = viewModel::practiseMissed,
                 onLoops = { n -> viewModel.updateSettings(loops = n) },
                 onPauseMode = { m -> viewModel.updateSettings(pauseMode = m) },
                 onPauseSeconds = { s -> viewModel.updateSettings(pauseSeconds = s) },
@@ -401,6 +406,7 @@ private fun CueCard(state: MemorizeUiState) {
 @Composable
 private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean) {
     CueCard(state)
+    if (state.practising) InfoNote(stringResource(R.string.memorize_practising), icon = R.drawable.ic_replay)
     // Play with gaps needs phrase segments and audio; without them the hints point to the reveal button.
     val gaps = state.segmented && state.hasAudio
     // The text comes first: it is what the learner recites from. The fade controls tune it below.
@@ -486,7 +492,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
 /** Ends a recital: the hints fade, stay or come back depending on the words revealed (vanishing cues). */
 @Composable
 private fun RecitalCheck(state: MemorizeUiState, actions: MemorizeActions) {
-    if (state.stage >= 1) {
+    if (state.stage >= 1 && !state.practising) {
         Text(
             stringResource(R.string.memorize_stage, state.stage, FadeLadder.LAST),
             style = MaterialTheme.typography.labelLarge,
@@ -510,6 +516,13 @@ private fun RecitalCheck(state: MemorizeUiState, actions: MemorizeActions) {
             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
         )
     }
+    state.practiceLeft?.let { left ->
+        Text(
+            if (left == 0) stringResource(R.string.memorize_practice_done) else pluralStringResource(R.plurals.memorize_practice_left, left, left),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+    }
 }
 
 private fun FadeOrder.labelRes() = when (this) {
@@ -519,23 +532,39 @@ private fun FadeOrder.labelRes() = when (this) {
 
 @Composable
 private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
-    ArabicCard(state, active = -1)
     val rated = state.rated
+    val markable = Recall.recallable(state.words).size
+    if (rated == null && markable > 0) {
+        MarkMissed(state, actions)
+    } else {
+        ArabicCard(state, active = -1)
+    }
     if (rated == null) {
         Text(stringResource(R.string.memorize_rate_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
         val current = state.review?.state
+        // Only words marked count as evidence; with none marked, nothing is suggested.
+        val suggested = if (state.missedWords.isEmpty()) null else Leitner.suggestedRating(state.missedWords.size, markable)
         Rating.entries.forEach { rating ->
             val next = Leitner.rate(current, rating, java.time.LocalDate.now())
             val days = Leitner.INTERVALS[next.box - 1]
-            GlassOutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) {
+            val content: @Composable () -> Unit = {
                 Column(Modifier.padding(vertical = HahoTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(rating.labelRes()), style = MaterialTheme.typography.titleSmall)
                     Text(
-                        pluralStringResource(R.plurals.memorize_next_in_days, days, days),
+                        if (rating == suggested) {
+                            stringResource(R.string.memorize_suggested_in_days, pluralStringResource(R.plurals.memorize_next_in_days, days, days))
+                        } else {
+                            pluralStringResource(R.plurals.memorize_next_in_days, days, days)
+                        },
                         style = MaterialTheme.typography.bodySmall,
                         textAlign = TextAlign.Center,
                     )
                 }
+            }
+            if (rating == suggested) {
+                GlassButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) { content() }
+            } else {
+                GlassOutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) { content() }
             }
         }
     } else {
@@ -553,6 +582,29 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
             GlassButton(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
         }
         GlassOutlinedButton(onClick = actions.onClose, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_done)) }
+    }
+}
+
+/** Mark the words missed in the recital; they can then be practised on their own in Recall. */
+@Composable
+private fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
+    Text(stringResource(R.string.memorize_mark_missed), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+    Text(stringResource(R.string.memorize_mark_missed_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    GlassCard(shape = MaterialTheme.shapes.extraLarge) {
+        MissedWords(
+            words = state.words,
+            missed = state.missedWords,
+            style = AdwamTheme.arabic.large(state.dua.isQuran),
+            onToggle = actions.onToggleMissed,
+            modifier = Modifier.padding(HahoTheme.spacing.xl),
+        )
+    }
+    val count = state.missedWords.size
+    if (count > 0) {
+        GlassTonalButton(onClick = actions.onPractiseMissed, modifier = Modifier.fillMaxWidth()) {
+            Icon(painterResource(R.drawable.ic_replay), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            Text(pluralStringResource(R.plurals.memorize_practise_missed, count, count), Modifier.padding(start = HahoTheme.spacing.sm))
+        }
     }
 }
 

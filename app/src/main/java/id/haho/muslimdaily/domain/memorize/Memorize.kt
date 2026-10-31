@@ -44,6 +44,18 @@ object Leitner {
         else -> null
     }
 
+    /**
+     * The rating the words marked in Check point to: none missed is Easy, up to a third Hard,
+     * more is Again. Self-ratings tend to run high, so the marked words anchor the choice; the
+     * learner still picks. Null when nothing can be marked.
+     */
+    fun suggestedRating(missed: Int, words: Int): Rating? = when {
+        words <= 0 -> null
+        missed == 0 -> Rating.EASY
+        missed * 3 <= words -> Rating.HARD
+        else -> Rating.AGAIN
+    }
+
     /** Reached the last box: shown as memorised in "My hifz". */
     fun isMemorized(state: LeitnerState): Boolean = state.box >= TOP_BOX
 }
@@ -199,7 +211,7 @@ object Recall {
      */
     fun hiddenWords(words: List<Word>, level: FadeLevel, seed: String, order: FadeOrder = FadeOrder.RANDOM): Set<Int> {
         // Tokens without a letter (a lone ، or ۝) stay visible: there is nothing to recall in them.
-        val candidates = words.filter { w -> w.text.any(::isLetter) }.map { it.index }
+        val candidates = recallable(words).map { it.index }
         if (level == FadeLevel.NONE || candidates.isEmpty()) return emptySet()
         val sequence = when (order) {
             FadeOrder.RANDOM -> candidates.shuffled(Random(seed.hashCode()))
@@ -208,6 +220,9 @@ object Recall {
         val n = ceil(candidates.size * level.fraction).toInt().coerceIn(1, candidates.size)
         return sequence.take(n).toSet()
     }
+
+    /** Words that can be hidden or marked as missed: tokens with an Arabic letter. */
+    fun recallable(words: List<Word>): List<Word> = words.filter { w -> w.text.any(::isLetter) }
 
     /** The first hidden word in reading order, shown next by "reveal as you go". */
     fun nextHidden(words: List<Word>, hidden: Set<Int>): Word? = words.firstOrNull { it.index in hidden }
