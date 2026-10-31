@@ -910,6 +910,14 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_10_0">
+        <item>Every dua now holds only the words to recite. The book's narration, instructions and count notes are under «See the full text in the book», and the translation is of the dua alone.</item>
+        <item>Entries with several sayings are split: each has its own count and audio, for example the istighfar and «Allahumma antas-salam» after prayer.</item>
+        <item>Virtue hadiths and instructions show as reading cards, without counter, memorisation or routines.</item>
+        <item>The audio of 156 duas now plays only the dua, and 104 duas have phrases that follow the recitation.</item>
+        <item>Evening dhikr that the book gives in the morning wording now show the evening wording as a note from the book.</item>
+        <item>Five duas show Darussalam's grading under «Other gradings». The widget no longer appears twice on Android 8–11, and the city list can be searched as soon as it opens.</item>
+    </string-array>
     <string-array name="whats_new_1_9_0">
         <item>Memorise: Listen and Build now show one phrase at a time, following the audio, with Back and Next. Check still shows the whole text.</item>
         <item>When you practise only the words you missed, the reveal button and first letters are there, even if none of the recital was right.</item>
