@@ -122,6 +122,9 @@ class RealContentScreenshotTest {
     fun sourcesFallback() = sources("65-real-sources-fallback", duas.first { it.sources.first().book == "Hisnul Muslim" }.id)
 
     @Test
+    fun sourcesOtherGradings() = sources("68-real-sources-other-gradings", "illness_05")
+
+    @Test
     fun quranEvent() = captureVariants("66-real-quran-ease") {
         val canonical = ActiveSet.canonical(duas.filter { it.event == "quran_ease" })
         EventContent(

@@ -1,5 +1,5 @@
 {
-  "content_version": 34,
+  "content_version": 35,
   "duas": [
     {
       "id": "wake_01",
@@ -709,7 +709,12 @@
         "grade": "",
         "grader": ""
       },
-      "alt_gradings": [],
+      "alt_gradings": [
+        {
+          "grade": "da'if",
+          "grader": "Darussalam (At-Tirmidzi 3427, An-Nasai 5486, Ibnu Majah 3884)"
+        }
+      ],
       "virtue": null,
       "audio": {
         "file": "hisn_017.opus",
@@ -1878,7 +1883,12 @@
         "grade": "",
         "grader": ""
       },
-      "alt_gradings": [],
+      "alt_gradings": [
+        {
+          "grade": "da'if",
+          "grader": "Darussalam (At-Tirmidzi 2892)"
+        }
+      ],
       "virtue": null,
       "audio": {
         "file": "hisn_110.opus",
@@ -3075,7 +3085,12 @@
         "grade": "",
         "grader": ""
       },
-      "alt_gradings": [],
+      "alt_gradings": [
+        {
+          "grade": "da'if",
+          "grader": "Darussalam (At-Tirmidzi 284, Ibnu Majah 898)"
+        }
+      ],
       "virtue": null,
       "audio": {
         "file": "hisn_049.opus",
@@ -7998,7 +8013,16 @@
         "grade": "",
         "grader": ""
       },
-      "alt_gradings": [],
+      "alt_gradings": [
+        {
+          "grade": "da'if",
+          "grader": "Darussalam (At-Tirmidzi 969)"
+        },
+        {
+          "grade": "hasan",
+          "grader": "Darussalam (Ibnu Majah 1442)"
+        }
+      ],
       "virtue": null,
       "audio": {
         "file": "hisn_149.opus",
@@ -8121,7 +8145,12 @@
         "grade": "sahih",
         "grader": "al-Albani"
       },
-      "alt_gradings": [],
+      "alt_gradings": [
+        {
+          "grade": "da'if",
+          "grader": "Darussalam (At-Tirmidzi 3430, Ibnu Majah 3794)"
+        }
+      ],
       "virtue": null,
       "audio": {
         "file": "hisn_152.opus",

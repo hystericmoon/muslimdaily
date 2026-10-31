@@ -5,21 +5,18 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, afternoon (1.9.0 approved; #98, #99, #102 merged). All earlier Adwam sessions were read and
-archived; everything still open from them is below.
+Last updated: 31 Oct 2026, evening (1.9.0 released; owner chose B for the da'if grades). All earlier Adwam
+sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
-- **1.9.0** (#101, versionCode 43): the owner approved shipping (31 Oct). Contents: #94, #96,
-  #97, #98, #99, #102. Check the GitHub Release v1.9.0 exists with `adwam-1.9.0.apk`; if #101 is
-  still open, merge it once CI is green.
-- **Da'if grades found by #102** (owner decides, per row: keep on al-Albani's grade of one
-  chain, switch to the sahih/hasan chain's wording, or remove): sleep_12 (Tirmidhi 2892 da'if,
-  Darussalam); illness_05 (Tirmidhi 3430 and Ibn Majah 3794 da'if; the row says sahih,
-  al-Albani); illness_06 (Tirmidhi 969 da'if; Ibn Majah 1442, closer wording, hasan);
-  leave_home_02 (Abu Dawud 5094 sahih, al-Albani; Tirmidhi/Nasa'i/Ibn Majah chains da'if);
-  between_sujud_02 (Abu Dawud 850 hasan; Tirmidhi 284 and Ibn Majah 898 da'if; the row joins
-  their wordings). Show it as a visual decision page. Details in #102's body.
+- **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
+  https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
+  leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
+  sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
+  `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
+  in it), content_version 35, PR claude/handover-docs-ntkjix. Shipped content: merge only after
+  the owner's OK. Not released yet: add a What's New line with the next release.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
   owner's Mac via `claude remote-control`): did #102. Planned next, the evening of 31 Oct: the
   device passes (TalkBack T1–T12, widget §5). Cloud sessions can't message it (the platform
@@ -28,9 +25,8 @@ archived; everything still open from them is below.
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
   tashahhud_13 (no single matching hadith; see #102).
-- This session (session_01W2ZFMtaszo1tYduaqJcuBq) is at lineage depth 8: it can't start
-  sessions or schedule reminders. The owner starts the next cloud session by hand, which resets
-  the depth.
+- Current session: session_01W2ZFMrUt3FG2NbnkiZDcqo (started by hand by the owner after the
+  depth-8 session).
 
 ## Decisions waiting on the owner
 
@@ -45,7 +41,7 @@ archived; everything still open from them is below.
   take hours"; afternoon: "I will check on that"); check the collection at the start of each
   session. The owner declined auto-shipping `match` phrase rows without listening.
   Answers so far (31 Oct, 9 rows, still in progress; checked again at the start of the
-  after-#94 session, no new rows, every sha still matched): ok seg adhan_04, evening_15,
+  after-1.9.0 session, still the same 9 rows): ok seg adhan_04, evening_15,
   morning_15; ok split morning_18; virtue split adhan_01; fix split morning_03 (no note);
   fix seg after_salah_05: three parts (one per surah); the proposed break puts the end of
   al-Falaq in front of the next basmalah; and drop the closing instruction بَعْدَ كُلِّ صَلاَةٍ
@@ -76,6 +72,9 @@ archived; everything still open from them is below.
 
 ## Shipped
 
+1.9.0 (versionCode 43, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.9.0):
+#94, #96, #97, #98, #99, #102 (details below).
+
 #97 (31 Oct): the PDF's footnote markers (NUL bytes plus stray dots) removed from 7 rows'
 Indonesian (morning_04/06/13, evening_04/06/13, distress_05; morning_04/evening_04 and
 distress_05 showed them in the main translation). `build_content.strip_markers` does it, used by
@@ -87,10 +86,10 @@ introduced the book's note "(or once, when lazy)"; the clip ends at 11.71 s (the
 "or" left in front of a dropped note. The owner approved the change; the new clip end comes
 from the pauses, not from listening, so it is in the listening review's next round.
 
-On main, not released yet (with #96, #97 above; goes into 1.9.0): #94 Memorise Listen/Build in the focus
+In 1.9.0 with #96, #97 above: #94 Memorise Listen/Build in the focus
 layout; practising missed words clears the hint level and always shows the reveal button; the
 focus layout's Back/Next row no longer breaks at 200% text (it also broke on the dua page in
-1.8.0). Add these to `WhatsNew.kt` with the next release.
+1.8.0).
 
 
 1.8.0 (versionCode 42, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.8.0): #89 Memorise Cek marks missed

@@ -39,7 +39,7 @@ incomplete it prints the problem and writes nothing. App builds run the same gat
 | `source_1_book`, `source_1_no` … `source_3_*` | at least one book | e.g. book `Sahih Muslim`, no `2723`. Up to three sources. |
 | `grade` | no | `sahih` or `hasan` only, where the source states it. Anything else is rejected. |
 | `grader` | with `grade` | Who graded it, e.g. `al-Albani` |
-| `alt_gradings` | no | Other gradings: `grader: grade; grader: grade` |
+| `alt_gradings` | no | Other gradings: `grader: grade; grader: grade`. Filled only by `tools/alt_gradings.py` (Darussalam's grades from the reviewed sunnah.com table, owner's decision of 31 Oct 2026) |
 | `virtue_text`, `virtue_source` | no (source required if text given) | The virtue and where it is narrated |
 | `audio_file` | no | File name in `content/audio/`, e.g. `wake_01.opus`. Without it the dua has no player. |
 | `audio_segments` | no | Start-end seconds per phrase, in order: `0.0-1.8; 1.8-3.9; 3.9-6.2`. Count must equal the number of `\|`-separated phrases; otherwise highlighting is off. |
