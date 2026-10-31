@@ -5,23 +5,29 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, afternoon (after #97; #98 and #99 open). All earlier Adwam sessions were read and
+Last updated: 31 Oct 2026, afternoon (1.9.0 approved; #98, #99, #102 merged). All earlier Adwam sessions were read and
 archived; everything still open from them is below.
 
 ## In flight (check first)
 
-- **#98** Focus layout: Next stays at the end of the line at 200% text (owner chose B on
-  https://claude.ai/artifact/DGWzNzJYk4BJcJQ1KkpFpQ). Screenshots workflow was started on the
-  branch; merge when CI is green (UI only, standing approval).
-- **#99** Hadith numbers for 20 of the 58 empty `source_1_no` rows (`tools/hadith_numbers.py`,
-  fawazahmed0/hadith-api, public domain). Shipped content: waits for the owner's OK.
-- **Mac session** (the owner starts it on their Mac with `claude remote-control` in their old
-  muslimdaily clone, updated to main): sunnah.com numbers for the other 38 rows (list in #99's
-  body: morning_07/08, evening_07/08, after_salah_08 partial matches, plus the rows with no
-  match), then tonight the device passes (TalkBack T1–T12, widget §5). It works on its own branch.
-- **1.9.0** (minor, stable): once #98 is merged. Contents: #94, #96, #97, #98 (and #99 if
-  approved by then). Bump versionCode 43 / versionName 1.9.0, WhatsNew.kt + `whats_new_*`
-  array, ask the owner before merging.
+- **1.9.0** (#101, versionCode 43): the owner approved shipping (31 Oct). Contents: #94, #96,
+  #97, #98, #99, #102. Check the GitHub Release v1.9.0 exists with `adwam-1.9.0.apk`; if #101 is
+  still open, merge it once CI is green.
+- **Da'if grades found by #102** (owner decides, per row: keep on al-Albani's grade of one
+  chain, switch to the sahih/hasan chain's wording, or remove): sleep_12 (Tirmidhi 2892 da'if,
+  Darussalam); illness_05 (Tirmidhi 3430 and Ibn Majah 3794 da'if; the row says sahih,
+  al-Albani); illness_06 (Tirmidhi 969 da'if; Ibn Majah 1442, closer wording, hasan);
+  leave_home_02 (Abu Dawud 5094 sahih, al-Albani; Tirmidhi/Nasa'i/Ibn Majah chains da'if);
+  between_sujud_02 (Abu Dawud 850 hasan; Tirmidhi 284 and Ibn Majah 898 da'if; the row joins
+  their wordings). Show it as a visual decision page. Details in #102's body.
+- **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
+  owner's Mac via `claude remote-control`): did #102. Planned next, the evening of 31 Oct: the
+  device passes (TalkBack T1–T12, widget §5). Cloud sessions can't message it (the platform
+  refuses cloud-to-Mac messages without a trust grant); relay through the owner.
+- **Hadith numbers**: 42 of the 58 empty rows filled (#99 dataset, #102 sunnah.com, both via
+  `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
+  Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
+  tashahhud_13 (no single matching hadith; see #102).
 - This session (session_01W2ZFMtaszo1tYduaqJcuBq) is at lineage depth 8: it can't start
   sessions or schedule reminders. The owner starts the next cloud session by hand, which resets
   the depth.
@@ -115,8 +121,8 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    hadiths above (owner decision first). Never ship a split without the owner's approval.
 5. Audio ranges for the 6 rows in #83 and the ~22 clips longer than their text: needs listening
    in `build/split/review.html` (`python3 -I tools/split_context.py suggest`).
-6. Empty `source_1_no`: 58 rows; #99 fills 20; the other 38 go to the Mac session (sunnah.com
-   answers 403 to cloud sessions, and so does dorar.net).
+6. Empty `source_1_no`: 16 rows left (see In flight). sunnah.com and dorar.net answer 403 to
+   cloud sessions; a Mac session can reach sunnah.com.
 7. Device passes (need the owner's phone, see Devices): `docs/talkback-checklist.md` T1–T12
    and widget QA `docs/device-qa.md` §5 (5.1–5.4c); no results recorded yet. Planned for the
    Mac session the evening of 31 Oct.
