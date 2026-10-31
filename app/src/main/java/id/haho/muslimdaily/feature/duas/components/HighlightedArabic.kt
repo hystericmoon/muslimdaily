@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +15,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import id.haho.muslimdaily.R
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -346,19 +346,27 @@ private fun PhraseFocus(
     val phrase = phrases[shown.coerceIn(phrases.indices)]
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget * 2))
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        // A flow row, not a weighted Row: at 200% text the buttons left the counter no width, so
+        // it wrapped digit by digit and "Berikutnya" broke mid-word. Here each item keeps its
+        // width and the row wraps whole items instead.
+        FlowRow(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
             TextButton(onClick = { shown -= 1 }, enabled = shown > 0) {
                 Icon(painterResource(R.drawable.ic_chevron_left), null, Modifier.size(HahoTheme.dimens.smallIcon))
                 Text(stringResource(R.string.dua_phrase_back), Modifier.padding(start = HahoTheme.spacing.xs))
             }
-            // "2 / 6" fits between the buttons at any text size; TalkBack hears "Frasa 2 dari 6".
+            // TalkBack hears "Frasa 2 dari 6".
             val position = stringResource(R.string.dua_phrase_position, shown + 1, phrases.size)
             Text(
                 "${shown + 1} / ${phrases.size}",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.weight(1f).semantics {
+                maxLines = 1,
+                modifier = Modifier.semantics {
                     contentDescription = position
                     liveRegion = LiveRegionMode.Polite
                 },
