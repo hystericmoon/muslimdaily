@@ -45,6 +45,26 @@ Play reviews these against its policies. The answers below are what the code act
 - Is data encrypted in transit? Not applicable (no transmission).
 - Can users request deletion? Yes: clearing app data or uninstalling removes everything.
 
+## Plan B: Play without the hisnmuslim.com English (owner's choice, 31 Oct)
+
+IslamHouse hasn't answered the licence request (23 Oct). The audio and the Indonesian rest on
+IslamHouse's published FAQ (republish unchanged, with credit), as in the GitHub build. The
+English Hisn text from hisnmuslim.com names no translator or licence, so the Play build leaves
+it out until IslamHouse answers:
+
+1. `build_content.py --without-en hisnmuslim`: writes a second `duas.json` with
+   `translations.en` (and `translations_full.en`) empty for rows whose English came from
+   hisnmuslim.com (`notes` names the source); Qur'an and HadeethEnc English stay.
+2. A `play` product flavor whose assets take that file; the `github` flavor keeps today's.
+   The flavor also carries the Play-only bits above (AAB, no updater).
+3. Check what the app shows for a row with no English when English is chosen (not verified
+   yet; it should fall back to Indonesian): the dua page, search, Memorise and the widget. Add
+   a screenshot of a Hisn row with English chosen.
+4. About credits: the Play build drops the hisnmuslim.com English credit line.
+
+If IslamHouse says yes, delete the flavor's content step; if they say no, apply step 1 to the
+GitHub build too.
+
 ## Risks to plan for
 
 - **Religious content review.** Play has no special policy, but Hisn al-Muslim audio and text
