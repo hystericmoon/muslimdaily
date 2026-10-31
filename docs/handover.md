@@ -124,7 +124,7 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 6. Empty `source_1_no`: 16 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions; a Mac session can reach sunnah.com.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
-   widget, needs the owner's PIN, by hand), 5.4's legacy-widget half, and a third-party
+   widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
    launcher. TalkBack T1–T12: skipped by the owner (31 Oct); the Redmi has no working audio,
    so a later pass belongs on `qa_api37_profile`.
    Filed from it: #106, fixed by #109 (merged 31 Oct, not released: the first city import
