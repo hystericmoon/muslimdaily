@@ -150,6 +150,9 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   this file, merge it, start a new cloud session on this repo with the prompt "Continue from
   docs/handover.md", and archive the finished session.
 
+- Standing instruction from the owner (31 Oct): work on Adwam only. Don't read, archive or
+  change sessions, repos or artifacts of other projects; the archiving notes below were
+  one-off requests.
 - 31 Oct (after #94): the owner asked to archive the other sessions. Archived Inverse
   Construction S3, Whittle S3, Drive Folder Sync S2, Speed Meter S2 and Smol; kept F052 Harbour
   (Crust, working) and OpenRef S3 (a long re-take job). Their open items are in the doc
