@@ -5,20 +5,18 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, evening (1.9.0 released; da'if decision page up). All earlier Adwam
+Last updated: 31 Oct 2026, evening (1.9.0 released; owner chose B for the da'if grades). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
-- **Da'if grades found by #102**: decision page
-  https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN, waiting on the owner's letter. Five rows
-  (between_sujud_02, leave_home_02, sleep_12, illness_05, illness_06) that al-Albani (the book's
-  footnotes; the app's stated bar, `dua_grading_policy`) grades sahih/hasan and Darussalam
-  (sunnah.com) grades da'if. A: keep, no change. B (recommended): keep and fill `alt_gradings`
-  with Darussalam's grade per chain (the Sources sheet already renders "Penilaian lain"; no row
-  uses it yet). C: stricter bar, remove between_sujud_02, sleep_12, illness_05; re-cite
-  leave_home_02 to Abu Dawud 5094 and illness_06 to Ibnu Majah 1442; change the policy string;
-  then a Darussalam pass over every row. B or C change shipped content: ask before merging.
+- **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
+  https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
+  leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
+  sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
+  `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
+  in it), content_version 35, PR claude/handover-docs-ntkjix. Shipped content: merge only after
+  the owner's OK. Not released yet: add a What's New line with the next release.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
   owner's Mac via `claude remote-control`): did #102. Planned next, the evening of 31 Oct: the
   device passes (TalkBack T1–T12, widget §5). Cloud sessions can't message it (the platform
