@@ -166,6 +166,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                     phrases = dua.phrases,
                     activePhrase = state.playback.activePhrase,
                     style = AdwamTheme.arabic.large(dua.isQuran),
+                    layout = state.prefs.layout,
                     onPlayFrom = if (dua.audio != null) actions.onPlayFrom else null,
                 )
             }

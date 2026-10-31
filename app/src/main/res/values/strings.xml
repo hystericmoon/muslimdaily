@@ -262,6 +262,9 @@
     <string name="player_play">Putar</string>
     <string name="player_pause">Jeda</string>
     <string name="player_repeat">Ulangi</string>
+    <string name="dua_phrase_back">Sebelumnya</string>
+    <string name="dua_phrase_next">Berikutnya</string>
+    <string name="dua_phrase_position">Frasa %1$d dari %2$d</string>
     <string name="dua_play_from_phrase">Putar dari frasa ini</string>
     <string name="dua_phrase_reciting">Sedang dibaca</string>
     <string name="player_speed">Kecepatan %s</string>
@@ -486,6 +489,13 @@
     <string name="notif_review_title">Ulangan hafalan</string>
 
     <!-- Display -->
+    <string name="display_phrase_layout">Tata letak doa</string>
+    <string name="display_phrase_lines">Satu frasa per baris</string>
+    <string name="display_phrase_lines_summary">Setiap baris baru adalah jeda. Paling mudah dipindai.</string>
+    <string name="display_phrase_inline">Teks mengalir</string>
+    <string name="display_phrase_inline_summary">Seperti di buku, dengan tanda jeda ⁞ di antara frasa.</string>
+    <string name="display_phrase_focus">Satu frasa sekaligus</string>
+    <string name="display_phrase_focus_summary">Dengan tombol Sebelumnya dan Berikutnya. Cocok untuk membaca pelan dan menghafal.</string>
     <string name="display_translation">Terjemahan</string>
     <string name="display_translation_id">Bahasa Indonesia</string>
     <string name="display_translation_en">Bahasa Inggris</string>

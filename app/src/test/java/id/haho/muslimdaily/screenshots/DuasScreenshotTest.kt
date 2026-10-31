@@ -3,6 +3,7 @@ package id.haho.muslimdaily.screenshots
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.DuaEvent
+import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.data.settings.TranslationMode
 import id.haho.muslimdaily.domain.myset.ActiveSet
 import id.haho.muslimdaily.domain.myset.Customization
@@ -59,6 +60,34 @@ class DuasScreenshotTest {
                 dua = DuaPreviewData.dua("morning_02", 2, count = 3),
                 event = event,
                 prefs = ReadingPrefs(TranslationMode.BOTH, transliteration = true),
+                playback = PlaybackState(duaId = "morning_02", isPlaying = true, activePhrase = 1),
+            ),
+            DuaDetailActions(),
+        )
+    }
+
+    /** Layout B: flowing text with a pause mark between phrases. */
+    @Test
+    fun detailInline() = captureVariants("138-dua-layout-inline") {
+        DuaDetailContent(
+            DuaDetailState(
+                dua = DuaPreviewData.dua("morning_02", 2, count = 3),
+                event = event,
+                prefs = ReadingPrefs(layout = PhraseLayout.INLINE),
+                playback = PlaybackState(duaId = "morning_02", isPlaying = true, activePhrase = 1),
+            ),
+            DuaDetailActions(),
+        )
+    }
+
+    /** Layout C: one phrase at a time, following the recitation. */
+    @Test
+    fun detailFocus() = captureVariants("139-dua-layout-focus") {
+        DuaDetailContent(
+            DuaDetailState(
+                dua = DuaPreviewData.dua("morning_02", 2, count = 3),
+                event = event,
+                prefs = ReadingPrefs(layout = PhraseLayout.FOCUS),
                 playback = PlaybackState(duaId = "morning_02", isPlaying = true, activePhrase = 1),
             ),
             DuaDetailActions(),
