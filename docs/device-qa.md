@@ -82,7 +82,7 @@ Launcher, exact alarms allowed. Emulator: `qa_api26_widget` (Android 8.0, Pixel 
 | 5.3b | Redmi | pass | 8 jam 20 → 19 → 18 menit at 19:48, 19:49, 19:50; no "±". |
 | 5.4 | Redmi | pass (partial) | 1.9.0 installed over 1.5.0 with a next-prayer widget placed: it kept updating. No legacy "Jadwal shalat hari ini" widget was placed, so that half is untested. |
 | 5.4b | Android 8 | pass | Card, chips and the widget's own corners are round; Roboto in place of Google Sans. |
-| 5.4c | Redmi | not run | The lock-screen widget page does not open from `adb` swipes, and adding a widget there needs the owner's PIN. To do by hand. |
+| 5.4c | Redmi | not run | This PixelOS build has no lock-screen widgets (no switch under Lock screen, no hub mode under Screen saver). Needs a real Pixel on Android 16 QPR2+. |
 
 Found on the way: on a fresh install the city list is blank for about 35 s while it imports,
 and a search typed meanwhile says "Kota tidak ditemukan" (#106).
