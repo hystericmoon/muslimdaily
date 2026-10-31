@@ -5,8 +5,26 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, after #95 (the أَوْ fix). All earlier Adwam sessions were read and
+Last updated: 31 Oct 2026, afternoon (after #97; #98 and #99 open). All earlier Adwam sessions were read and
 archived; everything still open from them is below.
+
+## In flight (check first)
+
+- **#98** Focus layout: Next stays at the end of the line at 200% text (owner chose B on
+  https://claude.ai/artifact/DGWzNzJYk4BJcJQ1KkpFpQ). Screenshots workflow was started on the
+  branch; merge when CI is green (UI only, standing approval).
+- **#99** Hadith numbers for 20 of the 58 empty `source_1_no` rows (`tools/hadith_numbers.py`,
+  fawazahmed0/hadith-api, public domain). Shipped content: waits for the owner's OK.
+- **Mac session** (the owner starts it on their Mac with `claude remote-control` in their old
+  muslimdaily clone, updated to main): sunnah.com numbers for the other 38 rows (list in #99's
+  body: morning_07/08, evening_07/08, after_salah_08 partial matches, plus the rows with no
+  match), then tonight the device passes (TalkBack T1–T12, widget §5). It works on its own branch.
+- **1.9.0** (minor, stable): once #98 is merged. Contents: #94, #96, #97, #98 (and #99 if
+  approved by then). Bump versionCode 43 / versionName 1.9.0, WhatsNew.kt + `whats_new_*`
+  array, ask the owner before merging.
+- This session (session_01W2ZFMtaszo1tYduaqJcuBq) is at lineage depth 8: it can't start
+  sessions or schedule reminders. The owner starts the next cloud session by hand, which resets
+  the depth.
 
 ## Decisions waiting on the owner
 
@@ -18,7 +36,8 @@ archived; everything still open from them is below.
   with `verdict` ok / fix / virtue / later, `note` and the row's `sha`. Apply only `ok` rows whose
   sha still matches; ask before merging (shipped content). Regenerate the page from
   fresh suggestions if `duas.csv` changes first. The owner will do it later (31 Oct: "gonna
-  take hours"); check the collection at the start of each session.
+  take hours"; afternoon: "I will check on that"); check the collection at the start of each
+  session. The owner declined auto-shipping `match` phrase rows without listening.
   Answers so far (31 Oct, 9 rows, still in progress; checked again at the start of the
   after-#94 session, no new rows, every sha still matched): ok seg adhan_04, evening_15,
   morning_15; ok split morning_18; virtue split adhan_01; fix split morning_03 (no note);
@@ -41,27 +60,28 @@ archived; everything still open from them is below.
   `RECORD_AUDIO` permission, so the owner decides.
 - **"Hafal?" above or below the Arabic** in routine recall (#79): moving it below was offered,
   not decided.
-- **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`), no reply
-  yet. It blocks a Play Store release (`docs/play-store.md`) and decides whether the English
-  Hisn text from hisnmuslim.com can stay.
+- **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`), no reply.
+  IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
+  (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
+  "Plan B". It is open work item 1.
 - **Cloud environment**: add haho-design under the environment's Repositories and a setup
   script (SDK, haho-design publish) so sessions skip the manual setup below. Not verified done.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
 
-PR (31 Oct): the PDF's footnote markers (NUL bytes plus stray dots) removed from 7 rows'
+#97 (31 Oct): the PDF's footnote markers (NUL bytes plus stray dots) removed from 7 rows'
 Indonesian (morning_04/06/13, evening_04/06/13, distress_05; morning_04/evening_04 and
 distress_05 showed them in the main translation). `build_content.strip_markers` does it, used by
 `parse_pdf.py`; the build now fails on any control character.
 
-PR (31 Oct, after #95): morning_13 / evening_13 drop the trailing أَوْ, the "or" that
+#96 (31 Oct): morning_13 / evening_13 drop the trailing أَوْ, the "or" that
 introduced the book's note "(or once, when lazy)"; the clip ends at 11.71 s (the pause after
 قَدِيرٌ) instead of 14.07, which ran on into the note. `split_context.py` now drops an
 "or" left in front of a dropped note. The owner approved the change; the new clip end comes
 from the pauses, not from listening, so it is in the listening review's next round.
 
-On main, not released yet (goes into the next minor): #94 Memorise Listen/Build in the focus
+On main, not released yet (with #96, #97 above; goes into 1.9.0): #94 Memorise Listen/Build in the focus
 layout; practising missed words clears the hint level and always shows the reveal button; the
 focus layout's Back/Next row no longer breaks at 200% text (it also broke on the dua page in
 1.8.0). Add these to `WhatsNew.kt` with the next release.
@@ -83,9 +103,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Optional, offer at large text: in the focus layout, Next wraps under Back at 200%; it could
-   sit at the line's end instead, at the cost of the counter sitting slightly off-centre at
-   normal sizes. Not offered as a decision yet.
+1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Plan in
+   `docs/play-store.md`, "Plan B". Not started.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
@@ -96,10 +115,11 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    hadiths above (owner decision first). Never ship a split without the owner's approval.
 5. Audio ranges for the 6 rows in #83 and the ~22 clips longer than their text: needs listening
    in `build/split/review.html` (`python3 -I tools/split_context.py suggest`).
-6. 58 rows with an empty `source_1_no`: the book gives no number; sunnah.com returns 403 from
-   cloud sessions, so this needs a session that can reach it, or the owner.
+6. Empty `source_1_no`: 58 rows; #99 fills 20; the other 38 go to the Mac session (sunnah.com
+   answers 403 to cloud sessions, and so does dorar.net).
 7. Device passes (need the owner's phone, see Devices): `docs/talkback-checklist.md` T1–T12
-   and widget QA `docs/device-qa.md` §5 (5.1–5.4c); no results recorded yet.
+   and widget QA `docs/device-qa.md` §5 (5.1–5.4c); no results recorded yet. Planned for the
+   Mac session the evening of 31 Oct.
 8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
    auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
    permission rule.
@@ -117,8 +137,9 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   `arabic` still carries unvowelled narration (صلى الله عليه وسلم) or basmalah.
 - The English "( 1 )" / "[Soorah …]" are mostly verse numbers and surah headings in the Qur'an
   translations: information, not junk.
-- sunnah.com and api.sunnah.com return 403 from cloud sessions (checked 31 Oct); hadeethenc.com
-  answers 200.
+- sunnah.com, api.sunnah.com and dorar.net return 403 from cloud sessions (checked 31 Oct);
+  hadeethenc.com and cdn.jsdelivr.net (fawazahmed0/hadith-api, Arabic of the six books with
+  numbers and Al-Albani grades, public domain) answer 200.
 - Screenshots workflow race: it commits to the branch it checked out, so a push to the branch
   while it runs makes its push fail. Push first, then start it (or cancel and restart it).
 - Phrase rendering is all in `feature/duas/components/HighlightedArabic.kt` (`PhraseLines`:
