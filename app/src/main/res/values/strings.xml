@@ -897,7 +897,7 @@
         <item>Saat melatih kata yang terlewat saja, tombol untuk membuka teks dan huruf awal tetap tersedia, juga ketika hafalan tadi belum ada yang benar.</item>
         <item>Dengan tulisan besar, tombol Sebelumnya dan Berikutnya tidak lagi terpotong, dan Berikutnya selalu ada di kanan.</item>
         <item>Dzikir pagi dan petang ke-13 tidak lagi diakhiri kata «atau» (أَوْ) yang tersisa dari catatan kitab, dan audionya berhenti di akhir dzikir.</item>
-        <item>Nomor hadits ditambahkan pada 20 doa, dan tanda sisa dari PDF kitab dihapus dari terjemahan tujuh doa.</item>
+        <item>Nomor hadits ditambahkan pada 42 doa, dan tanda sisa dari PDF kitab dihapus dari terjemahan tujuh doa.</item>
     </string-array>
     <string-array name="whats_new_1_8_0">
         <item>Tombol Aa di halaman doa membuka pengaturan tampilan bacaan: tata letak, warna frasa, terjemahan, dan ukuran tulisan. Perubahan langsung terlihat di doa.</item>
