@@ -169,6 +169,17 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(strip("((a)). x"), "((a)). x")
         self.assertEqual(strip("\ufd3fa\ufd3e"), "\ufd3fa\ufd3e")
 
+    def test_quote_marks_before_bracketed_notes_are_dropped(self):
+        strip = bc.strip_quote_marks
+        # The notes stay as printed; the app shows them muted, which marks where the dua ends.
+        self.assertEqual(strip("((a b)). [n x]"), "a b [n x]")
+        self.assertEqual(strip("((a)) (n)."), "a (n)")
+        self.assertEqual(strip("((a)). [n] [m (k)]"), "a [n] [m (k)]")
+        # A note in plain text keeps the marks: they are the only sign of where the dua ends.
+        self.assertEqual(strip("((a)) n."), "((a)) n.")
+        self.assertEqual(strip("((a)) ، n (k)"), "((a)) ، n (k)")
+        self.assertEqual(strip("((a)) ((b))"), "((a)) ((b))")
+
     def test_built_arabic_has_no_quote_marks_and_breaks_follow(self):
         report = self.run_build([dua_row(arabic="((ألف | باء)).")])
         self.assertTrue(report.ok, report.errors)

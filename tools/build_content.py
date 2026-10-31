@@ -84,7 +84,14 @@ def strip_quote_marks(text: str) -> str:
     """Drops the book's quotation marks around a whole dua for display: one outer "((...))" or
     "(...)" pair, with a full stop after it. Only a pair that encloses the whole text is
     removed; "[...]" (words in some narrations), notes in brackets inside the text and
-    Qur'anic ﴿...﴾ stay. The CSV keeps the entry as the book prints it."""
+    Qur'anic ﴿...﴾ stay. A "((...))" followed only by the book's bracketed notes ("(three
+    times)", "[in the evening he says: ...]") loses its marks too: the app shows those notes
+    muted, so the end of the dua stays visible. Notes in plain text after the marks keep them,
+    since the marks are then the only sign of where the dua ends. The CSV keeps the entry as the
+    book prints it."""
+    before_notes = _quote_before_notes(text)
+    if before_notes is not None:
+        return before_notes
     t = text.strip()
     if t.endswith("."):
         t = t[:-1].rstrip()
@@ -102,6 +109,48 @@ def strip_quote_marks(text: str) -> str:
                 break
             return inner
     return text.strip()
+
+
+def _bracket_groups(text: str) -> bool:
+    """True when text is nothing but balanced "(...)" or "[...]" groups (and spaces), none doubled."""
+    i, n = 0, len(text)
+    if not text.strip():
+        return False
+    while i < n:
+        if text[i].isspace():
+            i += 1
+            continue
+        if text[i] not in "([" or text[i:i + 2] == "((":
+            return False
+        opening, closing = text[i], ")" if text[i] == "(" else "]"
+        depth, j = 0, i
+        while j < n:
+            depth += 1 if text[j] == opening else -1 if text[j] == closing else 0
+            if depth == 0:
+                break
+            j += 1
+        if j == n:
+            return False
+        i = j + 1
+    return True
+
+
+def _quote_before_notes(text: str) -> str | None:
+    """"((dua)). (note) [note]" -> "dua (note) [note]"; None when the text is not of that shape."""
+    t = text.strip()
+    if t.endswith("."):
+        t = t[:-1].rstrip()
+    if not t.startswith("((") or t.count("((") != 1 or t.count("))") != 1:
+        return None
+    end = t.index("))")
+    inner, rest = t[2:end].strip(), t[end + 2:].strip()
+    if rest.startswith("."):
+        rest = rest[1:].strip()
+    if not inner or not _bracket_groups(rest):
+        return None
+    if inner.startswith(PHRASE_MARK) or inner.endswith(PHRASE_MARK):
+        return None
+    return inner + " " + rest
 
 
 def split_phrases(marked: str) -> tuple[str, list[int]]:
