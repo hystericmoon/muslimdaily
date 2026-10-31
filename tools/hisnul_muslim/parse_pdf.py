@@ -8,9 +8,14 @@ Arabic is dropped here; it is taken from hisnmuslim.com by entry number instead.
 from __future__ import annotations
 
 import re
+import sys
+from pathlib import Path
 from dataclasses import dataclass, field
 
 import pdfplumber
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from build_content import strip_markers  # noqa: E402
 
 BODY, SUPER, NOTE, NOTE_MARK, HEADING = "body", "super", "note", "note_mark", "heading"
 ENTRY_START = re.compile(r"^(\d{1,3})[.-]\s*(?=[^\s\d.])")
@@ -58,7 +63,7 @@ class Entry:
     def translation(self) -> str:
         t = " ".join(self.text)
         t = ENTRY_START.sub("", t, count=1)
-        return re.sub(r"\s+", " ", t).strip()
+        return strip_markers(t)
 
 
 def _lines(words, tol=3.5):

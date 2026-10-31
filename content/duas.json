@@ -1,5 +1,5 @@
 {
-  "content_version": 31,
+  "content_version": 32,
   "duas": [
     {
       "id": "wake_01",
@@ -4439,7 +4439,7 @@
       "arabic_full": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
       "is_quran": false,
       "translations": {
-        "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” \u0000 (dst.) \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 . \u0000",
+        "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” (dst.)",
         "en": "(O Allah, by your leave we have reached the morning and by Your leave we have reached the evening, by Your leave we live and die and unto You is our resurrection.)[In the evening:](O Allah, by Your leave we have reached the evening and by Your leave we have reached the morning, by Your leave we live and die and unto You is our return.)"
       },
       "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr",
@@ -4540,7 +4540,7 @@
       "arabic": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
-        "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore). \u0000 \u0000 \u0000",
+        "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore).",
         "en": "(O Allah, grant my body health, O Allah, grant my hearing health, O Allah, grant my sight health. None has the right to be worshipped except You.)(three times) (O Allah, I take refuge with You from disbelief and poverty, and I take refuge with You from the punishment of the grave. None has the right to be worshipped except You. (three times))"
       },
       "transliteration": "Allāhumma 'āfinī fī badanī, Allāhumma 'āfinī fī sam'ī, Allāhumma 'āfinī fī basharī, lā ilāha illā ant. Allāhumma innī a'ūdzu bika minal-kufr, wal-faqr, wa a'ūdzu bika min 'adzābil-qabr, lā ilāha illā ant",
@@ -4875,7 +4875,7 @@
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)( [ten times or once if lazy])"
       },
       "translations_full": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas)."
       },
       "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr",
       "count": 10,
@@ -5288,7 +5288,7 @@
       "arabic_full": "((اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا ، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ)). [وإذا أمسى قال: اللَّهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير.]",
       "is_quran": false,
       "translations": {
-        "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” \u0000 (dst.) \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 . \u0000",
+        "id": "“Ya Allah, dengan rahmat dan pertolonganMu kami memasuki waktu pagi, dan dengan rahmat dan pertolonganMu kami memasuki waktu sore. Dengan rahmat dan pertolonganMu kami hidup dan dengan kehendakMu kami mati. Dan kepadaMu kebangkitan (bagi semua makhluk).” (dst.)",
         "en": "(O Allah, by your leave we have reached the morning and by Your leave we have reached the evening, by Your leave we live and die and unto You is our resurrection.)[In the evening:](O Allah, by Your leave we have reached the evening and by Your leave we have reached the morning, by Your leave we live and die and unto You is our return.)"
       },
       "transliteration": "Allāhumma bika ashbahnā, wabika amsainā, wabika nahyā, wabika namūtu wa ilaikan-nusyūr",
@@ -5389,7 +5389,7 @@
       "arabic": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ",
       "is_quran": false,
       "translations": {
-        "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore). \u0000 \u0000 \u0000",
+        "id": "“Ya Allah! Selamatkan tubuhku (dari penyakit dan yang tidak aku inginkan). Ya Allah, selamatkan pendengaranku (dari penyakit dan maksiat atau sesuatu yang tidak aku inginkan). Ya Allah, selamatkan penglihatanku, tiada Tuhan (yang berhak disembah) kecuali Engkau. Ya Allah! Sesungguhnya aku berlindung kepadaMu dari kekufuran dan kefakiran. Aku berlindung kepadaMu dari siksa kubur, tiada Tuhan (yang berhak disembah) kecuali Engkau.” (Dibaca tiga kali di waktu pagi dan sore).",
         "en": "(O Allah, grant my body health, O Allah, grant my hearing health, O Allah, grant my sight health. None has the right to be worshipped except You.)(three times) (O Allah, I take refuge with You from disbelief and poverty, and I take refuge with You from the punishment of the grave. None has the right to be worshipped except You. (three times))"
       },
       "transliteration": "Allāhumma 'āfinī fī badanī, Allāhumma 'āfinī fī sam'ī, Allāhumma 'āfinī fī basharī, lā ilāha illā ant. Allāhumma innī a'ūdzu bika minal-kufr, wal-faqr, wa a'ūdzu bika min 'adzābil-qabr, lā ilāha illā ant",
@@ -5719,7 +5719,7 @@
         "en": "(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is over all things omnipotent.)( [ten times or once if lazy])"
       },
       "translations_full": {
-        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
+        "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas)."
       },
       "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr",
       "count": 10,
@@ -8325,7 +8325,7 @@
       "arabic": "لاَ إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظّالِمِينَ",
       "is_quran": false,
       "translations": {
-        "id": "“Tiada Tuhan yang berhak disembah selain Engkau. Maha Suci Engkau. Sesungguhnya aku tergolong orang-orang yang zhalim.” \u0000",
+        "id": "“Tiada Tuhan yang berhak disembah selain Engkau. Maha Suci Engkau. Sesungguhnya aku tergolong orang-orang yang zhalim.”",
         "en": "(None has the right to be worshipped except You. How perfect You are, verily I was among the wrong-doers.)"
       },
       "transliteration": "Lā ilāha illā anta subhānaka innī kuntu minazh-zhālimīn",
