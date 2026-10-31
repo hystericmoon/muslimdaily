@@ -61,6 +61,9 @@ NOTE_STARTS = {"وإذا", "إذا", "واذا", "اذا", "قال", "وقال",
 COUNT_WORDS = {"ثلاثا", "ثلاث", "ثلاثة", "سبعا", "سبع", "عشرا", "عشر", "مائة", "مئة", "مرات", "مرة",
                "مرتين", "مرتان", "سبعين", "وثلاثين", "أربعا", "اربعا", "وثلاثون"}
 
+# "Or", when it is the last word left before a dropped note.
+OR_WORDS = {"أو", "او"}
+
 
 def bare(token: str) -> str:
     """A token without harakat and the brackets/punctuation around it, for matching rules."""
@@ -146,6 +149,13 @@ def propose_arabic(text: str) -> tuple[str, list[str]]:
                     drop(prev_end + 1, start - 1)
         if len(pieces) > 1:
             rules.append("several")
+
+    # "أو" ("or") that only introduced a dropped note: "…)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ)"
+    # (or once, when lazy). With the note gone, it would be recited as part of the dua.
+    if rules:
+        last = max((i for i, k in enumerate(keep) if k and bare(tokens[i])), default=None)
+        if last is not None and last + 1 < len(tokens) and bare(tokens[last]) in OR_WORDS:
+            drop(last, last)
 
     if not rules:
         return text, []

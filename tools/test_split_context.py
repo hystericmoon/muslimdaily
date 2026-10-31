@@ -26,6 +26,14 @@ class ProposeTest(unittest.TestCase):
         part, _ = sc.propose_arabic("((ألف باء (ثلاثاً) جيم دال))")
         self.assertEqual("((ألف باء جيم دال))", part)
 
+    def test_or_that_introduced_a_dropped_note_goes_with_it(self):
+        part, _ = sc.propose_arabic("((ألف باء جيم)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).")
+        self.assertEqual("((ألف باء جيم))", part)
+
+    def test_or_inside_the_dua_stays(self):
+        part, _ = sc.propose_arabic("((ألف أَوْ باء (ثلاثاً) جيم))")
+        self.assertEqual("((ألف أَوْ باء جيم))", part)
+
     def test_instruction_in_brackets_is_context_but_added_words_stay(self):
         part, rules = sc.propose_arabic("((ألف باء جيم)). [وإذا أمسى قال: دال هاء]")
         self.assertEqual("((ألف باء جيم))", part)

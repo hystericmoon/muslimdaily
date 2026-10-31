@@ -1,5 +1,5 @@
 {
-  "content_version": 30,
+  "content_version": 31,
   "duas": [
     {
       "id": "wake_01",
@@ -4867,7 +4867,7 @@
       "event": "morning",
       "order": 13,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
       "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
       "is_quran": false,
       "translations": {
@@ -4877,7 +4877,7 @@
       "translations_full": {
         "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
       },
-      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr, au",
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr",
       "count": 10,
       "sources": [
         {
@@ -4905,7 +4905,7 @@
         "segments": [],
         "range": [
           0.01,
-          14.07
+          11.71
         ]
       },
       "phrase_breaks": []
@@ -5711,7 +5711,7 @@
       "event": "evening",
       "order": 13,
       "variant_group": null,
-      "arabic": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ",
+      "arabic": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
       "arabic_full": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)) ، أَوْ (مرَّةً واحدةً عندَ الكَسَلِ).",
       "is_quran": false,
       "translations": {
@@ -5721,7 +5721,7 @@
       "translations_full": {
         "id": "“Tidak ada Tuhan yang berhak disembah selain Allah Yang Maha Esa, tidak ada sekutu bagiNya. BagiNya kerajaan dan segala pujian. Dia-lah yang berkuasa atas segala sesuatu.” (Dibaca sepuluh kali, atau cukup sekali dalam keadaan malas). \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 \u0000 . \u0000 \u0000 \u0000 \u0000 \u0000"
       },
-      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr, au",
+      "transliteration": "Lā ilāha illallāhu wahdahu lā syarīka lah, lahul-mulku walahul-hamd, wahuwa 'alā kulli syai'in qadīr",
       "count": 10,
       "sources": [
         {
@@ -5749,7 +5749,7 @@
         "segments": [],
         "range": [
           0.01,
-          14.07
+          11.71
         ]
       },
       "phrase_breaks": []
