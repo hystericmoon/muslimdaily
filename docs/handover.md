@@ -5,8 +5,8 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, during the session after 1.7.0 (#89 open). All earlier Adwam
-sessions were read and archived; everything still open from them is below.
+Last updated: 31 Oct 2026, with the 1.8.0 release PR. All earlier Adwam sessions were read and
+archived; everything still open from them is below.
 
 ## Decisions waiting on the owner
 
@@ -17,18 +17,18 @@ sessions were read and archived; everything still open from them is below.
   Answers are in its `reviews` collection (`ArtifactData list`), one doc per `<split|seg>__<id>`
   with `verdict` ok / fix / virtue / later, `note` and the row's `sha`. Apply only `ok` rows whose
   sha still matches; ask before merging (shipped content). Regenerate the page from
-  fresh suggestions if `duas.csv` changes first.
+  fresh suggestions if `duas.csv` changes first. The owner will do it later (31 Oct: "gonna
+  take hours"); check the collection at the start of each session.
 
 - **Virtue hadiths shown as duas** (shalawat_01–05, salam_01/03, istighfar_01/02/04/05/06,
   illness_06, travel_09, night_03, tasbih_05): show them as virtue cards instead? Details in
   the body of #83.
 - **Evening rows with the morning wording**, the evening form only in the book's note
-  (evening_03, evening_11, morning_18 "3× in the evening").
+  (evening_03, evening_11, morning_18 "3× in the evening"). Idea offered: show the note as a
+  footnote under the dua, as surahquran.com does.
 - **Report source errors?** tasbih_02 English translates the 100× hadith while the Arabic is
   the 10× one; after_salah_06 English has no translation of Ayat al-Kursi; adhan_02 English
   "His salve"; HadeethEnc no. 5491 and 6163.
-- **Cue layout besides A** (A shipped in 1.7.0): prototype at
-  https://claude.ai/artifact/7sXgDbssoA1zWgF9WeWm6F. C is the candidate for memorising.
 - **Microphone recording in Memorise** (record yourself, compare with the reciter): adds the
   `RECORD_AUDIO` permission, so the owner decides.
 - **"Hafal?" above or below the Arabic** in routine recall (#79): moving it below was offered,
@@ -42,6 +42,12 @@ sessions were read and archived; everything still open from them is below.
 
 ## Shipped
 
+1.8.0 (versionCode 42, release PR #93, published when it merges): #89 Memorise Cek marks missed
+words (suggested rating, practise only those); #90 dua layouts A/B/C (`PhraseLayout`); #91 the
+build drops `(( ))` before bracketed notes (8 rows, content_version 30); #92 phrase fills
+(`PhraseFill`, hide while playing) and the Aa reading sheet on the dua page (`ReadingSheet`,
+shared with Display settings).
+
 1.7.0 (versionCode 41, released 30 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.7.0):
 #82 Today without a location, onboarding city picker and text size, 200% fixes, audio error
 message, search ranking (content DB v6); #83 six Hisnul Muslim rows reduced to the recited
@@ -52,8 +58,12 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Memorise in focus mode (layout C), once the owner picks it.
-2. Mark missed words in Memorise's Cek step: #89 (open). Merge when CI is green.
+1. Memorise in focus mode: Memorise's Arabic card still uses `HighlightedArabic`; reuse
+   `PhraseLines(layout = FOCUS)` for Listen/Build. Also clear the hint-level chip while
+   practising only missed words (#89 follow-up).
+2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
+   31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
+   the text keeps the book's punctuation.
 3. Phrase marks (`|`) for the rest: 87 of 323 rows have them. Batch 2 rows that failed the
    timing check need listening (`tools/segment_audio.py`).
 4. Dua/context splits: about 39 of the original 66 proposals are unapplied; 37 Hisn rows still
@@ -81,6 +91,12 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   translations: information, not junk.
 - sunnah.com and api.sunnah.com return 403 from cloud sessions (checked 31 Oct); hadeethenc.com
   answers 200.
+- Phrase rendering is all in `feature/duas/components/HighlightedArabic.kt` (`PhraseLines`:
+  column, flow, focus; fills and the gold active phrase). Reading settings composables are in
+  `feature/settings/ReadingSettings.kt`, used by both Display settings and the dua page sheet.
+- Connecting the owner's Mac: the desktop-app path "Settings → Claude Code → Remote Control"
+  does not exist in the owner's app (31 Oct); `claude remote-control` in a terminal in the
+  clone is the way.
 - `split_context.py` proposals are often wrong (it only drops the narrator); check every row.
   Values are cut from the source between anchors, never typed: see #83's approach.
 - Empty occasions (entering_home, drinking) are already hidden in the library.

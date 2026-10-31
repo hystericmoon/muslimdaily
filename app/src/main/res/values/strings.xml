@@ -892,6 +892,13 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_8_0">
+        <item>Tombol Aa di halaman doa membuka pengaturan tampilan bacaan: tata letak, warna frasa, terjemahan, dan ukuran tulisan. Perubahan langsung terlihat di doa.</item>
+        <item>Pilih tata letak doa: satu frasa per baris, teks mengalir seperti di buku dengan tanda jeda, atau satu frasa sekaligus dengan tombol Sebelumnya dan Berikutnya.</item>
+        <item>Warna frasa: beri latar selang-seling atau gelembung di belakang tiap frasa agar batasnya mudah terlihat. Saat audio diputar, hanya frasa yang sedang dibaca yang berwarna.</item>
+        <item>Hafalan: di langkah Cek, ketuk kata yang tadi terlewat. Aplikasi menyarankan penilaian, dan Anda bisa melatih kata-kata itu saja.</item>
+        <item>Delapan doa pagi, petang, dan tidur tidak lagi diapit tanda kurung kitab ((…)). Catatan kitab sesudahnya tetap ada dan tampil redup.</item>
+    </string-array>
     <string-array name="whats_new_1_7_0">
         <item>Doa kini tampil satu frasa per baris, sehingga tampak di mana berhenti dan di mana melanjutkan. Ketuk sebuah frasa untuk memutar bacaan mulai dari situ.</item>
         <item>Catatan kitab dalam kurung, seperti keterangan waktu atau jumlah bacaan, kini tampil lebih kecil dan lebih redup agar tidak terbaca sebagai bagian doa.</item>
