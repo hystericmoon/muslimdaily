@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
@@ -290,12 +291,17 @@ private fun PhraseFocus(
                 Icon(painterResource(R.drawable.ic_chevron_left), null, Modifier.size(HahoTheme.dimens.smallIcon))
                 Text(stringResource(R.string.dua_phrase_back), Modifier.padding(start = HahoTheme.spacing.xs))
             }
+            // "2 / 6" fits between the buttons at any text size; TalkBack hears "Frasa 2 dari 6".
+            val position = stringResource(R.string.dua_phrase_position, shown + 1, phrases.size)
             Text(
-                stringResource(R.string.dua_phrase_position, shown + 1, phrases.size),
+                "${shown + 1} / ${phrases.size}",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
+                modifier = Modifier.weight(1f).semantics {
+                    contentDescription = position
+                    liveRegion = LiveRegionMode.Polite
+                },
             )
             TextButton(onClick = { shown += 1 }, enabled = shown < phrases.lastIndex) {
                 Text(stringResource(R.string.dua_phrase_next), Modifier.padding(end = HahoTheme.spacing.xs))
