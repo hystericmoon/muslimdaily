@@ -72,6 +72,8 @@ is mergeable, without asking. Ask first only when the PR carries a risk:
 One session at a time. Start by reading `docs/handover.md`; before you stop, or when the
 conversation is getting long, update it (open PRs, what waits on the owner, decisions, facts
 that took time to find) and merge it with your PR or on its own, so the next session starts
-from it.
+from it. Standing instruction from the owner: when a session's work is done, start a new cloud
+session on this repo with the prompt "Continue from docs/handover.md", then archive the
+finished session, so only one runs.
 
 More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
