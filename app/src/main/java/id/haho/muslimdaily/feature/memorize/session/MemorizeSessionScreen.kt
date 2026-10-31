@@ -59,6 +59,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.PauseMode
+import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
@@ -67,6 +68,7 @@ import id.haho.muslimdaily.domain.memorize.Rating
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
+import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
 import androidx.compose.ui.semantics.contentDescription
@@ -236,11 +238,21 @@ private fun Step.hintRes() = when (this) {
     Step.CHECK -> R.string.memorize_hint_check
 }
 
+/**
+ * The dua's Arabic. With [focus], one phrase at a time that follows the audio, with back and next
+ * to step through it: learning a chunk at a time keeps the load on working memory low. Check
+ * shows the whole text, to compare the recital with.
+ */
 @Composable
-private fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase) {
+private fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase, focus: Boolean = false) {
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(HahoTheme.spacing.xl)) {
-            HighlightedArabic(state.dua.arabic, state.dua.phrases, active, AdwamTheme.arabic.large(state.dua.isQuran))
+            val style = AdwamTheme.arabic.large(state.dua.isQuran)
+            if (focus) {
+                PhraseLines(state.dua.arabic, state.dua.phrases, active, style, layout = PhraseLayout.FOCUS)
+            } else {
+                HighlightedArabic(state.dua.arabic, state.dua.phrases, active, style)
+            }
         }
     }
 }
@@ -273,7 +285,7 @@ private fun PlayRow(isPlaying: Boolean, enabled: Boolean, startLabel: String, on
 
 @Composable
 private fun ListenStep(state: MemorizeUiState, actions: MemorizeActions) {
-    ArabicCard(state)
+    ArabicCard(state, focus = true)
     if (!state.hasAudio) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
     if (state.playback.failed) {
         InfoNote(
@@ -296,7 +308,7 @@ private fun ListenStep(state: MemorizeUiState, actions: MemorizeActions) {
 
 @Composable
 private fun BuildStep(state: MemorizeUiState, actions: MemorizeActions) {
-    ArabicCard(state)
+    ArabicCard(state, focus = true)
     if (!state.segmented) InfoNote(stringResource(R.string.memorize_not_segmented))
     val loaded = (state.playing == Playing.BUILD || state.playing == Playing.AB) && !state.playback.ended
     if (loaded) BuildProgress(state)
@@ -424,7 +436,9 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             modifier = Modifier.padding(HahoTheme.spacing.xl),
         )
     }
-    if (state.fade != FadeLevel.NONE) {
+    // Practice hides the missed words whatever the fade level, so it always needs the reveal.
+    val hints = state.fade != FadeLevel.NONE || state.practising
+    if (hints) {
         // Reveal as you go: recite the next word aloud, then show it. The word shown is announced
         // as Arabic text (a stateDescription can't carry the Arabic locale, so the UI voice would read it).
         val last = state.lastRevealed?.text.orEmpty()
@@ -445,14 +459,15 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
     FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         levels.forEach { level ->
+            // While practising, the missed words are hidden, not a share of them: no level is current.
             FilterChip(
-                selected = state.fade == level,
+                selected = !state.practising && state.fade == level,
                 onClick = { actions.onFade(level) },
                 label = { Text(stringResource(R.string.memorize_fade_percent, (level.fraction * 100).toInt())) },
             )
         }
     }
-    if (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM) {
+    if (!state.practising && (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM)) {
         Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
         FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             FadeOrder.entries.forEach { order ->
@@ -464,7 +479,7 @@ private fun RecallStep(state: MemorizeUiState, actions: MemorizeActions, talkBac
             }
         }
     }
-    if (state.fade != FadeLevel.NONE) {
+    if (hints) {
         FilterChip(
             selected = state.firstLetters,
             onClick = { actions.onFirstLetters(!state.firstLetters) },
