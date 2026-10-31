@@ -18,6 +18,12 @@ enum class TranslationMode { INDONESIAN, ENGLISH, BOTH }
  */
 enum class PhraseLayout { LINES, INLINE, FOCUS }
 
+/**
+ * A background behind each phrase so its extent shows at a glance: none, two alternating neutral
+ * tones, or a rounded shape per phrase. Gold stays reserved for the phrase being recited.
+ */
+enum class PhraseFill { NONE, ALTERNATING, BUBBLES }
+
 enum class AdhanMode { OFF, SOUND, SILENT }
 
 enum class PauseMode { AUTO, MANUAL }
@@ -96,6 +102,9 @@ data class AppSettings(
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,
     val showTransliteration: Boolean = false,
     val phraseLayout: PhraseLayout = PhraseLayout.LINES,
+    val phraseFill: PhraseFill = PhraseFill.NONE,
+    /** While the audio plays, only the gold phrase keeps a background. */
+    val hideFillWhilePlaying: Boolean = true,
     val arabicScale: Float = 1f,
     val arabicFont: ArabicFont = ArabicFont.NASKH,
     val translationScale: Float = 1f,

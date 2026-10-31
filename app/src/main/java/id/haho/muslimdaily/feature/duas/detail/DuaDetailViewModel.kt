@@ -10,6 +10,8 @@ import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.data.content.ContentRepository
+import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.navigation.DuaDetailRoute
@@ -36,6 +38,8 @@ data class DuaDetailState(
     val note: String? = null,
     /** The reader's routines, for "add to routine". */
     val routines: List<Routine> = emptyList(),
+    /** All settings, for the reading sheet. */
+    val settings: AppSettings = AppSettings(),
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -64,13 +68,19 @@ class DuaDetailViewModel @Inject constructor(
             DuaDetailState(
                 dua = it,
                 event = e,
-                prefs = ReadingPrefs(s.translationMode, s.showTransliteration, s.phraseLayout),
+                prefs = ReadingPrefs(s.translationMode, s.showTransliteration, s.phraseLayout, s.phraseFill, s.hideFillWhilePlaying),
+                settings = s,
                 playback = if (playback.duaId == it.id) playback else PlaybackState(speed = s.audioSpeed, repeat = playback.repeat),
             )
         }
     }.combine(notes.note(duaId)) { st, note -> st?.copy(note = note) }
         .combine(routineRepo.routines()) { st, routines -> st?.copy(routines = routines) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    /** Changes from the reading sheet: the same settings as Display settings. */
+    fun updateSettings(block: SettingsEditor.() -> Unit) {
+        viewModelScope.launch { settings.update(block) }
+    }
 
     fun saveNote(text: String) {
         viewModelScope.launch { notes.save(duaId, text) }

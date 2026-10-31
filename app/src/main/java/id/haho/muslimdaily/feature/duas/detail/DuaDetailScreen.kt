@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import id.haho.muslimdaily.feature.settings.ReadingSheet
 import id.haho.muslimdaily.data.note.NoteRepository
 import id.haho.muslimdaily.data.settings.TranslationMode
 import id.haho.design.glass.GlassAlertDialog
@@ -99,11 +100,17 @@ fun DuaDetailRoute(
     val failedMessage = stringResource(R.string.audio_failed)
     val failed = s?.playback?.failed == true
     LaunchedEffect(failed) { if (failed) snackbar.showSnackbar(failedMessage) }
+    var readingSheet by rememberSaveable { mutableStateOf(false) }
+    if (readingSheet && s != null) ReadingSheet(s.settings, viewModel::updateSettings) { readingSheet = false }
     AdwamScreen(
         title = title,
         onBack = onBack,
         snackbarHostState = snackbar,
         actions = {
+            // Reading display: layout, phrase fill, translation and text size, adjusted in place.
+            IconButton(onClick = { readingSheet = true }) {
+                Icon(painterResource(R.drawable.ic_text_fields), stringResource(R.string.dua_reading_settings))
+            }
             if (s != null) {
                 val source = buildString {
                     append(s.dua.sources.joinToString("; ") { sourceLabel(it) })
@@ -167,6 +174,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                     activePhrase = state.playback.activePhrase,
                     style = AdwamTheme.arabic.large(dua.isQuran),
                     layout = state.prefs.layout,
+                    fill = state.prefs.fillFor(state.playback.isPlaying),
                     onPlayFrom = if (dua.audio != null) actions.onPlayFrom else null,
                 )
             }
