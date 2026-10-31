@@ -215,11 +215,38 @@ def is_blank_or_placeholder(value: str | None) -> bool:
     return not value or not value.strip() or PLACEHOLDER in value
 
 
+CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
+def strip_markers(text: str) -> str:
+    """The Hisnul Muslim PDF's footnote markers come out as NUL bytes, each with a stray dot
+    after the last sentence ("…sore). \\x00 . \\x00"). Drops the control characters and the
+    dots left alone at the end; words are never touched. Used by hisnul_muslim/parse_pdf.py."""
+    t = re.sub(r"\s+", " ", CONTROL_CHARS.sub(" ", text)).strip()
+    return re.sub(r"(?:\s+\.)+$", "", t)
+
+
+def _strings(value, key: str = ""):
+    """(key path, text) for every string inside a dua entry."""
+    if isinstance(value, str):
+        yield key, value
+    elif isinstance(value, dict):
+        for k, v in value.items():
+            yield from _strings(v, f"{key}.{k}" if key else k)
+    elif isinstance(value, list):
+        for i, v in enumerate(value):
+            yield from _strings(v, f"{key}[{i}]")
+
+
 def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, report: Report) -> None:
     """Validates one dua entry in its JSON shape. Shared by CSV build and --check."""
     did = d.get("id") or "?"
     p = lambda msg: report.problem(f"{did}: {msg}")  # noqa: E731
 
+    for key, value in _strings(d):
+        if CONTROL_CHARS.search(value):
+            report.errors.append(f"{did}: {key} has control characters (PDF footnote markers?); "
+                                 "clean them with strip_markers")
     if d.get("category") not in taxonomy:
         report.errors.append(f"{did}: unknown category '{d.get('category')}'")
     elif d.get("event") not in taxonomy[d["category"]]:

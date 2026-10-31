@@ -50,6 +50,11 @@ archived; everything still open from them is below.
 
 ## Shipped
 
+PR (31 Oct): the PDF's footnote markers (NUL bytes plus stray dots) removed from 7 rows'
+Indonesian (morning_04/06/13, evening_04/06/13, distress_05; morning_04/evening_04 and
+distress_05 showed them in the main translation). `build_content.strip_markers` does it, used by
+`parse_pdf.py`; the build now fails on any control character.
+
 PR (31 Oct, after #95): morning_13 / evening_13 drop the trailing أَوْ, the "or" that
 introduced the book's note "(or once, when lazy)"; the clip ends at 11.71 s (the pause after
 قَدِيرٌ) instead of 14.07, which ran on into the note. `split_context.py` now drops an
@@ -98,11 +103,6 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
    auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
    permission rule.
-
-9. NUL bytes in `translation_id_full` of 7 shipped rows (morning_04, morning_06, morning_13,
-   evening_04, evening_06, evening_13, distress_05): leftovers of the PDF extraction after the
-   Indonesian note (`\x00 \x00 …`). They render under the dua. Strip control characters in
-   the importer/build (not by hand); shipped content, so ask before merging.
 
 Not to do: the Wear OS app (decided by the owner, 31 Oct). The module is already gone from the
 repo; don't bring it back or plan Wear work.

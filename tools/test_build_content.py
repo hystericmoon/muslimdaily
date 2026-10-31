@@ -188,6 +188,14 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(entry["phrase_breaks"], [4])
 
 
+class StripMarkersTest(unittest.TestCase):
+    def test_markers_and_their_dots_go(self):
+        self.assertEqual("satu dua).", bc.strip_markers("satu dua). \x00 \x00 . \x00 \x00"))
+
+    def test_words_and_inner_dots_stay(self):
+        self.assertEqual("satu.” (dst.)", bc.strip_markers("satu.” \x00 (dst.) \x00 . \x00"))
+
+
 class TextPartOfTest(unittest.TestCase):
     def test_words_run_into_quotes(self):
         self.assertTrue(bc.text_part_of("And I too bear witness", "one says:‘And I too bear witness’"))
