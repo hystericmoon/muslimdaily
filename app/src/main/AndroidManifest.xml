@@ -119,6 +119,7 @@
 
         <receiver
             android:name=".widget.DayScheduleWidgetReceiver"
+            android:enabled="@bool/legacy_widget_enabled"
             android:exported="true"
             android:label="@string/widget_name">
             <intent-filter>
