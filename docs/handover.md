@@ -5,23 +5,19 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, night (1.9.0 released; widget pass recorded; #106 fixed in #109, #107 open). All earlier Adwam
+Last updated: 31 Oct 2026, late night (1.10.0 released: content cleanup, #107 fixed). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
-- **Content cleanup, #113** (waits for the owner's OK: shipped content). Owner's instruction
-  31 Oct: every row only what the reader says, with ID/EN translation, Latin and audio. Review
-  page https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1 (242 rows). It replaces the listening
-  review (artifact GzK5…, its 9 answers are covered). Tools: `tools/clean_entries.py` (every
-  text decision, with reasons; re-run on a fresh main CSV, it is not idempotent on its own
-  output) and `tools/align_audio.py` (wav2vec2 Arabic forced alignment; timings committed in
-  `tools/align/word_timings.json`; the `timings` step needs a venv with torch, see its
-  docstring; ~5 s a row on CPU). New columns `kind`, `footnote`, `translation_*_from`;
-  ContentDatabase 7. Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip);
-  16 rows the aligner was unsure of keep their old audio. Owner decided in this round: item 3
-  "your call" (reading cards), item 5 footnote yes, item 7 microphone no, #107 disable the old
-  widget (merged #112). After #113: release 1.10.0 (#104, #109, #112, #113; ask first).
+- **Content cleanup** (#113, shipped in 1.10.0): every row only what the reader says. Tools:
+  `tools/clean_entries.py` (every text decision, with reasons; re-run only on a fresh main CSV,
+  it is not idempotent on its own output) and `tools/align_audio.py` (wav2vec2 Arabic forced
+  alignment; timings in `tools/align/word_timings.json`; the `timings` step needs a venv with
+  torch, see its docstring; ~5 s a row on CPU). Review page (record):
+  https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1. It replaced the listening review
+  (GzK5…). Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip); 16 rows the
+  aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
 - **"Hafal?" placement**: explained to the owner (move below the Arabic, recommended); no
   answer yet.
 
@@ -30,8 +26,7 @@ sessions were read and archived; everything still open from them is below.
   leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
   sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
   `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
-  in it), content_version 35, merged in #104 (owner's OK, 31 Oct). Not released yet: add a
-  What's New line with the next release.
+  in it), content_version 35, merged in #104, shipped in 1.10.0.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
   owner's Mac via `claude remote-control`): did #102, then the widget pass the evening of
   31 Oct (results in `docs/device-qa.md` §5; issues #106, #107). TalkBack was skipped at the
@@ -90,6 +85,10 @@ sessions were read and archived; everything still open from them is below.
 
 ## Shipped
 
+1.10.0 (versionCode 44, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.10.0):
+#104 (Darussalam under "Penilaian lain"), #109 (city list during first import), #112 (one widget
+entry on Android 8–11, #107), #113 (content cleanup, reading cards, footnotes, timed audio).
+
 1.9.0 (versionCode 43, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.9.0):
 #94, #96, #97, #98, #99, #102 (details below).
 
@@ -142,15 +141,16 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    cloud sessions; a Mac session can reach sunnah.com.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
    widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
-   launcher. TalkBack T1–T12: skipped by the owner (31 Oct); the Redmi has no working audio,
-   so a later pass belongs on `qa_api37_profile`.
-   Filed from it: #106, fixed by #109 (merged 31 Oct, not released: the first city import
-   now survives a keystroke and shows "Menyiapkan daftar kota…"; add it to What's New with
-   the next release), and #107, open (Android 8–11 widget picker shows two identical
-   entries; options in the issue, owner's call).
-8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
-   auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
-   permission rule.
+   launcher. All three can run on emulators on the Mac (an Android 16 QPR2+ Pixel image for
+   5.4c; install 1.5.0, place the old widget, upgrade, for 5.4; Lawnchair from its GitHub
+   releases for a third-party launcher), told to the owner 31 Oct. TalkBack T1–T12: skipped
+   by the owner (31 Oct); a later pass belongs on `qa_api37_profile`.
+   Filed from it: #106 (fixed by #109) and #107 (fixed by #112: the old receiver is disabled
+   below Android 12, owner's choice); both shipped in 1.10.0.
+8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
+   (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
+   turn on "Automatically delete head branches" in the repo settings and delete the leftover
+   once by hand.
 
 Not to do: the Wear OS app (decided by the owner, 31 Oct). The module is already gone from the
 repo; don't bring it back or plan Wear work.
