@@ -233,6 +233,7 @@
     <string name="location_search">Search city</string>
     <string name="location_popular">Cities in Indonesia</string>
     <string name="location_results">Search results</string>
+    <string name="location_loading">Preparing the city list…</string>
     <string name="location_no_results">City not found. Try another spelling.</string>
     <string name="location_attribution">City data: GeoNames (CC BY 4.0)</string>
 
