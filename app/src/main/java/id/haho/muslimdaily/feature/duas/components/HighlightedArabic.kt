@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +43,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -346,14 +346,10 @@ private fun PhraseFocus(
     val phrase = phrases[shown.coerceIn(phrases.indices)]
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget * 2))
-        // A flow row, not a weighted Row: at 200% text the buttons left the counter no width, so
-        // it wrapped digit by digit and "Berikutnya" broke mid-word. Here each item keeps its
-        // width and the row wraps whole items instead.
-        FlowRow(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            itemVerticalAlignment = Alignment.CenterVertically,
-        ) {
+        // Not a weighted Row: at 200% text the buttons left the counter no width, so it wrapped
+        // digit by digit. Each item keeps its own width; when they don't fit on one line, Next
+        // moves to a second line at the end, so Back stays left and Next stays right.
+        BackCounterNext(Modifier.fillMaxWidth()) {
             TextButton(onClick = { shown -= 1 }, enabled = shown > 0) {
                 Icon(painterResource(R.drawable.ic_chevron_left), null, Modifier.size(HahoTheme.dimens.smallIcon))
                 Text(stringResource(R.string.dua_phrase_back), Modifier.padding(start = HahoTheme.spacing.xs))
@@ -374,6 +370,37 @@ private fun PhraseFocus(
             TextButton(onClick = { shown += 1 }, enabled = shown < phrases.lastIndex) {
                 Text(stringResource(R.string.dua_phrase_next), Modifier.padding(end = HahoTheme.spacing.xs))
                 Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            }
+        }
+    }
+}
+
+/**
+ * Back, the position and Next. On one line when they fit (the position centred between the
+ * buttons); otherwise Back and the position on the first line and Next at the end of a second
+ * line. Placement keeps TalkBack's order: Back, position, Next.
+ */
+@Composable
+private fun BackCounterNext(modifier: Modifier, content: @Composable () -> Unit) {
+    Layout(content, modifier) { measurables, constraints ->
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        val (back, counter, next) = measurables.map { it.measure(loose) }
+        val width = constraints.maxWidth
+        if (back.width + counter.width + next.width <= width) {
+            val height = maxOf(back.height, counter.height, next.height)
+            // Centred, but never over a button.
+            val counterX = ((width - counter.width) / 2).coerceIn(back.width, width - next.width - counter.width)
+            layout(width, height) {
+                back.placeRelative(0, (height - back.height) / 2)
+                counter.placeRelative(counterX, (height - counter.height) / 2)
+                next.placeRelative(width - next.width, (height - next.height) / 2)
+            }
+        } else {
+            val first = maxOf(back.height, counter.height)
+            layout(width, first + next.height) {
+                back.placeRelative(0, (first - back.height) / 2)
+                counter.placeRelative((width - counter.width).coerceAtLeast(0), (first - counter.height) / 2)
+                next.placeRelative(width - next.width, first)
             }
         }
     }
