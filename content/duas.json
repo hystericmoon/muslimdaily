@@ -1,5 +1,5 @@
 {
-  "content_version": 33,
+  "content_version": 34,
   "duas": [
     {
       "id": "wake_01",
@@ -271,7 +271,7 @@
       "sources": [
         {
           "book": "Seluruh penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 30; At-Tirmidzi 7; Ibnu Majah 300)"
         },
         {
           "book": "kecuali An-Nasai yang meriwayatkan dalam ‘Amalul Yaumi wal Lailah",
@@ -308,7 +308,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "101"
         },
         {
           "book": "Ibnu Majah",
@@ -468,7 +468,7 @@
       "sources": [
         {
           "book": "Seluruh penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 4023)"
         },
         {
           "book": "kecuali An-Nasai",
@@ -701,7 +701,7 @@
       "sources": [
         {
           "book": "Seluruh penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 5094; At-Tirmidzi 3427; An-Nasai 5486; Ibnu Majah 3884)"
         }
       ],
       "reference": "HR. Seluruh penyusun kitab Sunan, dan lihat Shahih At-Tirmidzi 3/152 dan Shahih Ibnu Majah 2/336. (Hisnul Muslim no. 17)",
@@ -1047,7 +1047,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "212"
         },
         {
           "book": "Abu Dawud",
@@ -1158,7 +1158,7 @@
       "sources": [
         {
           "book": "Penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 4023; At-Tirmidzi 3458; Ibnu Majah 3285)"
         },
         {
           "book": "kecuali An-Nasai",
@@ -1866,7 +1866,7 @@
       "sources": [
         {
           "book": "Tirmidzi",
-          "no": ""
+          "no": "2892"
         },
         {
           "book": "An-Nasai",
@@ -2180,7 +2180,7 @@
       "sources": [
         {
           "book": "Empat penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 775, 776; At-Tirmidzi 242, 243; An-Nasai 900; Ibnu Majah 804)"
         }
       ],
       "reference": "HR. Empat penyusun kitab Sunan, dan lihat Shahih At-Tirmidzi 1/77 dan Shahih Ibnu Majah 1/135. (Hisnul Muslim no. 28)",
@@ -3063,7 +3063,7 @@
       "sources": [
         {
           "book": "Ashhabus Sunan",
-          "no": ""
+          "no": "(Abu Dawud 850; At-Tirmidzi 284; Ibnu Majah 898)"
         },
         {
           "book": "kecuali An-Nasai",
@@ -3975,7 +3975,7 @@
       "sources": [
         {
           "book": "Ibnu Majah",
-          "no": ""
+          "no": "925"
         },
         {
           "book": "ahli hadits yang lain",
@@ -4012,7 +4012,7 @@
       "sources": [
         {
           "book": "Empat penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 1425; At-Tirmidzi 464; An-Nasai 1745; Ibnu Majah 1178)"
         },
         {
           "book": "Ahmad",
@@ -4099,7 +4099,7 @@
       "sources": [
         {
           "book": "Empat peenyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 1427; At-Tirmidzi 3566; An-Nasai 1747; Ibnu Majah 1179)"
         },
         {
           "book": "Imam Ahmad",
@@ -4630,7 +4630,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "5074"
         },
         {
           "book": "Ibnu Majah",
@@ -4667,7 +4667,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3392"
         },
         {
           "book": "Abu Dawud",
@@ -5479,7 +5479,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "5074"
         },
         {
           "book": "Ibnu Majah",
@@ -5516,7 +5516,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3392"
         },
         {
           "book": "Abu Dawud",
@@ -7212,7 +7212,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3444"
         }
       ],
       "reference": "HR. At-Tirmidzi, lihat Shahih At-Tirmidzi 3/155. (Hisnul Muslim no. 213)",
@@ -7982,7 +7982,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "969"
         },
         {
           "book": "Ibnu Majah",
@@ -8109,7 +8109,7 @@
       "sources": [
         {
           "book": "At-Tirmidzi",
-          "no": ""
+          "no": "3430"
         },
         {
           "book": "Ibnu Majah",
@@ -9364,7 +9364,7 @@
       "sources": [
         {
           "book": "Ashhabus Sunan",
-          "no": ""
+          "no": "(Abu Dawud 2774; At-Tirmidzi 1578; Ibnu Majah 1394)"
         },
         {
           "book": "kecuali An-Nasai",
@@ -9757,7 +9757,7 @@
       "sources": [
         {
           "book": "Penyusun-penyusun kitab Sunan",
-          "no": ""
+          "no": "(Abu Dawud 2130; At-Tirmidzi 1091; Ibnu Majah 1905)"
         },
         {
           "book": "kecuali An-Nasai",
@@ -10181,7 +10181,7 @@
       "sources": [
         {
           "book": "Ashhaabus Sunan",
-          "no": ""
+          "no": "(Abu Dawud 4859; At-Tirmidzi 3433)"
         }
       ],
       "reference": "HR. Ashhaabus Sunan dan lihat Shahih At-Tirmidzi 3/153. Dari Aisyah Radhiallahu'anha, dia berkata: “Setiap Rasulullah Shallallahu'alaihi wasallam duduk di suatu tempat, setiap membaca Al-Qur’an dan setiap melakukan shalat, beliau mengakhirinya dengan beberapa kalimat.” Aisyah Radhiallahu'anha berkata: Aku berkata: “Wahai Rasululllah! Aku melihat engkau setiap duduk di suatu majelis, membaca Al-Qur’an atau melakukan shalat, engkau selalu mengakhiri dengan beberapa kalimat itu.” Beliau bersabda: “Ya, barangsiapa yang berkata baik akan distempel pada kebaikan itu (pahala bacaan kalimat tersebut), barangsiapa yang berkata jelek, maka kalimat tersebut merupakan penghapusnya. (Kalimat itu adalah: Subhaanaka wa bihamdika laa ilaaha illaa anta astaghfiruka wa atuubu ilaik).” HR. An-Nasa’i dalam kitab ‘Amalul Yaum wal Lailah, hal. 308. Imam Ahmad 6/77. Dr. Faruq Hamadah menyatakan, hadits tersebut shahih dalam Tahqiq ‘Amalul Yaum wal Lailah, karya An-Nasa’i hal. 273. (Hisnul Muslim no. 196)",

@@ -68,6 +68,29 @@ class SuggestApplyTest(unittest.TestCase):
             self.assertIn(hn.NOTE, out["a"]["notes"])
             self.assertEqual("", out["b"]["source_1_no"])
 
+    def test_sunnah_com_rows_keep_the_group_book_and_get_their_own_note(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            duas = Path(tmp) / "duas.csv"
+            with duas.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=DUA_COLUMNS)
+                w.writeheader()
+                w.writerow(dua_row(id="a", arabic="ألف باء", source_1_book="Empat penyusun kitab Sunan", source_1_no=""))
+            target = next(csv.DictReader(duas.open(encoding="utf-8")))
+            review = Path(tmp) / "sunnah.csv"
+            fields = hn.REVIEW_FIELDS + ["url", "confidence", "reason"]
+            with review.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=fields)
+                w.writeheader()
+                w.writerow({"id": "a", "kind": "sunnah", "book": "Empat penyusun kitab Sunan",
+                            "number": "(Abu Dawud 1, At-Tirmidzi 2)", "approved": "ya",
+                            "source_sha1": hn.row_sha1(target), "url": "https://sunnah.com/abudawud:1"})
+            self.assertEqual((["a"], []), hn.apply(review, duas))
+            out = next(csv.DictReader(duas.open(encoding="utf-8")))
+            self.assertEqual(("Empat penyusun kitab Sunan", "(Abu Dawud 1, At-Tirmidzi 2)"),
+                             (out["source_1_book"], out["source_1_no"]))
+            self.assertIn(hn.NOTES["sunnah"], out["notes"])
+            self.assertNotIn(hn.NOTE, out["notes"])
+
 
 if __name__ == "__main__":
     unittest.main()
