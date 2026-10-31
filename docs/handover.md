@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, with #94 (after 1.8.0 shipped). All earlier Adwam sessions were read and
+Last updated: 31 Oct 2026, after #94 merged. All earlier Adwam sessions were read and
 archived; everything still open from them is below.
 
 ## Decisions waiting on the owner
@@ -50,6 +50,12 @@ archived; everything still open from them is below.
 
 ## Shipped
 
+On main, not released yet (goes into the next minor): #94 Memorise Listen/Build in the focus
+layout; practising missed words clears the hint level and always shows the reveal button; the
+focus layout's Back/Next row no longer breaks at 200% text (it also broke on the dua page in
+1.8.0). Add these to `WhatsNew.kt` with the next release.
+
+
 1.8.0 (versionCode 42, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.8.0): #89 Memorise Cek marks missed
 words (suggested rating, practise only those); #90 dua layouts A/B/C (`PhraseLayout`); #91 the
 build drops `(( ))` before bracketed notes (8 rows, content_version 30); #92 phrase fills
@@ -66,8 +72,9 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. #94 (merge when CI is green): Memorise Listen/Build in focus layout; practice clears the
-   hint level and always shows the reveal button. Unreleased: goes into the next minor.
+1. Optional, offer at large text: in the focus layout, Next wraps under Back at 200%; it could
+   sit at the line's end instead, at the cost of the counter sitting slightly off-centre at
+   normal sizes. Not offered as a decision yet.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
@@ -98,6 +105,8 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   translations: information, not junk.
 - sunnah.com and api.sunnah.com return 403 from cloud sessions (checked 31 Oct); hadeethenc.com
   answers 200.
+- Screenshots workflow race: it commits to the branch it checked out, so a push to the branch
+  while it runs makes its push fail. Push first, then start it (or cancel and restart it).
 - Phrase rendering is all in `feature/duas/components/HighlightedArabic.kt` (`PhraseLines`:
   column, flow, focus; fills and the gold active phrase). Reading settings composables are in
   `feature/settings/ReadingSettings.kt`, used by both Display settings and the dua page sheet.
