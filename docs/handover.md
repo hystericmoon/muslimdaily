@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, with the 1.8.0 release PR. All earlier Adwam sessions were read and
+Last updated: 31 Oct 2026, with #94 (after 1.8.0 shipped). All earlier Adwam sessions were read and
 archived; everything still open from them is below.
 
 ## Decisions waiting on the owner
@@ -19,6 +19,14 @@ archived; everything still open from them is below.
   sha still matches; ask before merging (shipped content). Regenerate the page from
   fresh suggestions if `duas.csv` changes first. The owner will do it later (31 Oct: "gonna
   take hours"); check the collection at the start of each session.
+  Answers so far (31 Oct, 9 rows, still in progress): ok seg adhan_04, evening_15, morning_15;
+  ok split morning_18; virtue split adhan_01; fix split morning_03 (no note); fix seg
+  morning_13 / evening_13: the owner asked what the trailing أَوْ is. It's "or", left over from
+  the book's note أَوْ (مرَّةً واحدةً عندَ الكَسَلِ) ("or once, when lazy"): the split cut the
+  note and kept the word that introduces it, so it gets recited. Drop it in the importer (the
+  split's end anchor), with the owner's approval. fix seg after_salah_05: three parts (one per
+  surah); the proposed break puts the end of al-Falaq in front of the next basmalah; and drop
+  the closing instruction بَعْدَ كُلِّ صَلاَةٍ ("after every prayer") from text and audio.
 
 - **Virtue hadiths shown as duas** (shalawat_01–05, salam_01/03, istighfar_01/02/04/05/06,
   illness_06, travel_09, night_03, tasbih_05): show them as virtue cards instead? Details in
@@ -42,7 +50,7 @@ archived; everything still open from them is below.
 
 ## Shipped
 
-1.8.0 (versionCode 42, release PR #93, published when it merges): #89 Memorise Cek marks missed
+1.8.0 (versionCode 42, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.8.0): #89 Memorise Cek marks missed
 words (suggested rating, practise only those); #90 dua layouts A/B/C (`PhraseLayout`); #91 the
 build drops `(( ))` before bracketed notes (8 rows, content_version 30); #92 phrase fills
 (`PhraseFill`, hide while playing) and the Aa reading sheet on the dua page (`ReadingSheet`,
@@ -58,9 +66,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Memorise in focus mode: Memorise's Arabic card still uses `HighlightedArabic`; reuse
-   `PhraseLines(layout = FOCUS)` for Listen/Build. Also clear the hint-level chip while
-   practising only missed words (#89 follow-up).
+1. #94 (merge when CI is green): Memorise Listen/Build in focus layout; practice clears the
+   hint level and always shows the reveal button. Unreleased: goes into the next minor.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
@@ -119,6 +126,11 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 - One session at a time. When its work is done, or the conversation is getting long: update
   this file, merge it, start a new cloud session on this repo with the prompt "Continue from
   docs/handover.md", and archive the finished session.
+
+- 31 Oct: the owner asked for idle sessions in other projects to be archived. Archived the
+  ones a later session in the same project had replaced (cRust 1.2, OpenRef S1/S2, Whittle
+  S1/S2, Drive Folder Sync S1, Speed Meter S1, Inverse Construction S1/S2) and two stale
+  one-offs (skills setup, installed skills list). Kept the latest session of each project.
 
 ## Session setup (cloud)
 
