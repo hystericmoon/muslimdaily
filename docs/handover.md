@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, night (1.9.0 released; widget pass recorded; #106, #107 filed). All earlier Adwam
+Last updated: 31 Oct 2026, night (1.9.0 released; widget pass recorded; #106 fixed in #109, #107 open). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -127,9 +127,10 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    widget, needs the owner's PIN, by hand), 5.4's legacy-widget half, and a third-party
    launcher. TalkBack T1–T12: skipped by the owner (31 Oct); the Redmi has no working audio,
    so a later pass belongs on `qa_api37_profile`.
-   Filed from it: #106 (fresh install: city list blank ~35 s, a search meanwhile says "not
-   found"; fix proposed in the issue) and #107 (Android 8–11 widget picker shows two
-   identical entries).
+   Filed from it: #106, fixed by #109 (merged 31 Oct, not released: the first city import
+   now survives a keystroke and shows "Menyiapkan daftar kota…"; add it to What's New with
+   the next release), and #107, open (Android 8–11 widget picker shows two identical
+   entries; options in the issue, owner's call).
 8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
    auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
    permission rule.
