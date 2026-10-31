@@ -58,6 +58,7 @@ import id.haho.muslimdaily.domain.memorize.Leitner
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.Clock
@@ -78,7 +79,7 @@ class MemorizeHomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val today = LocalDate.now(clock)
 
-    val state: StateFlow<MemorizeHomeState?> = combine(reviews.items(), content.allDuas(), content.categories()) { items, duas, cats ->
+    val state: StateFlow<MemorizeHomeState?> = combine(reviews.items(), content.allDuas().map { list -> list.filter { it.isRecitable } }, content.categories()) { items, duas, cats ->
         val byId = duas.associateBy { it.id }
         val labels = cats.flatMap { it.events }.associate { it.id to it.label }
         val twins = content.twinsOnce()

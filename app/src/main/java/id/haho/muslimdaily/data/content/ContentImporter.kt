@@ -138,6 +138,8 @@ internal object ContentMapper {
                 translationEnFull = d.translationsFull["en"].orEmpty().trim(),
                 audioStart = ContentValidator.rangeUsable(d)?.get(0),
                 audioEnd = ContentValidator.rangeUsable(d)?.get(1),
+                kind = d.kind.trim(),
+                footnote = d.footnote.trim(),
             )
         }
         val fts = accepted.map { d ->

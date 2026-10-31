@@ -59,7 +59,7 @@ class MemorizePickerViewModel @Inject constructor(
 
     val groups: StateFlow<List<PickerGroup>?> = _query.debounce(200).flatMapLatest { q ->
         if (q.isBlank()) {
-            combine(content.allDuas(), content.categories()) { duas, cats ->
+            combine(content.allDuas().map { list -> list.filter { it.isRecitable } }, content.categories()) { duas, cats ->
                 cats.flatMap { it.events }.mapNotNull { e ->
                     duas.filter { it.event == e.id }.takeIf { it.isNotEmpty() }?.let { PickerGroup(e.label, it) }
                 }

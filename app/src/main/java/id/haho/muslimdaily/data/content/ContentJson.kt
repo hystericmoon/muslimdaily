@@ -41,6 +41,9 @@ internal data class DuaJson(
     val virtue: VirtueJson? = null,
     val audio: AudioJson? = null,
     @SerialName("phrase_breaks") val phraseBreaks: List<Int> = emptyList(),
+    /** "hadith" when there is nothing to recite; absent for a dua. */
+    val kind: String = "",
+    val footnote: String = "",
 )
 
 @Serializable

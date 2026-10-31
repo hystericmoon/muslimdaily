@@ -122,7 +122,7 @@ class MemorizeSessionViewModel @Inject constructor(
     private val siblings = content.dua(duaId)
         .map { it?.event }
         .distinctUntilChanged()
-        .flatMapLatest { event -> if (event == null) flowOf(emptyList()) else content.duasForEvent(event).map { list -> list.map { it.id } } }
+        .flatMapLatest { event -> if (event == null) flowOf(emptyList()) else content.duasForEvent(event).map { list -> list.filter { it.isRecitable }.map { it.id } } }
 
     private data class Base(val dua: Dua?, val review: ReviewItem?, val settings: AppSettings, val siblings: List<String>)
 
