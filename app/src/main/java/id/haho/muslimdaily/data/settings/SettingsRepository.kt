@@ -139,6 +139,8 @@ class SettingsRepository @Inject constructor(
             ),
             showTransliteration = this[K.transliteration] ?: d.showTransliteration,
             phraseLayout = enumOr(K.phraseLayout, d.phraseLayout),
+            phraseFill = enumOr(K.phraseFill, d.phraseFill),
+            hideFillWhilePlaying = this[K.hideFillWhilePlaying] ?: d.hideFillWhilePlaying,
             arabicScale = this[K.arabicScale] ?: d.arabicScale,
             translationScale = this[K.translationScale] ?: d.translationScale,
             calculation = calc,
@@ -203,6 +205,8 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var widgetOpacity: Float by key(K.widgetOpacity, WIDGET_OPACITY_DEFAULT)
     var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
     var phraseLayout: PhraseLayout by enumKey(K.phraseLayout, PhraseLayout.LINES)
+    var phraseFill: PhraseFill by enumKey(K.phraseFill, PhraseFill.NONE)
+    var hideFillWhilePlaying: Boolean by key(K.hideFillWhilePlaying, true)
     var duaLibraryTab: String by key(K.duaLibraryTab, "")
     var onboardingDone: Boolean by key(K.onboardingDone, false)
     var whatsNewSeen: String by key(K.whatsNewSeen, "")
@@ -297,6 +301,8 @@ internal object K {
     val widgetOpacity = floatPreferencesKey("widget_opacity")
     val arabicFont = stringPreferencesKey("arabic_font")
     val phraseLayout = stringPreferencesKey("phrase_layout")
+    val phraseFill = stringPreferencesKey("phrase_fill")
+    val hideFillWhilePlaying = booleanPreferencesKey("hide_fill_while_playing")
     val duaLibraryTab = stringPreferencesKey("dua_library_tab")
     val onboardingDone = booleanPreferencesKey("onboarding_done")
     val whatsNewSeen = stringPreferencesKey("whats_new_seen")

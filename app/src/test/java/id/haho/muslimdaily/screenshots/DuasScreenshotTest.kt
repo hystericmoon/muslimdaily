@@ -3,7 +3,11 @@ package id.haho.muslimdaily.screenshots
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.DuaEvent
+import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.PhraseFill
 import id.haho.muslimdaily.data.settings.PhraseLayout
+import id.haho.muslimdaily.feature.settings.PhraseLayoutGroup
+import androidx.compose.foundation.layout.Column
 import id.haho.muslimdaily.data.settings.TranslationMode
 import id.haho.muslimdaily.domain.myset.ActiveSet
 import id.haho.muslimdaily.domain.myset.Customization
@@ -92,6 +96,40 @@ class DuasScreenshotTest {
             ),
             DuaDetailActions(),
         )
+    }
+
+    /** Layout B with alternating phrase tones, audio stopped. */
+    @Test
+    fun detailInlineAlternating() = captureVariants("140-dua-fill-alternating") {
+        DuaDetailContent(
+            DuaDetailState(
+                dua = DuaPreviewData.dua("morning_02", 2, count = 3),
+                event = event,
+                prefs = ReadingPrefs(layout = PhraseLayout.INLINE, fill = PhraseFill.ALTERNATING),
+                playback = PlaybackState(duaId = "morning_02", activePhrase = 1),
+            ),
+            DuaDetailActions(),
+        )
+    }
+
+    /** Layout A with a bubble per phrase. */
+    @Test
+    fun detailLinesBubbles() = captureVariants("141-dua-fill-bubbles") {
+        DuaDetailContent(
+            DuaDetailState(
+                dua = DuaPreviewData.dua("morning_02", 2, count = 3),
+                event = event,
+                prefs = ReadingPrefs(fill = PhraseFill.BUBBLES),
+                playback = PlaybackState(duaId = "morning_02", activePhrase = 1),
+            ),
+            DuaDetailActions(),
+        )
+    }
+
+    /** The reading sheet opened from the dua page. */
+    @Test
+    fun readingSheet() = captureVariants("142-dua-reading-sheet") {
+        Column { PhraseLayoutGroup(AppSettings(phraseFill = PhraseFill.ALTERNATING), {}) }
     }
 
     /** A dua shown as the words to recite, with the book's full entry opened below it. */

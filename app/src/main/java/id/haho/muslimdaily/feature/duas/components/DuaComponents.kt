@@ -50,6 +50,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.core.model.SourceRef
+import id.haho.muslimdaily.data.settings.PhraseFill
 import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.data.settings.TranslationMode
 import java.util.Locale
@@ -59,7 +60,12 @@ data class ReadingPrefs(
     val translation: TranslationMode = TranslationMode.INDONESIAN,
     val transliteration: Boolean = false,
     val layout: PhraseLayout = PhraseLayout.LINES,
-)
+    val fill: PhraseFill = PhraseFill.NONE,
+    val hideFillWhilePlaying: Boolean = true,
+) {
+    /** The fill to draw now: none while the audio plays, when the reader chose that. */
+    fun fillFor(playing: Boolean): PhraseFill = if (playing && hideFillWhilePlaying) PhraseFill.NONE else fill
+}
 
 /** "Al-Bukhari 7/162", "Hisnul Muslim no. 100": book and number as the source prints them. */
 fun sourceLabel(ref: SourceRef): String = listOf(ref.book, ref.no).filter(String::isNotBlank).joinToString(" ")

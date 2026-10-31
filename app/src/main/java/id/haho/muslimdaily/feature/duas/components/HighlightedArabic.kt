@@ -32,7 +32,11 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withLink
+import id.haho.muslimdaily.data.settings.PhraseFill
 import id.haho.muslimdaily.data.settings.PhraseLayout
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +96,13 @@ fun HighlightedArabic(
     HighlightedText(annotated, active?.range, style, modifier, color)
 }
 
-/** [annotated] with the gold fill and underline drawn behind [range], line by line. */
+/** A neutral background behind one phrase of a flowing text, with an optional outline. */
+private data class PhraseBackground(val range: IntRange, val fill: Color, val border: Color? = null)
+
+/**
+ * [annotated] with [backgrounds] drawn behind their phrases, then the gold fill and underline
+ * behind [range], line by line, so a phrase that wraps keeps its shape on each line.
+ */
 @Composable
 private fun HighlightedText(
     annotated: AnnotatedString,
@@ -100,12 +110,15 @@ private fun HighlightedText(
     style: TextStyle,
     modifier: Modifier,
     color: Color,
+    backgrounds: List<PhraseBackground> = emptyList(),
 ) {
     val colors = AdwamTheme.colors
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
     val density = LocalDensity.current
     val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
     val radius = with(density) { HahoTheme.spacing.xs.toPx() }
+    val bubbleRadius = with(density) { HahoTheme.spacing.md.toPx() }
+    val stroke = with(density) { HahoTheme.dimens.divider.toPx() }
     val padX = with(density) { HahoTheme.spacing.xs.toPx() }
 
     ArabicText(
@@ -117,20 +130,16 @@ private fun HighlightedText(
             .fillMaxWidth()
             .drawBehind {
                 val l = layout ?: return@drawBehind
-                if (range == null) return@drawBehind
-                if (range.isEmpty()) return@drawBehind
-                val firstLine = l.getLineForOffset(range.first)
-                val lastLine = l.getLineForOffset(range.last)
-                for (line in firstLine..lastLine) {
-                    val lineStart = max(range.first, l.getLineStart(line))
-                    val lineEnd = min(range.last + 1, l.getLineEnd(line, visibleEnd = true))
-                    if (lineEnd <= lineStart) continue
-                    val x1 = l.getHorizontalPosition(lineStart, usePrimaryDirection = true)
-                    val x2 = l.getHorizontalPosition(lineEnd, usePrimaryDirection = true)
-                    val left = min(x1, x2) - padX
-                    val right = max(x1, x2) + padX
-                    val top = l.getLineTop(line)
-                    val bottom = l.getLineBottom(line)
+                backgrounds.forEach { bg ->
+                    val r = if (bg.border != null) bubbleRadius else radius
+                    l.forEachLineBox(bg.range, padX) { left, top, right, bottom ->
+                        val corner = CornerRadius(r, r)
+                        drawRoundRect(bg.fill, Offset(left, top), Size(right - left, bottom - top), corner)
+                        bg.border?.let { drawRoundRect(it, Offset(left, top), Size(right - left, bottom - top), corner, style = Stroke(stroke)) }
+                    }
+                }
+                if (range == null || range.isEmpty()) return@drawBehind
+                l.forEachLineBox(range, padX) { left, top, right, bottom ->
                     drawRoundRect(
                         color = colors.highlightFill,
                         topLeft = Offset(left, top),
@@ -145,6 +154,19 @@ private fun HighlightedText(
                 }
             },
     )
+}
+
+/** Calls [box] with the left, top, right and bottom of [range] on each line it covers. */
+private inline fun TextLayoutResult.forEachLineBox(range: IntRange, padX: Float, box: (Float, Float, Float, Float) -> Unit) {
+    if (range.isEmpty()) return
+    for (line in getLineForOffset(range.first)..getLineForOffset(range.last)) {
+        val lineStart = max(range.first, getLineStart(line))
+        val lineEnd = min(range.last + 1, getLineEnd(line, visibleEnd = true))
+        if (lineEnd <= lineStart) continue
+        val x1 = getHorizontalPosition(lineStart, usePrimaryDirection = true)
+        val x2 = getHorizontalPosition(lineEnd, usePrimaryDirection = true)
+        box(min(x1, x2) - padX, getLineTop(line), max(x1, x2) + padX, getLineBottom(line))
+    }
 }
 
 /**
@@ -162,13 +184,27 @@ fun PhraseLines(
     style: TextStyle,
     modifier: Modifier = Modifier,
     layout: PhraseLayout = PhraseLayout.LINES,
+    fill: PhraseFill = PhraseFill.NONE,
     onPlayFrom: ((Int) -> Unit)? = null,
 ) {
     when {
         phrases.size < 2 -> HighlightedArabic(text, phrases, activePhrase, style, modifier)
-        layout == PhraseLayout.INLINE -> PhraseFlow(phrases, activePhrase, style, modifier, onPlayFrom)
+        layout == PhraseLayout.INLINE -> PhraseFlow(phrases, activePhrase, style, modifier, fill, onPlayFrom)
+        // One phrase on screen has nothing to tell apart, so focus mode draws no fill.
         layout == PhraseLayout.FOCUS -> PhraseFocus(phrases, activePhrase, style, modifier, onPlayFrom)
-        else -> PhraseColumn(phrases, activePhrase, style, modifier, onPlayFrom)
+        else -> PhraseColumn(phrases, activePhrase, style, modifier, fill, onPlayFrom)
+    }
+}
+
+/** Background and outline for phrase [index] under [fill]; null when it has none. */
+@Composable
+private fun phraseBackground(fill: PhraseFill, index: Int): Pair<Color, Color?>? {
+    val scheme = MaterialTheme.colorScheme
+    return when (fill) {
+        PhraseFill.NONE -> null
+        // Two neutral tones a few percent apart; onSurface stays well above 4.5:1 on both.
+        PhraseFill.ALTERNATING -> (if (index % 2 == 0) scheme.surfaceContainer else scheme.surfaceContainerHighest) to null
+        PhraseFill.BUBBLES -> scheme.surfaceContainerHigh to scheme.outlineVariant
     }
 }
 
@@ -179,16 +215,29 @@ private fun PhraseColumn(
     activePhrase: Int,
     style: TextStyle,
     modifier: Modifier,
+    fill: PhraseFill,
     onPlayFrom: ((Int) -> Unit)?,
 ) {
-    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
-        phrases.forEach { phrase -> PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom) }
+    val gap = if (fill == PhraseFill.BUBBLES) HahoTheme.spacing.sm else HahoTheme.spacing.xs
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(gap)) {
+        phrases.forEach { phrase ->
+            PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, background = phraseBackground(fill, phrase.index), bubble = fill == PhraseFill.BUBBLES)
+        }
     }
 }
 
 /** One phrase as its own row: a 48dp target that plays from the phrase when it has a segment. */
 @Composable
-private fun PhraseRow(phrase: Phrase, active: Boolean, style: TextStyle, onPlayFrom: ((Int) -> Unit)?, modifier: Modifier = Modifier) {
+private fun PhraseRow(
+    phrase: Phrase,
+    active: Boolean,
+    style: TextStyle,
+    onPlayFrom: ((Int) -> Unit)?,
+    modifier: Modifier = Modifier,
+    background: Pair<Color, Color?>? = null,
+    bubble: Boolean = false,
+) {
+    val shape = RoundedCornerShape(if (bubble) HahoTheme.spacing.md else HahoTheme.spacing.xs)
     val colors = AdwamTheme.colors
     val density = LocalDensity.current
     val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
@@ -198,7 +247,14 @@ private fun PhraseRow(phrase: Phrase, active: Boolean, style: TextStyle, onPlayF
     Box(
         modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(HahoTheme.spacing.xs))
+            .clip(shape)
+            .then(
+                when {
+                    active || background == null -> Modifier
+                    background.second != null -> Modifier.background(background.first, shape).border(HahoTheme.dimens.divider, background.second!!, shape)
+                    else -> Modifier.background(background.first, shape)
+                },
+            )
             .drawBehind {
                 if (!active) return@drawBehind
                 drawRect(colors.highlightFill)
@@ -235,10 +291,13 @@ private fun PhraseFlow(
     activePhrase: Int,
     style: TextStyle,
     modifier: Modifier,
+    fill: PhraseFill,
     onPlayFrom: ((Int) -> Unit)?,
 ) {
     val colors = AdwamTheme.colors
     val markColor = MaterialTheme.colorScheme.primary
+    val tones = phrases.map { phraseBackground(fill, it.index) }
+    val backgrounds = mutableListOf<PhraseBackground>()
     var activeRange: IntRange? = null
     val annotated = buildAnnotatedString {
         withStyle(SpanStyle(localeList = LocaleList("ar"))) {
@@ -263,10 +322,11 @@ private fun PhraseFlow(
                     withStyle(span) { append(phrase.text) }
                 }
                 if (active) activeRange = start until length
+                else tones[i]?.let { (bg, border) -> backgrounds += PhraseBackground(start until length, bg, border) }
             }
         }
     }
-    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current)
+    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current, backgrounds)
 }
 
 /**

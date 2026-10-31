@@ -509,6 +509,14 @@
     <string name="display_phrase_inline_summary">As in the book, with a ⁞ pause mark between phrases.</string>
     <string name="display_phrase_focus">One phrase at a time</string>
     <string name="display_phrase_focus_summary">With Back and Next buttons. Suits slow reading and memorising.</string>
+    <string name="dua_reading_settings">Reading display</string>
+    <string name="display_phrase_fill">Phrase colour</string>
+    <string name="display_phrase_fill_summary">A background behind each phrase so you can see where it ends. The phrase being recited stays gold.</string>
+    <string name="display_fill_none">None</string>
+    <string name="display_fill_alternating">Alternating</string>
+    <string name="display_fill_bubbles">Bubbles</string>
+    <string name="display_fill_hide_playing">Hide while playing</string>
+    <string name="display_fill_hide_playing_summary">While the audio plays, only the phrase being recited is coloured.</string>
     <string name="display_translation">Translation</string>
     <string name="display_translation_id">Indonesian</string>
     <string name="display_translation_en">English</string>
