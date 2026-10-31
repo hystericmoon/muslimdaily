@@ -12,6 +12,12 @@ enum class AsrMethod { STANDARD, HANAFI }
 
 enum class TranslationMode { INDONESIAN, ENGLISH, BOTH }
 
+/**
+ * How the dua page lays out a dua's phrases: one per line (the default), flowing text with a
+ * pause mark between phrases, or one phrase at a time with Back and Next.
+ */
+enum class PhraseLayout { LINES, INLINE, FOCUS }
+
 enum class AdhanMode { OFF, SOUND, SILENT }
 
 enum class PauseMode { AUTO, MANUAL }
@@ -89,6 +95,7 @@ data class AppSettings(
     val glassEffect: Boolean = true,
     val translationMode: TranslationMode = TranslationMode.INDONESIAN,
     val showTransliteration: Boolean = false,
+    val phraseLayout: PhraseLayout = PhraseLayout.LINES,
     val arabicScale: Float = 1f,
     val arabicFont: ArabicFont = ArabicFont.NASKH,
     val translationScale: Float = 1f,

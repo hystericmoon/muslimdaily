@@ -267,6 +267,9 @@
     <string name="player_play">Play</string>
     <string name="player_pause">Pause</string>
     <string name="player_repeat">Repeat</string>
+    <string name="dua_phrase_back">Back</string>
+    <string name="dua_phrase_next">Next</string>
+    <string name="dua_phrase_position">Phrase %1$d of %2$d</string>
     <string name="dua_play_from_phrase">Play from this phrase</string>
     <string name="dua_phrase_reciting">Being recited</string>
     <string name="player_speed">Speed %s</string>
@@ -499,6 +502,13 @@
     <string name="notif_review_title">Memorization review</string>
 
     <!-- Display -->
+    <string name="display_phrase_layout">Dua layout</string>
+    <string name="display_phrase_lines">One phrase per line</string>
+    <string name="display_phrase_lines_summary">Each line break is a pause. Easiest to scan.</string>
+    <string name="display_phrase_inline">Flowing text</string>
+    <string name="display_phrase_inline_summary">As in the book, with a ⁞ pause mark between phrases.</string>
+    <string name="display_phrase_focus">One phrase at a time</string>
+    <string name="display_phrase_focus_summary">With Back and Next buttons. Suits slow reading and memorising.</string>
     <string name="display_translation">Translation</string>
     <string name="display_translation_id">Indonesian</string>
     <string name="display_translation_en">English</string>

@@ -64,7 +64,7 @@ class DuaDetailViewModel @Inject constructor(
             DuaDetailState(
                 dua = it,
                 event = e,
-                prefs = ReadingPrefs(s.translationMode, s.showTransliteration),
+                prefs = ReadingPrefs(s.translationMode, s.showTransliteration, s.phraseLayout),
                 playback = if (playback.duaId == it.id) playback else PlaybackState(speed = s.audioSpeed, repeat = playback.repeat),
             )
         }

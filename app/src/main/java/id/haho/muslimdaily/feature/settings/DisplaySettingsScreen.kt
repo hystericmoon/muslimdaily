@@ -43,6 +43,7 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
+import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.data.settings.TranslationMode
 import kotlin.math.roundToInt
 
@@ -93,6 +94,33 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     summary = stringResource(R.string.display_transliteration_summary),
                     checked = settings.showTransliteration,
                     onCheckedChange = { v -> update { showTransliteration = v } },
+                )
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.display_phrase_layout)) {
+                RadioGroup(
+                    options = PhraseLayout.entries,
+                    selected = settings.phraseLayout,
+                    onSelect = { l -> update { phraseLayout = l } },
+                    label = {
+                        stringResource(
+                            when (it) {
+                                PhraseLayout.LINES -> R.string.display_phrase_lines
+                                PhraseLayout.INLINE -> R.string.display_phrase_inline
+                                PhraseLayout.FOCUS -> R.string.display_phrase_focus
+                            },
+                        )
+                    },
+                    description = {
+                        stringResource(
+                            when (it) {
+                                PhraseLayout.LINES -> R.string.display_phrase_lines_summary
+                                PhraseLayout.INLINE -> R.string.display_phrase_inline_summary
+                                PhraseLayout.FOCUS -> R.string.display_phrase_focus_summary
+                            },
+                        )
+                    },
                 )
             }
         }
