@@ -3,6 +3,7 @@
 
     python3 -I tools/hadith_numbers.py suggest     # writes build/hadith_numbers/review.csv
     python3 -I tools/hadith_numbers.py apply       # copies approved rows into duas.csv
+    python3 -I tools/hadith_numbers.py apply --review tools/hadith_numbers_sunnah.csv
 
 Two kinds of proposal, for rows with an empty `source_1_no`:
 
@@ -16,6 +17,10 @@ Two kinds of proposal, for rows with an empty `source_1_no`:
     more than one hadith ties (all numbers listed, the lowest proposed); `check` when it covers
     at least half. The number uses the dataset's numbering. Al-Albani's grade is shown so a
     da'if hadith can be caught (the app is sahih/hasan only).
+
+A third kind, `sunnah`, is looked up by hand on sunnah.com (which refuses cloud sessions) and
+kept in `tools/hadith_numbers_sunnah.csv` with its URL, grade and confidence; rows naming a
+group ("Seluruh penyusun kitab Sunan") get every book's number in brackets.
 
 Nothing is written into the Arabic or translations. `approved` is set by a person ("ya");
 `apply` refuses rows that changed since the suggestion.
@@ -39,6 +44,7 @@ OUT_DIR = ROOT / "build/hadith_numbers"
 CACHE = ROOT / "build/hadith_api"
 URL = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-{}.min.json"
 NOTE = "Nomor hadits: fawazahmed0/hadith-api"
+NOTES = {"dataset": NOTE, "sunnah": "Nomor hadits: sunnah.com"}
 
 # Book names as the import writes them -> dataset edition.
 BOOKS = {
@@ -152,8 +158,9 @@ def apply(review: Path = OUT_DIR / "review.csv", duas: Path = sa.DUAS) -> tuple[
             continue
         target["source_1_book"] = r["book"]
         target["source_1_no"] = r["number"]
-        if r["kind"] == "dataset" and NOTE not in target.get("notes", ""):
-            target["notes"] = " | ".join(x for x in (target.get("notes", ""), NOTE) if x)
+        note = NOTES.get(r["kind"])
+        if note and note not in target.get("notes", ""):
+            target["notes"] = " | ".join(x for x in (target.get("notes", ""), note) if x)
         applied.append(r["id"])
     if applied:
         sa.write_csv(duas, fields, rows, newline)
@@ -164,13 +171,13 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("suggest")
-    sub.add_parser("apply")
+    sub.add_parser("apply").add_argument("--review", type=Path, default=OUT_DIR / "review.csv")
     args = ap.parse_args()
     if args.cmd == "suggest":
         results = suggest()
         print(f"{len(results)} proposals in {OUT_DIR / 'review.csv'}")
         return 0
-    applied, problems = apply()
+    applied, problems = apply(args.review)
     print(f"applied: {' '.join(applied) or '-'}")
     for p in problems:
         print("problem:", p)
