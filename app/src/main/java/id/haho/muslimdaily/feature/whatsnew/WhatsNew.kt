@@ -37,6 +37,7 @@ object WhatsNew {
     data class Release(val version: String, @ArrayRes val items: Int)
 
     val releases = listOf(
+        Release("1.9.0", R.array.whats_new_1_9_0),
         Release("1.8.0", R.array.whats_new_1_8_0),
         Release("1.7.0", R.array.whats_new_1_7_0),
         Release("1.6.0", R.array.whats_new_1_6_0),
