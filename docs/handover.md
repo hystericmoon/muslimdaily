@@ -15,8 +15,8 @@ sessions were read and archived; everything still open from them is below.
   leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
   sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
   `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
-  in it), content_version 35, PR claude/handover-docs-ntkjix. Shipped content: merge only after
-  the owner's OK. Not released yet: add a What's New line with the next release.
+  in it), content_version 35, merged in #104 (owner's OK, 31 Oct). Not released yet: add a
+  What's New line with the next release.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
   owner's Mac via `claude remote-control`): did #102. Planned next, the evening of 31 Oct: the
   device passes (TalkBack T1–T12, widget §5). Cloud sessions can't message it (the platform
