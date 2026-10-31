@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, after #94 merged. All earlier Adwam sessions were read and
+Last updated: 31 Oct 2026, after #95 (the أَوْ fix). All earlier Adwam sessions were read and
 archived; everything still open from them is below.
 
 ## Decisions waiting on the owner
@@ -19,14 +19,14 @@ archived; everything still open from them is below.
   sha still matches; ask before merging (shipped content). Regenerate the page from
   fresh suggestions if `duas.csv` changes first. The owner will do it later (31 Oct: "gonna
   take hours"); check the collection at the start of each session.
-  Answers so far (31 Oct, 9 rows, still in progress): ok seg adhan_04, evening_15, morning_15;
-  ok split morning_18; virtue split adhan_01; fix split morning_03 (no note); fix seg
-  morning_13 / evening_13: the owner asked what the trailing أَوْ is. It's "or", left over from
-  the book's note أَوْ (مرَّةً واحدةً عندَ الكَسَلِ) ("or once, when lazy"): the split cut the
-  note and kept the word that introduces it, so it gets recited. Drop it in the importer (the
-  split's end anchor), with the owner's approval. fix seg after_salah_05: three parts (one per
-  surah); the proposed break puts the end of al-Falaq in front of the next basmalah; and drop
-  the closing instruction بَعْدَ كُلِّ صَلاَةٍ ("after every prayer") from text and audio.
+  Answers so far (31 Oct, 9 rows, still in progress; checked again at the start of the
+  after-#94 session, no new rows, every sha still matched): ok seg adhan_04, evening_15,
+  morning_15; ok split morning_18; virtue split adhan_01; fix split morning_03 (no note);
+  fix seg after_salah_05: three parts (one per surah); the proposed break puts the end of
+  al-Falaq in front of the next basmalah; and drop the closing instruction بَعْدَ كُلِّ صَلاَةٍ
+  ("after every prayer") from text and audio. Done: morning_13 / evening_13's trailing أَوْ
+  (owner said drop it, 31 Oct): see the أَوْ PR below. Their seg proposals are stale now
+  (the sha changed); regenerate them with the rest.
 
 - **Virtue hadiths shown as duas** (shalawat_01–05, salam_01/03, istighfar_01/02/04/05/06,
   illness_06, travel_09, night_03, tasbih_05): show them as virtue cards instead? Details in
@@ -49,6 +49,12 @@ archived; everything still open from them is below.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+PR (31 Oct, after #95): morning_13 / evening_13 drop the trailing أَوْ, the "or" that
+introduced the book's note "(or once, when lazy)"; the clip ends at 11.71 s (the pause after
+قَدِيرٌ) instead of 14.07, which ran on into the note. `split_context.py` now drops an
+"or" left in front of a dropped note. The owner approved the change; the new clip end comes
+from the pauses, not from listening, so it is in the listening review's next round.
 
 On main, not released yet (goes into the next minor): #94 Memorise Listen/Build in the focus
 layout; practising missed words clears the hint level and always shows the reveal button; the
@@ -93,6 +99,14 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
    permission rule.
 
+9. NUL bytes in `translation_id_full` of 7 shipped rows (morning_04, morning_06, morning_13,
+   evening_04, evening_06, evening_13, distress_05): leftovers of the PDF extraction after the
+   Indonesian note (`\x00 \x00 …`). They render under the dua. Strip control characters in
+   the importer/build (not by hand); shipped content, so ask before merging.
+
+Not to do: the Wear OS app (decided by the owner, 31 Oct). The module is already gone from the
+repo; don't bring it back or plan Wear work.
+
 Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05, news_05);
 1.7.0 shows them muted.
 
@@ -136,6 +150,13 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   this file, merge it, start a new cloud session on this repo with the prompt "Continue from
   docs/handover.md", and archive the finished session.
 
+- Standing instruction from the owner (31 Oct): work on Adwam only. Don't read, archive or
+  change sessions, repos or artifacts of other projects; the archiving notes below were
+  one-off requests.
+- 31 Oct (after #94): the owner asked to archive the other sessions. Archived Inverse
+  Construction S3, Whittle S3, Drive Folder Sync S2, Speed Meter S2 and Smol; kept F052 Harbour
+  (Crust, working) and OpenRef S3 (a long re-take job). Their open items are in the doc
+  https://claude.ai/artifact/TnBH5bNS1iAFZNm1BtQHSP ("Pending across projects").
 - 31 Oct: the owner asked for idle sessions in other projects to be archived. Archived the
   ones a later session in the same project had replaced (cRust 1.2, OpenRef S1/S2, Whittle
   S1/S2, Drive Folder Sync S1, Speed Meter S1, Inverse Construction S1/S2) and two stale
