@@ -8,7 +8,6 @@ import android.text.TextPaint
 import android.text.format.DateFormat
 import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.RemoteViews
 import android.widget.TextView
@@ -116,7 +115,8 @@ const val Accent: Int = GlassPainter.ACCENT
  * restricted context where TextView cannot load the app's own fonts, so it names a system font
  * instead: Google Sans Flex, the closest to the app's Plus Jakarta Sans, on phones that have it
  * (Pixel and Pixel-based ROMs); elsewhere the name is unknown and the system font is used.
- * Sizes are in sp, so the system font size still applies.
+ * Sizes are in sp, so the system font size still applies. [center] is Regular only: it picks a
+ * centred layout, since setGravity can't be sent through RemoteViews before Android 12.
  */
 @Composable
 fun Label(
@@ -139,6 +139,7 @@ fun Label(
         bold -> R.layout.widget_text_bold
         medium -> R.layout.widget_text_medium
         mono -> R.layout.widget_text_mono
+        center -> R.layout.widget_text_center
         else -> R.layout.widget_text
     }
     val views = RemoteViews(context.packageName, layout).apply {
@@ -146,7 +147,6 @@ fun Label(
         setTextViewTextSize(R.id.text, TypedValue.COMPLEX_UNIT_SP, sizeSp)
         setTextColor(R.id.text, color)
         if (maxLines != 1) setInt(R.id.text, "setMaxLines", maxLines)
-        if (center) setInt(R.id.text, "setGravity", Gravity.CENTER)
     }
     // An embedded RemoteViews fills its parent unless told otherwise, pushing siblings out.
     AndroidRemoteViews(views, if (fill) modifier else modifier.wrapContentSize())
