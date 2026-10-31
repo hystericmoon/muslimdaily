@@ -32,6 +32,7 @@ import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
 import id.haho.muslimdaily.feature.today.TodayUiState
 import id.haho.muslimdaily.data.settings.MemorizeSettings
+import id.haho.muslimdaily.data.settings.PhraseFill
 import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.Recall
@@ -104,6 +105,12 @@ class AccessibilityChecksTest {
     @Test fun duaDetailInline() = check { DuaDetailContent(detailState().copy(prefs = ReadingPrefs(layout = PhraseLayout.INLINE)), DuaDetailActions()) }
 
     @Test fun duaDetailFocus() = check { DuaDetailContent(detailState().copy(prefs = ReadingPrefs(layout = PhraseLayout.FOCUS)), DuaDetailActions()) }
+
+    @Test fun duaDetailBubbles() = check { DuaDetailContent(detailState().copy(prefs = ReadingPrefs(fill = PhraseFill.BUBBLES)), DuaDetailActions()) }
+
+    @Test fun duaDetailAlternatingDark() = check(ThemeMode.DARK) {
+        DuaDetailContent(detailState().copy(prefs = ReadingPrefs(layout = PhraseLayout.INLINE, fill = PhraseFill.ALTERNATING, hideFillWhilePlaying = false)), DuaDetailActions())
+    }
 
     @Test fun memorizeCheck() = check { MemorizeSessionScreen(memorizeCheckState(), MemorizeActions(), talkBack = false) }
 

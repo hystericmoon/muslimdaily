@@ -496,6 +496,14 @@
     <string name="display_phrase_inline_summary">Seperti di buku, dengan tanda jeda ⁞ di antara frasa.</string>
     <string name="display_phrase_focus">Satu frasa sekaligus</string>
     <string name="display_phrase_focus_summary">Dengan tombol Sebelumnya dan Berikutnya. Cocok untuk membaca pelan dan menghafal.</string>
+    <string name="dua_reading_settings">Tampilan bacaan</string>
+    <string name="display_phrase_fill">Warna frasa</string>
+    <string name="display_phrase_fill_summary">Latar di belakang tiap frasa agar batasnya terlihat. Frasa yang sedang dibaca tetap berwarna emas.</string>
+    <string name="display_fill_none">Tanpa</string>
+    <string name="display_fill_alternating">Selang-seling</string>
+    <string name="display_fill_bubbles">Gelembung</string>
+    <string name="display_fill_hide_playing">Sembunyikan saat diputar</string>
+    <string name="display_fill_hide_playing_summary">Saat audio diputar, hanya frasa yang sedang dibaca yang berwarna.</string>
     <string name="display_translation">Terjemahan</string>
     <string name="display_translation_id">Bahasa Indonesia</string>
     <string name="display_translation_en">Bahasa Inggris</string>

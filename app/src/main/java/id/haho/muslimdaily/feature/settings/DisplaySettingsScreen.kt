@@ -31,7 +31,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.design.component.RadioGroup
 import id.haho.design.component.SegmentedRow
 import id.haho.design.component.SettingsGroup
 import id.haho.design.component.StepperRow
@@ -43,8 +42,6 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
-import id.haho.muslimdaily.data.settings.PhraseLayout
-import id.haho.muslimdaily.data.settings.TranslationMode
 import kotlin.math.roundToInt
 
 @Composable
@@ -73,57 +70,8 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                 LanguageRow()
             }
         }
-        item {
-            SettingsGroup(stringResource(R.string.display_translation)) {
-                RadioGroup(
-                    options = TranslationMode.entries,
-                    selected = settings.translationMode,
-                    onSelect = { m -> update { translationMode = m } },
-                    label = {
-                        stringResource(
-                            when (it) {
-                                TranslationMode.INDONESIAN -> R.string.display_translation_id
-                                TranslationMode.ENGLISH -> R.string.display_translation_en
-                                TranslationMode.BOTH -> R.string.display_translation_both
-                            },
-                        )
-                    },
-                )
-                SwitchRow(
-                    title = stringResource(R.string.display_transliteration),
-                    summary = stringResource(R.string.display_transliteration_summary),
-                    checked = settings.showTransliteration,
-                    onCheckedChange = { v -> update { showTransliteration = v } },
-                )
-            }
-        }
-        item {
-            SettingsGroup(stringResource(R.string.display_phrase_layout)) {
-                RadioGroup(
-                    options = PhraseLayout.entries,
-                    selected = settings.phraseLayout,
-                    onSelect = { l -> update { phraseLayout = l } },
-                    label = {
-                        stringResource(
-                            when (it) {
-                                PhraseLayout.LINES -> R.string.display_phrase_lines
-                                PhraseLayout.INLINE -> R.string.display_phrase_inline
-                                PhraseLayout.FOCUS -> R.string.display_phrase_focus
-                            },
-                        )
-                    },
-                    description = {
-                        stringResource(
-                            when (it) {
-                                PhraseLayout.LINES -> R.string.display_phrase_lines_summary
-                                PhraseLayout.INLINE -> R.string.display_phrase_inline_summary
-                                PhraseLayout.FOCUS -> R.string.display_phrase_focus_summary
-                            },
-                        )
-                    },
-                )
-            }
-        }
+        item { TranslationGroup(settings, update) }
+        item { PhraseLayoutGroup(settings, update) }
         item {
             SettingsGroup(stringResource(R.string.display_arabic_font)) {
                 ArabicFontPicker(settings.arabicFont, settings.arabicScale) { f -> update { arabicFont = f } }
