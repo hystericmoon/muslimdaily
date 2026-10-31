@@ -906,6 +906,13 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_9_0">
+        <item>Memorise: Listen and Build now show one phrase at a time, following the audio, with Back and Next. Check still shows the whole text.</item>
+        <item>When you practise only the words you missed, the reveal button and first letters are there, even if none of the recital was right.</item>
+        <item>At large text sizes, Back and Next no longer break, and Next always stays on the right.</item>
+        <item>Morning and evening dhikr no. 13 no longer end with the word «or» (أَوْ) left over from the book\'s note, and the audio stops where the dhikr ends.</item>
+        <item>Hadith numbers added to 20 duas, and leftover marks from the book\'s PDF removed from seven duas\' Indonesian translation.</item>
+    </string-array>
     <string-array name="whats_new_1_8_0">
         <item>The Aa button on a dua opens the reading display settings: layout, phrase colour, translation and text size. Changes show on the dua right away.</item>
         <item>Choose how a dua is laid out: one phrase per line, flowing text as in the book with pause marks, or one phrase at a time with Back and Next.</item>
