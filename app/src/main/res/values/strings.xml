@@ -896,6 +896,14 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_10_0">
+        <item>Setiap doa kini hanya berisi bacaannya. Kisah, petunjuk, dan catatan hitungan dari kitab ada di «Lihat teks lengkap di kitab», dan terjemahannya juga hanya terjemahan doa.</item>
+        <item>Riwayat yang memuat beberapa bacaan kini dipisah: tiap bacaan punya hitungan dan audionya sendiri, misalnya istighfar dan «Allahumma antas-salam» sesudah shalat.</item>
+        <item>Hadits keutamaan dan petunjuk tampil sebagai kartu bacaan, tanpa hitungan, hafalan, atau rutinitas.</item>
+        <item>Audio 156 doa kini hanya memutar bagian doanya, dan 104 doa mendapat frasa yang mengikuti bacaan.</item>
+        <item>Dzikir petang yang di kitab memakai lafazh pagi kini menampilkan lafazh petangnya sebagai catatan kitab.</item>
+        <item>Lima doa menampilkan penilaian Darussalam di bawah «Penilaian lain». Widget di Android 8–11 tidak lagi muncul dua kali, dan daftar kota bisa dicari sejak pertama dibuka.</item>
+    </string-array>
     <string-array name="whats_new_1_9_0">
         <item>Hafalan: langkah Dengar dan Susun kini menampilkan satu frasa sekaligus yang mengikuti audio, dengan tombol Sebelumnya dan Berikutnya. Langkah Cek tetap menampilkan seluruh teks.</item>
         <item>Saat melatih kata yang terlewat saja, tombol untuk membuka teks dan huruf awal tetap tersedia, juga ketika hafalan tadi belum ada yang benar.</item>
