@@ -230,6 +230,7 @@
     <string name="location_search">Cari kota</string>
     <string name="location_popular">Kota di Indonesia</string>
     <string name="location_results">Hasil pencarian</string>
+    <string name="location_loading">Menyiapkan daftar kota…</string>
     <string name="location_no_results">Kota tidak ditemukan. Coba ejaan lain.</string>
     <string name="location_attribution">Data kota: GeoNames (CC BY 4.0)</string>
 

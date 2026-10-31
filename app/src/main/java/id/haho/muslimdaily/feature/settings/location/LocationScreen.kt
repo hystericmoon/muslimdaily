@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -53,6 +54,7 @@ import id.haho.muslimdaily.data.location.LocationRepository
 import id.haho.muslimdaily.data.settings.LocationSource
 import id.haho.muslimdaily.data.settings.SavedLocation
 import id.haho.muslimdaily.data.settings.SettingsRepository
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -79,7 +81,14 @@ class LocationViewModel @Inject constructor(
 
     val results: StateFlow<List<City>?> = _query.debounce(150).mapLatest { q ->
         // A data problem must never close the app; an empty list shows the "not found" note.
-        runCatching { if (q.isBlank()) cities.popular() else cities.search(q) }.getOrDefault(emptyList())
+        // Cancellation (a newer keystroke) is rethrown, not shown as "not found".
+        try {
+            if (q.isBlank()) cities.popular() else cities.search(q)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            emptyList()
+        }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private val _busy = MutableStateFlow(false)
@@ -201,7 +210,22 @@ fun LocationContent(
             SectionHeader(stringResource(if (query.isBlank()) R.string.location_popular else R.string.location_results))
         }
         val list = results.orEmpty()
-        if (results != null && list.isEmpty()) {
+        if (results == null) {
+            // The first search imports the city list, which can take a while on a slow phone.
+            item {
+                Column(
+                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                ) {
+                    Text(
+                        stringResource(R.string.location_loading),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    LinearProgressIndicator(Modifier.fillMaxWidth())
+                }
+            }
+        } else if (list.isEmpty()) {
             item {
                 Text(
                     stringResource(R.string.location_no_results),

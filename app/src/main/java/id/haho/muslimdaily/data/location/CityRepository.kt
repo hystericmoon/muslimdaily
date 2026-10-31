@@ -9,6 +9,7 @@ import id.haho.muslimdaily.data.db.CityEntity
 import id.haho.muslimdaily.data.db.CityFtsEntity
 import id.haho.muslimdaily.data.db.ContentDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -32,6 +33,10 @@ data class City(
 /**
  * Offline city search for the manual location picker, backed by GeoNames (CC BY 4.0) data in
  * assets/cities.tsv. Imported into Room the first time the picker is opened.
+ *
+ * The import takes tens of seconds on a slow phone, and the picker cancels a search on every
+ * keystroke. It runs [NonCancellable] so a keystroke can't roll it back halfway and start it
+ * over; a cancelled caller waits for it to finish before it stops.
  */
 @Singleton
 class CityRepository @Inject constructor(
@@ -40,7 +45,9 @@ class CityRepository @Inject constructor(
 ) {
     private val mutex = Mutex()
 
-    private suspend fun ensureLoaded() = mutex.withLock {
+    private suspend fun ensureLoaded() = withContext(NonCancellable) { load() }
+
+    private suspend fun load() = mutex.withLock {
         val dao = db.cityDao()
         if (dao.count() > 0) return@withLock
         withContext(Dispatchers.IO) {
