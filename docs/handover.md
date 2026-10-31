@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, evening (1.9.0 released; owner chose B for the da'if grades). All earlier Adwam
+Last updated: 31 Oct 2026, night (1.9.0 released; widget pass recorded; #106, #107 filed). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -18,9 +18,10 @@ sessions were read and archived; everything still open from them is below.
   in it), content_version 35, merged in #104 (owner's OK, 31 Oct). Not released yet: add a
   What's New line with the next release.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
-  owner's Mac via `claude remote-control`): did #102. Planned next, the evening of 31 Oct: the
-  device passes (TalkBack T1–T12, widget §5). Cloud sessions can't message it (the platform
-  refuses cloud-to-Mac messages without a trust grant); relay through the owner.
+  owner's Mac via `claude remote-control`): did #102, then the widget pass the evening of
+  31 Oct (results in `docs/device-qa.md` §5; issues #106, #107). TalkBack was skipped at the
+  owner's word (31 Oct). Cloud sessions can't message it (the platform refuses cloud-to-Mac
+  messages without a trust grant); relay through the owner.
 - **Hadith numbers**: 42 of the 58 empty rows filled (#99 dataset, #102 sunnah.com, both via
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
@@ -122,9 +123,13 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    in `build/split/review.html` (`python3 -I tools/split_context.py suggest`).
 6. Empty `source_1_no`: 16 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions; a Mac session can reach sunnah.com.
-7. Device passes (need the owner's phone, see Devices): `docs/talkback-checklist.md` T1–T12
-   and widget QA `docs/device-qa.md` §5 (5.1–5.4c); no results recorded yet. Planned for the
-   Mac session the evening of 31 Oct.
+7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
+   widget, needs the owner's PIN, by hand), 5.4's legacy-widget half, and a third-party
+   launcher. TalkBack T1–T12: skipped by the owner (31 Oct); the Redmi has no working audio,
+   so a later pass belongs on `qa_api37_profile`.
+   Filed from it: #106 (fresh install: city list blank ~35 s, a search meanwhile says "not
+   found"; fix proposed in the issue) and #107 (Android 8–11 widget picker shows two
+   identical entries).
 8. Delete the 10 merged `claude/*` branches on origin (and this session's merged ones). The
    auto-mode classifier refused `git push origin --delete`: needs the owner's go-ahead or a
    permission rule.
@@ -167,6 +172,11 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   or Remote Control session on the owner's MacBook (cloud sessions can't reach USB adb).
 - Xiaomi battery manager / launcher and Samsung font checks need stock phones; Android 8–11
   checks (5.4b) need an emulator.
+- Emulators on the Mac: set both `ANDROID_HOME` and `ANDROID_SDK_ROOT` to
+  `~/Library/Android/sdk` (the Homebrew SDK has no system images). `qa_api26_widget` is
+  Android 8; `adb root`, `settings put global auto_time 0` and `date MMDDhhmmYYYY.ss` set its
+  clock to just before a prayer (put `auto_time` back to 1 after). Never clear data or run
+  connected tests on the owner's phone.
 - On the Mac: `handoff.md` in the local clone is git-excluded, and an older handover is in
   `~/Library/Application Support/Claude/side-session-notes/`; this file supersedes both.
 

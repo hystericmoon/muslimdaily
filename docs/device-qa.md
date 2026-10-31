@@ -70,6 +70,23 @@ Leave the phone idle (screen off, unplugged) for at least one full prayer cycle.
 | 5.4c | Pixel on Android 16 QPR2+: add the widget to the lock-screen widget page | It shows and stays legible; tapping asks to unlock, then opens Today. |
 | 5.5 | Add the Quick Settings tile | Shows the next prayer and time; tap opens Today. |
 
+Results, 1.9.0 debug (31 Oct 2026). Phone: Redmi Note 10 Pro, PixelOS 17 (Android 17), Pixel
+Launcher, exact alarms allowed. Emulator: `qa_api26_widget` (Android 8.0, Pixel Launcher).
+
+| # | Device | Result | Note |
+|---|---|---|---|
+| 5.1 | Redmi | pass | One "Prayer times" entry; the preview matches the placed 4×2; night sky and moon after Isya. Only Pixel Launcher is installed, so no third-party launcher was tried. |
+| 5.1 | Android 8 | fail | Two identical "Prayer times 4 × 2" entries: `hide_from_picker` needs Android 12 (#107). |
+| 5.2 | Redmi | pass | 4×2, 4×1, 2×1, 1×1, 2×2, 4×3: no clipping or "…"; Google Sans numbers, monospace labels. 5 wide is not possible on the 4-column grid. |
+| 5.3 | Android 8 | pass | Clock set to 04:07 (Subuh 04.09, Jakarta): "1 menit menuju Subuh" at 04:08, Dzuhur 11.40 by 04:09:13. |
+| 5.3b | Redmi | pass | 8 jam 20 → 19 → 18 menit at 19:48, 19:49, 19:50; no "±". |
+| 5.4 | Redmi | pass (partial) | 1.9.0 installed over 1.5.0 with a next-prayer widget placed: it kept updating. No legacy "Jadwal shalat hari ini" widget was placed, so that half is untested. |
+| 5.4b | Android 8 | pass | Card, chips and the widget's own corners are round; Roboto in place of Google Sans. |
+| 5.4c | Redmi | not run | The lock-screen widget page does not open from `adb` swipes, and adding a widget there needs the owner's PIN. To do by hand. |
+
+Found on the way: on a fresh install the city list is blank for about 35 s while it imports,
+and a search typed meanwhile says "Kota tidak ditemukan" (#106).
+
 ## 6. Watch
 
 | # | Step | Expected |
