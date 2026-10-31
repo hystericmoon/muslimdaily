@@ -65,7 +65,7 @@ Leave the phone idle (screen off, unplugged) for at least one full prayer cycle.
 | 5.2 | Resize it through 1×1, 2×1, 4×1, 2×2, 4×2 and 4×3 (and 5 wide where the launcher allows) | Each size shows its layout (`docs/screenshots/80-widget-*`); no clipped or "…" times, names or countdown; numbers in Google Sans where the phone has it, labels in the system monospace. |
 | 5.3 | Wait across a prayer time with the screen on | Widget moves to the next prayer within 1 minute. |
 | 5.3b | With exact alarms allowed, watch the countdown for two minutes with the screen on | "Tiba dalam" counts down a minute at a time, with no "±". Without the permission it shows "±" and moves in steps of about ten minutes. |
-| 5.4 | Upgrade over a build that had a "Jadwal shalat hari ini" widget placed | It keeps working and shows the new widget; the picker lists only "Jadwal shalat" (Android 12+). |
+| 5.4 | Upgrade over a build that had a "Jadwal shalat hari ini" widget placed | Android 12+: it keeps working and shows the new widget. Android 8–11: the old receiver is disabled (#107), so a placed old widget stops; add "Jadwal shalat" again. The picker lists only "Jadwal shalat" on every version. |
 | 5.4b | Android 8–11 phone | The card and chips have round corners; the widget's own corners are round. |
 | 5.4c | Pixel on Android 16 QPR2+: add the widget to the lock-screen widget page | It shows and stays legible; tapping asks to unlock, then opens Today. |
 | 5.5 | Add the Quick Settings tile | Shows the next prayer and time; tap opens Today. |

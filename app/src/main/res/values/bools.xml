@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      The former "today's prayer times" widget receiver. Android 12+ hides it from the picker
+      (widget_day_schedule.xml, hide_from_picker); Android 8–11 ignore that flag and listed it as
+      a second identical entry (#107), so it is disabled there. Owner's decision, 31 Oct 2026.
+    -->
+    <bool name="legacy_widget_enabled">false</bool>
+</resources>
