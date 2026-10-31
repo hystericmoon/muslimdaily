@@ -70,6 +70,12 @@ data class MemorizeUiState(
     /** 1-based place of this dua among its event's duas, and how many there are (e.g. 3 of 19). */
     val position: Int = 0,
     val positionOf: Int = 0,
+    /** Words the learner marked in Check as missed or wrong. */
+    val missedWords: Set<Int> = emptySet(),
+    /** Recall hides only the missed words instead of the fade level's words. */
+    val practising: Boolean = false,
+    /** After a recital of the missed words: how many still had to be revealed. */
+    val practiceLeft: Int? = null,
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.phrases.isNotEmpty() && dua.phrases.all { it.segment != null }
@@ -104,6 +110,9 @@ class MemorizeSessionViewModel @Inject constructor(
         val rated: LeitnerState? = null,
         val nextDueId: String? = null,
         val ab: IntRange? = null,
+        val missed: Set<Int> = emptySet(),
+        val practice: Set<Int>? = null,
+        val practiceLeft: Int? = null,
     )
 
     private val today: LocalDate get() = LocalDate.now(clock)
@@ -133,7 +142,7 @@ class MemorizeSessionViewModel @Inject constructor(
             settings = memorize,
             fade = l.fade,
             words = words,
-            hiddenWords = Recall.hiddenWords(words, l.fade, dua.id, l.order) - l.revealed.toSet(),
+            hiddenWords = (l.practice ?: Recall.hiddenWords(words, l.fade, dua.id, l.order)) - l.revealed.toSet(),
             fadeOrder = l.order,
             firstLetters = l.firstLetters,
             lastRevealed = l.revealed.lastOrNull()?.let { words.getOrNull(it) },
@@ -147,6 +156,9 @@ class MemorizeSessionViewModel @Inject constructor(
             ab = l.ab ?: (0..(dua.phrases.lastIndex.coerceAtLeast(0))),
             position = siblings.indexOf(dua.id) + 1,
             positionOf = siblings.size,
+            missedWords = l.missed,
+            practising = l.practice != null,
+            practiceLeft = l.practiceLeft,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -177,20 +189,21 @@ class MemorizeSessionViewModel @Inject constructor(
     }
 
     fun setFade(level: FadeLevel) {
-        local.value = local.value.copy(fade = level, revealed = emptyList(), attempt = null)
+        local.value = local.value.copy(fade = level, revealed = emptyList(), attempt = null, practice = null, practiceLeft = null)
     }
 
     fun setFadeOrder(order: FadeOrder) {
-        local.value = local.value.copy(order = order, revealed = emptyList(), attempt = null)
+        local.value = local.value.copy(order = order, revealed = emptyList(), attempt = null, practice = null, practiceLeft = null)
     }
 
     fun setFirstLetters(on: Boolean) {
-        local.value = local.value.copy(firstLetters = on, attempt = null)
+        local.value = local.value.copy(firstLetters = on, attempt = null, practice = null, practiceLeft = null)
     }
 
     /** The learner finished reciting: the words they had to reveal decide how far the hints fade. */
     fun finishRecital() {
         val s = state.value ?: return
+        if (local.value.practice != null) return finishPractice()
         val revealed = local.value.revealed.size
         val outcome = FadeLadder.outcome(s.stage, revealed, s.hiddenWords.size + revealed)
         val stage = FadeLadder.STAGES[FadeLadder.next(s.stage, outcome)]
@@ -201,6 +214,40 @@ class MemorizeSessionViewModel @Inject constructor(
             revealed = emptyList(),
             attempt = outcome,
             playing = Playing.NONE,
+        )
+    }
+
+    /** A recital of the missed words: the ones revealed stay missed and hidden; none left ends the practice. */
+    private fun finishPractice() {
+        val left = local.value.revealed.toSet()
+        audio.stop()
+        local.value = local.value.copy(
+            practice = left.ifEmpty { null },
+            missed = left,
+            practiceLeft = left.size,
+            revealed = emptyList(),
+            attempt = null,
+            playing = Playing.NONE,
+        )
+    }
+
+    fun toggleMissed(index: Int) {
+        val missed = local.value.missed
+        local.value = local.value.copy(missed = if (index in missed) missed - index else missed + index)
+    }
+
+    /** Back to Recall with only the missed words hidden. */
+    fun practiseMissed() {
+        val missed = local.value.missed
+        if (missed.isEmpty()) return
+        audio.stop()
+        local.value = local.value.copy(
+            step = Step.RECALL,
+            playing = Playing.NONE,
+            practice = missed,
+            practiceLeft = null,
+            revealed = emptyList(),
+            attempt = null,
         )
     }
 

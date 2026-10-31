@@ -392,6 +392,19 @@
     </plurals>
     <string name="memorize_talkback_recall">TalkBack is on: hidden phrases are muted during playback. Fill the gaps from memory.</string>
     <string name="memorize_play_with_gaps">Play with gaps</string>
+    <string name="memorize_mark_missed">Words you missed</string>
+    <string name="memorize_mark_missed_hint">Tap the words you missed or got wrong while reciting. Tap again to undo.</string>
+    <plurals name="memorize_practise_missed">
+        <item quantity="one">Practice this word</item>
+        <item quantity="other">Practice these %d words</item>
+    </plurals>
+    <string name="memorize_suggested_in_days">Suggested · %1$s</string>
+    <string name="memorize_practising">Only the words you marked are hidden. Pick a hint level to go back to regular practice.</string>
+    <string name="memorize_practice_done">You remembered all the words you missed.</string>
+    <plurals name="memorize_practice_left">
+        <item quantity="one">%d word still needed revealing. Try once more.</item>
+        <item quantity="other">%d words still needed revealing. Try once more.</item>
+    </plurals>
     <string name="memorize_rate_prompt">How well do you know it?</string>
     <string name="memorize_rate_again">Again</string>
     <string name="memorize_rate_hard">Hard</string>

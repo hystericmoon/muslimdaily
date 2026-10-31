@@ -99,6 +99,20 @@ class MemorizeScreenshotTest {
     }
 
     @Test
+    fun checkMissedWords() = captureVariants("136-memorize-check-missed") {
+        MemorizeSessionScreen(state(Step.CHECK).copy(missedWords = setOf(2, 5)), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun practiseMissed() = captureVariants("137-memorize-practise-missed") {
+        MemorizeSessionScreen(
+            state(Step.RECALL).copy(hiddenWords = setOf(2, 5), missedWords = setOf(2, 5), practising = true),
+            MemorizeActions(),
+            talkBack = false,
+        )
+    }
+
+    @Test
     fun reviewRecallFirst() = captureVariants("121-memorize-review-cue") {
         MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.FULL, fromReview = true), MemorizeActions(), talkBack = false)
     }
