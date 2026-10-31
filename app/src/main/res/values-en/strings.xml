@@ -903,7 +903,7 @@
         <item>Choose how a dua is laid out: one phrase per line, flowing text as in the book with pause marks, or one phrase at a time with Back and Next.</item>
         <item>Phrase colour: give each phrase an alternating or bubble background so you can see where it ends. While the audio plays, only the phrase being recited is coloured.</item>
         <item>Memorise: in the Check step, tap the words you missed. The app suggests a rating, and you can practise just those words.</item>
-        <item>Eight morning, evening and sleep duas no longer sit inside the book's ((…)) marks. The book's notes after them stay, shown muted.</item>
+        <item>Eight morning, evening and sleep duas no longer sit inside the book\'s ((…)) marks. The book\'s notes after them stay, shown muted.</item>
     </string-array>
     <string-array name="whats_new_1_7_0">
         <item>Duas now show one phrase per line, so you can see where to pause and where to continue. Tap a phrase to play the recitation from there.</item>
