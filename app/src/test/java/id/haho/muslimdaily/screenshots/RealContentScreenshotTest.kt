@@ -122,6 +122,12 @@ class RealContentScreenshotTest {
     fun sourcesFallback() = sources("65-real-sources-fallback", duas.first { it.sources.first().book == "Hisnul Muslim" }.id)
 
     @Test
+    fun readingCard() = detail("69-real-detail-reading-card", "shalawat_01")
+
+    @Test
+    fun footnote() = detail("69-real-detail-footnote", "evening_03")
+
+    @Test
     fun sourcesOtherGradings() = sources("68-real-sources-other-gradings", "illness_05")
 
     @Test

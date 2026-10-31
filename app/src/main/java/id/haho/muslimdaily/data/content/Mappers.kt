@@ -46,6 +46,8 @@ internal fun DuaEntity.toModel(): Dua {
         arabicFull = arabicFull,
         translationIdFull = translationIdFull,
         translationEnFull = translationEnFull,
+        footnote = footnote,
+        isRecitable = kind != "hadith",
     )
 }
 

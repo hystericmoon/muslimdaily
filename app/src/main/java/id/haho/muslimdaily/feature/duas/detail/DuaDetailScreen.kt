@@ -186,7 +186,9 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
             SourceChip(dua)
         }
+        if (!dua.isRecitable) InfoNote(stringResource(R.string.dua_reading_card), icon = R.drawable.ic_menu_book)
         DuaTranslations(dua, state.prefs)
+        if (dua.footnote.isNotBlank()) Footnote(dua)
         if (dua.arabicFull.isNotBlank()) FullEntry(dua, state.prefs, fullEntryOpen)
         NoteCard(state.note, actions.onSaveNote)
         dua.virtue?.let { virtue ->
@@ -204,7 +206,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             }
         }
         if (dua.audio == null) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
-        FlowRow(
+        if (dua.isRecitable) FlowRow(
             horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
         ) {
@@ -225,6 +227,20 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                 Text(stringResource(R.string.dua_add_to_routine))
             }
         }
+    }
+}
+
+/** Another wording the book gives as a note under this dua (the evening form), muted. */
+@Composable
+private fun Footnote(dua: Dua) {
+    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+        Text(
+            stringResource(R.string.dua_footnote),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.semantics { heading() },
+        )
+        ArabicText(dua.footnote, style = AdwamTheme.arabic.body(false), color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

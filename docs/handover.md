@@ -10,6 +10,21 @@ sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
+- **Content cleanup, #113** (waits for the owner's OK: shipped content). Owner's instruction
+  31 Oct: every row only what the reader says, with ID/EN translation, Latin and audio. Review
+  page https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1 (242 rows). It replaces the listening
+  review (artifact GzK5…, its 9 answers are covered). Tools: `tools/clean_entries.py` (every
+  text decision, with reasons; re-run on a fresh main CSV, it is not idempotent on its own
+  output) and `tools/align_audio.py` (wav2vec2 Arabic forced alignment; timings committed in
+  `tools/align/word_timings.json`; the `timings` step needs a venv with torch, see its
+  docstring; ~5 s a row on CPU). New columns `kind`, `footnote`, `translation_*_from`;
+  ContentDatabase 7. Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip);
+  16 rows the aligner was unsure of keep their old audio. Owner decided in this round: item 3
+  "your call" (reading cards), item 5 footnote yes, item 7 microphone no, #107 disable the old
+  widget (merged #112). After #113: release 1.10.0 (#104, #109, #112, #113; ask first).
+- **"Hafal?" placement**: explained to the owner (move below the Arabic, recommended); no
+  answer yet.
+
 - **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
   https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
   leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
@@ -27,7 +42,9 @@ sessions were read and archived; everything still open from them is below.
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
   tashahhud_13 (no single matching hadith; see #102).
 - Current session: session_01W2ZFMrUt3FG2NbnkiZDcqo (started by hand by the owner after the
-  depth-8 session).
+  depth-8 session). haho-design was cloned by hand into ../haho-design (v0.1.0) and published.
+- Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
+  "Automatically delete head branches" in the repo settings.
 
 ## Decisions waiting on the owner
 

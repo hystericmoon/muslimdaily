@@ -79,14 +79,14 @@ class RoutineEditViewModel @Inject constructor(
             val categories = content.categories().first()
             val existing = route.id?.let { routines.routine(it) }
             val (name, items) = when {
-                existing != null -> existing.name to content.duas(existing.duaIds)
+                existing != null -> existing.name to content.duas(existing.duaIds).filter { it.isRecitable }
                 route.fromEvent != null -> {
                     // Start from what the user reads for that occasion now (their set, if any).
                     val event = content.eventOnce(route.fromEvent)
-                    val duas = ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(route.fromEvent)), mySets.customizationOnce(route.fromEvent))
+                    val duas = ActiveSet.active(ActiveSet.canonical(content.duasForEventOnce(route.fromEvent).filter { it.isRecitable }), mySets.customizationOnce(route.fromEvent))
                     event?.label.orEmpty() to duas
                 }
-                route.withDua != null -> "" to content.duas(listOf(route.withDua))
+                route.withDua != null -> "" to content.duas(listOf(route.withDua)).filter { it.isRecitable }
                 else -> "" to emptyList()
             }
             _state.value = RoutineEditState(isNew = existing == null, name = name, items = items, categories = categories)
@@ -114,7 +114,7 @@ class RoutineEditViewModel @Inject constructor(
         _state.update { it?.copy(expanded = it.expanded + eventId) }
         if (eventId !in s.eventDuas) {
             viewModelScope.launch {
-                val duas = content.duasForEventOnce(eventId)
+                val duas = content.duasForEventOnce(eventId).filter { it.isRecitable }
                 _state.update { it?.copy(eventDuas = it.eventDuas + (eventId to duas)) }
             }
         }

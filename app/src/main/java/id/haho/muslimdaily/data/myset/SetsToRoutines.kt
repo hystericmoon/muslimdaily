@@ -33,7 +33,7 @@ class SetsToRoutines @Inject constructor(
         var made = 0
         events.forEach { eventId ->
             val custom = mySets.customizationOnce(eventId)
-            val canonical = ActiveSet.canonical(content.duasForEventOnce(eventId))
+            val canonical = ActiveSet.canonical(content.duasForEventOnce(eventId).filter { it.isRecitable })
             val own = ActiveSet.active(canonical, custom).map { it.id }
             val full = ActiveSet.active(canonical, custom.copy(useMySet = false)).map { it.id }
             val name = content.eventOnce(eventId)?.label

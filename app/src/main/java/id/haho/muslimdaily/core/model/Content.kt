@@ -49,6 +49,10 @@ data class Dua(
     val arabicFull: String = "",
     val translationIdFull: String = "",
     val translationEnFull: String = "",
+    /** Another wording the book gives as a note (the evening form), shown under the dua. */
+    val footnote: String = "",
+    /** False for a hadith or instruction with no words to recite: a reading card, no counter. */
+    val isRecitable: Boolean = true,
 ) {
     val phrases: List<Phrase> by lazy { splitPhrases(arabic, phraseBreaks, audio?.segments.orEmpty()) }
 
