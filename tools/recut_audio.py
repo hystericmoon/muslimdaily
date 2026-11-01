@@ -25,6 +25,13 @@ least QUIET dB below the recording's loudest frame (a break between phrases goes
 point, as a reciter may run straight on). Phrase marks are not touched: only `audio_range`
 and `audio_segments` change, and only when some boundary moves by more than MIN_MOVE.
 Re-run `verify_audio.py --id` on the rows applied.
+
+`start` handles rows `propose` refuses whose only fault is the clip's start (on the title, or
+after the dua's first word): `tools/align/start_fixes.csv` names, per row, the index of the heard
+word that begins the dua (read off Whisper's words, with the reason; `late`, seconds the cut may
+fall after Whisper's start of that word, where the loudness shows Whisper starting it early), and
+only the clip start and
+the first segment's start move, to the quietest point before that word.
 """
 from __future__ import annotations
 
@@ -43,6 +50,7 @@ import verify_audio as va  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 WORDS = ROOT / "tools/align/whisper_words.json"
 OUT = ROOT / "build/align/recut.csv"
+START_FIXES = ROOT / "tools/align/start_fixes.csv"
 FRAME = 0.02      # seconds per loudness frame
 EDGE_PAD = 0.35   # at most this much before a phrase's first word or after its last
 QUIET = 15.0      # dB below the loudest frame for a clip edge (some recordings have a high noise floor)
@@ -174,6 +182,35 @@ def propose(row: dict, entry: dict) -> dict:
     return out
 
 
+def propose_start(row: dict, entry: dict, first: int, late: float = 0.0) -> dict:
+    """Moves only the clip's start (and the first segment's) to the quietest point between the
+    title's last heard word and the dua's first, heard word `first` (from START_FIXES). For rows
+    the full proposal refuses but whose only fault is a clip that starts on the title, or after
+    the dua's first word."""
+    out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": "", "audio_segments": "",
+           "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", "")}
+    heard, rms, dur = entry["words"], entry["rms"], entry["duration"]
+    s0 = heard[first][0]
+    # Whisper's end of the title's last word is unreliable (it can run to the next word's
+    # start), so the search starts a little after that word's start
+    prev_start = heard[first - 1][0] + 0.3 if first > 0 else 0.0
+    t, db = quietest(rms, max(prev_start, s0 - EDGE_PAD - 1.0), s0 + late)
+    if db > -QUIET:
+        out["reason"] = f"no quiet point before the first word ({t:.2f} at {db:.0f} dB)"
+        return out
+    segs = bc.parse_segments(row.get("audio_segments") or "")
+    rng = bc.parse_segments(row.get("audio_range") or "")
+    end = rng[0][1] if rng else (segs[-1][1] if segs else dur)
+    if segs:
+        if t >= segs[0][1]:
+            out["reason"] = "the first word starts after the first segment ends"
+            return out
+        segs[0] = [t, segs[0][1]]
+        out["audio_segments"] = "; ".join(f"{a:.2f}-{b:.2f}" for a, b in segs)
+    out.update(audio_range=f"{t:.2f}-{end:.2f}", status="ok")
+    return out
+
+
 def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and the model
     import numpy as np
     import torch
@@ -209,8 +246,20 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     for name in ("words", "propose"):
         sub.add_parser(name).add_argument("--id", action="append", default=[])
+    sub.add_parser("start", help="start-only fixes listed in tools/align/start_fixes.csv")
     sub.add_parser("apply")
     args = ap.parse_args()
+    if args.cmd == "start":
+        data = json.loads(WORDS.read_text(encoding="utf-8"))
+        fixes = {r["id"]: r for r in sa.read_csv(START_FIXES)[1]}
+        _, rows, _ = sa.read_csv(sa.DUAS)
+        res = [propose_start(r, data[r["audio_file"]], int(fixes[r["id"]]["first_word"]), float(fixes[r["id"]].get("late") or 0))
+               for r in rows if r["id"] in fixes]
+        sa.write_csv(OUT, FIELDS, res)
+        for r in res:
+            print(r["id"], r["status"], r["reason"], r["old_range"] or "-", "|", (r["old_segments"] or "-")[:40], "->",
+                  r["audio_range"], "|", (r["audio_segments"] or "-")[:40])
+        return 0
     if args.cmd == "words":
         compute_words(set(args.id))
         return 0
