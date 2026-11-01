@@ -91,6 +91,33 @@ class SuggestApplyTest(unittest.TestCase):
             self.assertIn(hn.NOTES["sunnah"], out["notes"])
             self.assertNotIn(hn.NOTE, out["notes"])
 
+    def test_slot_2_fills_the_second_source_only_when_its_book_matches(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            duas = Path(tmp) / "duas.csv"
+            with duas.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=DUA_COLUMNS)
+                w.writeheader()
+                w.writerow(dua_row(id="a", arabic="ألف باء", source_1_book="Kitab A", source_1_no="",
+                                   source_2_book="Kitab B", source_2_no=""))
+                w.writerow(dua_row(id="b", arabic="جيم دال", source_1_book="Kitab A", source_1_no="",
+                                   source_2_book="Kitab C", source_2_no=""))
+            targets = {r["id"]: r for r in csv.DictReader(duas.open(encoding="utf-8"))}
+            review = Path(tmp) / "islamweb.csv"
+            fields = hn.REVIEW_FIELDS + ["url", "confidence", "reason", "slot"]
+            with review.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=fields)
+                w.writeheader()
+                for i in ("a", "b"):
+                    w.writerow({"id": i, "kind": "islamweb", "book": "Kitab B", "number": "7", "approved": "ya",
+                                "source_sha1": hn.row_sha1(targets[i]), "slot": "2"})
+            applied, problems = hn.apply(review, duas)
+            self.assertEqual(["a"], applied)
+            self.assertEqual(1, len(problems))
+            out = {r["id"]: r for r in csv.DictReader(duas.open(encoding="utf-8"))}
+            self.assertEqual(("", "7"), (out["a"]["source_1_no"], out["a"]["source_2_no"]))
+            self.assertEqual("", out["b"]["source_2_no"])
+            self.assertEqual([], hn.apply(review, duas)[0])  # applied before: skipped
+
 
 if __name__ == "__main__":
     unittest.main()

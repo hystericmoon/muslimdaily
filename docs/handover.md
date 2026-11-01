@@ -37,9 +37,13 @@ sessions were read and archived; everything still open from them is below.
   `tools/align/whisper_words.json`) and the loudness; every one was re-checked by Whisper and
   passes or shows only mishearing inside the right cut. Eight more had only a wrong clip start
 (on the title; iftar_01 started after its first word, cutting it off): fixed by
-`recut_audio.py start` from `tools/align/start_fixes.csv` and re-checked. Left for a person:
-waswas_05 (phrases shifted by the title throughout), istiftah_05 (listen: Whisper skips its
-repeated phrases), and wake_04's break before "وبئس المهاد" (~223 s; it sits two words late).
+`recut_audio.py start` from `tools/align/start_fixes.csv` and re-checked. After 1.10.2 (branch
+`claude/audio-last-three`): waswas_05 re-cut from after its title (mode `full`) and wake_04's
+break moved after "وبئس المهاد" (mode `break`), both in `start_fixes.csv`. istiftah_05's cuts are
+right (Whisper's segment check drops its repeated lines; the full-file transcript has them all);
+but **the recording does not say "وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي"** (nothing between "أعلنت" 83.5 s and
+"أنت المقدم" 85.5 s): the text shows words the audio lacks. Owner's call; the text is not edited
+by hand.
 quran_16/18, dress_04, travel_01, sujud_03 are fine
   (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
   "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
@@ -72,10 +76,11 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   answers cloud sessions, sunnah.com and dorar.net don't): al-Hakim (morning_10, evening_10,
   night_01, travel_03, funeral_06), an-Nasa'i al-Kubra (wudu_04, manners_04), al-Baihaqi
   (witr_03), Ahmad 19109 (protection_02, plural wording), Abu Dawud 466 (enter_masjid_01, the
-  a'udzu sentence). 7 left: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
+  a'udzu sentence). 7 without a first-source number: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
   morning_19/evening_19 (at-Tabarani by two chains, not in al-Mu'jam ash-Shaghir; al-Kabir and
   al-Awsat not searched), travel_12/13 (Ibn as-Sunni not on islamweb; their second source,
-  al-Hakim, is no. 1883). islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
+  al-Hakim 1883, is filled since 1.10.2 via `slot` 2 in the islamweb CSV). al-Mu'jam al-Kabir's
+  section for the companion runs ~7000 pages with no search; a crawl that size was refused. islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
   Nasa'i al-Kubra 406 (its 'Amal al-Yawm is content ids 10054-11232), Tabarani Kabir 84, Awsat
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
@@ -146,7 +151,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
+1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
+   for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
    done (#118, #124). Left, all the owner's: create the upload keystore and add the four
    `PLAY_UPLOAD_*` secrets, enrol in Play App Signing, store listing, content rating, target
    audience ("Needs doing" in `docs/play-store.md`).
@@ -169,6 +175,10 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    1 Nov. Cloud sessions can't do it: the container has no /dev/kvm (no emulator) and
    `list_computer_folders` is empty until the owner runs `claude remote-control` in the clone
    on the Mac; then a cloud session can attach it with `request_computer_folder` (checked 1 Nov).
+   What the owner's Redmi can still cover (told to the owner 1 Nov): 5.1 on a third-party
+   launcher (install Lawnchair). Not 5.4's legacy half (placing the old widget needs an older
+   build installed over 1.10.x, i.e. a downgrade that wipes app data: emulator only) and not
+   5.4c (no lock-screen widgets on its PixelOS: a Pixel or a Pixel emulator image).
 8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
    (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
    turn on "Automatically delete head branches" in the repo settings and delete the leftover
