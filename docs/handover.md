@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A; #122 "Hafal?" below the Arabic merged). All earlier Adwam
+Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A; #122 "Hafal?" below the Arabic merged; #124 Play AAB in the release workflow merged). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -20,8 +20,8 @@ sessions were read and archived; everything still open from them is below.
   aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
 - **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
   recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
-  150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 changes only
-  the store (`release`) build's content, nothing users of the GitHub build see.
+  150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 and #124 change
+  only the store (`release`) build and the release workflow, nothing users of the GitHub build see.
 
 - **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
   https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
@@ -30,7 +30,11 @@ sessions were read and archived; everything still open from them is below.
   `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
   in it), content_version 35, merged in #104, shipped in 1.10.0.
 - **Plan B for Play** (open work 1): #118 merged 1 Nov with option A (owner's choice): the 5
-  English-only Hisn rows are left out of the Play build. See `docs/play-store.md`, "Plan B".
+  English-only Hisn rows are left out of the Play build. #124 (1 Nov): the release workflow
+  builds the AAB (artifact `play-bundle`, unsigned until the `PLAY_UPLOAD_*` secrets exist, see
+  `docs/release.md`); screenshot `143-play-hisn-english`; the old What's New Hisn-English items
+  can't show in the Play build, so they stay. Checked locally: the AAB's `content/duas.json` is
+  byte-identical to `content/play/duas.json`. See `docs/play-store.md`, "Plan B".
 - **5 English-only Hisn rows** (eating_08, eating_09, tasbih_03, tasbih_06, salam_04): the owner
   asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
   (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha
@@ -46,8 +50,8 @@ sessions were read and archived; everything still open from them is below.
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
   tashahhud_13 (no single matching hadith; see #102).
-- Previous session: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122; archived when it
-  started the next one).
+- Previous session: session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124; archived when it started the next
+  one). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
 
@@ -110,11 +114,11 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Content,
-   build and credits merged in #118 (option A: the 5 English-only Hisn rows are left out of the
-   Play build); left: AAB in the release workflow,
-   the What's New items about Hisn English, a screenshot of a Hisn row in English, and the
-   rest of "Needs doing" in `docs/play-store.md`.
+1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
+   done (#118, #124). Left, all the owner's: create the upload keystore and add the four
+   `PLAY_UPLOAD_*` secrets, enrol in Play App Signing, store listing, content rating, target
+   audience ("Needs doing" in `docs/play-store.md`). Nothing in the open-work list below needs
+   a cloud session right now: 2 waits on the owner, 3 on listening, 6 and 7 on the Mac.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
