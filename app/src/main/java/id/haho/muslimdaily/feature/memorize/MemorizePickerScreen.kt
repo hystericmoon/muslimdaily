@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +44,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import id.haho.design.component.HahoTextField
 
 data class PickerGroup(val label: String, val duas: List<Dua>)
 
@@ -100,7 +100,7 @@ fun MemorizePickerContent(
             verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
         ) {
             item {
-                OutlinedTextField(
+                HahoTextField(
                     value = query,
                     onValueChange = onQuery,
                     label = { Text(stringResource(R.string.search_hint)) },

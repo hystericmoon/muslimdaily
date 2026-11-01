@@ -26,7 +26,7 @@ roborazzi = "1.76.0"
 benchmark = "1.5.0"
 uiautomator = "2.4.0"
 # The shared design system; CI checks out the haho-design tag v<this version> (see .github/workflows).
-hahoDesign = "0.1.0"
+hahoDesign = "0.2.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
