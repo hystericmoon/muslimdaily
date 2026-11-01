@@ -45,10 +45,12 @@ WORDS = ROOT / "tools/align/whisper_words.json"
 OUT = ROOT / "build/align/recut.csv"
 FRAME = 0.02      # seconds per loudness frame
 EDGE_PAD = 0.35   # at most this much before a phrase's first word or after its last
-QUIET = 22.0      # dB below the loudest frame for a cut
+QUIET = 15.0      # dB below the loudest frame for a clip edge (some recordings have a high noise floor)
 MIN_HEARD = 0.6   # share of a phrase's words that must be heard
 MIN_MOVE = 0.25   # seconds; smaller differences are left alone
-SLACK = 0.3       # Whisper's word times run end to start; a cut is looked for this far around
+EARLY = 0.15      # a cut may go this far before Whisper's end of a phrase's last word
+LATE = 0.1        # and this far after its start of the next phrase's first word (Whisper's word
+                  # starts run early; further out, the quietest frame can be a dip inside a word)
 FIELDS = ["id", "status", "reason", "audio_range", "audio_segments", "old_range", "old_segments"]
 
 
@@ -131,25 +133,30 @@ def propose(row: dict, entry: dict) -> dict:
         if not idx or len(mine) < MIN_HEARD * len(idx) or mine[0][0] > idx[0] + 1 or mine[-1][0] < idx[-1] - 1:
             out["reason"] = f"phrase {k + 1}: its words are not heard clearly enough"
             return out
-        spans.append((heard[owner_h[mine[0][1]]][0], heard[owner_h[mine[-1][1]]][1],
-                      owner_h[mine[0][1]], owner_h[mine[-1][1]]))
+        first, last = owner_h[mine[0][1]], owner_h[mine[-1][1]]
+        # an edge word not matched (misheard) is the heard word next to the matched ones
+        if mine[0][0] > idx[0] and first > 0:
+            first -= 1
+        if mine[-1][0] < idx[-1] and last + 1 < len(heard):
+            last += 1
+        spans.append((heard[first][0], heard[last][1], first, last))
     cuts = []
     # start: in the gap after the word heard before the first phrase (the title), if any
     s0, _, h0, _ = spans[0]
     prev_end = heard[h0 - 1][1] if h0 > 0 else 0.0
-    t, db = quietest(rms, max(prev_end, s0 - EDGE_PAD), s0 + SLACK) if h0 > 0 else (max(0.0, s0 - EDGE_PAD), -99.0)
+    t, db = quietest(rms, max(prev_end, s0 - EDGE_PAD), s0)  # an edge never cuts into a word if h0 > 0 else (max(0.0, s0 - EDGE_PAD), -99.0)
     cuts.append((t, db))
     for (_, e1, _, _), (s2, _, _, _) in zip(spans, spans[1:]):
-        cuts.append(quietest(rms, e1 - SLACK, max(e1, s2) + SLACK))
+        cuts.append(quietest(rms, e1 - EARLY, max(e1, s2) + LATE))
     e9, _, _, h9 = spans[-1][1], None, None, spans[-1][3]
     if h9 + 1 < len(heard):
-        t, db = quietest(rms, e9 - SLACK, min(heard[h9 + 1][0] + SLACK, e9 + EDGE_PAD + 0.5))
+        t, db = quietest(rms, e9, max(e9, min(heard[h9 + 1][0], e9 + EDGE_PAD + 0.5)))
     else:
         t, db = dur, -99.0
     cuts.append((t, db))
     # the clip's two edges decide what is played, so they must be quiet; a break between two
     # phrases only moves the highlight, and a reciter may run straight on there
-    loud = [f"{t:.2f}" for t, db in (cuts[0], cuts[-1]) if db > -QUIET]
+    loud = [f"{t:.2f} at {db:.0f} dB" for t, db in (cuts[0], cuts[-1]) if db > -QUIET]
     if loud:
         out["reason"] = f"a cut is not in a quiet stretch ({', '.join(loud)})"
         return out
