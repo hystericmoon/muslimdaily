@@ -5,10 +5,15 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 83 rows re-timed; released as 1.10.2 with the owner's OK). All earlier Adwam
+Last updated: 1 Nov 2026, late (1.10.2 released: https://github.com/hystericmoon/muslimdaily/releases/tag/v1.10.2. **Open: PR #129** waits on the owner's OK, as it changes shipped content). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
+
+- **PR #129** (`claude/audio-last-three`): waswas_05 and wake_04 re-timed (Whisper-verified),
+  travel_12/13 second-source al-Hakim 1883, `tools/cloud_setup.sh`, handover. Changes shipped
+  content: merge only with the owner's OK; no version bump in it (a patch release, 1.10.3, if
+  the owner wants it out).
 
 - **haho-design 0.2.0** (1 Nov, branch `haho-design-0.2.0`): pin bumped from 0.1.0. The six
   `OutlinedTextField`s (search, location, routine name/notes, memorize picker, dua note) are now
@@ -85,8 +90,8 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- Previous session: session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124; archived when it started the next
-  one). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
+- Previous session: session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129). Before it:
+  session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
 
