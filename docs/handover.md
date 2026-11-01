@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 83 rows re-timed; waits on the owner because it changes shipped content; release 1.10.2 or 1.11.0 is the owner's call). All earlier Adwam
+Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 83 rows re-timed; released as 1.10.2 with the owner's OK). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -43,11 +43,7 @@ repeated phrases), and wake_04's break before "وبئس المهاد" (~223 s; i
 quran_16/18, dress_04, travel_01, sujud_03 are fine
   (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
   "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
-- **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
-  recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
-  150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 and #124 change
-  only the store (`release`) build and the release workflow, nothing users of the GitHub build see.
-
+- **1.10.2** (versionCode 46, PR #128, owner approved the merge and release on 1 Nov): #128 and #122.
 - **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
   https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
   leave_home_02, sleep_12, illness_05, illness_06) stay on al-Albani's grade and the Sources
@@ -104,6 +100,8 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.10.2 (versionCode 46, 1 Nov, #128): hadith numbers from islamweb.net, 86 duas re-timed after the Whisper check, tasbih_09 skips its narration, #122 ("Hafal?" below the Arabic).
 
 1.10.1 (versionCode 45, merged 1 Nov, #120): #116, the Android 8–11 widget no longer shows
 "Problem loading widget" (no location set, "moved to Adwam" notice).

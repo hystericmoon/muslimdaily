@@ -910,6 +910,12 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_10_2">
+        <item>The audio of 86 duas was checked word by word and now starts on the dua: the reciter\'s chapter title and read-aloud count notes are no longer played, and phrases light up in time with the recitation.</item>
+        <item>In the dhikr taught to the Bedouin (tasbih), the narration between its two parts is skipped.</item>
+        <item>Ten duas now show their hadith number, for example in al-Mustadrak, Musnad Ahmad and as-Sunan al-Kubra.</item>
+        <item>In routine recall, «Did you know it without the text?» sits below the Arabic, and its buttons stack at large text sizes.</item>
+    </string-array>
     <string-array name="whats_new_1_10_1">
         <item>On Android 8–11, the widget now shows before a location is set and when it carries the «moved to Adwam» notice, instead of «Problem loading widget».</item>
     </string-array>
