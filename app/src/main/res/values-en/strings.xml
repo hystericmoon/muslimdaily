@@ -910,6 +910,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_10_3">
+        <item>Two more recordings were re-timed: the dua against Satan\'s whispers now starts after the reciter\'s chapter title, and a waking-up dua\'s phrases light up in time with the recitation.</item>
+        <item>Two travel duas now also list their second source, al-Mustadrak of al-Hakim (no. 1883).</item>
+    </string-array>
     <string-array name="whats_new_1_10_2">
         <item>The audio of 86 duas was checked word by word and now starts on the dua: the reciter\'s chapter title and read-aloud count notes are no longer played, and phrases light up in time with the recitation.</item>
         <item>In the dhikr taught to the Bedouin (tasbih), the narration between its two parts is skipped.</item>

@@ -896,6 +896,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_10_3">
+        <item>Dua rekaman lagi ditata ulang waktunya: doa saat was-was setan kini dimulai setelah judul bab yang dibaca qari, dan frasa salah satu doa bangun tidur menyala seiring bacaan.</item>
+        <item>Dua doa safar kini juga mencantumkan sumber keduanya, al-Mustadrak karya al-Hakim (no. 1883).</item>
+    </string-array>
     <string-array name="whats_new_1_10_2">
         <item>Audio 86 doa diperiksa kata demi kata dan kini dimulai dari doanya: judul bab yang dibaca qari dan catatan jumlah bacaan tidak ikut diputar, dan frasa menyala seiring bacaan.</item>
         <item>Pada zikir yang diajarkan kepada orang Arab Badui (tasbih), riwayat di antara kedua bagiannya dilewati.</item>
