@@ -1,5 +1,5 @@
 {
-  "content_version": 44,
+  "content_version": 45,
   "duas": [
     {
       "id": "wake_01",
@@ -13144,7 +13144,7 @@
         "file": "hisn_176.opus",
         "segments": [
           [
-            4.32,
+            4.56,
             9.77
           ],
           [
@@ -13153,7 +13153,7 @@
           ]
         ],
         "range": [
-          4.32,
+          4.56,
           12.78
         ]
       },

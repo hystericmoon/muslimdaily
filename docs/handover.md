@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 75 rows re-timed; waits on the owner because it changes shipped content; release 1.10.2 or 1.11.0 is the owner's call). All earlier Adwam
+Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 83 rows re-timed; waits on the owner because it changes shipped content; release 1.10.2 or 1.11.0 is the owner's call). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -28,10 +28,12 @@ sessions were read and archived; everything still open from them is below.
   morning_02/09, evening_02/09, salam_03, witr_04). The rest were Whisper mishearing.
   `tools/recut_audio.py` re-timed **73 rows** from Whisper's word times (stored in
   `tools/align/whisper_words.json`) and the loudness; every one was re-checked by Whisper and
-  passes or shows only mishearing inside the right cut. Left for a person (the tool refused, or
-  can't tell): toilet_01, to_masjid_01, witr_01, fear_04, debt_01, wake_04 (clip starts on the
-  title), waswas_05 (phrases shifted), shalawat_01 (the title shares five words with phrase 1),
-  istiftah_05 and iftar_01 (listen). quran_16/18, dress_04, travel_01, sujud_03 are fine
+  passes or shows only mishearing inside the right cut. Eight more had only a wrong clip start
+(on the title; iftar_01 started after its first word, cutting it off): fixed by
+`recut_audio.py start` from `tools/align/start_fixes.csv` and re-checked. Left for a person:
+waswas_05 (phrases shifted by the title throughout), istiftah_05 (listen: Whisper skips its
+repeated phrases), and wake_04's break before "وبئس المهاد" (~223 s; it sits two words late).
+quran_16/18, dress_04, travel_01, sujud_03 are fine
   (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
   "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
 - **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
@@ -146,8 +148,8 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
-3. Done in 1.10.0 (#113) and on 1 Nov (#128: tasbih_09; full Whisper check; 75 rows re-timed).
-   Left: the ten rows listed under In flight, for a person to listen to.
+3. Done in 1.10.0 (#113) and on 1 Nov (#128: tasbih_09; full Whisper check; 83 rows re-timed).
+   Left: three rows listed under In flight, for a person to listen to.
 6. Empty `source_1_no`: 7 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen

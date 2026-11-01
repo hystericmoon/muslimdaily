@@ -29,7 +29,8 @@ Re-run `verify_audio.py --id` on the rows applied.
 `start` handles rows `propose` refuses whose only fault is the clip's start (on the title, or
 after the dua's first word): `tools/align/start_fixes.csv` names, per row, the index of the heard
 word that begins the dua (read off Whisper's words, with the reason; `late`, seconds the cut may
-fall after Whisper's start of that word, where the loudness shows Whisper starting it early), and
+fall after Whisper's start of that word, where the loudness shows Whisper starting it early; `after`, the earliest time for the cut, where
+the quietest point is a pause inside the title's last word), and
 only the clip start and
 the first segment's start move, to the quietest point before that word.
 """
@@ -182,7 +183,7 @@ def propose(row: dict, entry: dict) -> dict:
     return out
 
 
-def propose_start(row: dict, entry: dict, first: int, late: float = 0.0) -> dict:
+def propose_start(row: dict, entry: dict, first: int, late: float = 0.0, after: float = 0.0) -> dict:
     """Moves only the clip's start (and the first segment's) to the quietest point between the
     title's last heard word and the dua's first, heard word `first` (from START_FIXES). For rows
     the full proposal refuses but whose only fault is a clip that starts on the title, or after
@@ -194,7 +195,7 @@ def propose_start(row: dict, entry: dict, first: int, late: float = 0.0) -> dict
     # Whisper's end of the title's last word is unreliable (it can run to the next word's
     # start), so the search starts a little after that word's start
     prev_start = heard[first - 1][0] + 0.3 if first > 0 else 0.0
-    t, db = quietest(rms, max(prev_start, s0 - EDGE_PAD - 1.0), s0 + late)
+    t, db = quietest(rms, max(prev_start, s0 - EDGE_PAD - 1.0, after), s0 + late)
     if db > -QUIET:
         out["reason"] = f"no quiet point before the first word ({t:.2f} at {db:.0f} dB)"
         return out
@@ -253,7 +254,8 @@ def main() -> int:
         data = json.loads(WORDS.read_text(encoding="utf-8"))
         fixes = {r["id"]: r for r in sa.read_csv(START_FIXES)[1]}
         _, rows, _ = sa.read_csv(sa.DUAS)
-        res = [propose_start(r, data[r["audio_file"]], int(fixes[r["id"]]["first_word"]), float(fixes[r["id"]].get("late") or 0))
+        res = [propose_start(r, data[r["audio_file"]], int(fixes[r["id"]]["first_word"]), float(fixes[r["id"]].get("late") or 0),
+                             float(fixes[r["id"]].get("after") or 0))
                for r in rows if r["id"] in fixes]
         sa.write_csv(OUT, FIELDS, res)
         for r in res:
