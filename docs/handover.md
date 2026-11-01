@@ -29,7 +29,9 @@ sessions were read and archived; everything still open from them is below.
   in it), content_version 35, merged in #104, shipped in 1.10.0.
 - **Plan B for Play** (open work 1): PR claude/play-flavor, see `docs/play-store.md`,
   "Plan B". Waits on the owner before merging (adds content/play/duas.json, and leaves 5
-  English-only Hisn rows out of the Play build).
+  English-only Hisn rows out of the Play build). PR #118; decision page (A leave out,
+  recommended; B Arabic only; C keep their English):
+  https://claude.ai/artifact/2fAz81x9icuc5Wf7U67ito
 - **Next release notes**: #116 (Android 8–11 widget: "set a location" and the "moved to
   Adwam" notice no longer show "Problem loading widget") is merged but not released; add a
   What's New line for it. #109 is already in 1.10.0's notes.
