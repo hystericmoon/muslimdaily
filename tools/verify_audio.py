@@ -12,7 +12,8 @@ or splits a phrase shows up as words heard that are not written, or written word
 
 Nothing is written into the content: the CSV is for a person to act on. `common` is the longest
 common subsequence of written and heard words (harakat stripped, alif/ya/ta marbuta unified), so
-a single misheard word (a low-confidence word in a fast recitation) costs one, while a title or a
+words are compared as consonants (`skeleton`: no alif, waw, ya or hamza), so Uthmani and modern
+spellings agree, and a single misheard word (a low-confidence word in a fast recitation) costs one, while a title or a
 phrase in the wrong segment costs several. Rows are flagged `check` when a segment misses more
 than one written word or hears more than one extra word.
 
@@ -24,6 +25,7 @@ Venv (as for `align_audio.py timings`; ~9 s a segment on 4 CPU cores, ~2.5 h for
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -39,18 +41,45 @@ MODEL = "openai/whisper-large-v3-turbo"
 FIELDS = ["id", "status", "segment", "written", "heard", "common", "heard_text", "written_text"]
 
 
-def lcs(a: list[str], b: list[str]) -> int:
+def lcs_pairs(a: list[str], b: list[str]) -> list[tuple[int, int]]:
+    """Index pairs (in a, in b) of a longest common subsequence."""
     d = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
-    for i, x in enumerate(a):
-        for j, y in enumerate(b):
-            d[i + 1][j + 1] = d[i][j] + 1 if x == y else max(d[i][j + 1], d[i + 1][j])
-    return d[-1][-1]
+    for i in range(len(a) - 1, -1, -1):
+        for j in range(len(b) - 1, -1, -1):
+            d[i][j] = d[i + 1][j + 1] + 1 if a[i] == b[j] else max(d[i + 1][j], d[i][j + 1])
+    pairs, i, j = [], 0, 0
+    while i < len(a) and j < len(b):
+        if a[i] == b[j]:
+            pairs.append((i, j)); i += 1; j += 1
+        elif d[i + 1][j] >= d[i][j + 1]:
+            i += 1
+        else:
+            j += 1
+    return pairs
+
+
+def skeleton(words: list[str]) -> list[str]:
+    """Words as consonants: the Uthmani spelling of Qur'an rows (a dagger alif for most long a's,
+    "الظلمين") and Whisper's modern spelling ("الظالمين") then compare equal."""
+    out = [re.sub("[اويءى]", "", w) for w in words]
+    return [w for w in out if w]
 
 
 def judge(written: list[str], heard: list[str]) -> tuple[int, str]:
-    common = lcs(written, heard)
-    ok = len(written) - common <= 1 and len(heard) - common <= 1
-    return common, "ok" if ok else "check"
+    """`check` when the cut's edges are wrong: more than one word heard before the first written
+    word or after the last (a title, the next phrase), more than one written word not heard at
+    either end (a phrase cut short), or more than 30% (and more than one) of the words not heard. Whisper fusing or
+    mishearing words inside a phrase ("وقرب" for "وقل رب") is not a cut error."""
+    written, heard = skeleton(written), skeleton(heard)
+    pairs = lcs_pairs(written, heard)
+    if not written:
+        return 0, "ok" if len(heard) <= 1 else "check"
+    if not pairs:
+        return 0, "check"
+    (wi0, hi0), (wi1, hi1) = pairs[0], pairs[-1]
+    edges = max(hi0, len(heard) - 1 - hi1, wi0, len(written) - 1 - wi1)
+    ok = edges <= 1 and len(written) - len(pairs) <= max(1, 0.3 * len(written))
+    return len(pairs), "ok" if ok else "check"
 
 
 def segments_of(row: dict) -> list[tuple[float, float]]:

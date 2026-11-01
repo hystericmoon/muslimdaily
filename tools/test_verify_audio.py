@@ -3,18 +3,32 @@ import unittest
 
 import verify_audio as va
 
-# Neutral placeholder words only; no religious text is generated here.
+# Neutral placeholder words (consonants only, as the skeleton keeps them); no religious text is generated here.
 
 
 class JudgeTest(unittest.TestCase):
     def test_one_misheard_word_passes(self):
-        self.assertEqual((2, "ok"), va.judge(["ألف", "باء", "جيم"], ["ألف", "زاي", "جيم"]))
+        self.assertEqual((2, "ok"), va.judge(["كتب", "سلم", "درس"], ["كتب", "قلب", "درس"]))
 
     def test_a_title_read_before_the_phrase_is_flagged(self):
-        self.assertEqual("check", va.judge(["ألف", "باء"], ["كاف", "لام", "ميم", "ألف", "باء"])[1])
+        self.assertEqual("check", va.judge(["كتب", "سلم"], ["حمد", "خطب", "رسم", "كتب", "سلم"])[1])
 
     def test_a_phrase_missing_from_its_segment_is_flagged(self):
-        self.assertEqual("check", va.judge(["ألف", "باء", "جيم", "دال"], ["ألف", "باء"])[1])
+        self.assertEqual("check", va.judge(["كتب", "سلم", "درس", "فهم"], ["كتب", "سلم"])[1])
+
+
+class SkeletonTest(unittest.TestCase):
+    def test_spellings_with_and_without_long_vowels_agree(self):
+        self.assertEqual("ok", va.judge(["كتب", "سلم"], ["كاتب", "سالم"])[1])
+
+
+class EdgesTest(unittest.TestCase):
+    def test_words_fused_inside_a_phrase_pass(self):
+        w = ["كتب", "سلم", "درس", "فهم", "نصر", "شرب", "قلب"]
+        self.assertEqual("ok", va.judge(w, ["كتب", "سلمدرس", "فهم", "نصر", "شرب", "قلب"])[1])
+
+    def test_a_phrase_cut_short_is_flagged(self):
+        self.assertEqual("check", va.judge(["كتب", "سلم", "درس", "فهم", "نصر"], ["كتب", "سلم", "درس"])[1])
 
 
 class SegmentsTest(unittest.TestCase):
