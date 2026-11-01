@@ -183,7 +183,7 @@ def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and 
         raw = subprocess.run(["ffmpeg", "-v", "quiet", "-i", str(sa.AUDIO_DIR / f), "-ac", "1", "-ar", "16000",
                               "-f", "f32le", "-"], capture_output=True, check=True).stdout
         wav = np.frombuffer(raw, dtype=np.float32).copy()
-        o = asr({"raw": wav, "sampling_rate": 16000}, return_timestamps="word",
+        o = asr({"raw": wav, "sampling_rate": 16000}, return_timestamps="word", chunk_length_s=30, batch_size=1,
                 generate_kwargs={"language": "arabic", "task": "transcribe"})
         n = int(16000 * FRAME)
         db = [20 * float(np.log10(np.sqrt(np.mean(wav[i:i + n] ** 2)) + 1e-9)) for i in range(0, len(wav) - n, n)]
