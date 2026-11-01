@@ -19,7 +19,7 @@ it says so.
 | Item | Work | Notes |
 |---|---|---|
 | Upload key + Play App Signing | Create an upload keystore (`keystore.properties`, see release.md) and enrol in Play App Signing. | The GitHub build uses the shared debug key, so Play and GitHub installs can't update each other. Say so on the listing. |
-| App bundle | `./gradlew :app:bundleRelease` in the release workflow. | Play requires AAB. |
+| App bundle | Done: the release workflow builds it (artifact `play-bundle`), signed once the `PLAY_UPLOAD_*` secrets are set (docs/release.md). | Play requires AAB. |
 | Store listing | Short and full description in Indonesian and English, 8 phone screenshots (take them from `docs/screenshots`), a 1024×500 feature graphic. | |
 | Content rating | IARC questionnaire: no violence, no user content, no purchases. | Expected: Everyone / 3+. |
 | Target audience | 13+ is the simple choice; "includes children" pulls in the Families policy. | |
@@ -63,15 +63,18 @@ it out until IslamHouse answers:
    updater), and GitHub ships `sideload`. `ContentAssetsTask.duasFile` makes `release` package
    `play/duas.json` as `content/duas.json`; debug and sideload keep `duas.json`. A flavor would
    have doubled every variant and renamed the CI tasks for no gain. Still to add: AAB in the
-   release workflow (see "Needs doing").
+   release workflow: done, artifact `play-bundle` on each release run.
 3. Checked in code: with English chosen, a row with no English shows its Indonesian
    (`DuaTranslation` in `DuaComponents.kt`; the "Lihat teks lengkap" section in
    `DuaDetailScreen.kt` does the same). Search, Memorise and the widget don't read the
-   English. Not yet: a screenshot test of a Hisn row with English chosen on the Play content.
+   English. Screenshot `143-play-hisn-english` (morning_04 from `content/play/duas.json`, English
+   UI and English chosen) shows it.
 4. Done: `src/release/res/values*/strings.xml` override `methodology_reviewer`: no
    hisnmuslim.com English credit, and a line saying Hisn duas show the Indonesian in English.
-   Open: the What's New history (three items from 1.4.0 on about the Hisn English) still ships in
-   the Play build; drop or override those items before the first Play release.
+   The What's New history has three items about the Hisn English (1.4.0, 1.4.2, 1.6.0). They
+   can't show in the Play build: a fresh install shows no What's New (`WhatsNew.since`,
+   `firstRun`), later updates show only versions after the installed one, and About shows the
+   three latest. So they are left as they are; don't mention the Hisn English in a new item.
 
 If IslamHouse says yes, delete the flavor's content step; if they say no, apply step 1 to the
 GitHub build too.
