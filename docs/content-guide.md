@@ -225,7 +225,11 @@ independent speech model (Whisper) that is not told the text, and compares the w
 the words written (`build/align/verify.csv`). It caught two rows whose first segment was the
 reciter announcing the chapter ("... yaqulu") while both phrases sat in the second segment
 (between_sujud_01, grave_02); their range and segments were re-timed where Whisper's word times,
-the loudness and the pauses agree.
+the loudness and the pauses agree. A full pass over every row (1 Nov) flagged 88; the cuts that
+were wrong (the reciter's chapter title or a read-aloud count note inside the clip, phrases one
+segment late) were re-timed by `tools/recut_audio.py` from Whisper's word times and the loudness,
+then checked again by Whisper. Whisper mishears short words and invents text over silence
+("اشتركوا في القناة"); a flag whose cut holds the right words is not a cut error.
 
 Hadith numbers: `tools/hadith_numbers.py` (the six books from fawazahmed0/hadith-api), the
 sunnah.com lookups in `tools/hadith_numbers_sunnah.csv`, and for books sunnah.com lacks

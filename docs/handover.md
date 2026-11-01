@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (hadith numbers from islamweb.net, tasbih_09 audio, two mis-cut rows found by a Whisper check; PR for these waits on the owner because it changes shipped content). All earlier Adwam
+Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 75 rows re-timed; waits on the owner because it changes shipped content; release 1.10.2 or 1.11.0 is the owner's call). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -18,14 +18,22 @@ sessions were read and archived; everything still open from them is below.
   https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1. It replaced the listening review
   (GzK5…). Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip); 16 rows the
   aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
-  Update 1 Nov (branch `claude/hadith-numbers-islamweb`): the "16 unsure rows" count was stale;
-  against today's data 7 rows failed. tasbih_09 now has two phrases (11.28-30.83, 40.40-46.91)
-  and the app skips the narration between them (`Dua.playableParts` in `AudioEngine`). The other
-  six were checked by `tools/verify_audio.py` (Whisper, an independent model, transcribes each
-  segment): after_salah_02, morning_08, evening_08, tasbih_12 were right (the aligner's doubt was
-  wrong); between_sujud_01 and grave_02 had the reciter's chapter title as phrase 1 and both
-  phrases in segment 2: re-timed (range 6.85-11.57 / 5.11-10.42). A full Whisper pass over every
-  row (~2 h on CPU) has not been run yet; it is the way to find more cuts like these.
+  Update 1 Nov (PR #128, branch `claude/hadith-numbers-islamweb`): tasbih_09 has two phrases
+  and the app skips the narration between them (`Dua.playableParts` in `AudioEngine`).
+  **Full Whisper check of all 314 rows** (`tools/verify_audio.py`, results in
+  `build/align/verify.csv`, ~2.5 h): 88 rows flagged; about 30 were real mis-cuts from the
+  hisnmuslim.com recordings: the clip started on the reciter's chapter title ("دعاء ... يقول"),
+  every phrase played one segment late (morning_06/evening_06, fear_06, tilawah_01,
+  leave_home_01, night_01, after_salah_01 …), or a count note was read at the end ("ثلاث مرات",
+  morning_02/09, evening_02/09, salam_03, witr_04). The rest were Whisper mishearing.
+  `tools/recut_audio.py` re-timed **73 rows** from Whisper's word times (stored in
+  `tools/align/whisper_words.json`) and the loudness; every one was re-checked by Whisper and
+  passes or shows only mishearing inside the right cut. Left for a person (the tool refused, or
+  can't tell): toilet_01, to_masjid_01, witr_01, fear_04, debt_01, wake_04 (clip starts on the
+  title), waswas_05 (phrases shifted), shalawat_01 (the title shares five words with phrase 1),
+  istiftah_05 and iftar_01 (listen). quran_16/18, dress_04, travel_01, sujud_03 are fine
+  (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
+  "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
 - **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
   recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
   150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 and #124 change
@@ -138,8 +146,8 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
-3. Done in 1.10.0 (#113) and on 1 Nov (tasbih_09 two phrases; between_sujud_01 and grave_02
-   re-timed; see In flight). Left: a full `tools/verify_audio.py` pass over every row (~2 h).
+3. Done in 1.10.0 (#113) and on 1 Nov (#128: tasbih_09; full Whisper check; 75 rows re-timed).
+   Left: the ten rows listed under In flight, for a person to listen to.
 6. Empty `source_1_no`: 7 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
