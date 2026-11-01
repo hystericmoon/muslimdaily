@@ -4,6 +4,7 @@
     python3 -I tools/hadith_numbers.py suggest     # writes build/hadith_numbers/review.csv
     python3 -I tools/hadith_numbers.py apply       # copies approved rows into duas.csv
     python3 -I tools/hadith_numbers.py apply --review tools/hadith_numbers_sunnah.csv
+    python3 -I tools/hadith_numbers.py apply --review tools/hadith_numbers_islamweb.csv
 
 Two kinds of proposal, for rows with an empty `source_1_no`:
 
@@ -20,7 +21,12 @@ Two kinds of proposal, for rows with an empty `source_1_no`:
 
 A third kind, `sunnah`, is looked up by hand on sunnah.com (which refuses cloud sessions) and
 kept in `tools/hadith_numbers_sunnah.csv` with its URL, grade and confidence; rows naming a
-group ("Seluruh penyusun kitab Sunan") get every book's number in brackets.
+group ("Seluruh penyusun kitab Sunan") get every book's number in brackets. A fourth, `islamweb`,
+covers books sunnah.com lacks (al-Hakim's al-Mustadrak, al-Baihaqi's as-Sunan al-Kubra, an-Nasa'i's
+as-Sunan al-Kubra with its 'Amal al-Yawm wa al-Laylah, the whole Musnad Ahmad): looked up in the
+islamweb.net library (which answers cloud sessions) by matching the dua's words against the
+book's pages, read in full, and kept in `tools/hadith_numbers_islamweb.csv` with the page URL. The
+number is islamweb's numbering of that edition.
 
 Nothing is written into the Arabic or translations. `approved` is set by a person ("ya");
 `apply` refuses rows that changed since the suggestion.
@@ -44,7 +50,7 @@ OUT_DIR = ROOT / "build/hadith_numbers"
 CACHE = ROOT / "build/hadith_api"
 URL = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-{}.min.json"
 NOTE = "Nomor hadits: fawazahmed0/hadith-api"
-NOTES = {"dataset": NOTE, "sunnah": "Nomor hadits: sunnah.com"}
+NOTES = {"dataset": NOTE, "sunnah": "Nomor hadits: sunnah.com", "islamweb": "Nomor hadits: islamweb.net"}
 
 # Book names as the import writes them -> dataset edition.
 BOOKS = {

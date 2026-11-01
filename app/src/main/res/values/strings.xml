@@ -896,6 +896,12 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_10_2">
+        <item>Audio 86 doa diperiksa kata demi kata dan kini dimulai dari doanya: judul bab yang dibaca qari dan catatan jumlah bacaan tidak ikut diputar, dan frasa menyala seiring bacaan.</item>
+        <item>Pada zikir yang diajarkan kepada orang Arab Badui (tasbih), riwayat di antara kedua bagiannya dilewati.</item>
+        <item>Sepuluh doa kini mencantumkan nomor haditsnya, misalnya dalam al-Mustadrak, Musnad Ahmad, dan as-Sunan al-Kubra.</item>
+        <item>Saat rutinitas, pertanyaan «Hafal tanpa melihat teks?» kini ada di bawah teks Arab, dan tombolnya bertumpuk pada ukuran teks besar.</item>
+    </string-array>
     <string-array name="whats_new_1_10_1">
         <item>Di Android 8–11, widget kini tampil saat lokasi belum diatur dan saat memuat pemberitahuan pindah ke Adwam, tanpa pesan «Terjadi masalah saat memuat widget».</item>
     </string-array>

@@ -27,6 +27,22 @@ class ProposeTest(unittest.TestCase):
         out = aa.propose({"id": "t", "arabic": "ألف باء جيم", "arabic_full": full}, entry(full, words, 6.0))
         self.assertEqual(("ok", "1.75-3.85"), (out["status"], out["audio_range"]))
 
+    def test_a_dua_in_two_runs_of_its_entry_skips_what_lies_between(self):
+        full = "قال: ((ألف باء جيم)) قال: كاف لام ((دال هاء))"
+        words = [[0.2, 0.8, .9], [2.0, 2.4, .9], [2.5, 2.9, .9], [3.0, 3.6, .9],
+                 [5.0, 5.4, .9], [5.6, 6.0, .9], [6.2, 6.6, .9], [8.0, 8.4, .9], [8.5, 9.0, .9]]
+        row = {"id": "t", "arabic": "ألف باء جيم دال هاء", "arabic_full": full}
+        out = aa.propose(row, entry(full, words, 10.0))
+        self.assertEqual("ok", out["status"])
+        self.assertEqual("ألف باء جيم | دال هاء", out["arabic_marked"])
+        self.assertEqual("1.75-3.85; 7.75-9.25", out["audio_segments"])  # 3.85-7.75 is left out
+        self.assertEqual("1.75-9.25", out["audio_range"])
+
+    def test_runs_are_found_in_order(self):
+        self.assertEqual([(1, 2), (4, 1)], aa.locate_runs("باء جيم هاء", "ألف باء جيم دال هاء"))
+        self.assertIsNone(aa.locate_runs("باء جيم", "ألف باء جيم دال"))  # one run: locate's job
+        self.assertIsNone(aa.locate_runs("زاي", "ألف باء"))
+
     def test_a_recording_that_does_not_match_is_not_cut(self):
         text = "ألف باء جيم دال هاء"
         poor = [[0, 1, .9], [1, 2, .1], [2, 3, .2], [3, 4, .3], [4, 5, .9]]
