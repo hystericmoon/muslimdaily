@@ -36,43 +36,17 @@ sessions were read and archived; everything still open from them is below.
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
   tashahhud_13 (no single matching hadith; see #102).
-- Current session: session_01W2ZFMrUt3FG2NbnkiZDcqo (started by hand by the owner after the
-  depth-8 session). haho-design was cloned by hand into ../haho-design (v0.1.0) and published.
+- Current session: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (started 31 Oct by
+  session_01W2ZFMrUt3FG2NbnkiZDcqo, which did 1.10.0 and is archived). haho-design was cloned by hand into ../haho-design (v0.1.0) and published.
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
 
 ## Decisions waiting on the owner
 
-- **Listening review** (items 3, 4, 5 below and the virtue-hadith question):
-  https://claude.ai/artifact/GzK5Sa2Z61nSEtgDmZcSGy. 34 dua-part proposals (from
-  `split_context.py suggest`, count-note rows left out) and 86 phrase-break proposals (from
-  `segment_audio.py suggest`, status match/close/partial, rows waiting on a split left out).
-  Answers are in its `reviews` collection (`ArtifactData list`), one doc per `<split|seg>__<id>`
-  with `verdict` ok / fix / virtue / later, `note` and the row's `sha`. Apply only `ok` rows whose
-  sha still matches; ask before merging (shipped content). Regenerate the page from
-  fresh suggestions if `duas.csv` changes first. The owner will do it later (31 Oct: "gonna
-  take hours"; afternoon: "I will check on that"); check the collection at the start of each
-  session. The owner declined auto-shipping `match` phrase rows without listening.
-  Answers so far (31 Oct, 9 rows, still in progress; checked again at the start of the
-  after-1.9.0 session, still the same 9 rows): ok seg adhan_04, evening_15,
-  morning_15; ok split morning_18; virtue split adhan_01; fix split morning_03 (no note);
-  fix seg after_salah_05: three parts (one per surah); the proposed break puts the end of
-  al-Falaq in front of the next basmalah; and drop the closing instruction بَعْدَ كُلِّ صَلاَةٍ
-  ("after every prayer") from text and audio. Done: morning_13 / evening_13's trailing أَوْ
-  (owner said drop it, 31 Oct): see the أَوْ PR below. Their seg proposals are stale now
-  (the sha changed); regenerate them with the rest.
+Decided 31 Oct (1.10.0): listening review, virtue hadiths (reading cards), evening wording
+(footnote), source errors (fixed from the book's own data; HadeethEnc 5491/6163 were never
+imported), microphone in Memorise (no), #107 (disable the old widget).
 
-- **Virtue hadiths shown as duas** (shalawat_01–05, salam_01/03, istighfar_01/02/04/05/06,
-  illness_06, travel_09, night_03, tasbih_05): show them as virtue cards instead? Details in
-  the body of #83.
-- **Evening rows with the morning wording**, the evening form only in the book's note
-  (evening_03, evening_11, morning_18 "3× in the evening"). Idea offered: show the note as a
-  footnote under the dua, as surahquran.com does.
-- **Report source errors?** tasbih_02 English translates the 100× hadith while the Arabic is
-  the 10× one; after_salah_06 English has no translation of Ayat al-Kursi; adhan_02 English
-  "His salve"; HadeethEnc no. 5491 and 6163.
-- **Microphone recording in Memorise** (record yourself, compare with the reciter): adds the
-  `RECORD_AUDIO` permission, so the owner decides.
 - **"Hafal?" above or below the Arabic** in routine recall (#79): moving it below was offered,
   not decided.
 - **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`), no reply.
@@ -130,13 +104,10 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
-3. Phrase marks (`|`) for the rest: 87 of 323 rows have them. Batch 2 rows that failed the
-   timing check need listening (`tools/segment_audio.py`).
-4. Dua/context splits: about 39 of the original 66 proposals are unapplied; 37 Hisn rows still
-   carry قَالَ / مَنْ قَالَ narration in `arabic` with no `arabic_full`. Many are the virtue
-   hadiths above (owner decision first). Never ship a split without the owner's approval.
-5. Audio ranges for the 6 rows in #83 and the ~22 clips longer than their text: needs listening
-   in `build/split/review.html` (`python3 -I tools/split_context.py suggest`).
+3. Done in 1.10.0 (#113): phrase marks, dua/context splits and audio ranges, by
+   `tools/align_audio.py` and `tools/clean_entries.py`. Left: tasbih_09 (no clip; a #83 cut
+   joining two runs) and 16 rows the aligner was unsure of (listed by
+   `python3 -I tools/align_audio.py suggest`); they keep their old audio.
 6. Empty `source_1_no`: 16 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions; a Mac session can reach sunnah.com.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
