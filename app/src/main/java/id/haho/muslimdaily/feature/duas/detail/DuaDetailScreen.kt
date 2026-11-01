@@ -29,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.getValue
@@ -71,6 +70,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.withStyle
 import androidx.compose.runtime.saveable.rememberSaveable
+import id.haho.design.component.HahoTextField
 
 data class DuaDetailActions(
     val onTogglePlay: () -> Unit = {},
@@ -327,7 +327,7 @@ private fun NoteCard(note: String?, onSave: (String) -> Unit) {
             title = { Text(stringResource(R.string.note_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                    OutlinedTextField(
+                    HahoTextField(
                         value = text,
                         onValueChange = { text = it.take(NoteRepository.MAX_LENGTH) },
                         placeholder = { Text(stringResource(R.string.note_hint)) },

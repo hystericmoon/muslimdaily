@@ -26,7 +26,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -74,6 +73,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
+import id.haho.design.component.HahoTextField
 
 class RoutineEditActions(
     val onRename: (String) -> Unit = {},
@@ -160,7 +160,7 @@ private fun EditorContent(state: RoutineEditState, actions: RoutineEditActions, 
     LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item(key = "name") {
             Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                OutlinedTextField(
+                HahoTextField(
                     value = state.name,
                     onValueChange = actions.onRename,
                     label = { Text(stringResource(R.string.routine_name)) },
@@ -308,7 +308,7 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
     LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item(key = "search") {
             Column(Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                OutlinedTextField(
+                HahoTextField(
                     value = state.query,
                     onValueChange = actions.onSearch,
                     label = { Text(stringResource(R.string.search_hint)) },

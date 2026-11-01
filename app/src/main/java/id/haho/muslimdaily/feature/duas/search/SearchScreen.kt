@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,6 +51,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import id.haho.design.component.HahoTextField
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -100,7 +100,7 @@ fun SearchContent(
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
         item {
-            OutlinedTextField(
+            HahoTextField(
                 value = query,
                 onValueChange = onQueryChange,
                 label = { Text(stringResource(R.string.search_hint)) },
