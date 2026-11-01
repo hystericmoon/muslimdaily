@@ -21,6 +21,19 @@ keyPassword=…
 Without the file, `assembleRelease` produces an unsigned APK. For Google Play, prefer Play App
 Signing and upload an AAB: `./gradlew :app:bundleRelease`.
 
+The release workflow builds the Play bundle on every release (artifact `play-bundle` on the run,
+not attached to the GitHub Release). It signs it with the upload key when these repository
+secrets are set, and leaves it unsigned otherwise:
+
+| Secret | Value |
+|---|---|
+| `PLAY_UPLOAD_KEYSTORE` | the upload keystore, `base64 -w0 upload.jks` |
+| `PLAY_UPLOAD_STORE_PASSWORD` | its store password |
+| `PLAY_UPLOAD_KEY_ALIAS` | the key alias |
+| `PLAY_UPLOAD_KEY_PASSWORD` | the key password |
+
+With Play App Signing, this is the upload key only; Google holds the app signing key.
+
 Set the address that "Report an error" pre-fills in `gradle.properties`:
 `muslimdaily.reportEmail=…`.
 
