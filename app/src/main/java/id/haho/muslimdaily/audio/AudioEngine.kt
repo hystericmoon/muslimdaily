@@ -17,6 +17,7 @@ import androidx.media3.session.SessionToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.model.Dua
+import id.haho.muslimdaily.core.model.playableParts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -85,6 +86,8 @@ class AudioEngine @Inject constructor(
     private var ticker: Job? = null
     private var currentDua: Dua? = null
     private var sequence: List<SequenceItem> = emptyList()
+    /** For each media item: the sequence item it belongs to and where it starts in the file. */
+    private var parts: List<Pair<Int, Long>> = emptyList()
 
     @MainThread
     fun player(): ExoPlayer = player ?: ExoPlayer.Builder(context)
@@ -140,14 +143,24 @@ class AudioEngine @Inject constructor(
         currentDua = dua
         sequence = items
         val metadataTitle = context.getString(R.string.app_name)
-        p.setMediaItems(
-            items.mapIndexed { i, item ->
-                when (item) {
-                    is SequenceItem.Clip -> mediaItem("$i", "asset:///audio/${item.file}", item.startMs, item.endMs, item.title, metadataTitle)
-                    is SequenceItem.Pause -> mediaItem("$i", "asset:///audio/$SILENCE", 0, item.durationMs, item.title, metadataTitle)
+        // A clip that spans a gap between two phrases (words the recording reads that are not part
+        // of the dua) becomes one media item per part, so the gap is skipped.
+        val media = mutableListOf<MediaItem>()
+        val owners = mutableListOf<Pair<Int, Long>>()
+        items.forEachIndexed { i, item ->
+            when (item) {
+                is SequenceItem.Clip -> dua.playableParts(item.startMs, item.endMs).forEachIndexed { k, (from, to) ->
+                    media += mediaItem("$i.$k", "asset:///audio/${item.file}", from, to, item.title, metadataTitle)
+                    owners += i to from
                 }
-            },
-        )
+                is SequenceItem.Pause -> {
+                    media += mediaItem("$i", "asset:///audio/$SILENCE", 0, item.durationMs, item.title, metadataTitle)
+                    owners += i to 0L
+                }
+            }
+        }
+        parts = owners
+        p.setMediaItems(media)
         p.repeatMode = if (_state.value.repeat) Player.REPEAT_MODE_ALL else Player.REPEAT_MODE_OFF
         p.playbackParameters = PlaybackParameters(speed)
         p.prepare()
@@ -184,6 +197,7 @@ class AudioEngine @Inject constructor(
         player?.stop()
         player?.clearMediaItems()
         sequence = emptyList()
+        parts = emptyList()
         currentDua = null
         _state.value = PlaybackState(speed = _state.value.speed, repeat = _state.value.repeat)
     }
@@ -200,8 +214,9 @@ class AudioEngine @Inject constructor(
 
     fun skipTo(index: Int) {
         val p = player ?: return
-        if (index in 0 until p.mediaItemCount) {
-            p.seekTo(index, 0)
+        val media = parts.indexOfFirst { it.first == index }
+        if (media in 0 until p.mediaItemCount) {
+            p.seekTo(media, 0)
             p.play()
         }
     }
@@ -223,12 +238,13 @@ class AudioEngine @Inject constructor(
 
     private fun publish() {
         val p = player ?: return
-        val index = p.currentMediaItemIndex
+        val part = parts.getOrNull(p.currentMediaItemIndex)
+        val index = part?.first ?: p.currentMediaItemIndex
         val item = sequence.getOrNull(index)
         val dua = currentDua
         val active = when (item) {
             is SequenceItem.Clip -> {
-                val absolute = item.startMs + p.currentPosition
+                val absolute = (part?.second ?: item.startMs) + p.currentPosition
                 dua?.phrases?.indexOfFirst { ph -> ph.segment?.let { absolute >= it.startMs && absolute < it.endMs } == true } ?: -1
             }
             else -> -1

@@ -21,6 +21,33 @@ data class DuaAudio(val file: String, val segments: List<Segment>, val range: Se
     val endMs: Long? get() = range?.endMs
 }
 
+/**
+ * The parts of the recording to play for [startMs]..[endMs]: the span itself, cut wherever two
+ * neighbouring phrases' segments leave a gap (the recording reads words between them that are not
+ * part of the dua, e.g. the narration between two sayings of one hadith). [endMs] may be
+ * [END_OF_FILE] (media3's C.TIME_END_OF_SOURCE); it is kept as given.
+ */
+fun Dua.playableParts(startMs: Long, endMs: Long): List<Pair<Long, Long>> {
+    val segs = phrases.mapNotNull { it.segment }
+    if (segs.size != phrases.size || segs.size < 2) return listOf(startMs to endMs)
+    val parts = mutableListOf<Pair<Long, Long>>()
+    val end = if (endMs == END_OF_FILE) Long.MAX_VALUE else endMs
+    var from = startMs
+    for ((a, b) in segs.zipWithNext()) {
+        if (b.startMs - a.endMs > MIN_GAP_MS && a.endMs > from && b.startMs < end) {
+            parts += from to a.endMs
+            from = b.startMs
+        }
+    }
+    parts += from to endMs
+    return parts
+}
+
+private const val MIN_GAP_MS = 50L
+
+/** Equal to media3's C.TIME_END_OF_SOURCE, which the model layer does not import. */
+const val END_OF_FILE = Long.MIN_VALUE
+
 /** A phrase of the Arabic text. [range] indexes into [Dua.arabic]; [segment] is its audio, if any. */
 data class Phrase(val index: Int, val text: String, val range: IntRange, val segment: Segment?)
 

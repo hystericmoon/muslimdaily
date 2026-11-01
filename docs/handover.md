@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A; #122 "Hafal?" below the Arabic merged; #124 Play AAB in the release workflow merged). All earlier Adwam
+Last updated: 1 Nov 2026 (hadith numbers from islamweb.net, tasbih_09 audio, two mis-cut rows found by a Whisper check; PR for these waits on the owner because it changes shipped content). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -18,6 +18,14 @@ sessions were read and archived; everything still open from them is below.
   https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1. It replaced the listening review
   (GzK5…). Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip); 16 rows the
   aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
+  Update 1 Nov (branch `claude/hadith-numbers-islamweb`): the "16 unsure rows" count was stale;
+  against today's data 7 rows failed. tasbih_09 now has two phrases (11.28-30.83, 40.40-46.91)
+  and the app skips the narration between them (`Dua.playableParts` in `AudioEngine`). The other
+  six were checked by `tools/verify_audio.py` (Whisper, an independent model, transcribes each
+  segment): after_salah_02, morning_08, evening_08, tasbih_12 were right (the aligner's doubt was
+  wrong); between_sujud_01 and grave_02 had the reciter's chapter title as phrase 1 and both
+  phrases in segment 2: re-timed (range 6.85-11.57 / 5.11-10.42). A full Whisper pass over every
+  row (~2 h on CPU) has not been run yet; it is the way to find more cuts like these.
 - **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
   recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
   150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 and #124 change
@@ -46,10 +54,19 @@ sessions were read and archived; everything still open from them is below.
   (results in `docs/device-qa.md` §5; issues #106, #107) and #116. Stopped 1 Nov. TalkBack was
   skipped at the owner's word (31 Oct). It can message cloud sessions; cloud sessions can't
   message it (the platform refuses cloud-to-Mac messages without a trust grant).
-- **Hadith numbers**: 42 of the 58 empty rows filled (#99 dataset, #102 sunnah.com, both via
-  `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
-  Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
-  tashahhud_13 (no single matching hadith; see #102).
+- **Hadith numbers**: 42 of the 58 empty rows filled (#99 dataset, #102 sunnah.com), 10 more on
+  1 Nov from the islamweb.net library (`tools/hadith_numbers_islamweb.csv`, URL per row; it
+  answers cloud sessions, sunnah.com and dorar.net don't): al-Hakim (morning_10, evening_10,
+  night_01, travel_03, funeral_06), an-Nasa'i al-Kubra (wudu_04, manners_04), al-Baihaqi
+  (witr_03), Ahmad 19109 (protection_02, plural wording), Abu Dawud 466 (enter_masjid_01, the
+  a'udzu sentence). 7 left: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
+  morning_19/evening_19 (at-Tabarani by two chains, not in al-Mu'jam ash-Shaghir; al-Kabir and
+  al-Awsat not searched), travel_12/13 (Ibn as-Sunni not on islamweb; their second source,
+  al-Hakim, is no. 1883). islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
+  Nasa'i al-Kubra 406 (its 'Amal al-Yawm is content ids 10054-11232), Tabarani Kabir 84, Awsat
+  85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
+  `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
+  auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
 - Previous session: session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124; archived when it started the next
   one). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
@@ -117,17 +134,14 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
    done (#118, #124). Left, all the owner's: create the upload keystore and add the four
    `PLAY_UPLOAD_*` secrets, enrol in Play App Signing, store listing, content rating, target
-   audience ("Needs doing" in `docs/play-store.md`). Nothing in the open-work list below needs
-   a cloud session right now: 2 waits on the owner, 3 on listening, 6 and 7 on the Mac.
+   audience ("Needs doing" in `docs/play-store.md`).
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
-3. Done in 1.10.0 (#113): phrase marks, dua/context splits and audio ranges, by
-   `tools/align_audio.py` and `tools/clean_entries.py`. Left: tasbih_09 (no clip; a #83 cut
-   joining two runs) and 16 rows the aligner was unsure of (listed by
-   `python3 -I tools/align_audio.py suggest`); they keep their old audio.
-6. Empty `source_1_no`: 16 rows left (see In flight). sunnah.com and dorar.net answer 403 to
-   cloud sessions; a Mac session can reach sunnah.com.
+3. Done in 1.10.0 (#113) and on 1 Nov (tasbih_09 two phrases; between_sujud_01 and grave_02
+   re-timed; see In flight). Left: a full `tools/verify_audio.py` pass over every row (~2 h).
+6. Empty `source_1_no`: 7 rows left (see In flight). sunnah.com and dorar.net answer 403 to
+   cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
    widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
    launcher. All three can run on emulators on the Mac (an Android 16 QPR2+ Pixel image for
@@ -137,7 +151,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    Filed from it: #106 (fixed by #109) and #107 (fixed by #112: the old receiver is disabled
    below Android 12, owner's choice); both shipped in 1.10.0. #112 verified on Android 8 (one
    picker entry, the placed widget kept working). #116 (found on `qa_api26_widget`) merged
-   1 Nov.
+   1 Nov. Cloud sessions can't do it: the container has no /dev/kvm (no emulator) and
+   `list_computer_folders` is empty until the owner runs `claude remote-control` in the clone
+   on the Mac; then a cloud session can attach it with `request_computer_folder` (checked 1 Nov).
 8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
    (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
    turn on "Automatically delete head branches" in the repo settings and delete the leftover

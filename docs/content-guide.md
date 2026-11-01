@@ -215,6 +215,24 @@ with a wav2vec2 Arabic model; timings in `tools/align/word_timings.json`) and fr
 pauses. A row is cut only when every word is aligned with good confidence; the others are listed
 in `build/align/review.csv`. Rows that already had phrase marks keep them.
 
+When the row is two or more separate stretches of its entry (two sayings of one hadith with the
+narration between them left out, e.g. tasbih_09), each stretch becomes one phrase and the
+narration lies between two segments that do not touch. The app skips any such gap between
+phrase segments (`Dua.playableParts`), so `audio_range` can stay one span.
+
+Listening check: `tools/verify_audio.py` transcribes each phrase segment with a second,
+independent speech model (Whisper) that is not told the text, and compares the words heard with
+the words written (`build/align/verify.csv`). It caught two rows whose first segment was the
+reciter announcing the chapter ("... yaqulu") while both phrases sat in the second segment
+(between_sujud_01, grave_02); their range and segments were re-timed where Whisper's word times,
+the loudness and the pauses agree.
+
+Hadith numbers: `tools/hadith_numbers.py` (the six books from fawazahmed0/hadith-api), the
+sunnah.com lookups in `tools/hadith_numbers_sunnah.csv`, and for books sunnah.com lacks
+(al-Mustadrak, al-Baihaqi's and an-Nasa'i's as-Sunan al-Kubra, the whole Musnad Ahmad) the
+islamweb.net library in `tools/hadith_numbers_islamweb.csv`, each with its page URL. A number is
+filled only when the narration was read in full and is the one the book cites.
+
 ## Checking imported content
 
 The owner has no reviewer, so every imported row is checked when it is imported, and the

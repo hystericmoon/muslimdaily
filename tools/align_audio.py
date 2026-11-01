@@ -178,6 +178,78 @@ def locate(arabic: str, full: str) -> int | None:
     return None
 
 
+def locate_runs(arabic: str, full: str) -> list[tuple[int, int]] | None:
+    """The dua as several runs of `full`'s words, in order: [(index in full's words, word count)].
+
+    For a row cut from two sayings of one entry with the narration between them left out
+    (tasbih_09). Each run is the longest stretch of the dua's remaining words found, in order,
+    after the previous run; None when the dua's words cannot be covered that way.
+    """
+    a = [letters(w) for w in words_of(arabic)]
+    a = [w for w in a if w]
+    f = [letters(w) for w in words_of(full)]
+    fi = [i for i, w in enumerate(f) if w]
+    fl = [f[i] for i in fi]
+    runs, ai, fpos = [], 0, 0
+    while ai < len(a):
+        best = (0, -1)
+        for s in range(fpos, len(fl)):
+            n = 0
+            while ai + n < len(a) and s + n < len(fl) and fl[s + n] == a[ai + n]:
+                n += 1
+            if n > best[0]:
+                best = (n, s)
+        n, s = best
+        if n == 0:
+            return None
+        runs.append((s, n))
+        ai, fpos = ai + n, s + n
+    # back to indices in full's words (counting letterless tokens too)
+    return [(fi[s], fi[s + n - 1] - fi[s] + 1) for s, n in runs] if len(runs) > 1 else None
+
+
+def propose_runs(row: dict, entry: dict, runs: list[tuple[int, int]], out: dict) -> dict:
+    """One phrase per run; the recording between runs (the narration) is left out of the segments,
+    and the app skips it. Each run's edge words must be sure, as for any cut."""
+    timed, dur = entry["words"], entry["duration"]
+    spans = [[i for i in range(s, s + n) if timed[i] is not None] for s, n in runs]
+    if any(len(sp) == 0 or len(sp) != sum(1 for i in range(s, s + n) if letters(words_of(row["arabic_full"])[i]))
+           for sp, (s, n) in zip(spans, runs)):
+        out["reason"] = "some words could not be timed"
+        return out
+    scores = [timed[i][2] for sp in spans for i in sp]
+    mean = sum(scores) / len(scores)
+    out["mean"], out["min"] = f"{mean:.2f}", f"{min(scores):.2f}"
+    edges = [timed[sp[0]][2] for sp in spans] + [timed[sp[-1]][2] for sp in spans]
+    if mean < MIN_MEAN or min(edges) < MIN_EDGE:
+        out["reason"] = f"low confidence (mean {mean:.2f}, edges min {min(edges):.2f}): the recording may not match"
+        return out
+    segs = []
+    for sp in spans:
+        first, last = sp[0], sp[-1]
+        before = next((timed[i][1] for i in range(first - 1, -1, -1) if timed[i]), 0.0)
+        after = next((timed[i][0] for i in range(last + 1, len(timed)) if timed[i]), dur)
+        a = max(before, timed[first][0] - EDGE_PAD, (before + timed[first][0]) / 2 if first > 0 else 0.0)
+        b = min(after, timed[last][1] + EDGE_PAD, (timed[last][1] + after) / 2 if after < dur else dur)
+        segs.append((round(max(0.0, a), 2), round(b, 2)))
+    # phrase marks at the run boundaries: after the last word of each run but the last
+    arabic = bc.split_phrases(row["arabic"])[0]
+    words = arabic.split(" ")
+    counts = [sum(1 for i in range(s, s + n) if letters(words_of(row["arabic_full"])[i])) for s, n in runs]
+    lettered = [k for k, w in enumerate(words) if letters(w)]
+    ends, acc = [], 0
+    for c in counts[:-1]:
+        acc += c
+        ends.append(lettered[acc - 1])
+    marked = " ".join(w + (" |" if k in ends else "") for k, w in enumerate(words))
+    out["audio_range"] = f"{segs[0][0]:.2f}-{segs[-1][1]:.2f}"
+    out["arabic_marked"] = marked
+    out["audio_segments"] = "; ".join(f"{x:.2f}-{y:.2f}" for x, y in segs)
+    out["phrases"] = str(len(segs))
+    out["status"] = "ok"
+    return out
+
+
 def propose(row: dict, entry: dict) -> dict:
     rid, arabic = row["id"], bc.split_phrases(row["arabic"])[0]
     full = row.get("arabic_full") or ""
@@ -192,8 +264,11 @@ def propose(row: dict, entry: dict) -> dict:
     if full:
         start = locate(arabic, full)
         if start is None:
-            out["reason"] = "the dua is not one run of words of arabic_full"
-            return out
+            runs = locate_runs(arabic, full)
+            if runs is None:
+                out["reason"] = "the dua is not made of runs of words of arabic_full"
+                return out
+            return propose_runs(row, entry, runs, out)
     # map the row's words onto the timed words (skipping tokens with no letters, e.g. "-")
     span = [i for i in range(start, len(timed)) if letters(words_of(full or arabic)[i])][:len([w for w in words if letters(w)])]
     own = [timed[i] for i in span]

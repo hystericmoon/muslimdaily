@@ -1,5 +1,5 @@
 {
-  "content_version": 38,
+  "content_version": 40,
   "duas": [
     {
       "id": "wake_01",
@@ -496,7 +496,7 @@
       "sources": [
         {
           "book": "An-Nasai dalam ‘Amalul Yaumi wal Lailah",
-          "no": ""
+          "no": "(As-Sunanul Kubra 10019)"
         },
         {
           "book": "halaman",
@@ -1103,7 +1103,7 @@
       "sources": [
         {
           "book": "Abu Dawud",
-          "no": ""
+          "no": "466"
         }
       ],
       "reference": "HR. Abu Dawud, lihat Shahih Al-Jami’ no.4591. HR. Ibnu As-Sunni no.88, dinyatakan Al-Albani “hasan”. HR. Abu Dawud, lihat Shahih Al-Jami’ 1/528. HR. Muslim 1/494. Dalam Sunan Ibnu Majah, dari hadits Fathimah x “Allahummagh fir li dzunubi waftahli abwaba rahmatik”, Al-Albani menshahihkannya karena beberapa shahid. Lihat Shahih Ibnu Majah 1/128-129. (Hisnul Muslim no. 20)",
@@ -2774,7 +2774,7 @@
       "sources": [
         {
           "book": "Al-Hakim",
-          "no": ""
+          "no": "2024"
         },
         {
           "book": "menurut pendapatnya",
@@ -4179,13 +4179,17 @@
         "file": "hisn_048.opus",
         "segments": [
           [
-            0.0,
-            6.61
+            6.85,
+            8.72
           ],
           [
-            6.61,
+            8.72,
             11.57
           ]
+        ],
+        "range": [
+          6.85,
+          11.57
         ]
       },
       "phrase_breaks": [
@@ -5781,7 +5785,7 @@
       "sources": [
         {
           "book": "Al-Baihaqi dalam As-Sunanul Kubra",
-          "no": ""
+          "no": "3053"
         },
         {
           "book": "sanadnya menurut pendapat Al- Baihaqi adalah shahih",
@@ -6673,7 +6677,7 @@
       "sources": [
         {
           "book": "Al-Hakim",
-          "no": ""
+          "no": "2044"
         },
         {
           "book": "menurut pendapatnya",
@@ -7786,7 +7790,7 @@
       "sources": [
         {
           "book": "Al-Hakim",
-          "no": ""
+          "no": "2044"
         },
         {
           "book": "menurut pendapatnya",
@@ -9147,9 +9151,24 @@
       "virtue": null,
       "audio": {
         "file": "hisn_262.opus",
-        "segments": []
+        "segments": [
+          [
+            11.28,
+            30.83
+          ],
+          [
+            40.4,
+            46.91
+          ]
+        ],
+        "range": [
+          11.28,
+          46.91
+        ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [
+        212
+      ]
     },
     {
       "id": "tasbih_10",
@@ -9389,7 +9408,7 @@
       "sources": [
         {
           "book": "Ahmad",
-          "no": ""
+          "no": "19109"
         },
         {
           "book": "imam yang lain",
@@ -9652,7 +9671,7 @@
       "sources": [
         {
           "book": "Al-Hakim",
-          "no": ""
+          "no": "2534"
         },
         {
           "book": "menurut pendapatnya",
@@ -13912,7 +13931,7 @@
       "sources": [
         {
           "book": "An-Nasai dalam ‘Amalul Yaum wal Lailah",
-          "no": ""
+          "no": "(As-Sunanul Kubra 10312)"
         },
         {
           "book": "hal.",
@@ -14489,7 +14508,7 @@
       "sources": [
         {
           "book": "Al-Hakim",
-          "no": ""
+          "no": "1368"
         }
       ],
       "reference": "HR. Al-Hakim. Menurut pendapatnya: Hadits tersebut adalah shahih. Adz- Dzahabi menyetujuinya 1/359, dan lihat Ahkamul Jana’iz oleh Al-Albani, halaman 125. (Hisnul Muslim no. 159)",
@@ -14832,13 +14851,17 @@
         "file": "hisn_164.opus",
         "segments": [
           [
-            0.0,
-            5.09
+            5.11,
+            7.19
           ],
           [
-            5.09,
+            7.19,
             10.42
           ]
+        ],
+        "range": [
+          5.11,
+          10.42
         ]
       },
       "phrase_breaks": [
