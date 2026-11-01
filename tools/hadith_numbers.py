@@ -26,7 +26,9 @@ covers books sunnah.com lacks (al-Hakim's al-Mustadrak, al-Baihaqi's as-Sunan al
 as-Sunan al-Kubra with its 'Amal al-Yawm wa al-Laylah, the whole Musnad Ahmad): looked up in the
 islamweb.net library (which answers cloud sessions) by matching the dua's words against the
 book's pages, read in full, and kept in `tools/hadith_numbers_islamweb.csv` with the page URL. The
-number is islamweb's numbering of that edition.
+number is islamweb's numbering of that edition. A review row with `slot` 2 fills the row's second
+source instead (its `source_2_book` must be the book named), for rows whose first source is not
+online (travel_12/13: Ibnu As-Sunni).
 
 Nothing is written into the Arabic or translations. `approved` is set by a person ("ya");
 `apply` refuses rows that changed since the suggestion.
@@ -156,14 +158,23 @@ def apply(review: Path = OUT_DIR / "review.csv", duas: Path = sa.DUAS) -> tuple[
         if (r.get("approved") or "").strip().lower() not in bc.YES:
             continue
         target = by_id.get(r["id"])
+        slot = "2" if (r.get("slot") or "1").strip() == "2" else "1"
+        if target is not None and target[f"source_{slot}_no"].strip() == r["number"].strip():
+            continue  # applied before
         if target is None or row_sha1(target) != r["source_sha1"]:
             problems.append(f"{r['id']}: changed since the suggestion; run suggest again")
             continue
         if not r["number"].strip():
             problems.append(f"{r['id']}: no number")
             continue
-        target["source_1_book"] = r["book"]
-        target["source_1_no"] = r["number"]
+        if slot == "2":  # the row's second source (its book must match)
+            if target["source_2_book"].strip() != r["book"].strip():
+                problems.append(f"{r['id']}: source_2_book is not {r['book']}")
+                continue
+            target["source_2_no"] = r["number"]
+        else:
+            target["source_1_book"] = r["book"]
+            target["source_1_no"] = r["number"]
         note = NOTES.get(r["kind"])
         if note and note not in target.get("notes", ""):
             target["notes"] = " | ".join(x for x in (target.get("notes", ""), note) if x)

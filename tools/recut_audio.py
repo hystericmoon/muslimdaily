@@ -32,7 +32,10 @@ word that begins the dua (read off Whisper's words, with the reason; `late`, sec
 fall after Whisper's start of that word, where the loudness shows Whisper starting it early; `after`, the earliest time for the cut, where
 the quietest point is a pause inside the title's last word), and
 only the clip start and
-the first segment's start move, to the quietest point before that word.
+the first segment's start move, to the quietest point before that word. Two more modes in the
+same file: `full` runs `propose` matching only from that word on (a title that shares words with
+the dua, waswas_05), and `break` moves one break between phrases (`break`, 1 = after phrase 1) to
+the pause after heard word `first_word`, the earlier phrase's last word.
 """
 from __future__ import annotations
 
@@ -119,7 +122,7 @@ def quietest(rms: list[float], a: float, b: float) -> tuple[float, float]:
     return round(k * FRAME, 2), rms[k]
 
 
-def propose(row: dict, entry: dict) -> dict:
+def propose(row: dict, entry: dict, from_word: int = 0) -> dict:
     out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": "", "audio_segments": "",
            "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", "")}
     heard = entry["words"]                      # [[start, end, word], ...]
@@ -127,6 +130,8 @@ def propose(row: dict, entry: dict) -> dict:
     hw = [va.skeleton(hn.words(w[2])) for w in heard]
     flat_h, owner_h = [], []
     for k, ws in enumerate(hw):
+        if k < from_word:  # a title sharing words with the dua (see START_FIXES, mode "full")
+            continue
         for w in ws:
             flat_h.append(w); owner_h.append(k)
     phrases = [p.strip() for p in row["arabic"].split(bc.PHRASE_MARK)]
@@ -212,6 +217,26 @@ def propose_start(row: dict, entry: dict, first: int, late: float = 0.0, after: 
     return out
 
 
+def propose_break(row: dict, entry: dict, boundary: int, last_word: int) -> dict:
+    """Moves one break between phrases (`boundary`, 1 = between phrases 1 and 2) to the quietest
+    point after heard word `last_word`, the last word of the earlier phrase."""
+    out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": row.get("audio_range", ""),
+           "audio_segments": "", "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", "")}
+    heard, rms = entry["words"], entry["rms"]
+    segs = bc.parse_segments(row.get("audio_segments") or "")
+    if not 1 <= boundary < len(segs) + 0 or last_word + 1 >= len(heard):
+        out["reason"] = "no such break"
+        return out
+    e1, s2 = heard[last_word][1], heard[last_word + 1][0]
+    t, _ = quietest(rms, e1 - EARLY, max(e1, s2) + LATE)
+    if not segs[boundary - 1][0] < t < segs[boundary][1]:
+        out["reason"] = f"the new break {t:.2f} would empty a phrase"
+        return out
+    segs[boundary - 1][1] = segs[boundary][0] = t
+    out.update(audio_segments="; ".join(f"{a:.2f}-{b:.2f}" for a, b in segs), status="ok")
+    return out
+
+
 def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and the model
     import numpy as np
     import torch
@@ -252,11 +277,26 @@ def main() -> int:
     args = ap.parse_args()
     if args.cmd == "start":
         data = json.loads(WORDS.read_text(encoding="utf-8"))
-        fixes = {r["id"]: r for r in sa.read_csv(START_FIXES)[1]}
+        fixes = sa.read_csv(START_FIXES)[1]
         _, rows, _ = sa.read_csv(sa.DUAS)
-        res = [propose_start(r, data[r["audio_file"]], int(fixes[r["id"]]["first_word"]), float(fixes[r["id"]].get("late") or 0),
-                             float(fixes[r["id"]].get("after") or 0))
-               for r in rows if r["id"] in fixes]
+        by_id = {r["id"]: dict(r) for r in rows}
+        results: dict[str, dict] = {}
+        for f in fixes:  # in file order; a row's later fixes build on its earlier ones
+            r, e = by_id[f["id"]], data[by_id[f["id"]]["audio_file"]]
+            mode, first = f.get("mode") or "start", int(f["first_word"])
+            if mode == "full":
+                out = propose(r, e, from_word=first)
+            elif mode == "break":
+                out = propose_break(r, e, int(f["break"]), first)
+            else:
+                out = propose_start(r, e, first, float(f.get("late") or 0), float(f.get("after") or 0))
+            if out["status"] == "ok":
+                r["audio_range"], r["audio_segments"] = out["audio_range"], out["audio_segments"]
+                prev = results.get(f["id"])
+                if prev:
+                    out["old_range"], out["old_segments"] = prev["old_range"], prev["old_segments"]
+            results[f["id"]] = out
+        res = list(results.values())
         sa.write_csv(OUT, FIELDS, res)
         for r in res:
             print(r["id"], r["status"], r["reason"], r["old_range"] or "-", "|", (r["old_segments"] or "-")[:40], "->",

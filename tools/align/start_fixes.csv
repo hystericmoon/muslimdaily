@@ -1,9 +1,11 @@
-id,first_word,late,after,reason
-toilet_01,4,0.25,,"title 'du'a dukhul al-khala' yaqulu' (0.00-4.32) read inside the clip; dua starts at 'bismillah'; 'yaqulu bismillah' run together: the only pause is at 4.48-4.54 (-18 dB), 0.2 s after Whisper's start of 'bismi' (its starts run early)"
-to_masjid_01,5,,,title 'du'a adh-dhahab ila al-masjid yaqulu' (0.00-3.6) inside phrase 1
-witr_01,3,,,title 'du'a qunut al-witr' inside phrase 1
-fear_04,6,,,title 'du'a man khafa zhulm as-sultan yaqulu' inside phrase 1
-debt_01,4,,,title 'du'a qada' ad-dayn yaqulu' inside phrase 1
-wake_04,14,,,instruction 'wa yaqra' min qawlihi ta'ala ... ila akhir surat Al 'Imran' read before the verses
-shalawat_01,8,,,"title 'fadl as-salah 'ala an-nabi' shares five words with phrase 1, so propose refuses it; phrase 1 starts at 'qala'"
-iftar_01,5,,4.45,"clip started at 5.84, after the dua's first word 'dhahaba' (4.88); the dip at 4.24-4.30 is inside 'yaqulu' (Whisper still heard it after a cut there); the pause is 4.54-4.60 (-22 dB)"
+id,mode,first_word,break,late,after,reason
+toilet_01,start,4,,0.25,,"title 'du'a dukhul al-khala' yaqulu' (0.00-4.32) read inside the clip; dua starts at 'bismillah'; 'yaqulu bismillah' run together: the only pause is at 4.48-4.54 (-18 dB), 0.2 s after Whisper's start of 'bismi' (its starts run early)"
+to_masjid_01,start,5,,,,title 'du'a adh-dhahab ila al-masjid yaqulu' (0.00-3.6) inside phrase 1
+witr_01,start,3,,,,title 'du'a qunut al-witr' inside phrase 1
+fear_04,start,6,,,,title 'du'a man khafa zhulm as-sultan yaqulu' inside phrase 1
+debt_01,start,4,,,,title 'du'a qada' ad-dayn yaqulu' inside phrase 1
+wake_04,start,14,,,,instruction 'wa yaqra' min qawlihi ta'ala ... ila akhir surat Al 'Imran' read before the verses
+shalawat_01,start,8,,,,"title 'fadl as-salah 'ala an-nabi' shares five words with phrase 1, so propose refuses it; phrase 1 starts at 'qala'"
+iftar_01,start,5,,,4.45,"clip started at 5.84, after the dua's first word 'dhahaba' (4.88); the dip at 4.24-4.30 is inside 'yaqulu' (Whisper still heard it after a cut there); the pause is 4.54-4.60 (-22 dB)"
+waswas_05,full,11,,,,"title 'ma yaqulu wa yaf'alu man adhnaba dhanban, qala salla Allahu 'alayhi wa sallam' shares 'ma min ... dhanban' with phrase 1; every phrase played one late; matching starts at 'ma' (8.14)"
+wake_04,break,150,8,,,break after phrase 8 sat before 'wa bi'sa al-mihad' (223.19); it goes after 'al-mihad'

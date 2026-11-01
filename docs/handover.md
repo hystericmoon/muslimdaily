@@ -5,10 +5,15 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (PR #128: hadith numbers from islamweb.net, tasbih_09 audio, full Whisper check and 83 rows re-timed; released as 1.10.2 with the owner's OK). All earlier Adwam
+Last updated: 1 Nov 2026, late (1.10.2 released: https://github.com/hystericmoon/muslimdaily/releases/tag/v1.10.2. **Open: PR #129** waits on the owner's OK, as it changes shipped content). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
+
+- **PR #129** (`claude/audio-last-three`): waswas_05 and wake_04 re-timed (Whisper-verified),
+  travel_12/13 second-source al-Hakim 1883, `tools/cloud_setup.sh`, handover. Changes shipped
+  content: merge only with the owner's OK; no version bump in it (a patch release, 1.10.3, if
+  the owner wants it out).
 
 - **haho-design 0.2.0** (1 Nov, branch `haho-design-0.2.0`): pin bumped from 0.1.0. The six
   `OutlinedTextField`s (search, location, routine name/notes, memorize picker, dua note) are now
@@ -37,9 +42,13 @@ sessions were read and archived; everything still open from them is below.
   `tools/align/whisper_words.json`) and the loudness; every one was re-checked by Whisper and
   passes or shows only mishearing inside the right cut. Eight more had only a wrong clip start
 (on the title; iftar_01 started after its first word, cutting it off): fixed by
-`recut_audio.py start` from `tools/align/start_fixes.csv` and re-checked. Left for a person:
-waswas_05 (phrases shifted by the title throughout), istiftah_05 (listen: Whisper skips its
-repeated phrases), and wake_04's break before "وبئس المهاد" (~223 s; it sits two words late).
+`recut_audio.py start` from `tools/align/start_fixes.csv` and re-checked. After 1.10.2 (branch
+`claude/audio-last-three`): waswas_05 re-cut from after its title (mode `full`) and wake_04's
+break moved after "وبئس المهاد" (mode `break`), both in `start_fixes.csv`. istiftah_05's cuts are
+right (Whisper's segment check drops its repeated lines; the full-file transcript has them all);
+but **the recording does not say "وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي"** (nothing between "أعلنت" 83.5 s and
+"أنت المقدم" 85.5 s): the text shows words the audio lacks. Owner's call; the text is not edited
+by hand.
 quran_16/18, dress_04, travel_01, sujud_03 are fine
   (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
   "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
@@ -72,16 +81,17 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   answers cloud sessions, sunnah.com and dorar.net don't): al-Hakim (morning_10, evening_10,
   night_01, travel_03, funeral_06), an-Nasa'i al-Kubra (wudu_04, manners_04), al-Baihaqi
   (witr_03), Ahmad 19109 (protection_02, plural wording), Abu Dawud 466 (enter_masjid_01, the
-  a'udzu sentence). 7 left: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
+  a'udzu sentence). 7 without a first-source number: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
   morning_19/evening_19 (at-Tabarani by two chains, not in al-Mu'jam ash-Shaghir; al-Kabir and
   al-Awsat not searched), travel_12/13 (Ibn as-Sunni not on islamweb; their second source,
-  al-Hakim, is no. 1883). islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
+  al-Hakim 1883, is filled since 1.10.2 via `slot` 2 in the islamweb CSV). al-Mu'jam al-Kabir's
+  section for the companion runs ~7000 pages with no search; a crawl that size was refused. islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
   Nasa'i al-Kubra 406 (its 'Amal al-Yawm is content ids 10054-11232), Tabarani Kabir 84, Awsat
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- Previous session: session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124; archived when it started the next
-  one). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
+- Previous session: session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129). Before it:
+  session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
 
@@ -95,8 +105,8 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
-- **Cloud environment**: add haho-design under the environment's Repositories and a setup
-  script (SDK, haho-design publish) so sessions skip the manual setup below. Not verified done.
+- **Cloud environment**: steps given to the owner 1 Nov (see "Session setup (cloud)"); not
+  verified done. A new session can check: `ls ~/.m2/repository/id/haho/haho-design/` at start.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
@@ -146,7 +156,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
+1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
+   for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
    done (#118, #124). Left, all the owner's: create the upload keystore and add the four
    `PLAY_UPLOAD_*` secrets, enrol in Play App Signing, store listing, content rating, target
    audience ("Needs doing" in `docs/play-store.md`).
@@ -169,6 +180,10 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    1 Nov. Cloud sessions can't do it: the container has no /dev/kvm (no emulator) and
    `list_computer_folders` is empty until the owner runs `claude remote-control` in the clone
    on the Mac; then a cloud session can attach it with `request_computer_folder` (checked 1 Nov).
+   What the owner's Redmi can still cover (told to the owner 1 Nov): 5.1 on a third-party
+   launcher (install Lawnchair). Not 5.4's legacy half (placing the old widget needs an older
+   build installed over 1.10.x, i.e. a downgrade that wipes app data: emulator only) and not
+   5.4c (no lock-screen widgets on its PixelOS: a Pixel or a Pixel emulator image).
 8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
    (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
    turn on "Automatically delete head branches" in the repo settings and delete the leftover
@@ -243,8 +258,15 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 ## Session setup (cloud)
 
-- haho-design: `add_repo hystericmoon/haho-design`, then
-  `git clone --depth 1 --branch v0.1.0 https://github.com/hystericmoon/haho-design ../haho-design`
-  and `./gradlew publishToMavenLocal` there (version in `gradle/libs.versions.toml`).
+- `tools/cloud_setup.sh` does it all: clones haho-design at the version `gradle/libs.versions.toml`
+  pins and publishes it to `~/.m2` (skips when that version is already there; tested 1 Nov).
+  The owner was given the steps (1 Nov) to put it in the environment: cloud environment menu in
+  the session's title bar → Edit → Repositories: add `hystericmoon/haho-design` (private, so a
+  saved key will not fetch it) → Setup script: paste the script → new session. Until that is
+  confirmed, run `bash tools/cloud_setup.sh` by hand (`add_repo hystericmoon/haho-design` first
+  if the clone is refused).
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
+- Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):
+  `python3 -m venv /tmp/wvenv && /tmp/wvenv/bin/pip install --index-url
+  https://download.pytorch.org/whl/cpu torch && /tmp/wvenv/bin/pip install transformers numpy`.
