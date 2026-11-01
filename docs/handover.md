@@ -5,22 +5,21 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026, late (1.10.2 released: https://github.com/hystericmoon/muslimdaily/releases/tag/v1.10.2. #129 merged 1 Nov with the owner's OK, not released yet). All earlier Adwam
+Last updated: 1 Nov 2026, night (1.10.3 released from PR #131 at the owner's word: #129 only). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
-- **Unreleased on main**: #129 (merged 1 Nov, owner's OK): waswas_05 and wake_04 re-timed
-  (Whisper-verified), travel_12/13 second-source al-Hakim 1883, `tools/cloud_setup.sh`. Put it in
-  the next release's What's New; it alone would be a patch, 1.10.3 (ask the owner before shipping).
+- **1.10.3** (versionCode 47, PR #131, the owner asked for it 1 Nov): #129 only (waswas_05 and
+  wake_04 re-timed, travel_12/13 second source al-Hakim 1883). Nothing unreleased on main after it.
 
-- **haho-design 0.2.0** (1 Nov, branch `haho-design-0.2.0`): pin bumped from 0.1.0. The six
+- **haho-design 0.2.0** (1 Nov, shipped in 1.10.2): pin bumped from 0.1.0. The six
   `OutlinedTextField`s (search, location, routine name/notes, memorize picker, dua note) are now
   the library's `HahoTextField` (16dp corners instead of Material's 4dp), so their screenshots were
   re-recorded. `DockedBar` content now clears side insets (landscape only). New library parts Adwam
   could use later: `HahoOptionChip`, `HahoSegmentTrack`, `CenterZeroSlider`, `HahoTopBar`,
   `GlassOutlinedIconButton`, `HahoTheme.status`, `OpenSourceNoticesDialog` (see haho-design
-  README). Add to the next release's What's New only if the owner wants the field corners mentioned.
+  README).
 - **Content cleanup** (#113, shipped in 1.10.0): every row only what the reader says. Tools:
   `tools/clean_entries.py` (every text decision, with reasons; re-run only on a fresh main CSV,
   it is not idempotent on its own output) and `tools/align_audio.py` (wav2vec2 Arabic forced
@@ -109,6 +108,8 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.10.3 (versionCode 47, 1 Nov, #131): #129 (two re-timed recordings, travel_12/13 second source).
 
 1.10.2 (versionCode 46, 1 Nov, #128): hadith numbers from islamweb.net, 86 duas re-timed after the Whisper check, tasbih_09 skips its narration, #122 ("Hafal?" below the Arabic).
 
