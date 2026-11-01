@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (#116 merged; Plan B for Play in a PR). All earlier Adwam
+Last updated: 1 Nov 2026 (1.10.1 released with #116; Plan B for Play in a PR). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -32,9 +32,12 @@ sessions were read and archived; everything still open from them is below.
   English-only Hisn rows out of the Play build). PR #118; decision page (A leave out,
   recommended; B Arabic only; C keep their English):
   https://claude.ai/artifact/2fAz81x9icuc5Wf7U67ito
-- **Next release notes**: #116 (Android 8–11 widget: "set a location" and the "moved to
-  Adwam" notice no longer show "Problem loading widget") is merged but not released; add a
-  What's New line for it. #109 is already in 1.10.0's notes.
+- **5 English-only Hisn rows** (eating_08, eating_09, tasbih_03, tasbih_06, salam_04): the owner
+  asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
+  (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha
+  Agung", 65997 / 66011 / 65345 (eating_08, eating_09, salam_04; 65345 is a different wording)
+  are Arabic only so far. IslamHouse's Indonesian Hisn page (39092) is gone (404). Re-check
+  HadeethEnc later, or import another licensed Indonesian edition if the owner supplies one.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
   owner's Mac via `claude remote-control`): did #102, the widget pass the evening of 31 Oct
   (results in `docs/device-qa.md` §5; issues #106, #107) and #116. Stopped 1 Nov. TalkBack was
@@ -66,6 +69,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.10.1 (versionCode 45, merged 1 Nov, #120): #116, the Android 8–11 widget no longer shows
+"Problem loading widget" (no location set, "moved to Adwam" notice).
 
 1.10.0 (versionCode 44, released 31 Oct, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.10.0):
 #104 (Darussalam under "Penilaian lain"), #109 (city list during first import), #112 (one widget
