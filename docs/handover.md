@@ -100,8 +100,8 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
-- **Cloud environment**: add haho-design under the environment's Repositories and a setup
-  script (SDK, haho-design publish) so sessions skip the manual setup below. Not verified done.
+- **Cloud environment**: steps given to the owner 1 Nov (see "Session setup (cloud)"); not
+  verified done. A new session can check: `ls ~/.m2/repository/id/haho/haho-design/` at start.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
@@ -253,8 +253,15 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 ## Session setup (cloud)
 
-- haho-design: `add_repo hystericmoon/haho-design`, then
-  `git clone --depth 1 --branch v0.1.0 https://github.com/hystericmoon/haho-design ../haho-design`
-  and `./gradlew publishToMavenLocal` there (version in `gradle/libs.versions.toml`).
+- `tools/cloud_setup.sh` does it all: clones haho-design at the version `gradle/libs.versions.toml`
+  pins and publishes it to `~/.m2` (skips when that version is already there; tested 1 Nov).
+  The owner was given the steps (1 Nov) to put it in the environment: cloud environment menu in
+  the session's title bar → Edit → Repositories: add `hystericmoon/haho-design` (private, so a
+  saved key will not fetch it) → Setup script: paste the script → new session. Until that is
+  confirmed, run `bash tools/cloud_setup.sh` by hand (`add_repo hystericmoon/haho-design` first
+  if the clone is refused).
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
+- Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):
+  `python3 -m venv /tmp/wvenv && /tmp/wvenv/bin/pip install --index-url
+  https://download.pytorch.org/whl/cpu torch && /tmp/wvenv/bin/pip install transformers numpy`.
