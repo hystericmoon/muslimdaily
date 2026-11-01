@@ -86,7 +86,7 @@ def main() -> int:  # pragma: no cover - needs torch and the model
                 ["-i", str(sa.AUDIO_DIR / row["audio_file"]), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"]
             wav = np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, dtype=np.float32).copy()
             wavs.append({"raw": wav, "sampling_rate": 16000})
-        heard_all = asr(wavs, batch_size=8, generate_kwargs={"language": "arabic", "task": "transcribe"})
+        heard_all = asr(wavs, batch_size=8, return_timestamps=True, generate_kwargs={"language": "arabic", "task": "transcribe"})
         for k, (((a, b), text), h) in enumerate(zip(segs, heard_all)):
             heard_text = h["text"].strip()
             written, heard = hn.words(text), hn.words(heard_text)
