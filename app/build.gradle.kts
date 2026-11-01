@@ -147,6 +147,9 @@ androidComponents {
         val taskName = "generate${variant.name.replaceFirstChar { it.uppercase() }}ContentAssets"
         val task = tasks.register<ContentAssetsTask>(taskName) {
             contentDir.set(rootProject.layout.projectDirectory.dir("content"))
+            // The store build ships the duas without the hisnmuslim.com English (Plan B in
+            // docs/play-store.md); debug and the GitHub sideload build keep it.
+            duasFile.set(if (variant.buildType == "release") "play/duas.json" else "duas.json")
         }
         variant.sources.assets?.addGeneratedSourceDirectory(task, ContentAssetsTask::outputDir)
     }

@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 31 Oct 2026, late night (1.10.0 released: content cleanup, #107 fixed). All earlier Adwam
+Last updated: 1 Nov 2026 (#116 merged; Plan B for Play in a PR). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -27,11 +27,17 @@ sessions were read and archived; everything still open from them is below.
   sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
   `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
   in it), content_version 35, merged in #104, shipped in 1.10.0.
+- **Plan B for Play** (open work 1): PR claude/play-flavor, see `docs/play-store.md`,
+  "Plan B". Waits on the owner before merging (adds content/play/duas.json, and leaves 5
+  English-only Hisn rows out of the Play build).
+- **Next release notes**: #116 (Android 8–11 widget: "set a location" and the "moved to
+  Adwam" notice no longer show "Problem loading widget") is merged but not released; add a
+  What's New line for it. #109 is already in 1.10.0's notes.
 - **Mac session** "Sunnah.com hadith lookups" (session_01W2ZFMuts1anPa7PAqpiUjD, on the
-  owner's Mac via `claude remote-control`): did #102, then the widget pass the evening of
-  31 Oct (results in `docs/device-qa.md` §5; issues #106, #107). TalkBack was skipped at the
-  owner's word (31 Oct). Cloud sessions can't message it (the platform refuses cloud-to-Mac
-  messages without a trust grant); relay through the owner.
+  owner's Mac via `claude remote-control`): did #102, the widget pass the evening of 31 Oct
+  (results in `docs/device-qa.md` §5; issues #106, #107) and #116. Stopped 1 Nov. TalkBack was
+  skipped at the owner's word (31 Oct). It can message cloud sessions; cloud sessions can't
+  message it (the platform refuses cloud-to-Mac messages without a trust grant).
 - **Hadith numbers**: 42 of the 58 empty rows filled (#99 dataset, #102 sunnah.com, both via
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
@@ -99,8 +105,10 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Plan in
-   `docs/play-store.md`, "Plan B". Not started.
+1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Content,
+   build and credits done in the claude/play-flavor PR; left: AAB in the release workflow,
+   the What's New items about Hisn English, a screenshot of a Hisn row in English, and the
+   rest of "Needs doing" in `docs/play-store.md`.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
@@ -117,7 +125,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    releases for a third-party launcher), told to the owner 31 Oct. TalkBack T1–T12: skipped
    by the owner (31 Oct); a later pass belongs on `qa_api37_profile`.
    Filed from it: #106 (fixed by #109) and #107 (fixed by #112: the old receiver is disabled
-   below Android 12, owner's choice); both shipped in 1.10.0.
+   below Android 12, owner's choice); both shipped in 1.10.0. #112 verified on Android 8 (one
+   picker entry, the placed widget kept working). #116 (found on `qa_api26_widget`) merged
+   1 Nov.
 8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
    (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
    turn on "Automatically delete head branches" in the repo settings and delete the leftover
@@ -157,7 +167,10 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 ## Devices
 
-- The owner's phone: Redmi Note 10 Pro on PixelOS (AOSP, not MIUI). Device QA needs a desktop
+- The owner's phone: Redmi Note 10 Pro on PixelOS 17 (AOSP, not MIUI); runs the 1.9.0 debug
+  build with exact alarms allowed (1 Nov). It has no lock-screen widgets (no switch under Lock
+  screen, no hub mode under Screen saver, SystemUI's widget editor isn't exported), so 5.4c
+  needs a real Pixel. Device QA needs a desktop
   or Remote Control session on the owner's MacBook (cloud sessions can't reach USB adb).
 - Xiaomi battery manager / launcher and Samsung font checks need stock phones; Android 8–11
   checks (5.4b) need an emulator.
