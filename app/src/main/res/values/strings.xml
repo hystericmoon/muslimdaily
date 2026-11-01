@@ -896,6 +896,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_10_1">
+        <item>Di Android 8–11, widget kini tampil saat lokasi belum diatur dan saat memuat pemberitahuan pindah ke Adwam, tanpa pesan «Terjadi masalah saat memuat widget».</item>
+    </string-array>
     <string-array name="whats_new_1_10_0">
         <item>Setiap doa kini hanya berisi bacaannya. Kisah, petunjuk, dan catatan hitungan dari kitab ada di «Lihat teks lengkap di kitab», dan terjemahannya juga hanya terjemahan doa.</item>
         <item>Riwayat yang memuat beberapa bacaan kini dipisah: tiap bacaan punya hitungan dan audionya sendiri, misalnya istighfar dan «Allahumma antas-salam» sesudah shalat.</item>
