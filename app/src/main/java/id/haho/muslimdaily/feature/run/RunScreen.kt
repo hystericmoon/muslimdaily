@@ -46,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -260,6 +261,8 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                     // The meaning stays as the cue; transliteration would give the Arabic away.
                     DuaTranslations(dua, state.prefs.copy(transliteration = false))
                 } else {
+                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
+                    // Below the Arabic: the reader checks the recitation against the text, then answers.
                     if (state.asksRecall(page)) {
                         RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
                     }
@@ -271,7 +274,6 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                         )
                     }
-                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
                     DuaTranslations(dua, state.prefs)
                 }
             }
@@ -297,14 +299,25 @@ private fun FromMemoryPanel(onReveal: () -> Unit) {
     }
 }
 
+private const val LARGE_TEXT_SCALE = 1.5f
+
 /** After the text of a dua recited from memory is shown: did the recitation hold without it? */
 @Composable
 private fun RecallCheck(onAnswer: (Boolean) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         Text(stringResource(R.string.run_recall_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
-        Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_knew)) }
-            GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_needed)) }
+        // Side by side at normal text sizes; stacked at large ones, where a half-width
+        // "Perlu lihat teks" wraps to three lines and the pill turns into a blob.
+        if (LocalDensity.current.fontScale >= LARGE_TEXT_SCALE) {
+            Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.run_recall_knew)) }
+                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.run_recall_needed)) }
+            }
+        } else {
+            Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_knew)) }
+                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_needed)) }
+            }
         }
     }
 }
