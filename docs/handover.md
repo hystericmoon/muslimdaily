@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (1.10.1 released with #116; Plan B for Play in a PR). All earlier Adwam
+Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -27,11 +27,8 @@ sessions were read and archived; everything still open from them is below.
   sheet lists Darussalam's grade per chain under "Penilaian lain". Done by
   `tools/alt_gradings.py` (copies from `tools/hadith_numbers_sunnah.csv`, refuses anything not
   in it), content_version 35, merged in #104, shipped in 1.10.0.
-- **Plan B for Play** (open work 1): PR claude/play-flavor, see `docs/play-store.md`,
-  "Plan B". Waits on the owner before merging (adds content/play/duas.json, and leaves 5
-  English-only Hisn rows out of the Play build). PR #118; decision page (A leave out,
-  recommended; B Arabic only; C keep their English):
-  https://claude.ai/artifact/2fAz81x9icuc5Wf7U67ito
+- **Plan B for Play** (open work 1): #118 merged 1 Nov with option A (owner's choice): the 5
+  English-only Hisn rows are left out of the Play build. See `docs/play-store.md`, "Plan B".
 - **5 English-only Hisn rows** (eating_08, eating_09, tasbih_03, tasbih_06, salam_04): the owner
   asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
   (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha

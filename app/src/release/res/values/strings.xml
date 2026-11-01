@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The store (Play) build ships without the hisnmuslim.com English (docs/play-store.md, "Plan B"),
+     so its credits leave that source out. The GitHub build uses src/main's text. -->
+<resources>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dari hisnmuslim.com (IslamHouse.com). Doa Hisnul Muslim belum tersedia dalam bahasa Inggris; bila Anda memilih bahasa Inggris, terjemah bahasa Indonesia yang tampil. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Doa dari As-Sunnah di luar Hisnul Muslim diambil dari HadeethEnc.com (Ensiklopedia Hadis Terjemah): teks Arab, derajat, dan terjemah bahasa Indonesia dan Inggris, dimuat tanpa diubah. Lafal doa ditampilkan di atas, dan hadis utuhnya di bawah. Setiap doa menampilkan sumber dan takhrijnya.</string>
+</resources>

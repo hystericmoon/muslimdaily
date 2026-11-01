@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The store (Play) build ships without the hisnmuslim.com English (docs/play-store.md, "Plan B"). -->
+<resources>
+    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text from hisnmuslim.com (IslamHouse.com). The Hisn al-Muslim duas are not yet available in English; when you choose English, the Indonesian translation is shown. Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) and, in English, Saheeh International, via QuranEnc.com. Duas from the Sunnah beyond Hisn al-Muslim come from HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths): Arabic text, grading, and Indonesian and English translations, included unaltered. The words of the dua are shown on top, and the whole hadith below. Each dua shows its source and takhrij.</string>
+</resources>

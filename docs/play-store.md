@@ -52,15 +52,26 @@ IslamHouse's published FAQ (republish unchanged, with credit), as in the GitHub 
 English Hisn text from hisnmuslim.com names no translator or licence, so the Play build leaves
 it out until IslamHouse answers:
 
-1. `build_content.py --without-en hisnmuslim`: writes a second `duas.json` with
-   `translations.en` (and `translations_full.en`) empty for rows whose English came from
-   hisnmuslim.com (`notes` names the source); Qur'an and HadeethEnc English stay.
-2. A `play` product flavor whose assets take that file; the `github` flavor keeps today's.
-   The flavor also carries the Play-only bits above (AAB, no updater).
-3. Check what the app shows for a row with no English when English is chosen (not verified
-   yet; it should fall back to Indonesian): the dua page, search, Memorise and the widget. Add
-   a screenshot of a Hisn row with English chosen.
-4. About credits: the Play build drops the hisnmuslim.com English credit line.
+1. Done: `build_content.py` also writes `content/play/duas.json`, the same rows with the
+   English of every Hisn al-Muslim row emptied (`translations.en`, `translations_full.en`; the
+   rows are the ones whose `notes` start "Hisnul Muslim", which includes fasting_01's English
+   from IslamHouse's 2025 edition). Qur'an and HadeethEnc English stay (47 rows). The 5 Hisn
+   rows that have only English (eating_08, eating_09, tasbih_03, tasbih_06, salam_04: no
+   Indonesian at any source) are left out of the Play copy, since they would show the Arabic
+   alone. CI's "content is up to date" check covers the file.
+2. Done, without a flavor: the `release` build type is already the store build (offline, no
+   updater), and GitHub ships `sideload`. `ContentAssetsTask.duasFile` makes `release` package
+   `play/duas.json` as `content/duas.json`; debug and sideload keep `duas.json`. A flavor would
+   have doubled every variant and renamed the CI tasks for no gain. Still to add: AAB in the
+   release workflow (see "Needs doing").
+3. Checked in code: with English chosen, a row with no English shows its Indonesian
+   (`DuaTranslation` in `DuaComponents.kt`; the "Lihat teks lengkap" section in
+   `DuaDetailScreen.kt` does the same). Search, Memorise and the widget don't read the
+   English. Not yet: a screenshot test of a Hisn row with English chosen on the Play content.
+4. Done: `src/release/res/values*/strings.xml` override `methodology_reviewer`: no
+   hisnmuslim.com English credit, and a line saying Hisn duas show the Indonesian in English.
+   Open: the What's New history (three items from 1.4.0 on about the Hisn English) still ships in
+   the Play build; drop or override those items before the first Play release.
 
 If IslamHouse says yes, delete the flavor's content step; if they say no, apply step 1 to the
 GitHub build too.

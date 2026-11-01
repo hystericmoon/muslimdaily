@@ -68,6 +68,29 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(entry["reference"], "HR. Uji 1.")
         self.assertNotIn("status", entry)
 
+    def test_play_copy_drops_hisn_english_only(self):
+        report = self.run_build([
+            dua_row(id="t_01", notes="Hisnul Muslim no. 1 | uji", translation_en="test text"),
+            dua_row(id="t_02", order="2", notes="QS 1:1. uji", translation_en="test text"),
+        ])
+        self.assertTrue(report.ok, report.errors)
+        main = json.loads((self.tmp / "duas.json").read_text(encoding="utf-8"))
+        play = json.loads((self.tmp / "play" / "duas.json").read_text(encoding="utf-8"))
+        self.assertEqual(play["content_version"], main["content_version"])
+        en = {d["id"]: d["translations"]["en"] for d in play["duas"]}
+        self.assertEqual(en, {"t_01": "", "t_02": "test text"})
+        self.assertEqual([d["translations"]["en"] for d in main["duas"]], ["test text", "test text"])
+
+    def test_play_copy_leaves_out_rows_with_only_hisn_english(self):
+        rows = [{"id": "a", "translations": {"id": "", "en": "test"},
+                 "translations_full": {"en": "test"}, "translations_from": {"id": "none"}},
+                {"id": "b", "translations": {"id": "uji", "en": "test"},
+                 "translations_full": {"en": "test"}, "translations_from": {"en": "row:a"}}]
+        play, left_out = bc.play_duas(rows, {"a", "b"})
+        self.assertEqual(left_out, ["a"])
+        self.assertEqual(play, [{"id": "b", "translations": {"id": "uji", "en": ""}}])
+        self.assertEqual(rows[1]["translations"]["en"], "test")  # the input is not changed
+
     def test_without_source_fails(self):
         report = self.run_build([dua_row(source_1_book="", source_1_no="")])
         self.assertFalse(report.ok)
