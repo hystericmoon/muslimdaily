@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A). All earlier Adwam
+Last updated: 1 Nov 2026 (1.10.1 released; #118 Plan B merged with option A; #122 "Hafal?" below the Arabic merged). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
@@ -18,8 +18,10 @@ sessions were read and archived; everything still open from them is below.
   https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1. It replaced the listening review
   (GzK5…). Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip); 16 rows the
   aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
-- **"Hafal?" placement**: explained to the owner (move below the Arabic, recommended); no
-  answer yet.
+- **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
+  recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
+  150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 changes only
+  the store (`release`) build's content, nothing users of the GitHub build see.
 
 - **Da'if grades found by #102**: the owner chose B (31 Oct, decision page
   https://claude.ai/artifact/JV9nAhPh1S4QmUJ5AegmLN): the five rows (between_sujud_02,
@@ -44,8 +46,8 @@ sessions were read and archived; everything still open from them is below.
   `tools/hadith_numbers.py`). 16 left: books not on sunnah.com (Al-Hakim, At-Thabrani,
   Al-Baihaqi, Ibn as-Sunni, Nasa'i's 'Amal al-Yawm, part of Ahmad) and ruku_01, sujud_01,
   tashahhud_13 (no single matching hadith; see #102).
-- Current session: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (started 31 Oct by
-  session_01W2ZFMrUt3FG2NbnkiZDcqo, which did 1.10.0 and is archived). haho-design was cloned by hand into ../haho-design (v0.1.0) and published.
+- Previous session: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122; archived when it
+  started the next one).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
 
@@ -55,12 +57,10 @@ Decided 31 Oct (1.10.0): listening review, virtue hadiths (reading cards), eveni
 (footnote), source errors (fixed from the book's own data; HadeethEnc 5491/6163 were never
 imported), microphone in Memorise (no), #107 (disable the old widget).
 
-- **"Hafal?" above or below the Arabic** in routine recall (#79): moving it below was offered,
-  not decided.
 - **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`), no reply.
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
-  "Plan B". It is open work item 1.
+  "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
 - **Cloud environment**: add haho-design under the environment's Repositories and a setup
   script (SDK, haho-design publish) so sessions skip the manual setup below. Not verified done.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
@@ -111,7 +111,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
 1. Plan B for Play (owner's choice): a Play build without the hisnmuslim.com English. Content,
-   build and credits done in the claude/play-flavor PR; left: AAB in the release workflow,
+   build and credits merged in #118 (option A: the 5 English-only Hisn rows are left out of the
+   Play build); left: AAB in the release workflow,
    the What's New items about Hisn English, a screenshot of a Hisn row in English, and the
    rest of "Needs doing" in `docs/play-store.md`.
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
