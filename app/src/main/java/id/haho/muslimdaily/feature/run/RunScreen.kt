@@ -260,6 +260,8 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                     // The meaning stays as the cue; transliteration would give the Arabic away.
                     DuaTranslations(dua, state.prefs.copy(transliteration = false))
                 } else {
+                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
+                    // Below the Arabic: the reader checks the recitation against the text, then answers.
                     if (state.asksRecall(page)) {
                         RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
                     }
@@ -271,7 +273,6 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                             modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                         )
                     }
-                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
                     DuaTranslations(dua, state.prefs)
                 }
             }
