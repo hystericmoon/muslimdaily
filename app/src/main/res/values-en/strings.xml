@@ -910,6 +910,9 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_10_1">
+        <item>On Android 8–11, the widget now shows before a location is set and when it carries the «moved to Adwam» notice, instead of «Problem loading widget».</item>
+    </string-array>
     <string-array name="whats_new_1_10_0">
         <item>Every dua now holds only the words to recite. The book\'s narration, instructions and count notes are under «See the full text in the book», and the translation is of the dua alone.</item>
         <item>Entries with several sayings are split: each has its own count and audio, for example the istighfar and «Allahumma antas-salam» after prayer.</item>
