@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Checks each phrase's audio by ear, with a second speech model: what is heard in the cut.
 
-    venv/bin/python tools/verify_audio.py [--id ID ...]     # writes build/align/verify.csv
+    venv/bin/python tools/verify_audio.py [--id ID ...] [--resume]   # writes build/align/verify.csv
 
 `align_audio.py` times the written words with one model (wav2vec2, forced alignment: it is told
 the text and finds it). This is the independent check that stands in for listening: Whisper
@@ -16,7 +16,7 @@ a single misheard word (a low-confidence word in a fast recitation) costs one, w
 phrase in the wrong segment costs several. Rows are flagged `check` when a segment misses more
 than one written word or hears more than one extra word.
 
-Venv (as for `align_audio.py timings`; ~12 s a segment on 4 CPU cores):
+Venv (as for `align_audio.py timings`; ~9 s a segment on 4 CPU cores, ~2.5 h for every row):
 
     python3 -m venv venv && venv/bin/pip install --index-url https://download.pytorch.org/whl/cpu \\
         torch && venv/bin/pip install transformers numpy
@@ -68,28 +68,34 @@ def main() -> int:  # pragma: no cover - needs torch and the model
 
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--id", action="append", default=[])
+    ap.add_argument("--resume", action="store_true", help="keep build/align/verify.csv and skip its rows")
     args = ap.parse_args()
     torch.set_num_threads(4)
     asr = pipeline("automatic-speech-recognition", model=MODEL, device="cpu")
     _, rows, _ = sa.read_csv(sa.DUAS)
-    out = []
+    out = sa.read_csv(OUT)[1] if args.resume and OUT.exists() else []
+    done = {r["id"] for r in out}
     for row in rows:
-        if not row.get("audio_file") or (args.id and row["id"] not in args.id):
+        if not row.get("audio_file") or (args.id and row["id"] not in args.id) or row["id"] in done:
             continue
         phrases = [p.strip() for p in row["arabic"].split(bc.PHRASE_MARK)]
-        for k, ((a, b), text) in enumerate(zip(segments_of(row), phrases)):
+        segs = list(zip(segments_of(row), phrases))
+        wavs = []
+        for (a, b), _ in segs:
             cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a), "-to", str(b)] if b > a else []) + \
                 ["-i", str(sa.AUDIO_DIR / row["audio_file"]), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"]
             wav = np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, dtype=np.float32).copy()
-            heard_text = asr({"raw": wav, "sampling_rate": 16000},
-                             generate_kwargs={"language": "arabic", "task": "transcribe"})["text"].strip()
+            wavs.append({"raw": wav, "sampling_rate": 16000})
+        heard_all = asr(wavs, batch_size=8, generate_kwargs={"language": "arabic", "task": "transcribe"})
+        for k, (((a, b), text), h) in enumerate(zip(segs, heard_all)):
+            heard_text = h["text"].strip()
             written, heard = hn.words(text), hn.words(heard_text)
             common, status = judge(written, heard)
             out.append({"id": row["id"], "status": status, "segment": f"{a:.2f}-{b:.2f}", "written": len(written),
                         "heard": len(heard), "common": common, "heard_text": heard_text, "written_text": " ".join(written)})
             print(row["id"], k + 1, status, f"{common}/{len(written)} heard {len(heard)}", flush=True)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    sa.write_csv(OUT, FIELDS, out)
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        sa.write_csv(OUT, FIELDS, out)  # after every row, so a long run keeps what it has
     return 0
 
 
