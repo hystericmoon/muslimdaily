@@ -896,6 +896,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_10_2">
+        <item>Saat membaca rutinitas dari hafalan, pertanyaan «Hafal tanpa melihat teks?» kini ada di bawah teks Arab. Dengan teks besar, kedua tombolnya bertumpuk selebar layar agar tidak terpotong.</item>
+        <item>Kolom isian (cari, lokasi, nama dan catatan rutinitas, catatan doa) kini bersudut lebih bulat, serasi dengan kartu.</item>
+    </string-array>
     <string-array name="whats_new_1_10_1">
         <item>Di Android 8–11, widget kini tampil saat lokasi belum diatur dan saat memuat pemberitahuan pindah ke Adwam, tanpa pesan «Terjadi masalah saat memuat widget».</item>
     </string-array>

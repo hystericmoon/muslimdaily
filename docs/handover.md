@@ -16,7 +16,7 @@ sessions were read and archived; everything still open from them is below.
   re-recorded. `DockedBar` content now clears side insets (landscape only). New library parts Adwam
   could use later: `HahoOptionChip`, `HahoSegmentTrack`, `CenterZeroSlider`, `HahoTopBar`,
   `GlassOutlinedIconButton`, `HahoTheme.status`, `OpenSourceNoticesDialog` (see haho-design
-  README). Add to the next release's What's New only if the owner wants the field corners mentioned.
+  README). Shipped in 1.10.2 (What's New mentions the rounder fields).
 - **Content cleanup** (#113, shipped in 1.10.0): every row only what the reader says. Tools:
   `tools/clean_entries.py` (every text decision, with reasons; re-run only on a fresh main CSV,
   it is not idempotent on its own output) and `tools/align_audio.py` (wav2vec2 Arabic forced
@@ -25,7 +25,8 @@ sessions were read and archived; everything still open from them is below.
   https://claude.ai/artifact/2Pm8Bu3GsYdhqG4YNWUZd1. It replaced the listening review
   (GzK5…). Left as they were: tasbih_09 (a #83 cut joining two runs, so no clip); 16 rows the
   aligner was unsure of keep their old audio; 87 rows that had phrases keep them.
-- **Unreleased on main** (add to the next release's What's New): #122, "Hafal?" in routine
+- **1.10.2** (1 Nov, PR from branch `release-1.10.2`): ships #122 and #126 below; What's New `whats_new_1_10_2`.
+- **Was unreleased, now in 1.10.2**: #122, "Hafal?" in routine
   recall is below the Arabic (owner's choice, 1 Nov), and its two buttons stack full-width at
   150% text and above (at 200% "Perlu lihat teks" used to wrap into a blob). #118 and #124 change
   only the store (`release`) build and the release workflow, nothing users of the GitHub build see.

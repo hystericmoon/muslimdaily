@@ -910,6 +910,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_10_2">
+        <item>When you recite a routine from memory, «Did you know it without the text?» now sits below the Arabic. With large text, its two buttons stack full width so they no longer get cut off.</item>
+        <item>Text fields (search, location, routine name and notes, dua notes) now have rounder corners that match the cards.</item>
+    </string-array>
     <string-array name="whats_new_1_10_1">
         <item>On Android 8–11, the widget now shows before a location is set and when it carries the «moved to Adwam» notice, instead of «Problem loading widget».</item>
     </string-array>
