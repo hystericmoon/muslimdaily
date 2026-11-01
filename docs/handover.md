@@ -10,6 +10,13 @@ sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
+- **haho-design 0.2.0** (1 Nov, branch `haho-design-0.2.0`): pin bumped from 0.1.0. The six
+  `OutlinedTextField`s (search, location, routine name/notes, memorize picker, dua note) are now
+  the library's `HahoTextField` (16dp corners instead of Material's 4dp), so their screenshots were
+  re-recorded. `DockedBar` content now clears side insets (landscape only). New library parts Adwam
+  could use later: `HahoOptionChip`, `HahoSegmentTrack`, `CenterZeroSlider`, `HahoTopBar`,
+  `GlassOutlinedIconButton`, `HahoTheme.status`, `OpenSourceNoticesDialog` (see haho-design
+  README). Add to the next release's What's New only if the owner wants the field corners mentioned.
 - **Content cleanup** (#113, shipped in 1.10.0): every row only what the reader says. Tools:
   `tools/clean_entries.py` (every text decision, with reasons; re-run only on a fresh main CSV,
   it is not idempotent on its own output) and `tools/align_audio.py` (wav2vec2 Arabic forced
