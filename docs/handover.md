@@ -5,10 +5,15 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026, night (1.10.3 released from PR #131 at the owner's word: #129 only). All earlier Adwam
+Last updated: 1 Nov 2026, late night (1.10.3 published as v1.10.3; no open issues; nothing actionable
+without the owner). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
+
+- **PR #127 "Release 1.10.2"** (branch `release-1.10.2`, one commit 71ca64a on an old main) is
+  still open but superseded: 1.10.2 shipped from #128 and main is at 1.10.3. Never merge it.
+  Waiting on the owner to close it (closing someone's PR was left to them).
 
 - **1.10.3** (versionCode 47, PR #131, the owner asked for it 1 Nov): #129 only (waswas_05 and
   wake_04 re-timed, travel_12/13 second source al-Hakim 1883). Nothing unreleased on main after it.
