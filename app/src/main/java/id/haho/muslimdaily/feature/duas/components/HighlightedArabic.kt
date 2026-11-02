@@ -57,6 +57,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.withStyle
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
+import id.haho.muslimdaily.core.designsystem.component.arabicAnnotated
+import androidx.compose.ui.graphics.PathEffect
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
@@ -79,21 +81,19 @@ fun HighlightedArabic(
     color: Color = androidx.compose.material3.LocalContentColor.current,
 ) {
     val colors = AdwamTheme.colors
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
     val active = phrases.getOrNull(activePhrase)
-    val annotated = remember(text, active, colors) {
+    val unheard = phrases.filter { it.unheard }.map { it.range }
+    val annotated = remember(text, active, colors, unheard, muted) {
         buildAnnotatedString {
             withStyle(SpanStyle(localeList = LocaleList("ar"))) {
-                if (active == null) {
-                    append(text)
-                } else {
-                    append(text.substring(0, active.range.first))
-                    withStyle(SpanStyle(color = colors.onHighlightFill)) { append(text.substring(active.range.first, active.range.last + 1)) }
-                    append(text.substring(active.range.last + 1))
-                }
+                append(text)
+                unheard.forEach { addStyle(SpanStyle(color = muted), it.first, it.last + 1) }
+                if (active != null) addStyle(SpanStyle(color = colors.onHighlightFill), active.range.first, active.range.last + 1)
             }
         }
     }
-    HighlightedText(annotated, active?.range, style, modifier, color)
+    HighlightedText(annotated, active?.range, style, modifier, color, dashed = unheard)
 }
 
 /** A neutral background behind one phrase of a flowing text, with an optional outline. */
@@ -111,8 +111,10 @@ private fun HighlightedText(
     modifier: Modifier,
     color: Color,
     backgrounds: List<PhraseBackground> = emptyList(),
+    dashed: List<IntRange> = emptyList(),
 ) {
     val colors = AdwamTheme.colors
+    val dashColor = MaterialTheme.colorScheme.onSurfaceVariant
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
     val density = LocalDensity.current
     val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
@@ -136,6 +138,15 @@ private fun HighlightedText(
                         val corner = CornerRadius(r, r)
                         drawRoundRect(bg.fill, Offset(left, top), Size(right - left, bottom - top), corner)
                         bg.border?.let { drawRoundRect(it, Offset(left, top), Size(right - left, bottom - top), corner, style = Stroke(stroke)) }
+                    }
+                }
+                // A phrase the recording leaves out: a dotted line under it, so the state is not
+                // carried by its muted colour alone.
+                val dash = PathEffect.dashPathEffect(floatArrayOf(underline, underline))
+                dashed.forEach { r ->
+                    l.forEachLineBox(r, 0f) { left, _, right, bottom ->
+                        val y = bottom - underline
+                        drawLine(dashColor, Offset(left, y), Offset(right, y), strokeWidth = underline / 2, pathEffect = dash)
                     }
                 }
                 if (range == null || range.isEmpty()) return@drawBehind
@@ -243,6 +254,7 @@ private fun PhraseRow(
     val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
     val playLabel = stringResource(R.string.dua_play_from_phrase)
     val nowState = stringResource(R.string.dua_phrase_reciting)
+    val unheardState = stringResource(R.string.dua_phrase_unheard)
     val playable = onPlayFrom != null && phrase.segment != null
     Box(
         modifier
@@ -267,16 +279,27 @@ private fun PhraseRow(
                     Modifier
                 },
             )
-            .then(if (active) Modifier.semantics { stateDescription = nowState } else Modifier)
+            .then(
+                when {
+                    active -> Modifier.semantics { stateDescription = nowState }
+                    phrase.unheard -> Modifier.semantics { stateDescription = unheardState }
+                    else -> Modifier
+                },
+            )
             .heightIn(min = HahoTheme.dimens.minTouchTarget)
             .padding(horizontal = HahoTheme.spacing.xs),
         contentAlignment = Alignment.CenterStart,
     ) {
-        ArabicText(
-            phrase.text,
-            style = style,
-            color = if (active) colors.onHighlightFill else androidx.compose.material3.LocalContentColor.current,
-        )
+        if (phrase.unheard) {
+            val annotated = remember(phrase.text) { arabicAnnotated(phrase.text) }
+            HighlightedText(annotated, null, style, Modifier, MaterialTheme.colorScheme.onSurfaceVariant, dashed = listOf(0 until phrase.text.length))
+        } else {
+            ArabicText(
+                phrase.text,
+                style = style,
+                color = if (active) colors.onHighlightFill else androidx.compose.material3.LocalContentColor.current,
+            )
+        }
     }
 }
 
@@ -298,6 +321,8 @@ private fun PhraseFlow(
     val markColor = MaterialTheme.colorScheme.primary
     val tones = phrases.map { phraseBackground(fill, it.index) }
     val backgrounds = mutableListOf<PhraseBackground>()
+    val dashed = mutableListOf<IntRange>()
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
     var activeRange: IntRange? = null
     val annotated = buildAnnotatedString {
         withStyle(SpanStyle(localeList = LocaleList("ar"))) {
@@ -309,7 +334,13 @@ private fun PhraseFlow(
                 }
                 val start = length
                 val active = phrase.index == activePhrase
-                val span = SpanStyle(color = if (active) colors.onHighlightFill else Color.Unspecified)
+                val span = SpanStyle(
+                    color = when {
+                        active -> colors.onHighlightFill
+                        phrase.unheard -> muted
+                        else -> Color.Unspecified
+                    },
+                )
                 if (onPlayFrom != null && phrase.segment != null) {
                     withLink(
                         LinkAnnotation.Clickable(
@@ -321,12 +352,13 @@ private fun PhraseFlow(
                 } else {
                     withStyle(span) { append(phrase.text) }
                 }
+                if (phrase.unheard) dashed += start until length
                 if (active) activeRange = start until length
                 else tones[i]?.let { (bg, border) -> backgrounds += PhraseBackground(start until length, bg, border) }
             }
         }
     }
-    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current, backgrounds)
+    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current, backgrounds, dashed)
 }
 
 /**

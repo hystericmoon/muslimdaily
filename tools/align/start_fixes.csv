@@ -9,3 +9,4 @@ shalawat_01,start,8,,,,"title 'fadl as-salah 'ala an-nabi' shares five words wit
 iftar_01,start,5,,,4.45,"clip started at 5.84, after the dua's first word 'dhahaba' (4.88); the dip at 4.24-4.30 is inside 'yaqulu' (Whisper still heard it after a cut there); the pause is 4.54-4.60 (-22 dB)"
 waswas_05,full,11,,,,"title 'ma yaqulu wa yaf'alu man adhnaba dhanban, qala salla Allahu 'alayhi wa sallam' shares 'ma min ... dhanban' with phrase 1; every phrase played one late; matching starts at 'ma' (8.14)"
 wake_04,break,150,8,,,break after phrase 8 sat before 'wa bi'sa al-mihad' (223.19); it goes after 'al-mihad'
+istiftah_05,unheard,,20,,,"the recording leaves out two of the book's bracketed lines: nothing is said between أعلنت (83.52-84.22) and أنت المقدم (85.50), and the file ends on أنت (96.34) without ولا حول ولا قوة إلا بالله; full-file Whisper transcript, 1 Nov"

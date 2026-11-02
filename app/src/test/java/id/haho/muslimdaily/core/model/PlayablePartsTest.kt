@@ -5,10 +5,17 @@ import kotlin.test.assertEquals
 
 class PlayablePartsTest {
     // Neutral test strings only; no religious text is generated in tests.
-    private fun dua(segments: List<Segment>, breaks: List<Int> = listOf(4)) = Dua(
+    private fun dua(segments: List<Segment?>, breaks: List<Int> = listOf(4)) = Dua(
         "d", "adhkar", "morning", 1, null, "aaa bbb", false, "", "", "", null,
         emptyList(), "", null, emptyList(), null, DuaAudio("d.opus", segments, Segment(1.0, 9.0)), breaks,
     )
+
+    @Test
+    fun `a phrase the recording leaves out does not stop the gap check`() {
+        val d = dua(listOf(Segment(1.0, 3.0), null, Segment(5.0, 9.0)), listOf(2, 4))
+        assertEquals(true, d.phrases[1].unheard)
+        assertEquals(listOf((1000L to 3000L), (5000L to 9000L)), d.playableParts(1000, 9000))
+    }
 
     @Test
     fun `touching phrases play as one part`() {

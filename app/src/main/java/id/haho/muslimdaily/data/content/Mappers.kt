@@ -15,15 +15,16 @@ import id.haho.muslimdaily.data.db.DuaEntity
 import id.haho.muslimdaily.data.db.FardEntity
 import id.haho.muslimdaily.data.db.RawatibEntity
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 
 private val sources = ListSerializer(SourceRef.serializer())
 private val gradings = ListSerializer(GradingJson.serializer())
-private val segments = ListSerializer(ListSerializer(Double.serializer()))
+private val segments = ListSerializer(ListSerializer(Double.serializer()).nullable)
 private val ints = ListSerializer(Int.serializer())
 
 internal fun DuaEntity.toModel(): Dua {
-    val segs = ContentJsonFormat.decodeFromString(segments, segmentsJson).map { Segment(it[0], it[1]) }
+    val segs = ContentJsonFormat.decodeFromString(segments, segmentsJson).map { it?.let { s -> Segment(s[0], s[1]) } }
     return Dua(
         id = id,
         category = category,

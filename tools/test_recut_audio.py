@@ -48,5 +48,36 @@ class ProposeTest(unittest.TestCase):
         self.assertIn("quiet", out["reason"])
 
 
+class UnheardTest(unittest.TestCase):
+    ROW = {"id": "t", "arabic": "كتب سلم | درس فهم] [نصر شرب علم] [حمد خطب ذكر] [صبر شكر حلم]",
+           "audio_range": "", "audio_segments": "0.00-2.00; 2.00-9.00"}
+    # the second part ("نصر شرب علم") and the last are not said; "حمد" shares nothing with them
+    WORDS = [[0.0, 0.5, "كتب"], [0.5, 1.0, "سلم"], [2.2, 2.7, "درس"], [2.7, 3.2, "فهم"],
+             [5.0, 5.5, "حمد"], [5.5, 6.0, "خطب"], [6.0, 6.5, "ذكر"]]
+
+    def test_parts_the_recording_leaves_out_get_no_segment(self):
+        out = ra.propose_unheard(self.ROW, entry(self.WORDS, 9.0, quiet=[(3.3, 4.9), (6.6, 9.0)]), 2)
+        self.assertEqual("ok", out["status"], out["reason"])
+        segs = out["audio_segments"].split("; ")
+        self.assertEqual(["0.00-2.00", "-", "-"], [segs[0], segs[2], segs[4]])
+        a, b = (float(x) for x in segs[1].split("-"))
+        c, d = (float(x) for x in segs[3].split("-"))
+        self.assertEqual((2.0, 9.0), (a, d))
+        self.assertEqual(b, c)
+        self.assertTrue(3.3 <= b <= 5.1, b)
+        self.assertEqual("كتب سلم | درس فهم] | [نصر شرب علم] | [حمد خطب ذكر] | [صبر شكر حلم]", out["arabic"])
+
+    def test_a_part_heard_only_in_half_is_refused(self):
+        # one word of three: too many to call the part missing, too few to call it heard
+        words = self.WORDS[:4] + [[4.0, 4.4, "نصر"], [4.4, 4.6, "سجد"]] + self.WORDS[4:]
+        out = ra.propose_unheard(self.ROW, entry(words, 9.0, quiet=[(3.3, 3.9), (6.6, 9.0)]), 2)
+        self.assertEqual("fail", out["status"])
+        self.assertIn("part 2", out["reason"])
+
+    def test_a_phrase_without_bracketed_parts_is_refused(self):
+        row = dict(self.ROW, arabic="كتب سلم | درس فهم")
+        self.assertEqual("fail", ra.propose_unheard(row, entry(self.WORDS, 9.0), 2)["status"])
+
+
 if __name__ == "__main__":
     unittest.main()

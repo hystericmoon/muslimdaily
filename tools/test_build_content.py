@@ -124,6 +124,17 @@ class BuildContentTest(unittest.TestCase):
         report = self.run_build([dua_row(audio_segments="0.0-1.5; 1.0-2.0")])
         self.assertTrue(any("overlaps" in e for e in report.errors))
 
+    def test_a_phrase_can_be_marked_as_not_in_the_recording(self):
+        self.assertEqual([[0.0, 1.5], None], bc.parse_segments("0.0-1.5; -"))
+        report = self.run_build([dua_row(audio_segments="0.0-1.5; -")])
+        self.assertTrue(report.ok, report.errors)
+
+    def test_the_first_phrase_must_be_in_the_recording(self):
+        report = self.run_build([dua_row(audio_segments="-; 0.0-1.5")])
+        self.assertTrue(any("first phrase" in e for e in report.errors))
+        report = self.run_build([dua_row(audio_segments="-; -")])
+        self.assertTrue(any("every phrase" in e for e in report.errors))
+
     def test_count_must_be_positive_whole_number(self):
         report = self.run_build([dua_row(count="0")])
         self.assertTrue(any("count" in e for e in report.errors))

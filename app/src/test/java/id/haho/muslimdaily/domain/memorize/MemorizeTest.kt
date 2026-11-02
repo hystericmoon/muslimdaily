@@ -121,6 +121,26 @@ class MemorizePlanTest {
         assertEquals(1600L to 5000L, clips.first().startMs to clips.first().endMs)
     }
 
+    /** The middle phrase is a line the recording leaves out. */
+    private val unheard = dua.copy(
+        audio = dua.audio!!.copy(segments = listOf(id.haho.muslimdaily.core.model.Segment(0.0, 1.6), null, id.haho.muslimdaily.core.model.Segment(1.6, 5.0))),
+    )
+
+    @Test
+    fun `a phrase the recording leaves out adds no chunk of its own`() {
+        assertTrue(unheard.isSegmented && unheard.phrases[1].unheard)
+        val clips = MemorizePlan.build(unheard, settings, "").filterIsInstance<SequenceItem.Clip>()
+        assertEquals(listOf(0..0, 0..2), clips.map { it.phrases }.distinct())
+        assertEquals(0L to 5000L, clips.last().startMs to clips.last().endMs)
+    }
+
+    @Test
+    fun `an ab loop skips phrases the recording leaves out at its ends`() {
+        val clips = MemorizePlan.abLoop(unheard, 0, 1, settings, "").filterIsInstance<SequenceItem.Clip>()
+        assertEquals(0L to 1600L, clips.first().startMs to clips.first().endMs)
+        assertTrue(MemorizePlan.abLoop(unheard, 1, 1, settings, "").isEmpty())
+    }
+
     @Test
     fun `recall with gaps mutes hidden phrases`() {
         val seq = MemorizePlan.recallWithGaps(dua, setOf(1), settings, "")

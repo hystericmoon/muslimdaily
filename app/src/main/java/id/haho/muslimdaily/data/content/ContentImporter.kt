@@ -15,6 +15,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -93,7 +94,7 @@ internal class ContentBundle(
 internal object ContentMapper {
     private val sourcesSerializer = ListSerializer(SourceRef.serializer())
     private val gradingsSerializer = ListSerializer(GradingJson.serializer())
-    private val segmentsSerializer = ListSerializer(ListSerializer(Double.serializer()))
+    private val segmentsSerializer = ListSerializer(ListSerializer(Double.serializer()).nullable)
     private val intsSerializer = ListSerializer(Int.serializer())
 
     fun map(duas: DuasFile, rawatib: RawatibFile, taxonomy: TaxonomyFile): ContentBundle {

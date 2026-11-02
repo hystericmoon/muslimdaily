@@ -55,7 +55,8 @@ internal data class VirtueJson(val text: String = "", val source: String = "")
 @Serializable
 internal data class AudioJson(
     val file: String = "",
-    val segments: List<List<Double>> = emptyList(),
+    /** One per phrase; null for a phrase the recording leaves out. */
+    val segments: List<List<Double>?> = emptyList(),
     /** Start and end of the dua in the file, when the recording also reads its context. */
     val range: List<Double> = emptyList(),
 )

@@ -90,13 +90,15 @@ object MemorizePlan {
     /**
      * Step 2: cumulative chunks 1 → 1+2 → 1+2+3 …, each played [MemorizeSettings.loopsPerChunk]
      * times with a repeat-aloud pause after every play. Falls back to whole-dua loops when the dua
-     * has no phrase segments.
+     * has no phrase segments. A phrase the recording leaves out adds no chunk of its own: the chunk
+     * that ends on it would only replay the one before.
      */
     fun build(dua: Dua, settings: MemorizeSettings, title: String): List<SequenceItem> {
         val audio = dua.audio ?: return emptyList()
         val phrases = dua.phrases
-        val segmented = phrases.isNotEmpty() && phrases.all { it.segment != null }
-        val chunks: List<IntRange> = if (segmented) phrases.indices.map { 0..it } else listOf(phrases.indices)
+        val segmented = dua.isSegmented
+        val chunks: List<IntRange> =
+            if (segmented) phrases.indices.filter { phrases[it].segment != null }.map { 0..it } else listOf(phrases.indices)
         return buildList {
             for (chunk in chunks) {
                 val start = if (segmented) phrases[chunk.first].segment!!.startMs else audio.startMs
@@ -114,12 +116,13 @@ object MemorizePlan {
         }
     }
 
-    /** A–B loop over phrases [a]..[b]. */
+    /** A–B loop over phrases [a]..[b]; phrases the recording leaves out at either end are not played. */
     fun abLoop(dua: Dua, a: Int, b: Int, settings: MemorizeSettings, title: String): List<SequenceItem> {
         val audio = dua.audio ?: return emptyList()
-        val from = dua.phrases.getOrNull(minOf(a, b))?.segment ?: return emptyList()
-        val to = dua.phrases.getOrNull(maxOf(a, b))?.segment ?: return emptyList()
         val range = minOf(a, b)..maxOf(a, b)
+        val heard = range.mapNotNull { dua.phrases.getOrNull(it)?.segment }
+        val from = heard.firstOrNull() ?: return emptyList()
+        val to = heard.last()
         return buildList {
             repeat(settings.loopsPerChunk.coerceIn(1, 10)) {
                 add(SequenceItem.Clip(dua.id, audio.file, from.startMs, to.endMs, range, title))

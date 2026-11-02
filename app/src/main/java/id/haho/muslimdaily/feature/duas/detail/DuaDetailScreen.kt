@@ -179,6 +179,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                 )
             }
         }
+        if (dua.audio != null && dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
