@@ -21,7 +21,8 @@ class ReviewRepositoryTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val db = Room.inMemoryDatabaseBuilder(context, UserDatabase::class.java).allowMainThreadQueries().build()
     private val pair = listOf("morning_02", "evening_02")
-    private val repo = ReviewRepository(db) { pair.associateWith { pair } }
+    private var contentIds = emptySet<String>()
+    private val repo = ReviewRepository(db, { pair.associateWith { pair } }, { contentIds })
     private val today = LocalDate.of(2026, 10, 27)
 
     @After fun close() = db.close()
@@ -37,6 +38,18 @@ class ReviewRepositoryTest {
         repo.rate("wake_01", Rating.HARD, today)
         assertTrue(!repo.items().first().single().notStarted)
         assertEquals(1, repo.dueCountOnce(today.plusDays(1)))
+    }
+
+    @Test
+    fun `a dua no longer in the content keeps its progress but is never due`() = runTest {
+        repo.rate("wake_01", Rating.HARD, today)
+        repo.rate("morning_19", Rating.HARD, today)
+        contentIds = setOf("wake_01")
+        val tomorrow = today.plusDays(1)
+        assertEquals(1, repo.dueCountOnce(tomorrow))
+        assertEquals(1, repo.dueCount(tomorrow).first())
+        assertEquals(listOf("wake_01"), repo.due(tomorrow))
+        assertEquals(2, repo.items().first().size)
     }
 
     @Test

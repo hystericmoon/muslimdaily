@@ -41,6 +41,20 @@ class ExtendedColorsContrastTest {
         }
     }
 
+    /** The book's comma (،) in the primary colour: text contrast on every surface it sits on. */
+    @Test fun pauseCommaMeetsAa() {
+        for (palette in HahoPalette.entries) for (dark in listOf(false, true)) {
+            val scheme = colorSchemeFor(palette, dark)
+            val mode = "$palette " + if (dark) "dark" else "light"
+            for ((name, bg) in listOf(
+                "surface" to scheme.surface,
+                "surfaceContainerLow" to scheme.surfaceContainerLow,
+                "surfaceContainer" to scheme.surfaceContainer,
+                "highlightFill" to extendedColors(palette, dark).highlightFill,
+            )) assertRatio("$mode primary/$name", scheme.primary, bg, 4.5)
+        }
+    }
+
     /** The values the palette generator used to emit, before the move to haho-design. */
     @Test fun goldRolesKeepTheirValues() {
         for (palette in HahoPalette.entries) {

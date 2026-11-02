@@ -105,11 +105,16 @@ class DuaLibraryViewModel @Inject constructor(
 ) : ViewModel() {
     val categories: StateFlow<List<DuaCategory>?> = content.categories()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-    val routines: StateFlow<List<Routine>?> = routines.routines()
+    /** A dua left out of the content in an update stays saved in the routine but is not counted or shown. */
+    private val current = routines.routines().mapLatest { list ->
+        val ids = content.idsOnce()
+        if (ids.isEmpty()) list else list.map { r -> r.copy(duaIds = r.duaIds.filter { it in ids }) }
+    }
+    val routines: StateFlow<List<Routine>?> = current
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     /** The first duas of each routine, shown on its card. */
-    val previews: StateFlow<Map<String, Dua>> = routines.routines()
+    val previews: StateFlow<Map<String, Dua>> = current
         .mapLatest { list -> content.duas(list.flatMap { it.duaIds.take(ROUTINE_PREVIEW_ROWS) }.distinct()).associateBy { it.id } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
 

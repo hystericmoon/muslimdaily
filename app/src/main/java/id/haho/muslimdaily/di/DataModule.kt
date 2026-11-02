@@ -12,6 +12,7 @@ import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.content.ContentSource
 import id.haho.muslimdaily.data.db.ContentDatabase
 import id.haho.muslimdaily.data.db.UserDatabase
+import id.haho.muslimdaily.data.review.ContentIds
 import id.haho.muslimdaily.data.review.DuaTwins
 import java.time.Clock
 import javax.inject.Singleton
@@ -42,4 +43,7 @@ object DataModule {
 
     @Provides
     fun duaTwins(content: ContentRepository): DuaTwins = DuaTwins { content.twinsOnce() }
+
+    @Provides
+    fun contentIds(content: ContentRepository): ContentIds = ContentIds { content.idsOnce() }
 }

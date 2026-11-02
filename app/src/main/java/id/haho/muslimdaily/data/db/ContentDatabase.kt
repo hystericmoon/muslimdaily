@@ -182,6 +182,9 @@ interface ContentDao {
     @Query("SELECT * FROM duas WHERE id IN (:ids)")
     suspend fun duas(ids: List<String>): List<DuaEntity>
 
+    @Query("SELECT id FROM duas")
+    suspend fun ids(): List<String>
+
     @Query("SELECT * FROM duas ORDER BY category, event, sortOrder")
     fun allDuas(): Flow<List<DuaEntity>>
 
