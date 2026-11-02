@@ -5,18 +5,26 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 1 Nov 2026, late night (1.10.3 published as v1.10.3; no open issues; nothing actionable
-without the owner). All earlier Adwam
+Last updated: 2 Nov 2026 (1.11.0 merged from #133: istiftah_05's unheard lines; release workflow
+publishes it). All earlier Adwam
 sessions were read and archived; everything still open from them is below.
 
 ## In flight (check first)
 
 - **PR #127 "Release 1.10.2"** (branch `release-1.10.2`, one commit 71ca64a on an old main) is
   still open but superseded: 1.10.2 shipped from #128 and main is at 1.10.3. Never merge it.
-  Waiting on the owner to close it (closing someone's PR was left to them).
+  Waiting on the owner to close it (closing someone's PR was left to them; asked again 2 Nov).
 
-- **1.10.3** (versionCode 47, PR #131, the owner asked for it 1 Nov): #129 only (waswas_05 and
-  wake_04 re-timed, travel_12/13 second source al-Hakim 1883). Nothing unreleased on main after it.
+- **1.11.0** (versionCode 48, PR #133, owner's choice B on 2 Nov, decision page
+  https://claude.ai/artifact/1SzPRAj9bpBXBfP45f3Na4): istiftah_05's recording leaves out two of
+  the book's bracketed lines («وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي», and the closing «وَلاَ حَوْلَ وَلاَ قُوَّةَ
+  إِلاَّ بِاللَّهِ»: the file ends on «أنت»). The text is unchanged; those phrases have segment `-`
+  (`null` in duas.json) and show muted with a dotted underline, a note under the Arabic, TalkBack
+  "Not in the recording"; never highlighted or played; Memorise chunks and A–B loops skip them.
+  Pipeline: `recut_audio.py start`, mode `unheard` (row in `tools/align/start_fixes.csv`).
+  App: `Phrase.unheard`, `Dua.isSegmented`. Screenshot 144. Owner kept the display as is (no
+  extra label, no lighter grey); note that the book's bracketed lines are already muted by
+  `withBookNotes`, so the dotted underline is what tells unheard lines apart.
 
 - **haho-design 0.2.0** (1 Nov, shipped in 1.10.2): pin bumped from 0.1.0. The six
   `OutlinedTextField`s (search, location, routine name/notes, memorize picker, dua note) are now
@@ -51,7 +59,7 @@ break moved after "وبئس المهاد" (mode `break`), both in `start_fixes.c
 right (Whisper's segment check drops its repeated lines; the full-file transcript has them all);
 but **the recording does not say "وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي"** (nothing between "أعلنت" 83.5 s and
 "أنت المقدم" 85.5 s): the text shows words the audio lacks. Owner's call; the text is not edited
-by hand.
+by hand. Resolved in 1.11.0 (above).
 quran_16/18, dress_04, travel_01, sujud_03 are fine
   (Whisper mishearing). Whisper invents text on short or silent clips ("اشتركوا في القناة",
   "ترجمة نانسي قنقر", a word repeated over the silence): read such a flag as a mishearing.
@@ -93,7 +101,8 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- Previous session: session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129 merged). Before it:
+- Previous session: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
+  session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129 merged). Before it:
   session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
   "Automatically delete head branches" in the repo settings.
@@ -113,6 +122,8 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.11.0 (versionCode 48, 2 Nov, #133): istiftah_05's lines the recording leaves out are marked.
 
 1.10.3 (versionCode 47, 1 Nov, #131): #129 (two re-timed recordings, travel_12/13 second source).
 
@@ -169,8 +180,8 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
 2. Make the book's `،` more visible (accent colour, larger) was offered, not chosen. Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
-3. Done in 1.10.0 (#113) and on 1 Nov (#128: tasbih_09; full Whisper check; 83 rows re-timed).
-   Left: three rows listed under In flight, for a person to listen to.
+3. Done in 1.10.0 (#113), 1 Nov (#128: tasbih_09; full Whisper check; 83 rows re-timed) and
+   1.11.0 (#133: istiftah_05). Nothing left from the audio check.
 6. Empty `source_1_no`: 7 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
@@ -269,7 +280,7 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   the session's title bar → Edit → Repositories: add `hystericmoon/haho-design` (private, so a
   saved key will not fetch it) → Setup script: paste the script → new session. Until that is
   confirmed, run `bash tools/cloud_setup.sh` by hand (`add_repo hystericmoon/haho-design` first
-  if the clone is refused).
+  if the clone is refused). 2 Nov: still not set up; the clone was refused until `add_repo`.
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
 - Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):
