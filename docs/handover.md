@@ -118,8 +118,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
-- **Cloud environment**: steps given to the owner 1 Nov (see "Session setup (cloud)"); not
-  verified done. A new session can check: `ls ~/.m2/repository/id/haho/haho-design/` at start.
+- **Cloud environment**: owner is creating a second environment with haho-design under
+  Repositories (2 Nov, see "Session setup (cloud)"); the first session in it should check
+  `ls ~/.m2/repository/id/haho/haho-design/` and record the environment's name here.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
@@ -293,13 +294,17 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 ## Session setup (cloud)
 
-- `tools/cloud_setup.sh` does it all: clones haho-design at the version `gradle/libs.versions.toml`
-  pins and publishes it to `~/.m2` (skips when that version is already there; tested 1 Nov).
-  The owner was given the steps (1 Nov) to put it in the environment: cloud environment menu in
-  the session's title bar → Edit → Repositories: add `hystericmoon/haho-design` (private, so a
-  saved key will not fetch it) → Setup script: paste the script → new session. Until that is
-  confirmed, run `bash tools/cloud_setup.sh` by hand (`add_repo hystericmoon/haho-design` first
-  if the clone is refused). 2 Nov: still not set up; the clone was refused until `add_repo`.
+- `tools/cloud_setup.sh` is the environment's whole setup script (Android SDK 37, Maven Central
+  mirror for Gradle, haho-design at the version `gradle/libs.versions.toml` pins, published to
+  `~/.m2`). 2 Nov: it replaced the script in the Default environment's settings, which pinned
+  haho-design 0.1.0 (stale since 0.2.0). The **Default environment has no Repositories section**,
+  so its script can't clone the private haho-design; the owner chose (2 Nov) a second environment
+  with `hystericmoon/haho-design` under Repositories and this script. A session's own repo list
+  (side panel) is not the environment's: a repo attached with `add_repo` shows there too.
+  Check at start: `ls ~/.m2/repository/id/haho/haho-design/`. If the version is missing:
+  `add_repo hystericmoon/haho-design`, then `bash tools/cloud_setup.sh` (safe to re-run).
+  Start handover sessions with `create_session` from a session in the new environment (it
+  inherits the caller's environment).
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
 - Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):
