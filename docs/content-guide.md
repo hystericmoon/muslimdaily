@@ -167,6 +167,10 @@ The rows in `duas.csv` (24 events) and the full sheet `content/source/import/his
   «﴾.» becomes «﴾». The words themselves are never changed.
 * Entries the PDF's appendix reports al-Albani graded weak are left out of `duas.csv` and
   marked `LEMAH` in the full sheet. A count he judged unauthentic is left blank.
+* A row whose narration al-Albani later graded weak, outside the appendix, is listed in
+  `WEAK` in `tools/clean_entries.py` with the reason and removed from `duas.csv` (morning_19 /
+  evening_19, 2 Nov 2026). Saved progress and routines keep the id; the app skips ids the
+  content no longer has.
 * An event with no rows is hidden from the library, routines and memorisation. Two are empty
   on purpose: `entering_home` (Hisn no. 18 is graded weak) and `drinking` (no Hisn chapter).
   Filling them needs another sahih or hasan source.

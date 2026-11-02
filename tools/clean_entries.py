@@ -28,6 +28,7 @@ reason where it is not obvious):
   5. A note giving another wording for the evening goes to `footnote`, shown under the dua.
   6. A row the book files under the other time of day ("three times in the evening" in the
      morning list) is removed from that list (REMOVE); its twin in the right list stays.
+  7. A row whose narration al-Albani finally graded weak is left out (WEAK), with the reason.
 
 `apply` refuses to run when an entry changed since these decisions (its sha1 is pinned).
 """
@@ -281,6 +282,16 @@ REMOVE = {
     "evening_16": "said in the morning (إذا أصبح); morning_16 is the same entry",
 }
 
+# Left out because the narration is weak (CLAUDE.md: sahih/hasan only). Owner's choice C, 2 Nov 2026.
+WEAK = {
+    "morning_19": "Hisn no. 98, shalawat ten times morning and evening (Abu ad-Darda', at-Tabarani): "
+                  "al-Albani graded it hasan in Sahih al-Jami' 5357, then weak in Silsilah ad-Da'ifah "
+                  "5788 (islamqa.info/ar/answers/130213); Khalid ibn Ma'dan did not hear from Abu "
+                  "ad-Darda' (al-Haythami as quoted by al-Munawi, Fayd al-Qadir 8811). The count of "
+                  "ten and its virtue rest on this narration only",
+    "evening_19": "the same entry as morning_19",
+}
+
 
 def verbatim_run(part: str, full: str) -> str | None:
     """The run of `full` that reads as `part`, returned as written in `full`.
@@ -350,7 +361,7 @@ def apply(duas: Path = sa.DUAS) -> tuple[list[str], list[str]]:
     out: list[dict] = []
     for row in rows:
         rid = row["id"]
-        if rid in REMOVE:
+        if rid in REMOVE or rid in WEAK:
             changed.append(f"-{rid}")
             continue
         if rid in KINDS and row.get("kind") != KINDS[rid]:

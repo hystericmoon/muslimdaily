@@ -1,5 +1,5 @@
 {
-  "content_version": 48,
+  "content_version": 49,
   "duas": [
     {
       "id": "wake_01",
@@ -7196,50 +7196,6 @@
       "phrase_breaks": []
     },
     {
-      "id": "morning_19",
-      "category": "adhkar",
-      "event": "morning",
-      "order": 18,
-      "variant_group": null,
-      "arabic": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ",
-      "is_quran": false,
-      "translations": {
-        "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad.",
-        "en": ""
-      },
-      "translations_full": {
-        "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad. (Dibaca 10 kali)."
-      },
-      "transliteration": "Allāhumma shalli wasallim 'alā nabayyinā muhammad",
-      "count": 10,
-      "sources": [
-        {
-          "book": "At-Thabrani melalui dua isnad",
-          "no": ""
-        },
-        {
-          "book": "keduanya baik",
-          "no": ""
-        }
-      ],
-      "reference": "“Barangsiapa bershalawat untukku sepuluh kali pada pagi hari, dan sepuluh kali pada sore hari, mendapatkan syafaatku pada hari Kiamat.” HR. At-Thabrani melalui dua isnad, keduanya baik. Lihat Majma’ Az-Zawaid 10/120 dan Shahih At- Targhib wat Tarhib 1/273. (Hisnul Muslim no. 98)",
-      "grading": {
-        "grade": "",
-        "grader": ""
-      },
-      "alt_gradings": [],
-      "virtue": null,
-      "audio": {
-        "file": "hisn_098.opus",
-        "segments": [],
-        "range": [
-          0.55,
-          4.52
-        ]
-      },
-      "phrase_breaks": []
-    },
-    {
       "id": "evening_01",
       "category": "adhkar",
       "event": "evening",
@@ -8310,50 +8266,6 @@
         "range": [
           0.27,
           5.4
-        ]
-      },
-      "phrase_breaks": []
-    },
-    {
-      "id": "evening_19",
-      "category": "adhkar",
-      "event": "evening",
-      "order": 18,
-      "variant_group": null,
-      "arabic": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبَيِّنَا مُحَمَّدٍ",
-      "is_quran": false,
-      "translations": {
-        "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad.",
-        "en": ""
-      },
-      "translations_full": {
-        "id": "Ya Allah, limpahkanlah shalawat dan salam kepada Nabi kami Muhammad. (Dibaca 10 kali)."
-      },
-      "transliteration": "Allāhumma shalli wasallim 'alā nabayyinā muhammad",
-      "count": 10,
-      "sources": [
-        {
-          "book": "At-Thabrani melalui dua isnad",
-          "no": ""
-        },
-        {
-          "book": "keduanya baik",
-          "no": ""
-        }
-      ],
-      "reference": "“Barangsiapa bershalawat untukku sepuluh kali pada pagi hari, dan sepuluh kali pada sore hari, mendapatkan syafaatku pada hari Kiamat.” HR. At-Thabrani melalui dua isnad, keduanya baik. Lihat Majma’ Az-Zawaid 10/120 dan Shahih At- Targhib wat Tarhib 1/273. (Hisnul Muslim no. 98)",
-      "grading": {
-        "grade": "",
-        "grader": ""
-      },
-      "alt_gradings": [],
-      "virtue": null,
-      "audio": {
-        "file": "hisn_098.opus",
-        "segments": [],
-        "range": [
-          0.55,
-          4.52
         ]
       },
       "phrase_breaks": []

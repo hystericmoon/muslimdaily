@@ -912,6 +912,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_12_0">
+        <item>The book\'s comma (،) in the Arabic now shows in the accent colour, so the places to pause are easy to find while reading.</item>
+        <item>The shalawat ten times in the morning and evening adhkar is no longer listed: al-Albani\'s final grading of its hadith is weak (Silsilah ad-Da\'ifah no. 5788). Memorisation progress and routines that include it stay saved.</item>
+    </string-array>
     <string-array name="whats_new_1_11_0">
         <item>In the long opening dua of the night prayer, the recording leaves out two parts the book has. They now show muted with a dotted underline and are not highlighted during playback; the text stays as the book gives it.</item>
     </string-array>

@@ -77,6 +77,11 @@ class ContentRepository @Inject constructor(
         return ids.mapNotNull { byId[it]?.toModel() }
     }
 
+    suspend fun idsOnce(): Set<String> {
+        importer.ensureImported()
+        return dao.ids().toSet()
+    }
+
     fun allDuas(): Flow<List<Dua>> = afterImport { dao.allDuas().map { list -> list.map { it.toModel() } } }
 
     @Volatile private var twins: Map<String, List<String>>? = null

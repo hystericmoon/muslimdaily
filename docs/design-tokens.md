@@ -24,6 +24,10 @@ disc). In light mode the active-phrase underline uses the palette's primary colo
 gold on a light surface is below 3:1. The active phrase is marked by fill + underline + TalkBack
 state, never by colour alone.
 
+The book's comma (،) in Arabic is drawn in the palette's `primary` (`withPauseCommas`, since
+1.12.0), except inside book notes and muted text; `ExtendedColorsContrastTest` checks it at 4.5:1
+on the surfaces and on `highlightFill` for every palette.
+
 ## Contrast checks
 
 ### TEAL light (seed #1F5F5B)

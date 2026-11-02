@@ -55,7 +55,12 @@ fun ArabicText(
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     val noteColor = MaterialTheme.colorScheme.onSurfaceVariant
-    val shown = remember(text, noteColor) { withBookNotes(withQuranOrnaments(text), noteColor) }
+    val commaColor = MaterialTheme.colorScheme.primary
+    val shown = remember(text, noteColor, commaColor, color) {
+        val marked = withBookNotes(withQuranOrnaments(text), noteColor)
+        // Text drawn muted as a whole (a footnote, a preview line) keeps its commas muted too.
+        if (color == noteColor) marked else withPauseCommas(marked, commaColor, noteColor)
+    }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Text(
             text = shown,
@@ -106,6 +111,29 @@ fun withBookNotes(text: AnnotatedString, color: Color): AnnotatedString {
         }
     }
 }
+
+/**
+ * The book's comma (،) marks where the reader pauses. It is drawn in [color] (the palette's
+ * primary: 4.5:1 or more on the surface and on the gold fill of the playing phrase, in both
+ * themes) so the pause is easy to find in a flowing line; the glyph itself stays, so colour is
+ * not the only cue. Commas inside a book note or a phrase drawn in [muted] (not in the
+ * recording) keep that colour. Owner's choice B, 2 Nov 2026.
+ */
+fun withPauseCommas(text: AnnotatedString, color: Color, muted: Color): AnnotatedString {
+    if (PAUSE_COMMA !in text.text) return text
+    val notes = bookNoteRanges(text.text)
+    val mutedSpans = text.spanStyles.filter { it.item.color == muted }
+    return buildAnnotatedString {
+        append(text)
+        text.text.forEachIndexed { i, c ->
+            if (c != PAUSE_COMMA) return@forEachIndexed
+            if (notes.any { i in it } || mutedSpans.any { i >= it.start && i < it.end }) return@forEachIndexed
+            addStyle(SpanStyle(color = color), i, i + 1)
+        }
+    }
+}
+
+private const val PAUSE_COMMA = '\u060C'
 
 /** A plain-text [withBookNotes], for translations: "(yang berhak disembah)", "( 127 )". */
 fun bookNotesMuted(text: String, color: Color): AnnotatedString =

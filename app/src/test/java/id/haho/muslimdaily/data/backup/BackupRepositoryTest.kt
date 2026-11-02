@@ -38,7 +38,7 @@ class BackupRepositoryTest {
     private val settings = SettingsRepository(context)
     private val routines = RoutineRepository(db, Clock.systemUTC())
     private val repo = BackupRepository(
-        settings, MySetRepository(db), db, Clock.systemUTC(), ReviewRepository(db) { emptyMap() },
+        settings, MySetRepository(db), db, Clock.systemUTC(), ReviewRepository(db, { emptyMap() }, { emptySet() }),
         SetsToRoutines(db, content, MySetRepository(db), routines),
     )
 

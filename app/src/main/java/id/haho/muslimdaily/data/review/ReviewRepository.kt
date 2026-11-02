@@ -26,6 +26,11 @@ fun interface DuaTwins {
     suspend fun groups(): Map<String, List<String>>
 }
 
+/** Ids of the duas the content has now; empty while unknown. */
+fun interface ContentIds {
+    suspend fun all(): Set<String>
+}
+
 /**
  * Leitner review boxes for memorised duas. Private, local, and free of streaks.
  *
@@ -33,7 +38,11 @@ fun interface DuaTwins {
  * every call maps an id to the first of its twins, and [link] folds older separate rows into it.
  */
 @Singleton
-class ReviewRepository @Inject constructor(private val db: UserDatabase, private val twins: DuaTwins) {
+class ReviewRepository @Inject constructor(
+    private val db: UserDatabase,
+    private val twins: DuaTwins,
+    private val contentIds: ContentIds,
+) {
     private val dao get() = db.reviewDao()
 
     private suspend fun key(duaId: String): String = twins.groups()[duaId]?.first() ?: duaId
@@ -54,19 +63,26 @@ class ReviewRepository @Inject constructor(private val db: UserDatabase, private
         emitAll(dao.observeItem(key(duaId)).map { it?.toModel() })
     }
 
+    /**
+     * Due reviews count only duas the content still has. A dua left out in an update keeps its
+     * saved progress (backups and a later return restore it) but is never due, so the badge and
+     * the reminder don't point at a review that can't open.
+     */
     fun dueCount(today: LocalDate): Flow<Int> = flow {
         link()
-        emitAll(dao.observeDueCount(today.toEpochDay()))
+        emitAll(dao.observeDue(today.toEpochDay()).map { rows -> current(rows).size })
     }
 
-    suspend fun dueCountOnce(today: LocalDate): Int {
-        link()
-        return dao.dueCount(today.toEpochDay())
-    }
+    suspend fun dueCountOnce(today: LocalDate): Int = due(today).size
 
     suspend fun due(today: LocalDate): List<String> {
         link()
-        return dao.due(today.toEpochDay()).map { it.duaId }
+        return current(dao.due(today.toEpochDay())).map { it.duaId }
+    }
+
+    private suspend fun current(rows: List<ReviewItemEntity>): List<ReviewItemEntity> {
+        val ids = contentIds.all()
+        return if (ids.isEmpty()) rows else rows.filter { it.duaId in ids }
     }
 
     suspend fun rate(duaId: String, rating: Rating, today: LocalDate): LeitnerState {

@@ -898,6 +898,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_12_0">
+        <item>Tanda koma kitab (،) di teks Arab kini berwarna aksen, sehingga tempat berhenti sejenak mudah ditemukan saat membaca.</item>
+        <item>Shalawat sepuluh kali di dzikir pagi dan petang tidak lagi dicantumkan: al-Albani akhirnya menilai haditsnya lemah (Silsilah adh-Dha\'ifah no. 5788). Progres hafalan dan rutinitas yang memuatnya tetap tersimpan.</item>
+    </string-array>
     <string-array name="whats_new_1_11_0">
         <item>Pada doa iftitah tahajud yang panjang, rekamannya tidak membaca dua bagian yang ada di kitab. Bagian itu kini tampak redup dengan garis bawah titik-titik dan tidak ikut disorot saat diputar; teksnya tetap seperti di kitab.</item>
     </string-array>
