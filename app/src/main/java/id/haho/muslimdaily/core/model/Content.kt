@@ -13,9 +13,10 @@ data class Segment(val start: Double, val end: Double) {
 
 /**
  * A dua's recitation. [range] is the dua's part of the file when the recording also reads its
- * context (the hadith wording, a note); playback then covers only that part.
+ * context (the hadith wording, a note); playback then covers only that part. [segments] has one
+ * entry per phrase; null for a phrase the recording leaves out (see [Phrase.unheard]).
  */
-data class DuaAudio(val file: String, val segments: List<Segment>, val range: Segment? = null) {
+data class DuaAudio(val file: String, val segments: List<Segment?>, val range: Segment? = null) {
     val startMs: Long get() = range?.startMs ?: 0L
     /** Where playback stops, or null for the end of the file. */
     val endMs: Long? get() = range?.endMs
@@ -29,7 +30,7 @@ data class DuaAudio(val file: String, val segments: List<Segment>, val range: Se
  */
 fun Dua.playableParts(startMs: Long, endMs: Long): List<Pair<Long, Long>> {
     val segs = phrases.mapNotNull { it.segment }
-    if (segs.size != phrases.size || segs.size < 2) return listOf(startMs to endMs)
+    if (!isSegmented || segs.size < 2) return listOf(startMs to endMs)
     val parts = mutableListOf<Pair<Long, Long>>()
     val end = if (endMs == END_OF_FILE) Long.MAX_VALUE else endMs
     var from = startMs
@@ -48,8 +49,12 @@ private const val MIN_GAP_MS = 50L
 /** Equal to media3's C.TIME_END_OF_SOURCE, which the model layer does not import. */
 const val END_OF_FILE = Long.MIN_VALUE
 
-/** A phrase of the Arabic text. [range] indexes into [Dua.arabic]; [segment] is its audio, if any. */
-data class Phrase(val index: Int, val text: String, val range: IntRange, val segment: Segment?)
+/**
+ * A phrase of the Arabic text. [range] indexes into [Dua.arabic]; [segment] is its audio, if any.
+ * [unheard]: the dua has a recording, but the reciter leaves this phrase out (the book's text has
+ * a line the recording does not say). It is never highlighted or played and is shown as such.
+ */
+data class Phrase(val index: Int, val text: String, val range: IntRange, val segment: Segment?, val unheard: Boolean = false)
 
 data class Dua(
     val id: String,
@@ -83,6 +88,13 @@ data class Dua(
 ) {
     val phrases: List<Phrase> by lazy { splitPhrases(arabic, phraseBreaks, audio?.segments.orEmpty()) }
 
+    /** Every phrase has its own place in the recording, or is marked as left out of it. */
+    val isSegmented: Boolean
+        get() = phrases.isNotEmpty() && phrases.all { it.segment != null || it.unheard } && phrases.any { it.segment != null }
+
+    /** The text has lines the recording leaves out. */
+    val hasUnheardPhrases: Boolean get() = phrases.any { it.unheard }
+
     val isPlaceholder: Boolean get() = arabic.contains("[PLACEHOLDER")
 }
 
@@ -90,7 +102,7 @@ data class Dua(
  * Splits [arabic] at [breaks]. Segments are attached only when their count matches the phrase
  * count; a mismatch means the content is inconsistent and highlighting is switched off.
  */
-fun splitPhrases(arabic: String, breaks: List<Int>, segments: List<Segment>): List<Phrase> {
+fun splitPhrases(arabic: String, breaks: List<Int>, segments: List<Segment?>): List<Phrase> {
     val bounds = (listOf(0) + breaks.filter { it in 1 until arabic.length }.distinct().sorted() + arabic.length)
     val useSegments = segments.size == bounds.size - 1
     return bounds.zipWithNext().mapIndexed { i, (start, end) ->
@@ -103,6 +115,7 @@ fun splitPhrases(arabic: String, breaks: List<Int>, segments: List<Segment>): Li
             text = trimmed,
             range = from until (from + trimmed.length),
             segment = if (useSegments) segments[i] else null,
+            unheard = useSegments && segments[i] == null,
         )
     }
 }

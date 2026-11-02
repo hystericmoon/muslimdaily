@@ -109,6 +109,21 @@ class ContentMapperTest {
     }
 
     @Test
+    fun `a null segment marks a phrase the recording leaves out`() {
+        val phrases = splitPhrases("aaa bbb ccc", listOf(4, 8), listOf(Segment(0.0, 1.0), null, Segment(1.0, 2.0)))
+        assertEquals(listOf(false, true, false), phrases.map { it.unheard })
+        assertNull(phrases[1].segment)
+    }
+
+    @Test
+    fun `segments survive the mapping with a phrase left out, but not when the first is`() {
+        val ok = AudioJson("a.opus", listOf(listOf(0.0, 1.0), null))
+        val bad = AudioJson("a.opus", listOf(null, listOf(0.0, 1.0)))
+        assertEquals(true, ContentValidator.segmentsUsable(dua("a") { copy(audio = ok, phraseBreaks = listOf(2)) }))
+        assertEquals(false, ContentValidator.segmentsUsable(dua("a") { copy(audio = bad, phraseBreaks = listOf(2)) }))
+    }
+
+    @Test
     fun `split phrases drops segments on count mismatch`() {
         val phrases = splitPhrases("aaa bbb", listOf(4), listOf(Segment(0.0, 1.0)))
         assertEquals(2, phrases.size)

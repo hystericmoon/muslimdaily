@@ -36,6 +36,13 @@ the first segment's start move, to the quietest point before that word. Two more
 same file: `full` runs `propose` matching only from that word on (a title that shares words with
 the dua, waswas_05), and `break` moves one break between phrases (`break`, 1 = after phrase 1) to
 the pause after heard word `first_word`, the earlier phrase's last word.
+
+Mode `unheard` (istiftah_05): the book's text has lines the recording leaves out. Phrase `break`
+(1-based) is split where the book itself separates its bracketed additions ("] ["), and each
+part is matched to the words heard inside that phrase's old segment. A part none of whose words
+is heard gets "-" (not in the recording); every other part must be heard as `propose` requires,
+and the cuts between heard parts go at the quietest point. Only "|" marks are added to the
+Arabic (the text is checked unchanged), and only that phrase's segment is re-cut.
 """
 from __future__ import annotations
 
@@ -59,11 +66,13 @@ FRAME = 0.02      # seconds per loudness frame
 EDGE_PAD = 0.35   # at most this much before a phrase's first word or after its last
 QUIET = 15.0      # dB below the loudest frame for a clip edge (some recordings have a high noise floor)
 MIN_HEARD = 0.6   # share of a phrase's words that must be heard
+STRAY = 0.3       # below this share of its words heard, a part counts as not in the recording
 MIN_MOVE = 0.25   # seconds; smaller differences are left alone
 EARLY = 0.15      # a cut may go this far before Whisper's end of a phrase's last word
 LATE = 0.1        # and this far after its start of the next phrase's first word (Whisper's word
                   # starts run early; further out, the quietest frame can be a dip inside a word)
-FIELDS = ["id", "status", "reason", "audio_range", "audio_segments", "old_range", "old_segments"]
+FIELDS = ["id", "status", "reason", "audio_range", "audio_segments", "old_range", "old_segments", "arabic"]
+BOOK_PARTS = "] ["  # where the book separates its bracketed additions
 
 
 def near(a: str, b: str) -> bool:
@@ -237,6 +246,83 @@ def propose_break(row: dict, entry: dict, boundary: int, last_word: int) -> dict
     return out
 
 
+def fmt_segments(segs: list) -> str:
+    return "; ".join(f"{s[0]:.2f}-{s[1]:.2f}" if s else bc.UNHEARD for s in segs)
+
+
+def propose_unheard(row: dict, entry: dict, phrase: int) -> dict:
+    """Splits phrase `phrase` (1-based) at the book's "] [" and marks the parts the recording
+    does not say. See the module docstring, mode `unheard`."""
+    out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": row.get("audio_range", ""),
+           "audio_segments": "", "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", ""),
+           "arabic": ""}
+    heard, rms = entry["words"], entry["rms"]
+    phrases = [p.strip() for p in row["arabic"].split(bc.PHRASE_MARK)]
+    segs = bc.parse_segments(row.get("audio_segments") or "")
+    if not 1 <= phrase <= len(phrases) or len(segs) != len(phrases) or segs[phrase - 1] is None:
+        out["reason"] = "no such phrase with a segment"
+        return out
+    a, b = segs[phrase - 1]
+    text = phrases[phrase - 1]
+    cut = text.split(BOOK_PARTS)
+    parts = [p + "]" for p in cut[:-1]] + [cut[-1]]
+    parts = [parts[0]] + ["[" + p for p in parts[1:]]
+    if len(parts) < 2:
+        out["reason"] = "the phrase has no bracketed parts to split at"
+        return out
+    inside = [k for k, w in enumerate(heard) if w[0] >= a - 0.1 and w[1] <= b + 0.1]
+    hw = [(k, w) for k in inside for w in va.skeleton(hn.words(heard[k][2]))]
+    flat_w, owner_w = [], []
+    for k, p in enumerate(parts):
+        for w in va.skeleton(hn.words(p)):
+            flat_w.append(w); owner_w.append(k)
+    # A part with hardly any of its words matched is not in the recording: its one or two
+    # matches are common words ("أنت") borrowed from the next part. Leave it out and match again.
+    unheard: set[int] = set()
+    while True:
+        keep = [i for i, o in enumerate(owner_w) if o not in unheard]
+        sub = anchored(match([flat_w[i] for i in keep], [w for _, w in hw]))
+        pairs = [(keep[i], j) for i, j in sub]
+        stray = {k for k in range(len(parts)) if k not in unheard
+                 and 0 < sum(owner_w[i] == k for i, _ in pairs) < STRAY * owner_w.count(k)}
+        if not stray:
+            break
+        unheard |= stray
+    spans: list[tuple[float, float] | None] = []
+    for k in range(len(parts)):
+        idx = [i for i, o in enumerate(owner_w) if o == k]
+        mine = [(i, j) for i, j in pairs if owner_w[i] == k]
+        if not mine:
+            spans.append(None)
+            continue
+        if len(mine) < MIN_HEARD * len(idx) or mine[0][0] > idx[0] + 1 or mine[-1][0] < idx[-1] - 1:
+            out["reason"] = f"part {k + 1}: only some of its words are heard"
+            return out
+        first, last = hw[mine[0][1]][0], hw[mine[-1][1]][0]
+        if mine[0][0] > idx[0] and first > inside[0]:
+            first -= 1
+        if mine[-1][0] < idx[-1] and last < inside[-1]:
+            last += 1
+        spans.append((heard[first][0], heard[last][1]))
+    if spans[0] is None:
+        out["reason"] = "the first part is not heard"
+        return out
+    shown = [s for s in spans if s]
+    cuts = [a] + [quietest(rms, e1 - EARLY, max(e1, s2) + LATE)[0] for (_, e1), (s2, _) in zip(shown, shown[1:])] + [b]
+    if any(y <= x for x, y in zip(cuts, cuts[1:])):
+        out["reason"] = "cuts out of order"
+        return out
+    it = iter(zip(cuts, cuts[1:]))
+    new_segs = [list(next(it)) if s else None for s in spans]
+    marked = phrases[:phrase - 1] + parts + phrases[phrase:]
+    arabic = " | ".join(marked)
+    if bc.split_phrases(arabic)[0] != bc.split_phrases(row["arabic"])[0]:
+        out["reason"] = "splitting changed the text"
+        return out
+    out.update(audio_segments=fmt_segments(segs[:phrase - 1] + new_segs + segs[phrase:]), arabic=arabic, status="ok")
+    return out
+
+
 def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and the model
     import numpy as np
     import torch
@@ -283,8 +369,11 @@ def main() -> int:
         results: dict[str, dict] = {}
         for f in fixes:  # in file order; a row's later fixes build on its earlier ones
             r, e = by_id[f["id"]], data[by_id[f["id"]]["audio_file"]]
-            mode, first = f.get("mode") or "start", int(f["first_word"])
-            if mode == "full":
+            mode = f.get("mode") or "start"
+            first = int(f["first_word"]) if f.get("first_word") else 0
+            if mode == "unheard":
+                out = propose_unheard(r, e, int(f["break"]))
+            elif mode == "full":
                 out = propose(r, e, from_word=first)
             elif mode == "break":
                 out = propose_break(r, e, int(f["break"]), first)
@@ -292,6 +381,8 @@ def main() -> int:
                 out = propose_start(r, e, first, float(f.get("late") or 0), float(f.get("after") or 0))
             if out["status"] == "ok":
                 r["audio_range"], r["audio_segments"] = out["audio_range"], out["audio_segments"]
+                if out.get("arabic"):
+                    r["arabic"] = out["arabic"]
                 prev = results.get(f["id"])
                 if prev:
                     out["old_range"], out["old_segments"] = prev["old_range"], prev["old_segments"]
@@ -322,6 +413,8 @@ def main() -> int:
     for r in rows:
         if r["id"] in by:
             r["audio_range"], r["audio_segments"] = by[r["id"]]["audio_range"], by[r["id"]]["audio_segments"]
+            if by[r["id"]].get("arabic"):
+                r["arabic"] = by[r["id"]]["arabic"]
             done.append(r["id"])
     sa.write_csv(sa.DUAS, fields, rows, nl)
     print("applied:", " ".join(done) or "-")

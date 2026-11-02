@@ -27,12 +27,16 @@ internal object ContentValidator {
         return Result.Ok
     }
 
-    /** Segments are kept only if they are well-formed and match the phrase count. */
+    /**
+     * Segments are kept only if they are well-formed and match the phrase count. A null segment
+     * (a phrase the recording leaves out) is allowed anywhere but first.
+     */
     fun segmentsUsable(dua: DuaJson): Boolean {
         val segments = dua.audio?.segments ?: return false
-        if (segments.size != dua.phraseBreaks.size + 1) return false
+        if (segments.size != dua.phraseBreaks.size + 1 || segments.firstOrNull() == null) return false
         var last = 0.0
         for (s in segments) {
+            if (s == null) continue
             if (s.size != 2 || s[1] <= s[0] || s[0] < last - 1e-6) return false
             last = s[1]
         }

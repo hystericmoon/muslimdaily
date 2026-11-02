@@ -78,7 +78,7 @@ data class MemorizeUiState(
     val practiceLeft: Int? = null,
 ) {
     val hasAudio: Boolean get() = dua.audio != null
-    val segmented: Boolean get() = dua.phrases.isNotEmpty() && dua.phrases.all { it.segment != null }
+    val segmented: Boolean get() = dua.isSegmented
     val stage: Int get() = FadeLadder.stageOf(fade, firstLetters)
 }
 

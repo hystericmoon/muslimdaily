@@ -310,6 +310,7 @@ private fun ListenStep(state: MemorizeUiState, actions: MemorizeActions) {
 private fun BuildStep(state: MemorizeUiState, actions: MemorizeActions) {
     ArabicCard(state, focus = true)
     if (!state.segmented) InfoNote(stringResource(R.string.memorize_not_segmented))
+    if (state.hasAudio && state.dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
     val loaded = (state.playing == Playing.BUILD || state.playing == Playing.AB) && !state.playback.ended
     if (loaded) BuildProgress(state)
     PlayRow(
@@ -331,7 +332,7 @@ private fun BuildProgress(state: MemorizeUiState) {
     val i = state.playback.sequenceIndex.coerceAtLeast(0)
     val chunk = i / (2 * loops)
     val loop = (i % (2 * loops)) / 2 + 1
-    val chunks = if (state.segmented && state.playing == Playing.BUILD) state.dua.phrases.size else 1
+    val chunks = if (state.segmented && state.playing == Playing.BUILD) state.dua.phrases.count { it.segment != null } else 1
     Surface(
         color = if (state.playback.inPause) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.secondaryContainer,
         contentColor = if (state.playback.inPause) MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onSecondaryContainer,

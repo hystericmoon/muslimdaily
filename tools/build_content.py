@@ -225,12 +225,22 @@ def text_part_of(part: str, full: str) -> bool:
     return all(any(w == f for f in it) for w in re.findall(r"\w+", part))
 
 
-def parse_segments(value: str) -> list[list[float]]:
-    """'0.0-1.8; 1.8-3.9' -> [[0.0, 1.8], [1.8, 3.9]]."""
-    segments = []
+UNHEARD = "-"
+
+
+def parse_segments(value: str) -> list[list[float] | None]:
+    """'0.0-1.8; -; 1.8-3.9' -> [[0.0, 1.8], None, [1.8, 3.9]].
+
+    A lone "-" is a phrase the recording does not say (the book's text has a line the reciter
+    left out): the app shows it as not in the recording and never highlights it.
+    """
+    segments: list[list[float] | None] = []
     for chunk in (value or "").split(";"):
         chunk = chunk.strip()
         if not chunk:
+            continue
+        if chunk == UNHEARD:
+            segments.append(None)
             continue
         start, end = chunk.split("-")
         segments.append([round(float(start), 3), round(float(end), 3)])
@@ -315,18 +325,26 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         p(f"audio file content/audio/{audio['file']} not found")
     if segments and not audio.get("file"):
         p("audio segments given without an audio file")
+    if segments and all(s is None for s in segments):
+        p("every phrase is marked as not in the recording; leave the audio out instead")
+    if segments and segments[0] is None:
+        p("the first phrase must be in the recording")
     last_end = 0.0
-    for i, (start, end) in enumerate(segments):
+    for i, seg in enumerate(segments):
+        if seg is None:
+            continue
+        start, end = seg
         if start < last_end - 1e-6 or end <= start:
             report.errors.append(f"{did}: segment {i + 1} ({start}-{end}) overlaps or is out of order")
         last_end = end
+    heard = [s for s in segments if s is not None]
     rng = audio.get("range")
     if rng:
         if not audio.get("file"):
             p("audio_range given without an audio file")
         if len(rng) != 2 or rng[1] <= rng[0] or rng[0] < 0:
             report.errors.append(f"{did}: audio_range must look like '3.2-9.8'")
-        elif segments and (segments[0][0] < rng[0] - 1e-6 or segments[-1][1] > rng[1] + 1e-6):
+        elif heard and (heard[0][0] < rng[0] - 1e-6 or heard[-1][1] > rng[1] + 1e-6):
             report.errors.append(f"{did}: audio segments must lie inside audio_range")
     full = d.get("arabic_full") or ""
     if full:

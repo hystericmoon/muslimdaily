@@ -143,6 +143,23 @@ class RealContentScreenshotTest {
         }
     }
 
+    /**
+     * istiftah_05: the recording leaves out two of the book's bracketed lines. They show muted with
+     * a dotted underline next to the phrase being recited, with the note under the Arabic.
+     */
+    @Test
+    @Config(qualifiers = "id-w400dp-h2600dp-xhdpi")
+    fun unheardPhrases() {
+        val d = dua("istiftah_05")
+        kotlin.test.assertEquals(2, d.phrases.count { it.unheard })
+        captureVariants("144-real-unheard-lines") {
+            DuaDetailContent(
+                DuaDetailState(d, event(d.event), ReadingPrefs(), PlaybackState(duaId = d.id, isPlaying = true, activePhrase = 19)),
+                DuaDetailActions(),
+            )
+        }
+    }
+
     @Test
     fun readingCard() = detail("69-real-detail-reading-card", "shalawat_01")
 

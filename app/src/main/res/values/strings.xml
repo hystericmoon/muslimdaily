@@ -270,6 +270,8 @@
     <string name="dua_phrase_position">Frasa %1$d dari %2$d</string>
     <string name="dua_play_from_phrase">Putar dari frasa ini</string>
     <string name="dua_phrase_reciting">Sedang dibaca</string>
+    <string name="dua_phrase_unheard">Tidak ada di rekaman</string>
+    <string name="dua_unheard_note">Rekaman tidak membaca bagian yang bergaris bawah titik-titik. Teksnya tetap seperti di kitab.</string>
     <string name="player_speed">Kecepatan %s</string>
     <string name="state_enabled">aktif</string>
     <string name="state_disabled">mati</string>
@@ -896,6 +898,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_11_0">
+        <item>Pada doa iftitah tahajud yang panjang, rekamannya tidak membaca dua bagian yang ada di kitab. Bagian itu kini tampak redup dengan garis bawah titik-titik dan tidak ikut disorot saat diputar; teksnya tetap seperti di kitab.</item>
+    </string-array>
     <string-array name="whats_new_1_10_3">
         <item>Dua rekaman lagi ditata ulang waktunya: doa saat was-was setan kini dimulai setelah judul bab yang dibaca qari, dan frasa salah satu doa bangun tidur menyala seiring bacaan.</item>
         <item>Dua doa safar kini juga mencantumkan sumber keduanya, al-Mustadrak karya al-Hakim (no. 1883).</item>

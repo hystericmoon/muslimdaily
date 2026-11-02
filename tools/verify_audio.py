@@ -82,10 +82,11 @@ def judge(written: list[str], heard: list[str]) -> tuple[int, str]:
     return len(pairs), "ok" if ok else "check"
 
 
-def segments_of(row: dict) -> list[tuple[float, float]]:
+def segments_of(row: dict) -> list[tuple[float, float] | None]:
+    """Each phrase's (start, end); None for a phrase marked as not in the recording."""
     segs = bc.parse_segments(row.get("audio_segments") or "")
     if segs:
-        return [(a, b) for a, b in segs]
+        return [(s[0], s[1]) if s else None for s in segs]
     rng = bc.parse_segments(row.get("audio_range") or "")
     return [(rng[0][0], rng[0][1])] if rng else [(0.0, 0.0)]  # (0, 0): the whole file
 
@@ -108,7 +109,7 @@ def main() -> int:  # pragma: no cover - needs torch and the model
         if not row.get("audio_file") or (args.id and row["id"] not in args.id) or row["id"] in done:
             continue
         phrases = [p.strip() for p in row["arabic"].split(bc.PHRASE_MARK)]
-        segs = list(zip(segments_of(row), phrases))
+        segs = [(s, p) for s, p in zip(segments_of(row), phrases) if s]  # unheard phrases have no clip
         wavs = []
         for (a, b), _ in segs:
             cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a), "-to", str(b)] if b > a else []) + \
