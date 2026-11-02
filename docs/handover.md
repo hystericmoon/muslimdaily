@@ -5,9 +5,8 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 2 Nov 2026 (1.11.0 released 08:02 WIB; #127 closed on the owner's "do everything";
-three decisions put to the owner, below). All earlier Adwam
-sessions were read and archived; everything still open from them is below.
+Last updated: 2 Nov 2026 (1.12.0 merged from #136: accent-coloured ، and the shalawat 10×
+rows left out; release workflow publishes it).
 
 ## In flight (check first)
 
@@ -88,16 +87,15 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   answers cloud sessions, sunnah.com and dorar.net don't): al-Hakim (morning_10, evening_10,
   night_01, travel_03, funeral_06), an-Nasa'i al-Kubra (wudu_04, manners_04), al-Baihaqi
   (witr_03), Ahmad 19109 (protection_02, plural wording), Abu Dawud 466 (enter_masjid_01, the
-  a'udzu sentence). 7 without a first-source number: ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
-  morning_19/evening_19 (at-Tabarani by two chains; not in ash-Shaghir or the printed
-  al-Kabir; al-Awsat search found nothing; see Decisions: the hadith may be weak), travel_12/13 (Ibn as-Sunni not on islamweb; their second source,
+  a'udzu sentence). 5 without a first-source number (7 before morning_19/evening_19 left out): ruku_01, sujud_01, tashahhud_13 (no single hadith, #102),
+  morning_19/evening_19 (left out in 1.12.0 as weak), travel_12/13 (Ibn as-Sunni not on islamweb; their second source,
   al-Hakim 1883, is filled since 1.10.2 via `slot` 2 in the islamweb CSV). al-Mu'jam al-Kabir's
   section for the companion runs ~7000 pages with no search; a crawl that size was refused. islamweb book ids: Mustadrak 74, Musnad Ahmad 6, Baihaqi al-Kubra 71,
   Nasa'i al-Kubra 406 (its 'Amal al-Yawm is content ids 10054-11232), Tabarani Kabir 84, Awsat
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (2 Nov): session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127, two decision pages, the eating_08 question).
+- This session (2 Nov): session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
 - Previous session: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
   session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129 merged). Before it:
   session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
@@ -106,20 +104,7 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
 
 ## Decisions waiting on the owner
 
-- **morning_19 / evening_19 (shalawat 10×) may be weak** (found 2 Nov while looking for its
-  number; decision page https://claude.ai/artifact/8DvtMWsQgHHa7yRJdbrxVf: A keep, B keep and
-  list the later grade under "Penilaian lain", C leave out; recommended C). Majma' az-Zawa'id
-  no. 17022 (10/120, islamweb 87/17265): «رواه الطبراني بإسنادين، وإسناد أحدهما جيد، ورجاله
-  وثقوا»; al-Munawi (Fayd al-Qadir, islamweb 304/17656) quotes al-Haythami adding a break
-  (Khalid ibn Ma'dan did not hear from Abu ad-Darda'). islamqa.info/ar/answers/130213: al-Albani
-  called it hasan in Sahih al-Jami' 5357, then weak in Silsilah ad-Da'ifah 5788; al-'Iraqi,
-  as-Sakhawi, al-Wadi'i weak. Ad-Da'ifah itself not read (dorar.net 403): confirm it before
-  changing content. No number possible: Abu ad-Darda's narrations are missing from the printed
-  al-Mu'jam al-Kabir; al-Awsat search found nothing (search is not conclusive).
-- **The book's ، more visible** (decision page https://claude.ai/artifact/NJi4iMwytByy5Nj1WVcwNF:
-  A as is, B primary colour (recommended), C larger muted, D both). Open question with it: 7
-  Qur'anic rows also carry ، (travel_01, sleep_12, …): style them too or leave plain?
-- **eating_08 Indonesian**: hisnmuslim.com/i/id/69 has an exact match ("Dengan menyebut nama
+- **eating_08 Indonesian**: owner said leave it (2 Nov). hisnmuslim.com/i/id/69 has an exact match ("Dengan menyebut nama
   Allah, pada awalnya dan akhirnya."), but no translator or licence shown (same IslamHouse terms
   as the English), a different edition from the PDF, and `translation_id_from` would need a new
   source kind. Suggested: leave it. HadeethEnc re-checked 2 Nov (all 2,260 Indonesian hadiths):
@@ -138,6 +123,17 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.12.0 (versionCode 49, 2 Nov, #136; owner chose B and C on the decision pages
+https://claude.ai/artifact/NJi4iMwytByy5Nj1WVcwNF and https://claude.ai/artifact/8DvtMWsQgHHa7yRJdbrxVf):
+the book's ، in the palette's primary (`withPauseCommas`, also on the 7 Qur'anic rows that carry
+it; muted inside book notes and muted text); morning_19 / evening_19 left out as weak
+(`clean_entries.WEAK`: al-Albani hasan in Sahih al-Jami' 5357, then weak in Silsilah ad-Da'ifah
+5788 per islamqa 130213; ad-Da'ifah itself not read from a cloud session). Saved reviews and
+routines keep the ids; `ReviewRepository` never counts a missing id as due and routine cards skip
+it. `hisn_098.opus` stays unused in `content/audio`. content_version 49.
+Note: `clean_entries.py` is not idempotent on main's CSV (it re-touched 45 rows); the two rows were
+removed from `duas.csv` directly and the decision kept in `WEAK`.
 
 1.11.0 (versionCode 48, 2 Nov, #133): istiftah_05's lines the recording leaves out are marked.
 
@@ -193,12 +189,12 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    done (#118, #124). Left, all the owner's: create the upload keystore and add the four
    `PLAY_UPLOAD_*` secrets, enrol in Play App Signing, store listing, content rating, target
    audience ("Needs doing" in `docs/play-store.md`).
-2. Make the book's `،` more visible: options page made 2 Nov (see Decisions). Decided
+2. Done in 1.12.0 (accent-coloured ،). Decided
    31 Oct: no ۝ in non-Qur'anic duas (the owner checked: sunnah.com and dorar.net don't use it);
    the text keeps the book's punctuation.
 3. Done in 1.10.0 (#113), 1 Nov (#128: tasbih_09; full Whisper check; 83 rows re-timed) and
    1.11.0 (#133: istiftah_05). Nothing left from the audio check.
-6. Empty `source_1_no`: 7 rows left (see In flight). sunnah.com and dorar.net answer 403 to
+6. Empty `source_1_no`: 5 rows left (see In flight). sunnah.com and dorar.net answer 403 to
    cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
    widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
