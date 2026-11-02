@@ -256,6 +256,8 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 ## Sessions
 
+- Times: the owner reads Jakarta time. Give every time to the owner in WIB (UTC+7), not UTC
+  (asked 2 Nov). Tool results print UTC; convert before quoting them.
 - One session at a time. When its work is done, or the conversation is getting long: update
   this file, merge it, start a new cloud session on this repo with the prompt "Continue from
   docs/handover.md", and archive the finished session.
