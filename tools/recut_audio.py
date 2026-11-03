@@ -43,6 +43,12 @@ part is matched to the words heard inside that phrase's old segment. A part none
 is heard gets "-" (not in the recording); every other part must be heard as `propose` requires,
 and the cuts between heard parts go at the quietest point. Only "|" marks are added to the
 Arabic (the text is checked unchanged), and only that phrase's segment is re-cut.
+
+Mode `join` (travel_01): phrase `break` (1-based) holds only the reciter's title and the next
+segment holds both phrases, with no pause between them quiet enough to cut at. The two phrases
+become one (the "|" between them is removed, the text is checked unchanged) and play the later
+segment only; when it is the first phrase, the clip starts there too. Refused when any heard word
+inside the earlier segment is one of the joined phrases' words.
 """
 from __future__ import annotations
 
@@ -353,6 +359,36 @@ def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and 
         WORDS.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
 
 
+def propose_join(row: dict, entry: dict, phrase: int) -> dict:
+    """Joins phrase `phrase` (1-based) with the next; the joined phrase plays the next one's
+    segment only. See the module docstring, mode `join`."""
+    out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": row.get("audio_range", ""),
+           "audio_segments": "", "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", ""),
+           "arabic": ""}
+    phrases = [p.strip() for p in row["arabic"].split(bc.PHRASE_MARK)]
+    segs = bc.parse_segments(row.get("audio_segments") or "")
+    if not 1 <= phrase < len(phrases) or len(segs) != len(phrases) or not segs[phrase - 1] or not segs[phrase]:
+        out["reason"] = "no such pair of phrases with segments"
+        return out
+    (a, b), (c, d) = segs[phrase - 1], segs[phrase]
+    joined = set(va.skeleton(hn.words(phrases[phrase - 1] + " " + phrases[phrase])))
+    inside = [w for w in entry["words"] if w[0] >= a - 0.1 and w[1] <= b + 0.1]
+    if any(set(va.skeleton(hn.words(w[2]))) & joined for w in inside):
+        out["reason"] = "the earlier segment has words of the phrases"
+        return out
+    marked = phrases[:phrase - 1] + [phrases[phrase - 1] + " " + phrases[phrase]] + phrases[phrase + 1:]
+    arabic = " | ".join(marked)
+    if bc.split_phrases(arabic)[0] != bc.split_phrases(row["arabic"])[0]:
+        out["reason"] = "joining changed the text"
+        return out
+    new = segs[:phrase - 1] + [[c, d]] + segs[phrase + 1:]
+    if phrase == 1:
+        rng = bc.parse_segments(row.get("audio_range") or "")
+        out["audio_range"] = f"{c:.2f}-{rng[0][1] if rng else new[-1][1]:.2f}"
+    out.update(audio_segments=fmt_segments(new), arabic=arabic, status="ok")
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -375,6 +411,8 @@ def main() -> int:
                 out = propose_unheard(r, e, int(f["break"]))
             elif mode == "full":
                 out = propose(r, e, from_word=first)
+            elif mode == "join":
+                out = propose_join(r, e, int(f["break"]))
             elif mode == "break":
                 out = propose_break(r, e, int(f["break"]), first)
             else:

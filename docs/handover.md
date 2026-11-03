@@ -5,11 +5,29 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 2 Nov 2026 (1.12.0 merged from #136: accent-coloured ، and the shalawat 10×
-rows left out; release workflow publishes it).
+Last updated: 3 Nov 2026 (1.12.1, #139: six clips no longer open on the reciter's title;
+travel_01 joined, owner's choice B; staying on the Default environment).
 
 ## In flight (check first)
 
+- **1.12.1** (versionCode 50, branch `claude/audio-intros-1.12.1`): the owner heard the end of
+  the chapter title («يقول») at the start of dress_01 and dress_02 (2 Nov). An intro scan of all
+  312 recorded rows (Whisper on each clip's first 8 s, words heard before one of the dua's first
+  four words; script kept only in the session's scratchpad: re-create from this description)
+  found three more: grave_03, travel_10, distress_01, and travel_01 (below). All five re-cut by `recut_audio.py start`
+  (rows in `tools/align/start_fixes.csv`), re-checked by `verify_audio.py`: all start on the
+  dua (dress_02 phrase 1 "check" is Whisper fusing «أنت كسوتنيه»). Only `audio_range` and the
+  first segment changed. The 1 Nov check missed them because a single extra word passed its
+  "more than one word" rule. Flags that were not intros: misheard first words (ruku_03,
+  morning_10/evening_10, children_02, quran_18/21/23 «وقر» for «وقل») and rows whose text is
+  itself the book's instruction (night_03, waswas_01, waswas_06, sleep_12). PR #139; the owner
+  approved the merge and the release (2 Nov, Jakarta 3 Nov).
+- **travel_01** (owner chose B, 2 Nov, decision page https://claude.ai/artifact/Xo4WGqb1JzSdxZPe2Gm9nH):
+  phrase 1 (2.27-6.87) played only the title «دعاء الركوب … أقول»; phrase 2 (6.87-11.97) held
+  «بسم الله والحمد لله» with no pause quiet enough to cut between them (noisy track; Whisper's
+  whole-file words for hisn_206 miss the opening). New `recut_audio.py` mode `join` (row in
+  `start_fixes.csv`): the two phrases are one, playing 6.87-11.97; the clip starts at 6.87. Text
+  unchanged (one "|" removed). verify_audio: all 11 phrases ok. In 1.12.1.
 - **1.11.0** (versionCode 48, PR #133, owner's choice B on 2 Nov, decision page
   https://claude.ai/artifact/1SzPRAj9bpBXBfP45f3Na4): istiftah_05's recording leaves out two of
   the book's bracketed lines («وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي», and the closing «وَلاَ حَوْلَ وَلاَ قُوَّةَ
@@ -95,8 +113,9 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (2 Nov): session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
-- Previous session: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
+- This session (2 Nov): session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1).
+- Before it: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
+- Before that: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
   session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129 merged). Before it:
   session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
 - Branch deletes: the cloud git proxy refuses `git push --delete`; the owner can turn on
@@ -118,9 +137,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
-- **Cloud environment**: owner is creating a second environment with haho-design under
-  Repositories (2 Nov, see "Session setup (cloud)"); the first session in it should check
-  `ls ~/.m2/repository/id/haho/haho-design/` and record the environment's name here.
+- **Cloud environment**: decided (owner, 3 Nov): stay on Default. Each session attaches
+  haho-design (`add_repo`) and runs `tools/cloud_setup.sh` (~2 min). The public docs show no
+  Repositories field on any environment.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
@@ -296,15 +315,14 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 - `tools/cloud_setup.sh` is the environment's whole setup script (Android SDK 37, Maven Central
   mirror for Gradle, haho-design at the version `gradle/libs.versions.toml` pins, published to
-  `~/.m2`). 2 Nov: it replaced the script in the Default environment's settings, which pinned
-  haho-design 0.1.0 (stale since 0.2.0). The **Default environment has no Repositories section**,
-  so its script can't clone the private haho-design; the owner chose (2 Nov) a second environment
-  with `hystericmoon/haho-design` under Repositories and this script. A session's own repo list
+  `~/.m2`). 2 Nov: it is the Default environment's script plus the pinned haho-design version (Default's
+  copy still pins 0.1.0 unless the owner pasted the new one). The **Default environment has no Repositories section**,
+  so its script can't clone the private haho-design (its step fails quietly). The public docs
+  (code.claude.com/docs/en/cloud-environments) list no Repositories field for any environment. A session's own repo list
   (side panel) is not the environment's: a repo attached with `add_repo` shows there too.
   Check at start: `ls ~/.m2/repository/id/haho/haho-design/`. If the version is missing:
   `add_repo hystericmoon/haho-design`, then `bash tools/cloud_setup.sh` (safe to re-run).
-  Start handover sessions with `create_session` from a session in the new environment (it
-  inherits the caller's environment).
+  `create_session` takes one repo and inherits the caller's environment.
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
 - Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):

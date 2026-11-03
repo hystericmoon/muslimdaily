@@ -10,3 +10,9 @@ iftar_01,start,5,,,4.45,"clip started at 5.84, after the dua's first word 'dhaha
 waswas_05,full,11,,,,"title 'ma yaqulu wa yaf'alu man adhnaba dhanban, qala salla Allahu 'alayhi wa sallam' shares 'ma min ... dhanban' with phrase 1; every phrase played one late; matching starts at 'ma' (8.14)"
 wake_04,break,150,8,,,break after phrase 8 sat before 'wa bi'sa al-mihad' (223.19); it goes after 'al-mihad'
 istiftah_05,unheard,,20,,,"the recording leaves out two of the book's bracketed lines: nothing is said between أعلنت (83.52-84.22) and أنت المقدم (85.50), and the file ends on أنت (96.34) without ولا حول ولا قوة إلا بالله; full-file Whisper transcript, 1 Nov"
+dress_01,start,4,,,,"title 'du'a labs ath-thawb yaqulu' read inside the clip (found 2 Nov by the owner, by ear); dua starts at 'al-hamdu'"
+dress_02,start,5,,,,"title 'du'a labs ath-thawb al-jadid yaqulu' read inside the clip (found 2 Nov by the owner, by ear); dua starts at 'allahumma'"
+grave_03,start,4,,,,"title 'du'a ziyarat al-qubur yaqulu' read inside the clip (2 Nov intro scan); dua starts at 'as-salamu'"
+travel_10,start,5,,,,"title 'du'a al-musafir idha ashar yaqulu' read inside the clip (2 Nov intro scan); dua starts at 'sami'a'"
+distress_01,start,4,,,,"title 'du'a al-hamm wal-huzn yaqulu' read inside the clip (2 Nov intro scan); dua starts at 'allahumma'"
+travel_01,join,,1,,,"phrase 1 (2.27-6.87) held only the title 'du'a ar-rukub ... aqulu' and phrase 2 (6.87-11.97) both 'bismillah' and 'wal-hamdu lillah' (verify_audio, 2 Nov); the reciter runs on over a noisy track, so no cut passes QUIET between them; joined (owner's choice B, 2 Nov, https://claude.ai/artifact/Xo4WGqb1JzSdxZPe2Gm9nH)"
