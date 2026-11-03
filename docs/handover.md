@@ -5,12 +5,12 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.1, #139: six clips no longer open on the reciter's title;
-travel_01 joined, owner's choice B; staying on the Default environment).
+Last updated: 3 Nov 2026 (1.12.1 merged, #139; nothing in flight; next work waits on the
+owner).
 
 ## In flight (check first)
 
-- **1.12.1** (versionCode 50, branch `claude/audio-intros-1.12.1`): the owner heard the end of
+- **1.12.1** (versionCode 50, #139, merged 3 Nov 07:13 WIB; see Shipped): the owner heard the end of
   the chapter title («يقول») at the start of dress_01 and dress_02 (2 Nov). An intro scan of all
   312 recorded rows (Whisper on each clip's first 8 s, words heard before one of the dua's first
   four words; script kept only in the session's scratchpad: re-create from this description)
@@ -113,8 +113,10 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (2 Nov): session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1).
-- Before it: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
+- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (checked the 1.12.1 release;
+  handover only).
+- Before it: session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1 = #139).
+- Before that: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
 - Before that: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
   session_01W2ZFMuv8AfZt8voGDUM455 (#128 = 1.10.2, #129 merged). Before it:
   session_01W2ZFMscuG3LNhNF4PPQ8Gn (#124). Before it: session_01W2ZFMtyVHfVpmCd9Vz2uc7 (1.10.1, #118, #122).
@@ -143,6 +145,10 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.12.1 (versionCode 50, 3 Nov, #139): six clips (dress_01/02, grave_03, travel_10,
+distress_01, travel_01) no longer open on the reciter's chapter title; travel_01's first two
+phrases joined (details under In flight).
 
 1.12.0 (versionCode 49, 2 Nov, #136; owner chose B and C on the decision pages
 https://claude.ai/artifact/NJi4iMwytByy5Nj1WVcwNF and https://claude.ai/artifact/8DvtMWsQgHHa7yRJdbrxVf):
