@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.5 PR open: IslamHouse credits; merge waits on the owner, versionName change).
+Last updated: 3 Nov 2026 (1.12.5 released, #152; no open PRs; nothing waits on the owner).
 
 ## In flight (check first)
 
@@ -188,6 +188,10 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 
 ## Shipped
 
+1.12.5 (versionCode 54, 3 Nov 14:28 WIB, #152, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.5): About credits IslamHouse
+as their reply suggested: "Audio: Hamad ad-Duraihim" and "Teks: Hisnul Muslim" (Mahrus Ali for the
+two eating duas), from #150. No content change; content_version stays 54.
+
 1.12.4 (versionCode 53, 3 Nov 13:16 WIB, #147, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.4): eating_09 has Indonesian; eating_08/09 from IslamHouse's
 Indonesian PDF (Mahrus Ali), translator named in the reference; `tools/check_sources.py`.
 content_version 54.
@@ -268,12 +272,11 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Done (3 Nov, Sonnet, #150, merged, unreleased): IslamHouse credits.** About's licence list now has "Audio:
+0. **Done (3 Nov, Sonnet, #150, released in 1.12.5): IslamHouse credits.** About's licence list now has "Audio:
    Hamad ad-Duraihim" ("Sumber: IslamHouse.com …") and "Teks: Hisnul Muslim" (Arabic and English
    from hisnmuslim.com, no translator named; Indonesian of the two eating duas: Mahrus Ali; source
    IslamHouse.com). `methodology_*` and content untouched. Screenshot 47 re-recorded by the
-   Screenshots workflow. No version bump: ships with the next release (or 1.12.5 if the owner
-   wants it now; versionName change: ask first). Also done: `tools/check_sources.py` (1.12.4;
+   Screenshots workflow. Shipped as 1.12.5 (#152). Also done: `tools/check_sources.py` (1.12.4;
    release gate in `docs/release.md`), Play content (#146). Open follow-up: none.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
