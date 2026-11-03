@@ -1,6 +1,7 @@
 # Licence request to IslamHouse
 
-**Status: sent 2026-10-23 through the contact form, awaiting a reply.** The form at
+**Status: answered. IslamHouse said yes to all three points; see "Reply" at the end.** Sent
+2026-10-23 through the contact form. The form at
 https://islamhouse.com → "Contact us" allows only 500 characters, so the short message below
 went instead of the full letter (the site's FAQ is https://d1.islamhouse.com/html/faq.htm). If
 they ask for details, email them the full letter. Keep their reply in this folder as
@@ -63,3 +64,29 @@ Jazakumullahu khairan,
 [Name]
 Adwam maintainer
 [Email]
+
+## Reply (summary)
+
+The owner received IslamHouse's reply by email ("IslamHouse.com Management") and shared it on
+2026-11-03. The full email stays with the owner; it says it may be used as written confirmation.
+This is a summary, not the text.
+
+- **Granted:** use of the Hisn al-Muslim content in the free, offline, ad-free app, distributed
+  through GitHub and Google Play.
+- **Audio:** Hamad ad-Duraihim's recitation may be used. Converting to Opus for technical
+  purposes is fine as long as the audio content itself is not edited or altered.
+- **English text:** the English published on their platforms may be used. Keep the translator
+  exactly as the official source shows it; where no translator is listed, don't infer or assign
+  one.
+- **Conditions:** content reproduced without alteration; IslamHouse.com clearly credited as the
+  source; the reciter's name kept for the audio; translator, publisher and edition kept whenever
+  the source gives them; updated or corrected versions followed when available.
+- **Suggested credits:** "Audio: Hamad ad-Duraihim – Source: IslamHouse.com" and "Text: Hisn
+  al-Muslim – {Translator, if listed} – Source: IslamHouse.com".
+- **Developer resources:** https://dev.islamiccontent.org/
+
+How Adwam meets the conditions (checked 2026-11-03): `tools/hisnul_muslim/fetch_audio.py` only
+converts each whole file (mono, 48 kHz, 32 kbps Opus); clip starts, ends and phrases are
+playback times in `content/duas.json`, so the files are whole recordings. Row texts are verbatim
+excerpts (`tools/clean_entries.py` refuses anything else) and the full entry is shown under the
+dua. No translator is named for hisnmuslim.com text, since the site names none.

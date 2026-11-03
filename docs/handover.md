@@ -143,9 +143,9 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   {Translator, if listed} – Source: IslamHouse.com". Developer resources: dev.islamiccontent.org.
   Checked 3 Nov: `fetch_audio.py` only converts whole files (mono 48 kHz 32k Opus); every cut is
   a playback range in duas.json, the files are whole; row texts are verbatim excerpts with the
-  full entry shown. Asked the owner (no answer yet): the date it arrived; whether to commit the
-  email text to the repo (names in a public repo) or a summary; whether to put the hisnmuslim.com
-  English (and eating_08) back in the Play build now. Possible follow-ups: credits worded as they
+  full entry shown. Summary (not the text, owner's choice 3 Nov) in
+  `docs/islamhouse-licence-request.md`, "Reply". Still asked (no answer yet): the date it arrived;
+  whether to put the hisnmuslim.com English (and eating_08) back in the Play build now. Possible follow-ups: credits worded as they
   suggest; a release-checklist step to re-check the sources for corrections. The owner also
   asked about re-recording all audio with ElevenLabs: advised against (generated recitation
   breaks the content rules and this licence's "reciter's name retained"; the sample Ayat
