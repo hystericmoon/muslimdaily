@@ -8,13 +8,17 @@ tool when a task touches them; don't read it end to end). Repeated procedures li
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
 Last updated: 3 Nov 2026 (#156 merged: handover split, `docs/history.md`, project skills;
-content gaps PR open, item 0a).
+#157 content gaps open, waits on the owner).
 
 ## In flight
 
 - Main: 1.12.5 (versionCode 54, content_version 54, 329 rows).
-- Content gaps PR (item 0a): waits on the owner's OK to merge (shipped content). Then a
-  release (1.12.6 or 1.13.0, owner's call; `release` skill).
+- **PR #157** (item 0a): CI green, mergeable. Needs three answers from the owner (asked 3 Nov):
+  1. leave out an unvowelled «رضي الله عنه» too (only travel_09)? If no: remove that pattern
+     from `HONORIFICS` in `tools/transliterate.py` and its test (Opus: transliterator).
+  2. OK to merge (shipped content)?
+  3. release 1.12.6 (suggested: corrections and gap fills) or 1.13.0? Then the `release` skill
+     (What's New: English for 2 duas, funeral_01 audio, Latin for 16 rows, 5 corrected).
 
 ## Waiting on the owner
 
@@ -29,7 +33,7 @@ content gaps PR open, item 0a).
 
 Roadmap: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0a. **Content gaps: done in PR `claude/content-gaps` (waits on the owner: shipped content).**
+0a. **Content gaps: done in PR #157 (`claude/content-gaps`, CI green, mergeable; waits on the owner).**
    content_version 55. Counts after it: 1 row without English (manners_05: its entry's
    English is Aisha's reply about "them"; no row has its Arabic), 3 without Indonesian
    (tasbih_03, tasbih_06, salam_04: no licensed source), 16 without audio (sunnah_01-16:
@@ -67,7 +71,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
 - Last sessions: session_01W2ZFMu64SGUJb7ZB37ryAj (3 Nov, Opus: 1.12.3, #145, #146, 1.12.4;
-  then this split). Older ids in history, "Finished work".
+  #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 
