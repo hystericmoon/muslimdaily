@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 3 Nov 2026 (1.12.6 shipped: #157 content gaps, #159 release).
+Last updated: 3 Nov 2026 22:00 WIB (1.12.6 shipped: #157 content gaps, #159 release).
 
 ## In flight
 
@@ -16,10 +16,9 @@ Last updated: 3 Nov 2026 (1.12.6 shipped: #157 content gaps, #159 release).
 
 ## Waiting on the owner
 
-- **IslamHouse licence reply** (3 Nov; summary in `docs/islamhouse-licence-request.md`,
-  "Reply"; details in history, "Finished work"). Credits done (1.12.5). Still asked: the date
-  it arrived. Possible follow-up: a release-checklist step to re-check sources for corrections
-  (`tools/check_sources.py` already is the gate in `docs/release.md`).
+- **IslamHouse licence reply**: arrived ~01:00 WIB 3 Nov (recorded in `docs/islamhouse-licence-request.md`,
+  "Reply"). Credits done (1.12.5). Nothing owed. Possible follow-up: a release-checklist step to
+  re-check sources for corrections (`tools/check_sources.py` already is the gate in `docs/release.md`).
 - **Oppo user's widget feedback** via Diagnostics (1.5.0): no reply recorded.
 - Cloud environment: decided, stay on Default (see "Session setup").
 
@@ -40,8 +39,9 @@ Roadmap: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 7. Widget QA left: 5.4c (lock-screen widget, needs a Pixel), 5.4's legacy half, a third-party
    launcher; TalkBack T1–T12 skipped by the owner. Needs the owner's Mac (emulators) or phone;
    cloud sessions can't. Details: history, "Closed open-work items", 7.
-8. ~50 merged `claude/*` branches on origin; the cloud git proxy refuses `git push --delete`.
-   Suggested to the owner: turn on "Automatically delete head branches".
+8. ~50 old merged `claude/*` branches on origin; the cloud git proxy refuses `git push --delete`.
+   "Automatically delete head branches" is on (owner, 3 Nov), so new ones go away; the old ones
+   stay until the owner deletes them on GitHub.
 
 Not to do: the Wear OS app (owner, 31 Oct). Deleting count notes inside duas (after_salah_01/04,
 sleep_08, fear_05, news_05; shown muted since 1.7.0).
