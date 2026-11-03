@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.5 released, #152; no open PRs; nothing waits on the owner).
+Last updated: 3 Nov 2026 (1.12.5 released, #152; no open PRs; next: Opus, content gaps, item 0).
 
 ## In flight (check first)
 
@@ -272,6 +272,23 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
+0a. **Next (model: Opus): content gaps** (owner asked "can we fix those?", 3 Nov; counted on main,
+   content_version 54, 329 rows, from `content/duas.json`). Arabic: none missing. Audio file on
+   disk for every row that names one. Gaps:
+   - English missing (3): eating_01, waswas_04, manners_05 (Indonesian present). Not yet checked
+     whether their source has English: read the source rows first; import only what a source gives.
+   - Indonesian missing (3): tasbih_03, tasbih_06, salam_04 (English present). Already searched
+     (see "English-only Hisn rows"): no importable source; only fixable if the owner supplies a
+     licensed Indonesian edition.
+   - No audio (17): funeral_01 (a Hisn row: check IslamHouse's Hisn audio for entry 153) and
+     sunnah_01-16 (HadeethEnc, which has no audio; generated recitation is ruled out). Likely
+     stays as is unless a licensed recording exists.
+   - No Latin (55): by design, `tools/transliterate.py` skips rows whose Arabic has unvowelled
+     words or inline narration (e.g. صلى الله عليه وسلم); only 2 of the 55 have no vowel marks at
+     all, the rest were not inspected one by one. Never hand-edit the Arabic or write Latin. A fix
+     is a fixed rule in the transliterator (for example, skip the narration clause), which the
+     owner must approve first as it extends the 1 Nov exception.
+   Rows with audio but no phrase timing (118) are not a gap: they play the whole clip.
 0. **Done (3 Nov, Sonnet, #150, released in 1.12.5): IslamHouse credits.** About's licence list now has "Audio:
    Hamad ad-Duraihim" ("Sumber: IslamHouse.com …") and "Teks: Hisnul Muslim" (Arabic and English
    from hisnmuslim.com, no translator named; Indonesian of the two eating duas: Mahrus Ali; source
@@ -309,7 +326,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    launcher (install Lawnchair). Not 5.4's legacy half (placing the old widget needs an older
    build installed over 1.10.x, i.e. a downgrade that wipes app data: emulator only) and not
    5.4c (no lock-screen widgets on its PixelOS: a Pixel or a Pixel emulator image).
-8. Merged branches: only `claude/handover-docs-ntkjix` is left. The owner said go ahead
+8. Merged branches: `claude/handover-docs-ntkjix` is deleted (owner, 3 Nov), but ~50 other merged
+   `claude/*` branches are still on origin (checked 3 Nov), so auto-delete of head branches looks
+   off. Earlier note: only `claude/handover-docs-ntkjix` was left. The owner said go ahead
    (31 Oct), but the cloud git proxy refuses `git push --delete`; suggested to the owner:
    turn on "Automatically delete head branches" in the repo settings and delete the leftover
    once by hand.
