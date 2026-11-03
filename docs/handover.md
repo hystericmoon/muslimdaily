@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.3 released, #144; IslamHouse licence reply summarised).
+Last updated: 3 Nov 2026 (1.12.4 released, #147; next session: Sonnet, IslamHouse credits wording).
 
 ## In flight (check first)
 
@@ -93,7 +93,7 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   separate copy removed (`content/play/`, `ContentAssetsTask.duasFile`, `src/release` strings,
   screenshot 143, `play_duas`). Play gets the hisnmuslim.com English and the 5 rows back. Nothing
   ships to users (Play on hold); no version bump. `docs/play-store.md`, "Content".
-- **1.12.4** (versionCode 53, branch `claude/hisn-id-islamhouse-pdf`; owner: "do all the Opus
+- **1.12.4** (versionCode 53, #147, released 3 Nov 13:16 WIB; owner: "do all the Opus
   work", 3 Nov): IslamHouse's own Indonesian Hisn PDF
   (https://d1.islamhouse.com/data/id/ih_books/single/id_hisn_almuslim.pdf, 156 pp., «Kumpulan Doa
   dalam Alquran & Hadits», terj. Mahrus Ali, koreksi Abdullah Khaidhir, Fir'adi Nasruddin, Erwandi
@@ -108,7 +108,6 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   reference note now names translator, publisher and edition. tasbih_03 (256), tasbih_06 (259),
   salam_04 (227) give only a Latin reading in it too: still English only. content_version 54.
   Same PR: `tools/check_sources.py` (see open work 0).
-  Merging publishes a release and changes religious content: ask the owner first.
 - **1.12.3** (versionCode 52, #144, released 3 Nov 11:51 WIB; owner chose A on 3 Nov):
   eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
   from hisnmuslim.com/i/id/69 (entry 178). New source kind `translation_id_from = hisnmuslim:<no>`
@@ -142,7 +141,8 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (3 Nov, after a clear): session_01W2ZFMu64SGUJb7ZB37ryAj again (1.12.3).
+- This session (3 Nov, after a clear, Opus): session_01W2ZFMu64SGUJb7ZB37ryAj again: 1.12.3
+  (#144), #145, Play = GitHub content (#146), 1.12.4 + check_sources (#147). Next: Sonnet.
 - Before it: the same session id (1.12.1 released; #140, #141 Opus/Sonnet rule; 1.12.2 = #142;
   eating_08 decision page).
 - Before it: session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1 = #139).
@@ -187,6 +187,10 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.12.4 (versionCode 53, 3 Nov 13:16 WIB, #147, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.4): eating_09 has Indonesian; eating_08/09 from IslamHouse's
+Indonesian PDF (Mahrus Ali), translator named in the reference; `tools/check_sources.py`.
+content_version 54.
 
 1.12.3 (versionCode 52, 3 Nov 11:51 WIB, #144, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.3):
 eating_08 has Indonesian from hisnmuslim.com (details under In flight). content_version 53.
@@ -264,10 +268,18 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Licence follow-ups**: optional, Sonnet: word the credits as IslamHouse suggests ("Audio:
-   Hamad ad-Duraihim – Source: IslamHouse.com"). Done in 1.12.4's PR: `tools/check_sources.py`
-   (corrections check, release gate in `docs/release.md`; baseline `tools/sources_baseline.json`,
-   3 Nov: 0 changes, all 279 Hisn rows' English equal to hisnmuslim.com today). Play content: done.
+0. **Next (model: Sonnet): IslamHouse credits worded as they suggest.** Their reply suggests
+   "Audio: Hamad ad-Duraihim – Source: IslamHouse.com" and "Text: Hisn al-Muslim – {Translator,
+   if listed} – Source: IslamHouse.com". Today: About's licence list
+   (`feature/settings/AboutScreen.kt`, `License(...)` entries, hardcoded Indonesian) has "Audio
+   Hisnul Muslim: Hamad ad-Duraihim" / "IslamHouse.com. Boleh disebarkan …", and no entry for the
+   Hisn text. Do: (a) reword the audio entry to their wording; (b) add one entry for the text:
+   Hisnul Muslim, Arabic and English from hisnmuslim.com (no translator listed there, so name
+   none), the Indonesian of eating_08/09 translated by Mahrus Ali, source IslamHouse.com. Don't
+   touch `methodology_*` strings or any content. Re-record screenshots (About), run the
+   Screenshots workflow. Ship with the next release, or as 1.12.5 if the owner wants it now
+   (versionName change: ask before merging). Done already: `tools/check_sources.py` (1.12.4;
+   release gate in `docs/release.md`; baseline 3 Nov, 0 changes). Play content: done (#146).
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
@@ -279,7 +291,9 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    the text keeps the book's punctuation.
 3. Done in 1.10.0 (#113), 1 Nov (#128: tasbih_09; full Whisper check; 83 rows re-timed) and
    1.11.0 (#133: istiftah_05). Nothing left from the audio check.
-6. Empty `source_1_no`: 5 rows left (see In flight). sunnah.com and dorar.net answer 403 to
+6. Empty `source_1_no`: 5 rows left (see In flight). Closed 3 Nov: ruku_01, sujud_01,
+   tashahhud_13 have no single hadith (#102); travel_12/13 cite Ibn as-Sunni, not reachable from
+   cloud sessions. Reopen only if the owner can look them up on the Mac. sunnah.com and dorar.net answer 403 to
    cloud sessions (also through the web-fetch tool); islamweb.net answers.
 7. Widget pass for 1.9.0 done (31 Oct, `docs/device-qa.md` §5). Left: 5.4c (lock-screen
    widget: the Redmi's PixelOS has none, so it needs a real Pixel), 5.4's legacy-widget half, and a third-party
