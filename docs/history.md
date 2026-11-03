@@ -314,6 +314,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   `https://www.islamweb.net/ar/SearchEngine/explibtab.php` with `bookid=-1&collection=4&txt=…&R1=1&R2=0`
   (capped ranked list: a miss proves nothing). Page of a printed volume:
   `pageno_redirect.php?part=<vol>&bk_no=<book>&pageno=<page>`.
+- hisnmuslim.com's API gives entry 153's audio as `audio/ar/.mp3` (no number; 3 Nov); the
+  file is at `audio/ar/153.mp3` like every other. Check a missing recording there before
+  concluding the site has none.
 - hisnmuslim.com has Indonesian as HTML only (`/i/id/<chapter>`); its API has ar and en.
 - Empty occasions (entering_home, drinking) are already hidden in the library.
 - HadeethEnc (#81, from the fitrahive/dua-dhikr analysis): its grades name no grader, 4 entries
