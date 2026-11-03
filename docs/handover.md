@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.4 released, #147; IslamHouse credits wording in a PR, awaiting screenshots + CI).
+Last updated: 3 Nov 2026 (1.12.4 released, #147; IslamHouse credits merged, #150, unreleased: ships with the next release).
 
 ## In flight (check first)
 
@@ -268,7 +268,7 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Done in this PR (3 Nov, Sonnet): IslamHouse credits.** About's licence list now has "Audio:
+0. **Done (3 Nov, Sonnet, #150, merged, unreleased): IslamHouse credits.** About's licence list now has "Audio:
    Hamad ad-Duraihim" ("Sumber: IslamHouse.com …") and "Teks: Hisnul Muslim" (Arabic and English
    from hisnmuslim.com, no translator named; Indonesian of the two eating duas: Mahrus Ali; source
    IslamHouse.com). `methodology_*` and content untouched. Screenshot 47 re-recorded by the
