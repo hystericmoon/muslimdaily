@@ -7,14 +7,18 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 3 Nov 2026 (1.12.5 released, #152; handover split into this file and
-`docs/history.md`, project skills added; next: Opus, content gaps, item 0a).
+Last updated: 3 Nov 2026 (#156 merged: handover split, `docs/history.md`, project skills;
+#157 content gaps open, waits on the owner).
 
 ## In flight
 
-- Nothing open on main after 1.12.5 (versionCode 54, content_version 54, 329 rows).
-- `claude/token-saving`: this handover split, `docs/history.md`, the four project skills,
-  CLAUDE.md shortened (Release and the clearing routine point at skills). Docs only.
+- Main: 1.12.5 (versionCode 54, content_version 54, 329 rows).
+- **PR #157** (item 0a): CI green, mergeable. Needs three answers from the owner (asked 3 Nov):
+  1. leave out an unvowelled «رضي الله عنه» too (only travel_09)? If no: remove that pattern
+     from `HONORIFICS` in `tools/transliterate.py` and its test (Opus: transliterator).
+  2. OK to merge (shipped content)?
+  3. release 1.12.6 (suggested: corrections and gap fills) or 1.13.0? Then the `release` skill
+     (What's New: English for 2 duas, funeral_01 audio, Latin for 16 rows, 5 corrected).
 
 ## Waiting on the owner
 
@@ -29,27 +33,22 @@ Last updated: 3 Nov 2026 (1.12.5 released, #152; handover split into this file a
 
 Roadmap: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0a. **Next (model: Opus): content gaps** (owner asked "can we fix those?", 3 Nov; counted on main,
-   content_version 54, 329 rows, from `content/duas.json`). Arabic: none missing. Audio file on
-   disk for every row that names one. Gaps:
-   - English missing (3): eating_01, waswas_04, manners_05 (Indonesian present). Not yet checked
-     whether their source has English: read the source rows first; import only what a source gives.
-   - Indonesian missing (3): tasbih_03, tasbih_06, salam_04 (English present). Already searched
-     (history, "English-only Hisn rows"): no importable source; only fixable if the owner
-     supplies a licensed Indonesian edition.
-   - No audio (17): funeral_01 (a Hisn row: check IslamHouse's Hisn audio for entry 153) and
-     sunnah_01-16 (HadeethEnc, which has no audio; generated recitation is ruled out). Likely
-     stays as is unless a licensed recording exists.
-   - No Latin (55): by design, `tools/transliterate.py` skips rows whose Arabic has unvowelled
-     words or inline narration (e.g. صلى الله عليه وسلم); only 2 of the 55 have no vowel marks at
-     all, the rest were not inspected one by one. Never hand-edit the Arabic or write Latin. A fix
-     is a fixed rule in the transliterator. APPROVED by the owner, 3 Nov: the transliterator may
-     skip inline narration such as صلى الله عليه وسلم and transliterate the rest of the row by the
-     same fixed rules (still never hand-written Latin, and never an edit to the Arabic). Rows
-     with other unvowelled words stay without Latin. Check each newly transliterated row against
-     its Arabic, and add tests in `tools/`.
-   Rows with audio but no phrase timing (118) are not a gap: they play the whole clip.
-   Owner's order (3 Nov): the 3 English, then funeral_01's audio, then the narration rule.
+0a. **Content gaps: done in PR #157 (`claude/content-gaps`, CI green, mergeable; waits on the owner).**
+   content_version 55. Counts after it: 1 row without English (manners_05: its entry's
+   English is Aisha's reply about "them"; no row has its Arabic), 3 without Indonesian
+   (tasbih_03, tasbih_06, salam_04: no licensed source), 16 without audio (sunnah_01-16:
+   HadeethEnc has none), 39 without Latin (other unvowelled words; never hand-written).
+   - eating_01, waswas_04: English verbatim from rows with the same Arabic (travel_05,
+     anger_01), recorded in `clean_entries.py`.
+   - funeral_01: hisn_153.opus. The API's link for entry 153 has no number
+     (`audio/ar/.mp3`); `fetch_audio.audio_url` uses `audio/ar/<ID>.mp3`. Whisper: title
+     «تلقين المحتضر» (0-3.8 s), then the hadith; range 5.12-12.86 set in the CSV (not in
+     `start_fixes.csv`: `start` needs an existing range). `verify_audio`: 10/10.
+   - Latin: unvowelled «صلى الله عليه وسلم» / «رضي الله عنه» left out (owner approved;
+     رضي الله عنه added as the same kind, owner to confirm): 16 rows gain Latin. Three rule
+     fixes found while checking: النَّبيُّ without its kasra (now None: tasbih_10, news_04,
+     hajj_02), هَللَّهُ read as Allah (hajj_06 now None), خَيْرَاً read "khairaan" (5 shipped
+     rows corrected: adhan_02, adhan_04, istiftah_03, news_02, funeral_03).
 1. **On hold (owner, 1 Nov: no budget; don't start until the owner says).** Play release: the
    owner's steps only (upload keystore, four `PLAY_UPLOAD_*` secrets, Play App Signing, listing,
    content rating, target audience; "Needs doing" in `docs/play-store.md`). Play ships the same
@@ -72,7 +71,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
 - Last sessions: session_01W2ZFMu64SGUJb7ZB37ryAj (3 Nov, Opus: 1.12.3, #145, #146, 1.12.4;
-  then this split). Older ids in history, "Finished work".
+  #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 
