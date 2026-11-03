@@ -58,7 +58,9 @@ it out until IslamHouse answers:
    from IslamHouse's 2025 edition). Qur'an and HadeethEnc English stay (47 rows). The 5 Hisn
    rows that have only English (eating_08, eating_09, tasbih_03, tasbih_06, salam_04: no
    Indonesian at any source) are left out of the Play copy, since they would show the Arabic
-   alone. CI's "content is up to date" check covers the file.
+   alone. eating_08 has had Indonesian since 1.12.3, but from hisnmuslim.com too
+   (`hisnmuslim:178`), so it stays out. IslamHouse's licence reply (3 Nov 2026, see the
+   handover) allows Google Play; putting these rows back is the owner's call. CI's "content is up to date" check covers the file.
 2. Done, without a flavor: the `release` build type is already the store build (offline, no
    updater), and GitHub ships `sideload`. `ContentAssetsTask.duasFile` makes `release` package
    `play/duas.json` as `content/duas.json`; debug and sideload keep `duas.json`. A flavor would

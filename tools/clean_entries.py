@@ -21,7 +21,8 @@ reason where it is not obvious):
      of the same Arabic is taken from another row of the same book (`translation_*_from` names
      that row) or from HadeethEnc (`hadeethenc:<id>`); build_content.py checks both. Where no
      source has it, `translation_id_from` is "none": the row has no Indonesian and the app shows
-     its English (eating_08 and eating_09: HadeethEnc has the hadith in Arabic only; tasbih_03:
+     its English (eating_08 and eating_09: HadeethEnc has the hadith in Arabic only; eating_08
+     later took its Indonesian from hisnmuslim.com, `hisnmuslim:178`, in duas.csv; tasbih_03:
      its words in another order; tasbih_06: its Indonesian leaves out al-'Azim).
   4. An entry with no words to recite (a virtue hadith, an instruction) becomes kind "hadith":
      the app shows it as a reading card, without counter, routines or memorisation.
