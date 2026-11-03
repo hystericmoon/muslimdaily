@@ -7,6 +7,10 @@ don't read it end to end at session start. Newest first within each section.
 
 ## Shipped
 
+1.12.6 (versionCode 55, 3 Nov 21:23 WIB, #159, content #157): English for eating_01 and waswas_04, funeral_01
+audio (hisn_153), Latin for 16 rows, 5 Latin corrections (adhan_02, adhan_04, istiftah_03, news_02,
+funeral_03). Unvowelled «رضي الله عنه» left out of the Latin (owner, 3 Nov). content_version 55.
+
 1.12.5 (versionCode 54, 3 Nov 14:28 WIB, #152, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.5): About credits IslamHouse
 as their reply suggested: "Audio: Hamad ad-Duraihim" and "Teks: Hisnul Muslim" (Mahrus Ali for the
 two eating duas), from #150. No content change; content_version stays 54.
