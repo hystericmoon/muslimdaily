@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.3 = eating_08 Indonesian, PR open; IslamHouse licence reply received).
+Last updated: 3 Nov 2026 (1.12.3 released, #144; IslamHouse licence reply summarised).
 
 ## In flight (check first)
 
@@ -88,15 +88,15 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   `docs/release.md`); screenshot `143-play-hisn-english`; the old What's New Hisn-English items
   can't show in the Play build, so they stay. Checked locally: the AAB's `content/duas.json` is
   byte-identical to `content/play/duas.json`. See `docs/play-store.md`, "Plan B".
-- **1.12.3** (versionCode 52, branch `claude/eating-08-indonesian`; owner chose A on 3 Nov):
+- **1.12.3** (versionCode 52, #144, released 3 Nov 11:51 WIB; owner chose A on 3 Nov):
   eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
   from hisnmuslim.com/i/id/69 (entry 178). New source kind `translation_id_from = hisnmuslim:<no>`
   (must be the row's own "Hisnul Muslim no. N", cut verbatim from the snapshot
   `content/source/import/hisnmuslim_id.json`, written by `tools/hisnul_muslim/fetch_indonesian.py
   <chapter>`). The build appends "Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama
   penerjemah." to the reference (shown in the Sources sheet) and leaves the row out of the Play
-  build like the hisnmuslim.com English. Methodology text (About) names it. content_version 53.
-  Merging publishes a release: ask the owner first.
+  build like the hisnmuslim.com English. Methodology text (About) names it (screenshot 46
+  re-recorded). content_version 53.
 - **5 English-only Hisn rows** (eating_08 until 1.12.3, eating_09, tasbih_03, tasbih_06, salam_04): the owner
   asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
   (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha
@@ -166,6 +166,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.12.3 (versionCode 52, 3 Nov 11:51 WIB, #144, https://github.com/hystericmoon/muslimdaily/releases/tag/v1.12.3):
+eating_08 has Indonesian from hisnmuslim.com (details under In flight). content_version 53.
 
 1.12.2 (versionCode 51, 3 Nov 09:58 WIB, #142): end-of-clip scan of all 312 recordings (Whisper
 on each clip's last 10 s and the 4 s after it, plus the loudness at the cut; decision page
@@ -240,8 +243,9 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **1.12.3 (eating_08 Indonesian)**: PR open, see In flight. Ask the owner before merging
-   (release). Then the licence follow-ups (In flight, "IslamHouse licence reply").
+0. **Licence follow-ups** (In flight, "IslamHouse licence reply"): waits on the owner's answer
+   about the hisnmuslim.com English (and eating_08) in the Play build; optional: credits worded as
+   IslamHouse suggests, a release-checklist step to re-check the sources for corrections.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
