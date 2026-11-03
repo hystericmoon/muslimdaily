@@ -88,6 +88,11 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   `docs/release.md`); screenshot `143-play-hisn-english`; the old What's New Hisn-English items
   can't show in the Play build, so they stay. Checked locally: the AAB's `content/duas.json` is
   byte-identical to `content/play/duas.json`. See `docs/play-store.md`, "Plan B".
+- **Play build = GitHub content** (owner chose A, 3 Nov, decision page
+  https://claude.ai/artifact/4QQtVz85R8KrGWNZHBU4XM; branch `claude/play-same-content`): Plan B's
+  separate copy removed (`content/play/`, `ContentAssetsTask.duasFile`, `src/release` strings,
+  screenshot 143, `play_duas`). Play gets the hisnmuslim.com English and the 5 rows back. Nothing
+  ships to users (Play on hold); no version bump. `docs/play-store.md`, "Content".
 - **1.12.3** (versionCode 52, #144, released 3 Nov 11:51 WIB; owner chose A on 3 Nov):
   eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
   from hisnmuslim.com/i/id/69 (entry 178). New source kind `translation_id_from = hisnmuslim:<no>`
@@ -145,7 +150,7 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   a playback range in duas.json, the files are whole; row texts are verbatim excerpts with the
   full entry shown. Summary (not the text, owner's choice 3 Nov) in
   `docs/islamhouse-licence-request.md`, "Reply". Still asked (no answer yet): the date it arrived;
-  whether to put the hisnmuslim.com English (and eating_08) back in the Play build now. Possible follow-ups: credits worded as they
+  the Play build question (answered: A, see "Play build = GitHub content"). Possible follow-ups: credits worded as they
   suggest; a release-checklist step to re-check the sources for corrections. The owner also
   asked about re-recording all audio with ElevenLabs: advised against (generated recitation
   breaks the content rules and this licence's "reciter's name retained"; the sample Ayat
@@ -243,9 +248,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Licence follow-ups** (In flight, "IslamHouse licence reply"): waits on the owner's answer
-   about the hisnmuslim.com English (and eating_08) in the Play build; optional: credits worded as
-   IslamHouse suggests, a release-checklist step to re-check the sources for corrections.
+0. **Licence follow-ups** (optional): credits worded as IslamHouse suggests; a release-checklist
+   step to re-check the sources for corrections. Play content: done (below).
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side

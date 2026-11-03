@@ -122,28 +122,6 @@ class RealContentScreenshotTest {
     fun sourcesFallback() = sources("65-real-sources-fallback", duas.first { it.sources.first().book == "Hisnul Muslim" }.id)
 
     /**
-     * The store (Play) build's content: Hisn al-Muslim rows ship without English (Plan B in
-     * docs/play-store.md), so with English chosen the Indonesian shows, never the Arabic alone.
-     */
-    @Test
-    @Config(qualifiers = "en-w400dp-h1800dp-xhdpi")
-    fun playHisnInEnglish() {
-        val play = ContentMapper.map(
-            ContentJsonFormat.decodeFromString(DuasFile.serializer(), File(content, "play/duas.json").readText()),
-            RawatibFile(),
-            taxonomy,
-        ).duas.map { it.toModel() }
-        val d = play.first { it.id == "morning_04" }
-        kotlin.test.assertTrue(d.translationEn.isBlank() && d.translationId.isNotBlank())
-        captureVariants("143-play-hisn-english") {
-            DuaDetailContent(
-                DuaDetailState(d, event(d.event), ReadingPrefs(translation = id.haho.muslimdaily.data.settings.TranslationMode.ENGLISH), PlaybackState()),
-                DuaDetailActions(),
-            )
-        }
-    }
-
-    /**
      * istiftah_05: the recording leaves out two of the book's bracketed lines. They show muted with
      * a dotted underline next to the phrase being recited, with the note under the Arabic.
      */
