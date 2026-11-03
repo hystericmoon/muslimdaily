@@ -94,3 +94,12 @@ and the owner starts and clears them. Don't start or archive sessions yourself.
   data, Opus; if it is specified and a mistake shows in review or screenshots, Sonnet.
 
 More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
+
+## Token guard
+
+- Be concise. Lead with the answer; no restating the question, no recap of what was just done.
+- Route mechanical work (renames, formatting, summarizing, scraping, bulk find-and-replace) to a sub-agent with `model: "haiku"`. Keep judgment and design work in the main session.
+- Exception: never hand a Haiku sub-agent anything that touches religious content or user data (see "Sessions" for which work needs Opus).
+- Never suggest `/compact` as a cost-saving measure. Suggest `/clear` between unrelated jobs instead.
+- Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache.
+- Noisy install, build and test output is trimmed by `.claude/hooks/trim-output.py` to the error lines plus the last 30 lines. If you need the full log, rerun the command with `> /tmp/log.txt` and grep that file.
