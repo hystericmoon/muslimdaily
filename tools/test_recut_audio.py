@@ -81,3 +81,19 @@ class UnheardTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class JoinTest(unittest.TestCase):
+    ROW = {"id": "t", "arabic": "كتب سلم، | درس فهم | نصر شرب", "audio_range": "1.00-9.00",
+           "audio_segments": "1.00-3.00; 3.00-6.00; 6.00-9.00"}
+
+    def test_a_title_only_segment_is_dropped_and_the_phrases_joined(self):
+        out = ra.propose_join(self.ROW, entry([[0.5, 2.5, "قول"], [3.2, 4.0, "كتب"]], 9.0), 1)
+        self.assertEqual("ok", out["status"], out["reason"])
+        self.assertEqual("كتب سلم، درس فهم | نصر شرب", out["arabic"])
+        self.assertEqual("3.00-6.00; 6.00-9.00", out["audio_segments"])
+        self.assertEqual("3.00-9.00", out["audio_range"])
+
+    def test_refused_when_the_earlier_segment_has_the_phrase(self):
+        out = ra.propose_join(self.ROW, entry([[1.2, 2.0, "كتب"]], 9.0), 1)
+        self.assertEqual("fail", out["status"])

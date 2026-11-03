@@ -1,5 +1,5 @@
 {
-  "content_version": 50,
+  "content_version": 51,
   "duas": [
     {
       "id": "wake_01",
@@ -9512,10 +9512,6 @@
         "file": "hisn_206.opus",
         "segments": [
           [
-            2.27,
-            6.87
-          ],
-          [
             6.87,
             11.97
           ],
@@ -9561,12 +9557,11 @@
           ]
         ],
         "range": [
-          2.27,
+          6.87,
           45.48
         ]
       },
       "phrase_breaks": [
-        16,
         35,
         105,
         146,

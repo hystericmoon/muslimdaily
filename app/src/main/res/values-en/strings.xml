@@ -913,7 +913,7 @@
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
     <string-array name="whats_new_1_12_1">
-        <item>Five more recordings now start on the dua: the two duas for getting dressed, visiting the graves, the traveller at dawn, and distress and grief no longer open with the end of the reciter\'s chapter title (\"…yaqūlu\").</item>
+        <item>Six more recordings now start on the dua: the two duas for getting dressed, visiting the graves, the traveller at dawn, distress and grief, and mounting a vehicle no longer open with the reciter\'s chapter title. In the vehicle dua, \"Bismillāh, wal-hamdu lillāh\" now lights up as one phrase.</item>
     </string-array>
     <string-array name="whats_new_1_12_0">
         <item>The book\'s comma (،) in the Arabic now shows in the accent colour, so the places to pause are easy to find while reading.</item>

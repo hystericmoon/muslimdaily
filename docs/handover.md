@@ -5,8 +5,8 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 2 Nov 2026 (1.12.1 PR: five clips that opened on the reciter's "…yaqulu";
-travel_01 waits on the owner).
+Last updated: 3 Nov 2026 (1.12.1, #139: six clips no longer open on the reciter's title;
+travel_01 joined, owner's choice B; staying on the Default environment).
 
 ## In flight (check first)
 
@@ -14,22 +14,20 @@ travel_01 waits on the owner).
   the chapter title («يقول») at the start of dress_01 and dress_02 (2 Nov). An intro scan of all
   312 recorded rows (Whisper on each clip's first 8 s, words heard before one of the dua's first
   four words; script kept only in the session's scratchpad: re-create from this description)
-  found three more: grave_03, travel_10, distress_01. All five re-cut by `recut_audio.py start`
+  found three more: grave_03, travel_10, distress_01, and travel_01 (below). All five re-cut by `recut_audio.py start`
   (rows in `tools/align/start_fixes.csv`), re-checked by `verify_audio.py`: all start on the
   dua (dress_02 phrase 1 "check" is Whisper fusing «أنت كسوتنيه»). Only `audio_range` and the
   first segment changed. The 1 Nov check missed them because a single extra word passed its
   "more than one word" rule. Flags that were not intros: misheard first words (ruku_03,
   morning_10/evening_10, children_02, quran_18/21/23 «وقر» for «وقل») and rows whose text is
-  itself the book's instruction (night_03, waswas_01, waswas_06, sleep_12). Shipped religious
-  content: ask the owner before merging.
-- **travel_01** (waits on the owner, decision page https://claude.ai/artifact/Xo4WGqb1JzSdxZPe2Gm9nH):
-  phrase 1 (2.27-6.87) plays only the title «دعاء الركوب … أقول»; phrase 2 (6.87-11.97) plays
-  «بسم الله والحمد لله». The recording is noisy and the reciter runs straight on, so no cut
-  passes `QUIET` between them, and Whisper's whole-file words for hisn_206 miss the opening
-  (a crop from 4-12 s hears أقول 6.0, بسم 6.76, الله 8.26, والحمد 8.64). Options: A leave, B join
-  phrases 1-2 into one clip 6.87-11.97 (recommended; Arabic unchanged, one phrase mark removed),
-  C cut at 8.64 without a pause.
-
+  itself the book's instruction (night_03, waswas_01, waswas_06, sleep_12). PR #139; the owner
+  approved the merge and the release (2 Nov, Jakarta 3 Nov).
+- **travel_01** (owner chose B, 2 Nov, decision page https://claude.ai/artifact/Xo4WGqb1JzSdxZPe2Gm9nH):
+  phrase 1 (2.27-6.87) played only the title «دعاء الركوب … أقول»; phrase 2 (6.87-11.97) held
+  «بسم الله والحمد لله» with no pause quiet enough to cut between them (noisy track; Whisper's
+  whole-file words for hisn_206 miss the opening). New `recut_audio.py` mode `join` (row in
+  `start_fixes.csv`): the two phrases are one, playing 6.87-11.97; the clip starts at 6.87. Text
+  unchanged (one "|" removed). verify_audio: all 11 phrases ok. In 1.12.1.
 - **1.11.0** (versionCode 48, PR #133, owner's choice B on 2 Nov, decision page
   https://claude.ai/artifact/1SzPRAj9bpBXBfP45f3Na4): istiftah_05's recording leaves out two of
   the book's bracketed lines («وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي», and the closing «وَلاَ حَوْلَ وَلاَ قُوَّةَ
@@ -139,10 +137,9 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
-- **Cloud environment**: the public docs show no Repositories field on any environment, so a
-  second environment may not help. Suggested (2 Nov): stay on Default, where each session
-  attaches haho-design and runs `tools/cloud_setup.sh` (~2 min); optionally paste the new
-  script into Default's Setup script. Owner's answer pending.
+- **Cloud environment**: decided (owner, 3 Nov): stay on Default. Each session attaches
+  haho-design (`add_repo`) and runs `tools/cloud_setup.sh` (~2 min). The public docs show no
+  Repositories field on any environment.
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
