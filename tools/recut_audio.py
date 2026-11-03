@@ -335,7 +335,7 @@ def compute_words(ids: set[str]) -> None:  # pragma: no cover - needs torch and 
     from transformers import pipeline
 
     torch.set_num_threads(4)
-    asr = pipeline("automatic-speech-recognition", model=va.MODEL, device="cpu")
+    asr = pipeline("automatic-speech-recognition", model=va.MODEL, device="cpu", dtype=torch.float32)
     data = json.loads(WORDS.read_text(encoding="utf-8")) if WORDS.exists() else {}
     _, rows, _ = sa.read_csv(sa.DUAS)
     for row in rows:
