@@ -912,6 +912,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_12_6">
+        <item>Two duas now have an English translation, the dua for a dying person now has audio, and 16 more duas have Latin transliteration. The Latin is always derived from the sourced Arabic.</item>
+        <item>Five transliterations were corrected (e.g. \"rabbā\", not \"rabbaā\"), and any transliteration the rules are unsure of is now left blank instead of guessed.</item>
+    </string-array>
     <string-array name="whats_new_1_12_5">
         <item>The About page now credits the Hisnul Muslim audio and text the way IslamHouse.com asked: reciter Hamad ad-Duraihim, text from hisnmuslim.com, and the translator (Mahrus Ali for the two eating duas).</item>
     </string-array>
