@@ -107,6 +107,7 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   with the PDF's sha256, by `tools/hisnul_muslim/fetch_islamhouse_id.py 69:178 69:179`); the
   reference note now names translator, publisher and edition. tasbih_03 (256), tasbih_06 (259),
   salam_04 (227) give only a Latin reading in it too: still English only. content_version 54.
+  Same PR: `tools/check_sources.py` (see open work 0).
   Merging publishes a release and changes religious content: ask the owner first.
 - **1.12.3** (versionCode 52, #144, released 3 Nov 11:51 WIB; owner chose A on 3 Nov):
   eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
@@ -263,8 +264,10 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Licence follow-ups** (optional): credits worded as IslamHouse suggests; a release-checklist
-   step to re-check the sources for corrections. Play content: done (below).
+0. **Licence follow-ups**: optional, Sonnet: word the credits as IslamHouse suggests ("Audio:
+   Hamad ad-Duraihim – Source: IslamHouse.com"). Done in 1.12.4's PR: `tools/check_sources.py`
+   (corrections check, release gate in `docs/release.md`; baseline `tools/sources_baseline.json`,
+   3 Nov: 0 changes, all 279 Hisn rows' English equal to hisnmuslim.com today). Play content: done.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
