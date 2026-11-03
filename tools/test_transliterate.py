@@ -70,6 +70,32 @@ class TransliterateTest(unittest.TestCase):
         # ...but an unreadable bracketed note is only left out.
         self.assertEqual(transliterate("سُبْحَانَ اللَّهِ [ثلاثاً]"), "Subhānallāh")
 
+    def test_unvowelled_honorific_is_left_out(self):
+        # Approved by the owner (3 Nov 2026): the narration's unvowelled honorific is skipped.
+        self.check("قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم: ((لاَ تَدْخُلُوا الْجَنَّةَ))",
+                   "Qāla rasūlullāh: lā tadkhulul-jannah")
+        self.check("قَالَ جَابِرٌ رضي الله عنه: ((كُنَّا إِذَا صَعَدْنَا كَبَّرْنَا))", "Qāla jābir: kunnā idzā sha'adnā kabbarnā")
+        # A vowelled one is read like any other words.
+        self.check("صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ", "Shallallāhu 'alaihi wasallam")
+        # Any other unvowelled word still gives None.
+        self.assertIsNone(transliterate("وَقَالَ صلى الله عليه وسلم: ثلاث مرات"))
+
+    def test_no_unwritten_sukun_before_a_doubled_letter(self):
+        # The book's النَّبيُّ lacks the kasra under the ba: no guess.
+        self.assertIsNone(transliterate("كَانَ النَّبيُّ"))
+        self.check("قَالَ النَّبِيُّ", "Qālan-nabiyy")
+
+    def test_double_lam_is_allah_only_after_prefixes(self):
+        # هَللَّهُ (he said la ilaha illallah) with its shadda on the wrong lam: no guess.
+        self.assertIsNone(transliterate("وَهَللَّهُ"))
+        self.check("فَلِلَّهِ الْحَمْدُ", "Falillāhil-hamd")
+
+    def test_fatha_and_tanwin_on_alif_are_one(self):
+        # The book writes خَيْرَاً: the fatha and the tanwin on the alif read once.
+        self.check("خَيْرَاً مِنْهَا", "Khairan minhā")
+        self.check("رَضِيتُ بِاللَّهِ رَبَّاً", "Radhītu billāhi rabbā")
+        self.check("حَنِيفاً مُسْلِماً", "Hanīfan muslimā")
+
 
 if __name__ == "__main__":
     unittest.main()

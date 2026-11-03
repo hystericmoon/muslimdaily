@@ -1,5 +1,5 @@
 {
-  "content_version": 54,
+  "content_version": 55,
   "duas": [
     {
       "id": "wake_01",
@@ -1285,7 +1285,7 @@
         "id": "“Aku bersaksi, bahwa tiada Tuhan yang haq selain Allah, Yang Maha Esa, tidak ada sekutu bagiNya dan sesungguhnya Muhammad adalah hamba dan utusanNya. Aku rela Allah sebagai Tuhan, Muhammad sebagai Rasul dan Islam sebagai agama (yang benar). (Dibaca setelah muadzin membaca syahadat).",
         "en": "Immediately following the declaration of faith called by the mu-aththin, one says:‘And I too bear witness that none has the right to be worshipped except Allah, alone, without partner, and that Muhammad is His salve and Messenger. I am pleased with Allah as a Lord, and Muhammad as a Messenger and Islam as a religion.’"
       },
-      "transliteration": "Wa anā asyhadu an lā ilāha illallāhu wahdahu lā syarīka lahu wa anna muhammadan 'abduhu warasūluh, radhītu billāhi rabbaā, wabimuhammadin rasūlā, wabil-islāmi dīnaā",
+      "transliteration": "Wa anā asyhadu an lā ilāha illallāhu wahdahu lā syarīka lahu wa anna muhammadan 'abduhu warasūluh, radhītu billāhi rabbā, wabimuhammadin rasūlā, wabil-islāmi dīnā",
       "count": null,
       "sources": [
         {
@@ -1343,7 +1343,7 @@
         "id": "Membaca shalawat kepada Nabi Shallallahu’alaihi wasallam sesudah adzan.",
         "en": "‘One should then send prayers on the Prophet (sal-Allaahu 'alayhe wa sallam) after answering the call of the mu.adhdhin’."
       },
-      "transliteration": "",
+      "transliteration": "Yushallī 'alan-nabiyyi ba'da farāghihi min ijābatil-mu'adzdzin",
       "count": null,
       "sources": [
         {
@@ -1382,7 +1382,7 @@
         "id": "“Ya Allah, Tuhan Pemilik panggilan yang sempurna (adzan) ini dan shalat (wajib) yang didirikan. Berilah Al-Wasilah (derajat di Surga, yang tidak akan diberikan selain kepada Nabi dan fadhilah kepada Muhammad. Dan bangkitkan beliau sehingga bisa menempati maqam terpuji yang telah Engkau janjikan. Sesungguhnya Engkau tidak menyalahi janji”.",
         "en": "‘O Allah, Owner of this perfect call and Owner of this prayer to be performed, bestow upon Muhammad al-waseelah and al-fadeelah and send him upon a praised platform which You have promised him. Verily, You never fail in Your promise.’al-waseelah: A station in paradise.al-fadeelah: A rank above the rest of creation.praised platform: One in which all of creation will praise him on, in order to bring about the account quickly and be relieved from the lengthy standing or the role of intercession."
       },
-      "transliteration": "Allāhumma rabba hādzihid-da'watit-tāmmah, wash-shalātil-qā'imah, āti muhammadanil-wasīlata wal-fadhīlah, wab'atshu maqāmaan mahmūdanilladzī wa'adtah, [innaka lā tukhliful-mī'ād]",
+      "transliteration": "Allāhumma rabba hādzihid-da'watit-tāmmah, wash-shalātil-qā'imah, āti muhammadanil-wasīlata wal-fadhīlah, wab'atshu maqāman mahmūdanilladzī wa'adtah, [innaka lā tukhliful-mī'ād]",
       "count": null,
       "sources": [
         {
@@ -1489,7 +1489,7 @@
       "is_quran": false,
       "translations": {
         "id": "Dengan nama Allah.",
-        "en": ""
+        "en": "In the name of Allah."
       },
       "translations_full": {
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda : “Apabila seseorang di antara kamu memakan makanan, hendaklah membaca: Apabila lupa pada permulaannya, hendaklah membaca:",
@@ -1524,7 +1524,8 @@
       },
       "phrase_breaks": [],
       "translations_from": {
-        "id": "row:travel_05"
+        "id": "row:travel_05",
+        "en": "row:travel_05"
       }
     },
     {
@@ -3203,7 +3204,7 @@
         "id": "“Aku menghadap kepada Tuhan Pencipta langit dan bumi, dengan memegang agama yang lurus dan aku tidak tergolong orang-orang yang musyrik. Sesungguhnya shalat, ibadah dan hidup serta matiku adalah untuk Allah. Tuhan seru sekalian alam, tiada sekutu bagiNya, dan karena itu, aku diperintah dan aku termasuk orang-orang muslim. Ya Allah, Engkau adalah Raja, tiada Tuhan (yang berhak disembah) kecuali Engkau, engkau Tuhanku dan aku adalah hambaMu. Aku menganiaya diriku, aku mengakui dosaku (yang telah kulakukan). Oleh karena itu ampunilah seluruh dosaku, sesungguhnya tidak akan ada yang mengampuni dosa-dosa, kecuali Engkau. Tunjukkan aku pada akhlak yang terbaik, tidak akan menunjukkan kepadanya kecuali Engkau. Hindarkan aku dari akhlak yang jahat, tidak akan ada yang bisa menjauhkan aku daripadanya, kecuali Engkau. Aku penuhi panggilanMu dengan kegembiraan, seluruh kebaikan di kedua tanganMu, kejelekan tidak dinisbahkan kepadaMu. Aku hidup dengan pertolongan dan rahmatMu, dan kepadaMu (aku kembali). Maha Suci Engkau dan Maha Tinggi. Aku minta ampun dan bertaubat kepadaMu”.",
         "en": "(I have turned my face sincerely towards He who has brought forth the heavens and the Earth and I am not of those who associate (others with Allah). Indeed my prayer, my sacrifice, my life and my death are for Allah, Lord of the worlds, no partner has He, with this I am commanded and I am of the Muslims. O Allah, You are the Sovereign, none has the right to be worshipped except You. You are my Lord and I am Your servant, I have wronged my own soul and have acknowledged my sin, so forgive me all my sins for no one forgives sins except You. Guide me to the best of characters for none can guide to it other than You, and deliver me from the worst of characters for none can deliver me from it other than You. Here I am, in answer to Your call, happy to serve you. All good is within Your hands and evil does not stem from You. I exist by your will and will return to you. Blessed and High are You, I seek Your forgiveness and repent unto You.)(Allah does not create pure evil which does not have any good or contain any benefit, wisdom or mercy at all, nor does He punish anyone without having commited a sin. Something can be good in terms of its creation when viewed in a particular perspective and at the same time be evil when viewed in another way. Allah created the devil and by him, He tests His servants, so there are those who hate the devil, fight him and his way and they stand at enmity towards him and his followers and there are others who are at allegiance with the devil and follow his steps. So evil exists in His creatures by His will and wisdom, not in His actions or act of creating.)"
       },
-      "transliteration": "Wajjahtu wajhiya lilladzī fatharas-samāwāti wal-ardha hanīfaan wamā anā minal-musyrikīn, inna shalātī, wanusukī, wamahyāy, wamamātī lillāhi rabbil-'ālamīn, lā syarīka lahu wabidzālika umirtu wa anā minal-muslimīn. Allāhumma antal-maliku lā ilāha illā ant, anta rabbī wa anā 'abduk, zhalamtu nafsī wa'taraftu bidzanbī faghfir lī dzunūbī jamī'aan innahu lā yaghfirudz-dzunūba illā ant. Wahdinī li ahsanil-akhlāqi lā yahdī li ahsanihā illā ant, washrif 'annī sayyi'ahā, lā yashrifu 'annī sayyi'ahā illā ant, labbaika wasa'daik, wal-khairu kulluhu biyadaik, wasy-syarru laisa ilaik, anā bika wa ilaik, tabārakta wata'ālait, astaghfiruka wa atūbu ilaik",
+      "transliteration": "Wajjahtu wajhiya lilladzī fatharas-samāwāti wal-ardha hanīfan wamā anā minal-musyrikīn, inna shalātī, wanusukī, wamahyāy, wamamātī lillāhi rabbil-'ālamīn, lā syarīka lahu wabidzālika umirtu wa anā minal-muslimīn. Allāhumma antal-maliku lā ilāha illā ant, anta rabbī wa anā 'abduk, zhalamtu nafsī wa'taraftu bidzanbī faghfir lī dzunūbī jamī'an innahu lā yaghfirudz-dzunūba illā ant. Wahdinī li ahsanil-akhlāqi lā yahdī li ahsanihā illā ant, washrif 'annī sayyi'ahā, lā yashrifu 'annī sayyi'ahā illā ant, labbaika wasa'daik, wal-khairu kulluhu biyadaik, wasy-syarru laisa ilaik, anā bika wa ilaik, tabārakta wata'ālait, astaghfiruka wa atūbu ilaik",
       "count": null,
       "sources": [
         {
@@ -3373,7 +3374,7 @@
       "translations_full": {
         "id": "Apabila Nabi Shallallahu’alaihi wasallam shalat Tahajud di waktu malam, beliau membaca: “Ya, Allah! BagiMu segala puji, Engkau cahaya langit dan bumi serta seisinya. BagiMu segala puji, Engkau yang mengurusi langit dan bumi serta seisinya. BagiMu segala puji, Engkau Tuhan yang menguasai langit dan bumi serta seisinya. BagiMu segala puji dan bagi-Mu kerajaan langit dan bumi serta seisi-nya. BagiMu segala puji, Engkau benar, janjiMu benar, firmanMu benar, bertemu denganMu benar, Surga adalah benar (ada), Neraka adalah benar (ada), (terutusnya) para nabi adalah benar, (terutusnya) Muhammad adalah benar (dariMu), kejadian hari Kiamat adalah benar. Ya Allah, kepadaMu aku menyerah, kepadaMu aku bertawakal, kepadaMu aku beriman, kepadaMu aku kembali (bertaubat), dengan pertolonganMu aku berdebat (kepada orang-orang kafir), kepadaMu (dan dengan ajaran-Mu) aku menjatuhkan hukum. Oleh karena itu, ampunilah dosaku yang telah lewat dan yang akan datang. Engkaulah yang mendahulukan dan mengakhirkan, tiada Tuhan yang hak disembah kecuali Engkau, Engkau adalah Tuhanku, tidak ada Tuhan yang hak disembah kecuali Engkau”."
       },
-      "transliteration": "Allāhumma lakal-hamd, anta nūrus-samāwāti wal-ardhi waman fīhinn, walakal-hamdu anta qayyimus-samāwāti wal-ardhi waman fīhinn, [walakal-hamdu anta rabbus-samāwāti wal-ardhi waman fīhinn] [walakal-hamdu laka mulkus-samāwāti wal-ardhi waman fīhinn] [walakal-hamdu anta malikus-samāwāti wal-ardh] [walakal-hamd] [Allāhumma laka aslamt, wa'alaika tawakkalt, wabika āmant, wa ilaika anabt, wabika khāshamt, wa ilaika hākamt. Faghfir lī mā qaddamt, wamā akhkhart, wamā asrart, wamā a'lant] [wamā anta a'lamu bihi minnī] [antal-muqaddim, wa antal-mu'akhkhiru lā ilāha illā ant] [anta ilāhī lā ilāha illā ant] [walā haula walā quwwata illā billāh]",
+      "transliteration": "Allāhumma lakal-hamd, anta nūrus-samāwāti wal-ardhi waman fīhinn, walakal-hamdu anta qayyimus-samāwāti wal-ardhi waman fīhinn, [walakal-hamdu anta rabbus-samāwāti wal-ardhi waman fīhinn] [walakal-hamdu laka mulkus-samāwāti wal-ardhi waman fīhinn] [walakal-hamdu anta malikus-samāwāti wal-ardh] [walakal-hamd] [antal-haqq, wawa'dukal-haqq, waqaulukal-haqq, waliqā'ukal-haqq, wal-jannatu haqq, wan-nāru haqq, wan-nabiyyūna haqq, wamhammadun haqq, was-sā'atu haqq] [Allāhumma laka aslamt, wa'alaika tawakkalt, wabika āmant, wa ilaika anabt, wabika khāshamt, wa ilaika hākamt. Faghfir lī mā qaddamt, wamā akhkhart, wamā asrart, wamā a'lant] [wamā anta a'lamu bihi minnī] [antal-muqaddim, wa antal-mu'akhkhiru lā ilāha illā ant] [anta ilāhī lā ilāha illā ant] [walā haula walā quwwata illā billāh]",
       "count": null,
       "sources": [
         {
@@ -6946,7 +6947,7 @@
       "translations_full": {
         "en": "(We rise upon the fitrah of Islam, and the word of pure faith, and upon the religion of our Prophet Muhammad and the religion of our forefather Ibraheem, who was a Muslim and of true faith and was not of those who associate others with Allah.)(fitrah: the religion of Islam, the way of Ibraheem u.)(Note: for the evening, one reads amsayna instead of asbahna.)"
       },
-      "transliteration": "",
+      "transliteration": "Ashbahnā 'alā fithratil-islām, wa'alā kalimatil-ikhlāsh, wa'alā dīni nabiyyinā muhammad, wa'alā millati abīnā ibrāhīm, hanīfan musliman wamā kāna minal-musyrikīn",
       "count": null,
       "sources": [
         {
@@ -8040,7 +8041,7 @@
       "translations_full": {
         "en": "(We rise upon the fitrah of Islam, and the word of pure faith, and upon the religion of our Prophet Muhammad and the religion of our forefather Ibraheem, who was a Muslim and of true faith and was not of those who associate others with Allah.)(fitrah: the religion of Islam, the way of Ibraheem u.)(Note: for the evening, one reads amsayna instead of asbahna.)"
       },
-      "transliteration": "",
+      "transliteration": "Ashbahnā 'alā fithratil-islām, wa'alā kalimatil-ikhlāsh, wa'alā dīni nabiyyinā muhammad, wa'alā millati abīnā ibrāhīm, hanīfan musliman wamā kāna minal-musyrikīn",
       "count": null,
       "sources": [
         {
@@ -8426,7 +8427,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Barang siapa yang membaca shalawat kepadaku sekali, Allah akan memberikan balasan shalawat kepadanya sepuluh kali.”",
         "en": "(The Prophet (PBUH) said: ‘Whoever sends a prayer upon me, Allah sends ten upon him.)"
       },
-      "transliteration": "",
+      "transliteration": "Qālan-nabiyy: man shallā 'alayya shalātan shallallāhu 'alaihi bihā 'asyrā.",
       "count": null,
       "sources": [
         {
@@ -8475,7 +8476,7 @@
         "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Janganlah kamu menjadikan kuburanku sebagai hari raya, dan bacalah shalawatmu padaku, sesungguhnya bacaan shalawatmu akan sampai kepadaku, di mana saja kamu berada.”",
         "en": "(He (PBUH) also said: ‘Do not take my grave as a place of habitual ceremony. Send prayers upon me, for verily your prayers reach me wherever you are.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: lā taj'alū qabrī 'īdan washallū 'alayy; fa inna shalātakum tablughunī haitsu kuntum.",
       "count": null,
       "sources": [
         {
@@ -8533,7 +8534,7 @@
         "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Orang yang bakhil adalah orang yang apabila aku disebut, dia tidak membaca shalawat kepadaku.”",
         "en": "(He (PBUH) also said: ‘A miser is one whom when I am mentioned to him, fails to send prayers upon me.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: al-bakhīlu man dzukirtu 'indahu falam yushalli 'alayy.",
       "count": null,
       "sources": [
         {
@@ -8586,7 +8587,7 @@
         "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Sesungguhnya Allah mempunyai para malaikat yang senantiasa berkeliling di bumi yang akan menyampaikan salam kepadaku dari umatku”.",
         "en": "The Prophet [PBUH] said:'Indeed Allah has angels who roam the earth and they convey to me the greetings (or prayers of peace) of my 'Ummah (nation)."
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: inna lillāhi malā'ikatan sayyāhīna fil-ardhi yuballighūnī min ummatis-salām.",
       "count": null,
       "sources": [
         {
@@ -8628,7 +8629,7 @@
         "id": "Rasul Shallallahu’alaihi wasallam bersabda: “Tidaklah seseorang mengucapkan salam kepadaku kecuali Allah mengembalikan ruhku kepadaku sehingga aku membalas salam (nya).”",
         "en": "The Prophet [PBUH] said: 'No one sends greetings (or prayers of peace) upon me but Allah returns my soul to me so that I may return his greetings"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: mā min ahadin yusallimu 'alayya illā raddallāhu 'alayya rūhiya hattā arudda 'alaihis-salām.",
       "count": null,
       "sources": [
         {
@@ -8726,7 +8727,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Wahai manusia! Bertaubatlah kepada Allah, sesungguhnya aku bertaubat kepada-Nya seratus kali dalam sehari.”",
         "en": "(He also said: ‘O People, Repent! Verily I repent to Allah, a hundred times a day.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: yā ayyuhan-nāsu tūbū ilallāhi fa innī atūbu fil-yaumi ilaihi mi'ata marrah.",
       "count": null,
       "sources": [
         {
@@ -8825,7 +8826,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Keadaan yang paling dekat antara Tuhan dan hambaNya adalah di tengah malam yang terakhir. Apabila kamu mampu tergolong orang yang dzikir kepada Allah pada saat itu, lakukanlah.”",
         "en": "(He said: ‘The nearest the Lord comes to His servant is in the middle of the night, so if you are able to be of those who remember Allah at that time, then be so.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: aqrabu mā yakūnur-rabbu minal-'abdi fī jaufil-lailil-'ākhiri fa inistatha'ta an takūna mimman yadzkurullāha fī tilkas-sā'ati fakun.",
       "count": null,
       "sources": [
         {
@@ -8882,7 +8883,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Seorang hamba berada dalam keadaan yang paling dekat dengan Tuhannya adalah di saat sujud. Oleh karena itu, perbanyaklah doa.”",
         "en": "(He also said: ‘The nearest a servant is to his Lord is when he is prostrating, so supplicate much therein.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: aqrabu mā yakūnul-'abdu min rabbihi wahuwa sājidun fa aktsirud-du'ā'.",
       "count": null,
       "sources": [
         {
@@ -9190,7 +9191,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Apakah seseorang di antara kamu tidak mampu mendapatkan seribu kebaikan tiap hari?” Salah seorang di antara yang duduk bertanya: “Bagaimana di antara kita bisa memperoleh seribu kebaikan (dalam sehari)?” Rasul bersabda: “Hendaklah dia membaca seratus tasbih, maka ditulis seribu kebaikan baginya atau seribu kejelekannya dihapus.”",
         "en": "(Sa’d said: ‘We were sitting with the Messenger of Allah , and he said: ‘Are any of you unable to gain a thousand good deeds each day?’ Somebody then asked him : How does one achieve a thousand good deeds? He replied: ‘He should say: (How perfect Allah is.) one hundred times, for a thousand good deeds are recorded for him or a thousand bad deeds are wiped away.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: aya'jizu ahadukum an yaksiba kulla yaumin alfa hasanatin fasa'alahu sā'ilun min julasā'ihi kaifa yaksibu ahadunā alfa hasanah? Qāl: yusabbihu mi'ata tasbīhah, fayuktabu lahu alfu hasanatin au yuhaththu 'anhu alfu khathī'ah.",
       "count": 100,
       "sources": [
         {
@@ -9348,7 +9349,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Perkataan yang paling disenangi oleh Allah adalah empat: Subhaanallaah, Alhamdulillaah, Laa ilaaha illallaah dan Allaahu akbar. Tidak mengapa bagimu untuk memulai yang mana di antara kalimat tersebut.”",
         "en": "(the most beloved words to Allah are four: (How perfect Allah is, all praise is for Allah. None has the right to be worshipped except Allah and Allah is the greatest.))(it does not matter which of them you start with.)"
       },
-      "transliteration": "",
+      "transliteration": "Waqāl: ahabbul-kalāmi ilallāhi arba': subhānallāh, wal-hamdu lillāh, walā ilāha illallāh, wallāhu akbar, lā yadhurruka bi ayyihinna bada'at.",
       "count": null,
       "sources": [
         {
@@ -10216,7 +10217,7 @@
         "id": "Dari Jabir Radhiallahu’anhu, dia berkata: “Kami apabila berjalan naik, membaca takbir, dan apabila kami turun, membaca tasbih.”",
         "en": "Jabir said: Whenever we went up a hill we would say Allaahu 'Akber (Allah is the Most Great) and when we descended we would say Subhaanallaah (Glory is to Allah)"
       },
-      "transliteration": "",
+      "transliteration": "Qāla jābir: kunnā idzā sha'adnā kabbarnā, wa idzā nazalnā sabbahnā.",
       "count": null,
       "sources": [
         {
@@ -11119,7 +11120,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Apabila seorang laki-laki berkunjung kepada saudaranya yang muslim, maka seakan-akan dia berjalan di kebun Surga hingga duduk. Apabila sudah duduk, maka dituruni rahmat dengan deras. Apabila berkunjung di pagi hari, maka tujuh puluh ribu malaikat akan mendoakannya, agar mendapat rahmat hingga sore. Apabila berkunjung di sore hari, maka tujuh puluh ribu malaikat akan mendoakannya agar diberi rahmat hingga pagi.”",
         "en": "(Ali Ibn Abee Talib related that he heard the Messenger of Allah say: ‘If a man calls on his sick Muslim brother, it is as if he walks reaping the fruits of Paradise until he sits, and when he sits he is showered in mercy, and if this was in the morning, seventy thousand angles send prayers upon him until the evening, and if this was in the evening, seventy thousand angles send prayers upon him until the morning.)"
       },
-      "transliteration": "",
+      "transliteration": "Qālan-nabiyy: idzā 'ādar-rajulu akhāhul-muslima masyā fī khirāfatil-jannati hattā yajlis, fa idzā jalasa ghamarathur-rahmah, fa in kāna ghudwatan shallā 'alaihi sab'ūna alfa malakin hattā yumsiy, wa in kāna masā'an shallā 'alaihi sab'ūna alfa malakin hattā yushbih.",
       "count": null,
       "sources": [
         {
@@ -12488,7 +12489,7 @@
       "is_quran": false,
       "translations": {
         "id": "aku berlindung kepada Allah dari godaan syaitan yang terkutuk",
-        "en": ""
+        "en": "I take refuge with Allah from the accursed devil."
       },
       "translations_full": {
         "id": "(membaca: A’udzu billahi minas syaithanir rajim), artinya : \"aku berlindung kepada Allah dari godaan syaitan yang terkutuk\". lantas meludahlah ke kirimu, tiga kali.”",
@@ -12517,7 +12518,10 @@
           9.58
         ]
       },
-      "phrase_breaks": []
+      "phrase_breaks": [],
+      "translations_from": {
+        "en": "row:anger_01"
+      }
     },
     {
       "id": "waswas_05",
@@ -12840,7 +12844,7 @@
         "id": "“Sesungguhnya kami milik Allah dan kepadaNya kami akan kembali (di hari Kiamat). Ya Allah! Berilah pahala kepadaku dan gantilah untukku dengan yang lebih baik (dari musibahku).”",
         "en": "(To Allah we belong and unto Him is our return.O Allah, recompense me for my affliction and replace it for me with something better.)"
       },
-      "transliteration": "Innā lillāhi wa innā ilaihi rāji'ūn, Allāhumma ajurnī fī mushībatī, wa akhlif lī khairaan minhā",
+      "transliteration": "Innā lillāhi wa innā ilaihi rāji'ūn, Allāhumma ajurnī fī mushībatī, wa akhlif lī khairan minhā",
       "count": null,
       "sources": [
         {
@@ -13877,7 +13881,7 @@
         "id": "Rasulullah Shallallahu’alaihi wasallam bersabda: “Kamu tidak akan masuk ke Surga hingga kamu beriman, kamu tidak akan beriman secara sempurna hingga kamu saling mencintai. Maukah kamu kutunjukkan sesuatu, apabila kamu lakukan akan saling mencintai? Biasakan mengucapkan salam di antara kamu (apabila bertemu).”",
         "en": "(The Messenger of Allah said: ‘You shall not enter paradise until you believe, and you shall not believe until you love one another. Shall I not inform you of something, if you were to act upon it, you will indeed achieve mutual love for one another? Spread the greeting amongst yourselves.)"
       },
-      "transliteration": "",
+      "transliteration": "Qāla rasūlullāh: lā tadkhulul-jannata hattā tu'minū, walā tu'minū hattā tahābbū, awalā adullukum 'alā syai'in idzā fa'altumūhu tahābabtum, afsyus-salāma bainakum.",
       "count": null,
       "sources": [
         {
@@ -14614,8 +14618,12 @@
       "alt_gradings": [],
       "virtue": null,
       "audio": {
-        "file": "",
-        "segments": []
+        "file": "hisn_153.opus",
+        "segments": [],
+        "range": [
+          5.12,
+          12.86
+        ]
       },
       "phrase_breaks": [],
       "kind": "hadith"
@@ -14695,7 +14703,7 @@
         "id": "“Ya Allah! Ampunilah dia (mayat) berilah rahmat kepadanya, selamatkanlah dia (dari beberapa hal yang tidak disukai), maafkanlah dia dan tempatkanlah di tempat yang mulia (Surga), luaskan kuburannya, mandikan dia dengan air salju dan air es. Bersihkan dia dari segala kesalahan, sebagaimana Engkau membersihkan baju yang putih dari kotoran, berilah rumah yang lebih baik dari rumahnya (di dunia), berilah keluarga (atau istri di Surga) yang lebih baik daripada keluarganya (di dunia), istri (atau suami) yang lebih baik daripada istrinya (atau suaminya), dan masukkan dia ke Surga, jagalah dia dari siksa kubur dan Neraka.”",
         "en": "(O Allah, forgive and have mercy upon him, excuse him and pardon him, and make honourable his reception. Expand his entry, and cleanse him with water, snow, and ice, and purify him of sin as a white robe is purified of filth. Exchange his home for a better home, and his family for a better family, and his spouse for a better spouse. Admit him into the Garden, protect him from the punishment of the grave and the torment of the Fire.)"
       },
-      "transliteration": "Allāhummaghfir lahu warhamh, wa'āfih, wa'fu 'anh, wa akrim nuzulah, wawassi' mudkhalah, waghsilhu bil-mā'i wats-tsalji wal-barad, wanaqqihi minal-khathāyā kamā naqqaitats-tsaubal-abyadha minad-danas, wa abdilhu dāran khairan min dārih, wa ahlan khairan min ahlih, wazaujaan khairan min zaujih, wa adkhilhul-jannah, wa a'idzhu min 'adzābil-qabri [wa'adzābin-nār]",
+      "transliteration": "Allāhummaghfir lahu warhamh, wa'āfih, wa'fu 'anh, wa akrim nuzulah, wawassi' mudkhalah, waghsilhu bil-mā'i wats-tsalji wal-barad, wanaqqihi minal-khathāyā kamā naqqaitats-tsaubal-abyadha minad-danas, wa abdilhu dāran khairan min dārih, wa ahlan khairan min ahlih, wazaujan khairan min zaujih, wa adkhilhul-jannah, wa a'idzhu min 'adzābil-qabri [wa'adzābin-nār]",
       "count": null,
       "sources": [
         {

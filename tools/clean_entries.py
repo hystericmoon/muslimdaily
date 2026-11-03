@@ -94,7 +94,9 @@ SPLITS: dict[str, tuple[str, list[Part]]] = {
     ]),
     # The three times apply to spitting; the words are said, the count is left out.
     "waswas_04": ("", [
-        Part("waswas_04", "أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ", "aku berlindung kepada Allah dari godaan syaitan yang terkutuk", None),
+        # The entry's English paraphrases the hadith; anger_01 says the same words (3 Nov 2026).
+        Part("waswas_04", "أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ", "aku berlindung kepada Allah dari godaan syaitan yang terkutuk",
+             "I take refuge with Allah from the accursed devil.", ten_from="row:anger_01"),
     ]),
     "news_05": ("", [
         Part("news_05", "بِسْمِ اللَّهِ", "Dengan nama Allah.", "In the name of Allah", count="3", tid_from="row:travel_05"),
@@ -103,7 +105,9 @@ SPLITS: dict[str, tuple[str, list[Part]]] = {
              "I take refuge in Allah and within His omnipotence from the evil that I feel and am wary of.", count="7"),
     ]),
     "eating_01": ("", [
-        Part("eating_01", "بِسْمِ اللَّهِ", "Dengan nama Allah.", None, tid_from="row:travel_05"),
+        # The entry's English gives only "Bismil-lah"; travel_05 says the same words (3 Nov 2026).
+        Part("eating_01", "بِسْمِ اللَّهِ", "Dengan nama Allah.", "In the name of Allah.", tid_from="row:travel_05",
+             ten_from="row:travel_05"),
         Part("eating_08", "بسمِ اللَّهِ فِي أَوَّلِهِ وَآخِرِهِ", None, "In the name of Allah in it’s beginning and end.", tid_from="none"),
     ]),
     "eating_02": ("", [
