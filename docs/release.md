@@ -44,6 +44,11 @@ Set the address that "Report an error" pre-fills in `gradle.properties`:
   names an audio file that does not exist, naming each entry and field.
 * Before tagging: `python3 tools/build_content.py`, `./gradlew lintDebug testDebugUnitTest
   assembleRelease`, then a TalkBack pass on a device (see accessibility.md, "Known gaps").
+* Sources: before a release that touches content, and at least monthly, run
+  `python3 -I tools/check_sources.py` (about 5 minutes). IslamHouse's licence asks us to follow
+  corrected versions of hisnmuslim.com, its PDFs and HadeethEnc. Each change it lists is reviewed
+  against the row (docs/content-guide.md, "Checking imported content") before anything is
+  imported; then `--update-baseline` records the reviewed state.
 
 ## Store listing notes
 
