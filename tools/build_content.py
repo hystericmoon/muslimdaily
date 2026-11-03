@@ -185,8 +185,9 @@ def words(text: str) -> list[str]:
 
 KINDS = {"", "hadith"}
 HADEETHENC = Path(__file__).resolve().parent.parent / "content/source/import/hadeethenc.json"
-# hisnmuslim.com's Indonesian pages, by the book's number (tools/hisnul_muslim/fetch_indonesian.py).
-HISNMUSLIM_ID = Path(__file__).resolve().parent.parent / "content/source/import/hisnmuslim_id.json"
+# IslamHouse's Indonesian Hisnul Muslim PDF (Mahrus Ali's translation), by the book's number
+# (tools/hisnul_muslim/fetch_islamhouse_id.py).
+ISLAMHOUSE_ID = Path(__file__).resolve().parent.parent / "content/source/import/islamhouse_hisn_id.json"
 HISN_NO = re.compile(r"Hisnul Muslim no\. (\d+)")
 
 
@@ -194,18 +195,18 @@ def check_taken(duas: list[dict], report: Report) -> None:
     """A translation taken from elsewhere must be words of that source, in order."""
     by_id = {d["id"]: d for d in duas}
     snapshot = None
-    hisn_id = None
+    ih_id = None
     for d in duas:
         for lang, src in (d.get("translations_from") or {}).items():
             if src == "none":
                 continue
             kind, _, ref = src.partition(":")
             text = d["translations"].get(lang, "")
-            if kind == "hisnmuslim":
-                # Indonesian from hisnmuslim.com, for the book's own entry only, cut out verbatim.
-                if hisn_id is None:
-                    hisn_id = json.loads(HISNMUSLIM_ID.read_text(encoding="utf-8")).get("entries", {})
-                entry = hisn_id.get(ref)
+            if kind == "islamhouse":
+                # Indonesian from IslamHouse's edition, for the book's own entry only, cut out verbatim.
+                if ih_id is None:
+                    ih_id = json.loads(ISLAMHOUSE_ID.read_text(encoding="utf-8")).get("entries", {})
+                entry = ih_id.get(ref)
                 if lang != "id" or entry is None:
                     report.errors.append(f"{d['id']}: translation_{lang}_from {src} not found")
                 elif not text or " ".join(text.split()) not in entry["text"]:
@@ -374,9 +375,9 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         if src == "none":
             if lang != "id" or d["translations"].get("id") or not d["translations"].get("en"):
                 report.errors.append(f"{did}: translation_id_from 'none' needs an empty Indonesian and an English")
-        elif not re.fullmatch(r"(row|hadeethenc|hisnmuslim):[\w.-]+", src):
+        elif not re.fullmatch(r"(row|hadeethenc|islamhouse):[\w.-]+", src):
             report.errors.append(
-                f"{did}: translation_{lang}_from must be 'row:<id>', 'hadeethenc:<id>', 'hisnmuslim:<no>' or 'none'")
+                f"{did}: translation_{lang}_from must be 'row:<id>', 'hadeethenc:<id>', 'islamhouse:<no>' or 'none'")
     for lang, tr_full in (d.get("translations_full") or {}).items():
         if lang in taken:
             continue  # checked against its own source in check_taken()
@@ -437,11 +438,11 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
     virtue_text = (row.get("virtue_text") or "").strip()
     reference = (row.get("reference") or "").strip()
     id_from = (row.get("translation_id_from") or "").strip()
-    if id_from.startswith("hisnmuslim:"):
+    if id_from.startswith("islamhouse:"):
         no = HISN_NO.search(row.get("notes") or "")
         if not no or no.group(1) != id_from.partition(":")[2]:
             report.errors.append(f"{rid}: translation_id_from {id_from} is not this row's Hisnul Muslim number")
-        reference = f"{reference} {HISNMUSLIM_NOTE}".strip()
+        reference = f"{reference} {ISLAMHOUSE_NOTE}".strip()
     return {
         "id": rid,
         "category": (row.get("category") or "").strip(),
@@ -531,9 +532,10 @@ def read_csv(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-# Added to the reference of a row whose Indonesian comes from hisnmuslim.com (IslamHouse's terms:
-# credit the source; the page names no translator, so none is named).
-HISNMUSLIM_NOTE = "Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama penerjemah."
+# Added to the reference of a row whose Indonesian comes from IslamHouse's edition (IslamHouse's
+# terms: credit the source, keep translator, publisher and edition).
+ISLAMHOUSE_NOTE = ("Terjemah doa: Hisnul Muslim terjemah Mahrus Ali (Maktab Dakwah dan Bimbingan "
+                   "Jaliyat Rabwah, 1430/2010), IslamHouse.com.")
 
 
 def next_version(path: Path, payload_key: str, payload: list) -> int:
