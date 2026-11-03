@@ -1,5 +1,5 @@
 {
-  "content_version": 51,
+  "content_version": 52,
   "duas": [
     {
       "id": "wake_01",
@@ -15951,7 +15951,7 @@
         "segments": [],
         "range": [
           1.07,
-          21.98
+          22.4
         ]
       },
       "phrase_breaks": []
@@ -16151,12 +16151,12 @@
           ],
           [
             17.49,
-            27.42
+            27.64
           ]
         ],
         "range": [
           0.67,
-          27.42
+          27.64
         ]
       },
       "phrase_breaks": [
@@ -16335,7 +16335,7 @@
         "segments": [],
         "range": [
           0.61,
-          20.14
+          20.28
         ]
       },
       "phrase_breaks": []
@@ -16372,7 +16372,7 @@
         "segments": [],
         "range": [
           0.71,
-          16.88
+          17.18
         ]
       },
       "phrase_breaks": []
@@ -16409,7 +16409,7 @@
         "segments": [],
         "range": [
           0.47,
-          16.79
+          17.28
         ]
       },
       "phrase_breaks": []
@@ -16601,7 +16601,7 @@
         "segments": [],
         "range": [
           0.77,
-          11.71
+          12.22
         ]
       },
       "phrase_breaks": []
@@ -16686,7 +16686,7 @@
         "segments": [],
         "range": [
           0.61,
-          17.15
+          17.32
         ]
       },
       "phrase_breaks": []

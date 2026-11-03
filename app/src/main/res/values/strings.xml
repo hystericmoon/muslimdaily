@@ -898,6 +898,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_12_2">
+        <item>Tujuh bacaan ayat Al-Qur\'an kini tidak terpotong di akhir: huruf panjang terakhirnya dibiarkan selesai, tidak lagi berhenti mendadak.</item>
+    </string-array>
     <string-array name="whats_new_1_12_1">
         <item>Enam rekaman lagi kini dimulai dari doanya: dua doa memakai pakaian, doa ziarah kubur, doa musafir menjelang subuh, doa saat sedih dan gelisah, dan doa naik kendaraan tidak lagi diawali judul bab yang dibaca qari. Pada doa naik kendaraan, \"Bismillāh, wal-hamdu lillāh\" kini menyala sebagai satu frasa.</item>
     </string-array>

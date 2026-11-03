@@ -5,8 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.1 released; session rule changed to Opus/Sonnet with the owner
-clearing sessions; next task: end-of-clip scan, waits on the owner's yes).
+Last updated: 3 Nov 2026 (end-of-clip scan done; 1.12.2 = #142 waits on the owner's OK to merge).
 
 ## In flight (check first)
 
@@ -210,16 +209,17 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **End-of-clip scan (model: Opus; waits on the owner's yes, asked 3 Nov).** The intro scan
-   (1.12.1) covered every clip's first 8 s; clip endings only had the 1 Nov Whisper check, whose
-   "more than one word" rule let a single extra word through (it missed five intros). Do the
-   same for the last ~8 s of each of the 312 recorded rows: flag words heard after one of the
-   dua's last four words (a count note such as «ثلاث مرات», the next title, narration), re-cut
-   with `recut_audio.py` (rows in `tools/align/start_fixes.csv`; an end mode may need adding),
-   re-check with `verify_audio.py`, ship as 1.12.2 (ask before merging: it changes
-   `content/audio`). Expect Whisper mishearings on the last word; read the flags as in the
-   intro scan. Text-side narration is intended: ~30 reading cards (`clean_entries.KINDS`) and
-   muted book notes (count notes, witr_04, istikharah_01, tasbih_10) stay.
+0. **End-of-clip scan: done 3 Nov, 1.12.2 waits on the owner's OK** (PR #142, branch
+   `claude/end-of-clip-scan`; decision page https://claude.ai/artifact/EoRzFgYXsZcgYJLBoLRuXn).
+   Whisper on every clip's last 10 s and the 4 s after it, plus the loudness at the cut (script
+   kept only in the scratchpad: re-create from this). No clip plays a word after the dua. Seven
+   Qur'an clips (quran_08/13/17/18/19/24/26) ended 0.14-0.51 s before the held last vowel died
+   away: new `recut_audio.py` mode `end` (rows in `start_fixes.csv`, tested) moves the end into
+   the silence; each re-checked by `verify_audio.py` (quran_18 "check" is the known «وقل رب»
+   mishearing, same text as before). tasbih_01 tried and dropped: the reciter runs on into
+   «في يوم», and the longer cut made Whisper hear «فيه». 16 more flags checked, nothing to fix
+   (list on the page). sleep_02/sleep_07: the source file itself ends on the last word.
+   content_version 52, versionCode 51, versionName 1.12.2, What's New `whats_new_1_12_2`.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
@@ -343,6 +343,13 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
   `create_session` takes one repo and inherits the caller's environment.
 - `export ANDROID_HOME=/opt/android-sdk`; the first Gradle build takes several minutes.
 - Maven Central and sunnah.com may refuse direct `curl` (429 / 403); Gradle resolves fine.
+- Whisper with transformers 5 loads in float16 by default: ~6x slower on CPU (72 s against 12 s
+  for a 10 s clip); both tools now pass `dtype=torch.float32`. `recut_audio.py words` ran out of
+  memory (16 GB) on quran_13 (30 s, word timestamps); mode `end` reads the loudness from the file
+  instead. `recut_audio.py start` re-runs every fix in the file and travel_01's `join` joins
+  again on a second run: always `apply --id <new rows>` and check the CSV diff.
+- Run the content tests from `tools/` (`cd tools && python3 -m unittest discover -s .`); from the
+  repo root `python3 -m unittest tools.test_x` fails to import.
 - Whisper venv for `verify_audio.py` / `recut_audio.py` (not in the setup script: ~2 GB):
   `python3 -m venv /tmp/wvenv && /tmp/wvenv/bin/pip install --index-url
   https://download.pytorch.org/whl/cpu torch && /tmp/wvenv/bin/pip install transformers numpy`.

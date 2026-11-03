@@ -101,7 +101,8 @@ def main() -> int:  # pragma: no cover - needs torch and the model
     ap.add_argument("--resume", action="store_true", help="keep build/align/verify.csv and skip its rows")
     args = ap.parse_args()
     torch.set_num_threads(4)
-    asr = pipeline("automatic-speech-recognition", model=MODEL, device="cpu")
+    # float32: transformers 5 loads this model in float16 by default, ~6x slower on CPU
+    asr = pipeline("automatic-speech-recognition", model=MODEL, device="cpu", dtype=torch.float32)
     _, rows, _ = sa.read_csv(sa.DUAS)
     out = sa.read_csv(OUT)[1] if args.resume and OUT.exists() else []
     done = {r["id"] for r in out}
