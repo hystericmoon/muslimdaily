@@ -46,12 +46,9 @@ python -m unittest discover -s tools          # content pipeline
 
 ## Release
 
-- Releases are stable by default (owner's choice): minor version for new features, patch for
-  fixes; beta only when the owner asks. Say which version you will ship before merging.
-- Bump `versionCode` and `versionName` in `app/build.gradle.kts`; merging to main publishes a
-  GitHub Release when `versionName` changes. A name with `-` (e.g. `0.6.1-beta.1`) is a
-  pre-release for the beta channel. See `docs/release.md`, `docs/beta.md`.
-- Add the release's highlights to `feature/whatsnew/WhatsNew.kt` and a `whats_new_*` array.
+- Stable by default: minor for features, patch for fixes; beta only when the owner asks. Say
+  which version you will ship before merging. Merging a `versionName` change publishes a GitHub
+  Release. Steps: the `release` skill (`.claude/skills/release/`), `docs/release.md`, `docs/beta.md`.
 - Feedback/report email: `muslimdaily.reportEmail` in `gradle.properties`.
 
 ## Workflow
@@ -69,11 +66,10 @@ is mergeable, without asking. Ask first only when the PR carries a risk:
 
 ## Sessions
 
-One session at a time. Start by reading `docs/handover.md`; before you stop, or when the
-conversation is getting long, update it (open PRs, what waits on the owner, decisions, facts
-that took time to find) and merge it with your PR or on its own, so the next session starts
-from it. The handover is the only backup: the owner clears each session, and anything not
-merged to main is lost.
+One session at a time. Start by reading `docs/handover.md` (short by design; the archive is
+`docs/history.md`, searched, not read whole). Before you stop, or when the conversation is
+getting long, update it and merge it with your PR or on its own. The handover is the only
+backup: the owner clears each session, and anything not merged to main is lost.
 
 Standing instruction from the owner (3 Nov 2026): sessions alternate between Opus and Sonnet,
 and the owner starts and clears them. Don't start or archive sessions yourself.
@@ -81,9 +77,8 @@ and the owner starts and clears them. Don't start or archive sessions yourself.
 - When the owner asks for work, say first which model it needs (rule below). If this session
   is on the other model, say so before starting. If a Sonnet session finds the task needs
   Opus, stop, write what you found into the handover, and say so.
-- When the owner says they are clearing the session: update the handover, merge it (wait
-  for CI), then reply with "Safe to clear", the next session's model with a one-line reason,
-  and its prompt, starting "Continue from docs/handover.md." plus the task.
+- When the owner says they are clearing the session: follow the `session-clear` skill (update
+  and merge the handover, then "Safe to clear", the next model and its prompt).
 - Opus: religious content (imports, grades, translations, sources); audio cuts and checks;
   `UserDatabase`, `BackupRepository` or anything that could lose user data; features across
   several modules; bugs of unknown cause; decision pages that need research.
@@ -101,5 +96,7 @@ More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, 
 - Route mechanical work (renames, formatting, summarizing, scraping, bulk find-and-replace) to a sub-agent with `model: "haiku"`. Keep judgment and design work in the main session.
 - Exception: never hand a Haiku sub-agent anything that touches religious content or user data (see "Sessions" for which work needs Opus).
 - Never suggest `/compact` as a cost-saving measure. Suggest `/clear` between unrelated jobs instead.
-- Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache.
+- Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache, so start each session on the model its task needs (see "Sessions").
+- Project skills hold the repeated procedures and load only when used: `content-import`, `audio-recut`, `release`, `session-clear`. Use them instead of re-reading the long docs; read a doc section only when the skill points to it.
+- Searches across many files or docs (e.g. "where is X handled"): use the Explore sub-agent and keep only its conclusion.
 - Noisy install, build and test output is trimmed by `.claude/hooks/trim-output.py` to the error lines plus the last 30 lines. If you need the full log, rerun the command with `> /tmp/log.txt` and grep that file.
