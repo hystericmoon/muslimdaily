@@ -286,8 +286,11 @@ Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz
    - No Latin (55): by design, `tools/transliterate.py` skips rows whose Arabic has unvowelled
      words or inline narration (e.g. صلى الله عليه وسلم); only 2 of the 55 have no vowel marks at
      all, the rest were not inspected one by one. Never hand-edit the Arabic or write Latin. A fix
-     is a fixed rule in the transliterator (for example, skip the narration clause), which the
-     owner must approve first as it extends the 1 Nov exception.
+     is a fixed rule in the transliterator (for example, skip the narration clause). APPROVED by the
+     owner, 3 Nov: the transliterator may skip inline narration such as صلى الله عليه وسلم and
+     transliterate the rest of the row by the same fixed rules (still never hand-written Latin, and
+     never an edit to the Arabic). Rows with other unvowelled words stay without Latin. Check each
+     newly transliterated row against its Arabic, and add tests in `tools/`.
    Rows with audio but no phrase timing (118) are not a gap: they play the whole clip.
 0. **Done (3 Nov, Sonnet, #150, released in 1.12.5): IslamHouse credits.** About's licence list now has "Audio:
    Hamad ad-Duraihim" ("Sumber: IslamHouse.com …") and "Teks: Hisnul Muslim" (Arabic and English
