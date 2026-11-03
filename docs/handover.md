@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.4 released, #147; next session: Sonnet, IslamHouse credits wording).
+Last updated: 3 Nov 2026 (1.12.4 released, #147; IslamHouse credits wording in a PR, awaiting screenshots + CI).
 
 ## In flight (check first)
 
@@ -268,18 +268,13 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Next (model: Sonnet): IslamHouse credits worded as they suggest.** Their reply suggests
-   "Audio: Hamad ad-Duraihim – Source: IslamHouse.com" and "Text: Hisn al-Muslim – {Translator,
-   if listed} – Source: IslamHouse.com". Today: About's licence list
-   (`feature/settings/AboutScreen.kt`, `License(...)` entries, hardcoded Indonesian) has "Audio
-   Hisnul Muslim: Hamad ad-Duraihim" / "IslamHouse.com. Boleh disebarkan …", and no entry for the
-   Hisn text. Do: (a) reword the audio entry to their wording; (b) add one entry for the text:
-   Hisnul Muslim, Arabic and English from hisnmuslim.com (no translator listed there, so name
-   none), the Indonesian of eating_08/09 translated by Mahrus Ali, source IslamHouse.com. Don't
-   touch `methodology_*` strings or any content. Re-record screenshots (About), run the
-   Screenshots workflow. Ship with the next release, or as 1.12.5 if the owner wants it now
-   (versionName change: ask before merging). Done already: `tools/check_sources.py` (1.12.4;
-   release gate in `docs/release.md`; baseline 3 Nov, 0 changes). Play content: done (#146).
+0. **Done in this PR (3 Nov, Sonnet): IslamHouse credits.** About's licence list now has "Audio:
+   Hamad ad-Duraihim" ("Sumber: IslamHouse.com …") and "Teks: Hisnul Muslim" (Arabic and English
+   from hisnmuslim.com, no translator named; Indonesian of the two eating duas: Mahrus Ali; source
+   IslamHouse.com). `methodology_*` and content untouched. Screenshot 47 re-recorded by the
+   Screenshots workflow. No version bump: ships with the next release (or 1.12.5 if the owner
+   wants it now; versionName change: ask first). Also done: `tools/check_sources.py` (1.12.4;
+   release gate in `docs/release.md`), Play content (#146). Open follow-up: none.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
