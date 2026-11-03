@@ -72,8 +72,25 @@ is mergeable, without asking. Ask first only when the PR carries a risk:
 One session at a time. Start by reading `docs/handover.md`; before you stop, or when the
 conversation is getting long, update it (open PRs, what waits on the owner, decisions, facts
 that took time to find) and merge it with your PR or on its own, so the next session starts
-from it. Standing instruction from the owner: when a session's work is done, start a new cloud
-session on this repo with the prompt "Continue from docs/handover.md", then archive the
-finished session, so only one runs.
+from it. The handover is the only backup: the owner clears each session, and anything not
+merged to main is lost.
+
+Standing instruction from the owner (3 Nov 2026): sessions alternate between Opus and Sonnet,
+and the owner starts and clears them. Don't start or archive sessions yourself.
+
+- When the owner asks for work, say first which model it needs (rule below). If this session
+  is on the other model, say so before starting. If a Sonnet session finds the task needs
+  Opus, stop, write what you found into the handover, and say so.
+- When the owner says they are clearing the session: update the handover, merge it (wait
+  for CI), then reply with "Safe to clear", the next session's model with a one-line reason,
+  and its prompt, starting "Continue from docs/handover.md." plus the task.
+- Opus: religious content (imports, grades, translations, sources); audio cuts and checks;
+  `UserDatabase`, `BackupRepository` or anything that could lose user data; features across
+  several modules; bugs of unknown cause; decision pages that need research.
+- Sonnet: UI polish, copy and strings, generated icons, screenshot re-records, version bumps
+  and releases with known contents, bugs of known cause, docs and handover, non-breaking
+  dependency bumps, carrying out a written plan the owner already chose.
+- The test: if a wrong call could put wrong religious content in front of users or lose their
+  data, Opus; if it is specified and a mistake shows in review or screenshots, Sonnet.
 
 More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
