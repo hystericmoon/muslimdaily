@@ -5,8 +5,8 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.1 merged, #139; nothing in flight; next work waits on the
-owner).
+Last updated: 3 Nov 2026 (1.12.1 released; session rule changed to Opus/Sonnet with the owner
+clearing sessions; next task: end-of-clip scan, waits on the owner's yes).
 
 ## In flight (check first)
 
@@ -113,8 +113,8 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (checked the 1.12.1 release;
-  handover only).
+- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (1.12.1 released 07:23 WIB;
+  #140 handover; Opus/Sonnet session rule).
 - Before it: session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1 = #139).
 - Before that: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
 - Before that: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
@@ -210,6 +210,17 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
+0. **End-of-clip scan (model: Opus; waits on the owner's yes, asked 3 Nov).** The intro scan
+   (1.12.1) covered every clip's first 8 s; clip endings only had the 1 Nov Whisper check, whose
+   "more than one word" rule let a single extra word through (it missed five intros). Do the
+   same for the last ~8 s of each of the 312 recorded rows: flag words heard after one of the
+   dua's last four words (a count note such as «ثلاث مرات», the next title, narration), re-cut
+   with `recut_audio.py` (rows in `tools/align/start_fixes.csv`; an end mode may need adding),
+   re-check with `verify_audio.py`, ship as 1.12.2 (ask before merging: it changes
+   `content/audio`). Expect Whisper mishearings on the last word; read the flags as in the
+   intro scan. Text-side narration is intended: ~30 reading cards (`clean_entries.KINDS`) and
+   muted book notes (count notes, witr_04, istikharah_01, tasbih_10) stay.
+
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
    done (#118, #124). Left, all the owner's: create the upload keystore and add the four
@@ -301,9 +312,10 @@ Not to do: delete count notes inside duas (after_salah_01/04, sleep_08, fear_05,
 
 - Times: the owner reads Jakarta time. Give every time to the owner in WIB (UTC+7), not UTC
   (asked 2 Nov). Tool results print UTC; convert before quoting them.
-- One session at a time. When its work is done, or the conversation is getting long: update
-  this file, merge it, start a new cloud session on this repo with the prompt "Continue from
-  docs/handover.md", and archive the finished session.
+- One session at a time, alternating Opus and Sonnet (owner, 3 Nov; rules in CLAUDE.md,
+  "Sessions"). The owner starts and clears sessions: don't start or archive them. When the
+  owner says they're clearing: update this file, merge it, then reply "Safe to clear" with the
+  next model, a one-line reason and the prompt ("Continue from docs/handover.md." + task).
 
 - Standing instruction from the owner (31 Oct): work on Adwam only. Don't read, archive or
   change sessions, repos or artifacts of other projects; the archiving notes below were
