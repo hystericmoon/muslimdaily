@@ -67,8 +67,8 @@ Adwam maintainer
 
 ## Reply (summary)
 
-The owner received IslamHouse's reply by email ("IslamHouse.com Management") and shared it on
-2026-11-03. The full email stays with the owner; it says it may be used as written confirmation.
+The owner received IslamHouse's reply by email ("IslamHouse.com Management") about 01:00 WIB on
+2026-11-03 (owner: "21 hours ago" at 22:00 WIB) and shared it the same day. The full email stays with the owner; it says it may be used as written confirmation.
 This is a summary, not the text.
 
 - **Granted:** use of the Hisn al-Muslim content in the free, offline, ad-free app, distributed
