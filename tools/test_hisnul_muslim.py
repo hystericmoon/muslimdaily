@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "hisnul_muslim"))
+import fetch_audio  # noqa: E402
 import fetch_english  # noqa: E402
 import import_hisn  # noqa: E402
 import weak_appendix  # noqa: E402
@@ -111,6 +112,19 @@ class FetchEnglishTest(unittest.TestCase):
         ])
         self.assertEqual(fetch_english.pdf_entry(text, 185), "First line of the English (a note), second line.")
         self.assertIsNone(fetch_english.pdf_entry(text, 999))
+
+
+class AudioUrlTest(unittest.TestCase):
+    def test_url_kept_and_made_https(self):
+        self.assertEqual(fetch_audio.audio_url({"ID": 152, "AUDIO": "http://www.hisnmuslim.com/audio/ar/152.mp3"}),
+                         "https://www.hisnmuslim.com/audio/ar/152.mp3")
+
+    def test_missing_number_takes_the_entry_id(self):
+        self.assertEqual(fetch_audio.audio_url({"ID": 153, "AUDIO": "http://www.hisnmuslim.com/audio/ar/.mp3"}),
+                         "https://www.hisnmuslim.com/audio/ar/153.mp3")
+
+    def test_no_audio(self):
+        self.assertIsNone(fetch_audio.audio_url({"ID": 1, "AUDIO": ""}))
 
 
 if __name__ == "__main__":

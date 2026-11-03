@@ -11,7 +11,9 @@ long vowels ā ī ū; diphthongs ai and au; the article before a sun letter assi
 an alif of joining (hamzat waṣl) is not read after a word (rabbil-'ālamīn); words end in their
 pausal form before punctuation and at the end (ة becomes h, a final short vowel drops, -an
 becomes ā). Text the rules can't read (a word with no vowel marks, such as the book's notes)
-makes `transliterate` return None rather than a guess.
+makes `transliterate` return None rather than a guess. One exception (approved by the owner,
+2026-11-03): an honorific the book prints without vowel marks inside the narration (صلى الله
+عليه وسلم, رضي الله عنه) is left out of the Latin and the rest of the text is read as usual.
 """
 from __future__ import annotations
 
@@ -46,6 +48,12 @@ IGNORE = set("﴿﴾()«»\"'") | {"۞"}
 # skeleton) is read long. Skeletons are matched inside a word, so prefixes (و، ف، ب، ل) work.
 LONG_IN = {"إله": 1, "اله": 1, "رحمن": 2, "هذا": 0, "هذه": 0, "ذلك": 0, "لكن": 0, "أولئك": 2, "سموات": 1}
 PREFIXES = set("وفبلك")
+# Honorifics inside the narration, by the skeletons of their words. Left out of the Latin only
+# when printed without vowel marks (a vowelled one is read like any other text).
+HONORIFICS = [
+    (("صلى",), ("الله",), ("عليه",), ("وسلم",)),
+    (("رضي",), ("الله",), ("عنه", "عنها", "عنهما", "عنهم")),
+]
 
 
 class Token:
@@ -127,6 +135,11 @@ READ_MARKS = set(VOWELS) | {SUKUN, SHADDA, DAGGER_ALIF, MADDAH, SMALL_WAW, SMALL
 LONG_LETTERS = set("اىوي") | {"ٱ"}
 
 
+def only_prefixes(tokens: list[Token]) -> bool:
+    """True when [tokens] can only be prefixes before the name of Allah (وَ، فَ، بِ، لِ، تَ، ا)."""
+    return all(tok.letter in PREFIXES | set("تاٱأ") for tok in tokens)
+
+
 def vowelled(word: list[Token]) -> bool:
     """A word the rules can read: every consonant carries a mark, except at the end of the word,
     before a letter of length (ما, أعوذ) and the lam of the article."""
@@ -138,19 +151,20 @@ def vowelled(word: list[Token]) -> bool:
             return False
         if t.marks & READ_MARKS or t.letter not in CONSONANTS:
             continue
-        if idx == len(word) - 1 or word[idx + 1].letter in LONG_LETTERS:
-            continue
+        if idx == len(word) - 1 or (word[idx + 1].letter in LONG_LETTERS and not word[idx + 1].has(SHADDA)):
+            continue  # a doubled و or ي is a consonant, not a letter of length
         if t.letter in "وي" and idx and word[idx - 1].vowel:
             continue
         if t.letter == "ل" and idx and word[idx - 1].letter in "اٱ":
             continue
-        if t.letter == "ل" and idx + 1 < len(word) and word[idx + 1].letter == "ل" and word[idx + 1].has(SHADDA):
-            continue  # the book's للَّهِ
+        if (t.letter == "ل" and idx + 1 < len(word) and word[idx + 1].letter == "ل" and word[idx + 1].has(SHADDA)
+                and only_prefixes(word[:idx])):
+            continue  # the book's للَّهِ (not هَللَّهُ, a verb with its shadda misplaced)
         # A bare letter between two vowelled ones closes the syllable: an unwritten sukun
         # (أَنتَ، يَرحَمُكَ). A bare و or ي after a bare letter is its long vowel (وَأَتوبُ).
         nxt = word[idx + 1]
-        if idx and word[idx - 1].vowel and (nxt.vowel or nxt.has(SHADDA)):
-            continue
+        if idx and word[idx - 1].vowel and nxt.vowel and not nxt.has(SHADDA):
+            continue  # (never before a doubled letter: the book's النَّبيُّ lacks its kasra)
         if t.letter in "وي" and idx:
             continue
         if idx and word[idx - 1].letter in "اٱ" and not word[idx - 1].vowel:
@@ -171,10 +185,11 @@ def has_article(word: list[Token], start: int) -> bool:
 
 
 def is_jalalah(word: list[Token], i: int) -> bool:
-    """The doubled lam of Allah: لّ before a final ه, after another lam."""
+    """The doubled lam of Allah: لّ before a final ه, after another lam and only prefixes."""
     return (
         word[i].letter == "ل" and word[i].has(SHADDA) and i + 1 < len(word)
         and word[i + 1].letter == "ه" and i >= 1 and word[i - 1].letter == "ل"
+        and only_prefixes(word[:i - 1])
     )
 
 
@@ -307,6 +322,8 @@ def render(word: list[Token], at_pause: bool, joined: bool) -> str:
             continue
 
         cons = CONSONANTS.get(t.letter, "")
+        if t.letter in ALIFS and t.has(FATHATAN) and prev is not None and prev.vowel == "a" and out and out[-1].endswith("a"):
+            out[-1] = out[-1][:-1]  # the book's خَيْرَاً: the fatha and the tanwin are one -an
         if t.letter == "ة":
             cons = "h" if (last and at_pause) or not t.vowel else "t"
         if t.has(SHADDA) and cons and i > 0:
@@ -334,13 +351,36 @@ def render(word: list[Token], at_pause: bool, joined: bool) -> str:
     return "".join(out)
 
 
+def drop_honorifics(items: list) -> list:
+    """[items] without unvowelled honorifics (see HONORIFICS) and the spaces inside them."""
+    out = list(items)
+    k = 0
+    while k < len(out):
+        for pattern in HONORIFICS:
+            words, j = [], k
+            while len(words) < len(pattern) and j < len(out):
+                if isinstance(out[j], list):
+                    words.append(j)
+                elif not out[j].isspace():
+                    break
+                j += 1
+            if (len(words) == len(pattern)
+                    and all(skeleton(out[i]) in alts for i, alts in zip(words, pattern))
+                    and not all(vowelled(out[i]) for i in words)):
+                del out[k:words[-1] + 1]
+                break
+        else:
+            k += 1
+    return out
+
+
 def transliterate(arabic: str) -> str | None:
     """Indonesian-style Latin for [arabic], or None when a word can't be read by the rules.
 
     A bracketed note the rules can't read (the book's [ثلاثاً]) is left out; anywhere else an
     unreadable word gives None rather than a guess.
     """
-    items = tokenize(arabic)
+    items = drop_honorifics(tokenize(arabic))
     # Drop bracketed groups that hold an unreadable word.
     kept: list = []
     k = 0

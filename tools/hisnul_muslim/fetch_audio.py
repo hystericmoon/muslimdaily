@@ -32,14 +32,26 @@ JSON_CACHE = ROOT / "build/hisnmuslim"
 HISN_NO = re.compile(r"Hisnul Muslim no\. (\d+)")
 
 
+def audio_url(item: dict) -> str | None:
+    """The entry's MP3 URL. The API names entry 153's file "audio/ar/.mp3" (its number left
+    out, checked 3 Nov 2026); the site serves every recording at audio/ar/<ID>.mp3, so a URL
+    without a file name takes the entry's number. The file is checked by Whisper before use."""
+    url = (item.get("AUDIO") or "").replace("http://", "https://", 1)
+    if not url:
+        return None
+    if url.endswith("/.mp3"):
+        url = f"{url[:-len('.mp3')]}{int(item['ID'])}.mp3"
+    return url
+
+
 def audio_urls() -> dict[int, str]:
     """Hisn number -> MP3 URL, from the chapter JSON that fetch_arabic.py cached."""
     urls = {}
     for f in JSON_CACHE.glob("*.json"):
         for items in json.loads(f.read_text("utf-8-sig")).values():
             for it in items:
-                if it.get("AUDIO"):
-                    urls[int(it["ID"])] = it["AUDIO"].replace("http://", "https://", 1)
+                if url := audio_url(it):
+                    urls[int(it["ID"])] = url
     if not urls:
         sys.exit("No cached hisnmuslim.com JSON; run import_hisn.py (fetch_arabic) first.")
     return urls
