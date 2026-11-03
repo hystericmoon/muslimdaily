@@ -74,7 +74,7 @@ jobs:
         run: |
           ./gradlew :app:assembleSideload
           cp app/build/outputs/apk/sideload/app-sideload.apk "adwam-${{ steps.version.outputs.version }}.apk"
-      # The store (Play) bundle: release build type, Play content (docs/play-store.md, "Plan B").
+      # The store (Play) bundle: release build type, same content as the GitHub build.
       # Signed with the upload key when its secrets are set (see docs/release.md), unsigned
       # otherwise. Kept as a workflow artifact for upload to Play, not attached to the release.
       - name: Build Play bundle

@@ -4,9 +4,8 @@
     python3 tools/build_content.py            # CSV -> content/duas.json + content/rawatib.json
     python3 tools/build_content.py --check    # validate the existing JSON only
 
-It also writes content/play/duas.json, the Play build's copy (docs/play-store.md, "Plan B"):
-the same rows without the English taken from hisnmuslim.com, whose translator and licence are
-not named. Rows whose only translation is that English are left out of it.
+The Play build ships the same duas.json as the GitHub build: IslamHouse's licence reply
+(docs/islamhouse-licence-request.md, "Reply") allows Google Play, so Plan B's separate copy is gone.
 
 Input (CSV export of the spreadsheet, UTF-8):
     content/source/duas.csv      one row per dua / dhikr
@@ -532,40 +531,9 @@ def read_csv(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-HISN_NOTE = "Hisnul Muslim"
 # Added to the reference of a row whose Indonesian comes from hisnmuslim.com (IslamHouse's terms:
-# name the source; the page names no translator, so none is named).
+# credit the source; the page names no translator, so none is named).
 HISNMUSLIM_NOTE = "Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama penerjemah."
-
-
-def play_duas(duas: list[dict], hisn_ids: set[str]) -> tuple[list[dict], list[str]]:
-    """The Play build's rows: Hisn al-Muslim English (hisnmuslim.com, or IslamHouse's English
-    edition for one row) removed; Qur'an and HadeethEnc English stay. Returns the rows and the
-    ids left out because no translation would be left. An Indonesian taken from hisnmuslim.com
-    goes too (same source as the English)."""
-    rows, left_out = [], []
-    for d in duas:
-        if d["id"] not in hisn_ids:
-            rows.append(d)
-            continue
-        from_site = (d.get("translations_from") or {}).get("id", "").startswith("hisnmuslim:")
-        if not d["translations"].get("id") or from_site:
-            left_out.append(d["id"])
-            continue
-        d = json.loads(json.dumps(d))
-        d["translations"]["en"] = ""
-        full = d.get("translations_full")
-        if full and "en" in full:
-            del full["en"]
-            if not full:
-                del d["translations_full"]
-        taken = d.get("translations_from")
-        if taken and "en" in taken:
-            del taken["en"]
-            if not taken:
-                del d["translations_from"]
-        rows.append(d)
-    return rows, left_out
 
 
 def next_version(path: Path, payload_key: str, payload: list) -> int:
@@ -580,13 +548,11 @@ def next_version(path: Path, payload_key: str, payload: list) -> int:
 
 def build(duas_csv: Path, rawatib_csv: Path, out_dir: Path, audio_dir: Path, report: Report) -> None:
     taxonomy = load_taxonomy()
-    duas, seen, hisn_ids = [], set(), set()
+    duas, seen = [], set()
     for line, row in enumerate(read_csv(duas_csv), start=2):
         d = dua_from_row(row, line, report)
         if d is None:
             continue
-        if (row.get("notes") or "").strip().startswith(HISN_NOTE):
-            hisn_ids.add(d["id"])
         if d["id"] in seen:
             report.errors.append(f"{d['id']}: duplicate id")
         seen.add(d["id"])
@@ -621,13 +587,6 @@ def build(duas_csv: Path, rawatib_csv: Path, out_dir: Path, audio_dir: Path, rep
                    **rawatib_payload}
     duas_path.write_text(json.dumps(duas_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     rawatib_path.write_text(json.dumps(rawatib_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-    play, left_out = play_duas(duas, hisn_ids)
-    play_path = out_dir / "play" / "duas.json"
-    play_path.parent.mkdir(exist_ok=True)
-    play_doc = {"content_version": duas_doc["content_version"], "duas": play}
-    play_path.write_text(json.dumps(play_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    report.warnings.append(f"play/duas.json: {len(left_out)} row(s) left out, no translation without hisnmuslim.com: {', '.join(left_out)}")
 
 
 def check(out_dir: Path, audio_dir: Path, report: Report) -> None:

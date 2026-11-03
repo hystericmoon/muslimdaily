@@ -45,46 +45,23 @@ Play reviews these against its policies. The answers below are what the code act
 - Is data encrypted in transit? Not applicable (no transmission).
 - Can users request deletion? Yes: clearing app data or uninstalling removes everything.
 
-## Plan B: Play without the hisnmuslim.com English (owner's choice, 31 Oct)
+## Content: the same as the GitHub build (since 3 Nov 2026)
 
-IslamHouse hasn't answered the licence request (23 Oct). The audio and the Indonesian rest on
-IslamHouse's published FAQ (republish unchanged, with credit), as in the GitHub build. The
-English Hisn text from hisnmuslim.com names no translator or licence, so the Play build leaves
-it out until IslamHouse answers:
+From 31 Oct to 3 Nov the Play build had its own copy of the duas ("Plan B": no hisnmuslim.com
+English, the 5 rows with only that English left out, and its own `methodology_reviewer` in
+`src/release`), because IslamHouse hadn't answered the licence request. Their reply allows Google
+Play (summary: [islamhouse-licence-request.md](islamhouse-licence-request.md), "Reply"), so the
+owner chose (3 Nov, decision page https://claude.ai/artifact/4QQtVz85R8KrGWNZHBU4XM) to ship the
+same `content/duas.json` and credits in every build. `content/play/`, `ContentAssetsTask.duasFile`,
+the `src/release` strings and screenshot 143 are gone. The release workflow still builds the AAB
+(artifact `play-bundle`).
 
-1. Done: `build_content.py` also writes `content/play/duas.json`, the same rows with the
-   English of every Hisn al-Muslim row emptied (`translations.en`, `translations_full.en`; the
-   rows are the ones whose `notes` start "Hisnul Muslim", which includes fasting_01's English
-   from IslamHouse's 2025 edition). Qur'an and HadeethEnc English stay (47 rows). The 5 Hisn
-   rows that have only English (eating_08, eating_09, tasbih_03, tasbih_06, salam_04: no
-   Indonesian at any source) are left out of the Play copy, since they would show the Arabic
-   alone. eating_08 has had Indonesian since 1.12.3, but from hisnmuslim.com too
-   (`hisnmuslim:178`), so it stays out. IslamHouse's licence reply (3 Nov 2026, see the
-   handover) allows Google Play; putting these rows back is the owner's call. CI's "content is up to date" check covers the file.
-2. Done, without a flavor: the `release` build type is already the store build (offline, no
-   updater), and GitHub ships `sideload`. `ContentAssetsTask.duasFile` makes `release` package
-   `play/duas.json` as `content/duas.json`; debug and sideload keep `duas.json`. A flavor would
-   have doubled every variant and renamed the CI tasks for no gain. Still to add: AAB in the
-   release workflow: done, artifact `play-bundle` on each release run.
-3. Checked in code: with English chosen, a row with no English shows its Indonesian
-   (`DuaTranslation` in `DuaComponents.kt`; the "Lihat teks lengkap" section in
-   `DuaDetailScreen.kt` does the same). Search, Memorise and the widget don't read the
-   English. Screenshot `143-play-hisn-english` (morning_04 from `content/play/duas.json`, English
-   UI and English chosen) shows it.
-4. Done: `src/release/res/values*/strings.xml` override `methodology_reviewer`: no
-   hisnmuslim.com English credit, and a line saying Hisn duas show the Indonesian in English.
-   The What's New history has three items about the Hisn English (1.4.0, 1.4.2, 1.6.0). They
-   can't show in the Play build: a fresh install shows no What's New (`WhatsNew.since`,
-   `firstRun`), later updates show only versions after the installed one, and About shows the
-   three latest. So they are left as they are; don't mention the Hisn English in a new item.
-
-If IslamHouse says yes, delete the flavor's content step; if they say no, apply step 1 to the
-GitHub build too.
+If IslamHouse ever withdraws permission, the removed code is in git history (#118, #124).
 
 ## Risks to plan for
 
-- **Religious content review.** Play has no special policy, but Hisn al-Muslim audio and text
-  licences should be confirmed in writing first: see [islamhouse-licence-request.md](islamhouse-licence-request.md).
+- **Religious content review.** Play has no special policy. The Hisn al-Muslim audio and text
+  licence is confirmed in writing: see [islamhouse-licence-request.md](islamhouse-licence-request.md), "Reply".
 - **Mosque data.** OpenStreetMap ODbL attribution is in About; keep it there in the Play build.
 - **Two channels.** If both GitHub and Play builds exist, they are different signers. Decide whether
   the GitHub build continues; if it does, keep its updater pointing only at GitHub.

@@ -3,8 +3,6 @@ import groovy.json.JsonSlurper
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
@@ -19,10 +17,6 @@ import java.io.File
  * Every entry ships, so the build fails if one has placeholder Arabic, no source, or names an
  * audio file that does not exist. The full authoring validator lives in tools/build_content.py;
  * this is the last gate before shipping.
- *
- * [duasFile] picks which build of the duas ships: `duas.json`, or for the Play build
- * `play/duas.json` (no hisnmuslim.com English; see docs/play-store.md, "Plan B"). Either
- * lands in the APK as `content/duas.json`.
  */
 @CacheableTask
 abstract class ContentAssetsTask : DefaultTask() {
@@ -30,9 +24,6 @@ abstract class ContentAssetsTask : DefaultTask() {
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val contentDir: DirectoryProperty
-
-    @get:Input
-    abstract val duasFile: Property<String>
 
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
@@ -46,7 +37,7 @@ abstract class ContentAssetsTask : DefaultTask() {
         val audioOut = File(out, "audio").apply { mkdirs() }
 
         @Suppress("UNCHECKED_CAST")
-        val duasSrc = File(src, duasFile.getOrElse("duas.json"))
+        val duasSrc = File(src, "duas.json")
         val duas = (JsonSlurper().parse(duasSrc) as Map<String, Any?>)["duas"] as List<Map<String, Any?>>
         val errors = duas.flatMap { validate(it, src) }
         if (errors.isNotEmpty()) {
