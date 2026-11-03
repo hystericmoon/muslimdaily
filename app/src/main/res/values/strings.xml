@@ -898,6 +898,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_12_6">
+        <item>Dua doa kini punya terjemah bahasa Inggris, doa untuk orang yang hendak wafat kini ada rekamannya, dan 16 doa lagi punya tulisan Latin. Tulisan Latin selalu diturunkan dari teks Arab yang bersumber.</item>
+        <item>Lima tulisan Latin diperbaiki (mis. \"rabbā\", bukan \"rabbaā\"), dan tulisan Latin yang tidak yakin kini dikosongkan, bukan ditebak.</item>
+    </string-array>
     <string-array name="whats_new_1_12_5">
         <item>Halaman Tentang kini mencantumkan sumber audio dan teks Hisnul Muslim sesuai permintaan IslamHouse.com: pembaca Hamad ad-Duraihim, teks dari hisnmuslim.com, dan penerjemah (Mahrus Ali untuk dua doa makan).</item>
     </string-array>
