@@ -68,40 +68,40 @@ class BuildContentTest(unittest.TestCase):
         self.assertEqual(entry["reference"], "HR. Uji 1.")
         self.assertNotIn("status", entry)
 
-    def run_build_hisnmuslim(self, **overrides):
-        """A row whose Indonesian is taken from a hisnmuslim.com snapshot (neutral test strings)."""
-        snapshot = self.tmp / "hisnmuslim_id.json"
+    def run_build_islamhouse(self, **overrides):
+        """A row whose Indonesian is taken from an IslamHouse snapshot (neutral test strings)."""
+        snapshot = self.tmp / "islamhouse_hisn_id.json"
         snapshot.write_text(json.dumps({"entries": {"7": {"chapter": 3, "text": "“Kata uji: “teks uji satu.” (1)"}}}),
                             encoding="utf-8")
-        old, bc.HISNMUSLIM_ID = bc.HISNMUSLIM_ID, snapshot
+        old, bc.ISLAMHOUSE_ID = bc.ISLAMHOUSE_ID, snapshot
         old_cols = list(DUA_COLUMNS)
         DUA_COLUMNS.extend(["translation_id_from"])
         try:
-            row = dua_row(translation_id="teks uji satu.", translation_id_from="hisnmuslim:7",
+            row = dua_row(translation_id="teks uji satu.", translation_id_from="islamhouse:7",
                           notes="Hisnul Muslim no. 7 | uji", translation_en="test text")
             row.update(overrides)
             return self.run_build([row])
         finally:
-            bc.HISNMUSLIM_ID = old
+            bc.ISLAMHOUSE_ID = old
             DUA_COLUMNS[:] = old_cols
 
-    def test_indonesian_from_hisnmuslim_builds_and_names_the_site(self):
-        report = self.run_build_hisnmuslim()
+    def test_indonesian_from_islamhouse_builds_and_credits_the_translator(self):
+        report = self.run_build_islamhouse()
         self.assertTrue(report.ok, report.errors)
         entry = json.loads((self.tmp / "duas.json").read_text(encoding="utf-8"))["duas"][0]
-        self.assertEqual(entry["translations_from"], {"id": "hisnmuslim:7"})
-        self.assertTrue(entry["reference"].endswith(bc.HISNMUSLIM_NOTE))
+        self.assertEqual(entry["translations_from"], {"id": "islamhouse:7"})
+        self.assertTrue(entry["reference"].endswith(bc.ISLAMHOUSE_NOTE))
 
-    def test_indonesian_from_hisnmuslim_must_be_verbatim(self):
-        report = self.run_build_hisnmuslim(translation_id="teks uji dua.")
+    def test_indonesian_from_islamhouse_must_be_verbatim(self):
+        report = self.run_build_islamhouse(translation_id="teks uji dua.")
         self.assertFalse(report.ok)
         self.assertTrue(any("verbatim" in e for e in report.errors), report.errors)
 
-    def test_indonesian_from_hisnmuslim_must_be_the_rows_own_entry(self):
-        report = self.run_build_hisnmuslim(notes="Hisnul Muslim no. 8 | uji")
+    def test_indonesian_from_islamhouse_must_be_the_rows_own_entry(self):
+        report = self.run_build_islamhouse(notes="Hisnul Muslim no. 8 | uji")
         self.assertFalse(report.ok)
         self.assertTrue(any("Hisnul Muslim number" in e for e in report.errors), report.errors)
-        report = self.run_build_hisnmuslim(translation_id_from="hisnmuslim:9", notes="Hisnul Muslim no. 9 | uji")
+        report = self.run_build_islamhouse(translation_id_from="islamhouse:9", notes="Hisnul Muslim no. 9 | uji")
         self.assertTrue(any("not found" in e for e in report.errors), report.errors)
 
     def test_without_source_fails(self):

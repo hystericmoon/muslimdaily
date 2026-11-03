@@ -1,5 +1,5 @@
 {
-  "content_version": 53,
+  "content_version": 54,
   "duas": [
     {
       "id": "wake_01",
@@ -1556,7 +1556,7 @@
           "no": "4/288"
         }
       ],
-      "reference": "HR. Abu Dawud 3/347, At-Tirmidzi 4/288, dan lihat kitab Shahih At-Tirmidzi 2/167. (Hisnul Muslim no. 178) Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama penerjemah.",
+      "reference": "HR. Abu Dawud 3/347, At-Tirmidzi 4/288, dan lihat kitab Shahih At-Tirmidzi 2/167. (Hisnul Muslim no. 178) Terjemah doa: Hisnul Muslim terjemah Mahrus Ali (Maktab Dakwah dan Bimbingan Jaliyat Rabwah, 1430/2010), IslamHouse.com.",
       "grading": {
         "grade": "",
         "grader": ""
@@ -1573,7 +1573,7 @@
       },
       "phrase_breaks": [],
       "translations_from": {
-        "id": "hisnmuslim:178"
+        "id": "islamhouse:178"
       }
     },
     {
@@ -1628,7 +1628,7 @@
       "arabic_full": "((مَنْ أَطْعَمَهُ اللَّهُ الطَّعَامَ فَلْيَقُلْ: اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَأَطْعِمْنَا خَيْراً مِنْهُ، وَمَنْ سَقَاهُ اللَّهُ لَبَناً فَلْيَقُلْ اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ)).",
       "is_quran": false,
       "translations": {
-        "id": "",
+        "id": "Ya Allah! Berilah kami berkah padanya dan tambahkanlah kepada kami (berkah) darinya",
         "en": "O Allah, bless it for usand give us more of it."
       },
       "translations_full": {
@@ -1643,7 +1643,7 @@
           "no": "5/506"
         }
       ],
-      "reference": "HR. At-Tirmidzi 5/506, dan lihat Shahih Tirmidzi 3/158. (Hisnul Muslim no. 179)",
+      "reference": "HR. At-Tirmidzi 5/506, dan lihat Shahih Tirmidzi 3/158. (Hisnul Muslim no. 179) Terjemah doa: Hisnul Muslim terjemah Mahrus Ali (Maktab Dakwah dan Bimbingan Jaliyat Rabwah, 1430/2010), IslamHouse.com.",
       "grading": {
         "grade": "",
         "grader": ""
@@ -1660,7 +1660,7 @@
       },
       "phrase_breaks": [],
       "translations_from": {
-        "id": "none"
+        "id": "islamhouse:179"
       }
     },
     {

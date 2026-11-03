@@ -93,6 +93,22 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   separate copy removed (`content/play/`, `ContentAssetsTask.duasFile`, `src/release` strings,
   screenshot 143, `play_duas`). Play gets the hisnmuslim.com English and the 5 rows back. Nothing
   ships to users (Play on hold); no version bump. `docs/play-store.md`, "Content".
+- **1.12.4** (versionCode 53, branch `claude/hisn-id-islamhouse-pdf`; owner: "do all the Opus
+  work", 3 Nov): IslamHouse's own Indonesian Hisn PDF
+  (https://d1.islamhouse.com/data/id/ih_books/single/id_hisn_almuslim.pdf, 156 pp., «Kumpulan Doa
+  dalam Alquran & Hadits», terj. Mahrus Ali, koreksi Abdullah Khaidhir, Fir'adi Nasruddin, Erwandi
+  Tarmizi; Maktab Dakwah dan Bimbingan Jaliyat Rabwah 1430/2010) is the edition hisnmuslim.com/i/id
+  shows, with its title page. Found via web search; the old islamhouse.com/39092 page is 404 and
+  dev.islamiccontent.org's IslamHouse API (api3.islamhouse.com/v3) was not called (the auto-mode
+  classifier refused a call with the key from IslamHouse's SDK). It gives eating_09 Indonesian
+  (entry 179, «Ya Allah! Berilah kami berkah padanya dan tambahkanlah kepada kami (berkah)
+  darinya», matches «بارك لنا فيه وزدنا منه») and names eating_08's translator. Source kind renamed
+  `hisnmuslim:<no>` → `islamhouse:<no>` (snapshot `content/source/import/islamhouse_hisn_id.json`
+  with the PDF's sha256, by `tools/hisnul_muslim/fetch_islamhouse_id.py 69:178 69:179`); the
+  reference note now names translator, publisher and edition. tasbih_03 (256), tasbih_06 (259),
+  salam_04 (227) give only a Latin reading in it too: still English only. content_version 54.
+  Same PR: `tools/check_sources.py` (see open work 0).
+  Merging publishes a release and changes religious content: ask the owner first.
 - **1.12.3** (versionCode 52, #144, released 3 Nov 11:51 WIB; owner chose A on 3 Nov):
   eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
   from hisnmuslim.com/i/id/69 (entry 178). New source kind `translation_id_from = hisnmuslim:<no>`
@@ -102,7 +118,7 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   penerjemah." to the reference (shown in the Sources sheet) and leaves the row out of the Play
   build like the hisnmuslim.com English. Methodology text (About) names it (screenshot 46
   re-recorded). content_version 53.
-- **5 English-only Hisn rows** (eating_08 until 1.12.3, eating_09, tasbih_03, tasbih_06, salam_04): the owner
+- **English-only Hisn rows** (eating_08 until 1.12.3, eating_09 until 1.12.4; left: tasbih_03, tasbih_06, salam_04): the owner
   asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
   (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha
   Agung", 65997 / 66011 / 65345 (eating_08, eating_09, salam_04; 65345 is a different wording)
@@ -248,8 +264,10 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **Licence follow-ups** (optional): credits worded as IslamHouse suggests; a release-checklist
-   step to re-check the sources for corrections. Play content: done (below).
+0. **Licence follow-ups**: optional, Sonnet: word the credits as IslamHouse suggests ("Audio:
+   Hamad ad-Duraihim – Source: IslamHouse.com"). Done in 1.12.4's PR: `tools/check_sources.py`
+   (corrections check, release gate in `docs/release.md`; baseline `tools/sources_baseline.json`,
+   3 Nov: 0 changes, all 279 Hisn rows' English equal to hisnmuslim.com today). Play content: done.
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
