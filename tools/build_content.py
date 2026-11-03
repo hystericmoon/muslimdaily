@@ -186,18 +186,32 @@ def words(text: str) -> list[str]:
 
 KINDS = {"", "hadith"}
 HADEETHENC = Path(__file__).resolve().parent.parent / "content/source/import/hadeethenc.json"
+# hisnmuslim.com's Indonesian pages, by the book's number (tools/hisnul_muslim/fetch_indonesian.py).
+HISNMUSLIM_ID = Path(__file__).resolve().parent.parent / "content/source/import/hisnmuslim_id.json"
+HISN_NO = re.compile(r"Hisnul Muslim no\. (\d+)")
 
 
 def check_taken(duas: list[dict], report: Report) -> None:
     """A translation taken from elsewhere must be words of that source, in order."""
     by_id = {d["id"]: d for d in duas}
     snapshot = None
+    hisn_id = None
     for d in duas:
         for lang, src in (d.get("translations_from") or {}).items():
             if src == "none":
                 continue
             kind, _, ref = src.partition(":")
             text = d["translations"].get(lang, "")
+            if kind == "hisnmuslim":
+                # Indonesian from hisnmuslim.com, for the book's own entry only, cut out verbatim.
+                if hisn_id is None:
+                    hisn_id = json.loads(HISNMUSLIM_ID.read_text(encoding="utf-8")).get("entries", {})
+                entry = hisn_id.get(ref)
+                if lang != "id" or entry is None:
+                    report.errors.append(f"{d['id']}: translation_{lang}_from {src} not found")
+                elif not text or " ".join(text.split()) not in entry["text"]:
+                    report.errors.append(f"{d['id']}: translation_id must be cut verbatim from {src}")
+                continue
             if kind == "row":
                 other = by_id.get(ref)
                 base = other["translations"].get(lang, "") if other else None
@@ -361,8 +375,9 @@ def validate_dua(d: dict, taxonomy: dict[str, list[str]], audio_dir: Path, repor
         if src == "none":
             if lang != "id" or d["translations"].get("id") or not d["translations"].get("en"):
                 report.errors.append(f"{did}: translation_id_from 'none' needs an empty Indonesian and an English")
-        elif not re.fullmatch(r"(row|hadeethenc):[\w.-]+", src):
-            report.errors.append(f"{did}: translation_{lang}_from must be 'row:<id>', 'hadeethenc:<id>' or 'none'")
+        elif not re.fullmatch(r"(row|hadeethenc|hisnmuslim):[\w.-]+", src):
+            report.errors.append(
+                f"{did}: translation_{lang}_from must be 'row:<id>', 'hadeethenc:<id>', 'hisnmuslim:<no>' or 'none'")
     for lang, tr_full in (d.get("translations_full") or {}).items():
         if lang in taken:
             continue  # checked against its own source in check_taken()
@@ -421,6 +436,13 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
             grader, _, grade = chunk.partition(":")
             alt.append({"grade": grade.strip().lower(), "grader": grader.strip()})
     virtue_text = (row.get("virtue_text") or "").strip()
+    reference = (row.get("reference") or "").strip()
+    id_from = (row.get("translation_id_from") or "").strip()
+    if id_from.startswith("hisnmuslim:"):
+        no = HISN_NO.search(row.get("notes") or "")
+        if not no or no.group(1) != id_from.partition(":")[2]:
+            report.errors.append(f"{rid}: translation_id_from {id_from} is not this row's Hisnul Muslim number")
+        reference = f"{reference} {HISNMUSLIM_NOTE}".strip()
     return {
         "id": rid,
         "category": (row.get("category") or "").strip(),
@@ -442,7 +464,7 @@ def dua_from_row(row: dict, line: int, report: Report) -> dict | None:
         "transliteration": (row.get("transliteration") or "").strip() or transliterate(arabic) or "",
         "count": count,
         "sources": sources,
-        "reference": (row.get("reference") or "").strip(),
+        "reference": reference,
         "grading": {"grade": (row.get("grade") or "").strip().lower(), "grader": (row.get("grader") or "").strip()},
         "alt_gradings": alt,
         "virtue": {"text": virtue_text, "source": (row.get("virtue_source") or "").strip()} if virtue_text else None,
@@ -511,18 +533,23 @@ def read_csv(path: Path) -> list[dict]:
 
 
 HISN_NOTE = "Hisnul Muslim"
+# Added to the reference of a row whose Indonesian comes from hisnmuslim.com (IslamHouse's terms:
+# name the source; the page names no translator, so none is named).
+HISNMUSLIM_NOTE = "Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama penerjemah."
 
 
 def play_duas(duas: list[dict], hisn_ids: set[str]) -> tuple[list[dict], list[str]]:
     """The Play build's rows: Hisn al-Muslim English (hisnmuslim.com, or IslamHouse's English
     edition for one row) removed; Qur'an and HadeethEnc English stay. Returns the rows and the
-    ids left out because no translation would be left."""
+    ids left out because no translation would be left. An Indonesian taken from hisnmuslim.com
+    goes too (same source as the English)."""
     rows, left_out = [], []
     for d in duas:
         if d["id"] not in hisn_ids:
             rows.append(d)
             continue
-        if not d["translations"].get("id"):
+        from_site = (d.get("translations_from") or {}).get("id", "").startswith("hisnmuslim:")
+        if not d["translations"].get("id") or from_site:
             left_out.append(d["id"])
             continue
         d = json.loads(json.dumps(d))
@@ -600,7 +627,7 @@ def build(duas_csv: Path, rawatib_csv: Path, out_dir: Path, audio_dir: Path, rep
     play_path.parent.mkdir(exist_ok=True)
     play_doc = {"content_version": duas_doc["content_version"], "duas": play}
     play_path.write_text(json.dumps(play_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    report.warnings.append(f"play/duas.json: {len(left_out)} row(s) left out, English only: {', '.join(left_out)}")
+    report.warnings.append(f"play/duas.json: {len(left_out)} row(s) left out, no translation without hisnmuslim.com: {', '.join(left_out)}")
 
 
 def check(out_dir: Path, audio_dir: Path, report: Report) -> None:

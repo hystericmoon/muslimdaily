@@ -1,5 +1,5 @@
 {
-  "content_version": 52,
+  "content_version": 53,
   "duas": [
     {
       "id": "wake_01",
@@ -1537,7 +1537,7 @@
       "arabic_full": "((إِذَا أَكَلَ أَحَدُكُمْ طَعَاماً فَلْيَقُلْ بِسْمِ اللَّهِ، فَإِنْ نَسِيَ فِي أَوَّلِهِ فَلْيَقُلْ بسمِ اللَّهِ فِي أَوَّلِهِ وَآخِرِهِ)).",
       "is_quran": false,
       "translations": {
-        "id": "",
+        "id": "Dengan menyebut nama Allah, pada awalnya dan akhirnya.",
         "en": "In the name of Allah in it’s beginning and end."
       },
       "translations_full": {
@@ -1556,7 +1556,7 @@
           "no": "4/288"
         }
       ],
-      "reference": "HR. Abu Dawud 3/347, At-Tirmidzi 4/288, dan lihat kitab Shahih At-Tirmidzi 2/167. (Hisnul Muslim no. 178)",
+      "reference": "HR. Abu Dawud 3/347, At-Tirmidzi 4/288, dan lihat kitab Shahih At-Tirmidzi 2/167. (Hisnul Muslim no. 178) Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama penerjemah.",
       "grading": {
         "grade": "",
         "grader": ""
@@ -1573,7 +1573,7 @@
       },
       "phrase_breaks": [],
       "translations_from": {
-        "id": "none"
+        "id": "hisnmuslim:178"
       }
     },
     {

@@ -558,7 +558,7 @@
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Hanya bacaan yang jelas, tanpa musik, intro bernada, atau efek suara. Audio dzikir dan doa Hisnul Muslim dibacakan oleh Hamad ad-Duraihim, diterbitkan IslamHouse.com, dan dimuat tanpa diubah. Doa dari Al-Qur\'an dibacakan per ayat oleh Syaikh Maher al-Muaiqly (riwayat Hafs), diterbitkan Kompleks Percetakan Al-Qur\'an Raja Fahd (qurancomplex.gov.sa) untuk digunakan secara gratis dalam aplikasi; ayat-ayatnya disambung berurutan tanpa diubah.</string>
     <string name="methodology_review_title">Sumber konten</string>
-    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dan terjemah bahasa Inggris dari hisnmuslim.com (IslamHouse.com), dan untuk satu entri yang salah cetak di situs itu, dari edisi bahasa Inggris IslamHouse (Fortress of the Muslim, 2025). Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Doa dari As-Sunnah di luar Hisnul Muslim diambil dari HadeethEnc.com (Ensiklopedia Hadis Terjemah): teks Arab, derajat, dan terjemah bahasa Indonesia dan Inggris, dimuat tanpa diubah. Lafal doa ditampilkan di atas, dan hadis utuhnya di bawah. Setiap doa menampilkan sumber dan takhrijnya.</string>
+    <string name="methodology_reviewer">Doa dan dzikir diambil dari Hisnul Muslim karya Sa\'id bin Ali al-Qahthani: terjemah dan takhrij dari edisi bahasa Indonesia, teks Arab dan terjemah bahasa Inggris dari hisnmuslim.com (IslamHouse.com), untuk satu entri yang salah cetak di situs itu, dari edisi bahasa Inggris IslamHouse (Fortress of the Muslim, 2025), dan untuk satu doa yang terjemahnya tidak ada di edisi bahasa Indonesia, terjemah bahasa Indonesia dari hisnmuslim.com. Riwayat yang dinilai lemah oleh al-Albani tidak dimuat. Doa dari Al-Qur\'an dimuat per ayat utuh: teks Arab dari Tanzil, terjemah Kementerian Agama RI dan, dalam bahasa Inggris, Saheeh International melalui QuranEnc.com. Doa dari As-Sunnah di luar Hisnul Muslim diambil dari HadeethEnc.com (Ensiklopedia Hadis Terjemah): teks Arab, derajat, dan terjemah bahasa Indonesia dan Inggris, dimuat tanpa diubah. Lafal doa ditampilkan di atas, dan hadis utuhnya di bawah. Setiap doa menampilkan sumber dan takhrijnya.</string>
     <string name="methodology_prayer_title">Waktu shalat</string>
     <string name="methodology_prayer_body">Perhitungan bawaan mengikuti Kemenag RI, termasuk koreksi ketinggian tempat untuk terbit dan Maghrib, dan dapat disesuaikan. Diuji terhadap jadwal resmi Kemenag untuk 16 kota di WIB, WITA dan WIT: selisih paling banyak 1 menit. Tidak menampilkan waktu imsak.</string>
     <string name="methodology_version_title">Versi</string>
@@ -898,6 +898,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_12_3">
+        <item>Doa ketika lupa membaca bismillah sebelum makan kini punya terjemah bahasa Indonesia (\"Dengan menyebut nama Allah, pada awalnya dan akhirnya\"), dari hisnmuslim.com (IslamHouse.com). Sebelumnya hanya ada terjemah bahasa Inggris.</item>
+    </string-array>
     <string-array name="whats_new_1_12_2">
         <item>Tujuh bacaan ayat Al-Qur\'an kini tidak terpotong di akhir: huruf panjang terakhirnya dibiarkan selesai, tidak lagi berhenti mendadak.</item>
     </string-array>

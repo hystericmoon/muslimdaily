@@ -571,7 +571,7 @@
     <string name="methodology_audio_title">Audio</string>
     <string name="methodology_audio_body">Only clear recitation, with no music, melodic intros or sound effects. The Hisn al-Muslim dhikr and dua audio is recited by Hamad ad-Duraihim, published by IslamHouse.com, and included unaltered. The duas from the Qur\'an are recited ayah by ayah by Sheikh Maher al-Muaiqly (Hafs), published by the King Fahd Glorious Qur\'an Printing Complex (qurancomplex.gov.sa) for free use in apps; the ayahs are joined in order, unaltered.</string>
     <string name="methodology_review_title">Content sources</string>
-    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text and English translation from hisnmuslim.com (IslamHouse.com), and for one entry the site misprints, from IslamHouse\'s English edition (Fortress of the Muslim, 2025). Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) and, in English, Saheeh International, via QuranEnc.com. Duas from the Sunnah beyond Hisn al-Muslim come from HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths): Arabic text, grading, and Indonesian and English translations, included unaltered. The words of the dua are shown on top, and the whole hadith below. Each dua shows its source and takhrij.</string>
+    <string name="methodology_reviewer">Duas and dhikr are taken from Hisn al-Muslim by Sa\'id bin Ali al-Qahtani: translation and takhrij from the Indonesian edition, Arabic text and English translation from hisnmuslim.com (IslamHouse.com), for one entry the site misprints, from IslamHouse\'s English edition (Fortress of the Muslim, 2025), and for one dua whose translation the Indonesian edition lacks, the Indonesian from hisnmuslim.com. Narrations graded weak by al-Albani are not included. Duas from the Qur\'an are included as whole ayahs: Arabic text from Tanzil, translation by the Indonesian Ministry of Religious Affairs (Kementerian Agama RI) and, in English, Saheeh International, via QuranEnc.com. Duas from the Sunnah beyond Hisn al-Muslim come from HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths): Arabic text, grading, and Indonesian and English translations, included unaltered. The words of the dua are shown on top, and the whole hadith below. Each dua shows its source and takhrij.</string>
     <string name="methodology_prayer_title">Prayer times</string>
     <string name="methodology_prayer_body">The default calculation follows Kemenag RI, including its elevation correction for sunrise and Maghrib, and can be adjusted. Tested against Kemenag\'s official schedule for 16 cities across WIB, WITA and WIT: at most 1 minute apart. Imsak time is not shown.</string>
     <string name="methodology_version_title">Version</string>
@@ -912,6 +912,9 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_12_3">
+        <item>The dua for when you forget to say bismillah before eating now has an Indonesian translation, from hisnmuslim.com (IslamHouse.com). It used to show only the English.</item>
+    </string-array>
     <string-array name="whats_new_1_12_2">
         <item>Seven Qur\'an recitations no longer stop short: their held last vowel now finishes instead of cutting off.</item>
     </string-array>

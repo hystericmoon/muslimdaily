@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.2 released, #142; eating_08 Indonesian waits on the owner's A/B).
+Last updated: 3 Nov 2026 (1.12.3 = eating_08 Indonesian, PR open; IslamHouse licence reply received).
 
 ## In flight (check first)
 
@@ -88,7 +88,16 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   `docs/release.md`); screenshot `143-play-hisn-english`; the old What's New Hisn-English items
   can't show in the Play build, so they stay. Checked locally: the AAB's `content/duas.json` is
   byte-identical to `content/play/duas.json`. See `docs/play-store.md`, "Plan B".
-- **5 English-only Hisn rows** (eating_08, eating_09, tasbih_03, tasbih_06, salam_04): the owner
+- **1.12.3** (versionCode 52, branch `claude/eating-08-indonesian`; owner chose A on 3 Nov):
+  eating_08's Indonesian «Dengan menyebut nama Allah, pada awalnya dan akhirnya.» cut verbatim
+  from hisnmuslim.com/i/id/69 (entry 178). New source kind `translation_id_from = hisnmuslim:<no>`
+  (must be the row's own "Hisnul Muslim no. N", cut verbatim from the snapshot
+  `content/source/import/hisnmuslim_id.json`, written by `tools/hisnul_muslim/fetch_indonesian.py
+  <chapter>`). The build appends "Terjemah doa: hisnmuslim.com (IslamHouse.com), tanpa nama
+  penerjemah." to the reference (shown in the Sources sheet) and leaves the row out of the Play
+  build like the hisnmuslim.com English. Methodology text (About) names it. content_version 53.
+  Merging publishes a release: ask the owner first.
+- **5 English-only Hisn rows** (eating_08 until 1.12.3, eating_09, tasbih_03, tasbih_06, salam_04): the owner
   asked (1 Nov) to find their Indonesian online. Nothing importable: HadeethEnc 5507
   (tasbih_03) has the two phrases in the other order, 4201 (tasbih_06) leaves out "Yang Maha
   Agung", 65997 / 66011 / 65345 (eating_08, eating_09, salam_04; 65345 is a different wording)
@@ -112,8 +121,9 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (1.12.1 released; #140, #141
-  Opus/Sonnet rule; 1.12.2 = #142; eating_08 decision page). Next: Opus.
+- This session (3 Nov, after a clear): session_01W2ZFMu64SGUJb7ZB37ryAj again (1.12.3).
+- Before it: the same session id (1.12.1 released; #140, #141 Opus/Sonnet rule; 1.12.2 = #142;
+  eating_08 decision page).
 - Before it: session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1 = #139).
 - Before that: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
 - Before that: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
@@ -124,17 +134,29 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
 
 ## Decisions waiting on the owner
 
-- **eating_08 Indonesian**: owner said leave it (2 Nov). hisnmuslim.com/i/id/69 has an exact match ("Dengan menyebut nama
-  Allah, pada awalnya dan akhirnya."), but no translator or licence shown (same IslamHouse terms
-  as the English), a different edition from the PDF, and `translation_id_from` would need a new
-  source kind. Suggested: leave it. HadeethEnc re-checked 2 Nov (all 2,260 Indonesian hadiths):
-  nothing for the five rows; 65997/66011/65345 still Arabic only.
+- **IslamHouse licence reply** (owner shared it 3 Nov; from "IslamHouse.com Management, Abdullah
+  Radman"): allows the Hisn al-Muslim content in the free offline ad-free app on GitHub and Google
+  Play, if: content unaltered; IslamHouse.com credited; reciter's name kept; translator, publisher
+  and edition kept where the source gives them (none named: name none); updated or corrected
+  versions followed. Opus conversion is fine "as long as the actual audio content is not edited".
+  Suggested credits: "Audio: Hamad ad-Duraihim – Source: IslamHouse.com"; "Text: Hisn al-Muslim –
+  {Translator, if listed} – Source: IslamHouse.com". Developer resources: dev.islamiccontent.org.
+  Checked 3 Nov: `fetch_audio.py` only converts whole files (mono 48 kHz 32k Opus); every cut is
+  a playback range in duas.json, the files are whole; row texts are verbatim excerpts with the
+  full entry shown. Asked the owner (no answer yet): the date it arrived; whether to commit the
+  email text to the repo (names in a public repo) or a summary; whether to put the hisnmuslim.com
+  English (and eating_08) back in the Play build now. Possible follow-ups: credits worded as they
+  suggest; a release-checklist step to re-check the sources for corrections. The owner also
+  asked about re-recording all audio with ElevenLabs: advised against (generated recitation
+  breaks the content rules and this licence's "reciter's name retained"; the sample Ayat
+  al-Kursi ran 33 s against the recording's 57 s, likely without the long vowels).
 
 Decided 31 Oct (1.10.0): listening review, virtue hadiths (reading cards), evening wording
 (footnote), source errors (fixed from the book's own data; HadeethEnc 5491/6163 were never
 imported), microphone in Memorise (no), #107 (disable the old widget).
 
-- **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`), no reply.
+- **IslamHouse licence**: request sent 23 Oct (`docs/islamhouse-licence-request.md`); answered,
+  see "IslamHouse licence reply" above.
   IslamHouse publishes no email address (only the 500-character contact form). Owner's choice
   (31 Oct): plan B, a Play build without the hisnmuslim.com English; see `docs/play-store.md`,
   "Plan B". Merged in #118 (option A, 1 Nov); the rest is open work item 1.
@@ -218,16 +240,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **eating_08 Indonesian (model: Opus; waits on the owner's A/B, asked 3 Nov).** Decision
-   page https://claude.ai/artifact/EKRbEQQWuChwfejNvX93wC. The owner asked (3 Nov) for Indonesian
-   for the 5 English-only rows. hisnmuslim.com/i/id (chapters 69, 109, 130) checked: only
-   eating_08 has a usable meaning («Dengan menyebut nama Allah, pada awalnya dan akhirnya.», ch.
-   69, exact). eating_09's page text translates «وأطعمنا خيراً منه» (eating_02's, already shown);
-   tasbih_03, tasbih_06 (ch. 130) and salam_04 (ch. 109) give only a Latin reading. Recommended
-   A: import eating_08 from hisnmuslim.com (new `translation_id_from` source kind; leave it out of
-   the Play build like the English; Sources sheet names hisnmuslim.com), ship as 1.12.3. B keeps
-   the 2 Nov choice (all five in English). The owner's message also named this item twice; the
-   second may have meant something else (asked, no answer yet).
+0. **1.12.3 (eating_08 Indonesian)**: PR open, see In flight. Ask the owner before merging
+   (release). Then the licence follow-ups (In flight, "IslamHouse licence reply").
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
