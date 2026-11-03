@@ -912,6 +912,9 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_12_5">
+        <item>The About page now credits the Hisnul Muslim audio and text the way IslamHouse.com asked: reciter Hamad ad-Duraihim, text from hisnmuslim.com, and the translator (Mahrus Ali for the two eating duas).</item>
+    </string-array>
     <string-array name="whats_new_1_12_4">
         <item>The dua for when you are given milk to drink now has an Indonesian translation. It and the dua for when you forget to say bismillah now come from IslamHouse.com\'s Hisnul Muslim translated by Mahrus Ali, and the translator is named in the dua\'s source.</item>
     </string-array>

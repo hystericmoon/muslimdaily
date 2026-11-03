@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (1.12.4 released, #147; IslamHouse credits merged, #150, unreleased: ships with the next release).
+Last updated: 3 Nov 2026 (1.12.5 PR open: IslamHouse credits; merge waits on the owner, versionName change).
 
 ## In flight (check first)
 

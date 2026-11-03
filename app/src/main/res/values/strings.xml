@@ -898,6 +898,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_12_5">
+        <item>Halaman Tentang kini mencantumkan sumber audio dan teks Hisnul Muslim sesuai permintaan IslamHouse.com: pembaca Hamad ad-Duraihim, teks dari hisnmuslim.com, dan penerjemah (Mahrus Ali untuk dua doa makan).</item>
+    </string-array>
     <string-array name="whats_new_1_12_4">
         <item>Doa saat diberi minum susu kini punya terjemah bahasa Indonesia. Terjemahnya dan terjemah doa ketika lupa membaca bismillah diambil dari Hisnul Muslim terjemah Mahrus Ali terbitan IslamHouse.com, dan nama penerjemahnya kini tercantum di sumber doa.</item>
     </string-array>
