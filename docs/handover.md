@@ -5,7 +5,7 @@ before you stop, or when the conversation is getting long. Keep it current, not 
 what is done, keep what is open. Facts only (PR numbers, ids, counts, decisions), each with where
 to check it.
 
-Last updated: 3 Nov 2026 (end-of-clip scan done; 1.12.2 = #142 waits on the owner's OK to merge).
+Last updated: 3 Nov 2026 (1.12.2 released, #142; eating_08 Indonesian waits on the owner's A/B).
 
 ## In flight (check first)
 
@@ -112,8 +112,8 @@ quran_16/18, dress_04, travel_01, sujud_03 are fine
   85, Saghir 86. Pages: `/ar/library/content/<book>/<id>/`; chapter id ranges are the
   `data-idfrom`/`data-idto` attributes of `index.php?page=bookcontents&bk_no=<book>`. The
   auto-mode classifier refused one bulk crawl of ~9000 pages; fetch a chapter at a time.
-- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (1.12.1 released 07:23 WIB;
-  #140 handover; Opus/Sonnet session rule).
+- This session (3 Nov): session_01W2ZFMu64SGUJb7ZB37ryAj (1.12.1 released; #140, #141
+  Opus/Sonnet rule; 1.12.2 = #142; eating_08 decision page). Next: Opus.
 - Before it: session_01W2ZFMtXqwh55Bi2zuR56rM (#138 setup script; 1.12.1 = #139).
 - Before that: session_01W2ZFMtK31PRVNJYbAMjRnn (closed #127; #135; 1.12.0 = #136).
 - Before that: session_01W2ZFMtjcNVqpoYdcT8Jicx (#132, #133 = 1.11.0). Before it:
@@ -144,6 +144,15 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 - **Oppo user's widget feedback** via Diagnostics (shipped in 1.5.0): no reply recorded.
 
 ## Shipped
+
+1.12.2 (versionCode 51, 3 Nov 09:58 WIB, #142): end-of-clip scan of all 312 recordings (Whisper
+on each clip's last 10 s and the 4 s after it, plus the loudness at the cut; decision page
+https://claude.ai/artifact/EoRzFgYXsZcgYJLBoLRuXn). No clip plays a word after the dua. Seven
+Qur'an clips (quran_08/13/17/18/19/24/26) ended 0.14-0.51 s before the held last vowel died
+away: `recut_audio.py` mode `end` moved them into the silence, each re-checked by
+`verify_audio.py`. tasbih_01 tried and dropped (the reciter runs on into «في يوم»). 16 other
+flags checked, nothing to fix (list on the page; sleep_02/07's source files end on the last
+word). content_version 52.
 
 1.12.1 (versionCode 50, 3 Nov, #139): six clips (dress_01/02, grave_03, travel_10,
 distress_01, travel_01) no longer open on the reciter's chapter title; travel_01's first two
@@ -209,17 +218,16 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 Roadmap with reasons and effort: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0. **End-of-clip scan: done 3 Nov, 1.12.2 waits on the owner's OK** (PR #142, branch
-   `claude/end-of-clip-scan`; decision page https://claude.ai/artifact/EoRzFgYXsZcgYJLBoLRuXn).
-   Whisper on every clip's last 10 s and the 4 s after it, plus the loudness at the cut (script
-   kept only in the scratchpad: re-create from this). No clip plays a word after the dua. Seven
-   Qur'an clips (quran_08/13/17/18/19/24/26) ended 0.14-0.51 s before the held last vowel died
-   away: new `recut_audio.py` mode `end` (rows in `start_fixes.csv`, tested) moves the end into
-   the silence; each re-checked by `verify_audio.py` (quran_18 "check" is the known «وقل رب»
-   mishearing, same text as before). tasbih_01 tried and dropped: the reciter runs on into
-   «في يوم», and the longer cut made Whisper hear «فيه». 16 more flags checked, nothing to fix
-   (list on the page). sleep_02/sleep_07: the source file itself ends on the last word.
-   content_version 52, versionCode 51, versionName 1.12.2, What's New `whats_new_1_12_2`.
+0. **eating_08 Indonesian (model: Opus; waits on the owner's A/B, asked 3 Nov).** Decision
+   page https://claude.ai/artifact/EKRbEQQWuChwfejNvX93wC. The owner asked (3 Nov) for Indonesian
+   for the 5 English-only rows. hisnmuslim.com/i/id (chapters 69, 109, 130) checked: only
+   eating_08 has a usable meaning («Dengan menyebut nama Allah, pada awalnya dan akhirnya.», ch.
+   69, exact). eating_09's page text translates «وأطعمنا خيراً منه» (eating_02's, already shown);
+   tasbih_03, tasbih_06 (ch. 130) and salam_04 (ch. 109) give only a Latin reading. Recommended
+   A: import eating_08 from hisnmuslim.com (new `translation_id_from` source kind; leave it out of
+   the Play build like the English; Sources sheet names hisnmuslim.com), ship as 1.12.3. B keeps
+   the 2 Nov choice (all five in English). The owner's message also named this item twice; the
+   second may have meant something else (asked, no answer yet).
 
 1. **On hold (owner, 1 Nov: no budget for now; don't start it until the owner says).** Plan B
    for Play (owner's choice): a Play build without the hisnmuslim.com English. Code side
