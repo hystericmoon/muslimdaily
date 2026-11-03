@@ -79,10 +79,6 @@ class UnheardTest(unittest.TestCase):
         self.assertEqual("fail", ra.propose_unheard(row, entry(self.WORDS, 9.0), 2)["status"])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class JoinTest(unittest.TestCase):
     ROW = {"id": "t", "arabic": "كتب سلم، | درس فهم | نصر شرب", "audio_range": "1.00-9.00",
            "audio_segments": "1.00-3.00; 3.00-6.00; 6.00-9.00"}
@@ -97,3 +93,38 @@ class JoinTest(unittest.TestCase):
     def test_refused_when_the_earlier_segment_has_the_phrase(self):
         out = ra.propose_join(self.ROW, entry([[1.2, 2.0, "كتب"]], 9.0), 1)
         self.assertEqual("fail", out["status"])
+
+
+class EndTest(unittest.TestCase):
+    ROW = {"id": "t", "arabic": "كتب سلم | درس فهم", "audio_range": "1.00-5.00",
+           "audio_segments": "1.00-3.00; 3.00-5.00"}
+
+    def test_a_held_last_sound_is_kept_until_it_dies_away(self):
+        out = ra.propose_end(self.ROW, entry([], 9.0, quiet=[(5.3, 9.0)]))
+        self.assertEqual("ok", out["status"], out["reason"])
+        self.assertEqual("1.00-5.30", out["audio_range"])
+        self.assertEqual("1.00-3.00; 3.00-5.30", out["audio_segments"])
+
+    def test_the_end_stops_before_the_next_word(self):
+        e = entry([], 9.0)
+        for i in range(int(5.0 / ra.FRAME), int(5.6 / ra.FRAME)):
+            e["rms"][i] = -12.0
+        for i in range(int(5.2 / ra.FRAME), int(5.24 / ra.FRAME)):
+            e["rms"][i] = -24.0  # a short dip, then the next word at -5 dB
+        for i in range(int(5.3 / ra.FRAME), int(9.0 / ra.FRAME)):
+            e["rms"][i] = -5.0
+        out = ra.propose_end(self.ROW, e)
+        self.assertEqual("ok", out["status"], out["reason"])
+        self.assertEqual("1.00-5.20", out["audio_range"])
+
+    def test_an_end_already_in_silence_is_left_alone(self):
+        out = ra.propose_end(self.ROW, entry([], 9.0, quiet=[(4.98, 9.0)]))
+        self.assertEqual("fail", out["status"])
+
+    def test_no_quiet_point_is_refused(self):
+        out = ra.propose_end(self.ROW, entry([], 9.0))
+        self.assertEqual("fail", out["status"])
+
+
+if __name__ == "__main__":
+    unittest.main()

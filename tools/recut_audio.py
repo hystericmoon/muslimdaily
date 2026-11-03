@@ -3,7 +3,11 @@
 
     venv/bin/python tools/recut_audio.py words --id ID ...   # Whisper word times + loudness (model)
     python3 -I tools/recut_audio.py propose [--id ID ...]    # build/align/recut.csv (pure)
-    python3 -I tools/recut_audio.py apply                    # writes the rows that pass
+    python3 -I tools/recut_audio.py apply [--id ID ...]      # writes the rows that pass
+
+`start` re-runs every fix in `tools/align/start_fixes.csv` on the current rows, and a fix already
+applied is not always refused (travel_01's `join` joins its next two phrases on a second run,
+3 Nov): after `start`, always `apply --id` with the new rows only, and check the CSV diff.
 
 Found by the Whisper check (1 Nov): the hisnmuslim.com recordings open with a chapter title
 ("دعاء ... يقول") and some end with a count note read aloud ("ثلاث مرات"). The forced aligner,
@@ -49,6 +53,14 @@ segment holds both phrases, with no pause between them quiet enough to cut at. T
 become one (the "|" between them is removed, the text is checked unchanged) and play the later
 segment only; when it is the first phrase, the clip starts there too. Refused when any heard word
 inside the earlier segment is one of the joined phrases' words.
+
+Mode `end` (found by the end-of-clip scan, 3 Nov): the clip ends while the last sound still
+rings (a held final vowel cut 0.1-0.5 s early; the app plays no fade). The clip end, and the last
+segment's, move later to where the sound has died away: walking on from the old end, the first
+point that stays FADED dB below the loudest frame for FADE_HOLD seconds, or else the quietest
+point before the sound rises again (the next word: at most RISE dB above the lowest so far),
+within END_MAX seconds. It needs only the loudness, read from the file when `words` has not
+stored the recording. Refused when the new end is not QUIET dB down or moves less than END_MOVE.
 """
 from __future__ import annotations
 
@@ -78,6 +90,11 @@ EARLY = 0.15      # a cut may go this far before Whisper's end of a phrase's las
 LATE = 0.1        # and this far after its start of the next phrase's first word (Whisper's word
                   # starts run early; further out, the quietest frame can be a dip inside a word)
 FIELDS = ["id", "status", "reason", "audio_range", "audio_segments", "old_range", "old_segments", "arabic"]
+FADED = 30.0      # mode end: dB below the loudest frame where a held last sound has died away
+FADE_HOLD = 0.1   # for this long
+RISE = 6.0        # a rise of this much above the lowest point so far is the next sound
+END_MAX = 0.6     # seconds the end may move later
+END_MOVE = 0.1    # smaller moves are left alone
 BOOK_PARTS = "] ["  # where the book separates its bracketed additions
 
 
@@ -252,6 +269,58 @@ def propose_break(row: dict, entry: dict, boundary: int, last_word: int) -> dict
     return out
 
 
+def loudness(audio_file: str) -> dict:
+    """{"duration", "rms"} as `words` stores them (dB per FRAME, relative to the loudest frame),
+    read with ffmpeg and no model: mode `end` needs only the loudness."""
+    import array
+    import math
+    raw = subprocess.run(["ffmpeg", "-v", "quiet", "-i", str(sa.AUDIO_DIR / audio_file), "-ac", "1", "-ar", "16000",
+                          "-f", "f32le", "-"], capture_output=True, check=True).stdout
+    wav = array.array("f", raw)
+    n = int(16000 * FRAME)
+    db = [20 * math.log10(math.sqrt(sum(x * x for x in wav[i:i + n]) / n) + 1e-9) for i in range(0, len(wav) - n, n)]
+    peak = max(db)
+    return {"duration": round(len(wav) / 16000, 2), "words": [], "rms": [round(x - peak, 1) for x in db]}
+
+
+def propose_end(row: dict, entry: dict) -> dict:
+    """Moves the clip's end (and the last segment's) later, past a held last sound the old end
+    cuts off. See the module docstring, mode `end`."""
+    out = {"id": row["id"], "status": "fail", "reason": "", "audio_range": "", "audio_segments": "",
+           "old_range": row.get("audio_range", ""), "old_segments": row.get("audio_segments", "")}
+    rms, dur = entry["rms"], entry["duration"]
+    segs = bc.parse_segments(row.get("audio_segments") or "")
+    rng = bc.parse_segments(row.get("audio_range") or "")
+    start, end = (rng[0][0], rng[0][1]) if rng else (0.0, dur)
+    k0 = int(round(end / FRAME))
+    hold = int(round(FADE_HOLD / FRAME))
+    last = min(len(rms) - 1, int(round((end + END_MAX) / FRAME)))
+    best = k0
+    for k in range(k0, last + 1):
+        if all(x <= -FADED for x in rms[k:k + hold]) and k + hold <= len(rms):
+            best = k
+            break
+        if rms[k] < rms[best]:
+            best = k
+        elif rms[k] > rms[best] + RISE:
+            break
+    t, db = round(best * FRAME, 2), rms[best]
+    if db > -QUIET:
+        out["reason"] = f"no quiet point after the end ({t:.2f} at {db:.0f} dB)"
+        return out
+    if t - end < END_MOVE:
+        out["reason"] = f"the end moves only {t - end:.2f} s"
+        return out
+    if segs:
+        if segs[-1] is None or abs(segs[-1][1] - end) > 0.05:
+            out["reason"] = "the last segment does not end with the clip"
+            return out
+        segs[-1] = [segs[-1][0], t]
+        out["audio_segments"] = fmt_segments(segs)
+    out.update(audio_range=f"{start:.2f}-{t:.2f}", status="ok")
+    return out
+
+
 def fmt_segments(segs: list) -> str:
     return "; ".join(f"{s[0]:.2f}-{s[1]:.2f}" if s else bc.UNHEARD for s in segs)
 
@@ -395,7 +464,8 @@ def main() -> int:
     for name in ("words", "propose"):
         sub.add_parser(name).add_argument("--id", action="append", default=[])
     sub.add_parser("start", help="start-only fixes listed in tools/align/start_fixes.csv")
-    sub.add_parser("apply")
+    sub.add_parser("apply").add_argument("--id", action="append", default=[],
+                                         help="apply only these rows (start re-runs every fix in the file)")
     args = ap.parse_args()
     if args.cmd == "start":
         data = json.loads(WORDS.read_text(encoding="utf-8"))
@@ -404,8 +474,9 @@ def main() -> int:
         by_id = {r["id"]: dict(r) for r in rows}
         results: dict[str, dict] = {}
         for f in fixes:  # in file order; a row's later fixes build on its earlier ones
-            r, e = by_id[f["id"]], data[by_id[f["id"]]["audio_file"]]
+            r = by_id[f["id"]]
             mode = f.get("mode") or "start"
+            e = data.get(r["audio_file"]) or (loudness(r["audio_file"]) if mode == "end" else data[r["audio_file"]])
             first = int(f["first_word"]) if f.get("first_word") else 0
             if mode == "unheard":
                 out = propose_unheard(r, e, int(f["break"]))
@@ -413,6 +484,8 @@ def main() -> int:
                 out = propose(r, e, from_word=first)
             elif mode == "join":
                 out = propose_join(r, e, int(f["break"]))
+            elif mode == "end":
+                out = propose_end(r, e)
             elif mode == "break":
                 out = propose_break(r, e, int(f["break"]), first)
             else:
@@ -446,7 +519,7 @@ def main() -> int:
                   r["audio_range"], "|", r["audio_segments"] or "-")
         return 0
     fields, rows, nl = sa.read_csv(sa.DUAS)
-    by = {r["id"]: r for r in sa.read_csv(OUT)[1] if r["status"] == "ok"}
+    by = {r["id"]: r for r in sa.read_csv(OUT)[1] if r["status"] == "ok" and (not args.id or r["id"] in args.id)}
     done = []
     for r in rows:
         if r["id"] in by:
