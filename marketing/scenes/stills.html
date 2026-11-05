@@ -39,7 +39,7 @@ const W = 1080, H = 1350, PAD = 80;
 const root = document.getElementById('root');
 const el = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || root).appendChild(e); return e; };
 const NS = 'http://www.w3.org/2000/svg';
-const SCR = (n, th) => `../build/screens/${n}${th ? '-' + th : ''}.png`;
+const SCR = (n, th) => `../build/screens/${n}${LANG === 'en' ? '-en' : ''}${th ? '-' + th : ''}.png`;
 const URL_TXT = 'hystericmoon.github.io/muslimdaily';
 const PLANE = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>';
 

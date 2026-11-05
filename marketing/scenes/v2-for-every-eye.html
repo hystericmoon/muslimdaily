@@ -63,12 +63,12 @@ function buildWorld(theme) {
   // phone
   r.phone = el('div', 'phone', r.stage); el('div', 'bezel', r.phone);
   r.screen = el('div', 'screen', r.phone);
-  r.pImg = el('img', '', r.screen); r.pImg.src = `../build/screens/10-today-morning-${theme}.png`;
-  r.pBig = el('img', '', r.screen); r.pBig.src = theme === 'light' ? '../build/screens/10-today-morning-font200.png' : `../build/screens/10-today-morning-${theme}.png`;
+  r.pImg = el('img', '', r.screen); r.pImg.src = `../build/screens/10-today-morning${LANG === 'en' ? '-en' : ''}-${theme}.png`;
+  r.pBig = el('img', '', r.screen); r.pBig.src = theme === 'light' ? `../build/screens/10-today-morning${LANG === 'en' ? '-en' : ''}-font200.png` : `../build/screens/10-today-morning${LANG === 'en' ? '-en' : ''}-${theme}.png`;
   r.ov = el('div', 'ov', r.screen); r.ring = el('div', 'ring', r.ov);
   // tablet
   r.tab = el('div', 'tablet', r.stage); el('div', 'bezel', r.tab);
-  const ts = el('div', 'screen', r.tab); r.tImg = el('img', '', ts); r.tImg.src = `../build/screens/102-today-tablet-${theme}.png`;
+  const ts = el('div', 'screen', r.tab); r.tImg = el('img', '', ts); r.tImg.src = `../build/screens/102-today-tablet${LANG === 'en' ? '-en' : ''}-${theme}.png`;
   r.scrim = el('div', 'scrim', w); r.scrim.style.height = L.scrimH + 'px';
   // hook
   r.hook = el('div', 'txt title', w);
