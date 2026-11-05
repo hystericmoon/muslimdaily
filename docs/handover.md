@@ -33,6 +33,9 @@ direction: the session owns concept, copy, visuals, QA. Rules from the owner:
   to a private Google Drive folder "Adwam promo"; plan and results as a Google Doc there. Notion:
   connected, but this session lacked its page tools (create/update/fetch/search). Tool lists load
   at session start: check with ToolSearch; if present, write the plan and results to Notion.
+- Run as director: the Opus session decides concept, copy and what ships; sub-agents do the rest
+  (`model: "sonnet"` for rendering, ffmpeg, uploads and the fresh-eyes QA review; `"haiku"` for bulk
+  resizing/renaming). Never hand an agent sourced religious text or user data.
 - Don't post anything; the owner posts.
 
 ## Waiting on the owner
