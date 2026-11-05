@@ -254,12 +254,12 @@ function renderWorld(r, t) {
   r.phone.style.transformOrigin = `${c.fx}px ${c.fy}px`;
   showScreen(r, t);
   // overlays in screen coordinates (800 x 1700)
-  // Dengar: ripples from play button (center ~ (92, 1007))
+  // Dengar: ripples from the play button (centre (104, 1012), radius 73)
   const rip = env(t, S.s1 + 0.3, S.s2 - 0.2, 0.3, 0.3);
   r.ripples.forEach((e, i) => {
     const ph = ((t - S.s1 - i * 0.55) % 1.65 + 1.65) % 1.65 / 1.65;
-    const sc = 1 + ph * 1.9, d = 132;
-    Object.assign(e.style, { left: 92 - d / 2 + 'px', top: 1007 - d / 2 + 'px', width: d + 'px', height: d + 'px' });
+    const sc = 1 + ph * 1.9, d = 146;
+    Object.assign(e.style, { left: 104 - d / 2 + 'px', top: 1012 - d / 2 + 'px', width: d + 'px', height: d + 'px' });
     set(e, `scale(${sc})`, rip * (1 - ph) * 0.8);
   });
   // Bangun: segments reveal right-to-left (covers fade away)
