@@ -7,13 +7,13 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 01:30 WIB (promo batch 1 done, PR #163; 1.12.6 is the shipped version).
+Last updated: 6 Nov 2026 07:00 WIB (promo batch 2 EN-UI media done, PRs #165/#166; 1.12.6 is the shipped version).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PR #163 (marketing/ only).
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Nothing open; promo PRs #163, #165, #166 merged.
 
-## Promo campaign: batch 1 done (5-6 Nov); next task, Sonnet
+## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
 
 Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the results first.
 - Review page (videos play, ID/EN switch): https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj
@@ -25,12 +25,19 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   8 images, 2 carousels (+ PDFs). Calendar: 17 posts, Mon 9 Nov to Sat 5 Dec.
 - Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
   dark both shown; Arabic only as empty hidden-word boxes (option 3); silent; a voiceover, if any,
-  is a male voice. Kept by the director: Indonesian app UI in EN versions (batch 2: EN shots).
+  is a male voice.
 - Rules still hold: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks.
 - **Notion works** (tested 6 Nov): `notion-create-pages` loads via ToolSearch. The Google Doc is
   copied to a private Notion draft: https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3
   (owner can move it). Nothing owed.
-- Batch 2 ideas: EN-UI screenshots, widgets, reminders, routines, a LinkedIn "how it's built" post.
+- **Batch 2 step 1 done (6 Nov): English-UI media.** CI shots 150-157 (`PromoEnglishScreenshotTest`, #165);
+  `prep_screens.py` builds `-en` screens and the scenes read them for `lang=en` (#166). Re-rendered:
+  19 EN stills, EN carousel PDFs, EN 4:5 videos (v1 28.6 s, v2 20.3 s); pushed to `promo-assets`
+  (607802b; old EN media stays in its history) and the review page is updated. The old EN 9:16
+  videos still show the Indonesian UI: don't post them (not re-rendered; owner can ask).
+  Calendar rows for LinkedIn (Tue) now use the English-UI files. Renders: ~20-25 min per video
+  on 4 cores; v1 and v2 can run in parallel. Needs `build/mark.js` (`prep_mark.py`) for stills.
+- Batch 2 next: widgets, reminders, routines, a LinkedIn "how it's built" post (owner picks).
 
 ## Waiting on the owner
 
