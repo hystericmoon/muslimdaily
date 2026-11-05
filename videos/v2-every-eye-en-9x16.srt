@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:03,100
+Prayer times, no internet needed.
+Your location is never sent anywhere.
+
+2
+00:00:03,400 --> 00:00:07,100
+Large text.
+Stays tidy at 200% font size.
+
+3
+00:00:07,400 --> 00:00:11,100
+On tablets too.
+Two columns: today and the prayer schedule.
+
+4
+00:00:11,500 --> 00:00:14,900
+Light or dark.
+Text contrast meets WCAG AA.
+
+5
+00:00:17,800 --> 00:00:20,300
+Adwam · Free · Offline · No ads · Open source
+hystericmoon.github.io/muslimdaily

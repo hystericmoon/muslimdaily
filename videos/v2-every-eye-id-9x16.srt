@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:03,100
+Jadwal shalat, tanpa internet.
+Lokasi tidak pernah dikirim ke mana pun.
+
+2
+00:00:03,400 --> 00:00:07,100
+Teks besar.
+Tetap rapi di ukuran huruf 200%.
+
+3
+00:00:07,400 --> 00:00:11,100
+Juga di tablet.
+Dua kolom: hari ini dan jadwal shalat.
+
+4
+00:00:11,500 --> 00:00:14,900
+Terang atau gelap.
+Kontras teks memenuhi WCAG AA.
+
+5
+00:00:17,800 --> 00:00:20,300
+Adwam · Gratis · Offline · Tanpa iklan · Open source
+hystericmoon.github.io/muslimdaily
