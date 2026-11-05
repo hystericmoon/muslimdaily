@@ -34,6 +34,14 @@ SCREENS = {
 TABLET = ["102-today-tablet"]
 FONT200 = ["10-today-morning"]
 THEMES = ("light", "dark")
+# English-UI shots (PromoEnglishScreenshotTest) -> the same scene name with an "-en" suffix. The
+# English layouts match the Indonesian ones, so the regions above apply unchanged.
+EN_SRC = {
+    "50-memorize-home": "150-memorize-home-en", "51-memorize-build": "151-memorize-build-en",
+    "52-memorize-recall": "152-memorize-recall-en", "53-memorize-check": "153-memorize-check-en",
+    "10-today-morning": "154-today-morning-en", "100-onboarding": "155-onboarding-en",
+    "41-settings-prayer": "156-settings-prayer-en", "102-today-tablet": "157-today-tablet-en",
+}
 
 
 def glyph_mask(a, region, light):
@@ -99,25 +107,26 @@ def soften(img, regions, light):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, spec in SCREENS.items():
-        for theme in THEMES:
-            src = SRC / f"{name}-{theme}.png"
-            img = Image.open(src).convert("RGB")
-            img = img.crop((0, 0, img.width, min(img.height, CROP_H)))
-            if spec:
-                if spec[0] == "box":
-                    soften(img, spec[1], theme == "light").save(OUT / f"{name}-{theme}-soft.png", optimize=True)
-                img = treat(img, spec[0], spec[1], theme == "light")
-            img.save(OUT / f"{name}-{theme}.png", optimize=True)
-            print("wrote", f"{name}-{theme}.png")
-    for name in FONT200:
-        img = Image.open(SRC / f"{name}-font200.png").convert("RGB")
-        img.crop((0, 0, img.width, CROP_H)).save(OUT / f"{name}-font200.png", optimize=True)
-        print("wrote", f"{name}-font200.png")
-    for name in TABLET:
-        for theme in THEMES:
-            Image.open(SRC / f"{name}-{theme}.png").convert("RGB").save(OUT / f"{name}-{theme}.png", optimize=True)
-            print("wrote", f"{name}-{theme}.png")
+    for lang in ("", "-en"):
+        src_of = (lambda n: n) if not lang else (lambda n: EN_SRC[n])
+        for name, spec in SCREENS.items():
+            for theme in THEMES:
+                img = Image.open(SRC / f"{src_of(name)}-{theme}.png").convert("RGB")
+                img = img.crop((0, 0, img.width, min(img.height, CROP_H)))
+                if spec:
+                    if spec[0] == "box":
+                        soften(img, spec[1], theme == "light").save(OUT / f"{name}{lang}-{theme}-soft.png", optimize=True)
+                    img = treat(img, spec[0], spec[1], theme == "light")
+                img.save(OUT / f"{name}{lang}-{theme}.png", optimize=True)
+                print("wrote", f"{name}{lang}-{theme}.png")
+        for name in FONT200:
+            img = Image.open(SRC / f"{src_of(name)}-font200.png").convert("RGB")
+            img.crop((0, 0, img.width, CROP_H)).save(OUT / f"{name}{lang}-font200.png", optimize=True)
+            print("wrote", f"{name}{lang}-font200.png")
+        for name in TABLET:
+            for theme in THEMES:
+                Image.open(SRC / f"{src_of(name)}-{theme}.png").convert("RGB").save(OUT / f"{name}{lang}-{theme}.png", optimize=True)
+                print("wrote", f"{name}{lang}-{theme}.png")
 
 
 if __name__ == "__main__":

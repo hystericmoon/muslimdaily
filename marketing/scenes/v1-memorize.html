@@ -82,7 +82,7 @@ function buildWorld(theme) {
   el('div', 'bezel', r.phone);
   r.screen = el('div', 'screen', r.phone);
   r.img = {};
-  SCREENS.forEach((n) => { const i = el('img', '', r.screen); i.src = `../build/screens/${n.replace('-soft', '')}-${theme}${n.endsWith('-soft') ? '-soft' : ''}.png`; i.style.opacity = 0; r.img[n] = i; });
+  SCREENS.forEach((n) => { const i = el('img', '', r.screen); i.src = `../build/screens/${n.replace('-soft', '')}${LANG === 'en' ? '-en' : ''}-${theme}${n.endsWith('-soft') ? '-soft' : ''}.png`; i.style.opacity = 0; r.img[n] = i; });
   r.ov = el('div', 'ov', r.screen);
   r.ripples = [0, 1, 2].map(() => el('div', 'ripple', r.ov));
   r.tap = el('div', 'tap', r.ov);
