@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Adwam · Video 2 · Untuk semua mata</title>
+<!-- Video 2, "Untuk semua mata": offline prayer times, 200 % text, tablet, light/dark (WCAG AA).
+     Query: fmt=916|45, lang=id|en. Render with marketing/engine/render.js. -->
+<link rel="stylesheet" href="../engine/scene.css">
+</head>
+<body>
+<div id="root"></div>
+<script src="../engine/motion.js"></script>
+<script src="../build/mark.js"></script>
+<script>
+const Q = new URLSearchParams(location.search);
+const FMT = Q.get('fmt') || '916';
+const LANG = Q.get('lang') || 'id';
+const W = 1080, H = FMT === '45' ? 1350 : 1920;
+const { E, tw, prog, mix, spring, env, clamp, rng } = M;
+
+const T = {
+  id: {
+    hook1: 'Jadwal shalat,', hook2: 'tanpa internet.', plate: 'Lokasi tidak pernah dikirim ke mana pun.', plane: 'Mode pesawat',
+    b: [['Mudah dibaca', 'Teks besar.', 'Tetap rapi di ukuran huruf 200%.'],
+        ['Layar lebar', 'Juga di tablet.', 'Dua kolom: hari ini dan jadwal shalat.']],
+    theme1: 'Terang', theme2: 'atau gelap.', themeDesc: 'Kontras teks memenuhi WCAG AA.',
+    claims: ['Gratis', 'Offline', 'Tanpa iklan', 'Open source'],
+  },
+  en: {
+    hook1: 'Prayer times,', hook2: 'no internet needed.', plate: 'Your location is never sent anywhere.', plane: 'Airplane mode',
+    b: [['Easy to read', 'Large text.', 'Stays tidy at 200% font size.'],
+        ['Big screens', 'On tablets too.', 'Two columns: today and the prayer schedule.']],
+    theme1: 'Light', theme2: 'or dark.', themeDesc: 'Text contrast meets WCAG AA.',
+    claims: ['Free', 'Offline', 'No ads', 'Open source'],
+  },
+}[LANG];
+const URL_TXT = 'hystericmoon.github.io/muslimdaily';
+
+const L = FMT === '45' ? {
+  pad: 80, labelY: 70, titleSize: 92, descSize: 34, descW: 900, scrimH: 470,
+  phoneX: 540, phoneY: 420, z: 0.56, hookY: 96, hookSize: 92, plateY: 1180, plateSize: 30,
+  tabW: 900, tabY: 560, endScale: 0.82, chipY: 330, chipSize: 30,
+} : {
+  pad: 96, labelY: 196, titleSize: 116, descSize: 42, descW: 860, scrimH: 760,
+  phoneX: 540, phoneY: 600, z: 0.74, hookY: 230, hookSize: 104, plateY: 1430, plateSize: 36,
+  tabW: 1010, tabY: 780, endScale: 1, chipY: 500, chipSize: 36,
+};
+const S = { hook: 0, b1: 3.4, b2: 7.4, theme: 11.4, end: 15.2, total: 19.2 };
+
+const root = document.getElementById('root');
+const el = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || root).appendChild(e); return e; };
+function words(parent, text, cls) {
+  const line = el('span', 'line ' + (cls || ''), parent);
+  return text.split(' ').map((w, i, a) => { const m = el('span', 'wm', line); const s = el('span', 'w', m); s.textContent = w; if (i < a.length - 1) line.appendChild(document.createTextNode(' ')); return s; });
+}
+const PLANE = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>';
+
+function buildWorld(theme) {
+  const w = el('div', 'world ' + theme);
+  const r = { w };
+  r.b1 = el('div', 'blob b1', w); r.b2 = el('div', 'blob b2', w);
+  r.stage = el('div', 'stage', w);
+  // phone
+  r.phone = el('div', 'phone', r.stage); el('div', 'bezel', r.phone);
+  r.screen = el('div', 'screen', r.phone);
+  r.pImg = el('img', '', r.screen); r.pImg.src = `../build/screens/10-today-morning-${theme}.png`;
+  r.pBig = el('img', '', r.screen); r.pBig.src = theme === 'light' ? '../build/screens/10-today-morning-font200.png' : `../build/screens/10-today-morning-${theme}.png`;
+  r.ov = el('div', 'ov', r.screen); r.ring = el('div', 'ring', r.ov);
+  // tablet
+  r.tab = el('div', 'tablet', r.stage); el('div', 'bezel', r.tab);
+  const ts = el('div', 'screen', r.tab); r.tImg = el('img', '', ts); r.tImg.src = `../build/screens/102-today-tablet-${theme}.png`;
+  r.scrim = el('div', 'scrim', w); r.scrim.style.height = L.scrimH + 'px';
+  // hook
+  r.hook = el('div', 'txt title', w);
+  Object.assign(r.hook.style, { left: L.pad + 'px', top: L.hookY + 'px', fontSize: L.hookSize + 'px' });
+  r.hookA = words(r.hook, T.hook1); r.hookB = words(r.hook, T.hook2, 'em');
+  r.hookB.forEach((s) => { s.innerHTML = '<em>' + s.textContent + '</em>'; });
+  // beats
+  r.beats = T.b.map(([lab, title, desc]) => {
+    const g = el('div', 'grp', w); Object.assign(g.style, { left: L.pad + 'px', right: L.pad + 'px', top: L.labelY + 'px' });
+    const l = el('div', 'label', g); l.style.fontSize = Math.round(L.titleSize * 0.22) + 'px';
+    const tt = el('div', 'title', g); tt.style.cssText = `font-size:${L.titleSize}px;margin-top:${L.titleSize * 0.12}px`;
+    const d = el('div', 'desc', g); d.style.cssText = `font-size:${L.descSize}px;max-width:${L.descW}px;margin-top:${L.descSize * 0.55}px`;
+    return { labW: words(l, lab), tW: words(tt, title), dW: words(d, desc) };
+  });
+  r.theme = el('div', 'grp', w); Object.assign(r.theme.style, { left: L.pad + 'px', right: L.pad + 'px', top: (L.labelY + 40) + 'px' });
+  const th = el('div', 'title', r.theme); th.style.fontSize = L.titleSize + 'px';
+  r.themeA = words(th, T.theme1); r.themeB = words(th, T.theme2, 'em');
+  r.themeB.forEach((s) => { s.innerHTML = '<em>' + s.textContent + '</em>'; });
+  const thd = el('div', 'desc', r.theme); thd.style.cssText = `font-size:${L.descSize}px;max-width:${L.descW}px;margin-top:${L.descSize * 0.55}px`;
+  r.themeD = words(thd, T.themeDesc);
+  // airplane chip + plate
+  r.chip = el('div', 'chip', w, `${PLANE}<span>${T.plane}</span><span class="tgl"><b></b></span>`);
+  Object.assign(r.chip.style, { right: L.pad * 0.6 + 'px', top: L.chipY + 'px', fontSize: L.chipSize + 'px' });
+  r.tgl = r.chip.querySelector('.tgl'); r.knob = r.chip.querySelector('.tgl b');
+  r.plate = el('div', 'plate', w); r.plate.textContent = T.plate;
+  Object.assign(r.plate.style, { left: L.pad + 'px', top: L.plateY + 'px', fontSize: L.plateSize + 'px', padding: `${L.plateSize * 0.45}px ${L.plateSize * 0.7}px` });
+  return r;
+}
+const light = buildWorld('light');
+const dark = buildWorld('dark');
+const worlds = [light, dark];
+const sweep = el('div', 'sweep'); const sweepDot = el('div', 'sweepdot');
+
+// end card (dark world)
+const endc = el('div', 'endc', dark.w);
+const MK = window.MARK, NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', `0 0 ${MK.viewBox[0]} ${MK.viewBox[1]}`); endc.appendChild(svg);
+const strokeP = document.createElementNS(NS, 'path');
+for (const [k, v] of Object.entries({ d: MK.centreline, fill: 'none', stroke: '#81D5CE', 'stroke-width': MK.strokeWidth, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })) strokeP.setAttribute(k, v);
+svg.appendChild(strokeP);
+const outlineP = document.createElementNS(NS, 'path'); outlineP.setAttribute('d', MK.outline[0].d); outlineP.setAttribute('fill', '#81D5CE'); svg.appendChild(outlineP);
+const dotC = document.createElementNS(NS, 'circle');
+for (const [k, v] of Object.entries({ cx: MK.dot.cx, cy: MK.dot.cy, r: MK.dot.r, fill: '#C9A227' })) dotC.setAttribute(k, v);
+dotC.style.transformBox = 'fill-box'; dotC.style.transformOrigin = 'center'; svg.appendChild(dotC);
+const LEN = strokeP.getTotalLength(); strokeP.setAttribute('stroke-dasharray', LEN);
+const wsvg = document.createElementNS(NS, 'svg'); wsvg.setAttribute('viewBox', `0 0 ${MK.lockup.viewBox[0]} ${MK.lockup.viewBox[1]}`); endc.appendChild(wsvg);
+const wg = document.createElementNS(NS, 'g'); wsvg.appendChild(wg);
+MK.lockup.wordmark.forEach((p) => { const e = document.createElementNS(NS, 'path'); e.setAttribute('d', p.d); e.setAttribute('fill', p.fill || '#E2E3DF'); wg.appendChild(e); });
+const claims = el('div', 'claims', endc); const claimW = [];
+T.claims.forEach((c, i) => { const s = el('span', 'w', claims); s.textContent = c; claimW.push(s); if (i < T.claims.length - 1) { const d = el('span', 'w sep', claims); d.textContent = '·'; claimW.push(d); } });
+const url = el('div', 'url', endc); url.textContent = URL_TXT;
+const grain = el('canvas', 'grain'); grain.width = 270; grain.height = Math.round(270 * H / W);
+const gctx = grain.getContext('2d'); const gimg = gctx.createImageData(grain.width, grain.height);
+
+const set = (e, tf, op) => { if (tf != null) e.style.transform = tf; if (op != null) e.style.opacity = op; };
+function reveal(ws, t, tin, tout, stagger = 0.06, dur = 0.8) {
+  ws.forEach((w, i) => {
+    const a = E.out(prog(t, tin + i * stagger, dur));
+    const b = tout == null ? 0 : E.inOut(prog(t, tout + i * stagger * 0.5, 0.5));
+    w.style.transform = `translateY(${(1 - a) * 135 - b * 135}%)`;
+  });
+}
+
+function renderWorld(r, t) {
+  set(r.b1, `translate(${-200 + Math.sin(t * 0.35) * 60}px, ${H * 0.18 + Math.cos(t * 0.3) * 50}px)`); r.b1.style.width = r.b1.style.height = W * 0.9 + 'px';
+  set(r.b2, `translate(${W * 0.45 + Math.cos(t * 0.27) * 70}px, ${H * 0.55 + Math.sin(t * 0.32) * 60}px)`); r.b2.style.width = r.b2.style.height = W * 0.8 + 'px';
+  reveal(r.hookA, t, 0.1, S.b1 - 0.6, 0.07);
+  reveal(r.hookB, t, 0.42, S.b1 - 0.55, 0.07);
+  const pl = env(t, 1.7, S.b1 - 0.3, 0.6, 0.35);
+  set(r.plate, `translateY(${(1 - pl) * 30}px)`, pl);
+  // airplane chip pops in, toggle switches on
+  const chipIn = spring(t, 0.7, 0.55, 0.22), chipOut = E.inOut(prog(t, S.b1 - 0.5, 0.4));
+  set(r.chip, `scale(${0.9 + 0.1 * chipIn}) translateY(${(1 - clamp(chipIn)) * 20}px)`, clamp(prog(t, 0.7, 0.2)) * (1 - chipOut));
+  const on = E.out(prog(t, 1.3, 0.35));
+  r.knob.style.transform = `translateX(${on * 0.95}em)`;
+  r.tgl.style.background = on > 0.5 ? '#2fa59b' : '#5b6563';
+  // beats
+  const bs = [[S.b1, S.b2], [S.b2, S.theme]];
+  r.beats.forEach((g, i) => {
+    const [a, b] = bs[i];
+    reveal(g.labW, t, a, b - 0.45, 0.03, 0.6);
+    reveal(g.tW, t, a + 0.06, b - 0.45, 0.06, 0.8);
+    reveal(g.dW, t, a + 0.25, b - 0.45, 0.025, 0.7);
+  });
+  reveal(r.themeA, t, S.theme + 0.1, S.end - 0.4, 0.07);
+  reveal(r.themeB, t, S.theme + 0.5, S.end - 0.4, 0.07);
+  reveal(r.themeD, t, S.theme + 0.9, S.end - 0.4, 0.025, 0.7);
+  // phone: hook, then zoom swap to 200 % text, then exits left as the tablet arrives
+  const enter = E.out(prog(t, 0, 1.2));
+  const zoomIn = E.inOut(prog(t, S.b1 - 0.4, 1.0));
+  const fl = Math.sin(t * 1.3) * 6;
+  const z = L.z * mix(1, 1.18, zoomIn);
+  const fy = mix(0, 260, zoomIn), Y = mix(L.phoneY, L.phoneY + (FMT === '45' ? 120 : 210), zoomIn);
+  const out = E.inOut(prog(t, S.b2 - 0.45, 0.8));
+  const px = L.phoneX - 400 * z - out * 900;
+  const py = Y - fy * z + (1 - enter) * 600 + fl;
+  r.phone.style.transformOrigin = `400px ${fy}px`;
+  r.phone.style.transform = `translate(${px}px, ${py}px) scale(${z}) rotateX(${(1 - enter) * 24}deg) rotateY(${out * 35}deg) rotateZ(${(1 - enter) * -5}deg)`;
+  r.phone.style.opacity = 1 - clamp(prog(t, S.b2 + 0.2, 0.2));
+  // swap screens with a scale crossfade
+  const sw = E.out(prog(t, S.b1 + 0.15, 0.6));
+  r.pBig.style.opacity = sw; r.pImg.style.opacity = 1 - sw;
+  r.pBig.style.transformOrigin = r.pImg.style.transformOrigin = '50% 0';
+  r.pBig.style.transform = `scale(${mix(0.9, 1, sw)})`; r.pImg.style.transform = `scale(${mix(1, 1.12, sw)})`;
+  // ring on the next-prayer card during the hook
+  const ra = env(t, 1.9, S.b1 - 0.4, 0.5, 0.3);
+  Object.assign(r.ring.style, { left: '24px', top: '278px', width: '752px', height: '364px', borderRadius: '44px' });
+  set(r.ring, `scale(${1 + (1 - E.out(clamp(ra))) * 0.06})`, ra);
+  // tablet
+  const tin = E.out(prog(t, S.b2 - 0.25, 1.2));
+  const tExit = E.inOut(prog(t, S.end - 0.6, 0.8));
+  const ts = L.tabW / 2560;
+  const tx = (W - L.tabW) / 2 + (1 - tin) * 700;
+  const ty = L.tabY + Math.sin(t * 1.1) * 5 + tExit * H;
+  r.tab.style.transform = `translate(${tx}px, ${ty}px) scale(${ts * mix(0.92, 1, tin)}) rotateY(${(1 - tin) * -32}deg) rotateX(${tExit * 18}deg)`;
+  r.tab.style.opacity = clamp(prog(t, S.b2 - 0.25, 0.25));
+}
+
+function renderEnd(t) {
+  const t0 = S.end;
+  endc.style.opacity = t >= t0 - 0.1 ? 1 : 0;
+  const scale = L.endScale, vb = MK.viewBox;
+  const bigW = 520 * scale, lockW = 800 * scale, ls = lockW / MK.lockup.viewBox[0];
+  const markLockW = vb[0] * MK.lockup.markScale * ls;
+  const lockX = (W - lockW) / 2, lockY = H * 0.42;
+  const settle = E.inOut(prog(t, t0 + 1.7, 0.9));
+  const mw = mix(bigW, markLockW, settle);
+  Object.assign(svg.style, { left: mix((W - bigW) / 2, lockX, settle) + 'px', top: mix(H * 0.5 - bigW * vb[1] / vb[0] / 2 - 40, lockY, settle) + 'px', width: mw + 'px', height: mw * vb[1] / vb[0] + 'px' });
+  strokeP.setAttribute('stroke-dashoffset', LEN * (1 - E.inOut(prog(t, t0 + 0.1, 1.2))));
+  const hand = prog(t, t0 + 1.3, 0.12);
+  strokeP.style.opacity = 1 - hand; outlineP.style.opacity = hand;
+  const dot = spring(t, t0 + 1.15, 0.55, 0.25);
+  dotC.style.opacity = clamp(prog(t, t0 + 1.15, 0.12)); dotC.style.transform = `scale(${0.5 + 0.5 * dot})`;
+  const wr = E.out(prog(t, t0 + 2.2, 0.9)), lockH = MK.lockup.viewBox[1] * ls;
+  Object.assign(wsvg.style, { left: lockX + 'px', top: lockY + 'px', width: lockW + 'px', height: lockH + 'px' });
+  wsvg.style.clipPath = `inset(0 ${(1 - wr) * 100}% 0 ${markLockW / lockW * 100}%)`;
+  wg.style.transform = `translateX(${(1 - wr) * -30}px)`; wsvg.style.opacity = t >= t0 + 2.2 ? 1 : 0;
+  claims.style.top = lockY + lockH + 90 * scale + 'px'; claims.style.fontSize = 44 * scale + 'px';
+  claimW.forEach((w, i) => { const a = E.out(prog(t, t0 + 2.7 + i * 0.06, 0.7)); set(w, `translateY(${(1 - a) * 30}px)`, a); });
+  url.style.top = lockY + lockH + 170 * scale + 'px'; url.style.fontSize = 34 * scale + 'px';
+  const u = E.out(prog(t, t0 + 3.2, 0.7)); set(url, `translateY(${(1 - u) * 20}px)`, u);
+}
+
+function renderAt(t) {
+  worlds.forEach((r) => renderWorld(r, t));
+  const wp = E.inOut(prog(t, S.theme + 0.3, 1.6));
+  const y = wp * (H + 24) - 12;
+  dark.w.style.clipPath = wp <= 0 ? 'inset(0 0 100% 0)' : wp >= 1 ? 'none' : `inset(0 0 ${H - y}px 0)`;
+  const lineLen = W - 48, lineOn = wp > 0 && wp < 1;
+  sweep.style.opacity = sweepDot.style.opacity = lineOn ? 1 : 0;
+  Object.assign(sweep.style, { top: y - 6 + 'px', width: lineLen + 'px', borderRadius: '0 6px 6px 0' });
+  Object.assign(sweepDot.style, { top: y - 6 + 'px', left: lineLen + 6 + 'px' });
+  light.w.style.visibility = wp >= 1 ? 'hidden' : 'visible';
+  renderEnd(t);
+  const R = rng(Math.floor(t * 60) + 11), d = gimg.data;
+  for (let i = 0; i < d.length; i += 4) { const v = R() * 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+  gctx.putImageData(gimg, 0, 0);
+}
+
+const caps = [
+  { start: 0.1, end: S.b1 - 0.3, text: `${T.hook1} ${T.hook2}\n${T.plate}` },
+  { start: S.b1, end: S.b2 - 0.3, text: `${T.b[0][1]}\n${T.b[0][2]}` },
+  { start: S.b2, end: S.theme - 0.3, text: `${T.b[1][1]}\n${T.b[1][2]}` },
+  { start: S.theme + 0.1, end: S.end - 0.3, text: `${T.theme1} ${T.theme2}\n${T.themeDesc}` },
+  { start: S.end + 2.6, end: S.total, text: `Adwam · ${T.claims.join(' · ')}\n${URL_TXT}` },
+];
+document.documentElement.style.width = W + 'px'; document.documentElement.style.height = H + 'px';
+window.SCENE = { width: W, height: H, duration: S.total, renderAt, captions: caps, ready: false };
+Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]).then(() => { renderAt(0); window.SCENE.ready = true; });
+</script>
+</body>
+</html>

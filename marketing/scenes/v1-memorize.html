@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Adwam · Video 1 · Hafalan</title>
+<!-- Video 1, "Hafal sedikit, tapi rutin". Query: fmt=916|45, lang=id|en.
+     Every frame is a pure function of t: render with marketing/engine/render.js. -->
+<link rel="stylesheet" href="../engine/scene.css">
+</head>
+<body>
+<div id="root"></div>
+<script src="../engine/motion.js"></script>
+<script src="../build/mark.js"></script>
+<script>
+const Q = new URLSearchParams(location.search);
+const FMT = Q.get('fmt') || '916';
+const LANG = Q.get('lang') || 'id';
+const W = 1080, H = FMT === '45' ? 1350 : 1920;
+const { E, tw, prog, mix, spring, env, clamp, rng } = M;
+
+// ---------- copy (only claims the app shows on screen) ----------
+const T = {
+  id: {
+    hook1: 'Hafal doa harian,', hook2: 'sedikit demi sedikit.', plate: 'Empat langkah sederhana.',
+    step: (n) => `Langkah ${n} dari 4`,
+    s: [
+      ['Dengar.', 'Putar per frasa, bisa diperlambat.'],
+      ['Bangun.', 'Tambah satu frasa tiap putaran, ulangi dengan suara.'],
+      ['Ingat.', 'Sembunyikan 30, 60, lalu 100% kata.'],
+      ['Cek.', 'Ketuk kata yang terlewat, nilai dengan jujur.'],
+    ],
+    rev: ['Diulang saat perlu.', 'Ulangan berikutnya dijadwalkan otomatis.'],
+    theme1: 'Terang', theme2: 'atau gelap.', themeDesc: 'Nyaman dibaca, siang dan malam.',
+    claims: ['Gratis', 'Offline', 'Tanpa iklan', 'Open source'],
+  },
+  en: {
+    hook1: 'Memorize daily duas,', hook2: 'a little at a time.', plate: 'Four simple steps.',
+    step: (n) => `Step ${n} of 4`,
+    s: [
+      ['Listen.', 'Play phrase by phrase, slowed down if you like.'],
+      ['Build.', 'Add one phrase per round and repeat it aloud.'],
+      ['Recall.', 'Hide 30, 60, then 100% of the words.'],
+      ['Check.', 'Tap the words you missed and rate yourself honestly.'],
+    ],
+    rev: ['Reviewed when it’s due.', 'The next review is scheduled for you.'],
+    theme1: 'Light', theme2: 'or dark.', themeDesc: 'Easy to read, day and night.',
+    claims: ['Free', 'Offline', 'No ads', 'Open source'],
+  },
+}[LANG];
+const URL_TXT = 'hystericmoon.github.io/muslimdaily';
+
+// ---------- layout ----------
+const L = FMT === '45' ? {
+  pad: 80, labelY: 70, titleY: 112, titleSize: 92, descY: 228, descSize: 34, descW: 900, scrimH: 470,
+  phoneX: 540, phoneY: 420, z: 0.56, hookY: 96, hookSize: 92, plateY: 1170, plateSize: 34,
+  numSize: 640, numY: 260, endScale: 0.82,
+} : {
+  pad: 96, labelY: 196, titleY: 250, titleSize: 116, descY: 405, descSize: 42, descW: 860, scrimH: 760,
+  phoneX: 540, phoneY: 600, z: 0.74, hookY: 230, hookSize: 104, plateY: 1430, plateSize: 40,
+  numSize: 900, numY: 520, endScale: 1,
+};
+
+// ---------- timeline (seconds) ----------
+const S = { hook: 0, s1: 3.4, s2: 6.6, s3: 9.8, s4: 13.4, rev: 17.0, theme: 20.2, end: 23.6, total: 27.5 };
+
+// ---------- DOM ----------
+const root = document.getElementById('root');
+const el = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || root).appendChild(e); return e; };
+function words(parent, text, cls) {
+  const line = el('span', 'line ' + (cls || ''), parent);
+  return text.split(' ').map((w, i, a) => { const m = el('span', 'wm', line); const s = el('span', 'w', m); s.textContent = w; if (i < a.length - 1) line.appendChild(document.createTextNode(' ')); return s; });
+}
+const SCREENS = ['52-memorize-recall', '52-memorize-recall-soft', '51-memorize-build', '53-memorize-check', '50-memorize-home'];
+
+function buildWorld(theme) {
+  const w = el('div', 'world ' + theme);
+  const r = { w };
+  r.b1 = el('div', 'blob b1', w); r.b2 = el('div', 'blob b2', w);
+  // phone
+  r.stage = el('div', 'stage', w);
+  r.phone = el('div', 'phone', r.stage);
+  el('div', 'bezel', r.phone);
+  r.screen = el('div', 'screen', r.phone);
+  r.img = {};
+  SCREENS.forEach((n) => { const i = el('img', '', r.screen); i.src = `../build/screens/${n.replace('-soft', '')}-${theme}${n.endsWith('-soft') ? '-soft' : ''}.png`; i.style.opacity = 0; r.img[n] = i; });
+  r.ov = el('div', 'ov', r.screen);
+  r.ripples = [0, 1, 2].map(() => el('div', 'ripple', r.ov));
+  r.tap = el('div', 'tap', r.ov);
+  r.ring = el('div', 'ring', r.ov);
+  r.covers = [0, 1].map(() => el('div', 'cover', r.ov));
+  r.scrim = el('div', 'scrim', w); r.scrim.style.height = L.scrimH + 'px';
+  r.num = el('div', 'numeral', w); r.num.style.fontSize = L.numSize + 'px';
+  // hook headline
+  r.hook = el('div', 'txt title', w);
+  Object.assign(r.hook.style, { left: L.pad + 'px', top: L.hookY + 'px', fontSize: L.hookSize + 'px' });
+  r.hookA = words(r.hook, T.hook1); r.hookB = words(r.hook, T.hook2, 'em');
+  r.hookB.forEach((s) => { s.innerHTML = '<em>' + s.textContent + '</em>'; });
+  // step text
+  r.stepTxt = T.s.concat([T.rev]).map((pair, i) => {
+    const g = el('div', 'grp', w); Object.assign(g.style, { left: L.pad + 'px', right: L.pad + 'px', top: L.labelY + 'px' });
+    const lab = el('div', 'label', g); lab.style.fontSize = Math.round(L.titleSize * 0.22) + 'px';
+    const labW = words(lab, i < 4 ? T.step(i + 1) : (LANG === 'id' ? 'Lalu' : 'Then'));
+    const tt = el('div', 'title', g); tt.style.cssText = `font-size:${L.titleSize}px;margin-top:${L.titleSize * 0.12}px`;
+    const tW = words(tt, pair[0]);
+    const d = el('div', 'desc', g); d.style.cssText = `font-size:${L.descSize}px;max-width:${L.descW}px;margin-top:${L.descSize * 0.55}px`;
+    const dW = words(d, pair[1]);
+    return { g, labW, tW, dW };
+  });
+  // progress segments
+  r.steps = el('div', 'steps', w);
+  Object.assign(r.steps.style, { position: 'absolute', left: L.pad + 'px', top: (L.labelY - 30) + 'px', width: '260px' });
+  r.seg = [0, 1, 2, 3].map(() => { const i = el('i', '', r.steps); i.style.flex = '1'; return el('b', '', i); });
+  // theme text
+  r.theme = el('div', 'grp', w); Object.assign(r.theme.style, { left: L.pad + 'px', right: L.pad + 'px', top: (L.labelY + 40) + 'px' });
+  const th = el('div', 'title', r.theme); th.style.fontSize = L.titleSize + 'px';
+  r.themeA = words(th, T.theme1); r.themeB = words(th, T.theme2, 'em');
+  r.themeB.forEach((s) => { s.innerHTML = '<em>' + s.textContent + '</em>'; });
+  const thd = el('div', 'desc', r.theme); thd.style.cssText = `font-size:${L.descSize}px;max-width:${L.descW}px;margin-top:${L.descSize * 0.55}px`;
+  r.themeD = words(thd, T.themeDesc);
+  // plate
+  r.plate = el('div', 'plate', w);
+  r.plate.textContent = T.plate;
+  Object.assign(r.plate.style, { left: L.pad + 'px', top: L.plateY + 'px', fontSize: L.plateSize + 'px', padding: `${L.plateSize * 0.45}px ${L.plateSize * 0.7}px` });
+  return r;
+}
+
+const light = buildWorld('light');
+const dark = buildWorld('dark');
+const worlds = [light, dark];
+// sweep line + dot (on top of both worlds)
+const sweep = el('div', 'sweep'); const sweepDot = el('div', 'sweepdot');
+// end card lives in the dark world
+const endc = el('div', 'endc', dark.w);
+const MK = window.MARK;
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg');
+svg.setAttribute('viewBox', `0 0 ${MK.viewBox[0]} ${MK.viewBox[1]}`);
+endc.appendChild(svg);
+const strokeP = document.createElementNS(NS, 'path');
+strokeP.setAttribute('d', MK.centreline); strokeP.setAttribute('fill', 'none'); strokeP.setAttribute('stroke', '#81D5CE');
+strokeP.setAttribute('stroke-width', MK.strokeWidth); strokeP.setAttribute('stroke-linecap', 'round'); strokeP.setAttribute('stroke-linejoin', 'round');
+svg.appendChild(strokeP);
+const outlineP = document.createElementNS(NS, 'path');
+outlineP.setAttribute('d', MK.outline[0].d); outlineP.setAttribute('fill', '#81D5CE'); svg.appendChild(outlineP);
+const dotC = document.createElementNS(NS, 'circle');
+dotC.setAttribute('cx', MK.dot.cx); dotC.setAttribute('cy', MK.dot.cy); dotC.setAttribute('r', MK.dot.r); dotC.setAttribute('fill', '#C9A227');
+dotC.style.transformBox = 'fill-box'; dotC.style.transformOrigin = 'center'; svg.appendChild(dotC);
+const LEN = strokeP.getTotalLength();
+strokeP.setAttribute('stroke-dasharray', LEN);
+// wordmark from the outlined lockup (never retyped)
+const wsvg = document.createElementNS(NS, 'svg');
+wsvg.setAttribute('viewBox', `0 0 ${MK.lockup.viewBox[0]} ${MK.lockup.viewBox[1]}`);
+endc.appendChild(wsvg);
+const wg = document.createElementNS(NS, 'g'); wsvg.appendChild(wg);
+MK.lockup.wordmark.forEach((p) => { const e = document.createElementNS(NS, 'path'); e.setAttribute('d', p.d); e.setAttribute('fill', p.fill || '#E2E3DF'); wg.appendChild(e); });
+const claims = el('div', 'claims', endc);
+const claimW = [];
+T.claims.forEach((c, i) => { const s = el('span', 'w', claims); s.textContent = c; claimW.push(s); if (i < T.claims.length - 1) { const d = el('span', 'w sep', claims); d.textContent = '·'; claimW.push(d); } });
+const url = el('div', 'url', endc); url.textContent = URL_TXT;
+// grain
+const grain = el('canvas', 'grain'); grain.width = 270; grain.height = Math.round(270 * H / W);
+const gctx = grain.getContext('2d'); const gimg = gctx.createImageData(grain.width, grain.height);
+
+// ---------- helpers ----------
+const set = (e, tf, op) => { if (tf != null) e.style.transform = tf; if (op != null) e.style.opacity = op; };
+// Word reveal: rise from the line mask with stagger; exit upward.
+function reveal(ws, t, tin, tout, stagger = 0.06, dur = 0.8) {
+  ws.forEach((w, i) => {
+    const a = E.out(prog(t, tin + i * stagger, dur));
+    const b = tout == null ? 0 : E.inOut(prog(t, tout + i * stagger * 0.5, 0.5));
+    const y = (1 - a) * 135 - b * 135;
+    w.style.transform = `translateY(${y}%)`;
+  });
+}
+// Camera: keyframes {at, dur, fx, fy, z, rx, ry} move the phone so screen point (fx, fy) sits at (L.phoneX, Y).
+const SH = 1700;
+const CAM = [
+  { at: 0, dur: 0, fx: 400, fy: 0, z: L.z, Y: L.phoneY, rx: 0, ry: 0 },
+  { at: S.s1 - 0.5, dur: 1.0, fx: 400, fy: 1000, z: L.z * 1.55, Y: L.phoneY + (FMT === '45' ? 330 : 520), rx: 0, ry: -6 },
+  { at: S.s2 - 0.4, dur: 0.9, fx: 560, fy: 450, z: L.z * 1.7, Y: L.phoneY + (FMT === '45' ? 300 : 460), rx: 4, ry: 6 },
+  { at: S.s3 - 0.4, dur: 0.9, fx: 400, fy: 1000, z: L.z * 1.08, Y: L.phoneY + (FMT === '45' ? 300 : 460), rx: 0, ry: -4 },
+  { at: S.s4 - 0.4, dur: 0.9, fx: 420, fy: 700, z: L.z * 1.35, Y: L.phoneY + (FMT === '45' ? 280 : 420), rx: 3, ry: 5 },
+  { at: S.s4 + 1.9, dur: 0.9, fx: 400, fy: 1230, z: L.z * 1.35, Y: L.phoneY + (FMT === '45' ? 330 : 520), rx: 0, ry: 0 },
+  { at: S.rev - 0.4, dur: 0.9, fx: 300, fy: 520, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 260 : 380), rx: -3, ry: -5 },
+  { at: S.rev + 1.2, dur: 1.6, fx: 300, fy: 950, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 300 : 480), rx: 0, ry: -3 },
+  { at: S.theme - 0.5, dur: 1.0, fx: 400, fy: 0, z: L.z, Y: L.phoneY + (FMT === '45' ? 80 : 160), rx: 0, ry: 0 },
+];
+function cam(t) {
+  let c = { ...CAM[0] };
+  for (let i = 1; i < CAM.length; i++) {
+    const k = CAM[i], p = k.dur ? E.inOut(prog(t, k.at, k.dur)) : (t >= k.at ? 1 : 0);
+    if (p <= 0) break;
+    for (const key of ['fx', 'fy', 'z', 'Y', 'rx', 'ry']) c[key] = mix(c[key], k[key], p);
+  }
+  return c;
+}
+function showScreen(r, t) {
+  // [name, from, to] with 0.35 s crossfades
+  const seq = [['52-memorize-recall-soft', 0, 1.25], ['52-memorize-recall', 0.0, S.s1 - 0.2], ['51-memorize-build', S.s1 - 0.2, S.s3 - 0.2],
+    ['52-memorize-recall-soft', S.s3 - 0.2, S.s3 + 1.6], ['52-memorize-recall', S.s3 - 0.2, S.s4 - 0.2], ['53-memorize-check', S.s4 - 0.2, S.rev - 0.2],
+    ['50-memorize-home', S.rev - 0.2, S.theme - 0.3], ['52-memorize-recall', S.theme - 0.3, 99]];
+  const op = {}; SCREENS.forEach((n) => (op[n] = 0));
+  seq.forEach(([n, a, b]) => { op[n] = Math.max(op[n], Math.min(E.out(prog(t, a, 0.35)), 1 - E.out(prog(t, b, 0.35)))); });
+  // the soft layer is under the boxed one; boxed layer is revealed by an RTL wipe in hook and Recall
+  SCREENS.forEach((n) => { r.img[n].style.opacity = op[n]; r.img[n].style.zIndex = n.endsWith('-soft') ? 1 : 2; });
+  const hookWipe = E.inOut(prog(t, 1.0, 0.9));
+  const recWipe = E.inOut(prog(t, S.s3 + 1.25, 0.8));
+  const inRecall = t >= S.s3 - 0.2 && t < S.s4;
+  const wp = t < S.s1 ? hookWipe : inRecall ? recWipe : 1;
+  // RTL: boxes appear from the right edge moving left, like Arabic reading order
+  r.img['52-memorize-recall'].style.clipPath = wp >= 1 ? 'none' : `inset(0 0 0 ${(1 - wp) * 100}%)`;
+}
+
+// ---------- render ----------
+function renderWorld(r, t) {
+  // ambient
+  set(r.b1, `translate(${-200 + Math.sin(t * 0.35) * 60}px, ${H * 0.18 + Math.cos(t * 0.3) * 50}px)`); r.b1.style.width = r.b1.style.height = W * 0.9 + 'px';
+  set(r.b2, `translate(${W * 0.45 + Math.cos(t * 0.27) * 70}px, ${H * 0.55 + Math.sin(t * 0.32) * 60}px)`); r.b2.style.width = r.b2.style.height = W * 0.8 + 'px';
+  // hook
+  reveal(r.hookA, t, 0.1, S.s1 - 0.6, 0.07);
+  reveal(r.hookB, t, 0.42, S.s1 - 0.55, 0.07);
+  const pl = env(t, 1.5, S.s1 - 0.3, 0.6, 0.35);
+  set(r.plate, `translateY(${(1 - pl) * 30}px)`, pl);
+  // steps 1-4 + review
+  const starts = [S.s1, S.s2, S.s3, S.s4, S.rev];
+  r.stepTxt.forEach((g, i) => {
+    const tin = starts[i], tout = (starts[i + 1] || S.theme) - 0.45;
+    reveal(g.labW, t, tin, tout, 0.03, 0.6);
+    reveal(g.tW, t, tin + 0.06, tout, 0.06, 0.8);
+    reveal(g.dW, t, tin + 0.25, tout, 0.025, 0.7);
+  });
+  const segVis = env(t, S.s1, S.rev - 0.3, 0.5, 0.4);
+  r.steps.style.opacity = segVis;
+  r.seg.forEach((b, i) => { b.style.transform = `scaleX(${E.out(prog(t, starts[i] + 0.1, 0.7))})`; });
+  // big numeral (parallax, swaps per step)
+  const stepIdx = t < S.s2 ? 0 : t < S.s3 ? 1 : t < S.s4 ? 2 : 3;
+  r.num.textContent = String(stepIdx + 1);
+  const numIn = env(t, starts[stepIdx], starts[stepIdx + 1] - 0.1, 0.7, 0.35);
+  const numVis = t >= S.s1 && t < S.rev ? numIn : 0;
+  set(r.num, `translate(${W - L.numSize * 0.62 + (1 - numVis) * 120}px, ${L.numY}px)`, numVis * 0.09);
+  // theme text
+  reveal(r.themeA, t, S.theme + 0.1, S.end - 0.4, 0.07);
+  reveal(r.themeB, t, S.theme + 0.5, S.end - 0.4, 0.07);
+  reveal(r.themeD, t, S.theme + 0.9, S.end - 0.4, 0.025, 0.7);
+  // phone
+  const c = cam(t);
+  const enter = E.out(prog(t, 0, 1.2));
+  const exit = E.inOut(prog(t, S.end - 0.6, 0.8));
+  const fl = Math.sin(t * 1.3) * 6;
+  const k = c.z;
+  const px = L.phoneX - c.fx * k, py = c.Y - c.fy * k + (1 - enter) * 600 + fl + exit * H * 0.9;
+  const rx = c.rx + (1 - enter) * 24 + exit * 18, rz = (1 - enter) * -5;
+  r.phone.style.transform = `translate(${px}px, ${py}px) scale(${k}) rotateX(${rx}deg) rotateY(${c.ry}deg) rotateZ(${rz}deg)`;
+  r.phone.style.transformOrigin = `${c.fx}px ${c.fy}px`;
+  showScreen(r, t);
+  // overlays in screen coordinates (800 x 1700)
+  // Dengar: ripples from play button (center ~ (92, 1007))
+  const rip = env(t, S.s1 + 0.3, S.s2 - 0.2, 0.3, 0.3);
+  r.ripples.forEach((e, i) => {
+    const ph = ((t - S.s1 - i * 0.55) % 1.65 + 1.65) % 1.65 / 1.65;
+    const sc = 1 + ph * 1.9, d = 132;
+    Object.assign(e.style, { left: 92 - d / 2 + 'px', top: 1007 - d / 2 + 'px', width: d + 'px', height: d + 'px' });
+    set(e, `scale(${sc})`, rip * (1 - ph) * 0.8);
+  });
+  // Bangun: segments reveal right-to-left (covers fade away)
+  const covers = [[640, 418, 724, 488], [404, 426, 650, 496]];
+  r.covers.forEach((e, i) => {
+    const [x0, y0, x1, y1] = covers[i];
+    const vis = t >= S.s2 - 0.2 && t < S.s3 ? 1 : 0;
+    const a = spring(t, S.s2 + 0.5 + i * 0.55, 0.5, 0.2);
+    Object.assign(e.style, { left: x0 + 'px', top: y0 + 'px', width: x1 - x0 + 'px', height: y1 - y0 + 'px', background: r === light ? '#f4f7f6' : '#283231', borderRadius: '10px' });
+    e.style.opacity = vis * (1 - clamp(a));
+    e.style.transform = `scale(${1 + (1 - clamp(a)) * 0.02})`;
+  });
+  // gold ring: hook (card), Recall (slider 60 -> 100), Check (Sulit), Review (Perlu diulang chip)
+  let ring = null;
+  if (t < S.s1) ring = { x: 24, y: 708, w: 752, h: 452, a: env(t, 1.7, S.s1 - 0.4, 0.5, 0.3), r: 44 };
+  else if (t >= S.s3 && t < S.s4) {
+    const m = spring(t, S.s3 + 1.0, 0.5, 0.15);
+    ring = { x: mix(306, 454, m), y: 1588, w: mix(140, 154, m), h: 70, a: env(t, S.s3 + 0.4, S.s4 - 0.3, 0.4, 0.3), r: 35 };
+  } else if (t >= S.s4 && t < S.rev) ring = { x: 26, y: 1166, w: 748, h: 132, a: env(t, S.s4 + 2.4, S.rev - 0.3, 0.4, 0.3), r: 66 };
+  else if (t >= S.rev && t < S.theme) ring = { x: 54, y: 652, w: 248, h: 70, a: env(t, S.rev + 0.5, S.rev + 1.6, 0.4, 0.3), r: 35 };
+  if (ring) {
+    const pop = 1 + (1 - E.out(clamp(ring.a))) * 0.06;
+    Object.assign(r.ring.style, { left: ring.x + 'px', top: ring.y + 'px', width: ring.w + 'px', height: ring.h + 'px', borderRadius: ring.r + 'px' });
+    set(r.ring, `scale(${pop})`, ring.a);
+  } else r.ring.style.opacity = 0;
+  // Check: taps on two chips, then on "Sulit"
+  const taps = [[S.s4 + 0.7, 572, 578], [S.s4 + 1.2, 274, 690], [S.s4 + 2.9, 400, 1232]];
+  let tp = null;
+  for (const [at, x, y] of taps) if (t >= at && t < at + 0.6) tp = { p: (t - at) / 0.6, x, y };
+  if (tp) {
+    const d = 150;
+    Object.assign(r.tap.style, { left: tp.x - d / 2 + 'px', top: tp.y - d / 2 + 'px', width: d + 'px', height: d + 'px' });
+    set(r.tap, `scale(${0.4 + E.out(tp.p) * 1.1})`, (1 - tp.p) * 0.9);
+  } else r.tap.style.opacity = 0;
+}
+
+function renderEnd(t) {
+  const t0 = S.end;
+  endc.style.opacity = t >= t0 - 0.1 ? 1 : 0;
+  const scale = L.endScale;
+  // big mark centred, then moves into lockup position
+  const bigW = 520 * scale, vb = MK.viewBox;
+  const lockW = 800 * scale, ls = lockW / MK.lockup.viewBox[0];
+  const markLockW = vb[0] * MK.lockup.markScale * ls;
+  const lockX = (W - lockW) / 2, lockY = H * 0.42;
+  const settle = E.inOut(prog(t, t0 + 1.7, 0.9));
+  const mw = mix(bigW, markLockW, settle);
+  const mx = mix((W - bigW) / 2, lockX, settle), my = mix(H * 0.5 - bigW * vb[1] / vb[0] / 2 - 40, lockY, settle);
+  Object.assign(svg.style, { left: mx + 'px', top: my + 'px', width: mw + 'px', height: mw * vb[1] / vb[0] + 'px' });
+  const draw = E.inOut(prog(t, t0 + 0.1, 1.2));
+  strokeP.setAttribute('stroke-dashoffset', LEN * (1 - draw));
+  const hand = prog(t, t0 + 1.3, 0.12); // hand over to the official outline
+  strokeP.style.opacity = 1 - hand; outlineP.style.opacity = hand;
+  const dot = spring(t, t0 + 1.15, 0.55, 0.25);
+  dotC.style.opacity = clamp(prog(t, t0 + 1.15, 0.12));
+  dotC.style.transform = `scale(${0.5 + 0.5 * dot})`;
+  // wordmark reveal
+  const wr = E.out(prog(t, t0 + 2.2, 0.9));
+  const lockH = MK.lockup.viewBox[1] * ls;
+  Object.assign(wsvg.style, { left: lockX + 'px', top: lockY + 'px', width: lockW + 'px', height: lockH + 'px' });
+  wsvg.style.clipPath = `inset(0 ${(1 - wr) * 100}% 0 ${markLockW / lockW * 100}%)`;
+  wg.style.transform = `translateX(${(1 - wr) * -30}px)`;
+  wsvg.style.opacity = t >= t0 + 2.2 ? 1 : 0;
+  // claims + url
+  claims.style.top = lockY + lockH + 90 * scale + 'px'; claims.style.fontSize = 44 * scale + 'px';
+  claimW.forEach((w, i) => { const a = E.out(prog(t, t0 + 2.7 + i * 0.06, 0.7)); set(w, `translateY(${(1 - a) * 30}px)`, a); });
+  url.style.top = lockY + lockH + 170 * scale + 'px'; url.style.fontSize = 34 * scale + 'px';
+  const u = E.out(prog(t, t0 + 3.2, 0.7)); set(url, `translateY(${(1 - u) * 20}px)`, u);
+}
+
+function renderAt(t) {
+  worlds.forEach((r) => renderWorld(r, t));
+  // light -> dark wipe, top to bottom, edge = the Wasl line with gold dot leading
+  const wp = E.inOut(prog(t, S.theme + 0.3, 1.6));
+  const y = wp * (H + 24) - 12;
+  dark.w.style.clipPath = wp <= 0 ? 'inset(0 0 100% 0)' : wp >= 1 ? 'none' : `inset(0 0 ${H - y}px 0)`;
+  const lineOn = wp > 0 && wp < 1;
+  const lineLen = W - 48;
+  sweep.style.opacity = sweepDot.style.opacity = lineOn ? 1 : 0;
+  Object.assign(sweep.style, { top: y - 6 + 'px', width: lineLen + 'px', borderRadius: '0 6px 6px 0' });
+  Object.assign(sweepDot.style, { top: y - 6 + 'px', left: lineLen + 6 + 'px' });
+  // light world hides once fully covered
+  light.w.style.visibility = wp >= 1 ? 'hidden' : 'visible';
+  renderEnd(t);
+  // grain (seeded per frame)
+  const R = rng(Math.floor(t * 60) + 7);
+  const d = gimg.data;
+  for (let i = 0; i < d.length; i += 4) { const v = R() * 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+  gctx.putImageData(gimg, 0, 0);
+}
+
+// captions for the .srt (same text as on screen)
+const caps = [
+  { start: 0.1, end: S.s1 - 0.3, text: `${T.hook1} ${T.hook2}\n${T.plate}` },
+  ...T.s.map((p, i) => ({ start: [S.s1, S.s2, S.s3, S.s4][i], end: [S.s2, S.s3, S.s4, S.rev][i] - 0.3, text: `${T.step(i + 1)}: ${p[0]}\n${p[1]}` })),
+  { start: S.rev, end: S.theme - 0.3, text: `${T.rev[0]}\n${T.rev[1]}` },
+  { start: S.theme + 0.1, end: S.end - 0.3, text: `${T.theme1} ${T.theme2}\n${T.themeDesc}` },
+  { start: S.end + 2.6, end: S.total, text: `Adwam · ${T.claims.join(' · ')}\n${URL_TXT}` },
+];
+
+document.documentElement.style.width = W + 'px'; document.documentElement.style.height = H + 'px';
+window.SCENE = { width: W, height: H, duration: S.total, renderAt, captions: caps, ready: false };
+Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]).then(() => { renderAt(0); window.SCENE.ready = true; });
+</script>
+</body>
+</html>

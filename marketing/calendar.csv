@@ -1,0 +1,18 @@
+week,date,day,time_wib,channel,format,asset,language,status
+1,2026-11-09,Mon,19:30,Instagram,Reel,v1-memorize-id-9x16.mp4,id,ready
+1,2026-11-10,Tue,08:30,LinkedIn,Video,v1-memorize-en-4x5.mp4,en,ready
+1,2026-11-12,Thu,19:30,Instagram,Carousel,cA1-cA6 (id),id,ready
+1,2026-11-14,Sat,09:00,Instagram,Image,img1-id.png,id,ready
+2,2026-11-16,Mon,19:30,Instagram,Reel,v2-every-eye-id-9x16.mp4,id,ready
+2,2026-11-17,Tue,08:30,LinkedIn,Carousel (PDF),cA1-cA6 (en),en,ready
+2,2026-11-19,Thu,19:30,Instagram,Image,img3-id.png,id,ready
+2,2026-11-21,Sat,09:00,Instagram,Image,img5-id.png,id,ready
+3,2026-11-23,Mon,19:30,Instagram,Carousel,cB1-cB5 (id),id,ready
+3,2026-11-24,Tue,08:30,LinkedIn,Video,v2-every-eye-en-4x5.mp4,en,ready
+3,2026-11-26,Thu,19:30,Instagram,Image,img4-id.png,id,ready
+3,2026-11-28,Sat,09:00,Instagram,Image,img6-id.png,id,ready
+4,2026-11-30,Mon,19:30,Instagram,Image,img2-id.png,id,ready
+4,2026-12-01,Tue,08:30,LinkedIn,Carousel (PDF),cB1-cB5 (en),en,ready
+4,2026-12-03,Thu,19:30,Instagram,Image,img7-id.png,id,ready
+4,2026-12-04,Fri,08:30,LinkedIn,Image,img8-en.png,en,ready
+4,2026-12-05,Sat,09:00,Instagram,Image,img8-id.png,id,ready
