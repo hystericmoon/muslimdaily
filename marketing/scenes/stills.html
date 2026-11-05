@@ -300,8 +300,8 @@ function split(src, copy, o, carN) {
   return both;
 }
 
-const top = BUILD[ID]();
-if (!top.parentNode) root.appendChild(top);
+const topEl = BUILD[ID]();
+if (!topEl.parentNode) root.appendChild(topEl);
 grain(root);
 document.documentElement.style.width = W + 'px'; document.documentElement.style.height = H + 'px';
 window.SCENE = { width: W, height: H, duration: 1, renderAt() {}, ready: false };
