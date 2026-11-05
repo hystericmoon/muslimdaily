@@ -27,10 +27,9 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   dark both shown; Arabic only as empty hidden-word boxes (option 3); silent; a voiceover, if any,
   is a male voice. Kept by the director: Indonesian app UI in EN versions (batch 2: EN shots).
 - Rules still hold: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks.
-- **Notion test first** (owner wants it): `ToolSearch` "select:mcp__Notion__notion-create-pages".
-  5 Nov the Notion settings showed every tool on "Always", yet only setup/meeting/sidebar tools
-  reached the session. If the page tools load, copy the Google Doc into a private Notion page and
-  link it here; if not, tell the owner (reconnect the connector at claude.ai/customize/connectors).
+- **Notion works** (tested 6 Nov): `notion-create-pages` loads via ToolSearch. The Google Doc is
+  copied to a private Notion draft: https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3
+  (owner can move it). Nothing owed.
 - Batch 2 ideas: EN-UI screenshots, widgets, reminders, routines, a LinkedIn "how it's built" post.
 
 ## Waiting on the owner
