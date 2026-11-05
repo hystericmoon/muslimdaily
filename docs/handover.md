@@ -7,36 +7,31 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 5 Nov 2026 22:30 WIB (promo campaign planned, nothing built; 1.12.6 is the shipped version).
+Last updated: 6 Nov 2026 01:30 WIB (promo batch 1 done, PR #163; 1.12.6 is the shipped version).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). #157 and #159 merged 3 Nov; PR #157 answers: honorific
-  left out, release 1.12.6. Nothing else in flight.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PR #163 (marketing/ only).
 
-## Promo campaign (owner, 5 Nov; next task, Opus)
+## Promo campaign: batch 1 done (5-6 Nov); next task, Sonnet
 
-Free LinkedIn + Instagram videos, images and copy for Adwam. The owner gives no creative
-direction: the session owns concept, copy, visuals, QA. Rules from the owner:
-- No music; natural sounds or narration are fine. No faces, no awrah. Everything free.
-- **No IslamHouse material**: its licence (Reply in `docs/islamhouse-licence-request.md`) covers
-  the app only, not promo, and HadeethEnc is the same family. So no dua, hadith, verse or
-  recitation anywhere, and no screenshot showing a dua card. Never write religious text.
-- Use: Adwam mark/palette (`docs/brand/`), screens without dua text (onboarding, prayer times,
-  widgets, library categories, settings, dark, large text, tablet), claims the app proves (free,
-  offline, no ads/tracking, open source, WCAG AA). No streaks/points language.
-- Plan: brief and four-week calendar, copy (Indonesian first, English for LinkedIn), render HTML
-  scenes with Chromium + ffmpeg (both installed), captions burned in plus subtitle file, alt text,
-  QA by a fresh reviewer agent, no sourced religious text in any frame.
-- First batch: 8 images, 2 carousels, 2 videos; then the rest of the calendar.
-- Deliver: files in `marketing/` on a branch (kept out of the APK) with a PR; videos and images
-  to a private Google Drive folder "Adwam promo"; plan and results as a Google Doc there. Notion:
-  connected, but this session lacked its page tools (create/update/fetch/search). Tool lists load
-  at session start: check with ToolSearch; if present, write the plan and results to Notion.
-- Run as director: the Opus session decides concept, copy and what ships; sub-agents do the rest
-  (`model: "sonnet"` for rendering, ffmpeg, uploads and the fresh-eyes QA review; `"haiku"` for bulk
-  resizing/renaming). Never hand an agent sourced religious text or user data.
-- Don't post anything; the owner posts.
+Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the results first.
+- Review page (videos play, ID/EN switch): https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj
+- Full-quality media: orphan branch `promo-assets` (never merge it; keeps `main` small).
+- Drive folder "Adwam promo" (private): Google Doc "Batch 1 plan and results", Sheet "Calendar".
+  The Drive connector only takes inline content, so media is not in Drive.
+- Source: `marketing/` (PR #163): `README.md` (how to render), `brief.md`, `copy.md`,
+  `alt-text.md`, `calendar.csv`, scenes, engine. 2 videos x 4 formats (ID/EN, 9:16/4:5) + .srt,
+  8 images, 2 carousels (+ PDFs). Calendar: 17 posts, Mon 9 Nov to Sat 5 Dec.
+- Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
+  dark both shown; Arabic only as empty hidden-word boxes (option 3); silent; a voiceover, if any,
+  is a male voice. Kept by the director: Indonesian app UI in EN versions (batch 2: EN shots).
+- Rules still hold: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks.
+- **Notion test first** (owner wants it): `ToolSearch` "select:mcp__Notion__notion-create-pages".
+  5 Nov the Notion settings showed every tool on "Always", yet only setup/meeting/sidebar tools
+  reached the session. If the page tools load, copy the Google Doc into a private Notion page and
+  link it here; if not, tell the owner (reconnect the connector at claude.ai/customize/connectors).
+- Batch 2 ideas: EN-UI screenshots, widgets, reminders, routines, a LinkedIn "how it's built" post.
 
 ## Waiting on the owner
 
@@ -76,7 +71,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMu64SGUJb7ZB37ryAj (3-5 Nov; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)

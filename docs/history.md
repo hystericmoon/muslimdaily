@@ -93,6 +93,11 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
+- **Promo batch 1** (#163, 5-6 Nov, Opus director with Sonnet agents): `marketing/` render engine
+  (HTML scenes, Playwright frames at 60 fps blended to 30 fps by ffmpeg `tmix`), 2 videos x 4
+  formats, 8 images, 2 carousels, copy, alt text, calendar. Media on orphan branch `promo-assets`.
+  Two fresh-eyes QA passes (images, video frames) found no content blockers; craft fixes applied.
+  A 28.6 s 1080x1920 render takes ~38 min with three renders sharing 4 cores.
 - **1.12.1** (versionCode 50, #139, merged 3 Nov 07:13 WIB; see Shipped): the owner heard the end of
   the chapter title («يقول») at the start of dress_01 and dress_02 (2 Nov). An intro scan of all
   312 recorded rows (Whisper on each clip's first 8 s, words heard before one of the dua's first
@@ -296,6 +301,10 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 
 ## Facts that cost time to find
 
+- Promo (5 Nov): CI screenshots use the font-test string "هٰذَا نَصٌّ تَجْرِيبِيٌّ..." (reads "this is test
+  text"), not a dua; `marketing/tools/prep_screens.py` turns it into empty boxes. The Google Drive
+  connector takes file content inline only, so multi-MB media can't go to Drive from a session.
+  Notion: settings show all tools "Always", but only setup/meeting/sidebar tools reached sessions.
 - Content (main after 1.7.0): 323 rows; 87 with phrase breaks; 17 without audio
   (sunnah_01–16, funeral_01); 52 with a grade; rows without Latin are mostly the ones whose
   `arabic` still carries unvowelled narration (صلى الله عليه وسلم) or basmalah.
