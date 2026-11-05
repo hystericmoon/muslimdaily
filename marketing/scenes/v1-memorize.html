@@ -61,7 +61,7 @@ const L = FMT === '45' ? {
 };
 
 // ---------- timeline (seconds) ----------
-const S = { hook: 0, s1: 3.4, s2: 6.6, s3: 9.8, s4: 13.4, rev: 17.0, theme: 20.2, end: 23.6, total: 27.5 };
+const S = { hook: 0, s1: 3.4, s2: 6.6, s3: 9.8, s4: 13.4, rev: 17.0, theme: 20.2, end: 23.6, total: 28.6 };
 
 // ---------- DOM ----------
 const root = document.getElementById('root');
@@ -177,12 +177,12 @@ const SH = 1700;
 const CAM = [
   { at: 0, dur: 0, fx: 400, fy: 0, z: L.z, Y: L.phoneY, rx: 0, ry: 0 },
   { at: S.s1 - 0.5, dur: 1.0, fx: 400, fy: 1000, z: L.z * 1.55, Y: L.phoneY + (FMT === '45' ? 330 : 520), rx: 0, ry: -6 },
-  { at: S.s2 - 0.4, dur: 0.9, fx: 560, fy: 450, z: L.z * 1.7, Y: L.phoneY + (FMT === '45' ? 300 : 460), rx: 4, ry: 6 },
+  { at: S.s2 - 0.4, dur: 0.9, fx: 400, fy: 470, z: L.z * 1.3, Y: L.phoneY + (FMT === '45' ? 300 : 500), rx: 4, ry: 4 },
   { at: S.s3 - 0.4, dur: 0.9, fx: 400, fy: 1000, z: L.z * 1.08, Y: L.phoneY + (FMT === '45' ? 300 : 460), rx: 0, ry: -4 },
   { at: S.s4 - 0.4, dur: 0.9, fx: 420, fy: 700, z: L.z * 1.35, Y: L.phoneY + (FMT === '45' ? 280 : 420), rx: 3, ry: 5 },
   { at: S.s4 + 1.9, dur: 0.9, fx: 400, fy: 1230, z: L.z * 1.35, Y: L.phoneY + (FMT === '45' ? 330 : 520), rx: 0, ry: 0 },
-  { at: S.rev - 0.4, dur: 0.9, fx: 300, fy: 520, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 260 : 380), rx: -3, ry: -5 },
-  { at: S.rev + 1.2, dur: 1.6, fx: 300, fy: 950, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 300 : 480), rx: 0, ry: -3 },
+  { at: S.rev - 0.4, dur: 0.9, fx: 300, fy: 520, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 400 : 420), rx: -3, ry: -5 },
+  { at: S.rev + 1.2, dur: 1.6, fx: 300, fy: 950, z: L.z * 1.25, Y: L.phoneY + (FMT === '45' ? 420 : 480), rx: 0, ry: -3 },
   { at: S.theme - 0.5, dur: 1.0, fx: 400, fy: 0, z: L.z, Y: L.phoneY + (FMT === '45' ? 80 : 160), rx: 0, ry: 0 },
 ];
 function cam(t) {

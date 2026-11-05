@@ -45,7 +45,7 @@ const L = FMT === '45' ? {
   phoneX: 540, phoneY: 600, z: 0.74, hookY: 230, hookSize: 104, plateY: 1430, plateSize: 36,
   tabW: 1010, tabY: 780, endScale: 1, chipY: 500, chipSize: 36,
 };
-const S = { hook: 0, b1: 3.4, b2: 7.4, theme: 11.4, end: 15.2, total: 19.2 };
+const S = { hook: 0, b1: 3.4, b2: 7.4, theme: 11.4, end: 15.2, total: 20.3 };
 
 const root = document.getElementById('root');
 const el = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || root).appendChild(e); return e; };
@@ -167,7 +167,7 @@ function renderWorld(r, t) {
   const py = Y - fy * z + (1 - enter) * 600 + fl;
   r.phone.style.transformOrigin = `400px ${fy}px`;
   r.phone.style.transform = `translate(${px}px, ${py}px) scale(${z}) rotateX(${(1 - enter) * 24}deg) rotateY(${out * 35}deg) rotateZ(${(1 - enter) * -5}deg)`;
-  r.phone.style.opacity = 1 - clamp(prog(t, S.b2 + 0.2, 0.2));
+  r.phone.style.opacity = 1 - E.out(prog(t, S.b2 - 0.35, 0.3));
   // swap screens with a scale crossfade
   const sw = E.out(prog(t, S.b1 + 0.15, 0.6));
   r.pBig.style.opacity = sw; r.pImg.style.opacity = 1 - sw;
@@ -184,7 +184,7 @@ function renderWorld(r, t) {
   const tx = (W - L.tabW) / 2 + (1 - tin) * 700;
   const ty = L.tabY + Math.sin(t * 1.1) * 5 + tExit * H;
   r.tab.style.transform = `translate(${tx}px, ${ty}px) scale(${ts * mix(0.92, 1, tin)}) rotateY(${(1 - tin) * -32}deg) rotateX(${tExit * 18}deg)`;
-  r.tab.style.opacity = clamp(prog(t, S.b2 - 0.25, 0.25));
+  r.tab.style.opacity = clamp(prog(t, S.b2 - 0.1, 0.25));
 }
 
 function renderEnd(t) {

@@ -36,7 +36,7 @@ Files: `v1-memorize-id-9x16.mp4` (Reels), `v1-memorize-id-4x5.mp4` (feed), `v1-m
 > #Android #OpenSource #Accessibility #ProductDesign
 
 Video description (alt text / accessibility caption):
-> A 27-second silent animation on a cream background. A phone shows Adwam's memorization screen,
+> A 29-second silent animation on a cream background. A phone shows Adwam's memorization screen,
 > where the words of a dua turn into empty boxes. Large text introduces four steps: Listen, Build,
 > Recall, Check, each with the matching app screen. A screen of saved memorizations shows when the
 > next review is due. A teal line sweeps down and turns the whole scene dark. The Adwam mark draws
@@ -72,7 +72,7 @@ Files: `v2-every-eye-id-9x16.mp4`, `v2-every-eye-id-4x5.mp4`, `v2-every-eye-en-4
 > #Accessibility #a11y #Android #OpenSource
 
 Video description:
-> A 19-second silent animation. A phone shows today's prayer times while an "Airplane mode" switch
+> A 20-second silent animation. A phone shows today's prayer times while an "Airplane mode" switch
 > turns on. The screen zooms to the same view at 200% text size. A tablet slides in showing a
 > two-column layout. A teal line sweeps down and turns everything dark, with the line "Text
 > contrast meets WCAG AA". The Adwam mark draws itself, followed by the claims and website address.

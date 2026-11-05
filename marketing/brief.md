@@ -39,8 +39,8 @@ dark, WCAG AA.
 
 ## Batch 1 deliverables
 
-- Video 1 "Hafal sedikit, tapi rutin" (27.5 s): memorization steps, review, light/dark, end card.
-- Video 2 "Untuk semua mata" (19.2 s): offline prayer times, 200 % text, tablet, light/dark.
+- Video 1 "Hafal sedikit, tapi rutin" (28.6 s): memorization steps, review, light/dark, end card.
+- Video 2 "Untuk semua mata" (20.3 s): offline prayer times, 200 % text, tablet, light/dark.
 - Each video: `id-9x16` (Reels), `id-4x5` (IG feed), `en-4x5` (LinkedIn), `en-9x16`; `.srt` beside each.
 - 8 single images and 2 carousels (6 and 5 slides), Indonesian and English.
 - Copy, alt text and a four-week calendar: `copy.md`, `calendar.csv`.
