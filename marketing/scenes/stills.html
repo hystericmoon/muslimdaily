@@ -12,15 +12,15 @@
 .frame-count{position:absolute;top:76px;right:80px;font-weight:700;font-size:28px;letter-spacing:.04em;color:var(--muted);z-index:40;font-variant-numeric:tabular-nums}
 .ctitle{position:absolute;z-index:30}
 .dark .frame-count{color:var(--night-muted)}
-.light .scrim{background:linear-gradient(180deg,#FBF8F1 0%,#FBF8F1 84%,rgba(251,248,241,0) 100%)}
+.light .scrim{background:linear-gradient(180deg,#FBF8F1 0%,#FBF8F1 90%,rgba(251,248,241,0) 100%)}
 .ctitle .label{margin-bottom:18px}
-.ctitle .desc{margin-top:26px}
+.ctitle .desc{margin-top:26px;text-wrap:balance}
 .ctitle .title .line{white-space:nowrap}
-.fade-b{position:absolute;left:0;right:0;bottom:0;height:150px;z-index:35;pointer-events:none}
-.light .fade-b{background:linear-gradient(0deg,#FBF8F1 0%,#FBF8F1 40%,rgba(251,248,241,0) 100%)}
-.dark .fade-b{background:linear-gradient(0deg,#121412 0%,#121412 40%,rgba(18,20,18,0) 100%)}
+.fade-b{position:absolute;left:0;right:0;bottom:0;height:250px;z-index:35;pointer-events:none}
+.light .fade-b{background:linear-gradient(0deg,#FBF8F1 0%,#FBF8F1 44%,rgba(251,248,241,0) 100%)}
+.dark .fade-b{background:linear-gradient(0deg,#121412 0%,#121412 44%,rgba(18,20,18,0) 100%)}
 .track{position:absolute;left:80px;right:80px;bottom:56px;height:10px;border-radius:5px;background:rgba(31,95,91,.16);z-index:38}
-.dark .track{background:rgba(129,213,206,.2)}
+.dark .track{background:rgba(129,213,206,.5)}
 .prog{position:absolute;left:80px;bottom:56px;height:10px;background:var(--teal);z-index:39;border-radius:5px 0 0 5px}
 .progdot{position:absolute;bottom:56px;width:10px;height:10px;border-radius:50%;background:var(--gold);z-index:39}
 .dark .prog{background:var(--teal-light)}
@@ -150,26 +150,26 @@ const BUILD = {
   img1() {
     const w = world('light', { blobs: BL });
     phone(w, SCR('51-memorize-build', 'light'), { fx: 400, fy: 850, cx: 110, cy: 1260, s: 0.6, rx: 8, ry: 18, rz: 7, z: 0 });
-    phone(w, SCR('52-memorize-recall', 'light'), { fx: 400, fy: 930, cx: 600, cy: 1040, s: 0.86, rx: 8, ry: -14, rz: -5, z: 2,
+    phone(w, SCR('52-memorize-recall', 'light'), { fx: 400, fy: 930, cx: 600, cy: 1110, s: 0.86, rx: 8, ry: -14, rz: -5, z: 2,
       rings: [[30, 716, 744, 434, 40]] });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img1[LANG]);
     return w;
   },
   img2() {
     const w = world('light', { blobs: BL2 });
     phone(w, SCR('50-memorize-home', 'dark'), { fx: 400, fy: 850, cx: 1040, cy: 1290, s: 0.55, rx: 6, ry: -22, rz: -7, z: 0 });
-    phone(w, SCR('50-memorize-home', 'light'), { fx: 400, fy: 760, cx: 560, cy: 1050, s: 0.9, rx: 6, ry: 12, rz: 5, z: 2,
+    phone(w, SCR('50-memorize-home', 'light'), { fx: 400, fy: 760, cx: 560, cy: 880, s: 0.9, rx: 6, ry: 12, rz: 5, z: 2,
       rings: [[44, 646, 268, 82, 41]] });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img2[LANG]);
     return w;
   },
   img3() {
     const w = world('light', { blobs: BL });
-    phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 600, cx: 470, cy: 960, s: 0.88, rx: 6, ry: -12, rz: -4,
+    phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 600, cx: 470, cy: 990, s: 0.88, rx: 6, ry: -12, rz: -4,
       rings: [[18, 272, 764, 376, 46]] });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img3[LANG]);
     const chip = el('div', 'chip', w, `${PLANE}<span>${LANG === 'id' ? 'Mode pesawat' : 'Airplane mode'}</span><span class="tgl"><b></b></span>`);
     Object.assign(chip.style, { right: '56px', top: '600px', fontSize: '34px', zIndex: 40, transform: 'rotate(4deg)' });
@@ -179,18 +179,18 @@ const BUILD = {
   img4() {
     const w = world('light', { blobs: BL2 });
     phone(w, SCR('100-onboarding', 'dark'), { fx: 400, fy: 850, cx: 20, cy: 1280, s: 0.55, rx: 6, ry: 22, rz: -8, z: 0 });
-    phone(w, SCR('100-onboarding', 'light'), { fx: 400, fy: 840, cx: 600, cy: 1060, s: 0.9, rx: 6, ry: -10, rz: 4, z: 2,
+    phone(w, SCR('100-onboarding', 'light'), { fx: 400, fy: 840, cx: 600, cy: 910, s: 0.9, rx: 6, ry: -10, rz: 4, z: 2,
       rings: [[22, 578, 756, 536, 40]] });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img4[LANG]);
     return w;
   },
-  img5() { return split('52-memorize-recall', C.img5, { cx: 650, cy: 1090, s: 0.7 }); },
+  img5() { return split('52-memorize-recall', C.img5, { cx: 650, cy: 1090, s: 0.7 }, 0, 1087); },
   img6() {
     const w = world('light', { blobs: BL });
     phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 850, cx: 140, cy: 1250, s: 0.62, rx: 6, ry: 20, rz: 6, z: 0 });
     phone(w, SCR('10-today-morning-font200'), { fx: 400, fy: 850, cx: 640, cy: 1170, s: 0.94, rx: 6, ry: -12, rz: -4, z: 2 });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img6[LANG]);
     return w;
   },
@@ -198,7 +198,7 @@ const BUILD = {
     const w = world('light', { blobs: BL2 });
     tablet(w, SCR('102-today-tablet', 'light'), { cx: 500, cy: 850, s: 0.46, rx: 6, ry: 10, rz: -4, z: 1 });
     phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 850, cx: 800, cy: 1230, s: 0.6, rx: 6, ry: -10, rz: 5, z: 3 });
-    scrim(w, 510);
+    scrim(w, 500);
     text(w, C.img7[LANG]);
     return w;
   },
@@ -215,57 +215,57 @@ const BUILD = {
   },
   cA1() {
     const w = world('light', { blobs: BL });
-    phone(w, SCR('52-memorize-recall', 'light'), { fx: 400, fy: 930, cx: 560, cy: 1080, s: 0.9, rx: 6, ry: -12, rz: -4, rings: [[30, 716, 744, 434, 40]] });
-    scrim(w, 510);
+    phone(w, SCR('52-memorize-recall', 'light'), { fx: 400, fy: 930, cx: 560, cy: 1150, s: 0.9, rx: 6, ry: -12, rz: -4, rings: [[30, 716, 744, 434, 40]] });
+    scrim(w, 500);
     text(w, C.cA1[LANG], { size: 96, descW: 800, y: 120 });
     frame(w, 1, 6);
     return w;
   },
   cA2() {
     const w = world('light', { blobs: BL2 });
-    phone(w, SCR('51-memorize-build', 'light'), { fx: 87, fy: 1023, cx: 260, cy: 960, s: 1.25,
-      ripples: [[87, 1023, 78, 0.9], [87, 1023, 112, 0.55], [87, 1023, 146, 0.28]] });
-    scrim(w, 510);
-    text(w, C.cA2[LANG], { size: 120, dsize: 38, descW: 880, y: 120 });
+    phone(w, SCR('51-memorize-build', 'light'), { fx: 104, fy: 1012, cx: 214, cy: 800, s: 1.1,
+      ripples: [[104, 1012, 96, 0.9], [104, 1012, 130, 0.55], [104, 1012, 164, 0.28]] });
+    scrim(w, 500);
+    text(w, C.cA2[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
     frame(w, 2, 6);
     return w;
   },
   cA3() {
     const w = world('light', { blobs: BL });
-    phone(w, SCR('51-memorize-build', 'light'), { fx: 400, fy: 520, cx: 540, cy: 740, s: 1.18, rings: [[26, 322, 748, 404, 36]] });
-    scrim(w, 510);
-    text(w, C.cA3[LANG], { size: 120, dsize: 38, descW: 880, y: 120 });
+    phone(w, SCR('51-memorize-build', 'light'), { fx: 400, fy: 520, cx: 540, cy: 700, s: 1.1, rings: [[26, 322, 748, 404, 36]] });
+    scrim(w, 500);
+    text(w, C.cA3[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
     frame(w, 3, 6);
     return w;
   },
   cA4() {
     const w = world('light', { blobs: BL2 });
-    phone(w, SCR('52-memorize-recall', 'light'), { fx: 531, fy: 1623, cx: 760, cy: 1150, s: 1.05, rings: [[444, 1578, 174, 90, 45]] });
-    scrim(w, 510);
-    text(w, C.cA4[LANG], { size: 120, dsize: 38, descW: 880, y: 120 });
+    phone(w, SCR('52-memorize-recall', 'light'), { fx: 531, fy: 1623, cx: 482, cy: 1040, s: 1.6, rings: [[444, 1578, 174, 90, 45]] });
+    scrim(w, 500);
+    text(w, C.cA4[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
     frame(w, 4, 6);
     return w;
   },
   cA5() {
     const w = world('light', { blobs: BL });
-    phone(w, SCR('53-memorize-check', 'light'), { fx: 400, fy: 1230, cx: 540, cy: 960, s: 1.05, rings: [[14, 1156, 772, 152, 76]] });
-    scrim(w, 510);
-    text(w, C.cA5[LANG], { size: 120, dsize: 38, descW: 880, y: 120 });
+    phone(w, SCR('53-memorize-check', 'light'), { fx: 400, fy: 1230, cx: 540, cy: 960, s: 1.1, rings: [[14, 1156, 772, 152, 76]] });
+    scrim(w, 500);
+    text(w, C.cA5[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
     frame(w, 5, 6);
     return w;
   },
   cA6() { return cta(6, 6); },
   cB1() {
     const w = world('light', { blobs: BL2 });
-    phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 850, cx: 350, cy: 1100, s: 0.86, rx: 6, ry: 14, rz: 6, z: 1 });
-    phone(w, SCR('10-today-morning', 'dark'), { fx: 400, fy: 850, cx: 750, cy: 1180, s: 0.86, rx: 6, ry: -14, rz: -5, z: 2 });
-    scrim(w, 510);
+    phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 850, cx: 350, cy: 1190, s: 0.86, rx: 6, ry: 14, rz: 6, z: 1 });
+    phone(w, SCR('10-today-morning', 'dark'), { fx: 400, fy: 850, cx: 750, cy: 1220, s: 0.86, rx: 6, ry: -14, rz: -5, z: 2 });
+    scrim(w, 500);
     text(w, C.cB1[LANG], { y: 120 });
     frame(w, 1, 5);
     return w;
   },
   cB2() { const w = BUILD.img6(); frame(w, 2, 5); return w; },
-  cB3() { return split('10-today-morning', C.cB3, { cx: 650, cy: 1090, s: 0.7 }, 3); },
+  cB3() { return split('10-today-morning', C.cB3, { cx: 650, cy: 1090, s: 0.7 }, 3, 948); },
   cB4() { const w = BUILD.img7(); frame(w, 4, 5); return w; },
   cB5() { return cta(5, 5); },
 };
@@ -273,7 +273,7 @@ const BUILD = {
 function cta(n, N) {
   const w = world('dark', { blobs: [['b1', -300, 500, 900], ['b2', 450, 100, 800]] });
   const lw = 840, lh = 174 * lw / 918, y = 470;
-  [380, 620, 880, 1160].forEach((d, i) => { const g = el('div', 'ripple', w); Object.assign(g.style, { left: W / 2 - d / 2 + 'px', top: y + lh / 2 - d / 2 + 'px', width: d + 'px', height: d + 'px', opacity: [.22, .14, .09, .05][i], borderWidth: '3px' }); });
+  [380, 620, 880, 1160].forEach((d, i) => { const g = el('div', 'ripple', w); Object.assign(g.style, { left: W / 2 - d / 2 + 'px', top: y + lh / 2 - d / 2 + 'px', width: d + 'px', height: d + 'px', opacity: [.08, .06, .04, .025][i], borderWidth: '3px' }); });
   lockup(w, (W - lw) / 2, y, lw, '#81D5CE', '#E2E3DF');
   const c = el('div', 'claims', w, CTA); Object.assign(c.style, { top: y + lh + 90 + 'px', fontSize: '40px', padding: '0 60px', lineHeight: '1.3' });
   const u = el('div', 'url', w, URL_TXT); Object.assign(u.style, { top: y + lh + 210 + 'px', fontSize: '34px' });
@@ -282,8 +282,8 @@ function cta(n, N) {
 }
 
 // One phone drawn twice: light screen above the Wasl line, dark below it. The line is the edge.
-function split(src, copy, o, carN) {
-  const ang = -9, y0 = 960, slope = Math.tan(ang * Math.PI / 180), cos = Math.cos(ang * Math.PI / 180), sin = Math.sin(ang * Math.PI / 180);
+function split(src, copy, o, carN, y0) {
+  const ang = -9, slope = Math.tan(ang * Math.PI / 180), cos = Math.cos(ang * Math.PI / 180), sin = Math.sin(ang * Math.PI / 180);
   const yAt = (x) => y0 + slope * x;
   const both = el('div', 'world', root);
   const lightW = world('light', { blobs: BL });
@@ -292,7 +292,7 @@ function split(src, copy, o, carN) {
   darkW.style.clipPath = `polygon(0 ${yAt(0)}px, ${W}px ${yAt(W)}px, ${W}px ${H}px, 0 ${H}px)`;
   const base = { fx: 400, fy: 850, rz: ang, ...o };
   phone(lightW, SCR(src, 'light'), base); phone(darkW, SCR(src, 'dark'), base);
-  scrim(lightW, 510);
+  scrim(lightW, 500);
   text(lightW, copy[LANG]);
   const th = 14, len = W - 150, x0 = 0;
   const ln = el('div', '', both);
