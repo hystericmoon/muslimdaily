@@ -49,6 +49,17 @@ Screens never show readable Arabic: dua words appear as empty boxes, the app's o
 | cD2 | Pilihan tiap shalat: Subuh Suara, Dzuhur Mati, Maghrib Senyap, masing-masing disorot. Judul: "Mati, suara, atau senyap." | The choice for each prayer: Fajr Sound, Dhuhr Off, Maghrib Silent, each highlighted. Headline: "Off, sound, or silent." |
 | cD3 | Catatan di pengaturan: tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit. Judul: "Jujur soal batasnya." | The note in settings: without the exact-alarm permission, reminders may be a few minutes late. Headline: "Honest about the limits." |
 
+## Batch 2: routines
+
+| Image | Indonesian | English |
+|---|---|---|
+| imgN1 / cE1 | Layar Rangkaian Adwam dengan dua rangkaian, "Berangkat kerja" (3 doa) dan "Sebelum tidur" (1 doa), tombol Mulai disorot; isi doa berupa kotak kosong. Judul: "Rangkaian buatan Anda." | Adwam's Routines screen with two routines, "Leaving for work" (3 duas) and "Before sleep" (1 dua), the Start button highlighted; the dua text appears as empty boxes. Headline: "Routines of your own." |
+| cE2 | Layar ubah rangkaian dengan tiga doa dan pegangan seret disorot. Judul: "Pilih dan urutkan." | The edit-routine screen with three duas and the drag handle highlighted. Headline: "Pick and reorder." |
+| cE3 | Layar pilih doa dengan kolom cari disorot: "Kata dalam Arab, Indonesia, atau Inggris." Judul: "Temukan doanya." | The pick-duas screen with the search field highlighted: "Words in Arabic, Indonesian or English." Headline: "Find the dua." |
+| cE4 | Layar baca "Dzikir pagi", doa 2 dari 3, dengan kartu doa berupa kotak kosong disorot. Judul: "Satu doa per layar." | The reading screen "Morning adhkar", dua 2 of 3, with the dua card shown as empty boxes and highlighted. Headline: "One dua per screen." |
+| cE5 | Layar selesai: "Dzikir pagi selesai, 3 dari 3 dibaca" dan catatan "Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik." disorot. Judul: "Tanpa riwayat." | The completion screen: "Morning adhkar complete, 3 of 3 read" and the note "Counts are only used to resume today's session" highlighted. Headline: "No history, no statistics." |
+| cE6 | Kartu penutup: logo Adwam, "Gratis · Offline · Tanpa iklan · Open source", alamat situs. | End card: the Adwam logo, "Free · Offline · No ads · Open source" and the website address. |
+
 ## How it's built (LinkedIn, English)
 
 | Image | English |
