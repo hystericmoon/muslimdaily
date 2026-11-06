@@ -34,3 +34,17 @@ Screens never show readable Arabic: dua words appear as empty boxes, the app's o
 | 3 | Ponsel terbelah terang dan gelap oleh garis teal. "Terang atau gelap. Kontras teks memenuhi WCAG AA." | A phone split light and dark by a teal line. "Light or dark. Text contrast meets WCAG AA." |
 | 4 | Tablet dua kolom dengan ponsel di depan. "Ponsel dan tablet." | A two-column tablet with a phone in front. "Phone and tablet." |
 | 5 | Logo Adwam di latar gelap dengan klaim dan alamat situs. | The Adwam logo on dark with the claims and website address. |
+
+## Batch 2: widgets and reminders
+
+| Image | Indonesian | English |
+|---|---|---|
+| imgW1 / cC1 | Widget jadwal shalat Adwam di latar berwarna, menampilkan 08.30, "3 jam 10 menit menuju Jumat 11.40" dan waktu shalat sehari. Judul: "Jadwal shalat di layar utama." | Adwam's prayer-times widget on a coloured background, showing 8:30, a countdown to the next prayer and the day's prayer times. Headline: "Prayer times on your home screen." |
+| imgW2 / cC2 | Dua widget Adwam bertumpuk: malam dengan ikon bulan, siang dengan ikon matahari. Judul: "Siang dan malam." | Two Adwam widgets overlapping: night with a moon icon, day with a sun icon. Headline: "Day and night." |
+| cC3 | Widget dalam beberapa ukuran, dari lebar sampai kecil. Judul: "Satu widget, banyak ukuran." | The widget in several sizes, from wide to small. Headline: "One widget, many sizes." |
+| cC4 | Widget berbahasa Indonesia di atas widget berbahasa English dengan jam 12 jam. Judul: "Indonesia atau English." | An Indonesian widget above an English widget with a 12-hour clock. Headline: "Indonesian or English." |
+| cC5 | Layar Hari ini dengan catatan widget disorot: izinkan alarm tepat waktu agar widget berganti tepat waktu. Judul: "Jujur soal batasnya." | The Today screen with the widget note highlighted: allow exact alarms so the widget changes on time. Headline: "Honest about the limits." |
+| cC6 / cD4 | Kartu penutup: logo Adwam, "Gratis · Offline · Tanpa iklan · Open source", alamat situs. | End card: the Adwam logo, "Free · Offline · No ads · Open source" and the website address. |
+| imgR1 / cD1 | Pengaturan pengingat Adwam dengan pilihan Mati, Suara, Senyap untuk Subuh disorot. Judul: "Pengingat sesuai Anda." | Adwam's reminder settings with the Off, Sound, Silent choice for Fajr highlighted. Headline: "Reminders your way." |
+| cD2 | Pilihan tiap shalat: Subuh Suara, Dzuhur Mati, Maghrib Senyap, masing-masing disorot. Judul: "Mati, suara, atau senyap." | The choice for each prayer: Fajr Sound, Dhuhr Off, Maghrib Silent, each highlighted. Headline: "Off, sound, or silent." |
+| cD3 | Catatan di pengaturan: tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit. Judul: "Jujur soal batasnya." | The note in settings: without the exact-alarm permission, reminders may be a few minutes late. Headline: "Honest about the limits." |
