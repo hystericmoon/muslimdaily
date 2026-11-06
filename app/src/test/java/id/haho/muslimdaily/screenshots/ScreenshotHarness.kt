@@ -35,6 +35,15 @@ fun captureVariants(name: String, content: @Composable () -> Unit) {
     }
 }
 
+/** Light theme only, for promo shots that never show the dark or 200 % variants. */
+fun captureLight(name: String, content: @Composable () -> Unit) {
+    val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+    Settings.System.putString(context.contentResolver, Settings.System.TIME_12_24, "24")
+    captureRoboImage("$name-${Variant.LIGHT.suffix}.png") {
+        AdwamTheme(themeMode = Variant.LIGHT.mode) { GlassBackdrop { content() } }
+    }
+}
+
 /** A phone shot for the landing page (site/shots), in the site's Forest dark theme. */
 fun captureSite(name: String, content: @Composable () -> Unit) {
     val context = ApplicationProvider.getApplicationContext<android.content.Context>()
