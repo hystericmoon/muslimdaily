@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Adwam · Video 3 · Di layar utama</title>
+<!-- Video 3, "Di layar utama": the prayer-times widget through the day, many sizes, the exact-alarm limit.
+     Query: fmt=916|45, lang=id|en. Render with marketing/engine/render.js.
+     Widget shots: docs/screenshots 80/81 (Indonesian, 24 h) and 160-164 (English, 12 h) via tools/prep_screens.py. -->
+<link rel="stylesheet" href="../engine/scene.css">
+</head>
+<body>
+<div id="root"></div>
+<script src="../engine/motion.js"></script>
+<script src="../build/mark.js"></script>
+<script>
+const Q = new URLSearchParams(location.search);
+const FMT = Q.get('fmt') || '916';
+const LANG = Q.get('lang') || 'id';
+const W = 1080, H = FMT === '45' ? 1350 : 1920;
+const { E, tw, prog, mix, spring, env, clamp, rng } = M;
+
+const T = {
+  id: {
+    beats: [['Jadwal shalat', 'di layar utama.', 'Waktu berikutnya dan hitung mundurnya, sekali lihat.'],
+            ['Siang', 'dan malam.', 'Hitung mundur ke waktu berikutnya, kapan saja.'],
+            ['Satu widget,', 'banyak ukuran.', 'Ubah ukurannya, dari kecil sampai lebar.'],
+            ['Jujur soal', 'batasnya.', 'Tanpa izin alarm tepat waktu, widget bisa terlambat sampai 10 menit.']],
+    claims: ['Gratis', 'Offline', 'Tanpa iklan', 'Open source'],
+  },
+  en: {
+    beats: [['Prayer times', 'on your home screen.', 'The next prayer and the countdown, at a glance.'],
+            ['Day', 'and night.', 'A countdown to the next prayer, any time of day.'],
+            ['One widget,', 'many sizes.', 'Resize it from small to wide.'],
+            ['Honest about', 'the limits.', 'Without the exact-alarm permission, the widget can be up to 10 minutes late.']],
+    claims: ['Free', 'Offline', 'No ads', 'Open source'],
+  },
+}[LANG];
+const URL_TXT = 'hystericmoon.github.io/muslimdaily';
+const EN = LANG === 'en';
+
+const L = FMT === '45' ? {
+  pad: 80, titleY: 70, titleSize: 92, descSize: 34, descW: 900, scrimH: 560, oy: 0, mainY: 540, phoneY: 1060, phoneZ: 0.9,
+} : {
+  pad: 96, titleY: 196, titleSize: 116, descSize: 42, descW: 860, scrimH: 900, oy: 380, mainY: 940, phoneY: 1420, phoneZ: 1.0,
+};
+const S = { hook: 0, day: 3.6, sizes: 8.4, limit: 12.0, wipe: 15.0, end: 16.6, total: 21.7 };
+
+// Widget shots: 4x2 through the day (Indonesian 24 h / English 12 h), then three sizes.
+const SHOT = (n) => `../build/screens/${n}.png`;
+const STATES = EN
+  ? ['160-widget-4x2-en-12h-0445', '161-widget-4x2-en-12h-0830', '162-widget-4x2-en-12h-1135', '163-widget-4x2-en-12h-1730', '164-widget-4x2-en-12h-2100']
+  : ['81-widget-4x2-0445', '80-widget-4x2', '81-widget-4x2-1135', '81-widget-4x2-1730', '81-widget-4x2-2100'];
+const SIZES = EN
+  ? [['86-widget-5x2-en-12h-2100', 60, 540, 0.82, -2], ['88-widget-4x3-tall-en-12h', 80, 900, 0.5, 2], ['89-widget-1x3-tall-en-12h', 520, 880, 0.5, -2]]
+  : [['80-widget-5x2', 60, 540, 0.82, -2], ['80-widget-2x2', 80, 905, 0.7, 2], ['80-widget-4x1', 400, 925, 0.55, -2]];
+// The day: state 1 (08:30) is shown first, then the sequence 04:45, 08:30, 11:35, 17:30, 21:00.
+const SEQ = [[-1e9, 1], [S.day + 0.5, 0], [S.day + 1.35, 1], [S.day + 2.2, 2], [S.day + 3.05, 3], [S.day + 3.9, 4]];
+const RING = EN ? [44, 208, 480, 60, 30] : [44, 208, 505, 60, 30];
+const MAIN_S = 920 / 744;
+
+const root = document.getElementById('root');
+const el = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || root).appendChild(e); return e; };
+function words(parent, text, cls) {
+  const line = el('span', 'line ' + (cls || ''), parent);
+  return text.split(' ').map((w, i, a) => { const m = el('span', 'wm', line); const s = el('span', 'w', m); s.textContent = w; if (i < a.length - 1) line.appendChild(document.createTextNode(' ')); return s; });
+}
+const card = (parent, name, extra) => {
+  const c = el('div', 'wcard', parent);
+  Object.assign(c.style, { position: 'absolute', left: '0px', top: '0px', transformOrigin: '0 0', filter: 'drop-shadow(0 18px 34px rgba(31,40,38,.30))', willChange: 'transform' });
+  const im = el('img', '', c); im.src = SHOT(name); Object.assign(im.style, { display: 'block', borderRadius: '40px' });
+  return c;
+};
+
+function buildWorld(theme) {
+  const w = el('div', 'world ' + theme);
+  const r = { w };
+  r.b1 = el('div', 'blob b1', w); r.b2 = el('div', 'blob b2', w);
+  r.stage = el('div', 'stage', w);
+  return r;
+}
+const light = buildWorld('light');
+const dark = buildWorld('dark');
+
+// -- light world: main card (five states), three sizes, phone with the exact-alarm note
+const main = el('div', '', light.stage);
+Object.assign(main.style, { position: 'absolute', left: '0px', top: '0px', transformOrigin: '0 0', filter: 'drop-shadow(0 18px 34px rgba(31,40,38,.30))' });
+const mainImgs = STATES.map((n) => { const im = el('img', '', main); im.src = SHOT(n); Object.assign(im.style, { position: 'absolute', left: '0px', top: '0px', display: 'block', borderRadius: '40px' }); return im; });
+const mainRing = el('div', 'ring', main);
+Object.assign(mainRing.style, { left: RING[0] + 'px', top: RING[1] + 'px', width: RING[2] + 'px', height: RING[3] + 'px', borderRadius: RING[4] + 'px', borderWidth: '6px' });
+main.style.width = '744px'; main.style.height = '392px';
+const sizeCards = SIZES.map(([n]) => card(light.stage, n));
+
+const phone = el('div', 'phone', light.stage); el('div', 'bezel', phone);
+const pscr = el('div', 'screen', phone);
+const pimg = el('img', '', pscr); pimg.src = `../build/screens/117-today-widget-alarm-note${EN ? '-en' : ''}-light.png`;
+const pov = el('div', 'ov', pscr); const pring = el('div', 'ring', pov);
+Object.assign(pring.style, { left: '20px', top: '655px', width: '760px', height: '350px', borderRadius: '40px' });
+
+const scrim = el('div', 'scrim', light.w); scrim.style.height = L.scrimH + 'px'; scrim.style.zIndex = 20;
+const beats = T.beats.map(([a, b, d]) => {
+  const g = el('div', 'grp', light.w); Object.assign(g.style, { left: L.pad + 'px', right: L.pad + 'px', top: L.titleY + 'px', zIndex: 30 });
+  const tt = el('div', 'title', g); tt.style.fontSize = L.titleSize + 'px';
+  const A = words(tt, a), B = words(tt, b, 'em'); B.forEach((s) => { s.innerHTML = '<em>' + s.textContent + '</em>'; });
+  const dd = el('div', 'desc', g); dd.style.cssText = `font-size:${L.descSize}px;max-width:${L.descW}px;margin-top:${L.descSize * 0.55}px`;
+  return { A, B, D: words(dd, d) };
+});
+
+const sweep = el('div', 'sweep'); const sweepDot = el('div', 'sweepdot');
+
+// -- end card (dark world), same as video 2
+const endc = el('div', 'endc', dark.w);
+const MK = window.MARK, NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', `0 0 ${MK.viewBox[0]} ${MK.viewBox[1]}`); endc.appendChild(svg);
+const strokeP = document.createElementNS(NS, 'path');
+for (const [k, v] of Object.entries({ d: MK.centreline, fill: 'none', stroke: '#81D5CE', 'stroke-width': MK.strokeWidth, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })) strokeP.setAttribute(k, v);
+svg.appendChild(strokeP);
+const outlineP = document.createElementNS(NS, 'path'); outlineP.setAttribute('d', MK.outline[0].d); outlineP.setAttribute('fill', '#81D5CE'); svg.appendChild(outlineP);
+const dotC = document.createElementNS(NS, 'circle');
+for (const [k, v] of Object.entries({ cx: MK.dot.cx, cy: MK.dot.cy, r: MK.dot.r, fill: '#C9A227' })) dotC.setAttribute(k, v);
+dotC.style.transformBox = 'fill-box'; dotC.style.transformOrigin = 'center'; svg.appendChild(dotC);
+const LEN = strokeP.getTotalLength(); strokeP.setAttribute('stroke-dasharray', LEN);
+const wsvg = document.createElementNS(NS, 'svg'); wsvg.setAttribute('viewBox', `0 0 ${MK.lockup.viewBox[0]} ${MK.lockup.viewBox[1]}`); endc.appendChild(wsvg);
+const wg = document.createElementNS(NS, 'g'); wsvg.appendChild(wg);
+MK.lockup.wordmark.forEach((p) => { const e = document.createElementNS(NS, 'path'); e.setAttribute('d', p.d); e.setAttribute('fill', p.fill || '#E2E3DF'); wg.appendChild(e); });
+const claims = el('div', 'claims', endc); const claimW = [];
+T.claims.forEach((c, i) => { const s = el('span', 'w', claims); s.textContent = c; claimW.push(s); if (i < T.claims.length - 1) { const d = el('span', 'w sep', claims); d.textContent = '·'; claimW.push(d); } });
+const url = el('div', 'url', endc); url.textContent = URL_TXT;
+const grain = el('canvas', 'grain'); grain.width = 270; grain.height = Math.round(270 * H / W);
+const gctx = grain.getContext('2d'); const gimg = gctx.createImageData(grain.width, grain.height);
+
+const set = (e, tf, op) => { if (tf != null) e.style.transform = tf; if (op != null) e.style.opacity = op; };
+function reveal(ws, t, tin, tout, stagger = 0.06, dur = 0.8) {
+  ws.forEach((w, i) => {
+    const a = E.out(prog(t, tin + i * stagger, dur));
+    const b = tout == null ? 0 : E.inOut(prog(t, tout + i * stagger * 0.5, 0.5));
+    w.style.transform = `translateY(${(1 - a) * 135 - b * 135}%)`;
+  });
+}
+
+const BEAT_AT = [S.hook, S.day, S.sizes, S.limit];
+const BEAT_OUT = [S.day - 0.5, S.sizes - 0.5, S.limit - 0.5, S.wipe - 0.4];
+
+function renderLight(t) {
+  const r = light;
+  r.b1.style.width = r.b1.style.height = W * 0.9 + 'px'; r.b2.style.width = r.b2.style.height = W * 0.8 + 'px';
+  set(r.b1, `translate(${-200 + Math.sin(t * 0.35) * 60}px, ${H * 0.18 + Math.cos(t * 0.3) * 50}px)`);
+  set(r.b2, `translate(${W * 0.45 + Math.cos(t * 0.27) * 70}px, ${H * 0.55 + Math.sin(t * 0.32) * 60}px)`);
+  beats.forEach((g, i) => {
+    const a = BEAT_AT[i], o = BEAT_OUT[i], first = i === 0 ? 0.1 : 0;
+    reveal(g.A, t, a + first, o, 0.07); reveal(g.B, t, a + first + 0.35, o, 0.07); reveal(g.D, t, a + first + 0.75, o, 0.025, 0.7);
+  });
+
+  // main card: enters in the hook, crossfades through the day, leaves before the sizes
+  const enter = spring(t, 0.3, 0.9, 0.18), exit = E.inOut(prog(t, S.sizes - 0.7, 0.8));
+  const fl = Math.sin(t * 1.2) * 5;
+  const mx = (W - 920) / 2 - exit * 900, my = L.mainY + (1 - clamp(enter)) * 500 + fl;
+  main.style.transform = `translate(${mx}px, ${my}px) rotate(${-2 + (1 - clamp(enter)) * -4}deg) scale(${MAIN_S})`;
+  main.style.opacity = clamp(prog(t, 0.3, 0.25)) * (1 - E.out(prog(t, S.sizes - 0.5, 0.4)));
+  let k = 0; SEQ.forEach(([ts], i) => { if (t >= ts) k = i; });
+  const act = SEQ[k][1], prev = k > 0 ? SEQ[k - 1][1] : act, f = k > 0 ? E.out(prog(t, SEQ[k][0], 0.3)) : 1;
+  mainImgs.forEach((im, i) => { im.style.opacity = i === act ? (prev === act ? 1 : f) : (i === prev ? 1 - f : 0); });
+  const ra = env(t, 1.7, S.day - 0.2, 0.5, 0.35);
+  set(mainRing, `scale(${1 + (1 - E.out(clamp(ra))) * 0.06})`, ra);
+
+  // three sizes spring in one after another, then leave
+  sizeCards.forEach((c, i) => {
+    const [, x, y, s, rz] = SIZES[i];
+    const a = spring(t, S.sizes + 0.3 + i * 0.28, 0.8, 0.2), o = E.inOut(prog(t, S.limit - 0.6, 0.7));
+    c.style.transform = `translate(${x}px, ${y + L.oy + (1 - clamp(a)) * 160 + o * 700}px) rotate(${rz}deg) scale(${s * mix(0.85, 1, clamp(a))})`;
+    c.style.opacity = clamp(prog(t, S.sizes + 0.3 + i * 0.28, 0.25)) * (1 - o);
+  });
+
+  // phone with the exact-alarm note
+  const z = L.phoneZ, fy = 830, pin = E.out(prog(t, S.limit + 0.1, 1.0)), pout = E.inOut(prog(t, S.wipe - 0.5, 0.7));
+  phone.style.transformOrigin = `400px ${fy}px`;
+  phone.style.transform = `translate(${540 - 400 * z}px, ${L.phoneY - fy * z + (1 - pin) * 900 + pout * 900}px) scale(${z})`;
+  phone.style.opacity = clamp(prog(t, S.limit, 0.2)) * (1 - clamp(pout * 1.2));
+  const pr = env(t, S.limit + 1.3, S.wipe - 0.6, 0.5, 0.35);
+  set(pring, `scale(${1 + (1 - E.out(clamp(pr))) * 0.05})`, pr);
+}
+
+function renderDark(t) {
+  const r = dark;
+  r.b1.style.width = r.b1.style.height = W * 0.9 + 'px'; r.b2.style.width = r.b2.style.height = W * 0.8 + 'px';
+  set(r.b1, `translate(${-200 + Math.sin(t * 0.35) * 60}px, ${H * 0.18 + Math.cos(t * 0.3) * 50}px)`);
+  set(r.b2, `translate(${W * 0.45 + Math.cos(t * 0.27) * 70}px, ${H * 0.55 + Math.sin(t * 0.32) * 60}px)`);
+}
+
+function renderEnd(t) {
+  const t0 = S.end;
+  endc.style.opacity = t >= t0 - 0.1 ? 1 : 0;
+  const scale = FMT === '45' ? 0.82 : 1, vb = MK.viewBox;
+  const bigW = 520 * scale, lockW = 800 * scale, ls = lockW / MK.lockup.viewBox[0];
+  const markLockW = vb[0] * MK.lockup.markScale * ls;
+  const lockX = (W - lockW) / 2, lockY = H * 0.42;
+  const settle = E.inOut(prog(t, t0 + 1.7, 0.9));
+  const mw = mix(bigW, markLockW, settle);
+  Object.assign(svg.style, { left: mix((W - bigW) / 2, lockX, settle) + 'px', top: mix(H * 0.5 - bigW * vb[1] / vb[0] / 2 - 40, lockY, settle) + 'px', width: mw + 'px', height: mw * vb[1] / vb[0] + 'px' });
+  strokeP.setAttribute('stroke-dashoffset', LEN * (1 - E.inOut(prog(t, t0 + 0.1, 1.2))));
+  const hand = prog(t, t0 + 1.3, 0.12);
+  strokeP.style.opacity = 1 - hand; outlineP.style.opacity = hand;
+  const dot = spring(t, t0 + 1.15, 0.55, 0.25);
+  dotC.style.opacity = clamp(prog(t, t0 + 1.15, 0.12)); dotC.style.transform = `scale(${0.5 + 0.5 * dot})`;
+  const wr = E.out(prog(t, t0 + 2.2, 0.9)), lockH = MK.lockup.viewBox[1] * ls;
+  Object.assign(wsvg.style, { left: lockX + 'px', top: lockY + 'px', width: lockW + 'px', height: lockH + 'px' });
+  wsvg.style.clipPath = `inset(0 ${(1 - wr) * 100}% 0 ${markLockW / lockW * 100}%)`;
+  wg.style.transform = `translateX(${(1 - wr) * -30}px)`; wsvg.style.opacity = t >= t0 + 2.2 ? 1 : 0;
+  claims.style.top = lockY + lockH + 90 * scale + 'px'; claims.style.fontSize = 44 * scale + 'px';
+  claimW.forEach((w, i) => { const a = E.out(prog(t, t0 + 2.7 + i * 0.06, 0.7)); set(w, `translateY(${(1 - a) * 30}px)`, a); });
+  url.style.top = lockY + lockH + 170 * scale + 'px'; url.style.fontSize = 34 * scale + 'px';
+  const u = E.out(prog(t, t0 + 3.2, 0.7)); set(url, `translateY(${(1 - u) * 20}px)`, u);
+}
+
+function renderAt(t) {
+  renderLight(t); renderDark(t);
+  const wp = E.inOut(prog(t, S.wipe, 1.6));
+  const y = wp * (H + 24) - 12;
+  dark.w.style.clipPath = wp <= 0 ? 'inset(0 0 100% 0)' : wp >= 1 ? 'none' : `inset(0 0 ${H - y}px 0)`;
+  const lineLen = W - 48, lineOn = wp > 0 && wp < 1;
+  sweep.style.opacity = sweepDot.style.opacity = lineOn ? 1 : 0;
+  Object.assign(sweep.style, { top: y - 6 + 'px', width: lineLen + 'px', borderRadius: '0 6px 6px 0' });
+  Object.assign(sweepDot.style, { top: y - 6 + 'px', left: lineLen + 6 + 'px' });
+  light.w.style.visibility = wp >= 1 ? 'hidden' : 'visible';
+  renderEnd(t);
+  const R = rng(Math.floor(t * 60) + 11), d = gimg.data;
+  for (let i = 0; i < d.length; i += 4) { const v = R() * 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+  gctx.putImageData(gimg, 0, 0);
+}
+
+const caps = [
+  { start: S.hook + 0.1, end: S.day - 0.3, text: `${T.beats[0][0]} ${T.beats[0][1]}\n${T.beats[0][2]}` },
+  { start: S.day, end: S.sizes - 0.3, text: `${T.beats[1][0]} ${T.beats[1][1]}\n${T.beats[1][2]}` },
+  { start: S.sizes, end: S.limit - 0.3, text: `${T.beats[2][0]} ${T.beats[2][1]}\n${T.beats[2][2]}` },
+  { start: S.limit, end: S.wipe - 0.3, text: `${T.beats[3][0]} ${T.beats[3][1]}\n${T.beats[3][2]}` },
+  { start: S.end + 2.6, end: S.total, text: `Adwam · ${T.claims.join(' · ')}\n${URL_TXT}` },
+];
+document.documentElement.style.width = W + 'px'; document.documentElement.style.height = H + 'px';
+window.SCENE = { width: W, height: H, duration: S.total, renderAt, captions: caps, ready: false };
+Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]).then(() => { renderAt(0); window.SCENE.ready = true; });
+</script>
+</body>
+</html>
