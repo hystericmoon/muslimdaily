@@ -237,6 +237,18 @@ Video description (alt text / accessibility caption):
 |---|---|---|
 | imgN1 | Susun doa yang ingin dibaca berurutan: rangkaian buatan Anda di Adwam. Gratis dan offline. | Line up the duas you want to read in order: routines of your own in Adwam. |
 
+## Single images · open slots (Instagram, Indonesian; `imgP1`, `imgP2`, `imgT1`, `imgD1`)
+
+Wording follows the app's own strings. Each post ends with the same line: "Gratis, offline, tanpa iklan,
+open source. Untuk Android, unduh lewat link di bio." and the hashtags `#Adwam #AplikasiMuslim #OpenSource`.
+
+| Image | Slot | Instagram (Indonesian) | Extra hashtags |
+|---|---|---|---|
+| imgP1 | Sat 26 Dec | Pilih metode perhitungan waktu shalat: Kemenag RI (bawaan untuk Indonesia), Liga Muslim Dunia, Umm al-Qura, atau kustom dengan sudut Subuh dan Isya sendiri. Dihitung di HP Anda. | #JadwalShalat |
+| imgP2 | Mon 28 Dec | Jadwal masjid di tempat Anda berbeda beberapa menit? Geser waktunya dengan tombol + dan −, tanpa mengubah metode perhitungan. | #JadwalShalat |
+| imgT1 | Thu 31 Dec | Ukuran tulisan Arab dan terjemah diatur sendiri-sendiri, supaya nyaman dibaca. Terpisah dari ukuran huruf sistem; keduanya digabungkan. | #Aksesibilitas |
+| imgD1 | Sat 2 Jan | Tanggal Hijriah tampil di layar Hari ini, di samping tanggal masehi. | #Hijriah |
+
 ## How it's built · LinkedIn only (`imgH-en.png`, English)
 
 Claims come from `docs/architecture.md` and `CLAUDE.md` (three content gates, Room + FTS4, MVVM,

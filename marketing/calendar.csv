@@ -27,9 +27,9 @@ week,date,day,time_wib,channel,format,asset,language,status
 7,2026-12-21,Mon,19:30,Instagram,Carousel,cE1-cE6 (id),id,ready
 7,2026-12-22,Tue,08:30,LinkedIn,Carousel (PDF),carousel-D-en.pdf,en,ready
 7,2026-12-24,Thu,19:30,Instagram,Image,imgN1-id.png,id,ready
-7,2026-12-26,Sat,09:00,Instagram,Image,(owner's pick),id,open
-8,2026-12-28,Mon,19:30,Instagram,Image,(owner's pick),id,open
+7,2026-12-26,Sat,09:00,Instagram,Image,imgP1-id.png,id,ready
+8,2026-12-28,Mon,19:30,Instagram,Image,imgP2-id.png,id,ready
 8,2026-12-29,Tue,08:30,LinkedIn,Post + image,imgH-en.png,en,ready
-8,2026-12-31,Thu,19:30,Instagram,Image,(owner's pick),id,open
-8,2027-01-02,Sat,09:00,Instagram,Image,(owner's pick),id,open
+8,2026-12-31,Thu,19:30,Instagram,Image,imgT1-id.png,id,ready
+8,2027-01-02,Sat,09:00,Instagram,Image,imgD1-id.png,id,ready
 9,2027-01-05,Tue,08:30,LinkedIn,Carousel (PDF),carousel-E-en.pdf,en,ready

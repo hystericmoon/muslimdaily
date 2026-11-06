@@ -60,6 +60,15 @@ Screens never show readable Arabic: dua words appear as empty boxes, the app's o
 | cE5 | Layar selesai: "Dzikir pagi selesai, 3 dari 3 dibaca" dan catatan "Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik." disorot. Judul: "Tanpa riwayat." | The completion screen: "Morning adhkar complete, 3 of 3 read" and the note "Counts are only used to resume today's session" highlighted. Headline: "No history, no statistics." |
 | cE6 | Kartu penutup: logo Adwam, "Gratis · Offline · Tanpa iklan · Open source", alamat situs. | End card: the Adwam logo, "Free · Offline · No ads · Open source" and the website address. |
 
+## Batch 2: open slots (Instagram, Indonesian)
+
+| Image | Indonesian |
+|---|---|
+| imgP1 | Pengaturan Adwam, bagian "Metode perhitungan" disorot: Kemenag RI (terpilih), Liga Muslim Dunia (MWL), Umm al-Qura dan Kustom. Judul: "Pilih metode perhitungan." |
+| imgP2 | Pengaturan Adwam, bagian "Penyesuaian menit" disorot: Subuh, Terbit dan Dzuhur masing-masing 0 mnt dengan tombol plus dan minus. Judul: "Sesuaikan dengan masjid Anda." |
+| imgT1 | Pengaturan Adwam, bagian "Ukuran teks" disorot: Teks Arab 100% dan Terjemahan 100%, masing-masing dengan tombol plus dan minus. Judul: "Ukuran teks Arab dan terjemah." |
+| imgD1 | Layar Hari ini Adwam dengan tanggal disorot: "Rabu, 21 Oktober 2026" dan "10 Jumadilawal 1448 H". Judul: "Tanggal Hijriah." |
+
 ## How it's built (LinkedIn, English)
 
 | Image | English |
