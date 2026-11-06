@@ -30,8 +30,9 @@ Step 1 (done 6 Nov): English-UI media for batch 1 (stills, carousel PDFs, 4:5 an
 Weeks 5-8 (7 Dec to 2 Jan) are rows in `calendar.csv`, same cadence as batch 1 (Instagram Mon/Thu
 19:30 and Sat 09:00, LinkedIn Tue 08:30). Ready: Video 3, carousels C and D, images imgW1, imgW2, imgR1.
 The "how it's built" post (`imgH-en.png`, Tue 29 Dec) is ready too. Routines (carousel E and
-imgN1) are ready too. Four slots
-are open (Sat 26 Dec, Mon 28 Dec, Thu 31 Dec, Sat 2 Jan): the owner's pick.
+imgN1) are ready too. The four slots that were open (Sat 26 Dec, Mon 28 Dec, Thu 31 Dec, Sat 2 Jan) hold
+imgP1 (calculation method), imgP2 (minute adjustment), imgT1 (Arabic and translation text size) and imgD1
+(Hijri date): one still each from existing screens (41, 100, 10), Indonesian only.
 
 ## Open for the owner
 

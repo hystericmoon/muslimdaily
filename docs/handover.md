@@ -35,13 +35,12 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
 - **Batch 2** (plan `marketing/batch2.md`; details in history, "Promo batch 2"). Done: English-UI media
   for batch 1, widgets (carousel C, Video 3, imgW1/W2), reminders (carousel D, imgR1), "how it's
   built" (`imgH-en`, LinkedIn Tue 29 Dec), calendar weeks 5-8 in `calendar.csv` (the Drive Sheet has
-  weeks 1-4 only), all media on `promo-assets` (fd23653), review page current. 4 slots are the
-  owner's pick (26, 28, 31 Dec, 2 Jan).
+  weeks 1-4 only), all media on `promo-assets` (fd23653), review page current.
 - **Routines (N): done** (#174, #175). Carousel E (cE1-cE6, ID+EN, PDFs) and imgN1 are on
   `promo-assets` (f571d5b) and the review page; captions, alt text and calendar (21 Dec, 24 Dec = ready)
   are on main. `carousel-E-en.pdf` is on LinkedIn Tue 5 Jan 08:30 (week 9, added 6 Nov).
-  Batch 2 is complete; 4 Instagram slots (26, 28, 31 Dec, 2 Jan) stay open: all built media is
-  already scheduled, so filling them needs new content (the owner's pick).
+  Batch 2 is complete: the 4 slots that were open (26, 28, 31 Dec, 2 Jan) now hold imgP1, imgP2, imgT1, imgD1
+  (ID stills, copy and alt text on main). Not yet on `promo-assets`/the review page: owner's OK needed.
   Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
 
 ## Waiting on the owner

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Adwam · Promo stills</title>
-<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5|imgW1,imgW2,imgR1|cC1..cC6|cD1..cD4|imgH (English only)|imgN1|cE1..cE6, lang=id|en.
+<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5|imgW1,imgW2,imgR1|cC1..cC6|cD1..cD4|imgH (English only)|imgN1|cE1..cE6|imgP1,imgP2,imgT1,imgD1 (open slots), lang=id|en.
      Render: node marketing/engine/render.js marketing/scenes/stills.html out.png --still 0 --query "id=img1&lang=id" -->
 <link rel="stylesheet" href="../engine/scene.css">
 <style>
@@ -80,6 +80,13 @@ Object.assign(C, {
   cE5: { id: [null, 'Tanpa', 'riwayat.', 'Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik.'], en: [null, 'No history,', 'no statistics.', "Counts are only used to resume today's session."] },
 });
 C.imgN1 = C.cE1;
+// Batch 2, open slots (Instagram, Indonesian): settings the app shows on screen, wording from its own strings.
+Object.assign(C, {
+  imgP1: { id: [null, 'Pilih metode', 'perhitungan.', 'Kemenag RI, Liga Muslim Dunia, Umm al-Qura, atau kustom.'], en: [null, 'Choose your', 'calculation method.', 'Kemenag RI, Muslim World League, Umm al-Qura or custom.'] },
+  imgP2: { id: [null, 'Sesuaikan', 'dengan masjid Anda.', 'Geser waktu tiap shalat bila jadwal masjid setempat berbeda.'], en: [null, 'Match', 'your local mosque.', 'Shift each prayer if the local mosque timetable differs.'] },
+  imgT1: { id: [null, 'Ukuran teks', 'Arab dan terjemah.', 'Atur masing-masing agar nyaman dibaca.'], en: [null, 'Text size,', 'Arabic and translation.', 'Set each one so it reads comfortably.'] },
+  imgD1: { id: [null, 'Tanggal', 'Hijriah.', 'Tampil di layar Hari ini, di samping tanggal masehi.'], en: [null, 'The Hijri', 'date.', 'Shown on the Today screen next to the Gregorian date.'] },
+});
 C.imgH = { id: [null, 'How Adwam', 'is built.', 'One module, no network, and content checked three times.'], en: [null, 'How Adwam', 'is built.', 'One module, no network, and content checked three times.'] };
 const CLAIMS = { id: ['Gratis.', 'Tanpa iklan.', 'Tanpa pelacak.', 'Open source.'], en: ['Free.', 'No ads.', 'No tracking.', 'Open source.'] }[LANG];
 const CTA = { id: 'Gratis · Offline · Tanpa iklan · Open source', en: 'Free · Offline · No ads · Open source' }[LANG];
@@ -376,6 +383,44 @@ const BUILD = {
   },
   cE6() { return cta(6, 6); },
   imgN1() { return BUILD.cE1(0); },
+  imgP1() {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('41-settings-prayer', 'dark'), { fx: 400, fy: 420, cx: 1040, cy: 1290, s: 0.55, rx: 6, ry: -22, rz: -7, z: 0 });
+    phone(w, SCR('41-settings-prayer', 'light'), { fx: 400, fy: 420, cx: 560, cy: 960, s: 0.88, rx: 6, ry: 12, rz: 5, z: 2,
+      rings: [[22, 96, 756, 620, 40]] });
+    scrim(w, 500);
+    text(w, C.imgP1[LANG]);
+    return w;
+  },
+  imgP2() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('41-settings-prayer', 'dark'), { fx: 400, fy: 1400, cx: 1040, cy: 1290, s: 0.55, rx: 6, ry: -22, rz: -7, z: 0 });
+    phone(w, SCR('41-settings-prayer', 'light'), { fx: 400, fy: 1400, cx: 560, cy: 960, s: 0.88, rx: 6, ry: 12, rz: 5, z: 2,
+      rings: [[22, 1120, 756, 470, 40]] });
+    el('div', 'fade-b', w);
+    scrim(w, 500);
+    text(w, C.imgP2[LANG]);
+    return w;
+  },
+  imgT1() {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('100-onboarding', 'dark'), { fx: 400, fy: 1400, cx: 1040, cy: 1290, s: 0.55, rx: 6, ry: -22, rz: -7, z: 0 });
+    phone(w, SCR('100-onboarding', 'light'), { fx: 400, fy: 1400, cx: 560, cy: 960, s: 0.88, rx: 6, ry: 12, rz: 5, z: 2,
+      rings: [[22, 1130, 756, 490, 40]] });
+    el('div', 'fade-b', w);
+    scrim(w, 500);
+    text(w, C.imgT1[LANG]);
+    return w;
+  },
+  imgD1() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('10-today-morning', 'dark'), { fx: 400, fy: 330, cx: 1040, cy: 1290, s: 0.55, rx: 6, ry: -22, rz: -7, z: 0 });
+    phone(w, SCR('10-today-morning', 'light'), { fx: 400, fy: 330, cx: 560, cy: 960, s: 0.88, rx: 6, ry: 12, rz: 5, z: 2,
+      rings: [[14, 30, 560, 124, 30]] });
+    scrim(w, 500);
+    text(w, C.imgD1[LANG]);
+    return w;
+  },
   cB5() { return cta(5, 5); },
   // Batch 2. Widget shots: Indonesian set (24 h) or English set (12 h).
   cC1(n = 1) {
