@@ -7,39 +7,30 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 11:00 WIB (promo batch 2 complete; 1.12.6 is shipped).
+Last updated: 6 Nov 2026 12:50 WIB (promo batches 1-2 complete, nothing open in flight; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#173 merged; #174 (routines) merged with this handover.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 all merged; no PR open.
 
-## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
+## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
-Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the results first.
-- Review page (videos play, ID/EN switch): https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj
-- Full-quality media: orphan branch `promo-assets` (never merge it; keeps `main` small).
-- Plan, results and calendar live in Notion (6 Nov; the Drive Doc and Sheets were trashed, restorable from
-  Drive's trash): page https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
-  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04 (weeks 1-9). `calendar.csv` stays the source
-  of truth. Media is on `promo-assets` and the review page, not in Notion or Drive.
-- Source: `marketing/` (PR #163): `README.md` (how to render), `brief.md`, `copy.md`,
-  `alt-text.md`, `calendar.csv`, scenes, engine. 2 videos x 4 formats (ID/EN, 9:16/4:5) + .srt,
-  8 images, 2 carousels (+ PDFs). Calendar: 17 posts, Mon 9 Nov to Sat 5 Dec.
+Batches 1 and 2 are done: 34 posts, Mon 9 Nov to Tue 5 Jan, every slot has media, copy and alt text.
+The owner posts; nothing has been posted. Details of batch 2: history, "Promo batch 2".
+- Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
+  from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
+  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
+- Media: orphan branch `promo-assets` (never merge it; head 6fae9a0) and the review page
+  https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj (private; the owner shares it).
+- Source: `marketing/` (`README.md` how to render, `brief.md`, `batch2.md`, `copy.md`, `alt-text.md`,
+  scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
 - Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
-  dark both shown; Arabic only as empty hidden-word boxes (option 3); silent; a voiceover, if any,
-  is a male voice.
-- Rules still hold: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks.
-- **Notion works** (6 Nov): page tools load; the batch 1 plan is a private Notion draft
-  (https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3). Nothing owed.
-- **Batch 2** (plan `marketing/batch2.md`; details in history, "Promo batch 2"). Done: English-UI media
-  for batch 1, widgets (carousel C, Video 3, imgW1/W2), reminders (carousel D, imgR1), "how it's
-  built" (`imgH-en`, LinkedIn Tue 29 Dec), calendar weeks 5-9 in `calendar.csv` and Notion, all media on `promo-assets` (fd23653), review page current.
-- **Routines (N): done** (#174, #175). Carousel E (cE1-cE6, ID+EN, PDFs) and imgN1 are on
-  `promo-assets` (f571d5b) and the review page; captions, alt text and calendar (21 Dec, 24 Dec = ready)
-  are on main. `carousel-E-en.pdf` is on LinkedIn Tue 5 Jan 08:30 (week 9, added 6 Nov).
-  Batch 2 is complete: the 4 slots that were open (26, 28, 31 Dec, 2 Jan) now hold imgP1, imgP2, imgT1, imgD1
-  (ID stills, copy, alt text on main; media on `promo-assets` 6fae9a0, review page and Notion calendar current).
-  Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
+  dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
+- Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
+  before pushing to `promo-assets` (the owner said "always allow" on 6 Nov for pushes, review page,
+  Notion and Drive updates of this campaign).
+- Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
+- Possible next: a LinkedIn slot after 5 Jan, English versions of the four open-slot stills, a batch 3.
 
 ## Waiting on the owner
 
@@ -79,7 +70,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (6 Nov Sonnet: promo batch 2, #165-#174); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-6 Nov Sonnet: promo batch 2, #165-#181); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
