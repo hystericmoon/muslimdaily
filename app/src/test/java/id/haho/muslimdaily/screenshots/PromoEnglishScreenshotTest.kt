@@ -2,9 +2,12 @@ package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.audio.PlaybackState
+import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.data.review.ReviewItem
+import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.MemorizeSettings
+import id.haho.muslimdaily.data.settings.ReminderSettings
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.LeitnerState
@@ -20,7 +23,9 @@ import id.haho.muslimdaily.feature.memorize.session.Playing
 import id.haho.muslimdaily.feature.memorize.session.Step
 import id.haho.muslimdaily.feature.onboarding.OnboardingActions
 import id.haho.muslimdaily.feature.onboarding.OnboardingScreen
+import id.haho.muslimdaily.feature.settings.PermissionState
 import id.haho.muslimdaily.feature.settings.PrayerSettingsContent
+import id.haho.muslimdaily.feature.settings.RemindersContent
 import id.haho.muslimdaily.feature.today.TodayActions
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
@@ -113,5 +118,29 @@ class PromoEnglishScreenshotTest {
     @Config(qualifiers = "en-w1280dp-h800dp-xhdpi")
     fun todayTablet() = captureVariants("157-today-tablet-en") {
         TodayScreen(TodayPreviewData.ready(), TodayActions(), initiallyExpanded = setOf("FAJR", "DHUHR"))
+    }
+
+    @Test
+    @Config(qualifiers = "en-w400dp-h1800dp-xhdpi")
+    fun reminders() = captureVariants("158-settings-reminders-en") {
+        RemindersContent(
+            settings = TodayPreviewData.settings.copy(
+                reminders = ReminderSettings(
+                    adhan = mapOf(Prayer.FAJR to AdhanMode.SOUND, Prayer.MAGHRIB to AdhanMode.SILENT),
+                    morningAdhkar = true,
+                    beforeSleep = true,
+                ),
+            ),
+            permissions = PermissionState(notifications = true, exactAlarms = false),
+            onAskNotifications = {},
+            onAskExact = {},
+            update = {},
+        )
+    }
+
+    @Test
+    @Config(qualifiers = "en-w400dp-h2400dp-xhdpi")
+    fun widgetAlarmNote() = captureVariants("159-today-widget-alarm-note-en") {
+        TodayScreen(TodayPreviewData.ready(), TodayActions(), widgetAlarmNote = true)
     }
 }
