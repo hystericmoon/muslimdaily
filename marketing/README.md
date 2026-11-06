@@ -5,7 +5,8 @@ Promo material for Adwam. Not part of the app build (nothing here is referenced 
 - `brief.md`: idea, look, motion rules, claims and where the app proves each one.
 - `copy.md`, `alt-text.md`: post captions (Instagram in Indonesian, LinkedIn in English), video
   descriptions and image alt text.
-- `calendar.csv`: four-week posting plan (also a Google Sheet in Drive, "Adwam promo").
+- `calendar.csv`: posting plan, weeks 1-4 (batch 1, from 9 Nov) and 5-8 (batch 2, from 7 Dec). The
+  Google Sheet in Drive ("Adwam promo") holds weeks 1-4 only. `status`: ready, todo (not built), open (free slot).
 - `scenes/`: one HTML page per video or still set. Each frame is a pure function of time, so the
   render is deterministic. Query `fmt=916|45` (9:16 or 4:5) and `lang=id|en`.
 - `engine/`: `render.js` (Playwright frames into ffmpeg, 60 fps sub-frames blended to 30 fps),
