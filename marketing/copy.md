@@ -204,3 +204,26 @@ Video description (alt text / accessibility caption):
 > countdown, changing from early morning to night. Then three widget sizes appear, followed by a note
 > that the widget can be up to 10 minutes late without the exact-alarm permission. It ends on the
 > Adwam logo with "Free, Offline, No ads, Open source" and the website address.
+
+## How it's built · LinkedIn only (`imgH-en.png`, English)
+
+Claims come from `docs/architecture.md` and `CLAUDE.md` (three content gates, Room + FTS4, MVVM,
+no INTERNET permission, screenshot tests that fail CI when a render changes).
+
+**LinkedIn**
+> A look under the hood of Adwam, my free Android app for daily dhikr and duas.
+>
+> The part I care about most: nothing reaches a screen unchecked. Content comes only from CSV
+> sources and is validated three times: by a Python validator while authoring, by the Gradle release
+> build (it fails on incomplete entries), and again on the phone at import.
+>
+> After that it lives in a local Room database with FTS4 search, and each screen renders one
+> immutable state (MVVM, Jetpack Compose). Kotlin, Hilt, DataStore and Glance widgets round out the
+> stack.
+>
+> There is no INTERNET permission at all. Screenshots of every screen are recorded on CI, and the
+> build fails when a render no longer matches. It's all open source.
+>
+> https://hystericmoon.github.io/muslimdaily/
+>
+> #Android #Kotlin #JetpackCompose #OpenSource
