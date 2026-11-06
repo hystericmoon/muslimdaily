@@ -31,7 +31,16 @@ SCREENS = {
     "41-settings-prayer": None,
     "43-settings-reminders": None,
     "117-today-widget-alarm-note": None,
+    # Routines (batch 2). Light only. One Arabic line per library row; the editor rows are erased so
+    # only the titles stay; the picker and run screens show their sample lines as empty boxes.
+    "170-promo-routines-library": ("box", [(95, y - 32, 760, y + 32) for y in (316, 425, 534, 828, 1122, 1234, 1343)]),
+    "171-promo-routines-editor": ("erase", [(90, 530, 730, 615), (90, 695, 730, 785), (90, 862, 730, 950)]),
+    "172-promo-routines-picker": ("box", [(130, 640, 760, 830), (130, 865, 760, 1055), (130, 1090, 760, 1275), (130, 1310, 760, 1490)]),
+    "173-promo-routines-run": ("box", [(60, 190, 760, 520)]),
+    "174-promo-routines-summary": None,
 }
+LIGHT_ONLY = {"170-promo-routines-library", "171-promo-routines-editor", "172-promo-routines-picker",
+              "173-promo-routines-run", "174-promo-routines-summary"}
 # Tablet screens are copied whole (no Arabic script on them); font200 renders are light-only.
 TABLET = ["102-today-tablet"]
 FONT200 = ["10-today-morning"]
@@ -45,6 +54,8 @@ EN_SRC = {
     "41-settings-prayer": "156-settings-prayer-en", "102-today-tablet": "157-today-tablet-en",
     "43-settings-reminders": "158-settings-reminders-en",
     "117-today-widget-alarm-note": "159-today-widget-alarm-note-en",
+    **{n: n + "-en" for n in ("170-promo-routines-library", "171-promo-routines-editor", "172-promo-routines-picker",
+                              "173-promo-routines-run", "174-promo-routines-summary")},
 }
 # Widget shots (no Arabic, no theme variants): copied as they are, same names.
 WIDGETS = ["80-widget-4x2", "80-widget-1x1", "80-widget-2x2", "80-widget-4x1", "80-widget-5x2", "80-widget-3x3",
@@ -124,7 +135,7 @@ def main():
     for lang in ("", "-en"):
         src_of = (lambda n: n) if not lang else (lambda n: EN_SRC[n])
         for name, spec in SCREENS.items():
-            for theme in THEMES:
+            for theme in (("light",) if name in LIGHT_ONLY else THEMES):
                 img = Image.open(SRC / f"{src_of(name)}-{theme}.png").convert("RGB")
                 img = img.crop((0, 0, img.width, min(img.height, CROP_H)))
                 if spec:

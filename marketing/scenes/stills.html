@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Adwam · Promo stills</title>
-<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5|imgW1,imgW2,imgR1|cC1..cC6|cD1..cD4|imgH (English only), lang=id|en.
+<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5|imgW1,imgW2,imgR1|cC1..cC6|cD1..cD4|imgH (English only)|imgN1|cE1..cE6, lang=id|en.
      Render: node marketing/engine/render.js marketing/scenes/stills.html out.png --still 0 --query "id=img1&lang=id" -->
 <link rel="stylesheet" href="../engine/scene.css">
 <style>
@@ -72,6 +72,14 @@ Object.assign(C, {
 });
 C.imgW1 = C.cC1; C.imgW2 = C.cC2; C.imgR1 = C.cD1;
 // LinkedIn only, so English in both: the architecture claims come from docs/architecture.md.
+Object.assign(C, {
+  cE1: { id: [null, 'Rangkaian', 'buatan Anda.', 'Susun doa yang ingin dibaca berurutan.'], en: [null, 'Routines', 'of your own.', 'Line up the duas you want to read in order.'] },
+  cE2: { id: [null, 'Pilih', 'dan urutkan.', 'Seret pegangan untuk mengubah urutan.'], en: [null, 'Pick', 'and reorder.', 'Drag the handle to change the order.'] },
+  cE3: { id: [null, 'Temukan', 'doanya.', 'Cari dengan kata Arab, Indonesia, atau Inggris.'], en: [null, 'Find', 'the dua.', 'Search by words in Arabic, Indonesian or English.'] },
+  cE4: { id: [null, 'Satu doa', 'per layar.', 'Ketuk kartu untuk menghitung.'], en: [null, 'One dua', 'per screen.', 'Tap the card to count.'] },
+  cE5: { id: [null, 'Tanpa', 'riwayat.', 'Hitungan hanya untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik.'], en: [null, 'No history,', 'no statistics.', "Counts are only used to resume today's session."] },
+});
+C.imgN1 = C.cE1;
 C.imgH = { id: [null, 'How Adwam', 'is built.', 'One module, no network, and content checked three times.'], en: [null, 'How Adwam', 'is built.', 'One module, no network, and content checked three times.'] };
 const CLAIMS = { id: ['Gratis.', 'Tanpa iklan.', 'Tanpa pelacak.', 'Open source.'], en: ['Free.', 'No ads.', 'No tracking.', 'Open source.'] }[LANG];
 const CTA = { id: 'Gratis · Offline · Tanpa iklan · Open source', en: 'Free · Offline · No ads · Open source' }[LANG];
@@ -326,6 +334,48 @@ const BUILD = {
     const u = el('div', '', w, URL_TXT); u.style.cssText = `position:absolute;left:${x0}px;top:1246px;font-size:30px;font-weight:600;color:${MUTED};z-index:6`;
     return w;
   },
+  cE1(n = 1) {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('170-promo-routines-library', 'light'), { fx: 400, fy: 560, cx: 540, cy: 880, s: 0.9, rx: 6, ry: -12, rz: -4, rings: [[539, 140, 250, 115, 57]] });
+    scrim(w, 500);
+    text(w, C.cE1[LANG], { size: n ? 120 : 104, dsize: 38, descW: 920, y: n ? 120 : PAD });
+    if (n) frame(w, 1, 6);
+    return w;
+  },
+  cE2() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('171-promo-routines-editor', 'light'), { fx: 400, fy: 640, cx: 540, cy: 880, s: 1.0, rings: [[10, 505, 80, 95, 40]] });
+    scrim(w, 500);
+    text(w, C.cE2[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 2, 6);
+    return w;
+  },
+  cE3() {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('172-promo-routines-picker', 'light'), { fx: 400, fy: 420, cx: 540, cy: 800, s: 1.0, rings: [[24, 150, 752, 176, 40]] });
+    scrim(w, 500);
+    text(w, C.cE3[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 3, 6);
+    return w;
+  },
+  cE4() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('173-promo-routines-run', 'light'), { fx: 400, fy: 860, cx: 540, cy: 883, s: 0.65, rings: [[150, 1385, 500, 160, 60]] });
+    scrim(w, 500);
+    text(w, C.cE4[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 4, 6);
+    return w;
+  },
+  cE5() {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('174-promo-routines-summary', 'light'), { fx: 400, fy: 1130, cx: 540, cy: 900, s: 1.7, rings: [[60, 1085, 680, 100, 40]] });
+    scrim(w, 560);
+    text(w, C.cE5[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 5, 6);
+    return w;
+  },
+  cE6() { return cta(6, 6); },
+  imgN1() { return BUILD.cE1(0); },
   cB5() { return cta(5, 5); },
   // Batch 2. Widget shots: Indonesian set (24 h) or English set (12 h).
   cC1(n = 1) {
