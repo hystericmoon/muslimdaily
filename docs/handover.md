@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 08:00 WIB (promo batch 2: EN media, widgets and reminders built; 1.12.6 is shipped).
+Last updated: 6 Nov 2026 08:45 WIB (promo batch 2: widgets, reminders and Video 3 done; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#168 merged; #169 (widgets and reminders media) open.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#170 merged.
 
 ## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
 
@@ -30,16 +30,16 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
 - **Notion works** (tested 6 Nov): `notion-create-pages` loads via ToolSearch. The Google Doc is
   copied to a private Notion draft: https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3
   (owner can move it). Nothing owed.
-- **Batch 2 (plan: `marketing/batch2.md`).** Step 1 done 6 Nov: all English media now in the English UI
-  (shots 150-159 from `PromoEnglishScreenshotTest`; `prep_screens.py` builds `-en` screens; scenes read
-  them for `lang=en`), incl. the EN 9:16 videos. Owner picked widgets + reminders first: built
-  carousel C (widgets, 6), D (reminders, 4), images imgW1/W2/imgR1, ID + EN, EN PDFs; captions and
-  alt text drafted in `copy.md`/`alt-text.md`. All media on `promo-assets` (56ea248); review page updated.
-  **Not done:** Video 3 "Di layar utama" (~15 s widget video); routines (N) needs Arabic boxes in
-  `prep_screens.py` (111, 113, 31 show Arabic; 112 shows placeholder text); "how it's built" (H) image;
-  calendar rows for batch 2 (draft in `batch2.md`, from 7 Dec); owner picks topic order for the rest.
-  Tips: a still needs `build/mark.js` (`prep_mark.py`); renders take ~15-25 min per video, run 2 in parallel.
-  The Screenshots workflow does a plain `git push`: push your own commits only after it finishes.
+- **Batch 2 (plan: `marketing/batch2.md`).** Done 6 Nov: English-UI media for batch 1 (shots 150-159,
+  `PromoEnglishScreenshotTest`; `prep_screens.py` builds `-en`; scenes read them for `lang=en`);
+  widgets + reminders first (owner's pick): carousels C, D, images imgW1/W2/imgR1, EN PDFs, and
+  Video 3 "Di layar utama" (~22 s, 4 files, scene `v3-widgets.html`, EN shots 160-164). Captions and
+  alt text in `copy.md`/`alt-text.md`. All media on `promo-assets` (8121b9f); review page updated.
+  **Not done:** routines (N) needs Arabic boxes in `prep_screens.py` (111, 113, 31 show Arabic; 112
+  shows placeholder text); "how it's built" (H) image; batch 2 calendar rows (draft in `batch2.md`,
+  from 7 Dec). Owner picks the next topic.
+  Tips: stills need `build/mark.js` (`prep_mark.py`); a video takes ~15-25 min, run 2-4 in parallel.
+  The Screenshots workflow does a plain `git push`: push your own commits after it finishes.
 
 ## Waiting on the owner
 
