@@ -93,7 +93,8 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
-- **Promo batch 2** (6 Nov, Sonnet, #165-#174): English-UI shots 150-164 (`PromoEnglishScreenshotTest`,
+- **Promo batch 2** (6 Nov, Sonnet, #165-#181; routines #174-#175, four open-slot stills `imgP1`, `imgP2`,
+  `imgT1`, `imgD1` from screens 41, 100, 10 in #179; calendar and plan moved from Drive to Notion, #178, #181): English-UI shots 150-164 (`PromoEnglishScreenshotTest`,
   `WidgetScreenshotTest`) and routine shots 170-174 (`PromoRoutineScreenshotTest`, light only via
   `captureLight`); `prep_screens.py` builds `-en` screens and handles light-only entries; scenes
   `stills.html` (carousels C, D, E, images, `imgH`) and `v3-widgets.html` read them for `lang=en`.
