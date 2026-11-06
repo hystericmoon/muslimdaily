@@ -205,6 +205,38 @@ Video description (alt text / accessibility caption):
 > that the widget can be up to 10 minutes late without the exact-alarm permission. It ends on the
 > Adwam logo with "Free, Offline, No ads, Open source" and the website address.
 
+## Carousel E · Rangkaian buatan Anda (6 slides: `cE1`-`cE6`; PDF for LinkedIn)
+
+**Instagram**
+> Rangkaian doa buatan Anda.
+>
+> Susun doa yang ingin dibaca berurutan, misalnya sebelum berangkat kerja atau sebelum tidur.
+> Cari doanya, seret untuk mengubah urutan, lalu baca satu doa per layar, sama seperti dzikir pagi.
+>
+> Hitungan hanya dipakai untuk melanjutkan sesi hari ini. Tidak ada riwayat atau statistik.
+>
+> Gratis, offline, tanpa iklan, open source. Untuk Android, unduh lewat link di bio.
+>
+> #Adwam #AplikasiMuslim #DoaHarian #OpenSource
+
+**LinkedIn**
+> Routines in Adwam: line up the duas you want to read in order, then run them one per screen,
+> the same way the morning adhkar work. Search works in Arabic, Indonesian or English, and the
+> order is a drag handle away.
+>
+> A design choice we kept on purpose: counts are only used to resume today's session. No history,
+> no statistics, no streaks.
+>
+> https://hystericmoon.github.io/muslimdaily/
+>
+> #Android #UX #OpenSource #Accessibility
+
+## Single image · routines
+
+| Image | Instagram (Indonesian) | LinkedIn (English) |
+|---|---|---|
+| imgN1 | Susun doa yang ingin dibaca berurutan: rangkaian buatan Anda di Adwam. Gratis dan offline. | Line up the duas you want to read in order: routines of your own in Adwam. |
+
 ## How it's built · LinkedIn only (`imgH-en.png`, English)
 
 Claims come from `docs/architecture.md` and `CLAUDE.md` (three content gates, Room + FTS4, MVVM,
