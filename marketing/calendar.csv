@@ -32,3 +32,4 @@ week,date,day,time_wib,channel,format,asset,language,status
 8,2026-12-29,Tue,08:30,LinkedIn,Post + image,imgH-en.png,en,ready
 8,2026-12-31,Thu,19:30,Instagram,Image,(owner's pick),id,open
 8,2027-01-02,Sat,09:00,Instagram,Image,(owner's pick),id,open
+9,2027-01-05,Tue,08:30,LinkedIn,Carousel (PDF),carousel-E-en.pdf,en,ready

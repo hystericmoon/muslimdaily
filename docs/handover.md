@@ -36,8 +36,9 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   owner's pick (26, 28, 31 Dec, 2 Jan).
 - **Routines (N): done** (#174, #175). Carousel E (cE1-cE6, ID+EN, PDFs) and imgN1 are on
   `promo-assets` (f571d5b) and the review page; captions, alt text and calendar (21 Dec, 24 Dec = ready)
-  are on main. No LinkedIn slot for `carousel-E-en.pdf` yet (22 Dec is carousel D): owner's pick.
-  Batch 2 is complete; 4 slots (26, 28, 31 Dec, 2 Jan) are the owner's pick.
+  are on main. `carousel-E-en.pdf` is on LinkedIn Tue 5 Jan 08:30 (week 9, added 6 Nov).
+  Batch 2 is complete; 4 Instagram slots (26, 28, 31 Dec, 2 Jan) stay open: all built media is
+  already scheduled, so filling them needs new content (the owner's pick).
   Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
 
 ## Waiting on the owner
