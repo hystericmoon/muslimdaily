@@ -50,7 +50,9 @@ EN_SRC = {
 WIDGETS = ["80-widget-4x2", "80-widget-1x1", "80-widget-2x2", "80-widget-4x1", "80-widget-5x2", "80-widget-3x3",
            "81-widget-4x2-0445", "81-widget-4x2-1135", "81-widget-4x2-1730", "81-widget-4x2-2100",
            "86-widget-5x2-en-12h-2100", "87-widget-5x3-tall-en-12h", "88-widget-4x3-tall-en-12h",
-           "89-widget-1x3-tall-en-12h", "125-widget-5x2-en-12h-light-glass"]
+           "89-widget-1x3-tall-en-12h", "125-widget-5x2-en-12h-light-glass",
+           "160-widget-4x2-en-12h-0445", "161-widget-4x2-en-12h-0830", "162-widget-4x2-en-12h-1135",
+           "163-widget-4x2-en-12h-1730", "164-widget-4x2-en-12h-2100"]
 
 
 def glyph_mask(a, region, light):

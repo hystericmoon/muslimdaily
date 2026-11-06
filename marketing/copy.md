@@ -167,3 +167,40 @@ Same rules as batch 1. Claims come from the app's own strings: the exact-alarm n
 | imgW1 | Waktu shalat berikutnya dan hitung mundurnya, sekali lihat. Widget Adwam, gratis dan offline. | The next prayer and its countdown, at a glance: Adwam's home-screen widget. |
 | imgW2 | Siang dan malam, hitung mundur ke shalat berikutnya tetap terbaca. | Day and night, the countdown to the next prayer stays readable. |
 | imgR1 | Mati, suara, atau senyap: atur pengingat untuk tiap waktu shalat. | Off, sound or silent: set reminders for each prayer time. |
+
+## Video 3 · Di layar utama (widgets, ~22 s)
+
+Files: `v3-widgets-id-9x16.mp4` (Reels), `v3-widgets-id-4x5.mp4` (feed), `v3-widgets-en-4x5.mp4`
+(LinkedIn), `v3-widgets-en-9x16.mp4`; `.srt` beside each.
+
+**Instagram (Reels)**
+> Jadwal shalat di layar utama.
+>
+> Widget Adwam menampilkan waktu shalat berikutnya dan hitung mundurnya, dari subuh sampai malam.
+> Ukurannya bisa diubah, dari kecil sampai lebar.
+>
+> Jujur soal batasnya: tanpa izin alarm tepat waktu, widget bisa terlambat sampai 10 menit
+> berganti ke shalat berikutnya.
+>
+> Gratis, offline, tanpa iklan, open source. Untuk Android, unduh lewat link di bio.
+>
+> #Adwam #WidgetAndroid #JadwalShalat #AplikasiMuslim #OpenSource
+
+**LinkedIn**
+> A short tour of Adwam's home-screen widget: the next prayer and a countdown to it, through the
+> day and night, in any size from small to wide.
+>
+> The honest part: without the exact-alarm permission, the widget can take up to 10 minutes to move
+> to the next prayer. The app says so and asks for the permission instead of hiding it.
+>
+> Free, offline, no ads, no tracking, open source.
+>
+> https://hystericmoon.github.io/muslimdaily/
+>
+> #Android #Widgets #OpenSource #ProductDesign
+
+Video description (alt text / accessibility caption):
+> A 22-second silent animation on a cream background. A phone widget shows the next prayer and a
+> countdown, changing from early morning to night. Then three widget sizes appear, followed by a note
+> that the widget can be up to 10 minutes late without the exact-alarm permission. It ends on the
+> Adwam logo with "Free, Offline, No ads, Open source" and the website address.
