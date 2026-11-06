@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:03,300
+Jadwal shalat di layar utama.
+Waktu berikutnya dan hitung mundurnya, sekali lihat.
+
+2
+00:00:03,600 --> 00:00:08,100
+Siang dan malam.
+Hitung mundur ke waktu berikutnya, kapan saja.
+
+3
+00:00:08,400 --> 00:00:11,700
+Satu widget, banyak ukuran.
+Ubah ukurannya, dari kecil sampai lebar.
+
+4
+00:00:12,000 --> 00:00:14,700
+Jujur soal batasnya.
+Tanpa izin alarm tepat waktu, widget bisa terlambat sampai 10 menit.
+
+5
+00:00:19,200 --> 00:00:21,700
+Adwam · Gratis · Offline · Tanpa iklan · Open source
+hystericmoon.github.io/muslimdaily
