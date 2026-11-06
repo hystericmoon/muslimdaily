@@ -20,7 +20,7 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
 - Full-quality media: orphan branch `promo-assets` (never merge it; keeps `main` small).
 - Drive folder "Adwam promo" (private): Google Doc "Batch 1 plan and results", Sheet "Calendar".
   Notion (6 Nov): the plan page also holds the full calendar (weeks 1-9) as a database:
-  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. Drive has a second Sheet "Calendar (weeks 1-9, 6 Nov)";
+  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. Drive has a second Sheet "Calendar (weeks 1-9, final)";
   the old Sheet (weeks 1-4) can't be edited from here. `calendar.csv` stays the source of truth.
   The Drive connector only takes inline content, so media is not in Drive.
 - Source: `marketing/` (PR #163): `README.md` (how to render), `brief.md`, `copy.md`,
@@ -40,7 +40,7 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   `promo-assets` (f571d5b) and the review page; captions, alt text and calendar (21 Dec, 24 Dec = ready)
   are on main. `carousel-E-en.pdf` is on LinkedIn Tue 5 Jan 08:30 (week 9, added 6 Nov).
   Batch 2 is complete: the 4 slots that were open (26, 28, 31 Dec, 2 Jan) now hold imgP1, imgP2, imgT1, imgD1
-  (ID stills, copy and alt text on main). Not yet on `promo-assets`/the review page: owner's OK needed.
+  (ID stills, copy, alt text on main; media on `promo-assets` 6fae9a0, review page and Notion calendar current).
   Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
 
 ## Waiting on the owner
