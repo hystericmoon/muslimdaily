@@ -29,6 +29,8 @@ SCREENS = {
     "10-today-morning": None,
     "100-onboarding": None,
     "41-settings-prayer": None,
+    "43-settings-reminders": None,
+    "117-today-widget-alarm-note": None,
 }
 # Tablet screens are copied whole (no Arabic script on them); font200 renders are light-only.
 TABLET = ["102-today-tablet"]
@@ -41,7 +43,14 @@ EN_SRC = {
     "52-memorize-recall": "152-memorize-recall-en", "53-memorize-check": "153-memorize-check-en",
     "10-today-morning": "154-today-morning-en", "100-onboarding": "155-onboarding-en",
     "41-settings-prayer": "156-settings-prayer-en", "102-today-tablet": "157-today-tablet-en",
+    "43-settings-reminders": "158-settings-reminders-en",
+    "117-today-widget-alarm-note": "159-today-widget-alarm-note-en",
 }
+# Widget shots (no Arabic, no theme variants): copied as they are, same names.
+WIDGETS = ["80-widget-4x2", "80-widget-1x1", "80-widget-2x2", "80-widget-4x1", "80-widget-5x2", "80-widget-3x3",
+           "81-widget-4x2-0445", "81-widget-4x2-1135", "81-widget-4x2-1730", "81-widget-4x2-2100",
+           "86-widget-5x2-en-12h-2100", "87-widget-5x3-tall-en-12h", "88-widget-4x3-tall-en-12h",
+           "89-widget-1x3-tall-en-12h", "125-widget-5x2-en-12h-light-glass"]
 
 
 def glyph_mask(a, region, light):
@@ -107,6 +116,9 @@ def soften(img, regions, light):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    for name in WIDGETS:
+        Image.open(SRC / f"{name}.png").convert("RGBA").save(OUT / f"{name}.png", optimize=True)
+        print("wrote", f"{name}.png")
     for lang in ("", "-en"):
         src_of = (lambda n: n) if not lang else (lambda n: EN_SRC[n])
         for name, spec in SCREENS.items():

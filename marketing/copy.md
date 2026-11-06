@@ -101,3 +101,69 @@ Alt text for each image: `alt-text.md` (written from the final renders).
 **B · Dibuat untuk semua mata** (5 slides)
 > IG: Teks besar, mode gelap, tablet. Adwam dibuat agar nyaman dibaca siapa saja.
 > LinkedIn: Accessibility as the baseline: large text, dark mode, tablets, WCAG AA.
+
+# Batch 2: widgets and reminders (draft; plan in `batch2.md`)
+
+Same rules as batch 1. Claims come from the app's own strings: the exact-alarm note
+(`today_widget_alarm_note`, `reminders_exact_permission`) and "all reminders are off by default".
+
+## Carousel C · Jadwal shalat di layar utama (6 slides: `cC1`-`cC6`; PDF for LinkedIn)
+
+**Instagram**
+> Jadwal shalat di layar utama.
+>
+> Widget Adwam menampilkan waktu shalat berikutnya dan hitung mundurnya, siang dan malam. Ukurannya
+> bisa diubah, dari kecil sampai lebar, dan tersedia dalam bahasa Indonesia dan English.
+>
+> Jujur soal batasnya: tanpa izin alarm tepat waktu, widget bisa terlambat sampai 10 menit
+> berganti ke shalat berikutnya.
+>
+> Gratis, offline, tanpa iklan, open source. Untuk Android, unduh lewat link di bio.
+>
+> #Adwam #WidgetAndroid #JadwalShalat #AplikasiMuslim #OpenSource
+
+**LinkedIn**
+> Adwam's home-screen widget shows the next prayer and a countdown to it, day and night. It
+> resizes from small to wide and comes in Indonesian and English.
+>
+> One honest limit: without the exact-alarm permission, the widget can take up to 10 minutes to
+> move to the next prayer. The app says so and asks for the permission instead of hiding it.
+>
+> Free, offline, no ads, no tracking, open source.
+>
+> https://hystericmoon.github.io/muslimdaily/
+>
+> #Android #Widgets #OpenSource #ProductDesign
+
+## Carousel D · Pengingat sesuai Anda (4 slides: `cD1`-`cD4`; PDF for LinkedIn)
+
+**Instagram**
+> Pengingat shalat sesuai Anda.
+>
+> Untuk tiap waktu shalat, pilih: mati, suara, atau senyap. Semua pengingat mati secara bawaan,
+> jadi Anda yang memutuskan mana yang menyala.
+>
+> Jujur soal batasnya: tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit.
+>
+> Gratis, offline, tanpa iklan, open source. Untuk Android, unduh lewat link di bio.
+>
+> #Adwam #PengingatShalat #AplikasiMuslim #OpenSource
+
+**LinkedIn**
+> Reminders in Adwam are yours to set: for each prayer time, off, sound or silent. Everything is
+> off by default, so nothing buzzes until you choose it.
+>
+> And the honest limit again: without the exact-alarm permission, reminders can be a few minutes
+> late. The app explains this next to the setting.
+>
+> https://hystericmoon.github.io/muslimdaily/
+>
+> #Android #UX #OpenSource #Accessibility
+
+## Single images
+
+| Image | Instagram (Indonesian) | LinkedIn (English) |
+|---|---|---|
+| imgW1 | Waktu shalat berikutnya dan hitung mundurnya, sekali lihat. Widget Adwam, gratis dan offline. | The next prayer and its countdown, at a glance: Adwam's home-screen widget. |
+| imgW2 | Siang dan malam, hitung mundur ke shalat berikutnya tetap terbaca. | Day and night, the countdown to the next prayer stays readable. |
+| imgR1 | Mati, suara, atau senyap: atur pengingat untuk tiap waktu shalat. | Off, sound or silent: set reminders for each prayer time. |

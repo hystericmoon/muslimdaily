@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Adwam · Promo stills</title>
-<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5, lang=id|en.
+<!-- Promo stills 1080x1350 (4:5). Query: id=img1..img8|cA1..cA6|cB1..cB5|imgW1,imgW2,imgR1|cC1..cC6|cD1..cD4, lang=id|en.
      Render: node marketing/engine/render.js marketing/scenes/stills.html out.png --still 0 --query "id=img1&lang=id" -->
 <link rel="stylesheet" href="../engine/scene.css">
 <style>
@@ -59,6 +59,18 @@ const C = {
   cB1: { id: [null, 'Dibuat untuk', 'semua mata.', 'Geser →'], en: [null, 'Made for', 'every eye.', 'Swipe →'] },
 };
 C.cB2 = C.img6; C.cB3 = C.img5; C.cB4 = C.img7;
+// Batch 2: widgets (C, imgW) and reminders (D, imgR). Wording follows the app's own strings.
+Object.assign(C, {
+  cC1: { id: [null, 'Jadwal shalat', 'di layar utama.', 'Waktu berikutnya dan hitung mundurnya, sekali lihat.'], en: [null, 'Prayer times', 'on your home screen.', 'The next prayer and the countdown, at a glance.'] },
+  cC2: { id: [null, 'Siang', 'dan malam.', 'Hitung mundur ke waktu berikutnya, kapan saja.'], en: [null, 'Day', 'and night.', 'A countdown to the next prayer, any time of day.'] },
+  cC3: { id: [null, 'Satu widget,', 'banyak ukuran.', 'Ubah ukurannya, dari kecil sampai lebar.'], en: [null, 'One widget,', 'many sizes.', 'Resize it from small to wide.'] },
+  cC4: { id: [null, 'Indonesia', 'atau English.', 'Widget tersedia dalam dua bahasa.'], en: [null, 'Indonesian', 'or English.', 'The widget comes in both languages.'] },
+  cC5: { id: [null, 'Jujur soal', 'batasnya.', 'Tanpa izin alarm tepat waktu, widget bisa terlambat sampai 10 menit.'], en: [null, 'Honest about', 'the limits.', 'Without the exact-alarm permission, the widget can be up to 10 minutes late.'] },
+  cD1: { id: [null, 'Pengingat', 'sesuai Anda.', 'Atur untuk tiap waktu shalat.'], en: [null, 'Reminders', 'your way.', 'Set them for each prayer time.'] },
+  cD2: { id: [null, 'Mati, suara,', 'atau senyap.', 'Subuh, Dzuhur, Ashar, Maghrib, Isya: satu per satu.'], en: [null, 'Off, sound,', 'or silent.', 'Fajr, Dhuhr, Asr, Maghrib, Isha: one by one.'] },
+  cD3: { id: [null, 'Jujur soal', 'batasnya.', 'Tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit.'], en: [null, 'Honest about', 'the limits.', 'Without the exact-alarm permission, reminders may be a few minutes late.'] },
+});
+C.imgW1 = C.cC1; C.imgW2 = C.cC2; C.imgR1 = C.cD1;
 const CLAIMS = { id: ['Gratis.', 'Tanpa iklan.', 'Tanpa pelacak.', 'Open source.'], en: ['Free.', 'No ads.', 'No tracking.', 'Open source.'] }[LANG];
 const CTA = { id: 'Gratis · Offline · Tanpa iklan · Open source', en: 'Free · Offline · No ads · Open source' }[LANG];
 
@@ -142,6 +154,16 @@ function lockup(parent, x, y, width, markColor, wordColor) {
   const c = document.createElementNS(NS, 'circle'); for (const [k, v] of Object.entries({ cx: MK.dot.cx, cy: MK.dot.cy, r: MK.dot.r, fill: '#C9A227' })) c.setAttribute(k, v); svg.appendChild(c);
   parent.appendChild(svg);
   return MK.lockup.viewBox[1] * ls;
+}
+// A widget shot (no bezel) as a rounded, shadowed card. (x,y) is its top-left; rings are in the image's own pixels.
+const WGT = (n) => `../build/screens/${n}.png`;
+function wcard(w, name, o) {
+  const { x, y, s = 1, rz = 0, z = 5, rings = [] } = o;
+  const c = el('div', 'wcard', w);
+  Object.assign(c.style, { position: 'absolute', left: x + 'px', top: y + 'px', transformOrigin: '0 0', transform: `rotate(${rz}deg) scale(${s})`, zIndex: z, filter: 'drop-shadow(0 18px 34px rgba(31,40,38,.30))' });
+  const im = el('img', '', c); im.src = WGT(name); Object.assign(im.style, { display: 'block', borderRadius: '40px' });
+  rings.forEach(([rx, ry, rw, rh, rr = 30]) => { const g = el('div', 'ring', c); Object.assign(g.style, { left: rx + 'px', top: ry + 'px', width: rw + 'px', height: rh + 'px', borderRadius: rr + 'px', borderWidth: (7 / s) + 'px' }); });
+  return c;
 }
 const BL = [['b1', -260, 700, 900], ['b2', 520, 150, 800]];
 const BL2 = [['b1', -300, 150, 800], ['b2', 450, 800, 900]];
@@ -268,6 +290,90 @@ const BUILD = {
   cB3() { return split('10-today-morning', C.cB3, { cx: 650, cy: 1090, s: 0.7 }, 3, 948); },
   cB4() { const w = BUILD.img7(); frame(w, 4, 5); return w; },
   cB5() { return cta(5, 5); },
+  // Batch 2. Widget shots: Indonesian set (24 h) or English set (12 h).
+  cC1(n = 1) {
+    const w = world('light', { blobs: BL });
+    const L = LANG === 'en' ? { name: '125-widget-5x2-en-12h-light-glass', w: 920, ring: [44, 208, 480, 60, 30] } : { name: '80-widget-4x2', w: 744, ring: [44, 208, 505, 60, 30] };
+    const s = 893 / L.w;
+    wcard(w, L.name, { x: 93, y: 600, s, rz: -2, rings: [L.ring] });
+    scrim(w, 500);
+    text(w, C.cC1[LANG], { size: n ? 96 : 104, descW: 800, y: n ? 120 : PAD });
+    if (n) frame(w, 1, 6);
+    return w;
+  },
+  cC2(n = 1) {
+    const w = world('light', { blobs: BL2 });
+    const night = LANG === 'en' ? ['86-widget-5x2-en-12h-2100', 920] : ['81-widget-4x2-2100', 744];
+    const day = LANG === 'en' ? ['125-widget-5x2-en-12h-light-glass', 920] : ['80-widget-4x2', 744];
+    wcard(w, night[0], { x: 50, y: 560, s: 760 / night[1], rz: -3, z: 5 });
+    wcard(w, day[0], { x: 270, y: 820, s: 760 / day[1], rz: 3, z: 6 });
+    scrim(w, 500);
+    text(w, C.cC2[LANG], { size: n ? 120 : 104, dsize: 38, descW: 920, y: n ? 120 : PAD });
+    if (n) frame(w, 2, 6);
+    return w;
+  },
+  cC3() {
+    const w = world('light', { blobs: BL });
+    if (LANG === 'en') {
+      wcard(w, '86-widget-5x2-en-12h-2100', { x: 60, y: 540, s: 0.82, rz: -2, z: 5 });
+      wcard(w, '88-widget-4x3-tall-en-12h', { x: 80, y: 900, s: 0.5, rz: 2, z: 6 });
+      wcard(w, '89-widget-1x3-tall-en-12h', { x: 520, y: 880, s: 0.5, rz: -2, z: 7 });
+    } else {
+      wcard(w, '80-widget-5x2', { x: 60, y: 540, s: 0.82, rz: -2, z: 5 });
+      wcard(w, '80-widget-2x2', { x: 80, y: 905, s: 0.7, rz: 2, z: 6 });
+      wcard(w, '80-widget-4x1', { x: 400, y: 925, s: 0.55, rz: -2, z: 7 });
+    }
+    scrim(w, 500);
+    text(w, C.cC3[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 3, 6);
+    return w;
+  },
+  cC4() {
+    const w = world('light', { blobs: BL2 });
+    wcard(w, '80-widget-4x2', { x: 60, y: 560, s: 0.95, rz: -3, z: 5 });
+    wcard(w, '86-widget-5x2-en-12h-2100', { x: 230, y: 880, s: 0.85, rz: 2, z: 6 });
+    scrim(w, 500);
+    text(w, C.cC4[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 4, 6);
+    return w;
+  },
+  cC5() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('117-today-widget-alarm-note', 'light'), { fx: 400, fy: 830, cx: 540, cy: 950, s: 1.0, rings: [[20, 655, 760, 350, 40]] });
+    scrim(w, 500);
+    text(w, C.cC5[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 5, 6);
+    return w;
+  },
+  cC6() { return cta(6, 6); },
+  imgW1() { return BUILD.cC1(0); },
+  imgW2() { return BUILD.cC2(0); },
+  cD1(n = 1) {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('43-settings-reminders', 'light'), { fx: 400, fy: 900, cx: 540, cy: 960, s: 0.9, rx: 6, ry: -12, rz: -4, rings: [[60, 554, 680, 112, 56]] });
+    scrim(w, 500);
+    text(w, C.cD1[LANG], { size: n ? 120 : 104, dsize: 38, descW: 920, y: n ? 120 : PAD });
+    if (n) frame(w, 1, 4);
+    return w;
+  },
+  cD2() {
+    const w = world('light', { blobs: BL });
+    phone(w, SCR('43-settings-reminders', 'light'), { fx: 400, fy: 850, cx: 540, cy: 789, s: 0.85, rings: [[287, 554, 225, 112, 56], [60, 745, 225, 112, 56], [513, 1122, 225, 112, 56]] });
+    scrim(w, 500);
+    text(w, C.cD2[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 2, 4);
+    return w;
+  },
+  cD3() {
+    const w = world('light', { blobs: BL2 });
+    phone(w, SCR('43-settings-reminders', 'light'), { fx: 400, fy: 230, cx: 540, cy: 800, s: 1.1, rings: [[30, 95, 740, 270, 40]] });
+    scrim(w, 500);
+    text(w, C.cD3[LANG], { size: 120, dsize: 38, descW: 920, y: 120 });
+    frame(w, 3, 4);
+    return w;
+  },
+  cD4() { return cta(4, 4); },
+  imgR1() { return BUILD.cD1(0); },
 };
 
 function cta(n, N) {
