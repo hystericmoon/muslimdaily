@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 12:50 WIB (promo batches 1-2 complete, nothing open in flight; 1.12.6 is shipped).
+Last updated: 6 Nov 2026 13:20 WIB (promo batches 1-2 complete, Notion calendar now holds copy, alt text and links; nothing open in flight; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 all merged; no PR open.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 and #183 (Notion tools allowed in `.claude/settings.json`) merged; no PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -20,6 +20,10 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 - Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
   from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
   https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
+  Calendar columns added 6 Nov: Media link (GitHub raw link on `promo-assets`, folder link for
+  Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
+  `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
+  no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
 - Media: orphan branch `promo-assets` (never merge it; head 6fae9a0) and the review page
   https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj (private; the owner shares it).
 - Source: `marketing/` (`README.md` how to render, `brief.md`, `batch2.md`, `copy.md`, `alt-text.md`,
@@ -70,7 +74,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-6 Nov Sonnet: promo batch 2, #165-#181); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-6 Nov Sonnet: promo batch 2, #165-#181; Notion calendar copy/links, #183); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
