@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:03,300
+Prayer times on your home screen.
+The next prayer and the countdown, at a glance.
+
+2
+00:00:03,600 --> 00:00:08,100
+Day and night.
+A countdown to the next prayer, any time of day.
+
+3
+00:00:08,400 --> 00:00:11,700
+One widget, many sizes.
+Resize it from small to wide.
+
+4
+00:00:12,000 --> 00:00:14,700
+Honest about the limits.
+Without the exact-alarm permission, the widget can be up to 10 minutes late.
+
+5
+00:00:19,200 --> 00:00:21,700
+Adwam · Free · Offline · No ads · Open source
+hystericmoon.github.io/muslimdaily
