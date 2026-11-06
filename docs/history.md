@@ -93,6 +93,17 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
+- **Promo batch 2** (6 Nov, Sonnet, #165-#174): English-UI shots 150-164 (`PromoEnglishScreenshotTest`,
+  `WidgetScreenshotTest`) and routine shots 170-174 (`PromoRoutineScreenshotTest`, light only via
+  `captureLight`); `prep_screens.py` builds `-en` screens and handles light-only entries; scenes
+  `stills.html` (carousels C, D, E, images, `imgH`) and `v3-widgets.html` read them for `lang=en`.
+  Media: orphan branch `promo-assets`; review page updated each step. Pitfalls found: a worktree's
+  own FETCH_HEAD is stale (fetch inside it); the Screenshots workflow commits with a plain `git
+  push`; `.scrim` is opaque only to 62% of its height and `fade-b` hides the bottom 250 px of
+  stills; a stills `phone()` needs `fx,fy` as the screen point that lands at `cx,cy`; `blank` fills
+  with the column median (fails when the object fills the region: use `bridge`); render ~15-25 min
+  per video, 2-4 in parallel on 4 cores. The gold completion mark on the run summary is blanked in
+  promo shots (no reward look).
 - **Promo batch 1** (#163, 5-6 Nov, Opus director with Sonnet agents): `marketing/` render engine
   (HTML scenes, Playwright frames at 60 fps blended to 30 fps by ffmpeg `tmix`), 2 videos x 4
   formats, 8 images, 2 carousels, copy, alt text, calendar. Media on orphan branch `promo-assets`.

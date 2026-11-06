@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 10:00 WIB (promo batch 2: only routines left; 1.12.6 is shipped).
+Last updated: 6 Nov 2026 10:30 WIB (promo batch 2: routines in flight; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#172 merged.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#173 merged; #174 (routines) merged with this handover.
 
 ## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
 
@@ -27,20 +27,20 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   dark both shown; Arabic only as empty hidden-word boxes (option 3); silent; a voiceover, if any,
   is a male voice.
 - Rules still hold: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks.
-- **Notion works** (tested 6 Nov): `notion-create-pages` loads via ToolSearch. The Google Doc is
-  copied to a private Notion draft: https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3
-  (owner can move it). Nothing owed.
-- **Batch 2 (plan: `marketing/batch2.md`).** Done 6 Nov: English-UI media for batch 1 (shots 150-159,
-  `PromoEnglishScreenshotTest`; `prep_screens.py` builds `-en`; scenes read them for `lang=en`);
-  widgets + reminders first (owner's pick): carousels C, D, images imgW1/W2/imgR1, EN PDFs, and
-  Video 3 "Di layar utama" (~22 s, 4 files, scene `v3-widgets.html`, EN shots 160-164). Captions and
-  alt text in `copy.md`/`alt-text.md`. All media on `promo-assets` (8121b9f); review page updated.
-  Calendar weeks 5-8 (7 Dec to 2 Jan) are in `calendar.csv` (not in the Drive Sheet, which has
-  weeks 1-4). **Not done:** routines (N) needs Arabic boxes in `prep_screens.py` (111, 113, 31 show
-  Arabic; 112 shows placeholder text). "How it's built" image `imgH-en` done (LinkedIn Tue 29 Dec).
-  4 calendar slots are the owner's pick.
-  Tips: stills need `build/mark.js` (`prep_mark.py`); a video takes ~15-25 min, run 2-4 in parallel.
-  The Screenshots workflow does a plain `git push`: push your own commits after it finishes.
+- **Notion works** (6 Nov): page tools load; the batch 1 plan is a private Notion draft
+  (https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3). Nothing owed.
+- **Batch 2** (plan `marketing/batch2.md`; details in history, "Promo batch 2"). Done: English-UI media
+  for batch 1, widgets (carousel C, Video 3, imgW1/W2), reminders (carousel D, imgR1), "how it's
+  built" (`imgH-en`, LinkedIn Tue 29 Dec), calendar weeks 5-8 in `calendar.csv` (the Drive Sheet has
+  weeks 1-4 only), all media on `promo-assets` (fd23653), review page current. 4 slots are the
+  owner's pick (26, 28, 31 Dec, 2 Jan).
+- **Routines (N), in flight, #174.** Done: promo-only shots 170-174 ID+EN (light, placeholders
+  blanked; CI recorded), `prep_screens.py` regions (checked by eye; modes box/erase/blank/bridge),
+  scenes `cE1`-`cE6` + `imgN1` in `stills.html`. **Left:** re-render all E stills ID+EN (`cE4`,
+  `cE5` changed last), `carousel-E-en.pdf`, push to `promo-assets` (ask the owner first), add to the
+  review page, captions + alt text in `copy.md`/`alt-text.md`, set the calendar rows Mon 21 Dec
+  (carousel E) and Thu 24 Dec (`imgN1`) from todo to ready.
+  Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
 
 ## Waiting on the owner
 
@@ -80,7 +80,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (6 Nov Sonnet: promo batch 2, #165-#174); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)

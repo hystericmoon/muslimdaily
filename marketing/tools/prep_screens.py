@@ -31,7 +31,16 @@ SCREENS = {
     "41-settings-prayer": None,
     "43-settings-reminders": None,
     "117-today-widget-alarm-note": None,
+    # Routines (batch 2). Light only. One Arabic line per library row; the editor rows are blanked so
+    # only the titles stay; the picker and run screens show their sample lines as empty boxes.
+    "170-promo-routines-library": ("box", [(95, y - 32, 760, y + 32) for y in (316, 425, 534, 828, 1122, 1234, 1343)]),
+    "171-promo-routines-editor": ("blank", [(90, 535, 730, 625), (90, 700, 730, 795), (90, 867, 730, 960)]),
+    "172-promo-routines-picker": ("box", [(130, 640, 760, 830), (130, 865, 760, 1055), (130, 1090, 760, 1275), (130, 1310, 760, 1490)]),
+    "173-promo-routines-run": ("box", [(60, 190, 760, 520)]),
+    "174-promo-routines-summary": ("bridge", [(285, 555, 515, 775)]),  # the gold completion mark: no reward look
 }
+LIGHT_ONLY = {"170-promo-routines-library", "171-promo-routines-editor", "172-promo-routines-picker",
+              "173-promo-routines-run", "174-promo-routines-summary"}
 # Tablet screens are copied whole (no Arabic script on them); font200 renders are light-only.
 TABLET = ["102-today-tablet"]
 FONT200 = ["10-today-morning"]
@@ -45,6 +54,8 @@ EN_SRC = {
     "41-settings-prayer": "156-settings-prayer-en", "102-today-tablet": "157-today-tablet-en",
     "43-settings-reminders": "158-settings-reminders-en",
     "117-today-widget-alarm-note": "159-today-widget-alarm-note-en",
+    **{n: n + "-en" for n in ("170-promo-routines-library", "171-promo-routines-editor", "172-promo-routines-picker",
+                              "173-promo-routines-run", "174-promo-routines-summary")},
 }
 # Widget shots (no Arabic, no theme variants): copied as they are, same names.
 WIDGETS = ["80-widget-4x2", "80-widget-1x1", "80-widget-2x2", "80-widget-4x1", "80-widget-5x2", "80-widget-3x3",
@@ -70,6 +81,22 @@ def treat(img, mode, regions, light):
     d = ImageDraw.Draw(out)
     # Box colours sampled from the app's own hidden-word box on the recall screen.
     fill, edge = ((229, 226, 219), (111, 121, 120)) if light else ((51, 53, 51), (136, 147, 145))
+    if mode == "bridge":
+        # For an object that fills its region: blend the clean rows just above and just below it.
+        arr = np.asarray(out).astype(float)
+        for x0, y0, x1, y1 in regions:
+            top = np.median(arr[y0 - 8:y0 - 2, x0:x1], axis=0)
+            bot = np.median(arr[y1 + 2:y1 + 8, x0:x1], axis=0)
+            t = np.linspace(0, 1, y1 - y0)[:, None, None]
+            arr[y0:y1, x0:x1] = top[None] * (1 - t) + bot[None] * t
+        return Image.fromarray(arr.clip(0, 255).astype(np.uint8))
+    if mode == "blank":
+        # Replace each region with its own background: the column-wise median ignores the glyph pixels.
+        arr = np.asarray(out).copy()
+        for x0, y0, x1, y1 in regions:
+            med = np.median(arr[y0:y1, x0:x1], axis=0)
+            arr[y0:y1, x0:x1] = med.astype(np.uint8)[None, :, :]
+        return Image.fromarray(arr)
     for reg in regions:
         mask = glyph_mask(a, reg, light)
         if mode == "erase":
@@ -124,7 +151,7 @@ def main():
     for lang in ("", "-en"):
         src_of = (lambda n: n) if not lang else (lambda n: EN_SRC[n])
         for name, spec in SCREENS.items():
-            for theme in THEMES:
+            for theme in (("light",) if name in LIGHT_ONLY else THEMES):
                 img = Image.open(SRC / f"{src_of(name)}-{theme}.png").convert("RGB")
                 img = img.crop((0, 0, img.width, min(img.height, CROP_H)))
                 if spec:
