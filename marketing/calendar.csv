@@ -16,3 +16,19 @@ week,date,day,time_wib,channel,format,asset,language,status
 4,2026-12-03,Thu,19:30,Instagram,Image,img7-id.png,id,ready
 4,2026-12-04,Fri,08:30,LinkedIn,Image,img8-en.png,en,ready
 4,2026-12-05,Sat,09:00,Instagram,Image,img8-id.png,id,ready
+5,2026-12-07,Mon,19:30,Instagram,Reel,v3-widgets-id-9x16.mp4,id,ready
+5,2026-12-08,Tue,08:30,LinkedIn,Video,v3-widgets-en-4x5.mp4,en,ready
+5,2026-12-10,Thu,19:30,Instagram,Carousel,cC1-cC6 (id),id,ready
+5,2026-12-12,Sat,09:00,Instagram,Image,imgW1-id.png,id,ready
+6,2026-12-14,Mon,19:30,Instagram,Carousel,cD1-cD4 (id),id,ready
+6,2026-12-15,Tue,08:30,LinkedIn,Carousel (PDF),carousel-C-en.pdf,en,ready
+6,2026-12-17,Thu,19:30,Instagram,Image,imgR1-id.png,id,ready
+6,2026-12-19,Sat,09:00,Instagram,Image,imgW2-id.png,id,ready
+7,2026-12-21,Mon,19:30,Instagram,Carousel,routines carousel (not built),id,todo
+7,2026-12-22,Tue,08:30,LinkedIn,Carousel (PDF),carousel-D-en.pdf,en,ready
+7,2026-12-24,Thu,19:30,Instagram,Image,routines image (not built),id,todo
+7,2026-12-26,Sat,09:00,Instagram,Image,(owner's pick),id,open
+8,2026-12-28,Mon,19:30,Instagram,Image,(owner's pick),id,open
+8,2026-12-29,Tue,08:30,LinkedIn,Post + image,how it's built (not built),en,todo
+8,2026-12-31,Thu,19:30,Instagram,Image,(owner's pick),id,open
+8,2027-01-02,Sat,09:00,Instagram,Image,(owner's pick),id,open

@@ -25,14 +25,12 @@ Step 1 (done 6 Nov): English-UI media for batch 1 (stills, carousel PDFs, 4:5 an
 - N: carousel E (5 slides) after the Arabic regions are set and checked by eye; 1 image.
 - H: one LinkedIn text post plus the flow image; no Instagram version.
 
-## Draft calendar (same cadence as batch 1: Instagram Mon/Thu 19:30 and Sat 09:00, LinkedIn Tue 08:30)
+## Calendar
 
-| Week | Mon | Tue | Thu | Sat |
-|---|---|---|---|---|
-| 5 (from 7 Dec) | Video 3 Reel (W) | LinkedIn: Video 3 EN | Carousel C (W) | Image W1 |
-| 6 | Carousel D (R) | LinkedIn: Carousel C EN | Image R1 | Image W2 |
-| 7 | Carousel E (N) | LinkedIn: Carousel D EN | Image N1 | Carousel C repeat or owner's pick |
-| 8 | Owner's pick | LinkedIn: "how it's built" (H) | Owner's pick | Owner's pick |
+Weeks 5-8 (7 Dec to 2 Jan) are rows in `calendar.csv`, same cadence as batch 1 (Instagram Mon/Thu
+19:30 and Sat 09:00, LinkedIn Tue 08:30). Ready: Video 3, carousels C and D, images imgW1, imgW2, imgR1.
+Todo: the routines carousel and image (need Arabic boxes) and the "how it's built" post. Four slots
+are open (Sat 26 Dec, Mon 28 Dec, Thu 31 Dec, Sat 2 Jan): the owner's pick.
 
 ## Open for the owner
 
