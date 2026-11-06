@@ -18,11 +18,10 @@ Last updated: 6 Nov 2026 11:00 WIB (promo batch 2 complete; 1.12.6 is shipped).
 Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the results first.
 - Review page (videos play, ID/EN switch): https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj
 - Full-quality media: orphan branch `promo-assets` (never merge it; keeps `main` small).
-- Drive folder "Adwam promo" (private): Google Doc "Batch 1 plan and results", Sheet "Calendar".
-  Notion (6 Nov): the plan page also holds the full calendar (weeks 1-9) as a database:
-  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. Drive has a second Sheet "Calendar (weeks 1-9, final)";
-  the old Sheet (weeks 1-4) can't be edited from here. `calendar.csv` stays the source of truth.
-  The Drive connector only takes inline content, so media is not in Drive.
+- Plan, results and calendar live in Notion (6 Nov; the Drive Doc and Sheets were trashed, restorable from
+  Drive's trash): page https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
+  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04 (weeks 1-9). `calendar.csv` stays the source
+  of truth. Media is on `promo-assets` and the review page, not in Notion or Drive.
 - Source: `marketing/` (PR #163): `README.md` (how to render), `brief.md`, `copy.md`,
   `alt-text.md`, `calendar.csv`, scenes, engine. 2 videos x 4 formats (ID/EN, 9:16/4:5) + .srt,
   8 images, 2 carousels (+ PDFs). Calendar: 17 posts, Mon 9 Nov to Sat 5 Dec.
@@ -34,8 +33,7 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   (https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3). Nothing owed.
 - **Batch 2** (plan `marketing/batch2.md`; details in history, "Promo batch 2"). Done: English-UI media
   for batch 1, widgets (carousel C, Video 3, imgW1/W2), reminders (carousel D, imgR1), "how it's
-  built" (`imgH-en`, LinkedIn Tue 29 Dec), calendar weeks 5-8 in `calendar.csv` (the Drive Sheet has
-  weeks 1-4 only), all media on `promo-assets` (fd23653), review page current.
+  built" (`imgH-en`, LinkedIn Tue 29 Dec), calendar weeks 5-9 in `calendar.csv` and Notion, all media on `promo-assets` (fd23653), review page current.
 - **Routines (N): done** (#174, #175). Carousel E (cE1-cE6, ID+EN, PDFs) and imgN1 are on
   `promo-assets` (f571d5b) and the review page; captions, alt text and calendar (21 Dec, 24 Dec = ready)
   are on main. `carousel-E-en.pdf` is on LinkedIn Tue 5 Jan 08:30 (week 9, added 6 Nov).
