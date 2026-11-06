@@ -134,6 +134,15 @@ class WidgetScreenshotTest {
             render("89-widget-1x3-tall-en-12h", DpSize(84.dp, 240.dp), data(at(8, 30), is24 = false), locale = Locale.ENGLISH)
             // The lightest glass the opacity setting allows, with the 12-hour "PM" on the digits' baseline.
             render("125-widget-5x2-en-12h-light-glass", DpSize(428.dp, 164.dp), data(at(13, 10), is24 = false, opacity = WIDGET_OPACITY_MIN), locale = Locale.ENGLISH)
+            // The English 4×2 through the day (promo video 3), same times as the Indonesian 81 series.
+            val day = listOf(
+                "160-widget-4x2-en-12h-0445" to at(4, 45),
+                "161-widget-4x2-en-12h-0830" to at(8, 30),
+                "162-widget-4x2-en-12h-1135" to at(11, 35),
+                "163-widget-4x2-en-12h-1730" to at(17, 30),
+                "164-widget-4x2-en-12h-2100" to at(21, 0),
+            )
+            for ((name, t) in day) render(name, DpSize(340.dp, 164.dp), data(t, is24 = false), locale = Locale.ENGLISH)
         } finally {
             Locale.setDefault(default)
         }
