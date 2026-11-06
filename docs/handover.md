@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 07:00 WIB (promo batch 2 EN-UI media done, PRs #165/#166; 1.12.6 is the shipped version).
+Last updated: 6 Nov 2026 08:00 WIB (promo batch 2: EN media, widgets and reminders built; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Nothing open; promo PRs #163, #165, #166 merged.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#168 merged; #169 (widgets and reminders media) open.
 
 ## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
 
@@ -30,14 +30,16 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
 - **Notion works** (tested 6 Nov): `notion-create-pages` loads via ToolSearch. The Google Doc is
   copied to a private Notion draft: https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3
   (owner can move it). Nothing owed.
-- **Batch 2 step 1 done (6 Nov): English-UI media.** CI shots 150-157 (`PromoEnglishScreenshotTest`, #165);
-  `prep_screens.py` builds `-en` screens and the scenes read them for `lang=en` (#166). Re-rendered:
-  19 EN stills, EN carousel PDFs, EN 4:5 videos (v1 28.6 s, v2 20.3 s); pushed to `promo-assets`
-  (607802b; old EN media stays in its history) and the review page is updated. The old EN 9:16
-  videos still show the Indonesian UI: don't post them (not re-rendered; owner can ask).
-  Calendar rows for LinkedIn (Tue) now use the English-UI files. Renders: ~20-25 min per video
-  on 4 cores; v1 and v2 can run in parallel. Needs `build/mark.js` (`prep_mark.py`) for stills.
-- Batch 2 next: widgets, reminders, routines, a LinkedIn "how it's built" post (owner picks).
+- **Batch 2 (plan: `marketing/batch2.md`).** Step 1 done 6 Nov: all English media now in the English UI
+  (shots 150-159 from `PromoEnglishScreenshotTest`; `prep_screens.py` builds `-en` screens; scenes read
+  them for `lang=en`), incl. the EN 9:16 videos. Owner picked widgets + reminders first: built
+  carousel C (widgets, 6), D (reminders, 4), images imgW1/W2/imgR1, ID + EN, EN PDFs; captions and
+  alt text drafted in `copy.md`/`alt-text.md`. All media on `promo-assets` (56ea248); review page updated.
+  **Not done:** Video 3 "Di layar utama" (~15 s widget video); routines (N) needs Arabic boxes in
+  `prep_screens.py` (111, 113, 31 show Arabic; 112 shows placeholder text); "how it's built" (H) image;
+  calendar rows for batch 2 (draft in `batch2.md`, from 7 Dec); owner picks topic order for the rest.
+  Tips: a still needs `build/mark.js` (`prep_mark.py`); renders take ~15-25 min per video, run 2 in parallel.
+  The Screenshots workflow does a plain `git push`: push your own commits only after it finishes.
 
 ## Waiting on the owner
 
