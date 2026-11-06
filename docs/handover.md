@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 09:15 WIB (promo batch 2: widgets, reminders, Video 3, calendar done; 1.12.6 is shipped).
+Last updated: 6 Nov 2026 10:00 WIB (promo batch 2: only routines left; 1.12.6 is shipped).
 
 ## In flight
 
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#171 merged.
+- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#172 merged.
 
 ## Promo campaign: batch 1 done, batch 2 started (6 Nov); next task, Sonnet
 
@@ -37,7 +37,8 @@ Batch 1 is built, QA'd and ready to post; the owner posts. Show the owner the re
   alt text in `copy.md`/`alt-text.md`. All media on `promo-assets` (8121b9f); review page updated.
   Calendar weeks 5-8 (7 Dec to 2 Jan) are in `calendar.csv` (not in the Drive Sheet, which has
   weeks 1-4). **Not done:** routines (N) needs Arabic boxes in `prep_screens.py` (111, 113, 31 show
-  Arabic; 112 shows placeholder text); "how it's built" (H) image; 4 calendar slots are the owner's pick.
+  Arabic; 112 shows placeholder text). "How it's built" image `imgH-en` done (LinkedIn Tue 29 Dec).
+  4 calendar slots are the owner's pick.
   Tips: stills need `build/mark.js` (`prep_mark.py`); a video takes ~15-25 min, run 2-4 in parallel.
   The Screenshots workflow does a plain `git push`: push your own commits after it finishes.
 

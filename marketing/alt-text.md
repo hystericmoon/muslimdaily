@@ -48,3 +48,9 @@ Screens never show readable Arabic: dua words appear as empty boxes, the app's o
 | imgR1 / cD1 | Pengaturan pengingat Adwam dengan pilihan Mati, Suara, Senyap untuk Subuh disorot. Judul: "Pengingat sesuai Anda." | Adwam's reminder settings with the Off, Sound, Silent choice for Fajr highlighted. Headline: "Reminders your way." |
 | cD2 | Pilihan tiap shalat: Subuh Suara, Dzuhur Mati, Maghrib Senyap, masing-masing disorot. Judul: "Mati, suara, atau senyap." | The choice for each prayer: Fajr Sound, Dhuhr Off, Maghrib Silent, each highlighted. Headline: "Off, sound, or silent." |
 | cD3 | Catatan di pengaturan: tanpa izin alarm tepat waktu, pengingat bisa terlambat beberapa menit. Judul: "Jujur soal batasnya." | The note in settings: without the exact-alarm permission, reminders may be a few minutes late. Headline: "Honest about the limits." |
+
+## How it's built (LinkedIn, English)
+
+| Image | English |
+|---|---|
+| imgH | A flow diagram on a cream background titled "How Adwam is built." Three cards in a row: Check 1, Authoring (a Python validator runs before anything is built); Check 2, Build (the Gradle release build fails on incomplete entries); Check 3, On device (checksum and validation again at import). Below, two cards: Local database (Room with FTS4 search) leading to Compose screens (one immutable state per screen). A row of labels: Kotlin, Compose, Hilt, Room, DataStore, Glance, and the line "No INTERNET permission · Screenshot tests on CI · Open source". |
