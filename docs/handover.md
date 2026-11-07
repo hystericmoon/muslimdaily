@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 7 Nov 2026 (promo done, LinkedIn video thumbnails added; nothing in flight; 1.12.6 shipped).
+Last updated: 7 Nov 2026 (promo done, LinkedIn thumbnails added; nothing in flight; 1.12.6 shipped; next: owner posts from 9 Nov).
 
 ## In flight
 
@@ -77,7 +77,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-6 Nov Sonnet: promo batch 2, #165-#181; Notion calendar copy/links, #183); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-7 Nov Sonnet: promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
