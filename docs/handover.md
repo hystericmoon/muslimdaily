@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 6 Nov 2026 13:20 WIB (promo batches 1-2 complete, Notion calendar now holds copy, alt text and links; nothing open in flight; 1.12.6 is shipped).
+Last updated: 7 Nov 2026 (promo done, LinkedIn video thumbnails added; nothing in flight; 1.12.6 shipped).
 
 ## In flight
 
@@ -24,10 +24,13 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
   Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
   `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
   no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
-- Media: orphan branch `promo-assets` (never merge it; head 6fae9a0) and the review page
+- Media: orphan branch `promo-assets` (never merge it; head 15d6316) and the review page
   https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj (private; the owner shares it).
 - Source: `marketing/` (`README.md` how to render, `brief.md`, `batch2.md`, `copy.md`, `alt-text.md`,
   scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
+- LinkedIn video thumbnails (7 Nov, #185): v1 `images/tV1-en.png`, v2 `images/tV2-en.png` (scene ids
+  `tV1`/`tV2` in `stills.html`: covers without swipe line and counter), v3 existing `imgW1-en.png`.
+  Linked under Extra files in the Notion rows for weeks 1, 3, 5.
 - Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
   dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
 - Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
