@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 7 Nov 2026 (promo done, LinkedIn video thumbnails added; nothing in flight; 1.12.6 shipped).
+Last updated: 7 Nov 2026 (promo done, LinkedIn thumbnails added; nothing in flight; 1.12.6 shipped; next: owner posts from 9 Nov).
 
 ## In flight
 
@@ -20,7 +20,7 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 - Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
   from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
   https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
-  Calendar columns added 6 Nov: Media link (GitHub raw link on `promo-assets`, folder link for
+  Calendar columns added 6 Nov (Thumbnail 7 Nov): Media link (GitHub raw link on `promo-assets`, folder link for
   Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
   `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
   no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
@@ -30,7 +30,7 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
   scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
 - LinkedIn video thumbnails (7 Nov, #185): v1 `images/tV1-en.png`, v2 `images/tV2-en.png` (scene ids
   `tV1`/`tV2` in `stills.html`: covers without swipe line and counter), v3 existing `imgW1-en.png`.
-  Linked under Extra files in the Notion rows for weeks 1, 3, 5.
+  Linked in the Notion `Thumbnail` column (URL) for weeks 1, 3, 5.
 - Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
   dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
 - Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
@@ -77,7 +77,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-6 Nov Sonnet: promo batch 2, #165-#181; Notion calendar copy/links, #183); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-7 Nov Sonnet: promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
