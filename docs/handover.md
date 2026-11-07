@@ -20,7 +20,7 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 - Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
   from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
   https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
-  Calendar columns added 6 Nov: Media link (GitHub raw link on `promo-assets`, folder link for
+  Calendar columns added 6 Nov (Thumbnail 7 Nov): Media link (GitHub raw link on `promo-assets`, folder link for
   Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
   `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
   no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
@@ -30,7 +30,7 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
   scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
 - LinkedIn video thumbnails (7 Nov, #185): v1 `images/tV1-en.png`, v2 `images/tV2-en.png` (scene ids
   `tV1`/`tV2` in `stills.html`: covers without swipe line and counter), v3 existing `imgW1-en.png`.
-  Linked under Extra files in the Notion rows for weeks 1, 3, 5.
+  Linked in the Notion `Thumbnail` column (URL) for weeks 1, 3, 5.
 - Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
   dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
 - Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
