@@ -108,6 +108,7 @@ class RoutineScreenshotTest {
             id.haho.muslimdaily.feature.duas.components.PlayerBar(
                 isPlaying = true, speed = 1f, repeat = false, enabled = true,
                 onToggle = {}, onSpeed = {}, onRepeat = {},
+                onPreviousPhrase = {}, onNextPhrase = {}, canPrevious = true, canNext = true,
             )
         }
     }

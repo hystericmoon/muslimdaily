@@ -21,6 +21,7 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -227,8 +229,6 @@ fun DuaCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     header: (@Composable () -> Unit)? = null,
-    /** An action at the end of the source row, e.g. "Hafalkan" on an occasion's page. */
-    footer: (@Composable RowScope.() -> Unit)? = null,
 ) {
     val press = remember { MutableInteractionSource() }
     GlassCard(
@@ -251,22 +251,38 @@ fun DuaCard(
             // A preview: long texts (e.g. Ayat al-Kursi) are clamped; the detail shows them in full.
             ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
             DuaTranslations(dua, prefs, maxLines = CARD_TRANSLATION_LINES)
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                FlowRow(
-                    modifier = Modifier.weight(1f),
-                    horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-                ) {
-                    dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
-                    SourceChip(dua)
-                }
-                footer?.invoke(this)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            ) {
+                dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
+                SourceChip(dua)
             }
         }
     }
 }
 
-/** Play/pause, speed and repeat for a dua's recitation. Controls exceed the 48dp minimum. */
+/**
+ * Adds the dua to the Memorize tab (My hifz) and says whether it is there. A toggle like the
+ * routine bookmark: it never starts a session, the Memorize tab does.
+ */
+@Composable
+fun HifzToggle(inHifz: Boolean, onToggle: () -> Unit, modifier: Modifier = Modifier) {
+    val state = stringResource(if (inHifz) R.string.memorize_state_in else R.string.memorize_state_not_in)
+    IconToggleButton(
+        checked = inHifz,
+        onCheckedChange = { onToggle() },
+        modifier = modifier.semantics { stateDescription = state },
+    ) {
+        Icon(
+            painterResource(if (inHifz) R.drawable.ic_record_voice_over_fill else R.drawable.ic_record_voice_over),
+            contentDescription = stringResource(R.string.memorize_add_label),
+            tint = if (inHifz) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** Repeat, previous phrase, play/pause, next phrase and speed, in one compact row. Every control is at least 48dp. */
 @Composable
 fun PlayerBar(
     isPlaying: Boolean,
@@ -276,6 +292,10 @@ fun PlayerBar(
     onToggle: () -> Unit,
     onSpeed: (Float) -> Unit,
     onRepeat: (Boolean) -> Unit,
+    onPreviousPhrase: () -> Unit,
+    onNextPhrase: () -> Unit,
+    canPrevious: Boolean,
+    canNext: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var speedMenu by remember { mutableStateOf(false) }
@@ -292,7 +312,7 @@ fun PlayerBar(
                 onCheckedChange = onRepeat,
                 enabled = enabled,
                 modifier = Modifier
-                    .size(HahoTheme.dimens.largeTouchTarget)
+                    .size(PLAYER_TARGET)
                     .semantics { stateDescription = repeatState },
             ) {
                 Icon(
@@ -301,23 +321,29 @@ fun PlayerBar(
                     tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            IconButton(onClick = onPreviousPhrase, enabled = enabled && canPrevious, modifier = Modifier.size(PLAYER_TARGET)) {
+                Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.player_previous_phrase))
+            }
             GlassIconButton(
                 onClick = onToggle,
                 enabled = enabled,
-                modifier = Modifier.size(AdwamDimens.playerMainButton),
+                modifier = Modifier.size(AdwamDimens.playerCompactButton),
             ) {
                 Icon(
                     painterResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
                     contentDescription = stringResource(if (isPlaying) R.string.player_pause else R.string.player_play),
-                    modifier = Modifier.size(HahoTheme.dimens.icon * 1.5f),
+                    modifier = Modifier.size(HahoTheme.dimens.icon * 1.25f),
                 )
+            }
+            IconButton(onClick = onNextPhrase, enabled = enabled && canNext, modifier = Modifier.size(PLAYER_TARGET)) {
+                Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.player_next_phrase))
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 val speedDescription = stringResource(R.string.player_speed, speedLabel(speed))
                 TextButton(
                     onClick = { speedMenu = true },
                     enabled = enabled,
-                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = HahoTheme.dimens.largeTouchTarget * 1.25f, height = HahoTheme.dimens.largeTouchTarget),
+                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = PLAYER_TARGET * 1.25f, height = PLAYER_TARGET),
                 ) {
                     Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
                 }
@@ -338,6 +364,7 @@ fun PlayerBar(
     }
 }
 
+private val PLAYER_TARGET = 48.dp
 private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 
 fun speedLabel(speed: Float): String = String.format(AppLocale, "%.2f×", speed).replace(Regex("[.,]00×"), "×").replace(Regex("([.,]\\d)0×"), "$1×")

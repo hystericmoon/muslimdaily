@@ -119,6 +119,7 @@
     <string name="today_isha_ends_third">Until a third of the night %s</string>
     <string name="today_isha_ends_middle">Until the middle of the night %s</string>
     <string name="today_isha_ends_fajr">Until Fajr %s</string>
+    <string name="today_isha_ended">Ended %s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Some scholars allow a wider time range.</string>
     <string name="note_prohibited_cause">Scholars differ on prayers that have a reason, such as tahiyyat al-masjid.</string>
@@ -261,7 +262,11 @@
     <string name="dua_virtue">Virtue</string>
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
     <string name="audio_failed">The audio couldn\'t be played. Try again; if it keeps failing, report it from the dua\'s page.</string>
-    <string name="dua_memorize">Memorize</string>
+    <string name="memorize_add_label">Add to Memorize</string>
+    <string name="memorize_state_in">in Memorize</string>
+    <string name="memorize_state_not_in">not in Memorize</string>
+    <string name="memorize_added">Added to Memorize</string>
+    <string name="memorize_undo">Undo</string>
     <string name="dua_add_to_routine">Add to routine</string>
     <string name="dua_full_entry_show">See the full text in the book</string>
     <string name="dua_full_entry_hide">Hide the full text</string>
@@ -270,6 +275,8 @@
     <string name="player_play">Play</string>
     <string name="player_pause">Pause</string>
     <string name="player_repeat">Repeat</string>
+    <string name="player_previous_phrase">Previous phrase</string>
+    <string name="player_next_phrase">Next phrase</string>
     <string name="dua_phrase_back">Back</string>
     <string name="dua_phrase_next">Next</string>
     <string name="dua_phrase_position">Phrase %1$d of %2$d</string>
@@ -858,7 +865,6 @@
         <item quantity="one">+%d more dua</item>
         <item quantity="other">+%d more duas</item>
     </plurals>
-    <string name="event_in_hifz">In My hifz</string>
     <string name="routine_default_name">My duas</string>
     <string name="bookmark_label">Save to routine</string>
     <string name="bookmark_state_saved">in a routine</string>

@@ -103,7 +103,6 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<DuaDetailRoute> {
                 DuaDetailRoute(
                     onBack = back,
-                    onMemorize = { navController.navigate(MemorizeSessionRoute(it)) },
                     onNewRoutine = { navController.navigate(RoutineEditRoute(withDua = it)) },
                 )
             }

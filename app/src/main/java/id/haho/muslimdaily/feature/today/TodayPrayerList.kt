@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.today
 
+import androidx.compose.foundation.selection.toggleable
+import java.time.Duration
 import id.haho.design.component.checkRowTitleInset
 import id.haho.design.component.CheckRowAnchor
 import id.haho.design.glass.GlassBottomSheet
@@ -107,6 +109,9 @@ internal fun PrayerListCard(
     evidenceFor?.let { line -> EvidenceSheet(line) { evidenceFor = null } }
 }
 
+/** One "until ..." line in an expanded prayer row; [countdown] only on the nearest end of Isya. */
+private data class EndLine(val text: String, val countdown: String? = null, val past: Boolean = false)
+
 @Composable
 private fun PrayerRowView(
     row: PrayerRow,
@@ -122,12 +127,28 @@ private fun PrayerRowView(
     val name = stringResource(row.plan?.prayer?.labelRes() ?: row.slot.labelRes())
     // When the time ends, the first lines inside the row. Isya's three ends are stacked, unranked.
     val ends = when (row.slot) {
-        PrayerTimeSlot.FAJR -> listOf(stringResource(R.string.today_fajr_ends, time.format(data.sunrise, data.zone)))
-        PrayerTimeSlot.ISHA -> listOf(
-            stringResource(R.string.today_isha_ends_third, time.format(data.ishaEnds.thirdOfNight, data.zone)),
-            stringResource(R.string.today_isha_ends_middle, time.format(data.ishaEnds.midnight, data.zone)),
-            stringResource(R.string.today_isha_ends_fajr, time.format(data.ishaEnds.fajr, data.zone)),
-        )
+        PrayerTimeSlot.FAJR -> listOf(EndLine(stringResource(R.string.today_fajr_ends, time.format(data.sunrise, data.zone))))
+        PrayerTimeSlot.ISHA -> {
+            val limits = listOf(
+                R.string.today_isha_ends_third to data.ishaEnds.thirdOfNight,
+                R.string.today_isha_ends_middle to data.ishaEnds.midnight,
+                R.string.today_isha_ends_fajr to data.ishaEnds.fajr,
+            )
+            // While Isya is current, the nearest end carries a countdown and an end that has passed
+            // says so; the later ones stay as plain times.
+            val nearest = if (row.isCurrent) limits.firstOrNull { it.second.isAfter(data.now) } else null
+            limits.map { (res, at) ->
+                val formatted = time.format(at, data.zone)
+                when {
+                    row.isCurrent && !at.isAfter(data.now) -> EndLine(stringResource(R.string.today_isha_ended, formatted), past = true)
+                    at == nearest?.second -> EndLine(
+                        stringResource(res, formatted),
+                        countdown = stringResource(R.string.countdown_in, durationLabel(Duration.between(data.now, at))),
+                    )
+                    else -> EndLine(stringResource(res, formatted))
+                }
+            }
+        }
         else -> null
     }
     // Witr is checked inside Isya, after its ba'diyah.
@@ -220,12 +241,16 @@ private fun PrayerRowView(
                             Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).padding(bottom = HahoTheme.spacing.sm)
                                 .semantics(mergeDescendants = true) {},
                         ) {
-                            lines.forEach {
+                            lines.forEach { line ->
                                 Text(
-                                    it,
+                                    line.text,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = if (row.isCurrent) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    color = if (row.isCurrent && !line.past) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
+                                // Minute precision, and not a live region: TalkBack reads it when focused.
+                                line.countdown?.let {
+                                    Text(it, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                                }
                             }
                         }
                     }
@@ -293,12 +318,16 @@ private fun TimelineStepRow(
     Column(Modifier.fillMaxWidth().padding(start = HahoTheme.spacing.md)) {
         // Dot, title and checkbox share one line: the step's first line.
         Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
-            Rail(isFirst, isLast && !hasExtras, emphasised = step is TimelineStep.Obligatory)
-            AdwamCheckRow(
-                checked = checked,
-                onCheckedChange = { onToggle(key, it) },
-                modifier = Modifier.padding(start = HahoTheme.spacing.md, end = HahoTheme.spacing.xs),
-                minHeight = HahoTheme.dimens.largeTouchTarget,
+            Rail(isFirst, isLast && !hasExtras, emphasised = step is TimelineStep.Obligatory, checked = checked)
+            // The whole row is the check: the rail's dot fills and shows a tick once it is done.
+            val doneLabel = stringResource(if (checked) R.string.check_state_done else R.string.check_state_not_done)
+            Row(
+                Modifier
+                    .weight(1f)
+                    .padding(start = HahoTheme.spacing.md, end = HahoTheme.spacing.xs)
+                    .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+                    .toggleable(value = checked, role = Role.Checkbox, onValueChange = { onToggle(key, it) })
+                    .semantics { stateDescription = doneLabel },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
@@ -393,22 +422,38 @@ private fun rakahText(line: RawatibLine): String? {
 @Composable
 private fun RailLine(visible: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
-    Box(Modifier.fillMaxHeight().width(AdwamDimens.timelineDot), contentAlignment = Alignment.Center) {
+    Box(Modifier.fillMaxHeight().width(AdwamDimens.timelineCheck), contentAlignment = Alignment.Center) {
         if (visible) Box(Modifier.fillMaxHeight().width(HahoTheme.dimens.divider * 2).background(lineColor))
     }
 }
 
 @Composable
-private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean) {
+private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean, checked: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
     val dotColor = if (emphasised) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-    Column(Modifier.fillMaxHeight().width(AdwamDimens.timelineDot), horizontalAlignment = Alignment.CenterHorizontally) {
-        // Dot centred on the checkbox anchor, i.e. level with the step's title.
+    Column(Modifier.fillMaxHeight().width(AdwamDimens.timelineCheck), horizontalAlignment = Alignment.CenterHorizontally) {
+        // The dot is centred on the title's anchor; a done step grows into a filled circle with a tick.
         Box(
-            Modifier.height(CheckRowAnchor - AdwamDimens.timelineDot / 2).width(HahoTheme.dimens.divider * 2)
+            Modifier.height(CheckRowAnchor - AdwamDimens.timelineCheck / 2).width(HahoTheme.dimens.divider * 2)
                 .background(if (isFirst) lineColor.copy(alpha = 0f) else lineColor),
         )
-        Box(Modifier.size(AdwamDimens.timelineDot).background(dotColor, CircleShape))
+        Box(Modifier.size(AdwamDimens.timelineCheck), contentAlignment = Alignment.Center) {
+            if (checked) {
+                Box(
+                    Modifier.size(AdwamDimens.timelineCheck).background(MaterialTheme.colorScheme.primary, CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        painterResource(R.drawable.ic_check),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(AdwamDimens.timelineCheck * 0.7f),
+                    )
+                }
+            } else {
+                Box(Modifier.size(AdwamDimens.timelineDot).background(dotColor, CircleShape))
+            }
+        }
         Box(Modifier.weight(1f).width(HahoTheme.dimens.divider * 2).background(if (isLast) lineColor.copy(alpha = 0f) else lineColor))
     }
 }

@@ -7,9 +7,19 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 7 Nov 2026 (promo done, LinkedIn thumbnails added; nothing in flight; 1.12.6 shipped; next: owner posts from 9 Nov).
+Last updated: 11 Nov 2026 (screenshot-review UI pass in flight; promo done; 1.12.6 shipped; next: owner posts from 9 Nov).
 
 ## In flight
+
+- Screenshot review (owner, 11 Nov, Sonnet): review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v. Done in the PR
+  `claude/notion-promo-batch-1-o2p0c4`: Memorize is now a toggle (adds to My hifz, never starts a session) in the occasion
+  card header and on the dua detail source row, with an Undo snackbar; compact player bar with previous/next phrase (focus
+  layout keeps only the "n / m" count when audio exists); Isha ends show a countdown on the nearest end and "Ended" after;
+  Today timeline: the rail dot becomes the check and the whole row is the target; Run card: previous/next sit in line with
+  the tap hint. NOT done, needs the owner: (1) "Start reading" only on chosen packs (needs a flag in `content/*.json`, so
+  an owner OK and which packs); (2) back-transition overlap on Qibla (predictive back; screens are transparent over the
+  window backdrop, needs an emulator to verify); (3) a media bar inside Run (no audio there today, a feature for Opus);
+  (4) wrapping date heading on Today. Screenshots workflow must be run on the branch after the push.
 
 - Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 and #183 (Notion tools allowed in `.claude/settings.json`) merged; no PR open.
 
