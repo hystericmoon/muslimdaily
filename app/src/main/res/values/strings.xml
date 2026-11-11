@@ -904,6 +904,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_13_0">
+        <item>Tombol Hafalkan kini ada di kartu momen dan di sumber doa: menambahkan doa ke Hafalan saya tanpa memulai sesi, dengan Urungkan.</item>
+        <item>Mulai membaca kini hanya muncul untuk dzikir pagi dan petang. Pemutar audio lebih ringkas dengan frasa sebelumnya/berikutnya, dan Isya kini menampilkan hitung mundur menuju berakhirnya waktu.</item>
+        <item>Linimasa Hari ini: titik di rel menjadi centang dan seluruh baris bisa diketuk. Judul tanggal tanpa tahun.</item>
+    </string-array>
     <string-array name="whats_new_1_12_6">
         <item>Dua doa kini punya terjemah bahasa Inggris, doa untuk orang yang hendak wafat kini ada rekamannya, dan 16 doa lagi punya tulisan Latin. Tulisan Latin selalu diturunkan dari teks Arab yang bersumber.</item>
         <item>Lima tulisan Latin diperbaiki (mis. \"rabbā\", bukan \"rabbaā\"), dan tulisan Latin yang tidak yakin kini dikosongkan, bukan ditebak.</item>

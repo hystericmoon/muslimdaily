@@ -7,6 +7,11 @@ don't read it end to end at session start. Newest first within each section.
 
 ## Shipped
 
+1.13.0 (versionCode 56, 11 Nov WIB, release PR #193; features #188, #191, #192): Memorize toggle (occasion card, dua
+source row, Undo), compact player bar with previous/next phrase, Isha end countdown, Today timeline rail check, Today
+heading without year, Start reading only on morning/evening adhkar (`sequential` flag, ContentDatabase v8). No
+content rows changed.
+
 1.12.6 (versionCode 55, 3 Nov 21:23 WIB, #159, content #157): English for eating_01 and waswas_04, funeral_01
 audio (hisn_153), Latin for 16 rows, 5 Latin corrections (adhan_02, adhan_04, istiftah_03, news_02,
 funeral_03). Unvowelled «رضي الله عنه» left out of the Latin (owner, 3 Nov). content_version 55.

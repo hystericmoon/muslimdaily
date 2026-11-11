@@ -918,6 +918,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_13_0">
+        <item>A Memorize toggle now sits on the occasion card and on a dua\'s source row: it adds the dua to My hifz without starting a session, with Undo.</item>
+        <item>Start reading now appears only for morning and evening adhkar. The audio player is more compact with previous/next phrase, and Isha shows a countdown to when its time ends.</item>
+        <item>Today timeline: the rail dot becomes the check and the whole row is tappable. The date heading drops the year.</item>
+    </string-array>
     <string-array name="whats_new_1_12_6">
         <item>Two duas now have an English translation, the dua for a dying person now has audio, and 16 more duas have Latin transliteration. The Latin is always derived from the sourced Arabic.</item>
         <item>Five transliterations were corrected (e.g. \"rabbā\", not \"rabbaā\"), and any transliteration the rules are unsure of is now left blank instead of guessed.</item>
