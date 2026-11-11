@@ -109,6 +109,7 @@ class RoutineScreenshotTest {
                 isPlaying = true, speed = 1f, repeat = false, enabled = true,
                 onToggle = {}, onSpeed = {}, onRepeat = {},
                 onPreviousPhrase = {}, onNextPhrase = {}, canPrevious = true, canNext = true,
+                phraseCount = 24, activePhrase = 3,
             )
         }
     }

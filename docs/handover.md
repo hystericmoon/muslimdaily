@@ -20,7 +20,7 @@ Last updated: 11 Nov 2026 (screenshot-review pass merged in #188; promo done; 1.
   Open, needs the owner: (1) "Start reading" only on chosen packs: a flag in `content/*.json`, so owner OK and which
   packs (suggested: morning and evening dhikr); (2) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (3) media bar inside Run (no audio there; Opus feature);
-  (4) pick media bar concept A (phrase-segmented, recommended), B or C; (5) wrapping date heading on Today.
+  (4) media bar concept A (phrase-segmented track) chosen 11 Nov and built in a follow-up PR; (5) wrapping date heading on Today.
 - Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 and #183 (Notion tools allowed in `.claude/settings.json`) merged; no PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
