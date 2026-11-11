@@ -56,6 +56,11 @@ private val LongDate get() = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Ap
 
 fun formatLongDate(date: LocalDate): String = LongDate.format(date)
 
+private val DayMonth get() = DateTimeFormatter.ofPattern("EEEE, d MMMM", AppLocale)
+
+/** Weekday, day and month without the year: short enough for a headline on one line at "Rabu, 30 September". */
+fun formatDayMonth(date: LocalDate): String = DayMonth.format(date)
+
 @Composable
 fun hijriLabel(h: HijriDate): String {
     val months = stringArrayResource(R.array.hijri_months)
