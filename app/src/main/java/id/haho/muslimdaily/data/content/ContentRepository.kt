@@ -38,7 +38,7 @@ class ContentRepository @Inject constructor(
                     labelId = c.label,
                     order = c.sortOrder,
                     events = events.filter { it.categoryId == c.id && it.duaCount > 0 }
-                        .map { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, it.duaCount, it.labelEn) },
+                        .map { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, it.duaCount, it.labelEn, it.sequential) },
                     labelEn = c.labelEn,
                 )
             }.filter { it.events.isNotEmpty() }
@@ -46,12 +46,12 @@ class ContentRepository @Inject constructor(
     }
 
     fun event(eventId: String): Flow<DuaEvent?> = afterImport {
-        dao.observeEvent(eventId).map { e -> e?.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, labelEn = it.labelEn) } }
+        dao.observeEvent(eventId).map { e -> e?.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, labelEn = it.labelEn, sequential = it.sequential) } }
     }
 
     suspend fun eventOnce(eventId: String): DuaEvent? {
         importer.ensureImported()
-        return dao.event(eventId)?.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, labelEn = it.labelEn) }
+        return dao.event(eventId)?.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, labelEn = it.labelEn, sequential = it.sequential) }
     }
 
     fun duasForEvent(eventId: String): Flow<List<Dua>> = afterImport {

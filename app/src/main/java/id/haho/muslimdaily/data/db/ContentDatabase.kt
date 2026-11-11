@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.Flow
     ],
     // 2: removed draft/review status, added the takhrij reference. Content is re-imported
     // from the bundled assets, so a destructive migration loses nothing. 5: the full English
-    // entry (translation_en_full). 6: sources in the search index. 7: kind and footnote.
-    version = 7,
+    // entry (translation_en_full). 6: sources in the search index. 7: kind and footnote. 8: events.sequential.
+    version = 8,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
@@ -42,6 +42,7 @@ data class EventEntity(
     val label: String,
     val labelEn: String,
     val sortOrder: Int,
+    val sequential: Boolean = false,
 )
 
 @Entity(tableName = "duas")
@@ -140,6 +141,7 @@ data class EventWithCount(
     val label: String,
     val labelEn: String,
     val sortOrder: Int,
+    val sequential: Boolean,
     val duaCount: Int,
 )
 
@@ -155,7 +157,7 @@ interface ContentDao {
     fun categories(): Flow<List<CategoryEntity>>
 
     @Query(
-        """SELECT e.id, e.categoryId, e.label, e.labelEn, e.sortOrder,
+        """SELECT e.id, e.categoryId, e.label, e.labelEn, e.sortOrder, e.sequential,
            (SELECT COUNT(*) FROM duas d WHERE d.event = e.id) AS duaCount
            FROM events e ORDER BY e.sortOrder""",
     )

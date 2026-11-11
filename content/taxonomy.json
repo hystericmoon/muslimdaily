@@ -47,8 +47,8 @@
       "label_en": "Morning & evening adhkar",
       "order": 3,
       "events": [
-        { "id": "morning", "label": "Dzikir pagi", "label_en": "Morning adhkar", "order": 1 },
-        { "id": "evening", "label": "Dzikir petang", "label_en": "Evening adhkar", "order": 2 }
+        { "id": "morning", "label": "Dzikir pagi", "label_en": "Morning adhkar", "order": 1, "sequential": true },
+        { "id": "evening", "label": "Dzikir petang", "label_en": "Evening adhkar", "order": 2, "sequential": true }
       ]
     },
     {

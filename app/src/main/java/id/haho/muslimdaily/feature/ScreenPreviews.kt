@@ -56,7 +56,7 @@ import java.time.LocalDate
  * to TodayScreen. Sample data is structural only; see DuaPreviewData.
  */
 
-private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1)
+private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1, sequential = true)
 private val settings = TodayPreviewData.settings
 
 @HahoPreviews @Composable

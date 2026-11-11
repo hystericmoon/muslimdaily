@@ -29,7 +29,7 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "id-w400dp-h1600dp-xhdpi")
 class DuasScreenshotTest {
-    private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1)
+    private val event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1, sequential = true)
 
     @Test
     fun library() = captureVariants("20-duas-library") { DuaLibraryContent(DuaPreviewData.categories) {} }

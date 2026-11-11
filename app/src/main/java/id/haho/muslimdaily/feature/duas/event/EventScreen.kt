@@ -126,7 +126,7 @@ fun EventRoute(
         snackbarHostState = snackbar,
         // Docked on the menu: read the occasion's duas one after another.
         bottomBar = {
-            if (s != null && s.items.isNotEmpty()) {
+            if (s != null && s.event?.sequential == true && s.items.isNotEmpty()) {
                 EventActionBar(
                     count = s.items.size,
                     onStart = { onStart(viewModel.eventId) },

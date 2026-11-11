@@ -128,7 +128,7 @@ class AccessibilityChecksTest {
 
     private fun detailState() = DuaDetailState(
         dua = DuaPreviewData.dua("morning_02", 2, count = 3),
-        event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1),
+        event = DuaEvent("morning", "adhkar", "Dzikir pagi", 1, sequential = true),
         prefs = ReadingPrefs(TranslationMode.BOTH, transliteration = true),
         playback = PlaybackState(duaId = "morning_02", isPlaying = true, activePhrase = 1),
     )
