@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.feature.duas.detail
 
-import id.haho.design.glass.GlassOutlinedButton
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,6 +58,11 @@ import id.haho.muslimdaily.feature.duas.components.CountBadge
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
+import id.haho.muslimdaily.feature.duas.components.HifzToggle
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
 import id.haho.muslimdaily.feature.duas.components.SourceChip
 import androidx.compose.material3.SnackbarHostState
@@ -76,7 +80,7 @@ data class DuaDetailActions(
     val onTogglePlay: () -> Unit = {},
     val onSpeed: (Float) -> Unit = {},
     val onRepeat: (Boolean) -> Unit = {},
-    val onMemorize: () -> Unit = {},
+    val onToggleHifz: () -> Unit = {},
     val onPlayFrom: (phrase: Int) -> Unit = {},
     val onSaveNote: (String) -> Unit = {},
     val onSetInRoutine: (routineId: String, included: Boolean) -> Unit = { _, _ -> },
@@ -86,7 +90,6 @@ data class DuaDetailActions(
 @Composable
 fun DuaDetailRoute(
     onBack: () -> Unit,
-    onMemorize: (String) -> Unit,
     onNewRoutine: (String) -> Unit,
     viewModel: DuaDetailViewModel = hiltViewModel(),
 ) {
@@ -100,6 +103,28 @@ fun DuaDetailRoute(
     val failedMessage = stringResource(R.string.audio_failed)
     val failed = s?.playback?.failed == true
     LaunchedEffect(failed) { if (failed) snackbar.showSnackbar(failedMessage) }
+    val addedMessage = stringResource(R.string.memorize_added)
+    val undoLabel = stringResource(R.string.memorize_undo)
+    var confirmRemove by rememberSaveable { mutableStateOf(false) }
+    // Adding is one tap with an Undo; removing drops the review schedule, so it asks first.
+    fun addToHifz() {
+        viewModel.addToHifz()
+        scope.launch {
+            snackbar.currentSnackbarData?.dismiss()
+            if (snackbar.showSnackbar(addedMessage, actionLabel = undoLabel, duration = SnackbarDuration.Short) == SnackbarResult.ActionPerformed) {
+                viewModel.removeFromHifz()
+            }
+        }
+    }
+    if (confirmRemove) {
+        AlertDialog(
+            onDismissRequest = { confirmRemove = false },
+            title = { Text(stringResource(R.string.memorize_remove_title)) },
+            text = { Text(stringResource(R.string.memorize_remove_body)) },
+            confirmButton = { TextButton(onClick = { confirmRemove = false; viewModel.removeFromHifz() }) { Text(stringResource(R.string.memorize_remove)) } },
+            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.action_cancel)) } },
+        )
+    }
     var readingSheet by rememberSaveable { mutableStateOf(false) }
     if (readingSheet && s != null) ReadingSheet(s.settings, viewModel::updateSettings) { readingSheet = false }
     AdwamScreen(
@@ -134,6 +159,10 @@ fun DuaDetailRoute(
                     onToggle = { viewModel.togglePlay(title) },
                     onSpeed = viewModel::setSpeed,
                     onRepeat = viewModel::setRepeat,
+                    onPreviousPhrase = { viewModel.skipPhrase(-1, title) },
+                    onNextPhrase = { viewModel.skipPhrase(1, title) },
+                    canPrevious = s.playback.activePhrase > 0,
+                    canNext = s.playback.activePhrase < s.dua.phrases.lastIndex,
                 )
             }
         },
@@ -142,7 +171,9 @@ fun DuaDetailRoute(
             DuaDetailContent(
                 state = s,
                 actions = DuaDetailActions(
-                    onMemorize = { onMemorize(s.dua.id) },
+                    onToggleHifz = {
+                        if (s.inHifz) confirmRemove = true else addToHifz()
+                    },
                     onPlayFrom = { viewModel.playFrom(it, title) },
                     onSaveNote = viewModel::saveNote,
                     onSetInRoutine = viewModel::setInRoutine,
@@ -176,16 +207,37 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                     layout = state.prefs.layout,
                     fill = state.prefs.fillFor(state.playback.isPlaying),
                     onPlayFrom = if (dua.audio != null) actions.onPlayFrom else null,
+                    focusNav = dua.audio == null,
                 )
             }
         }
         if (dua.audio != null && dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-        ) {
-            dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
-            SourceChip(dua)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+            FlowRow(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            ) {
+                dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
+                SourceChip(dua)
+            }
+            // Two toggles, as on the occasion page: in the Memorize tab, and in a routine.
+            if (dua.isRecitable) {
+                HifzToggle(state.inHifz, actions.onToggleHifz)
+                val saved = state.routines.any { dua.id in it.duaIds }
+                val savedLabel = stringResource(if (saved) R.string.bookmark_state_saved else R.string.bookmark_state_not_saved)
+                IconToggleButton(
+                    checked = saved,
+                    onCheckedChange = { routineSheet = true },
+                    modifier = Modifier.semantics { stateDescription = savedLabel },
+                ) {
+                    Icon(
+                        painterResource(if (saved) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
+                        contentDescription = stringResource(R.string.bookmark_label),
+                        tint = if (saved) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
         if (!dua.isRecitable) InfoNote(stringResource(R.string.dua_reading_card), icon = R.drawable.ic_menu_book)
         DuaTranslations(dua, state.prefs)
@@ -207,27 +259,6 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             }
         }
         if (dua.audio == null) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
-        if (dua.isRecitable) FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-        ) {
-            GlassOutlinedButton(onClick = actions.onMemorize) {
-                Icon(painterResource(R.drawable.ic_record_voice_over), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                Spacer(Modifier.width(HahoTheme.spacing.sm))
-                Text(stringResource(R.string.dua_memorize))
-            }
-            GlassOutlinedButton(onClick = { routineSheet = true }) {
-                // The same bookmark as on the occasion page: filled once the dua is in a routine.
-                val saved = state.routines.any { state.dua.id in it.duaIds }
-                Icon(
-                    painterResource(if (saved) R.drawable.ic_bookmark_added_fill else R.drawable.ic_bookmark_add),
-                    null,
-                    Modifier.size(HahoTheme.dimens.smallIcon),
-                )
-                Spacer(Modifier.width(HahoTheme.spacing.sm))
-                Text(stringResource(R.string.dua_add_to_routine))
-            }
-        }
     }
 }
 

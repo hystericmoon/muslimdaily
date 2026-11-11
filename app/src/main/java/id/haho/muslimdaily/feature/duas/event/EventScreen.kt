@@ -64,6 +64,7 @@ import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.domain.myset.ResolvedItem
 import id.haho.muslimdaily.domain.myset.SetItem
 import id.haho.muslimdaily.feature.duas.components.DuaCard
+import id.haho.muslimdaily.feature.duas.components.HifzToggle
 
 @Composable
 fun EventRoute(
@@ -138,7 +139,18 @@ fun EventRoute(
                 state = s,
                 onOpenDua = onOpenDua,
                 onChooseForm = viewModel::chooseForm,
-                onAddToHifz = viewModel::addToHifz,
+                onAddToHifz = { id ->
+                    viewModel.addToHifz(id)
+                    scope.launch {
+                        snackbar.currentSnackbarData?.dismiss()
+                        val result = snackbar.showSnackbar(
+                            resources.getString(R.string.memorize_added),
+                            actionLabel = resources.getString(R.string.memorize_undo),
+                            duration = SnackbarDuration.Short,
+                        )
+                        if (result == SnackbarResult.ActionPerformed) viewModel.removeFromHifz(id)
+                    }
+                },
                 onRemoveFromHifz = viewModel::removeFromHifz,
                 onBookmark = onBookmark,
             )
@@ -194,16 +206,15 @@ fun EventContent(
                 onClick = { onOpenDua(resolved.form.id) },
                 header = {
                     val id = resolved.form.id
-                    ItemHeader(index, state.items.size, resolved, onChooseForm, saved = id in saved, onBookmark = { onBookmark(id) })
-                },
-                // A reading card (a virtue hadith) has nothing to memorise.
-                footer = if (!resolved.form.isRecitable) null else ({
-                    val id = resolved.form.id
-                    HifzButton(
+                    ItemHeader(
+                        index, state.items.size, resolved, onChooseForm,
+                        saved = id in saved,
+                        onBookmark = { onBookmark(id) },
                         inHifz = id in state.hifz,
-                        onClick = { if (id in state.hifz) confirmRemove = id else onAddToHifz(id) },
+                        // Removing drops the review schedule, so it asks first; adding is one tap.
+                        onToggleHifz = { if (id in state.hifz) confirmRemove = id else onAddToHifz(id) },
                     )
-                }),
+                },
                 modifier = Modifier.animateItem().enterReveal(index),
             )
         }
@@ -218,6 +229,8 @@ private fun ItemHeader(
     onChooseForm: (String, String) -> Unit,
     saved: Boolean = false,
     onBookmark: () -> Unit = {},
+    inHifz: Boolean = false,
+    onToggleHifz: () -> Unit = {},
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -231,7 +244,9 @@ private fun ItemHeader(
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(1f).semantics { heading() },
             )
+            // A reading card (a virtue hadith) has nothing to memorise or save.
             if (!resolved.form.isRecitable) return@Row
+            HifzToggle(inHifz, onToggleHifz)
             // A toggle that says whether the dua is in a routine; the snackbar or sheet says which.
             val savedLabel = stringResource(if (saved) R.string.bookmark_state_saved else R.string.bookmark_state_not_saved)
             IconToggleButton(
@@ -268,25 +283,6 @@ private fun ItemHeader(
                 }
             }
         }
-    }
-}
-
-/** Adds the dua to "My hifz", or once there, says so (tapping again offers to remove it). */
-@Composable
-private fun HifzButton(inHifz: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val content: @Composable RowScope.() -> Unit = {
-        Icon(
-            painterResource(if (inHifz) R.drawable.ic_check else R.drawable.ic_record_voice_over),
-            null,
-            Modifier.size(HahoTheme.dimens.smallIcon),
-        )
-        Spacer(Modifier.width(HahoTheme.spacing.sm))
-        Text(stringResource(if (inHifz) R.string.event_in_hifz else R.string.dua_memorize), maxLines = 1)
-    }
-    if (inHifz) {
-        GlassTonalButton(onClick = onClick, modifier = modifier) { content() }
-    } else {
-        GlassOutlinedButton(onClick = onClick, modifier = modifier) { content() }
     }
 }
 

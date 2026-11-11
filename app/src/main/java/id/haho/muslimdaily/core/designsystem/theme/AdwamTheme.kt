@@ -59,9 +59,13 @@ object AdwamTheme {
 /** Sizes only Adwam's screens use; the shared ones are in [HahoTheme.dimens]. */
 object AdwamDimens {
     val playerMainButton: Dp = 72.dp
+    /** Play in the compact dua player: with 48dp skip buttons the bar is about 64dp tall. */
+    val playerCompactButton: Dp = 56.dp
     val completeDisc: Dp = 56.dp
     val highlightUnderline: Dp = 2.dp
     val timelineDot: Dp = 10.dp
+    /** The rail column and the filled dot of a done step: dot and tick in one circle. */
+    val timelineCheck: Dp = 20.dp
     val placeholderWordHeight: Dp = 28.dp
 }
 

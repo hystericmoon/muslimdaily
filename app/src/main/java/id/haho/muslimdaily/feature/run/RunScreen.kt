@@ -132,6 +132,7 @@ fun RunScreen(state: RunUiState, actions: RunActions) {
     val pageCount = state.items.size + 1
     val pager = rememberPagerState(initialPage = state.index) { pageCount }
     val motion = HahoTheme.motion
+    val scope = rememberCoroutineScope()
 
     // ViewModel → pager (taps, auto-advance) with spring motion; pager → ViewModel on swipe.
     LaunchedEffect(state.index) {
@@ -151,12 +152,16 @@ fun RunScreen(state: RunUiState, actions: RunActions) {
             key = { if (it < state.items.size) state.items[it].duaId + it else "summary" },
         ) { page ->
             if (page < state.items.size) {
-                RunCard(state, page, actions)
+                RunCard(
+                    state, page, actions,
+                    onPrevious = { scope.launch { pager.animateScrollToPage(page - 1) } },
+                    onNext = { scope.launch { pager.animateScrollToPage(page + 1) } },
+                )
             } else {
                 SummaryPage(state, actions)
             }
         }
-        RunBottomBar(state, pager, actions)
+        if (pager.currentPage >= state.items.size) RunBottomBar(pager)
     }
 }
 
@@ -229,7 +234,7 @@ private fun RunTopBar(state: RunUiState, pager: PagerState, actions: RunActions)
 }
 
 @Composable
-private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
+private fun RunCard(state: RunUiState, page: Int, actions: RunActions, onPrevious: () -> Unit, onNext: () -> Unit) {
     val dua = state.duas.getOrNull(page) ?: return
     val item = state.items[page]
     val count = state.counts.getOrElse(page) { 0 }
@@ -277,7 +282,12 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions) {
                     DuaTranslations(dua, state.prefs)
                 }
             }
-            CountArea(done = done, countText = countText, isCurrent = isCurrent, count = count)
+            CountArea(
+                done = done, countText = countText, isCurrent = isCurrent, count = count,
+                onPrevious = onPrevious.takeIf { page > 0 },
+                onNext = onNext,
+                onUndo = actions.onUndo.takeIf { count > 0 && isCurrent },
+            )
         }
     }
 }
@@ -324,7 +334,15 @@ private fun RecallCheck(onAnswer: (Boolean) -> Unit) {
 
 /** Count display with a spring "bump" on each tap; a gold disc with a dark check when complete. */
 @Composable
-private fun CountArea(done: Boolean, countText: String?, isCurrent: Boolean, count: Int) {
+private fun CountArea(
+    done: Boolean,
+    countText: String?,
+    isCurrent: Boolean,
+    count: Int,
+    onPrevious: (() -> Unit)?,
+    onNext: () -> Unit,
+    onUndo: (() -> Unit)?,
+) {
     val scale = remember { Animatable(1f) }
     val motion = HahoTheme.motion
     LaunchedEffect(count) {
@@ -333,42 +351,62 @@ private fun CountArea(done: Boolean, countText: String?, isCurrent: Boolean, cou
             scale.animateTo(1f, motion.countTap())
         }
     }
-    Column(
-        Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.lg),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
-    ) {
-        if (done) {
-            Surface(
-                shape = CircleShape,
-                color = AdwamTheme.colors.completeFill,
-                contentColor = AdwamTheme.colors.onCompleteFill,
-                modifier = Modifier.size(AdwamDimens.completeDisc),
-            ) {
-                Icon(painterResource(R.drawable.ic_check), contentDescription = null, modifier = Modifier.padding(HahoTheme.spacing.md))
+    // Previous and next sit in line with the tap hint; they take their own taps, so the card's
+    // "count" tap does not fire from them.
+    Row(Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.lg), verticalAlignment = Alignment.Bottom) {
+        Box(Modifier.size(HahoTheme.dimens.largeTouchTarget)) {
+            if (onPrevious != null) {
+                IconButton(onClick = onPrevious, modifier = Modifier.fillMaxSize()) {
+                    Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.run_previous))
+                }
             }
-            Text(stringResource(R.string.run_done), style = MaterialTheme.typography.titleMedium)
-        } else if (countText != null) {
-            Text(
-                countText,
-                style = MaterialTheme.typography.displaySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .graphicsLayer { scaleX = scale.value; scaleY = scale.value }
-                    .then(if (isCurrent) Modifier.semantics { liveRegion = LiveRegionMode.Polite } else Modifier),
-            )
-            Text(stringResource(R.string.run_tap_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-        } else {
-            Spacer(Modifier.height(HahoTheme.spacing.sm))
-            Text(stringResource(R.string.run_tap_read_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+        }
+        Column(
+            Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+        ) {
+            if (done) {
+                Surface(
+                    shape = CircleShape,
+                    color = AdwamTheme.colors.completeFill,
+                    contentColor = AdwamTheme.colors.onCompleteFill,
+                    modifier = Modifier.size(AdwamDimens.completeDisc),
+                ) {
+                    Icon(painterResource(R.drawable.ic_check), contentDescription = null, modifier = Modifier.padding(HahoTheme.spacing.md))
+                }
+                Text(stringResource(R.string.run_done), style = MaterialTheme.typography.titleMedium)
+            } else if (countText != null) {
+                Text(
+                    countText,
+                    style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .graphicsLayer { scaleX = scale.value; scaleY = scale.value }
+                        .then(if (isCurrent) Modifier.semantics { liveRegion = LiveRegionMode.Polite } else Modifier),
+                )
+                Text(stringResource(R.string.run_tap_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+            } else {
+                Spacer(Modifier.height(HahoTheme.spacing.sm))
+                Text(stringResource(R.string.run_tap_read_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+            }
+            onUndo?.let {
+                TextButton(onClick = it) {
+                    Icon(painterResource(R.drawable.ic_remove), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                    Text(stringResource(R.string.run_undo), Modifier.padding(start = HahoTheme.spacing.xs))
+                }
+            }
+        }
+        IconButton(onClick = onNext, modifier = Modifier.size(HahoTheme.dimens.largeTouchTarget)) {
+            Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.run_next))
         }
     }
 }
 
+/** Only the summary page needs it: on a card, previous and next sit inside the card. */
 @Composable
-private fun RunBottomBar(state: RunUiState, pager: PagerState, actions: RunActions) {
+private fun RunBottomBar(pager: PagerState) {
     val scope = rememberCoroutineScope()
-    val onCard = pager.currentPage < state.items.size
     Row(
         Modifier.fillMaxWidth().heightIn(min = HahoTheme.dimens.largeTouchTarget).padding(horizontal = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
@@ -379,21 +417,6 @@ private fun RunBottomBar(state: RunUiState, pager: PagerState, actions: RunActio
             modifier = Modifier.size(HahoTheme.dimens.largeTouchTarget),
         ) {
             Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.run_previous))
-        }
-        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            if (onCard && state.counts.getOrElse(pager.currentPage) { 0 } > 0) {
-                TextButton(onClick = actions.onUndo) {
-                    Icon(painterResource(R.drawable.ic_remove), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                    Text(stringResource(R.string.run_undo), Modifier.padding(start = HahoTheme.spacing.xs))
-                }
-            }
-        }
-        IconButton(
-            onClick = { scope.launch { pager.animateScrollToPage(pager.currentPage + 1) } },
-            enabled = pager.currentPage < state.items.size,
-            modifier = Modifier.size(HahoTheme.dimens.largeTouchTarget),
-        ) {
-            Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.run_next))
         }
     }
 }

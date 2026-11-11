@@ -197,12 +197,14 @@ fun PhraseLines(
     layout: PhraseLayout = PhraseLayout.LINES,
     fill: PhraseFill = PhraseFill.NONE,
     onPlayFrom: ((Int) -> Unit)? = null,
+    /** False when a player bar below already has previous and next phrase: focus mode keeps only the count. */
+    focusNav: Boolean = true,
 ) {
     when {
         phrases.size < 2 -> HighlightedArabic(text, phrases, activePhrase, style, modifier)
         layout == PhraseLayout.INLINE -> PhraseFlow(phrases, activePhrase, style, modifier, fill, onPlayFrom)
         // One phrase on screen has nothing to tell apart, so focus mode draws no fill.
-        layout == PhraseLayout.FOCUS -> PhraseFocus(phrases, activePhrase, style, modifier, onPlayFrom)
+        layout == PhraseLayout.FOCUS -> PhraseFocus(phrases, activePhrase, style, modifier, onPlayFrom, focusNav)
         else -> PhraseColumn(phrases, activePhrase, style, modifier, fill, onPlayFrom)
     }
 }
@@ -372,12 +374,28 @@ private fun PhraseFocus(
     style: TextStyle,
     modifier: Modifier,
     onPlayFrom: ((Int) -> Unit)?,
+    nav: Boolean = true,
 ) {
     var shown by rememberSaveable(phrases.size) { mutableIntStateOf(0) }
     LaunchedEffect(activePhrase) { if (activePhrase in phrases.indices) shown = activePhrase }
     val phrase = phrases[shown.coerceIn(phrases.indices)]
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget * 2))
+        if (!nav) {
+            // The player bar steps through the phrases; the card keeps the position.
+            val posDesc = stringResource(R.string.dua_phrase_position, shown + 1, phrases.size)
+            Text(
+                "${shown + 1} / ${phrases.size}",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().semantics {
+                    contentDescription = posDesc
+                    liveRegion = LiveRegionMode.Polite
+                },
+            )
+            return@Column
+        }
         // Not a weighted Row: at 200% text the buttons left the counter no width, so it wrapped
         // digit by digit. Each item keeps its own width; when they don't fit on one line, Next
         // moves to a second line at the end, so Back stays left and Next stays right.

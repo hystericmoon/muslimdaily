@@ -117,6 +117,7 @@
     <string name="today_isha_ends_third">Hingga sepertiga malam %s</string>
     <string name="today_isha_ends_middle">Hingga tengah malam %s</string>
     <string name="today_isha_ends_fajr">Hingga Subuh %s</string>
+    <string name="today_isha_ended">Berakhir %s</string>
     <string name="window_range">%1$s – %2$s</string>
     <string name="note_adhkar_window">Sebagian ulama membolehkan rentang waktu yang lebih luas.</string>
     <string name="note_prohibited_cause">Ulama berbeda pendapat tentang shalat yang memiliki sebab, seperti tahiyatul masjid.</string>
@@ -256,7 +257,11 @@
     <string name="dua_virtue">Keutamaan</string>
     <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
     <string name="audio_failed">Audio tidak dapat diputar. Coba lagi; bila tetap gagal, laporkan dari halaman doa.</string>
-    <string name="dua_memorize">Hafalkan</string>
+    <string name="memorize_add_label">Tambah ke hafalan</string>
+    <string name="memorize_state_in">ada di hafalan</string>
+    <string name="memorize_state_not_in">belum di hafalan</string>
+    <string name="memorize_added">Ditambahkan ke hafalan</string>
+    <string name="memorize_undo">Urungkan</string>
     <string name="dua_add_to_routine">Tambah ke rangkaian</string>
     <string name="dua_full_entry_show">Lihat teks lengkap di kitab</string>
     <string name="dua_full_entry_hide">Sembunyikan teks lengkap</string>
@@ -265,6 +270,8 @@
     <string name="player_play">Putar</string>
     <string name="player_pause">Jeda</string>
     <string name="player_repeat">Ulangi</string>
+    <string name="player_previous_phrase">Frasa sebelumnya</string>
+    <string name="player_next_phrase">Frasa berikutnya</string>
     <string name="dua_phrase_back">Sebelumnya</string>
     <string name="dua_phrase_next">Berikutnya</string>
     <string name="dua_phrase_position">Frasa %1$d dari %2$d</string>
@@ -845,7 +852,6 @@
     <plurals name="routine_more">
         <item quantity="other">+%d doa lainnya</item>
     </plurals>
-    <string name="event_in_hifz">Di hafalan</string>
     <string name="routine_default_name">Doa saya</string>
     <string name="bookmark_label">Simpan ke rangkaian</string>
     <string name="bookmark_state_saved">ada di rangkaian</string>
