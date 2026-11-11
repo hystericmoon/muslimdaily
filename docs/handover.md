@@ -7,22 +7,16 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 11 Nov 2026 (screenshot review done: #188, #191, #192; promo done; 1.12.6 shipped; next: owner posts from 9 Nov).
+Last updated: 11 Nov 2026 (1.13.0 released via #193; next: owner installs it and checks).
 
 ## In flight
 
-- Screenshot review (owner, 11 Nov, Sonnet): merged in #188, #191, #192 (not released; next release would be 1.13.0, owner decides).
+- 1.13.0 (versionCode 56) shipped via #193: screenshot review work (#188, #191, #192) plus bump and What's New.
+  Check the GitHub Release v1.13.0 exists. Details: history, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
-  Done: Memorize toggle (adds to My hifz, never starts a session) in the occasion card header and on the dua detail
-  source row, Undo snackbar; compact player bar with previous/next phrase (focus layout keeps only "n / m" when audio
-  exists); Isha ends: countdown on the nearest end, "Ended" after; Today timeline: rail dot becomes the check, whole row
-  is the target; Run card: previous/next in line with the tap hint.
-  Also done 11 Nov: "Start reading" only on morning and evening adhkar (`sequential` flag on events in
-  `content/taxonomy.json`, ContentDatabase v8, test `SequentialEventsTest`; owner chose the packs; after_salah not
-  flagged) #192; Today date heading without the year #191; media bar concept A (phrase-segmented track) merged.
-  Open, needs the owner: (1) Qibla back-transition overlap (predictive back over transparent screens; needs an
-  emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature).
-- Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 and #183 (Notion tools allowed in `.claude/settings.json`) merged; no PR open.
+- Open, needs the owner (both Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over
+  transparent screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature).
+- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -88,7 +82,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-11 Nov Sonnet: promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-11 Nov Sonnet: 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
