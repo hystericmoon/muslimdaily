@@ -92,7 +92,7 @@ import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.PreviewSurface
 import id.haho.design.component.HahoPreviews
 import id.haho.muslimdaily.core.ui.durationLabel
-import id.haho.muslimdaily.core.ui.formatLongDate
+import id.haho.muslimdaily.core.ui.formatDayMonth
 import id.haho.muslimdaily.core.ui.hijriLabel
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.rememberTimeFormatter
@@ -441,7 +441,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
         ),
     ) {
         Text(
-            formatLongDate(data.date),
+            formatDayMonth(data.date),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.focusRequester(headerFocus).focusable().semantics { heading() },
         )
