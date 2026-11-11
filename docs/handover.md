@@ -7,20 +7,20 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 11 Nov 2026 (screenshot-review UI pass in flight; promo done; 1.12.6 shipped; next: owner posts from 9 Nov).
+Last updated: 11 Nov 2026 (screenshot-review pass merged in #188; promo done; 1.12.6 shipped; next: owner posts from 9 Nov).
 
 ## In flight
 
-- Screenshot review (owner, 11 Nov, Sonnet): review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v. Done in the PR
-  `claude/notion-promo-batch-1-o2p0c4`: Memorize is now a toggle (adds to My hifz, never starts a session) in the occasion
-  card header and on the dua detail source row, with an Undo snackbar; compact player bar with previous/next phrase (focus
-  layout keeps only the "n / m" count when audio exists); Isha ends show a countdown on the nearest end and "Ended" after;
-  Today timeline: the rail dot becomes the check and the whole row is the target; Run card: previous/next sit in line with
-  the tap hint. NOT done, needs the owner: (1) "Start reading" only on chosen packs (needs a flag in `content/*.json`, so
-  an owner OK and which packs); (2) back-transition overlap on Qibla (predictive back; screens are transparent over the
-  window backdrop, needs an emulator to verify); (3) a media bar inside Run (no audio there today, a feature for Opus);
-  (4) wrapping date heading on Today. Screenshots workflow must be run on the branch after the push.
-
+- Screenshot review (owner, 11 Nov, Sonnet): merged in #188 (not released; next release would be 1.13.0, owner decides).
+  Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
+  Done: Memorize toggle (adds to My hifz, never starts a session) in the occasion card header and on the dua detail
+  source row, Undo snackbar; compact player bar with previous/next phrase (focus layout keeps only "n / m" when audio
+  exists); Isha ends: countdown on the nearest end, "Ended" after; Today timeline: rail dot becomes the check, whole row
+  is the target; Run card: previous/next in line with the tap hint.
+  Open, needs the owner: (1) "Start reading" only on chosen packs: a flag in `content/*.json`, so owner OK and which
+  packs (suggested: morning and evening dhikr); (2) Qibla back-transition overlap (predictive back over transparent
+  screens; needs an emulator, may touch haho-design); (3) media bar inside Run (no audio there; Opus feature);
+  (4) pick media bar concept A (phrase-segmented, recommended), B or C; (5) wrapping date heading on Today.
 - Main: 1.12.6 (versionCode 55, content_version 55, 329 rows). Promo PRs #163, #165-#181 and #183 (Notion tools allowed in `.claude/settings.json`) merged; no PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
