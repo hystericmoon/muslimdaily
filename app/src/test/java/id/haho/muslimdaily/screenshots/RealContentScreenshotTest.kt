@@ -58,7 +58,7 @@ class RealContentScreenshotTest {
     )
     private val duas: List<Dua> = bundle.duas.map { it.toModel() }
     private fun dua(id: String) = duas.first { it.id == id }
-    private fun event(id: String) = bundle.events.first { it.id == id }.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder) }
+    private fun event(id: String) = bundle.events.first { it.id == id }.let { DuaEvent(it.id, it.categoryId, it.label, it.sortOrder, sequential = it.sequential) }
 
     private val categories = taxonomy.categories.sortedBy { it.order }.map { c ->
         DuaCategory(

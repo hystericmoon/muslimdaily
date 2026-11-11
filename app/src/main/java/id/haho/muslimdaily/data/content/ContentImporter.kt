@@ -100,7 +100,7 @@ internal object ContentMapper {
     fun map(duas: DuasFile, rawatib: RawatibFile, taxonomy: TaxonomyFile): ContentBundle {
         val categories = taxonomy.categories.map { CategoryEntity(it.id, it.label, it.labelEn, it.order) }
         val events = taxonomy.categories.flatMap { c ->
-            c.events.map { e -> EventEntity(e.id, c.id, e.label, e.labelEn, c.order * 1000 + e.order) }
+            c.events.map { e -> EventEntity(e.id, c.id, e.label, e.labelEn, c.order * 1000 + e.order, e.sequential) }
         }
         val eventLabels = events.associate { it.id to it.label }
         val rejected = mutableMapOf<String, String>()

@@ -108,4 +108,6 @@ internal data class EventJson(
     val label: String,
     @SerialName("label_en") val labelEn: String = "",
     val order: Int = 0,
+    /** The duas are read one after another as a set, so the event offers "Start reading". */
+    val sequential: Boolean = false,
 )

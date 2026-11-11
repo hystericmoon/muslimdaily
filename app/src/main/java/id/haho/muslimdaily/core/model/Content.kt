@@ -127,6 +127,8 @@ data class DuaEvent(
     val order: Int,
     val duaCount: Int = 0,
     val labelEn: String = "",
+    /** Offers "Start reading": the duas are read one after another as a set. */
+    val sequential: Boolean = false,
 ) {
     /** The name in the app's language; read on use so a language switch applies at once. */
     val label: String get() = localizedLabel(labelId, labelEn)
