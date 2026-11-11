@@ -1,5 +1,17 @@
 package id.haho.muslimdaily.feature.duas.components
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import id.haho.muslimdaily.core.ui.AppLocale
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.ripple
@@ -297,10 +309,18 @@ fun PlayerBar(
     canPrevious: Boolean,
     canNext: Boolean,
     modifier: Modifier = Modifier,
+    /** Phrases in the dua; the segmented track above the controls shows from two. */
+    phraseCount: Int = 0,
+    activePhrase: Int = -1,
+    onSeekPhrase: (Int) -> Unit = {},
 ) {
     var speedMenu by remember { mutableStateOf(false) }
     // Docked on the bottom navigation, full width, like a media mini-player.
     DockedBar(modifier) {
+      Column(Modifier.fillMaxWidth()) {
+        if (phraseCount >= 2) {
+            PhraseTrack(phraseCount, activePhrase, enabled, onSeekPhrase)
+        }
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -361,9 +381,75 @@ fun PlayerBar(
                 }
             }
         }
+      }
     }
 }
 
+/**
+ * One tick per phrase: heard ones tinted, the current one lit. Tap a tick to jump there, or drag
+ * across to choose one; the audio restarts from that phrase when the finger lifts. One slider
+ * for TalkBack ("Phrase 4 of 24"), which steps with the volume keys or the swipe actions.
+ */
+@Composable
+private fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int) -> Unit) {
+    var width by remember { mutableStateOf(1) }
+    var dragging by remember { mutableStateOf<Int?>(null) }
+    val shown = dragging ?: active
+    fun indexAt(x: Float) = ((x / width) * count).toInt().coerceIn(0, count - 1)
+    val position = stringResource(R.string.dua_phrase_position, shown.coerceAtLeast(0) + 1, count)
+    val heard = MaterialTheme.colorScheme.primary.copy(alpha = 0.45f)
+    val lit = MaterialTheme.colorScheme.primary
+    val rest = MaterialTheme.colorScheme.outlineVariant
+    Column(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs)) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(PLAYER_TRACK_TARGET)
+                .onSizeChanged { width = it.width.coerceAtLeast(1) }
+                .pointerInput(count, enabled) {
+                    if (enabled) detectTapGestures { onSeek(indexAt(it.x)) }
+                }
+                .pointerInput(count, enabled) {
+                    if (enabled) detectHorizontalDragGestures(
+                        onDragStart = { dragging = indexAt(it.x) },
+                        onDragEnd = { dragging?.let(onSeek); dragging = null },
+                        onDragCancel = { dragging = null },
+                    ) { change, _ -> dragging = indexAt(change.position.x) }
+                }
+                .clearAndSetSemantics {
+                    contentDescription = position
+                    progressBarRangeInfo = ProgressBarRangeInfo(shown.coerceAtLeast(0).toFloat(), 0f..(count - 1).toFloat(), count - 2)
+                    setProgress { target -> onSeek(target.toInt().coerceIn(0, count - 1)); true }
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                repeat(count) { i ->
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .height(if (i == shown) 8.dp else 6.dp)
+                            .background(
+                                when {
+                                    i == shown -> lit
+                                    i < shown -> heard
+                                    else -> rest
+                                },
+                                RoundedCornerShape(2.dp),
+                            ),
+                    )
+                }
+            }
+        }
+        Text(
+            position,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+private val PLAYER_TRACK_TARGET = 32.dp
 private val PLAYER_TARGET = 48.dp
 private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 

@@ -163,6 +163,9 @@ fun DuaDetailRoute(
                     onNextPhrase = { viewModel.skipPhrase(1, title) },
                     canPrevious = s.playback.activePhrase > 0,
                     canNext = s.playback.activePhrase < s.dua.phrases.lastIndex,
+                    phraseCount = s.dua.phrases.size,
+                    activePhrase = s.playback.activePhrase,
+                    onSeekPhrase = { viewModel.playFrom(it, title) },
                 )
             }
         },

@@ -197,7 +197,7 @@ fun PhraseLines(
     layout: PhraseLayout = PhraseLayout.LINES,
     fill: PhraseFill = PhraseFill.NONE,
     onPlayFrom: ((Int) -> Unit)? = null,
-    /** False when a player bar below already has previous and next phrase: focus mode keeps only the count. */
+    /** False when the player bar below has the phrase track and previous/next: focus mode shows the phrase alone. */
     focusNav: Boolean = true,
 ) {
     when {
@@ -381,21 +381,8 @@ private fun PhraseFocus(
     val phrase = phrases[shown.coerceIn(phrases.indices)]
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget * 2))
-        if (!nav) {
-            // The player bar steps through the phrases; the card keeps the position.
-            val posDesc = stringResource(R.string.dua_phrase_position, shown + 1, phrases.size)
-            Text(
-                "${shown + 1} / ${phrases.size}",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().semantics {
-                    contentDescription = posDesc
-                    liveRegion = LiveRegionMode.Polite
-                },
-            )
-            return@Column
-        }
+        // The player bar's phrase track steps through the phrases and shows the position.
+        if (!nav) return@Column
         // Not a weighted Row: at 200% text the buttons left the counter no width, so it wrapped
         // digit by digit. Each item keeps its own width; when they don't fit on one line, Next
         // moves to a second line at the end, so Back stays left and Next stays right.
