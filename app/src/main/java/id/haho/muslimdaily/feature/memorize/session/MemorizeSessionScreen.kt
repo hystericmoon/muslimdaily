@@ -244,7 +244,8 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
             } else {
                 subtitle
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            // A flow, not a row: at large text the link drops to its own line instead of breaking inside the word.
+            FlowRow(verticalArrangement = Arrangement.Center) {
                 Text(
                     subtitle,
                     style = MaterialTheme.typography.bodyMedium,
@@ -259,6 +260,7 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
                         textDecoration = TextDecoration.Underline,
+                        softWrap = false,
                         modifier = Modifier
                             .clickable(role = Role.Button, onClick = onMeaning)
                             .minimumInteractiveComponentSize()
