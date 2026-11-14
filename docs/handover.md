@@ -7,26 +7,27 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (Memorize revamp PRs 1-3 merged; PR 4 Sonnet, PR 5 Opus).
+Last updated: 14 Nov 2026 (Memorize revamp PRs 1-4 merged; PR 5 Guided in progress on Opus; release waits for it).
 
 ## In flight
 
 - 1.13.0 is live (Release v1.13.0, 11 Nov); owner still to install and check. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
 - **Memorize revamp: owner chose 1A 2A 3A 4A 5A (14 Nov)** on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK (the
-  mockups are the spec; read the page before each PR). Done and merged: PR 1 list #196, PR 2 dock #197, PR 3 A-B #198
-  (details: history, "Memorize revamp PRs 1-3"). Next, one PR each, Screenshots workflow right after each push, in
-  `feature/memorize/session/MemorizeSessionScreen.kt` (fill `recallDock` / `recallMore`; `Dock` helpers exist):
-  - **PR 4 (Sonnet), Recall (4A): pushed 14 Nov** (cue card gone; "Meaning" link in the top bar subtitle toggles the
-    translations; dock shows "Hints · N% hidden"). Merge when CI green; Screenshots workflow re-records.
-  - **PR 5 (Opus), Guided (5A):** default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
-    whether it belongs in backup); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself
-    (Reveal, tap missed words, Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself.
-  Ship together as 1.14.0 once all five are merged (ask the owner first). Open question for the owner: dock the Check
-  ratings too? (PR 2 left Check without a dock.)
+  mockups are the spec). Merged: PR 1 list #196, PR 2 dock #197, PR 3 A-B #198, PR 4 Recall #200 (details: history,
+  "Memorize revamp PRs 1-4"). Screenshots workflow right after each UI push, in `feature/memorize/session/MemorizeSessionScreen.kt`.
+  - **PR 5 (Opus), Guided (5A): in progress** in child session session_01W2ZFMud8U4wDYpiJN2KDT6 (Opus, started 14 Nov
+    16:24 UTC by the owner's request), branch `claude/memorize-guided-pr5`, cut before #200's last fixes (main has them; merge
+    main into it and re-run Screenshots before merging). Scope: default per dua, Advanced switch in the overflow, remembered per
+    dua in DataStore only (child told not to touch BackupRepository/UserDatabase; if it says backup is needed, ask the
+    owner); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself (Reveal, tap missed words,
+    Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself. Child merges nothing and bumps nothing;
+    it messages the parent when pushed with CI green. If no PR exists, restart PR 5 from this text on Opus.
+  - **Release 1.14.0 only after PR 5 is merged (owner, 14 Nov: "release after everything is finished").** Say the version
+    first (release skill). Open question for the owner: dock the Check ratings too? (Left as is for now.)
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
-- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No PR open after #198.
+- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No PR open after #200 (PR 5 pending).
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
