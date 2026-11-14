@@ -232,7 +232,7 @@ private fun AppNavigationBar(
  * full-size name stays available to TalkBack through the item semantics.
  */
 @Composable
-private fun NavLabel(text: String) {
+internal fun NavLabel(text: String) {
     val color = LocalContentColor.current
     val style = MaterialTheme.typography.labelMedium
     val density = LocalDensity.current

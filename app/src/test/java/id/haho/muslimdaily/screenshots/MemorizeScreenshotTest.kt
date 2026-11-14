@@ -116,4 +116,19 @@ class MemorizeScreenshotTest {
     fun reviewRecallFirst() = captureVariants("121-memorize-review-cue") {
         MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.FULL, fromReview = true), MemorizeActions(), talkBack = false)
     }
+
+    @Test
+    fun buildSheetOpen() = captureVariants("160-memorize-build-sheet") {
+        MemorizeSessionScreen(state(Step.BUILD), MemorizeActions(), talkBack = false, startExpanded = true)
+    }
+
+    @Test
+    fun recallSheetOpen() = captureVariants("161-memorize-recall-sheet") {
+        MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.MEDIUM), MemorizeActions(), talkBack = false, startExpanded = true)
+    }
+
+    @Test
+    fun listenSheetOpen() = captureVariants("162-memorize-listen-sheet") {
+        MemorizeSessionScreen(state(Step.LISTEN), MemorizeActions(), talkBack = false, startExpanded = true)
+    }
 }

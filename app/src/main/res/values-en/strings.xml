@@ -354,9 +354,11 @@
 
     <!-- Memorize -->
     <string name="memorize_session_title">Memorize</string>
-    <string name="memorize_settings">Memorization settings</string>
     <string name="memorize_listen_only">Listen only</string>
-    <string name="memorize_step_n">%1$d. %2$s</string>
+    <string name="memorize_session_menu">Memorize menu</string>
+    <string name="memorize_dock_less">Less</string>
+    <string name="memorize_dock_state_collapsed">Collapsed</string>
+    <string name="memorize_dock_state_expanded">Expanded</string>
     <string name="memorize_step_listen">Listen</string>
     <string name="memorize_step_build">Build</string>
     <string name="memorize_step_recall">Recall</string>
@@ -437,7 +439,6 @@
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
     <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
-    <string name="memorize_next_step">Continue to %s</string>
     <string name="memorize_loops">Loops per segment</string>
     <string name="memorize_pause">Pause to repeat</string>
     <string name="memorize_pause_summary">Automatic: about 1.2× the segment length.</string>

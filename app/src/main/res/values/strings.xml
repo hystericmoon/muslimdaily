@@ -347,9 +347,11 @@
 
     <!-- Memorize -->
     <string name="memorize_session_title">Hafalan</string>
-    <string name="memorize_settings">Pengaturan hafalan</string>
     <string name="memorize_listen_only">Dengar saja</string>
-    <string name="memorize_step_n">%1$d. %2$s</string>
+    <string name="memorize_session_menu">Menu hafalan</string>
+    <string name="memorize_dock_less">Sedikit</string>
+    <string name="memorize_dock_state_collapsed">Tertutup</string>
+    <string name="memorize_dock_state_expanded">Terbuka</string>
     <string name="memorize_step_listen">Dengar</string>
     <string name="memorize_step_build">Bangun</string>
     <string name="memorize_step_recall">Ingat</string>
@@ -425,7 +427,6 @@
     <string name="memorize_remove_body">Jadwal ulangnya ikut terhapus. Doanya tetap ada di daftar doa, dan bisa dihafalkan lagi kapan saja.</string>
     <string name="memorize_box_n">Kotak %d</string>
     <string name="memorize_next_review">Doa berikutnya</string>
-    <string name="memorize_next_step">Lanjut ke %s</string>
     <string name="memorize_loops">Putaran per potongan</string>
     <string name="memorize_pause">Jeda untuk mengulang</string>
     <string name="memorize_pause_summary">Otomatis: sekitar 1,2× panjang potongan.</string>
