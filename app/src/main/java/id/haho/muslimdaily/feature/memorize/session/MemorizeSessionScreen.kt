@@ -89,6 +89,7 @@ import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
 import id.haho.muslimdaily.domain.memorize.Leitner
+import id.haho.muslimdaily.domain.memorize.LeitnerState
 import id.haho.muslimdaily.domain.memorize.Rating
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
@@ -97,10 +98,18 @@ import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Switch
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 
 data class MemorizeActions(
     val onStep: (Step) -> Unit = {},
+    val onGuidedStep: (GuidedStep) -> Unit = {},
+    val onRevealTest: () -> Unit = {},
+    val onAdvanced: (Boolean) -> Unit = {},
+    val onPractiseNow: () -> Unit = {},
     val onListen: () -> Unit = {},
     val onBuild: () -> Unit = {},
     val onAb: () -> Unit = {},
@@ -137,6 +146,10 @@ fun MemorizeSessionRoute(
             it,
             MemorizeActions(
                 onStep = viewModel::setStep,
+                onGuidedStep = viewModel::setGuidedStep,
+                onRevealTest = viewModel::revealTest,
+                onAdvanced = viewModel::setAdvanced,
+                onPractiseNow = viewModel::practiseNow,
                 onListen = viewModel::playListen,
                 onBuild = viewModel::playBuild,
                 onAb = viewModel::playAb,
@@ -171,9 +184,10 @@ private fun talkBackOn(): Boolean {
 }
 
 /**
- * The session screen: the dua's text owns the screen, the step's main action and status sit in a
- * docked sheet above the bottom navigation, and the step's secondary controls open from that sheet.
- * Check has no sheet: its rating buttons are the content.
+ * The session screen. Guided (the default) shows one step at a time, see [GuidedSession]. Advanced:
+ * the dua's text owns the screen, the step's main action and status sit in a docked sheet above the
+ * bottom navigation, and the step's secondary controls open from that sheet. Check has no sheet:
+ * its rating buttons are the content.
  */
 @Composable
 fun MemorizeSessionScreen(
@@ -189,6 +203,16 @@ fun MemorizeSessionScreen(
     var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     // Recall: the meaning opens from the top bar's title line, the cue to recite from.
     var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
+    if (!state.advanced) {
+        BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
+            val dockMax = maxHeight * DOCK_MAX_SHARE
+            Column(Modifier.fillMaxSize()) {
+                SessionTopBar(state, actions, meaning) { meaning = !meaning }
+                GuidedSession(state, actions, talkBack, meaning, dockMax)
+            }
+        }
+        return
+    }
     BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
         val dockMax = maxHeight * DOCK_MAX_SHARE
         Column(Modifier.fillMaxSize()) {
@@ -225,6 +249,13 @@ fun MemorizeSessionScreen(
 
 private const val DOCK_MAX_SHARE = 0.6f
 
+/** Where the recital cue's meaning is offered: wherever the text is hidden. */
+private fun offersMeaning(state: MemorizeUiState) = if (state.advanced) {
+    state.step == Step.RECALL
+} else {
+    state.guided == GuidedStep.GAPS || (state.guided == GuidedStep.TEST && !state.testRevealed)
+}
+
 @Composable
 private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, meaning: Boolean, onMeaning: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
@@ -252,7 +283,7 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.semantics { contentDescription = spoken },
                 )
-                if (state.step == Step.RECALL) {
+                if (offersMeaning(state)) {
                     // The cue is the title line; its meaning is one tap away. 48 dp target, and a button for TalkBack.
                     val shown = stringResource(if (meaning) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
                     Text(
@@ -281,9 +312,33 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                     enabled = state.hasAudio,
                     onClick = { menu = false; actions.onListenOnly() },
                 )
+                AdvancedItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
             }
         }
     }
+}
+
+/** A labelled switch with its state (not an icon toggle), and what it changes. */
+@Composable
+private fun AdvancedItem(on: Boolean, onClick: () -> Unit) {
+    DropdownMenuItem(
+        text = {
+            Column(Modifier.widthIn(max = 280.dp).padding(vertical = HahoTheme.spacing.xs)) {
+                Text(stringResource(R.string.memorize_advanced), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    stringResource(R.string.memorize_advanced_body),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        },
+        trailingIcon = { Switch(checked = on, onCheckedChange = null) },
+        onClick = onClick,
+        modifier = Modifier.semantics(mergeDescendants = true) {
+            role = Role.Switch
+            toggleableState = ToggleableState(on)
+        },
+    )
 }
 
 @Composable
@@ -389,7 +444,7 @@ private fun Step.hintRes() = when (this) {
  * shows the whole text, to compare the recital with.
  */
 @Composable
-private fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase, focus: Boolean = false) {
+internal fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase, focus: Boolean = false) {
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(HahoTheme.spacing.xl)) {
             val style = AdwamTheme.arabic.large(state.dua.isQuran)
@@ -442,7 +497,7 @@ private fun PlayDock(
 }
 
 @Composable
-private fun RestartButton(onStart: () -> Unit) {
+internal fun RestartButton(onStart: () -> Unit) {
     TextButton(onClick = onStart) {
         Icon(painterResource(R.drawable.ic_replay), null, Modifier.size(HahoTheme.dimens.smallIcon))
         Text(stringResource(R.string.memorize_restart), Modifier.padding(start = HahoTheme.spacing.xs))
@@ -450,7 +505,7 @@ private fun RestartButton(onStart: () -> Unit) {
 }
 
 @Composable
-private fun ListenStep(state: MemorizeUiState) {
+internal fun ListenStep(state: MemorizeUiState) {
     ArabicCard(state, focus = true)
     if (!state.hasAudio) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
     if (state.playback.failed) {
@@ -462,7 +517,7 @@ private fun ListenStep(state: MemorizeUiState) {
     }
 }
 
-private fun listenLoaded(state: MemorizeUiState) = state.playing == Playing.LISTEN && !state.playback.ended
+internal fun listenLoaded(state: MemorizeUiState) = state.playing == Playing.LISTEN && !state.playback.ended
 
 private fun listenDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     PlayDock(
@@ -483,7 +538,7 @@ private fun listenMore(state: MemorizeUiState, actions: MemorizeActions): @Compo
 }
 
 @Composable
-private fun BuildStep(state: MemorizeUiState) {
+internal fun BuildStep(state: MemorizeUiState) {
     ArabicCard(state, focus = true)
     if (!state.segmented) InfoNote(stringResource(R.string.memorize_not_segmented))
     if (state.hasAudio && state.dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
@@ -522,7 +577,7 @@ private fun buildMore(
 
 /** Whose turn it is and where in the build: a live region, so TalkBack announces each change. */
 @Composable
-private fun BuildProgress(state: MemorizeUiState) {
+internal fun BuildProgress(state: MemorizeUiState) {
     val loops = state.settings.loopsPerChunk.coerceIn(1, 10)
     val i = state.playback.sequenceIndex.coerceAtLeast(0)
     val chunk = i / (2 * loops)
@@ -657,13 +712,16 @@ private fun RangeTag(label: String) {
 }
 
 @Composable
-private fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boolean) {
+internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boolean) {
     if (meaning) {
         GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
             Column(Modifier.padding(HahoTheme.spacing.lg)) { DuaTranslations(state.dua, state.reading) }
         }
     }
-    if (state.practising) InfoNote(stringResource(R.string.memorize_practising), icon = R.drawable.ic_replay)
+    if (state.practising) {
+        // Guided has no hint levels to pick, so practice ends when every marked word is recited.
+        InfoNote(stringResource(if (state.advanced) R.string.memorize_practising else R.string.memorize_practising_guided), icon = R.drawable.ic_replay)
+    }
     // Play with gaps needs phrase segments and audio; without them the hints point to the reveal button.
     val gaps = state.segmented && state.hasAudio
     // The text comes first: it is what the learner recites from. The fade controls tune it in the sheet.
@@ -697,7 +755,7 @@ private fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boole
 /** Practice hides the missed words whatever the fade level, so it always needs the reveal. */
 private fun hasHints(state: MemorizeUiState) = state.fade != FadeLevel.NONE || state.practising
 
-private fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
+internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
             if (state.playing == Playing.RECALL && state.playback.isPlaying) {
@@ -748,7 +806,7 @@ private fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle:
     }
 }
 
-private const val STACK_FONT_SCALE = 1.3f
+internal const val STACK_FONT_SCALE = 1.3f
 
 private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean): @Composable ColumnScope.() -> Unit = {
     val gaps = state.segmented && state.hasAudio
@@ -802,7 +860,7 @@ private fun RecitalOutcome(state: MemorizeUiState) {
                     FadeLadder.Outcome.UP -> R.string.memorize_attempt_up
                     FadeLadder.Outcome.SAME -> R.string.memorize_attempt_same
                     FadeLadder.Outcome.DOWN -> R.string.memorize_attempt_down
-                    FadeLadder.Outcome.DONE -> R.string.memorize_attempt_done
+                    FadeLadder.Outcome.DONE -> if (state.advanced) R.string.memorize_attempt_done else R.string.memorize_attempt_done_guided
                 },
             ),
             style = MaterialTheme.typography.bodyMedium,
@@ -861,26 +919,43 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
             }
         }
     } else {
-        Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(HahoTheme.spacing.lg).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
-                Text(stringResource(R.string.memorize_scheduled, formatLongDate(rated.due)), style = MaterialTheme.typography.titleMedium)
-                Text(
-                    if (Leitner.isMemorized(rated)) stringResource(R.string.memorize_memorized) else stringResource(R.string.memorize_box_n, rated.box),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-        }
-        val next = state.nextDueId
-        if (next != null) {
-            GlassButton(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
-        }
-        GlassOutlinedButton(onClick = actions.onClose, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_done)) }
+        RatedResult(state, rated, actions)
     }
+}
+
+/** After rating: when the dua comes back, then the next due dua (in a review) or Done. */
+@Composable
+internal fun RatedResult(state: MemorizeUiState, rated: LeitnerState, actions: MemorizeActions, practiseNow: Boolean = false) {
+    Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(HahoTheme.spacing.lg).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
+            Text(stringResource(R.string.memorize_scheduled, formatLongDate(rated.due)), style = MaterialTheme.typography.titleMedium)
+            Text(
+                if (Leitner.isMemorized(rated)) stringResource(R.string.memorize_memorized) else stringResource(R.string.memorize_box_n, rated.box),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+    }
+    if (practiseNow) {
+        GlassButton(onClick = actions.onPractiseNow, modifier = Modifier.fillMaxWidth()) {
+            Icon(painterResource(R.drawable.ic_replay), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            Text(stringResource(R.string.memorize_practise_now), Modifier.padding(start = HahoTheme.spacing.sm))
+        }
+    }
+    val next = state.nextDueId
+    if (next != null) {
+        val primary = !practiseNow
+        if (primary) {
+            GlassButton(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
+        } else {
+            GlassOutlinedButton(onClick = { actions.onNext(next) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_next_review)) }
+        }
+    }
+    GlassOutlinedButton(onClick = actions.onClose, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_done)) }
 }
 
 /** Mark the words missed in the recital; they can then be practised on their own in Recall. */
 @Composable
-private fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
+internal fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
     Text(stringResource(R.string.memorize_mark_missed), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
     Text(stringResource(R.string.memorize_mark_missed_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
@@ -901,7 +976,7 @@ private fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
     }
 }
 
-private fun Rating.labelRes() = when (this) {
+internal fun Rating.labelRes() = when (this) {
     Rating.AGAIN -> R.string.memorize_rate_again
     Rating.HARD -> R.string.memorize_rate_hard
     Rating.EASY -> R.string.memorize_rate_easy

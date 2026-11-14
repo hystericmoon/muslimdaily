@@ -14,7 +14,7 @@ set; "Implemented" means built to the rule but needs a device pass with TalkBack
 | In-app text size | Arabic and translation scales (80–180%) applied on top of the system scale | Implemented |
 | TalkBack labels | Icon buttons have descriptions; decorative icons are null; settings rows merge label + value and read as buttons, not unselected toggles; segmented choices read "title: option" once; checklist rows say "Sudah/Belum dikerjakan"; steppers name their effect ("Tambah Subuh") | Device pass 2026-10-25 (emulator) |
 | Headings | Section headers, screen titles, sheet titles marked as headings | Implemented |
-| Live regions | Run-mode count ("2 dari 3"), memorize turn prompts, stepper values. Not the next-prayer countdown: it is read with the card when focused, so it doesn't interrupt every minute | Verified for run mode (UI test) |
+| Live regions | Run-mode count ("2 dari 3"), memorize turn prompts and Guided step ("Langkah 2 dari 4, Tirukan"), stepper values. Not the next-prayer countdown: it is read with the card when focused, so it doesn't interrupt every minute | Verified for run mode (UI test) |
 | Arabic voice | Every Arabic string carries an Arabic `LocaleList` span (exported as `LocaleSpan`); English translations an English one | Implemented |
 | Bidi isolation | City names inside Indonesian sentences wrapped in FSI…PDI | Implemented |
 | Timing adjustable (2.2.1) | Auto-advance toggle (run mode menu and settings); memorize pauses auto or manual; no timeouts | Implemented |

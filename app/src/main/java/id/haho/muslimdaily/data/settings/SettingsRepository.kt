@@ -168,6 +168,7 @@ class SettingsRepository @Inject constructor(
                 pauseMode = enumOr(K.memPauseMode, m.pauseMode),
                 manualPauseSeconds = this[K.memPauseSeconds] ?: m.manualPauseSeconds,
                 speed = this[K.memSpeed] ?: m.speed,
+                advancedDuas = this[K.memAdvanced] ?: m.advancedDuas,
             ),
             reminders = reminders,
         )
@@ -217,6 +218,11 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var memPauseMode: PauseMode by enumKey(K.memPauseMode, PauseMode.AUTO)
     var memPauseSeconds: Int by key(K.memPauseSeconds, 3)
     var memSpeed: Float by key(K.memSpeed, 0.85f)
+    fun setAdvanced(duaId: String, on: Boolean) {
+        val current = p[K.memAdvanced].orEmpty()
+        val next = if (on) current + duaId else current - duaId
+        if (next.isEmpty()) p.remove(K.memAdvanced) else p[K.memAdvanced] = next
+    }
     var remMorning: Boolean by key(K.remMorning, false)
     var remMorningOffset: Int by key(K.remMorningOffset, 15)
     var remEvening: Boolean by key(K.remEvening, false)
@@ -313,6 +319,7 @@ internal object K {
     val memPauseMode = stringPreferencesKey("mem_pause_mode")
     val memPauseSeconds = intPreferencesKey("mem_pause_seconds")
     val memSpeed = floatPreferencesKey("mem_speed")
+    val memAdvanced = stringSetPreferencesKey("mem_advanced")
     val remMorning = booleanPreferencesKey("rem_morning")
     val remMorningOffset = intPreferencesKey("rem_morning_offset")
     val remEvening = booleanPreferencesKey("rem_evening")

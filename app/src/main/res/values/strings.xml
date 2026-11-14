@@ -347,6 +347,23 @@
 
     <!-- Memorize -->
     <string name="memorize_session_title">Hafalan</string>
+    <string name="memorize_guided_step">Langkah %1$d dari %2$d · %3$s</string>
+    <string name="memorize_guided_step_spoken">Langkah %1$d dari %2$d, %3$s</string>
+    <string name="memorize_guided_repeat">Tirukan</string>
+    <string name="memorize_guided_gaps">Baca teks rumpang</string>
+    <string name="memorize_guided_test">Uji hafalan</string>
+    <string name="memorize_next">Lanjut</string>
+    <string name="memorize_test_prompt">Baca seluruh doa dari ingatan, lalu buka teksnya untuk mengecek hafalan Anda.</string>
+    <string name="memorize_reveal_text">Buka teks</string>
+    <string name="memorize_how_did_it_go">Bagaimana hasilnya?</string>
+    <string name="memorize_knew_it">Sudah hafal</string>
+    <string name="memorize_with_help">Dengan bantuan</string>
+    <string name="memorize_not_yet">Belum</string>
+    <string name="memorize_practise_now">Latih sekarang</string>
+    <string name="memorize_advanced">Kontrol lanjutan</string>
+    <string name="memorize_advanced_body">Keempat langkah sebagai tab, dengan A–B, kecepatan, dan tingkat petunjuk. Diingat untuk doa ini.</string>
+    <string name="memorize_attempt_done_guided">Anda membacanya tanpa petunjuk. Lanjutkan ke Uji hafalan.</string>
+    <string name="memorize_practising_guided">Hanya kata yang Anda tandai yang disembunyikan.</string>
     <string name="memorize_listen_only">Dengar saja</string>
     <string name="memorize_session_menu">Menu hafalan</string>
     <string name="memorize_dock_less">Sedikit</string>

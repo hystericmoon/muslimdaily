@@ -54,6 +54,9 @@ class BackupRepositoryTest {
             remFasting = true
             setFastingTime(LocalTime.of(21, 15))
             arabicScale = 1.3f
+            setAdvanced("wake_01", true)
+            setAdvanced("sleep_01", true)
+            setAdvanced("sleep_01", false)
         }
         db.mySetDao().upsertPref(EventPrefEntity("morning", true))
         db.mySetDao().insertItems(listOf(EventItemEntity("morning", "morning_01", false, 0)))
@@ -72,6 +75,8 @@ class BackupRepositoryTest {
         assertEquals(true, s.reminders.fasting)
         assertEquals(LocalTime.of(21, 15), s.reminders.fastingTime)
         assertEquals(1.3f, s.arabicScale)
+        // The per-dua Advanced switch is a setting, so it travels with them.
+        assertEquals(setOf("wake_01"), s.memorize.advancedDuas)
         // The old backup's morning set (first dua hidden) comes back as a routine.
         val routine = routines.routines().first().single()
         assertEquals(content.eventOnce("morning")!!.label, routine.name)

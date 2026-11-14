@@ -91,6 +91,11 @@ data class MemorizeSettings(
     val pauseMode: PauseMode = PauseMode.AUTO,
     val manualPauseSeconds: Int = 3,
     val speed: Float = 0.85f,
+    /**
+     * Duas the learner switched to Advanced controls; every other dua opens Guided. A preference,
+     * not progress: it lives in the settings file, so backups carry it with the other settings.
+     */
+    val advancedDuas: Set<String> = emptySet(),
 )
 
 data class AppSettings(

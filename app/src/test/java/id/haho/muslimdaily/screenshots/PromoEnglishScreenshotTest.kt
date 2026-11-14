@@ -58,7 +58,7 @@ class PromoEnglishScreenshotTest {
             settings = MemorizeSettings(), fade = fade, words = words,
             hiddenWords = Recall.hiddenWords(words, fade, dua.id, FadeOrder.RANDOM), review = null, rated = null,
             fromReview = false, nextDueId = null, ab = 0..1, fadeOrder = FadeOrder.RANDOM, firstLetters = false,
-            position = 2, positionOf = 19,
+            position = 2, positionOf = 19, advanced = true,
         )
     }
 

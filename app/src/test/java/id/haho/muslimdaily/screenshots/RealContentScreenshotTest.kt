@@ -206,7 +206,7 @@ class RealContentScreenshotTest {
                 dua = d, eventLabel = event("morning").label, step = Step.RECALL, playing = Playing.NONE,
                 playback = PlaybackState(), settings = MemorizeSettings(), fade = FadeLevel.FULL, words = words,
                 hiddenWords = Recall.hiddenWords(words, FadeLevel.FULL, d.id), review = null, rated = null,
-                fromReview = false, nextDueId = null, ab = 0..0, firstLetters = true,
+                fromReview = false, nextDueId = null, ab = 0..0, firstLetters = true, advanced = true,
             ),
             MemorizeActions(),
             talkBack = false,

@@ -103,7 +103,7 @@ private fun MemorizeSessionPreview() = PreviewSurface {
     MemorizeSessionScreen(
         MemorizeUiState(
             dua, "Dzikir pagi", Step.RECALL, Playing.NONE, PlaybackState(), MemorizeSettings(), FadeLevel.LIGHT, words,
-            Recall.hiddenWords(words, FadeLevel.LIGHT, dua.id), null, null, false, null, 0..1,
+            Recall.hiddenWords(words, FadeLevel.LIGHT, dua.id), null, null, false, null, 0..1, advanced = true,
         ),
         MemorizeActions(),
         talkBack = false,
