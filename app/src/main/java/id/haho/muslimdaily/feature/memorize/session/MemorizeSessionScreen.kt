@@ -9,6 +9,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.ColumnScope
@@ -184,10 +187,12 @@ fun MemorizeSessionScreen(
     BackHandler(enabled = expanded) { expanded = false }
     // A–B: true between the first and the second phrase tap. Held here so closing the sheet keeps it.
     var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
+    // Recall: the meaning opens from the top bar's title line, the cue to recite from.
+    var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
         val dockMax = maxHeight * DOCK_MAX_SHARE
         Column(Modifier.fillMaxSize()) {
-            SessionTopBar(state, actions)
+            SessionTopBar(state, actions, meaning) { meaning = !meaning }
             Column(
                 Modifier
                     .weight(1f)
@@ -201,7 +206,7 @@ fun MemorizeSessionScreen(
                 when (state.step) {
                     Step.LISTEN -> ListenStep(state)
                     Step.BUILD -> BuildStep(state)
-                    Step.RECALL -> RecallStep(state, talkBack)
+                    Step.RECALL -> RecallStep(state, talkBack, meaning)
                     Step.CHECK -> CheckStep(state, actions)
                 }
             }
@@ -221,7 +226,7 @@ fun MemorizeSessionScreen(
 private const val DOCK_MAX_SHARE = 0.6f
 
 @Composable
-private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions) {
+private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, meaning: Boolean, onMeaning: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
     Row(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.xs), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = actions.onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
@@ -239,12 +244,31 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions) {
             } else {
                 subtitle
             }
-            Text(
-                subtitle,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.semantics { contentDescription = spoken },
-            )
+            // A flow, not a row: at large text the link drops to its own line instead of breaking inside the word.
+            FlowRow(verticalArrangement = Arrangement.Center, itemVerticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    subtitle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.semantics { contentDescription = spoken },
+                )
+                if (state.step == Step.RECALL) {
+                    // The cue is the title line; its meaning is one tap away. 48 dp target, and a button for TalkBack.
+                    val shown = stringResource(if (meaning) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
+                    Text(
+                        stringResource(R.string.memorize_cue_meaning),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        textDecoration = TextDecoration.Underline,
+                        softWrap = false,
+                        modifier = Modifier
+                            .clickable(role = Role.Button, onClick = onMeaning)
+                            .minimumInteractiveComponentSize()
+                            .padding(horizontal = HahoTheme.spacing.sm)
+                            .semantics { stateDescription = shown },
+                    )
+                }
+            }
         }
         Box {
             IconButton(onClick = { menu = true }) {
@@ -632,37 +656,13 @@ private fun RangeTag(label: String) {
     }
 }
 
-/** What the dua is for, and on request its meaning: the cue to recite from before any Arabic shows. */
 @Composable
-private fun CueCard(state: MemorizeUiState) {
-    var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
-    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            Text(
-                stringResource(R.string.memorize_cue_title),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.semantics { heading() },
-            )
-            Text(state.eventLabel, style = MaterialTheme.typography.titleMedium)
-            if (state.positionOf > 1 && state.position > 0) {
-                Text(
-                    stringResource(R.string.memorize_cue_position, state.position, state.positionOf),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            if (meaning) DuaTranslations(state.dua, state.reading)
-            TextButton(onClick = { meaning = !meaning }) {
-                Text(stringResource(if (meaning) R.string.memorize_cue_hide_meaning else R.string.memorize_cue_show_meaning))
-            }
+private fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boolean) {
+    if (meaning) {
+        GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+            Column(Modifier.padding(HahoTheme.spacing.lg)) { DuaTranslations(state.dua, state.reading) }
         }
     }
-}
-
-@Composable
-private fun RecallStep(state: MemorizeUiState, talkBack: Boolean) {
-    CueCard(state)
     if (state.practising) InfoNote(stringResource(R.string.memorize_practising), icon = R.drawable.ic_replay)
     // Play with gaps needs phrase segments and audio; without them the hints point to the reveal button.
     val gaps = state.segmented && state.hasAudio
@@ -713,6 +713,16 @@ private fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle:
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            // The level in words, not only as gaps in the text.
+            Text(
+                when {
+                    state.practising -> stringResource(R.string.memorize_hints_missed)
+                    state.fade == FadeLevel.NONE -> stringResource(R.string.memorize_hints_off)
+                    else -> stringResource(R.string.memorize_hints_hidden, (state.fade.fraction * 100).toInt())
+                },
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         toggle()
     }
