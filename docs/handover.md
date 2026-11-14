@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (1.13.0 published; Memorize revamp proposed, Opus decision page next).
+Last updated: 14 Nov 2026 (1.13.0 published; Memorize decision page up, waiting on the owner's picks).
 
 ## In flight
 
@@ -21,8 +21,10 @@ Last updated: 14 Nov 2026 (1.13.0 published; Memorize revamp proposed, Opus deci
   Guided (default: listen, read with hidden words, test yourself, one task per screen) over the same engine, plus Advanced
   (today's 4 tabs) switchable per dua and remembered; compact list with Continue first and a plain-text state per dua;
   A-B picker as 48dp phrase chips, tap start then tap end, no dragging (WCAG 2.5.7); Recall one prompt, Reveal, Got it/Again.
-  No streaks, points or badges. First step for Opus: read the current screens, build the visual decision page (before/after
-  mockups, recommendation marked), wait for the owner's choice, then plan small PRs (list and docked layout first).
+  No streaks, points or badges. **Decision page (Opus, 14 Nov): https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK**,
+  five decisions, recommended 1A 2A 3A 4A 5A (compact list with Continue; docked nav + collapsible sheet; A-B by tapping phrase
+  rows; one Recall card with levels under More; Guided default + per-dua Advanced switch in DataStore). Waiting for the owner's
+  picks. Then PRs in order: list, docked layout, A-B, Recall (Sonnet can do these), Guided (Opus: session flow, check backup).
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
 - Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open.
