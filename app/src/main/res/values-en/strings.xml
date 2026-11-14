@@ -377,7 +377,7 @@
     <string name="memorize_fade_random">Random</string>
     <string name="memorize_fade_from_end">From the end</string>
     <string name="memorize_first_letters">Show first letters</string>
-    <string name="memorize_reveal_next">Show the next word</string>
+    <string name="memorize_reveal_next">Next word</string>
     <string name="memorize_recited">Done reciting</string>
     <string name="memorize_stage">Stage %1$d of %2$d</string>
     <string name="memorize_attempt_up">More words are hidden now.</string>

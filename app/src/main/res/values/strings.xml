@@ -370,7 +370,7 @@
     <string name="memorize_fade_random">Acak</string>
     <string name="memorize_fade_from_end">Dari akhir</string>
     <string name="memorize_first_letters">Tampilkan huruf awal</string>
-    <string name="memorize_reveal_next">Buka kata berikutnya</string>
+    <string name="memorize_reveal_next">Kata berikutnya</string>
     <string name="memorize_recited">Selesai membaca</string>
     <string name="memorize_stage">Tahap %1$d dari %2$d</string>
     <string name="memorize_attempt_up">Lebih banyak kata kini disembunyikan.</string>
