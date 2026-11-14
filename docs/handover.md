@@ -18,6 +18,10 @@ Last updated: 15 Nov 2026 (1.14.0 released with the Memorize revamp; nothing in 
   Owner still to install and check on the phone. Guided (PR 5) was built by an Opus child session; `mem_advanced` lives in
   the settings DataStore and rides in backups via the generic settings export. Open question for the owner: dock the Check
   ratings too? (Check left as is.) Possible follow-up: check the promo posts still match the Memorize screens (not touched).
+- Small open polish (Sonnet, from the Guided child's report, 14 Nov): (1) Indonesian "Kata berikutnya" may wrap to two
+  lines in its half-width button in the Recall and Read-with-gaps docks at normal font (seen only in Guided gaps; fix:
+  shorter label or a 1:1.4 split, re-record shots); (2) the rating card still says "Kotak N" as Check always has; (3) "Not yet"
+  schedules the dua for tomorrow (Leitner Again = box 1) while its subtitle says "Latih sekarang", as the mock does.
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
 - Main: 1.14.0 (versionCode 57, content_version 55, 329 rows). No PR open.
