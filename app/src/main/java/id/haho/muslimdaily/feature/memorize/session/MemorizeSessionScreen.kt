@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import id.haho.design.glass.Glass
 import id.haho.muslimdaily.feature.memorize.MemorizeSpeedControl
+import id.haho.muslimdaily.navigation.NavLabel
+import androidx.compose.ui.platform.LocalDensity
 import id.haho.design.glass.GlassIconButton
 import id.haho.design.glass.GlassOutlinedButton
 import id.haho.design.glass.GlassTonalButton
@@ -186,7 +188,8 @@ fun MemorizeSessionScreen(
                 verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
             ) {
                 val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
-                InfoNote(stringResource(hint))
+                // The step hint gives way to the text while the sheet is open.
+                if (!expanded) InfoNote(stringResource(hint))
                 when (state.step) {
                     Step.LISTEN -> ListenStep(state)
                     Step.BUILD -> BuildStep(state)
@@ -260,7 +263,7 @@ private fun SessionNavBar(selected: Step, onStep: (Step) -> Unit) {
                 selected = step == selected,
                 onClick = { onStep(step) },
                 icon = { Icon(painterResource(step.iconRes()), null) },
-                label = { Text(stringResource(step.labelRes()), maxLines = 1) },
+                label = { NavLabel(stringResource(step.labelRes())) },
                 colors = NavigationBarItemDefaults.colors(indicatorColor = g.tinted),
             )
         }
@@ -618,18 +621,29 @@ private fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle:
         }
         toggle()
     }
-    Row(Modifier.padding(top = HahoTheme.spacing.sm), horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+    // Side by side two half-width buttons break words at large text sizes: stack them from 1.3x.
+    val stacked = LocalDensity.current.fontScale > STACK_FONT_SCALE
+    val buttons: @Composable (Modifier) -> Unit = { m ->
         if (hasHints(state)) {
-            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = Modifier.weight(1f)) {
+            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m) {
                 Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
                 Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = HahoTheme.spacing.sm))
             }
         }
-        GlassButton(onClick = actions.onFinishRecital, modifier = Modifier.weight(1f)) {
-            Text(stringResource(R.string.memorize_recited))
+        GlassButton(onClick = actions.onFinishRecital, modifier = m) { Text(stringResource(R.string.memorize_recited)) }
+    }
+    if (stacked) {
+        Column(Modifier.padding(top = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            buttons(Modifier.fillMaxWidth())
+        }
+    } else {
+        Row(Modifier.padding(top = HahoTheme.spacing.sm), horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            buttons(Modifier.weight(1f))
         }
     }
 }
+
+private const val STACK_FONT_SCALE = 1.3f
 
 private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean): @Composable ColumnScope.() -> Unit = {
     val gaps = state.segmented && state.hasAudio
