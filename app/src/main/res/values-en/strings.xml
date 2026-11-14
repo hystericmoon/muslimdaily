@@ -947,6 +947,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_14_0">
+        <item>Memorize is redesigned. The list has a Continue card and compact rows, and a session now has bottom navigation (Listen, Build, Recall, Check) with a docked sheet for the main action. More controls open from it.</item>
+        <item>New Guided mode, the default for every dua: Listen, Repeat after it, Read with gaps, then Test yourself, where you reveal the text, tap the words you missed and rate it Knew it, With help or Not yet. Advanced controls stay one switch away in the menu, remembered per dua.</item>
+        <item>Build: tap the phrases to pick the part to repeat. Recall: the title line is your cue with the meaning one tap away, and the dock says how many words are hidden.</item>
+    </string-array>
     <string-array name="whats_new_1_13_0">
         <item>A Memorize toggle now sits on the occasion card and on a dua\'s source row: it adds the dua to My hifz without starting a session, with Undo.</item>
         <item>Start reading now appears only for morning and evening adhkar. The audio player is more compact with previous/next phrase, and Isha shows a countdown to when its time ends.</item>

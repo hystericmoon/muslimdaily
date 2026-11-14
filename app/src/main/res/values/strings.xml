@@ -933,6 +933,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_14_0">
+        <item>Hafalan didesain ulang. Daftarnya punya kartu Lanjutkan dan baris ringkas, dan sesi kini punya navigasi bawah (Dengar, Bangun, Ingat, Cek) dengan lembar di bawah untuk aksi utama. Kontrol lainnya terbuka dari sana.</item>
+        <item>Mode Terpandu baru, bawaan untuk setiap doa: Dengar, Tirukan, Baca teks rumpang, lalu Uji hafalan, tempat Anda membuka teks, mengetuk kata yang terlewat, dan menilai Sudah hafal, Dengan bantuan, atau Belum. Kontrol lanjutan tetap satu sakelar di menu, diingat untuk tiap doa.</item>
+        <item>Bangun: ketuk frasa untuk memilih bagian yang diulang. Ingat: judul jadi petunjuk Anda, artinya satu ketukan, dan lembar bawah menyebutkan berapa kata yang disembunyikan.</item>
+    </string-array>
     <string-array name="whats_new_1_13_0">
         <item>Tombol Hafalkan kini ada di kartu momen dan di sumber doa: menambahkan doa ke Hafalan saya tanpa memulai sesi, dengan Urungkan.</item>
         <item>Mulai membaca kini hanya muncul untuk dzikir pagi dan petang. Pemutar audio lebih ringkas dengan frasa sebelumnya/berikutnya, dan Isya kini menampilkan hitung mundur menuju berakhirnya waktu.</item>
