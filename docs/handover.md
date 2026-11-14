@@ -17,9 +17,8 @@ Last updated: 14 Nov 2026 (Memorize revamp PRs 1-3 merged; PR 4 Sonnet, PR 5 Opu
   mockups are the spec; read the page before each PR). Done and merged: PR 1 list #196, PR 2 dock #197, PR 3 A-B #198
   (details: history, "Memorize revamp PRs 1-3"). Next, one PR each, Screenshots workflow right after each push, in
   `feature/memorize/session/MemorizeSessionScreen.kt` (fill `recallDock` / `recallMore`; `Dock` helpers exist):
-  - **PR 4 (Sonnet), Recall (4A):** title line as cue with Meaning on tap (shrink `CueCard`); gapped text; collapsed dock =
-    "Hints · 60% hidden" (text, not only boxes), Next word, Done reciting; expanded = hide level, order, first letters, Play
-    with gaps (already split that way by PR 2; add the "Hints" line and the cue). Check tab stays as is.
+  - **PR 4 (Sonnet), Recall (4A): pushed 14 Nov** (cue card gone; "Meaning" link in the top bar subtitle toggles the
+    translations; dock shows "Hints · N% hidden"). Merge when CI green; Screenshots workflow re-records.
   - **PR 5 (Opus), Guided (5A):** default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
     whether it belongs in backup); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself
     (Reveal, tap missed words, Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself.

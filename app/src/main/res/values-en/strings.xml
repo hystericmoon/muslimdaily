@@ -367,11 +367,11 @@
     <string name="memorize_hint_build">The segment grows by one phrase each time. After each loop, repeat it aloud during the pause.</string>
     <string name="memorize_hint_recall">Recite from memory, show the next word if you get stuck, then tap Done reciting. When you recite without help, more words are hidden.</string>
     <string name="memorize_hint_review">Recite from memory first, using the cue below, then check the full text.</string>
-    <string name="memorize_cue_title">Cue</string>
-    <string name="memorize_cue_show_meaning">Show the meaning</string>
-    <string name="memorize_cue_hide_meaning">Hide the meaning</string>
-    <string name="memorize_cue_position">Dua %1$d of %2$d</string>
     <string name="memorize_event_position_spoken">%1$s, dua %2$d of %3$d</string>
+    <string name="memorize_cue_meaning">Meaning</string>
+    <string name="memorize_hints_hidden">Hints · %1$d%% hidden</string>
+    <string name="memorize_hints_missed">Hints · missed words only</string>
+    <string name="memorize_hints_off">Hints · off</string>
     <string name="memorize_event_position">%1$s · %2$d of %3$d</string>
     <string name="memorize_fade_order">Hide first</string>
     <string name="memorize_fade_random">Random</string>
