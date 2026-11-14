@@ -55,6 +55,14 @@ fun MemorizeSettingsControls(
                 canIncrement = settings.manualPauseSeconds < 30,
             )
         }
+        MemorizeSpeedControl(settings, onSpeed)
+    }
+}
+
+/** Playback speed 0.5–1.0× in 0.05 steps; the one control Listen shares with Build. */
+@Composable
+fun MemorizeSpeedControl(settings: MemorizeSettings, onSpeed: (Float) -> Unit, modifier: Modifier = Modifier) {
+    Column(modifier) {
         val speedTitle = stringResource(R.string.memorize_speed)
         val step = 0.05f
         StepperRow(

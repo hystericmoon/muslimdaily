@@ -24,6 +24,7 @@ ICONS = [
     "lock", "graphic_eq", "mobile_off", "nightlight", "sunny", "volume_off", "inbox",
     "event_repeat", "location_off", "travel_explore", "format_list_numbered",
     "directions_walk", "near_me", "explore", "calendar_month", "share", "backup", "settings_backup_restore", "dark_mode", "restaurant", "bug_report", "edit_note",
+    "music_note", "psychology", "keyboard_arrow_up",
 ]
 FILLED = ["wb_twilight", "menu_book", "record_voice_over", "settings", "bookmark_added"]
 MIRRORED = {"chevron_right", "chevron_left", "skip_next", "skip_previous", "ios_share"}
