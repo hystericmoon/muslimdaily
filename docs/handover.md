@@ -7,24 +7,28 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.14.0 released with the Memorize revamp; nothing in flight).
+Last updated: 15 Nov 2026 (1.14.0 released; #205 merged; Check dock and promo refresh await the owner).
 
 ## In flight
 
 - 1.13.0 shipped 11 Nov. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
-- **1.14.0 (versionCode 57) released 15 Nov WIB** with the whole Memorize revamp (PRs #196-#198, #200, #202; owner chose
-  1A-5A on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4").
-  Owner still to install and check on the phone. Guided (PR 5) was built by an Opus child session; `mem_advanced` lives in
-  the settings DataStore and rides in backups via the generic settings export. Open question for the owner: dock the Check
-  ratings too? (Check left as is.) Possible follow-up: check the promo posts still match the Memorize screens (not touched).
-- Small open polish (Sonnet, from the Guided child's report, 14 Nov): (1) Indonesian "Kata berikutnya" may wrap to two
-  lines in its half-width button in the Recall and Read-with-gaps docks at normal font (seen only in Guided gaps; fix:
-  shorter label or a 1:1.4 split, re-record shots); (2) the rating card still says "Kotak N" as Check always has; (3) "Not yet"
-  schedules the dua for tomorrow (Leitner Again = box 1) while its subtitle says "Latih sekarang", as the mock does.
+- **1.14.0 (versionCode 57) released 15 Nov WIB** with the Memorize revamp (PRs #196-#198, #200, #202; owner chose 1A-5A on
+  https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4"). `mem_advanced`
+  lives in the settings DataStore and rides in backups via the generic settings export. Owner has installed it; phone notes
+  not yet given (the 14 Nov message had a literal `<your notes>` placeholder).
+- Done 14 Nov (Sonnet): Indonesian "Kata berikutnya" is now "Buka kata" (#205, shots re-recorded).
+- **Owner decision pending**: dock the Check ratings? Page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt (A leave, B stacked
+  dock, C one-row dock = recommended; B/C re-record Check shots, C adds 2 short interval strings, stacks from 1.3x font).
+- **Promo media is stale (read-only check 14 Nov)**: Video 1 `v1-memorize-*` (IG Reel 9 Nov, LinkedIn 10 Nov) and Carousel A
+  were rendered from `marketing/build/screens/50-53-memorize-*` (5 Nov: top tabs, Cue card, inline buttons). The shipped app
+  has the bottom nav and dock (shots 150-153, 161, 165). Copy and alt text still hold; only visuals differ. Fix = re-render
+  from the new shots and push to `promo-assets` (ask first); the owner has not yet said whether to. The 9/10 Nov dates have passed.
+- Small open polish (Sonnet): (1) the rating card still says "Kotak N" as Check always has; (2) "Not yet" schedules the dua
+  for tomorrow (Leitner Again = box 1) while its subtitle says "Latih sekarang", as the mock does.
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
-- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows). No PR open.
+- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205. No PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -70,8 +74,9 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov; 14-15 Nov Sonnet: Recall #200, handover #201, release 1.14.0, with child Opus session_01W2ZFMud8U4wDYpiJN2KDT6 for Guided #202; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: dock #197, A-B #198; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
-  #156 token saving; #157 content gaps). Older ids in history, "Finished work".
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp PRs, 1.14.0 release, #205, with child Opus
+  session_01W2ZFMud8U4wDYpiJN2KDT6 for Guided #202; earlier work in history); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo
+  batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 
