@@ -433,7 +433,6 @@
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
     <string name="memorize_remove">Remove</string>
-    <string name="memorize_remove_named">Remove %1$s from My hifz</string>
     <string name="memorize_remove_title">Remove from My hifz?</string>
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
     <string name="memorize_box_n">Box %d</string>
@@ -461,7 +460,12 @@
     <string name="memorize_review_start">Start review</string>
     <string name="memorize_open">Open memorization</string>
     <string name="memorize_due_badge">Due for review</string>
-    <string name="memorize_next_on">Next %s</string>
+    <string name="memorize_continue">Continue</string>
+    <string name="memorize_start_learning">Start learning</string>
+    <string name="memorize_state_learning">Learning · next review %1$s</string>
+    <string name="memorize_state_memorized">Memorized · next review %1$s</string>
+    <string name="memorize_more_named">More options for %1$s</string>
+    <string name="memorize_remove_menu">Remove from My hifz</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>
     <string name="memorize_listen_only_start">Tap to start</string>

@@ -7,27 +7,31 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (1.13.0 published; Memorize decision page up, waiting on the owner's picks).
+Last updated: 14 Nov 2026 (Memorize revamp chosen, PR 1 list merged; PRs 2-4 Sonnet, PR 5 Opus).
 
 ## In flight
 
-- 1.13.0 (versionCode 56) is live: GitHub Release v1.13.0 published 11 Nov 23:38 WIB with adwam-1.13.0.apk
-  (checked 14 Nov). Owner still to install and check. Details: history, "Shipped".
+- 1.13.0 is live (Release v1.13.0, 11 Nov); owner still to install and check. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
-- **Next, Opus: Memorize tab revamp** (owner, 14 Nov; nothing built, no PR). Owner's complaints: (1) Memorize list cards badly
-  laid out; (2) in the dua's Memorize view, nav should dock at the bottom with each tab's actions in a collapsed docked sheet
-  above it; (3) Build tab, Repeat A to B: picking phrases is very hard; (4) Recall tab is messy. Owner asked whether to build
-  two levels (easy + the current 4-step advanced). Sonnet's position, not yet decided by the owner: yes, as one flow:
-  Guided (default: listen, read with hidden words, test yourself, one task per screen) over the same engine, plus Advanced
-  (today's 4 tabs) switchable per dua and remembered; compact list with Continue first and a plain-text state per dua;
-  A-B picker as 48dp phrase chips, tap start then tap end, no dragging (WCAG 2.5.7); Recall one prompt, Reveal, Got it/Again.
-  No streaks, points or badges. **Decision page (Opus, 14 Nov): https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK**,
-  five decisions, recommended 1A 2A 3A 4A 5A (compact list with Continue; docked nav + collapsible sheet; A-B by tapping phrase
-  rows; one Recall card with levels under More; Guided default + per-dua Advanced switch in DataStore). Waiting for the owner's
-  picks. Then PRs in order: list, docked layout, A-B, Recall (Sonnet can do these), Guided (Opus: session flow, check backup).
+- **Memorize revamp: owner chose 1A 2A 3A 4A 5A (14 Nov)** on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK (the
+  mockups are the spec; read the page before each PR). PR 1, list: #196 (Continue card, compact rows sorted due > learning >
+  not started > memorized, state in words, remove behind a row menu with the old confirm dialog; merged with this handover).
+  Next, **Sonnet**, one PR each, Screenshots workflow after each push, all in `feature/memorize/session/MemorizeSessionScreen.kt`:
+  - PR 2, docked layout (2A): drop top tabs; bottom NavigationBar Listen/Build/Recall/Check with labels; above it a
+    collapsible docked sheet: collapsed = the step's main action + status (must hold every required action), expanded = the
+    step's secondary controls; today's tune sheet (`MemorizeSettingsControls`) folds into Build's expanded sheet; headphones
+    (Listen only) moves to a top-bar overflow. Back collapses the sheet first; 200% font: expanded sheet caps ~60% and scrolls.
+  - PR 3, A-B (3A): in Build's sheet, the phrases as full-width rows (number + Arabic, >=48dp); first tap = From, second = To
+    (either order), third restarts; From/To tags on the range, "Whole dua" action, button "Repeat phrases 2-4". Taps only.
+  - PR 4, Recall (4A): title line as cue with Meaning on tap; gapped text; collapsed sheet = "Hints · 60% hidden", Next word,
+    Done reciting; expanded = hide level, order, first letters, Play with gaps. Check tab unchanged apart from the dock.
+  - Then **Opus**, PR 5, Guided (5A): default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
+    whether it belongs in backup); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself
+    (Reveal, tap missed words, Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself.
+  Ship together as 1.14.0 once all five are merged (ask the owner first).
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
-- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open.
+- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open after #196.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -50,10 +54,7 @@ does a plain `git push`; push your own commits after it ends. Links, decisions, 
 
 Roadmap: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0a. **Done (3 Nov, shipped in 1.12.6, #157/#159).** Gaps left: 1 row without English (manners_05: no
-   row has its Arabic), 3 without Indonesian (tasbih_03, tasbih_06, salam_04: no licensed source),
-   16 without audio (sunnah_01-16: HadeethEnc has none), 39 without Latin (unvowelled words; never
-   hand-written). Details: history, "Shipped" 1.12.6.
+0a. Content gaps (1 no English, 3 no Indonesian, 16 no audio, 39 no Latin): history, "Shipped" 1.12.6.
 1. **On hold (owner, 1 Nov: no budget; don't start until the owner says).** Play release: the
    owner's steps only (upload keystore, four `PLAY_UPLOAD_*` secrets, Play App Signing, listing,
    content rating, target audience; "Needs doing" in `docs/play-store.md`). Play ships the same
@@ -76,7 +77,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov Sonnet: Memorize revamp proposal 14 Nov, no code; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)

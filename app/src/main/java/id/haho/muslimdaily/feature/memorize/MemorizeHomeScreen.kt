@@ -10,14 +10,22 @@ import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.key
+import androidx.compose.ui.unit.dp
+import id.haho.muslimdaily.core.ui.formatDayMonth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,14 +51,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
-import id.haho.muslimdaily.core.designsystem.component.ArabicText
-import id.haho.design.component.Badge
 import id.haho.design.component.EmptyState
 import id.haho.design.component.InfoNote
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
-import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.review.ReviewRepository
@@ -65,10 +70,28 @@ import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
-data class HifzEntry(val item: ReviewItem, val dua: Dua, val eventLabel: String, val due: Boolean)
+/** Where a dua stands, in the order the list shows them: what needs the reader first. */
+enum class HifzStatus { DUE, LEARNING, NOT_STARTED, MEMORIZED }
+
+data class HifzEntry(val item: ReviewItem, val dua: Dua, val eventLabel: String, val due: Boolean) {
+    val status: HifzStatus
+        get() = when {
+            due -> HifzStatus.DUE
+            item.notStarted -> HifzStatus.NOT_STARTED
+            item.memorized -> HifzStatus.MEMORIZED
+            else -> HifzStatus.LEARNING
+        }
+}
 
 data class MemorizeHomeState(val today: LocalDate, val entries: List<HifzEntry>) {
-    val dueEntries: List<HifzEntry> get() = entries.filter { it.due }
+    val dueEntries: List<HifzEntry> get() = sorted.filter { it.due }
+
+    /** Due first, then learning, not started and memorized; within each, the nearest review first. */
+    val sorted: List<HifzEntry>
+        get() = entries.sortedWith(compareBy<HifzEntry>({ it.status.ordinal }, { it.item.state.due }, { it.eventLabel }))
+
+    /** What "Continue" opens: the first due review, else the first dua not started yet. */
+    val next: HifzEntry? get() = dueEntries.firstOrNull() ?: sorted.firstOrNull { it.status == HifzStatus.NOT_STARTED }
 }
 
 @HiltViewModel
@@ -130,7 +153,7 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {
         contentPadding = PaddingValues(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, bottom = HahoTheme.spacing.xxxl * 2),
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
     ) {
-        item(key = "queue") { Box(Modifier.enterReveal(0)) { ReviewQueueCard(state, onOpen) } }
+        item(key = "queue") { Box(Modifier.enterReveal(0)) { ContinueCard(state, onOpen) } }
         if (state.entries.isEmpty()) {
             item(key = "empty") {
                 EmptyState(
@@ -148,8 +171,17 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {
                     modifier = Modifier.padding(top = HahoTheme.spacing.md).semantics { heading() },
                 )
             }
-            items(state.entries, key = { it.item.duaId }) { entry ->
-                Box(Modifier.animateItem()) { HifzRow(entry, onRemove = { onRemove(entry.dua.id) }) { onOpen(entry.dua.id, entry.due) } }
+            item(key = "rows") {
+                GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+                    Column {
+                        state.sorted.forEachIndexed { i, entry ->
+                            key(entry.item.duaId) {
+                                if (i > 0) HorizontalDivider(Modifier.padding(start = HahoTheme.spacing.lg + StatusDot + HahoTheme.spacing.md))
+                                HifzRow(entry, onRemove = { onRemove(entry.dua.id) }) { onOpen(entry.dua.id, entry.due) }
+                            }
+                        }
+                    }
+                }
             }
         }
         item(key = "note") { InfoNote(stringResource(R.string.memorize_no_streaks)) }
@@ -157,8 +189,8 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {
 }
 
 @Composable
-private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> Unit) {
-    val due = state.dueEntries
+private fun ContinueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> Unit) {
+    val next = state.next
     GlassCard(
         shape = MaterialTheme.shapes.extraLarge,
         color = Glass.colors.tinted,
@@ -166,80 +198,77 @@ private fun ReviewQueueCard(state: MemorizeHomeState, onOpen: (String, Boolean) 
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            Text(stringResource(R.string.memorize_review_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
-            if (due.isEmpty()) {
+            if (next == null) {
+                Text(stringResource(R.string.memorize_review_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
             } else {
-                Text(pluralStringResource(R.plurals.memorize_review_due, due.size, due.size), style = MaterialTheme.typography.titleLarge)
-                GlassButton(onClick = { onOpen(due.first().dua.id, true) }) { Text(stringResource(R.string.memorize_review_start)) }
+                Text(stringResource(R.string.memorize_continue), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
+                Column(Modifier.semantics(mergeDescendants = true) {}) {
+                    Text(next.eventLabel, style = MaterialTheme.typography.titleLarge)
+                    val due = state.dueEntries.size
+                    Text(
+                        if (next.due) pluralStringResource(R.plurals.memorize_review_due, due, due) else stringResource(R.string.memorize_not_started),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+                GlassButton(onClick = { onOpen(next.dua.id, next.due) }) {
+                    Text(stringResource(if (next.due) R.string.memorize_review_start else R.string.memorize_start_learning))
+                }
             }
         }
     }
 }
 
+private val StatusDot = 32.dp
+
+/**
+ * One dua: its state as an icon and in words, so nothing rests on colour alone. Removing sits
+ * behind the overflow menu and a confirmation, away from the row's main tap.
+ */
 @Composable
 private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit) {
+    var menu by remember { mutableStateOf(false) }
     var confirmRemove by remember { mutableStateOf(false) }
-    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+    val status = statusText(entry)
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .clickable(role = Role.Button, onClickLabel = stringResource(R.string.memorize_open), onClick = onClick)
+            .padding(start = HahoTheme.spacing.lg, end = HahoTheme.spacing.xs, top = HahoTheme.spacing.sm, bottom = HahoTheme.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        val (container, content, icon) = when (entry.status) {
+            HifzStatus.DUE -> Triple(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary, R.drawable.ic_event_repeat)
+            HifzStatus.LEARNING -> Triple(MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer, R.drawable.ic_schedule)
+            HifzStatus.NOT_STARTED -> Triple(MaterialTheme.colorScheme.surfaceContainerHighest, MaterialTheme.colorScheme.onSurfaceVariant, R.drawable.ic_record_voice_over)
+            HifzStatus.MEMORIZED -> Triple(AdwamTheme.colors.completeFill, AdwamTheme.colors.onCompleteFill, R.drawable.ic_check)
+        }
+        Surface(shape = CircleShape, color = container, contentColor = content, modifier = Modifier.size(StatusDot)) {
+            Box(contentAlignment = Alignment.Center) { Icon(painterResource(icon), null, Modifier.size(HahoTheme.dimens.smallIcon)) }
+        }
         Column(
             Modifier
-                .clickable(role = Role.Button, onClickLabel = stringResource(R.string.memorize_open), onClick = onClick)
-                .padding(HahoTheme.spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+                .weight(1f)
+                .padding(horizontal = HahoTheme.spacing.md)
+                .semantics(mergeDescendants = true) {},
         ) {
-            ArabicText(entry.dua.phrases.firstOrNull()?.text ?: entry.dua.arabic, style = AdwamTheme.arabic.arabicSmall)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    entry.eventLabel,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1f),
+            Text(entry.eventLabel, style = MaterialTheme.typography.titleSmall)
+            Text(status, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Box {
+            IconButton(onClick = { menu = true }) {
+                Icon(
+                    painterResource(R.drawable.ic_more_vert),
+                    stringResource(R.string.memorize_more_named, entry.eventLabel),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                IconButton(onClick = { confirmRemove = true }) {
-                    Icon(
-                        painterResource(R.drawable.ic_close),
-                        stringResource(R.string.memorize_remove_named, entry.eventLabel),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
             }
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
-                when {
-                    entry.due -> Badge(
-                        stringResource(R.string.memorize_due_badge),
-                        container = MaterialTheme.colorScheme.primary,
-                        content = MaterialTheme.colorScheme.onPrimary,
-                        icon = R.drawable.ic_event_repeat,
-                    )
-                    entry.item.notStarted -> Badge(
-                        stringResource(R.string.memorize_not_started),
-                        container = MaterialTheme.colorScheme.secondaryContainer,
-                        content = MaterialTheme.colorScheme.onSecondaryContainer,
-                        icon = R.drawable.ic_record_voice_over,
-                    )
-                    entry.item.memorized -> Badge(
-                        stringResource(R.string.memorize_memorized),
-                        container = AdwamTheme.colors.completeFill,
-                        content = AdwamTheme.colors.onCompleteFill,
-                        icon = R.drawable.ic_check,
-                    )
-                    else -> Unit
-                }
-                if (!entry.item.notStarted) {
-                    Badge(
-                        stringResource(R.string.memorize_box_n, entry.item.state.box),
-                        container = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        content = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                if (!entry.due && !entry.item.notStarted) {
-                    Text(
-                        stringResource(R.string.memorize_next_on, formatLongDate(entry.item.state.due)),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                    )
-                }
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.memorize_remove_menu)) },
+                    onClick = { menu = false; confirmRemove = true },
+                )
             }
         }
     }
@@ -254,4 +283,12 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
             dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.action_cancel)) } },
         )
     }
+}
+
+@Composable
+private fun statusText(entry: HifzEntry): String = when (entry.status) {
+    HifzStatus.DUE -> stringResource(R.string.memorize_due_badge)
+    HifzStatus.NOT_STARTED -> stringResource(R.string.memorize_not_started)
+    HifzStatus.LEARNING -> stringResource(R.string.memorize_state_learning, formatDayMonth(entry.item.state.due))
+    HifzStatus.MEMORIZED -> stringResource(R.string.memorize_state_memorized, formatDayMonth(entry.item.state.due))
 }
