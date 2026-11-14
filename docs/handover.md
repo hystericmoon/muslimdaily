@@ -7,27 +7,20 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (Memorize revamp PRs 1-4 merged; PR 5 Guided in progress on Opus; release waits for it).
+Last updated: 15 Nov 2026 (1.14.0 released with the Memorize revamp; nothing in flight).
 
 ## In flight
 
-- 1.13.0 is live (Release v1.13.0, 11 Nov); owner still to install and check. History, "Shipped".
+- 1.13.0 shipped 11 Nov. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
-- **Memorize revamp: owner chose 1A 2A 3A 4A 5A (14 Nov)** on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK (the
-  mockups are the spec). Merged: PR 1 list #196, PR 2 dock #197, PR 3 A-B #198, PR 4 Recall #200 (details: history,
-  "Memorize revamp PRs 1-4"). Screenshots workflow right after each UI push, in `feature/memorize/session/MemorizeSessionScreen.kt`.
-  - **PR 5 (Opus), Guided (5A): in progress** in child session session_01W2ZFMud8U4wDYpiJN2KDT6 (Opus, started 14 Nov
-    16:24 UTC by the owner's request), branch `claude/memorize-guided-pr5`, cut before #200's last fixes (main has them; merge
-    main into it and re-run Screenshots before merging). Scope: default per dua, Advanced switch in the overflow, remembered per
-    dua in DataStore only (child told not to touch BackupRepository/UserDatabase; if it says backup is needed, ask the
-    owner); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself (Reveal, tap missed words,
-    Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself. Child merges nothing and bumps nothing;
-    it messages the parent when pushed with CI green. If no PR exists, restart PR 5 from this text on Opus.
-  - **Release 1.14.0 only after PR 5 is merged (owner, 14 Nov: "release after everything is finished").** Say the version
-    first (release skill). Open question for the owner: dock the Check ratings too? (Left as is for now.)
+- **1.14.0 (versionCode 57) released 15 Nov WIB** with the whole Memorize revamp (PRs #196-#198, #200, #202; owner chose
+  1A-5A on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4").
+  Owner still to install and check on the phone. Guided (PR 5) was built by an Opus child session; `mem_advanced` lives in
+  the settings DataStore and rides in backups via the generic settings export. Open question for the owner: dock the Check
+  ratings too? (Check left as is.) Possible follow-up: check the promo posts still match the Memorize screens (not touched).
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
-- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No PR open after #200 (PR 5 pending).
+- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows). No PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -73,7 +66,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: dock #197, A-B #198; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov; 14-15 Nov Sonnet: Recall #200, handover #201, release 1.14.0, with child Opus session_01W2ZFMud8U4wDYpiJN2KDT6 for Guided #202; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: dock #197, A-B #198; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
