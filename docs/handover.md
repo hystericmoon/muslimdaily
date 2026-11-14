@@ -7,42 +7,34 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 11 Nov 2026 (1.13.0 released via #193; next: owner installs it and checks).
+Last updated: 14 Nov 2026 (1.13.0 published; Memorize revamp proposed, Opus decision page next).
 
 ## In flight
 
-- 1.13.0 (versionCode 56) shipped via #193: screenshot review work (#188, #191, #192) plus bump and What's New.
-  Check the GitHub Release v1.13.0 exists. Details: history, "Shipped".
+- 1.13.0 (versionCode 56) is live: GitHub Release v1.13.0 published 11 Nov 23:38 WIB with adwam-1.13.0.apk
+  (checked 14 Nov). Owner still to install and check. Details: history, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
-- Open, needs the owner (both Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over
-  transparent screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature).
+- **Next, Opus: Memorize tab revamp** (owner, 14 Nov; nothing built, no PR). Owner's complaints: (1) Memorize list cards badly
+  laid out; (2) in the dua's Memorize view, nav should dock at the bottom with each tab's actions in a collapsed docked sheet
+  above it; (3) Build tab, Repeat A to B: picking phrases is very hard; (4) Recall tab is messy. Owner asked whether to build
+  two levels (easy + the current 4-step advanced). Sonnet's position, not yet decided by the owner: yes, as one flow:
+  Guided (default: listen, read with hidden words, test yourself, one task per screen) over the same engine, plus Advanced
+  (today's 4 tabs) switchable per dua and remembered; compact list with Continue first and a plain-text state per dua;
+  A-B picker as 48dp phrase chips, tap start then tap end, no dragging (WCAG 2.5.7); Recall one prompt, Reveal, Got it/Again.
+  No streaks, points or badges. First step for Opus: read the current screens, build the visual decision page (before/after
+  mockups, recommendation marked), wait for the owner's choice, then plan small PRs (list and docked layout first).
+- Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
+  screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
 - Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
-Batches 1 and 2 are done: 34 posts, Mon 9 Nov to Tue 5 Jan, every slot has media, copy and alt text.
-The owner posts; nothing has been posted. Details of batch 2: history, "Promo batch 2".
-- Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
-  from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
-  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
-  Calendar columns added 6 Nov (Thumbnail 7 Nov): Media link (GitHub raw link on `promo-assets`, folder link for
-  Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
-  `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
-  no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
-- Media: orphan branch `promo-assets` (never merge it; head 15d6316) and the review page
-  https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj (private; the owner shares it).
-- Source: `marketing/` (`README.md` how to render, `brief.md`, `batch2.md`, `copy.md`, `alt-text.md`,
-  scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
-- LinkedIn video thumbnails (7 Nov, #185): v1 `images/tV1-en.png`, v2 `images/tV2-en.png` (scene ids
-  `tV1`/`tV2` in `stills.html`: covers without swipe line and counter), v3 existing `imgW1-en.png`.
-  Linked in the Notion `Thumbnail` column (URL) for weeks 1, 3, 5.
-- Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
-  dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
-- Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
-  before pushing to `promo-assets` (the owner said "always allow" on 6 Nov for pushes, review page,
-  Notion and Drive updates of this campaign).
-- Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
-- Possible next: a LinkedIn slot after 5 Jan, English versions of the four open-slot stills, a batch 3.
+34 posts, Mon 9 Nov to Tue 5 Jan, all with media, copy and alt text. The owner posts; nothing posted yet.
+Source of truth `marketing/calendar.csv` (Notion calendar mirrors it). Media: orphan branch `promo-assets`
+(never merge; ask before pushing, except the campaign's pushes the owner always allowed). Rules: no
+IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Pitfall: the Screenshots workflow
+does a plain `git push`; push your own commits after it ends. Links, decisions, thumbnails: history,
+"Promo campaign (moved from handover, 14 Nov)".
 
 ## Waiting on the owner
 
@@ -82,7 +74,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-11 Nov Sonnet: 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov Sonnet: Memorize revamp proposal 14 Nov, no code; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
