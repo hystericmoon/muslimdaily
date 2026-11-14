@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (Memorize revamp: PR 1 list merged, PR 2 dock in #197; PRs 3-4 Sonnet, PR 5 Opus).
+Last updated: 14 Nov 2026 (Memorize revamp: PR 1 list merged, PR 2 dock in #197, PR 3 A-B; PR 4 Sonnet, PR 5 Opus).
 
 ## In flight
 
@@ -22,8 +22,9 @@ Last updated: 14 Nov 2026 (Memorize revamp: PR 1 list merged, PR 2 dock in #197;
     the dock; open dock caps at 60%). Check has no dock (its rating buttons are the content). Dock helpers
     (`Dock`, `DockToggle`, `PlayDock`, `recallDock/recallMore`) are in `MemorizeSessionScreen.kt`; PR 3 and 4 fill
     `buildMore` / `recallDock` / `recallMore`. New shots 160-162 (sheets open).
-  - PR 3, A-B (3A): in Build's sheet, the phrases as full-width rows (number + Arabic, >=48dp); first tap = From, second = To
-    (either order), third restarts; From/To tags on the range, "Whole dua" action, button "Repeat phrases 2-4". Taps only.
+  - PR 3, A-B (3A): **done** (PR number in history once merged): Build's sheet lists the phrases as full-width rows
+    (>=48dp); tap logic is `AbSelection` (unit-tested), From/To tags, "Whole dua", "Repeat phrases a-b". Build's start
+    button stacks above the toggle from 1.3x font (same for `PlayDock`).
   - PR 4, Recall (4A): title line as cue with Meaning on tap; gapped text; collapsed sheet = "Hints · 60% hidden", Next word,
     Done reciting; expanded = hide level, order, first letters, Play with gaps. Check tab unchanged apart from the dock.
   - Then **Opus**, PR 5, Guided (5A): default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
