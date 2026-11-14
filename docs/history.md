@@ -124,7 +124,7 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
-- **Memorize revamp PRs 1-3** (14 Nov; owner chose 1A 2A 3A 4A 5A on the decision page
+- **Memorize revamp PRs 1-4** (14 Nov; PR 4 Recall #200: cue card replaced by an underlined "Meaning" link in the top-bar subtitle (FlowRow, 48dp, wraps to its own line at large text), dock line "Hints · N% hidden" / "off" / "missed words only", reveal button "Next word"; Check unchanged; owner chose 1A 2A 3A 4A 5A on the decision page
   https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK): PR 1 list #196 (Continue card, compact rows sorted due > learning >
   not started > memorized, state in words, remove behind a row menu). PR 2 dock #197: bottom NavigationBar, `Dock` with
   collapsed main action + status and expanded secondary controls (tune controls in Build's, speed in Listen's), Listen only
