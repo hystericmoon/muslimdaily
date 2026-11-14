@@ -42,6 +42,22 @@ import javax.inject.Inject
 
 enum class Step { LISTEN, BUILD, RECALL, CHECK }
 
+/**
+ * Guided mode, the default: one task per screen in a fixed order, on the same engine as the
+ * Advanced tabs. Each guided step has an Advanced equivalent, so switching keeps the place.
+ */
+enum class GuidedStep(val advanced: Step) {
+    LISTEN(Step.LISTEN),
+    REPEAT(Step.BUILD),
+    GAPS(Step.RECALL),
+    TEST(Step.CHECK),
+    ;
+
+    companion object {
+        fun of(step: Step): GuidedStep = entries.first { it.advanced == step }
+    }
+}
+
 /** Which sequence is loaded, so the screen can describe progress. */
 enum class Playing { NONE, LISTEN, BUILD, AB, RECALL }
 
@@ -76,6 +92,13 @@ data class MemorizeUiState(
     val practising: Boolean = false,
     /** After a recital of the missed words: how many still had to be revealed. */
     val practiceLeft: Int? = null,
+    /** Advanced controls (the four tabs) for this dua; Guided otherwise. */
+    val advanced: Boolean = false,
+    val guided: GuidedStep = GuidedStep.LISTEN,
+    /** Test yourself: the text is shown after the learner recited it from memory. */
+    val testRevealed: Boolean = false,
+    /** The rating given in this session, so Not yet can lead straight back to practice. */
+    val ratedWith: Rating? = null,
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.isSegmented
@@ -94,9 +117,10 @@ class MemorizeSessionViewModel @Inject constructor(
     private val route = savedState.toRoute<MemorizeSessionRoute>()
     val duaId = route.duaId
 
-    // A review starts with recall (retrieval before restudy): the whole text hidden behind the cue card.
+    // A review starts with retrieval before restudy: Guided opens on Test yourself, Advanced on
+    // Recall with the whole text hidden.
     private val local = MutableStateFlow(
-        if (route.fromReview) Local(step = Step.RECALL, fade = FadeLevel.FULL) else Local(),
+        if (route.fromReview) Local(step = Step.RECALL, guided = GuidedStep.TEST, fade = FadeLevel.FULL) else Local(),
     )
 
     private data class Local(
@@ -113,6 +137,9 @@ class MemorizeSessionViewModel @Inject constructor(
         val missed: Set<Int> = emptySet(),
         val practice: Set<Int>? = null,
         val practiceLeft: Int? = null,
+        val guided: GuidedStep = GuidedStep.LISTEN,
+        val testRevealed: Boolean = false,
+        val ratedWith: Rating? = null,
     )
 
     private val today: LocalDate get() = LocalDate.now(clock)
@@ -159,12 +186,48 @@ class MemorizeSessionViewModel @Inject constructor(
             missedWords = l.missed,
             practising = l.practice != null,
             practiceLeft = l.practiceLeft,
+            advanced = dua.id in memorize.advancedDuas,
+            guided = l.guided,
+            testRevealed = l.testRevealed,
+            ratedWith = l.ratedWith,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun setStep(step: Step) {
         audio.stop()
         local.value = local.value.copy(step = step, playing = Playing.NONE)
+    }
+
+    fun setGuidedStep(step: GuidedStep) {
+        audio.stop()
+        local.value = local.value.copy(guided = step, playing = Playing.NONE)
+    }
+
+    /** Test yourself: show the text once it has been recited from memory. */
+    fun revealTest() {
+        local.value = local.value.copy(testRevealed = true)
+    }
+
+    /** Remembered per dua. The place carries over: Repeat after it is Build, Test yourself is Check. */
+    fun setAdvanced(on: Boolean) {
+        audio.stop()
+        val l = local.value
+        local.value = if (on) {
+            l.copy(step = l.guided.advanced, playing = Playing.NONE)
+        } else {
+            l.copy(guided = GuidedStep.of(l.step), playing = Playing.NONE, testRevealed = l.testRevealed || l.step == Step.CHECK)
+        }
+        viewModelScope.launch { settingsRepository.update { setAdvanced(duaId, on) } }
+    }
+
+    /** After Not yet: practise the missed words, or read with gaps again when none were marked. */
+    fun practiseNow() {
+        if (local.value.missed.isNotEmpty()) {
+            practiseMissed()
+        } else {
+            audio.stop()
+            local.value = local.value.copy(step = Step.RECALL, guided = GuidedStep.GAPS, playing = Playing.NONE)
+        }
     }
 
     private fun play(kind: Playing, build: (MemorizeUiState) -> List<id.haho.muslimdaily.audio.SequenceItem>) {
@@ -243,6 +306,7 @@ class MemorizeSessionViewModel @Inject constructor(
         audio.stop()
         local.value = local.value.copy(
             step = Step.RECALL,
+            guided = GuidedStep.GAPS,
             playing = Playing.NONE,
             practice = missed,
             practiceLeft = null,
@@ -262,7 +326,7 @@ class MemorizeSessionViewModel @Inject constructor(
             audio.stop()
             val next = reviews.rate(duaId, rating, today)
             val nextDue = if (route.fromReview) reviews.due(today).firstOrNull { it != duaId } else null
-            local.value = local.value.copy(rated = next, nextDueId = nextDue)
+            local.value = local.value.copy(rated = next, ratedWith = rating, nextDueId = nextDue)
         }
     }
 

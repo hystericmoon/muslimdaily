@@ -354,6 +354,23 @@
 
     <!-- Memorize -->
     <string name="memorize_session_title">Memorize</string>
+    <string name="memorize_guided_step">Step %1$d of %2$d · %3$s</string>
+    <string name="memorize_guided_step_spoken">Step %1$d of %2$d, %3$s</string>
+    <string name="memorize_guided_repeat">Repeat after it</string>
+    <string name="memorize_guided_gaps">Read with gaps</string>
+    <string name="memorize_guided_test">Test yourself</string>
+    <string name="memorize_next">Next</string>
+    <string name="memorize_test_prompt">Recite the whole dua from memory, then reveal the text to check yourself.</string>
+    <string name="memorize_reveal_text">Reveal the text</string>
+    <string name="memorize_how_did_it_go">How did it go?</string>
+    <string name="memorize_knew_it">Knew it</string>
+    <string name="memorize_with_help">With help</string>
+    <string name="memorize_not_yet">Not yet</string>
+    <string name="memorize_practise_now">Practise now</string>
+    <string name="memorize_advanced">Advanced controls</string>
+    <string name="memorize_advanced_body">All four steps as tabs, with A–B, speed and hint levels. Remembered for this dua.</string>
+    <string name="memorize_attempt_done_guided">You recited it with no hints. Continue to Test yourself.</string>
+    <string name="memorize_practising_guided">Only the words you marked are hidden.</string>
     <string name="memorize_listen_only">Listen only</string>
     <string name="memorize_session_menu">Memorize menu</string>
     <string name="memorize_dock_less">Less</string>

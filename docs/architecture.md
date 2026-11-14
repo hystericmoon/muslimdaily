@@ -94,5 +94,7 @@ by a 12-hour WorkManager safety net.
 
 * No `INTERNET` permission. Location is coarse, one-shot, stored locally.
 * Worship counts (`run_sessions`) are per day and pruned; memorisation loops live only in
-  `MemorizePlan`. The checklist is pruned daily unless the user enables history.
+  `MemorizePlan`. Memorize opens Guided (one step per screen) unless the learner switched
+  that dua to Advanced controls; the switch is the `mem_advanced` string set in the settings
+  DataStore, so backups carry it with the other settings (no `UserDatabase` change). The checklist is pruned daily unless the user enables history.
 * No streaks, badges, leaderboards or sharing of worship statistics anywhere.

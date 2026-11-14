@@ -18,6 +18,8 @@ import id.haho.muslimdaily.feature.memorize.session.MemorizeSessionScreen
 import id.haho.muslimdaily.feature.memorize.session.MemorizeUiState
 import id.haho.muslimdaily.feature.memorize.session.Playing
 import id.haho.muslimdaily.feature.memorize.session.Step
+import id.haho.muslimdaily.feature.memorize.session.GuidedStep
+import id.haho.muslimdaily.domain.memorize.Rating
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -46,7 +48,7 @@ class MemorizeScreenshotTest {
             settings = MemorizeSettings(), fade = fade, words = words,
             hiddenWords = Recall.hiddenWords(words, fade, dua.id, order), review = null, rated = null,
             fromReview = fromReview, nextDueId = null, ab = 0..1, fadeOrder = order, firstLetters = firstLetters,
-            position = 2, positionOf = 19,
+            position = 2, positionOf = 19, advanced = true,
         )
     }
 
@@ -130,5 +132,53 @@ class MemorizeScreenshotTest {
     @Test
     fun listenSheetOpen() = captureVariants("162-memorize-listen-sheet") {
         MemorizeSessionScreen(state(Step.LISTEN), MemorizeActions(), talkBack = false, startExpanded = true)
+    }
+
+    // Guided mode (the default): one step per screen.
+    private fun guided(step: GuidedStep, fade: FadeLevel = FadeLevel.LIGHT) = state(Step.LISTEN, fade).copy(advanced = false, guided = step)
+
+    @Test
+    fun guidedListen() = captureVariants("163-memorize-guided-listen") {
+        MemorizeSessionScreen(guided(GuidedStep.LISTEN), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun guidedRepeat() = captureVariants("164-memorize-guided-repeat") {
+        MemorizeSessionScreen(
+            guided(GuidedStep.REPEAT).copy(
+                playing = Playing.BUILD,
+                playback = PlaybackState(duaId = dua.id, isPlaying = true, sequenceIndex = 3, inPause = true, activePhrase = 0),
+            ),
+            MemorizeActions(),
+            talkBack = false,
+        )
+    }
+
+    @Test
+    fun guidedGaps() = captureVariants("165-memorize-guided-gaps") {
+        MemorizeSessionScreen(guided(GuidedStep.GAPS, FadeLevel.MEDIUM), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun guidedTest() = captureVariants("166-memorize-guided-test") {
+        MemorizeSessionScreen(guided(GuidedStep.TEST, FadeLevel.FULL).copy(fromReview = true), MemorizeActions(), talkBack = false)
+    }
+
+    @Test
+    fun guidedTestRevealed() = captureVariants("167-memorize-guided-rate") {
+        MemorizeSessionScreen(
+            guided(GuidedStep.TEST).copy(testRevealed = true, missedWords = setOf(2)),
+            MemorizeActions(),
+            talkBack = false,
+        )
+    }
+
+    @Test
+    fun guidedNotYet() = captureVariants("168-memorize-guided-not-yet") {
+        MemorizeSessionScreen(
+            guided(GuidedStep.TEST).copy(testRevealed = true, rated = LeitnerState(1, today.plusDays(1)), ratedWith = Rating.AGAIN),
+            MemorizeActions(),
+            talkBack = false,
+        )
     }
 }
