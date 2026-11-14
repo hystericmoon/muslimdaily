@@ -7,33 +7,27 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (Memorize revamp: PR 1 list merged, PR 2 dock in #197, PR 3 A-B; PR 4 Sonnet, PR 5 Opus).
+Last updated: 14 Nov 2026 (Memorize revamp PRs 1-3 merged; PR 4 Sonnet, PR 5 Opus).
 
 ## In flight
 
 - 1.13.0 is live (Release v1.13.0, 11 Nov); owner still to install and check. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
 - **Memorize revamp: owner chose 1A 2A 3A 4A 5A (14 Nov)** on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK (the
-  mockups are the spec; read the page before each PR). PR 1, list: #196 (Continue card, compact rows sorted due > learning >
-  not started > memorized, state in words, remove behind a row menu with the old confirm dialog; merged with this handover).
-  Next, **Sonnet**, one PR each, Screenshots workflow after each push, all in `feature/memorize/session/MemorizeSessionScreen.kt`:
-  - PR 2, docked layout (2A): **done in #197** (bottom NavigationBar; dock = collapsed main action + status, expanded
-    secondary controls; tune controls in Build's sheet, speed in Listen's; Listen only in a top-bar overflow; Back closes
-    the dock; open dock caps at 60%). Check has no dock (its rating buttons are the content). Dock helpers
-    (`Dock`, `DockToggle`, `PlayDock`, `recallDock/recallMore`) are in `MemorizeSessionScreen.kt`; PR 3 and 4 fill
-    `buildMore` / `recallDock` / `recallMore`. New shots 160-162 (sheets open).
-  - PR 3, A-B (3A): **done** (PR number in history once merged): Build's sheet lists the phrases as full-width rows
-    (>=48dp); tap logic is `AbSelection` (unit-tested), From/To tags, "Whole dua", "Repeat phrases a-b". Build's start
-    button stacks above the toggle from 1.3x font (same for `PlayDock`).
-  - PR 4, Recall (4A): title line as cue with Meaning on tap; gapped text; collapsed sheet = "Hints · 60% hidden", Next word,
-    Done reciting; expanded = hide level, order, first letters, Play with gaps. Check tab unchanged apart from the dock.
-  - Then **Opus**, PR 5, Guided (5A): default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
+  mockups are the spec; read the page before each PR). Done and merged: PR 1 list #196, PR 2 dock #197, PR 3 A-B #198
+  (details: history, "Memorize revamp PRs 1-3"). Next, one PR each, Screenshots workflow right after each push, in
+  `feature/memorize/session/MemorizeSessionScreen.kt` (fill `recallDock` / `recallMore`; `Dock` helpers exist):
+  - **PR 4 (Sonnet), Recall (4A):** title line as cue with Meaning on tap (shrink `CueCard`); gapped text; collapsed dock =
+    "Hints · 60% hidden" (text, not only boxes), Next word, Done reciting; expanded = hide level, order, first letters, Play
+    with gaps (already split that way by PR 2; add the "Hints" line and the cue). Check tab stays as is.
+  - **PR 5 (Opus), Guided (5A):** default per dua, Advanced switch in the overflow, remembered per dua in DataStore (decide
     whether it belongs in backup); steps Listen > Repeat after it > Read with gaps (ladder sets level) > Test yourself
     (Reveal, tap missed words, Knew it / With help / Not yet = Easy / Hard / Again); reviews open on Test yourself.
-  Ship together as 1.14.0 once all five are merged (ask the owner first).
+  Ship together as 1.14.0 once all five are merged (ask the owner first). Open question for the owner: dock the Check
+  ratings too? (PR 2 left Check without a dock.)
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
   screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
-- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No other PR open after #196.
+- Main: 1.13.0 (versionCode 56, content_version 55, 329 rows). No PR open after #198.
 
 ## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
 
@@ -79,7 +73,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-14 Nov; 14 Nov Opus: Memorize decision page #195, list #196; Sonnet: dock #197, A-B #198; Sonnet: Memorize revamp proposal 14 Nov; 1.13.0 release #193; promo batch 2, #165-#181; Notion copy/links, #183; LinkedIn thumbnails, #185-#187; screenshot review #188; Today heading #191; sequential flag #192); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1 on Opus 5-6 Nov, #163; promo plan on Sonnet 5 Nov; 3 Nov Opus: 1.12.3, #145, #146, 1.12.4;
   #156 token saving; #157 content gaps). Older ids in history, "Finished work".
 
 ## Session setup (cloud)

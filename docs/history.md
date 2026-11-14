@@ -124,6 +124,16 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
+- **Memorize revamp PRs 1-3** (14 Nov; owner chose 1A 2A 3A 4A 5A on the decision page
+  https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK): PR 1 list #196 (Continue card, compact rows sorted due > learning >
+  not started > memorized, state in words, remove behind a row menu). PR 2 dock #197: bottom NavigationBar, `Dock` with
+  collapsed main action + status and expanded secondary controls (tune controls in Build's, speed in Listen's), Listen only
+  in a top-bar overflow, Back closes the dock, open dock caps at 60%; Check has no dock (ratings are its content). PR 3
+  A-B #198: phrases as >=48dp rows, `AbSelection` tap logic (first tap From, second To either order, third restarts), From/To
+  tags, "Whole dua". Helpers in `MemorizeSessionScreen.kt`: `Dock`, `DockToggle`, `PlayDock`, `buildMore`, `recallDock`,
+  `recallMore`. Large text: from 1.3x font the start button and the Recall buttons stack, nav labels use `NavLabel`
+  (scaled, shared with the app bar). Shots 160-162 (sheets open). Pitfall: the first CI run on a UI push is red until the
+  Screenshots workflow commits its shots; trigger it right after pushing and don't push until it ends.
 - **Promo batch 2** (6 Nov, Sonnet, #165-#181; routines #174-#175, four open-slot stills `imgP1`, `imgP2`,
   `imgT1`, `imgD1` from screens 41, 100, 10 in #179; calendar and plan moved from Drive to Notion, #178, #181): English-UI shots 150-164 (`PromoEnglishScreenshotTest`,
   `WidgetScreenshotTest`) and routine shots 170-174 (`PromoRoutineScreenshotTest`, light only via
