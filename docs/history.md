@@ -5,6 +5,32 @@ items and facts that took time to find. Moved here verbatim on 3 Nov 2026 to kee
 short. Read a section when a task touches it (search by row id, PR number or tool name);
 don't read it end to end at session start. Newest first within each section.
 
+## Promo campaign (moved from handover, 14 Nov)
+
+Batches 1 and 2 are done: 34 posts, Mon 9 Nov to Tue 5 Jan, every slot has media, copy and alt text.
+The owner posts; nothing has been posted. Details of batch 2: history, "Promo batch 2".
+- Plan, results and calendar live in Notion (the Drive Doc and Sheets were trashed 6 Nov, restorable
+  from Drive's trash): plan https://app.notion.com/p/40feb9fc21558177b761e849159cd6f3, calendar database
+  https://app.notion.com/p/06ba9cf0b4664b45b94264815533ad04. `marketing/calendar.csv` is the source of truth.
+  Calendar columns added 6 Nov (Thumbnail 7 Nov): Media link (GitHub raw link on `promo-assets`, folder link for
+  Instagram carousels), Copy, Alt text, Extra files (.srt, slide names); filled for all 34 rows from
+  `copy.md`/`alt-text.md` verbatim. Update them in Notion if copy changes (property key is `Media link`,
+  no `userDefined:` prefix). Links open only while signed in to GitHub (private repo).
+- Media: orphan branch `promo-assets` (never merge it; head 15d6316) and the review page
+  https://claude.ai/artifact/MTfXg3ptJcNMLLqRhVSMsj (private; the owner shares it).
+- Source: `marketing/` (`README.md` how to render, `brief.md`, `batch2.md`, `copy.md`, `alt-text.md`,
+  scenes, engine). Last four slots: imgP1, imgP2, imgT1, imgD1 (26, 28, 31 Dec, 2 Jan; ID only).
+- LinkedIn video thumbnails (7 Nov, #185): v1 `images/tV1-en.png`, v2 `images/tV2-en.png` (scene ids
+  `tV1`/`tV2` in `stills.html`: covers without swipe line and counter), v3 existing `imgW1-en.png`.
+  Linked in the Notion `Thumbnail` column (URL) for weeks 1, 3, 5.
+- Decisions (owner, 5 Nov): direction A (parchment, product first); memorization first; light and
+  dark both shown; Arabic only as empty hidden-word boxes; silent; any voiceover is a male voice.
+- Rules: no IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Ask the owner
+  before pushing to `promo-assets` (the owner said "always allow" on 6 Nov for pushes, review page,
+  Notion and Drive updates of this campaign).
+- Pitfall: the Screenshots workflow does a plain `git push`: push your own commits after it ends.
+- Possible next: a LinkedIn slot after 5 Jan, English versions of the four open-slot stills, a batch 3.
+
 ## Shipped
 
 1.13.0 (versionCode 56, 11 Nov WIB, release PR #193; features #188, #191, #192): Memorize toggle (occasion card, dua
