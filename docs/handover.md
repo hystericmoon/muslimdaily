@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 14 Nov 2026 (Memorize revamp chosen, PR 1 list merged; PRs 2-4 Sonnet, PR 5 Opus).
+Last updated: 14 Nov 2026 (Memorize revamp: PR 1 list merged, PR 2 dock in #197; PRs 3-4 Sonnet, PR 5 Opus).
 
 ## In flight
 
@@ -17,10 +17,11 @@ Last updated: 14 Nov 2026 (Memorize revamp chosen, PR 1 list merged; PRs 2-4 Son
   mockups are the spec; read the page before each PR). PR 1, list: #196 (Continue card, compact rows sorted due > learning >
   not started > memorized, state in words, remove behind a row menu with the old confirm dialog; merged with this handover).
   Next, **Sonnet**, one PR each, Screenshots workflow after each push, all in `feature/memorize/session/MemorizeSessionScreen.kt`:
-  - PR 2, docked layout (2A): drop top tabs; bottom NavigationBar Listen/Build/Recall/Check with labels; above it a
-    collapsible docked sheet: collapsed = the step's main action + status (must hold every required action), expanded = the
-    step's secondary controls; today's tune sheet (`MemorizeSettingsControls`) folds into Build's expanded sheet; headphones
-    (Listen only) moves to a top-bar overflow. Back collapses the sheet first; 200% font: expanded sheet caps ~60% and scrolls.
+  - PR 2, docked layout (2A): **done in #197** (bottom NavigationBar; dock = collapsed main action + status, expanded
+    secondary controls; tune controls in Build's sheet, speed in Listen's; Listen only in a top-bar overflow; Back closes
+    the dock; open dock caps at 60%). Check has no dock (its rating buttons are the content). Dock helpers
+    (`Dock`, `DockToggle`, `PlayDock`, `recallDock/recallMore`) are in `MemorizeSessionScreen.kt`; PR 3 and 4 fill
+    `buildMore` / `recallDock` / `recallMore`. New shots 160-162 (sheets open).
   - PR 3, A-B (3A): in Build's sheet, the phrases as full-width rows (number + Arabic, >=48dp); first tap = From, second = To
     (either order), third restarts; From/To tags on the range, "Whole dua" action, button "Repeat phrases 2-4". Taps only.
   - PR 4, Recall (4A): title line as cue with Meaning on tap; gapped text; collapsed sheet = "Hints · 60% hidden", Next word,
