@@ -1,6 +1,12 @@
 package id.haho.muslimdaily.feature.memorize.session
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -176,6 +182,8 @@ fun MemorizeSessionScreen(
     // Each step opens with its sheet collapsed; Back closes an open sheet before it leaves the screen.
     var expanded by rememberSaveable(state.step) { mutableStateOf(startExpanded) }
     BackHandler(enabled = expanded) { expanded = false }
+    // A–B: true between the first and the second phrase tap. Held here so closing the sheet keeps it.
+    var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
         val dockMax = maxHeight * DOCK_MAX_SHARE
         Column(Modifier.fillMaxSize()) {
@@ -201,7 +209,7 @@ fun MemorizeSessionScreen(
             val toggle: @Composable () -> Unit = { DockToggle(expanded) { expanded = !expanded } }
             when (state.step) {
                 Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
-                Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions))
+                Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
                 Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> Unit
             }
@@ -382,6 +390,8 @@ private fun PlayDock(
     toggle: @Composable () -> Unit,
     status: (@Composable () -> Unit)? = null,
 ) {
+    // A start button beside the toggle gets squeezed into a blob at large text: stack them from 1.3x.
+    val stacked = !loaded && LocalDensity.current.fontScale > STACK_FONT_SCALE
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
         if (loaded) {
             GlassIconButton(onClick = onToggle, modifier = Modifier.size(AdwamDimens.playerMainButton)) {
@@ -401,8 +411,9 @@ private fun PlayDock(
                     Text(startLabel)
                 }
             }
+            if (stacked) Box(Modifier.align(Alignment.End)) { toggle() }
         }
-        toggle()
+        if (!stacked) toggle()
     }
 }
 
@@ -468,9 +479,14 @@ private fun buildDock(state: MemorizeUiState, actions: MemorizeActions, toggle: 
     )
 }
 
-private fun buildMore(state: MemorizeUiState, actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
+private fun buildMore(
+    state: MemorizeUiState,
+    actions: MemorizeActions,
+    abAwaiting: Boolean,
+    onAbAwaiting: (Boolean) -> Unit,
+): @Composable ColumnScope.() -> Unit = {
     if (state.playing == Playing.BUILD && !state.playback.ended) RestartButton(actions.onBuild)
-    if (state.segmented && state.dua.phrases.size > 1) AbLoop(state, actions)
+    if (state.segmented && state.dua.phrases.size > 1) AbLoop(state, actions, abAwaiting, onAbAwaiting)
     MemorizeSettingsControls(
         settings = state.settings,
         onLoops = actions.onLoops,
@@ -501,39 +517,118 @@ private fun BuildProgress(state: MemorizeUiState) {
     }
 }
 
+/**
+ * Repeat a part: the dua's phrases are the targets. The first tap sets one end, the second the other
+ * (either order), a third starts over. Taps only, no dragging (WCAG 2.5.7).
+ */
 @Composable
-private fun AbLoop(state: MemorizeUiState, actions: MemorizeActions) {
-    GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            Text(stringResource(R.string.memorize_ab_title), style = MaterialTheme.typography.titleSmall)
-            Text(stringResource(R.string.memorize_ab_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            val n = state.dua.phrases.size
-            PhrasePicker(stringResource(R.string.memorize_ab_from), n, state.ab.first) { a -> actions.onSetAb(a..maxOf(a, state.ab.last)) }
-            PhrasePicker(stringResource(R.string.memorize_ab_to), n, state.ab.last) { b -> actions.onSetAb(minOf(state.ab.first, b)..b) }
-            GlassOutlinedButton(onClick = actions.onAb, enabled = state.hasAudio) {
-                Icon(painterResource(R.drawable.ic_repeat), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                Text(
-                    stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
-                    Modifier.padding(start = HahoTheme.spacing.sm),
-                )
+private fun AbLoop(state: MemorizeUiState, actions: MemorizeActions, awaitingSecond: Boolean, onAwaiting: (Boolean) -> Unit) {
+    val phrases = state.dua.phrases
+    val selection = AbSelection(state.ab, awaitingSecond)
+    val whole = AbSelection.whole(phrases.size).range
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.memorize_ab_title),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.weight(1f).semantics { heading() },
+            )
+            TextButton(onClick = { actions.onSetAb(whole); onAwaiting(false) }, enabled = state.ab != whole) {
+                Text(stringResource(R.string.memorize_ab_whole))
+            }
+        }
+        Text(
+            stringResource(if (awaitingSecond) R.string.memorize_ab_body_last else R.string.memorize_ab_body),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+        phrases.forEachIndexed { i, phrase ->
+            PhraseRow(
+                number = i + 1,
+                text = phrase.text,
+                isQuran = state.dua.isQuran,
+                inRange = i in state.ab,
+                isFrom = i == state.ab.first,
+                isTo = i == state.ab.last && !awaitingSecond,
+                onClick = {
+                    val next = selection.tap(i)
+                    actions.onSetAb(next.range)
+                    onAwaiting(next.awaitingSecond)
+                },
+            )
+        }
+        GlassButton(onClick = actions.onAb, enabled = state.hasAudio, modifier = Modifier.fillMaxWidth()) {
+            Icon(painterResource(R.drawable.ic_repeat), null, Modifier.size(HahoTheme.dimens.smallIcon))
+            Text(
+                stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
+                Modifier.padding(start = HahoTheme.spacing.sm),
+            )
+        }
+    }
+}
+
+/** One phrase as a full-width target (at least 48 dp): number, Arabic, and a From/To tag on the ends of the range. */
+@Composable
+private fun PhraseRow(number: Int, text: String, isQuran: Boolean, inRange: Boolean, isFrom: Boolean, isTo: Boolean, onClick: () -> Unit) {
+    val container = if (inRange) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
+    val content = if (inRange) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
+    val position = stringResource(
+        when {
+            isFrom && isTo -> R.string.memorize_ab_state_both
+            isFrom -> R.string.memorize_ab_state_from
+            isTo -> R.string.memorize_ab_state_to
+            inRange -> R.string.memorize_ab_state_in
+            else -> R.string.memorize_ab_state_out
+        },
+    )
+    Surface(
+        onClick = onClick,
+        color = container,
+        contentColor = content,
+        shape = MaterialTheme.shapes.medium,
+        border = if (inRange) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                selected = inRange
+                stateDescription = position
+            },
+    ) {
+        Row(
+            Modifier.heightIn(min = 48.dp).padding(horizontal = HahoTheme.spacing.md, vertical = HahoTheme.spacing.xs),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
+        ) {
+            // "2" alone is not a useful announcement; the Arabic follows in its own language.
+            val spoken = stringResource(R.string.memorize_phrase_n, number)
+            Text(
+                number.toString(),
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.clearAndSetSemantics { contentDescription = spoken },
+            )
+            ArabicText(
+                text,
+                style = AdwamTheme.arabic.body(isQuran),
+                textAlign = TextAlign.End,
+                modifier = Modifier.weight(1f),
+            )
+            if (isFrom || isTo) {
+                // Not colour alone (WCAG 1.4.1): the ends of the range carry words too.
+                Column(horizontalAlignment = Alignment.End, modifier = Modifier.clearAndSetSemantics {}) {
+                    if (isFrom) RangeTag(stringResource(R.string.memorize_ab_from))
+                    if (isTo) RangeTag(stringResource(R.string.memorize_ab_to))
+                }
             }
         }
     }
 }
 
 @Composable
-private fun PhrasePicker(label: String, count: Int, selected: Int, onSelect: (Int) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
-        Text(label, style = MaterialTheme.typography.labelLarge)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
-            repeat(count) { i ->
-                FilterChip(
-                    selected = i == selected,
-                    onClick = { onSelect(i) },
-                    label = { Text(stringResource(R.string.memorize_phrase_n, i + 1)) },
-                )
-            }
-        }
+private fun RangeTag(label: String) {
+    Surface(color = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary, shape = MaterialTheme.shapes.small) {
+        Text(label, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = HahoTheme.spacing.xs, vertical = 2.dp))
     }
 }
 
