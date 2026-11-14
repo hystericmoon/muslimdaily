@@ -421,7 +421,6 @@
     <string name="memorize_memorized">Hafal</string>
     <string name="memorize_not_started">Belum dipelajari</string>
     <string name="memorize_remove">Hapus</string>
-    <string name="memorize_remove_named">Hapus %1$s dari Hafalan saya</string>
     <string name="memorize_remove_title">Hapus dari Hafalan saya?</string>
     <string name="memorize_remove_body">Jadwal ulangnya ikut terhapus. Doanya tetap ada di daftar doa, dan bisa dihafalkan lagi kapan saja.</string>
     <string name="memorize_box_n">Kotak %d</string>
@@ -448,7 +447,12 @@
     <string name="memorize_review_start">Mulai mengulang</string>
     <string name="memorize_open">Buka hafalan</string>
     <string name="memorize_due_badge">Perlu diulang</string>
-    <string name="memorize_next_on">Berikutnya %s</string>
+    <string name="memorize_continue">Lanjutkan</string>
+    <string name="memorize_start_learning">Mulai menghafal</string>
+    <string name="memorize_state_learning">Sedang dihafal · diulang %1$s</string>
+    <string name="memorize_state_memorized">Hafal · diulang %1$s</string>
+    <string name="memorize_more_named">Opsi lain untuk %1$s</string>
+    <string name="memorize_remove_menu">Hapus dari Hafalan saya</string>
     <string name="memorize_pick_title">Pilih doa untuk dihafal</string>
     <string name="memorize_listen_done">Selesai</string>
     <string name="memorize_listen_only_start">Ketuk untuk mulai</string>
