@@ -11,8 +11,7 @@ Last updated: 14 Nov 2026 (Memorize revamp chosen, PR 1 list merged; PRs 2-4 Son
 
 ## In flight
 
-- 1.13.0 (versionCode 56) is live: GitHub Release v1.13.0 published 11 Nov 23:38 WIB with adwam-1.13.0.apk
-  (checked 14 Nov). Owner still to install and check. Details: history, "Shipped".
+- 1.13.0 is live (Release v1.13.0, 11 Nov); owner still to install and check. History, "Shipped".
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
 - **Memorize revamp: owner chose 1A 2A 3A 4A 5A (14 Nov)** on https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK (the
   mockups are the spec; read the page before each PR). PR 1, list: #196 (Continue card, compact rows sorted due > learning >
@@ -55,10 +54,7 @@ does a plain `git push`; push your own commits after it ends. Links, decisions, 
 
 Roadmap: https://claude.ai/artifact/12tBkTW16bxrFGE9tEuz73
 
-0a. **Done (3 Nov, shipped in 1.12.6, #157/#159).** Gaps left: 1 row without English (manners_05: no
-   row has its Arabic), 3 without Indonesian (tasbih_03, tasbih_06, salam_04: no licensed source),
-   16 without audio (sunnah_01-16: HadeethEnc has none), 39 without Latin (unvowelled words; never
-   hand-written). Details: history, "Shipped" 1.12.6.
+0a. Content gaps (1 no English, 3 no Indonesian, 16 no audio, 39 no Latin): history, "Shipped" 1.12.6.
 1. **On hold (owner, 1 Nov: no budget; don't start until the owner says).** Play release: the
    owner's steps only (upload keystore, four `PLAY_UPLOAD_*` secrets, Play App Signing, listing,
    content rating, target audience; "Needs doing" in `docs/play-store.md`). Play ships the same
