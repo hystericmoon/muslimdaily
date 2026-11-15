@@ -39,6 +39,7 @@ import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -46,6 +47,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.feature.memorize.session.STACK_FONT_SCALE
 import id.haho.muslimdaily.feature.routines.RoutineSheet
 import id.haho.muslimdaily.feature.duas.components.gradeLabel
 import id.haho.muslimdaily.feature.duas.components.sourceLabel
@@ -215,16 +217,18 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             }
         }
         if (dua.audio != null && dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+        val chips: @Composable (Modifier) -> Unit = { chipModifier ->
             FlowRow(
-                modifier = Modifier.weight(1f),
+                modifier = chipModifier,
                 horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
                 verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
                 dua.count?.let { CountBadge(it, Modifier.align(Alignment.CenterVertically)) }
                 SourceChip(dua)
             }
-            // Two toggles, as on the occasion page: in the Memorize tab, and in a routine.
+        }
+        // Two toggles, as on the occasion page: in the Memorize tab, and in a routine.
+        val toggles: @Composable () -> Unit = {
             if (dua.isRecitable) {
                 HifzToggle(state.inHifz, actions.onToggleHifz)
                 val saved = state.routines.any { dua.id in it.duaIds }
@@ -240,6 +244,19 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                         tint = if (saved) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+            }
+        }
+        // At large text the toggles drop below the chips, so the source label (the Quran verse range)
+        // gets the whole width instead of being squeezed by two 48 dp buttons (audit M9).
+        if (LocalDensity.current.fontScale > STACK_FONT_SCALE) {
+            Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+                chips(Modifier.fillMaxWidth())
+                if (dua.isRecitable) Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) { toggles() }
+            }
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs)) {
+                chips(Modifier.weight(1f))
+                toggles()
             }
         }
         if (!dua.isRecitable) InfoNote(stringResource(R.string.dua_reading_card), icon = R.drawable.ic_menu_book)
