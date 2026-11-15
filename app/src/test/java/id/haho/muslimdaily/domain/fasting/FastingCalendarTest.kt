@@ -49,4 +49,19 @@ class FastingCalendarTest {
         assertTrue(special.all { d -> d.forbidden || d.kinds.any { !it.weekly } })
         assertTrue(all.first().date <= special.first().date)
     }
+
+    @Test
+    fun `consecutive days of one fast are grouped and weekly fasts do not split them`() {
+        val groups = FastingCalendar.upcomingGroups(wednesday, 0, limit = 6)
+        assertEquals(6, groups.size)
+        groups.forEach { run ->
+            assertTrue(run.zipWithNext().all { (a, b) -> b.date == a.date.plusDays(1) })
+            assertTrue(run.all { d -> d.kinds.filter { !it.weekly } == run.first().kinds.filter { !it.weekly } })
+        }
+        // The same fast is never listed twice in a row on consecutive days.
+        assertTrue(groups.zipWithNext().none { (a, b) -> a.last().date.plusDays(1) == b.first().date && a.first().kinds.filter { !it.weekly } == b.first().kinds.filter { !it.weekly } })
+        // Ayyamul Bidh (13-15) is one entry of up to three days (two in Dzulhijjah, where the 13th is Tashriq).
+        val bidh = groups.filter { FastKind.WHITE_DAYS in it.first().kinds }
+        assertTrue(bidh.isNotEmpty() && bidh.all { it.size in 2..3 })
+    }
 }

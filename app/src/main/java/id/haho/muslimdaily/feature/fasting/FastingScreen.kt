@@ -63,6 +63,7 @@ import id.haho.design.glass.GlassCard
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.ui.AppLocale
+import id.haho.muslimdaily.core.ui.formatDateRange
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.fasting.FastDay
@@ -118,7 +119,8 @@ data class FastingUiState(
     val tomorrow: FastDay,
     val month: List<FastDay>,
     val selected: FastDay,
-    val upcoming: List<FastDay>,
+    /** Runs of consecutive days of one fast, soonest first. */
+    val upcoming: List<List<FastDay>>,
 )
 
 @HiltViewModel
@@ -142,7 +144,7 @@ class FastingViewModel @Inject constructor(settings: SettingsRepository, clock: 
             tomorrow = FastingCalendar.day(todayDate.plusDays(1), adj),
             month = month,
             selected = FastingCalendar.day(sel, adj),
-            upcoming = FastingCalendar.upcoming(todayDate, adj, includeWeekly = false, limit = 6),
+            upcoming = FastingCalendar.upcomingGroups(todayDate, adj, limit = 6),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -189,9 +191,9 @@ fun FastingContent(
         item {
             GlassCard(Modifier.fillMaxWidth().padding(horizontal = gutter)) {
                 Column {
-                    state.upcoming.forEachIndexed { i, d ->
+                    state.upcoming.forEachIndexed { i, run ->
                         if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-                        UpcomingRow(d) { onSelect(d.date) }
+                        UpcomingRow(run) { onSelect(run.first().date) }
                     }
                 }
             }
@@ -405,7 +407,8 @@ private fun DayDetails(day: FastDay, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun UpcomingRow(day: FastDay, onClick: () -> Unit) {
+private fun UpcomingRow(run: List<FastDay>, onClick: () -> Unit) {
+    val day = run.first()
     Row(
         Modifier
             .fillMaxWidth()
@@ -423,7 +426,7 @@ private fun UpcomingRow(day: FastDay, onClick: () -> Unit) {
                 color = if (day.forbidden) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                formatLongDate(day.date) + " · " + hijriText(day.hijri),
+                if (run.size > 1) formatDateRange(day.date, run.last().date) else formatLongDate(day.date) + " · " + hijriText(day.hijri),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
