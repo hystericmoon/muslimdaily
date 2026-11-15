@@ -436,16 +436,16 @@ private fun RecallCheck(onAnswer: (Boolean) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
         Text(stringResource(R.string.run_recall_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
         // Side by side at normal text sizes; stacked at large ones, where a half-width
-        // "Perlu lihat teks" wraps to three lines and the pill turns into a blob.
+        // a half-width answer wraps to three lines and the pill turns into a blob.
         if (LocalDensity.current.fontScale >= LARGE_TEXT_SCALE) {
             Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.run_recall_knew)) }
-                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.run_recall_needed)) }
+                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_not_yet)) }
+                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.memorize_knew_it)) }
             }
         } else {
             Row(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_knew)) }
-                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.run_recall_needed)) }
+                GlassOutlinedButton(onClick = { onAnswer(false) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.memorize_not_yet)) }
+                GlassOutlinedButton(onClick = { onAnswer(true) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.memorize_knew_it)) }
             }
         }
     }

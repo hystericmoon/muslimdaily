@@ -1015,7 +1015,7 @@ internal fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
 }
 
 internal fun Rating.labelRes() = when (this) {
-    Rating.AGAIN -> R.string.memorize_rate_again
-    Rating.HARD -> R.string.memorize_rate_hard
-    Rating.EASY -> R.string.memorize_rate_easy
+    Rating.AGAIN -> R.string.memorize_not_yet
+    Rating.HARD -> R.string.memorize_with_help
+    Rating.EASY -> R.string.memorize_knew_it
 }
