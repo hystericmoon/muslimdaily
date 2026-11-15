@@ -61,6 +61,17 @@ private val DayMonth get() = DateTimeFormatter.ofPattern("EEEE, d MMMM", AppLoca
 /** Weekday, day and month without the year: short enough for a headline on one line at "Rabu, 30 September". */
 fun formatDayMonth(date: LocalDate): String = DayMonth.format(date)
 
+private val DayOnly get() = DateTimeFormatter.ofPattern("d", AppLocale)
+private val DayShortMonth get() = DateTimeFormatter.ofPattern("d MMM", AppLocale)
+
+/** "24–26 Okt" within one month, "30 Okt – 2 Nov" across two. */
+fun formatDateRange(first: LocalDate, last: LocalDate): String =
+    if (first.month == last.month && first.year == last.year) {
+        DayOnly.format(first) + "–" + DayShortMonth.format(last)
+    } else {
+        DayShortMonth.format(first) + " – " + DayShortMonth.format(last)
+    }
+
 @Composable
 fun hijriLabel(h: HijriDate): String {
     val months = stringArrayResource(R.array.hijri_months)

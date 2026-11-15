@@ -101,7 +101,7 @@ class WidgetFitTest {
         // What must always show in full: the clock, the times, the prayer names and the countdown.
         val clock = text.time(now)
         val whole = (model.slots.map { text.time(it.time) } + model.slots.map { clockDigits(text.time(it.time)) } + model.slots.map { text.name(it.slot) } +
-            listOf(text.nextNameLong, text.countdown, text.countdownShort, clockDigits(text.time(model.track.stops.first().time)), text.now, text.hijriShort, text.hijriLong) +
+            listOf(text.nextNameLong, text.countdown, text.countdownShort, clockDigits(text.time(model.track.stops.first().time)), text.now, text.hijriShort, text.hijriLong, text.dateNarrow) +
             listOf(clock, clockDigits(clock), now.atZone(model.zone).let { "%02d".format(it.hour) }, now.atZone(model.zone).let { "${(it.hour + 11) % 12 + 1}" }, now.atZone(model.zone).let { "%02d".format(it.minute) }, text.target(false), text.untilTarget(true).toString(), text.untilTarget(false).toString()) +
             listOfNotNull(text.fast)).toSet()
 
