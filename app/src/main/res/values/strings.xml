@@ -957,6 +957,14 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_15_1">
+        <item>Teks besar lebih rapi: kalender puasa tersusun ulang di ukuran 200%, lembar Sumber dan derajat bisa digulir, kolom cari punya label pendek, rujukan Al-Qur\'an dan tombol di bawahnya tidak lagi terpotong, dan ikon di Hari ini ikut membesar.</item>
+        <item>Hafalan dan Mulai membaca: penilaian memakai satu kata yang sama (Belum, Dengan bantuan, Sudah hafal) dengan gaya tombol yang sama. Mode Terpandu hanya menampilkan satu penghitung langkah, tombol di lembar bawah bernama Opsi, hitungan berbunyi \"2 dari 3 kali\" dengan tombol Batalkan hitungan, dan pilihan tingkat sembunyi lebih besar.</item>
+        <item>Doa: pratinjau dipotong di kata yang utuh, gambar bagikan memakai tanda ayat dan catatan kaki seperti di aplikasi, dua ikon di setiap doa dijelaskan sekali, dan chip sumber yang kosong tidak lagi tampil.</item>
+        <item>Hari ini dan puasa: langkah rawatib yang belum dicentang tampil sebagai lingkaran kosong, catatan panjang ada di balik ikon info, chip Mode safar yang aktif terlihat jelas, hari puasa dibedakan dengan bentuk (bukan warna saja), dan hari berurutan digabung dalam satu baris.</item>
+        <item>Pengaturan: menit penyesuaian dan jarak iqamah ada di layar sendiri dengan ringkasan, beranda Pengaturan punya grup Data dan Aplikasi, Diagnostik menandai yang bermasalah dengan panduan yang bisa diketuk, dan peringatan kompas Kiblat tampil di atas arahan. Di layar sambutan, ukuran teks dan pengingat dilipat ke Lainnya.</item>
+        <item>Widget: 1x1 menampilkan waktu shalat berikutnya, skala hari lebih besar dengan shalat berikutnya ditebalkan dan bertitik, widget tanpa lokasi punya tombol Atur lokasi yang membuka layar lokasi, kaca tidak bisa lebih tipis dari 85% agar teks tetap terbaca, dan widget sempit tidak lagi menampilkan tanggal Hijriah.</item>
+    </string-array>
     <string-array name="whats_new_1_15_0">
         <item>Sesi Mulai membaca kini punya pemutar audio di lembar bawah yang bisa dilipat, seperti di Hafalan: putar atau jeda, lalu Lainnya untuk frasa, ulangi, frasa sebelumnya atau berikutnya, dan kecepatan. Teks Arab menyorot frasa yang sedang terdengar.</item>
         <item>Hafalan, langkah Cek: penilaian kini ada di lembar bawah dalam satu baris, jadi tetap terjangkau jempol pada doa panjang. Kartu hasil tidak lagi menampilkan nomor kotak, dan di mode Terpandu tombol Belum menyebut kapan doa muncul lagi.</item>

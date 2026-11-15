@@ -975,6 +975,14 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_15_1">
+        <item>Large text is tidier: the fasting calendar reflows at 200%, the Sources and grading sheet scrolls, the search field has a short label, the Quran reference and the buttons under it are no longer cut off, and the icons on Today grow with the text.</item>
+        <item>Memorize and Start reading: ratings use one set of words (Not yet, With help, Knew it) in one button style. Guided shows a single step counter, the bottom sheet toggle is named Options, the count reads \"2 of 3 times\" with an Undo count button, and the hide-level choices are larger.</item>
+        <item>Duas: previews are cut at a whole word, the share image uses the same verse marks and footnote styling as the app, the two icons on every dua are explained once, and an empty source chip no longer shows.</item>
+        <item>Today and fasting: unchecked Rawatib steps show an empty ring, the long notes sit behind an info icon, an active Travel mode chip is easy to see, fasting days are told apart by shape (not colour alone), and consecutive days share one row.</item>
+        <item>Settings: the minute adjustments and iqamah gaps have their own screens with a summary, Settings home has Data and App groups, Diagnostics marks what is wrong with a tappable guide, and the Qibla compass warning sits above the guidance. On the welcome screen, text size and reminders fold into More.</item>
+        <item>Widgets: the 1x1 shows the next prayer\'s time, the day scale is larger with the next prayer in bold and marked with a dot, the no-location widget has a Set location button that opens the location screen, the glass can no longer be thinner than 85% so text stays readable, and narrow widgets no longer show the Hijri date.</item>
+    </string-array>
     <string-array name="whats_new_1_15_0">
         <item>Start reading now has an audio player in a collapsible sheet at the bottom, as in Memorize: play or pause, then More for phrases, repeat, previous or next phrase, and speed. The Arabic highlights the phrase you are hearing.</item>
         <item>Memorize, Check step: the ratings now sit in the bottom sheet in one row, so they stay within thumb reach on a long dua. The result card no longer shows a box number, and in Guided mode the Not yet button says when the dua comes back.</item>
