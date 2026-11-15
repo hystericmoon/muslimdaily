@@ -849,7 +849,8 @@
     <string name="diag_battery_restricted">Restricted: Android may delay reminders</string>
     <string name="diag_open_settings">Open settings</string>
     <string name="diag_muted">Notification channels turned off: %1$s</string>
-    <string name="diag_oem">Phones of this brand often stop apps in the background. Steps to allow it: dontkillmyapp.com/%1$s</string>
+    <string name="diag_oem">Phones of this brand often stop apps in the background. The guide below shows how to allow it.</string>
+    <string name="diag_oem_guide">Open the guide</string>
     <string name="diag_next">Next reminders</string>
     <string name="diag_none_planned">No reminders are on</string>
     <string name="diag_recent">Recently rang</string>

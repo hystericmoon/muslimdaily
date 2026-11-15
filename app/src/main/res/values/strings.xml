@@ -837,7 +837,8 @@
     <string name="diag_battery_restricted">Dibatasi: Android bisa menunda pengingat</string>
     <string name="diag_open_settings">Buka pengaturan</string>
     <string name="diag_muted">Saluran notifikasi yang dimatikan: %1$s</string>
-    <string name="diag_oem">Ponsel merek ini sering menghentikan aplikasi di latar belakang. Langkah untuk mengizinkannya: dontkillmyapp.com/%1$s</string>
+    <string name="diag_oem">Ponsel merek ini sering menghentikan aplikasi di latar belakang. Panduan cara mengizinkannya ada di tombol di bawah.</string>
+    <string name="diag_oem_guide">Buka panduan</string>
     <string name="diag_next">Pengingat berikutnya</string>
     <string name="diag_none_planned">Tidak ada pengingat yang aktif</string>
     <string name="diag_recent">Terakhir berbunyi</string>
