@@ -77,6 +77,9 @@ private val GoldTone90 = Color(0xFFFFE08E)
 private val GoldTone30 = Color(0xFF584400)
 private val GoldTone10 = Color(0xFF241A00)
 
+/** The gold for small marks on a light surface (dots, the crescent): 3.7:1 on the tinted containers, where raw gold is 2:1. */
+private val GoldMarkLight = Color(0xFF93750F)
+
 /** Colour roles M3 does not cover. Gold appears only as fill or non-text indicator. */
 @Immutable
 data class ExtendedColors(
@@ -85,11 +88,13 @@ data class ExtendedColors(
     val highlightIndicator: Color,
     val completeFill: Color,
     val onCompleteFill: Color,
+    /** A small gold mark on the page background or a card (fasting dots, the Ramadan crescent), 3:1 or more. */
+    val goldMark: Color,
 )
 
 /**
  * The gold roles for [palette]. They are the same in every palette except the light-mode
- * underline, which uses the palette's primary because raw gold on a light surface is below 3:1.
+ * underline and [ExtendedColors.goldMark], which use darker tones because raw gold on a light surface is below 3:1.
  * Dynamic colour does not change them.
  */
 fun extendedColors(palette: HahoPalette, dark: Boolean) = ExtendedColors(
@@ -98,6 +103,7 @@ fun extendedColors(palette: HahoPalette, dark: Boolean) = ExtendedColors(
     highlightIndicator = if (dark) Gold else colorSchemeFor(palette, dark = false).primary,
     completeFill = Gold,
     onCompleteFill = GoldTone10,
+    goldMark = if (dark) Gold else GoldMarkLight,
 )
 
 val LocalExtendedColors = staticCompositionLocalOf { extendedColors(HahoPalette.Default, dark = false) }
