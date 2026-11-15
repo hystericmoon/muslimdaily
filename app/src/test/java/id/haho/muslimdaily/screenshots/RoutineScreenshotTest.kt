@@ -14,6 +14,8 @@ import id.haho.muslimdaily.feature.duas.library.LibraryTab
 import id.haho.muslimdaily.feature.routines.RoutineEditActions
 import id.haho.muslimdaily.feature.routines.RoutineEditScreen
 import id.haho.muslimdaily.feature.routines.RoutineEditState
+import id.haho.muslimdaily.feature.settings.IqamahContent
+import id.haho.muslimdaily.feature.settings.PrayerOffsetsContent
 import id.haho.muslimdaily.feature.today.TodayActions
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import id.haho.muslimdaily.feature.today.TodayScreen
@@ -192,4 +194,10 @@ class RoutineScreenshotTest {
             dockExpanded = true,
         )
     }
+
+    @Test
+    fun settingsPrayerOffsets() = captureVariants("190-settings-prayer-offsets") { PrayerOffsetsContent(TodayPreviewData.settings) {} }
+
+    @Test
+    fun settingsIqamah() = captureVariants("191-settings-iqamah") { IqamahContent(TodayPreviewData.settings) {} }
 }

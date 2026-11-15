@@ -10,12 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.design.component.InfoNote
+import id.haho.design.component.NavigationRow
 import id.haho.design.component.RadioGroup
 import id.haho.design.component.SegmentedRow
 import id.haho.design.component.SettingsGroup
@@ -35,15 +37,20 @@ import id.haho.muslimdaily.data.settings.SettingsEditor
 import java.util.Locale
 
 @Composable
-fun PrayerSettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
+fun PrayerSettingsRoute(onBack: () -> Unit, onOffsets: () -> Unit, onIqamah: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     AdwamScreen(title = stringResource(R.string.settings_prayer), onBack = onBack) {
-        settings?.let { PrayerSettingsContent(it, viewModel::update) }
+        settings?.let { PrayerSettingsContent(it, onOffsets, onIqamah, viewModel::update) }
     }
 }
 
 @Composable
-fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
+fun PrayerSettingsContent(
+    settings: AppSettings,
+    onOffsets: () -> Unit = {},
+    onIqamah: () -> Unit = {},
+    update: (SettingsEditor.() -> Unit) -> Unit,
+) {
     val calc = settings.calculation
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
@@ -74,37 +81,21 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
             }
         }
         item {
-            SettingsGroup(stringResource(R.string.settings_offsets)) {
-                InfoNote(
-                    stringResource(R.string.settings_offsets_note),
-                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
+            SettingsGroup(stringResource(R.string.settings_times_group)) {
+                val changed = PrayerTimeSlot.entries.count { calc.offsets.of(it) != 0 }
+                NavigationRow(
+                    title = stringResource(R.string.settings_offsets),
+                    summary = if (changed == 0) stringResource(R.string.settings_offsets_none) else pluralStringResource(R.plurals.settings_offsets_changed, changed, changed),
+                    icon = R.drawable.ic_tune,
+                    onClick = onOffsets,
                 )
-                PrayerTimeSlot.entries.forEach { slot ->
-                    val key = slot.name.lowercase(Locale.ROOT)
-                    MinuteStepper(
-                        title = stringResource(slot.labelRes()),
-                        value = calc.offsets.of(slot),
-                        range = -30..30,
-                        signed = true,
-                    ) { v -> update { setOffset(key, v) } }
-                }
-            }
-        }
-        item {
-            SettingsGroup(stringResource(R.string.settings_iqamah)) {
-                InfoNote(
-                    stringResource(R.string.settings_iqamah_note),
-                    Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
+                val iqamah = (FIVE_PRAYERS + Prayer.JUMUAH).count { (settings.iqamahOffsets[it] ?: 0) != 0 }
+                NavigationRow(
+                    title = stringResource(R.string.settings_iqamah),
+                    summary = if (iqamah == 0) stringResource(R.string.settings_off) else pluralStringResource(R.plurals.settings_iqamah_set, iqamah, iqamah),
+                    icon = R.drawable.ic_schedule,
+                    onClick = onIqamah,
                 )
-                (FIVE_PRAYERS + Prayer.JUMUAH).forEach { prayer ->
-                    MinuteStepper(
-                        title = stringResource(prayer.labelRes()),
-                        value = settings.iqamahOffsets[prayer] ?: 0,
-                        range = 0..60,
-                        signed = false,
-                        zeroText = stringResource(R.string.settings_off),
-                    ) { v -> update { setIqamah(prayer, v) } }
-                }
             }
         }
         item {
@@ -122,7 +113,7 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                     options = listOf(4, 2),
                     selected = settings.dhuhrQabliyahRakah,
                     onSelect = { v -> update { dhuhrQabliyahRakah = v } },
-                    label = { androidx.compose.ui.res.pluralStringResource(R.plurals.rakah_count, it, it) },
+                    label = { pluralStringResource(R.plurals.rakah_count, it, it) },
                 )
                 SwitchRow(
                     title = stringResource(R.string.settings_checklist_history),
@@ -167,7 +158,7 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
     }
 }
 
-private fun PrayerOffsets.of(slot: PrayerTimeSlot): Int = when (slot) {
+internal fun PrayerOffsets.of(slot: PrayerTimeSlot): Int = when (slot) {
     PrayerTimeSlot.FAJR -> fajr
     PrayerTimeSlot.SUNRISE -> sunrise
     PrayerTimeSlot.DHUHR -> dhuhr
@@ -177,7 +168,7 @@ private fun PrayerOffsets.of(slot: PrayerTimeSlot): Int = when (slot) {
 }
 
 @Composable
-private fun MinuteStepper(
+internal fun MinuteStepper(
     title: String,
     value: Int,
     range: IntRange,

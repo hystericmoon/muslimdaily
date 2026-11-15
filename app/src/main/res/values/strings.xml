@@ -199,6 +199,14 @@
     <string name="settings_asr_standard">Standar (1×)</string>
     <string name="settings_asr_hanafi">Hanafi (2×)</string>
     <string name="settings_offsets">Penyesuaian menit</string>
+    <string name="settings_times_group">Waktu dan iqamah</string>
+    <string name="settings_offsets_none">Semua 0 mnt</string>
+    <plurals name="settings_offsets_changed">
+        <item quantity="other">%d waktu diubah</item>
+    </plurals>
+    <plurals name="settings_iqamah_set">
+        <item quantity="other">%d shalat diatur</item>
+    </plurals>
     <string name="settings_offsets_note">Geser waktu bila jadwal masjid setempat berbeda.</string>
     <string name="settings_iqamah">Jarak iqamah</string>
     <string name="settings_iqamah_note">Menit setelah adzan, sesuaikan dengan masjid Anda.</string>

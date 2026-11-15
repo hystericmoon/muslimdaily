@@ -39,6 +39,8 @@ import kotlinx.serialization.Serializable
 // Settings
 @Serializable data object SettingsHomeRoute
 @Serializable data object PrayerSettingsRoute
+@Serializable data object PrayerOffsetsRoute
+@Serializable data object IqamahRoute
 @Serializable data object LocationRoute
 @Serializable data object RemindersRoute
 @Serializable data object DisplaySettingsRoute
