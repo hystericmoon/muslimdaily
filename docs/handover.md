@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026, 22:25 WIB (UX/UI audit fixes: 12 merged, T2 open, five streams running, 1.15.1 release planned).
+Last updated: 15 Nov 2026, 22:50 WIB (UX/UI audit: stream PRs #236-#261 open, 5 merged; 1.15.1 not cut).
 
 ## In flight
 
@@ -26,13 +26,16 @@ Last updated: 15 Nov 2026, 22:25 WIB (UX/UI audit fixes: 12 merged, T2 open, fiv
   **Open:** T2 #231 (Today icons scale with the font; shared `smallIcon` is haho-design, untouched). Main was merged into it (M7 and
   T2 both re-recorded the Ramadan/Isbat 200% shots) and the Screenshots workflow re-run on the merge. Merge on a green dispatched
   Android run once shots 14, 15, 101 `-font200` show the darker crescent and scaled icons.
-  **Overnight run (owner, 15 Nov night: "make sure everything is done, the new APK released with all the fixes").** Five sub-agent
-  streams (worktrees, one PR at a time each, branches `claude/audit-<id>-*`) are doing the rest: A Widgets W2 W4 W5 W7 W9 then M1
-  (floor 85%); B S10 S14 S15 S11 S9 S7; C T3 T7 T6 T8 T10 S4 S6; D1 M3-rest (answers pinned in the dock at >=1.5x) R13 R9 R4 R6 R12;
-  D2 R10 R15 R18 D6 R14 R11 D7 D8 then M10 (word clamp on translation and picker rows). The decision-page picks were built as
-  recommended (A, A, C) since the owner asked for everything done. Anything needing haho-design, content, database or backup was to
-  be skipped and reported. Lead ships **1.15.1 (versionCode 59)** after all merge (release skill; owner approved the release).
-  If you find this unfinished: list open PRs `claude/audit-*`, merge the green ones (look at the shots), then do the release.
+  **State (15 Nov 22:50 WIB; usage limit near, so streams were told to merge open PRs only).** Stream PRs merged: S10 #234, S14 #235,
+  M3 #238, R10 #239, S15 #240. **Open (each: look at its shots, merge on a green dispatched Android run; a red pre-record head is
+  expected):** #236 T3, #237 T7, #241 R13, #242 R15, #243 R18, #244 T6, #245 S11, #246 D6, #247 R9, #248 W2, #249 T8, #250 R14,
+  #251 R4, #252 R11, #253 T10 (its `record` job failed once, re-run it), #254 R6, #255 S9, #256 S4, #257 R12, #258 D7, #259 S6,
+  #260 D8, #261 M10 (word clamp for translations and picker rows; decision page pick C). CI is backed up, so allow time.
+  **Never started:** W4, W5, W7, W9 (widgets, `PrayerWidgets.kt`), M1 (WIDGET_OPACITY_MIN 0.85 + GlassContrastTest over the range),
+  S7 (prayer settings: minute steppers onto own screens). One PR each, Sonnet.
+  **Release:** owner asked for it ("everything done, new APK released"). Ship **1.15.1 (versionCode 59)** with what merged (release
+  skill; say the version first; Screenshots re-record covers the What's New shot). Not cut yet. Merge conflicts between PRs are
+  PNG/strings: merge origin/main into the branch, take either PNG, re-run `screenshots.yml`.
   **Loose ends** (history, "Facts that cost time to find", audit session 2): routine-editor hint says "drag the handle" (R10 copy pass); `WidgetFitTest` flags 56/76 dp cells at large fonts; Qibla tip draws raw gold.
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
