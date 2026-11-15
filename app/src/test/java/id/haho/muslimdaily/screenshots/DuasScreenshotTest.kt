@@ -98,7 +98,7 @@ class DuasScreenshotTest {
         )
     }
 
-    /** Layout B with alternating phrase tones, audio stopped. */
+    /** Layout B with alternating phrase tones, audio stopped; the first phrase is the active one so both tones show. */
     @Test
     fun detailInlineAlternating() = captureVariants("140-dua-fill-alternating") {
         DuaDetailContent(
@@ -106,7 +106,7 @@ class DuasScreenshotTest {
                 dua = DuaPreviewData.dua("morning_02", 2, count = 3),
                 event = event,
                 prefs = ReadingPrefs(layout = PhraseLayout.INLINE, fill = PhraseFill.ALTERNATING),
-                playback = PlaybackState(duaId = "morning_02", activePhrase = 1),
+                playback = PlaybackState(duaId = "morning_02", activePhrase = 0),
             ),
             DuaDetailActions(),
         )
