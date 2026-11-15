@@ -18,10 +18,12 @@ import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.design.component.NavigationRow
 import id.haho.design.component.SettingsGroup
+import id.haho.design.component.SwitchRow
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.core.ui.reportError
 import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.SettingsEditor
 
 data class SettingsDestinations(
     val onPrayer: () -> Unit = {},
@@ -44,13 +46,13 @@ fun SettingsHomeRoute(destinations: SettingsDestinations, viewModel: SettingsVie
     val context = LocalContext.current
     AdwamScreen(title = stringResource(R.string.nav_settings)) {
         settings?.let {
-            SettingsHomeContent(it, destinations.copy(onReportError = { reportError(context, null, version) }))
+            SettingsHomeContent(it, destinations.copy(onReportError = { reportError(context, null, version) }), viewModel::update)
         }
     }
 }
 
 @Composable
-fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
+fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations, update: (SettingsEditor.() -> Unit) -> Unit = {}) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             SettingsGroup(stringResource(R.string.settings_group_prayer)) {
@@ -89,11 +91,21 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
                     icon = R.drawable.ic_headphones,
                     onClick = d.onAudio,
                 )
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.settings_group_data)) {
                 NavigationRow(
                     title = stringResource(R.string.settings_my_sets),
                     summary = stringResource(R.string.settings_my_sets_summary),
                     icon = R.drawable.ic_ios_share,
                     onClick = d.onMySets,
+                )
+                SwitchRow(
+                    title = stringResource(R.string.settings_checklist_history),
+                    summary = stringResource(R.string.settings_checklist_history_summary),
+                    checked = settings.keepChecklistHistory,
+                    onCheckedChange = { v -> update { keepChecklistHistory = v } },
                 )
             }
         }
@@ -112,11 +124,15 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations) {
                     onClick = d.onReportError,
                 )
                 NavigationRow(
-                    title = stringResource(R.string.diag_title),
+                    title = stringResource(R.string.settings_feedback),
                     summary = stringResource(R.string.diag_summary),
                     icon = R.drawable.ic_bug_report,
                     onClick = d.onDiagnostics,
                 )
+            }
+        }
+        item {
+            SettingsGroup(stringResource(R.string.settings_group_app)) {
                 NavigationRow(
                     title = stringResource(R.string.settings_about),
                     summary = stringResource(R.string.settings_about_summary),

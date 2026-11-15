@@ -78,4 +78,28 @@ object FastingCalendar {
             .filter { it.forbidden || it.sunnah(includeWeekly).isNotEmpty() }
             .take(limit)
             .toList()
+
+    /**
+     * Runs of consecutive days that are the same fast (weekly Monday/Thursday aside), so a
+     * three-day fast reads as one entry rather than three.
+     */
+    fun group(days: List<FastDay>): List<List<FastDay>> {
+        val groups = mutableListOf<MutableList<FastDay>>()
+        for (d in days) {
+            val last = groups.lastOrNull()?.last()
+            if (last != null && last.date.plusDays(1) == d.date && last.kinds.filter { !it.weekly } == d.kinds.filter { !it.weekly }) {
+                groups.last().add(d)
+            } else {
+                groups.add(mutableListOf(d))
+            }
+        }
+        return groups
+    }
+
+    /** The next [limit] fasts (sunnah or forbidden), consecutive days of one fast counted once. */
+    fun upcomingGroups(from: LocalDate, hijriAdjustment: Int, limit: Int): List<List<FastDay>> =
+        group(upcoming(from, hijriAdjustment, includeWeekly = false, limit = GROUP_SCAN_DAYS, horizonDays = 400)).take(limit)
+
+    // Enough to hold the longest run (the 28 days of Shawwal) and the fasts after it.
+    private const val GROUP_SCAN_DAYS = 120
 }
