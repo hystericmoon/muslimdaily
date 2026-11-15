@@ -7,13 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit done, owner to pick fixes).
+Last updated: 15 Nov 2026, 20:10 WIB (UX/UI audit fixes: 8 merged, 3 PRs open; owner cleared the session).
 
 ## In flight
 
-- **1.15.0 (versionCode 58) released 15 Nov WIB**, release PR #211: #205 ("Buka kata"), #207 Check ratings in one row (owner
-  chose C), #208 plain rating card and honest "Belum", #209 Qibla back fix, #210 Run audio dock (owner chose B). Details: history,
-  "Shipped" and "Run audio and predictive back". No content, database or backup change. Nothing in flight, no PR open.
+- **1.15.0 (versionCode 58) released 15 Nov WIB** (release PR #211; details: history, "Shipped"). No content, database or backup change.
 - **Owner to check on a phone or emulator (cloud can't)**: (1) Check row: one-row dock, Indonesian labels on one line, 200% font
   stacks; (2) Run audio dock: playback, lock-screen title (the run's name), Back closes the open dock, 200% font; (3) **Qibla
   back overlap (#209, fix unverified on a device; Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold
@@ -21,14 +19,19 @@ Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit done, owner to pick fixe
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit fixes IN PROGRESS (Sonnet, started 15 Nov 18:30 WIB).** Findings page:
-  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse (2 Blocker, 11 Major, 33 Minor). Owner's picks: the recommended
-  (rec) option on every finding, in order B1, B2, M1-M11, then Minors; one small PR each, Screenshots workflow after each UI
-  change. Hold (ask owner) any PR that needs a haho-design release (B2 option b; token swaps M2/M7/R14 if they touch it).
-  **Done:** B1 #216 (fasting calendar at 200%), B2 #217 (sources sheet scroll; `SourceSheetScrollUiTest`). **Next:** M1.
-  `docs/accessibility.md` 200% row lists the gaps still open (remove each as its fix lands); fix the 2.5.7 row with M4.
-  Lesson: the Screenshots workflow commits the shots as a bot and dispatches the Android run; the `pull_request` run on the
-  bot commit shows `action_required` (PR reads `unstable`). CI is green when the dispatched Android run passes on the final head.
+- **UX/UI audit fixes IN PROGRESS (Sonnet, from 15 Nov 18:30 WIB).** Page: https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse
+  (2 Blocker, 11 Major, 33 Minor). Owner's picks: the rec option on every finding, order B1, B2, M1-M11, then Minors; one small PR
+  each, Screenshots workflow after each UI change; ask before any PR that needs a haho-design release.
+  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224, M9 #225.
+  **Open, CI or shots running (look at the re-recorded shots, then merge on green):** M10 #226, M11 #227. Then take M11 out of the
+  200% row in `docs/accessibility.md` (T3 stays).
+  **Held for the owner, bring as one visual decision page:** M1 (rec option leaves widget glass 85-100%: over white, muted text
+  passes AA only from ~83%; options: keep floor + darken tint as opacity drops, or accept); M3 rest ("Perlu lihat teks" still below
+  the card's scroll at 200%: pin the row in the dock, or a fade); M10: clamp the card translation at a word too?
+  **Loose ends:** routine editor hint still says "drag the handle" (fix in the R10 copy pass); `WidgetFitTest` height check on 56/76 dp
+  cells flags names and clock at large fonts (outside M6). **Next:** M7 (a darker light-theme gold; find where `ExtendedColors` live,
+  haho-design means ask first), then the Minors in the page's order.
+  CI after the Screenshots workflow and the stale widget PNGs: history, "Facts that cost time to find" (15 Nov audit).
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
@@ -69,9 +72,8 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp PRs, 1.14.0 and 1.15.0 releases, #205, #207,
-  #208; child Opus session_01W2ZFMud8U4wDYpiJN2KDT6 built Guided #202, archived 15 Nov; child Opus session_01W2ZFMuXRfZyDLfuS5TnzLY,
-  15 Nov: #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp, 1.14.0 and 1.15.0, audit fixes #216-#227;
+  child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 
