@@ -375,7 +375,8 @@
     <string name="memorize_practising_guided">Only the words you marked are hidden.</string>
     <string name="memorize_listen_only">Listen only</string>
     <string name="memorize_session_menu">Memorize menu</string>
-    <string name="memorize_dock_less">Less</string>
+    <string name="memorize_dock_more">Options</string>
+    <string name="memorize_dock_less">Close options</string>
     <string name="memorize_dock_state_collapsed">Collapsed</string>
     <string name="memorize_dock_state_expanded">Expanded</string>
     <string name="memorize_step_listen">Listen</string>
