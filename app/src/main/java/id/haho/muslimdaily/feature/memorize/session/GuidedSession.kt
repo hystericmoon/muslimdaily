@@ -286,12 +286,9 @@ private fun RatingButtons(state: MemorizeUiState, actions: MemorizeActions) {
         val content: @Composable () -> Unit = {
             Column(Modifier.padding(vertical = HahoTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(rating.guidedRes()), style = MaterialTheme.typography.titleSmall)
+                // Every rating says when the dua comes back; "Practise now" is offered on the result after Not yet.
                 Text(
-                    if (rating == Rating.AGAIN) {
-                        stringResource(R.string.memorize_practise_now)
-                    } else {
-                        pluralStringResource(R.plurals.memorize_next_in_days, days, days)
-                    },
+                    pluralStringResource(R.plurals.memorize_next_in_days, days, days),
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Center,
                 )

@@ -453,7 +453,6 @@
     <string name="memorize_remove">Hapus</string>
     <string name="memorize_remove_title">Hapus dari Hafalan saya?</string>
     <string name="memorize_remove_body">Jadwal ulangnya ikut terhapus. Doanya tetap ada di daftar doa, dan bisa dihafalkan lagi kapan saja.</string>
-    <string name="memorize_box_n">Kotak %d</string>
     <string name="memorize_next_review">Doa berikutnya</string>
     <string name="memorize_loops">Putaran per potongan</string>
     <string name="memorize_pause">Jeda untuk mengulang</string>

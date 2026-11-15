@@ -969,10 +969,8 @@ internal fun RatedResult(state: MemorizeUiState, rated: LeitnerState, actions: M
     Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(HahoTheme.spacing.lg).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
             Text(stringResource(R.string.memorize_scheduled, formatLongDate(rated.due)), style = MaterialTheme.typography.titleMedium)
-            Text(
-                if (Leitner.isMemorized(rated)) stringResource(R.string.memorize_memorized) else stringResource(R.string.memorize_box_n, rated.box),
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            // The Leitner box number is an internal detail and means nothing to the reader: only say when it counts as memorized.
+            if (Leitner.isMemorized(rated)) Text(stringResource(R.string.memorize_memorized), style = MaterialTheme.typography.bodyMedium)
         }
     }
     if (practiseNow) {
