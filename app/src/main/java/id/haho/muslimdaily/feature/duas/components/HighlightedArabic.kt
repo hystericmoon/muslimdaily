@@ -97,7 +97,7 @@ fun HighlightedArabic(
 }
 
 /** A neutral background behind one phrase of a flowing text, with an optional outline. */
-private data class PhraseBackground(val range: IntRange, val fill: Color, val border: Color? = null)
+private data class PhraseBackground(val range: IntRange, val fill: Color, val border: Color? = null, val bubble: Boolean = false)
 
 /**
  * [annotated] with [backgrounds] drawn behind their phrases, then the gold fill and underline
@@ -133,7 +133,7 @@ private fun HighlightedText(
             .drawBehind {
                 val l = layout ?: return@drawBehind
                 backgrounds.forEach { bg ->
-                    val r = if (bg.border != null) bubbleRadius else radius
+                    val r = if (bg.bubble) bubbleRadius else radius
                     l.forEachLineBox(bg.range, padX) { left, top, right, bottom ->
                         val corner = CornerRadius(r, r)
                         drawRoundRect(bg.fill, Offset(left, top), Size(right - left, bottom - top), corner)
@@ -215,9 +215,9 @@ private fun phraseBackground(fill: PhraseFill, index: Int): Pair<Color, Color?>?
     val scheme = MaterialTheme.colorScheme
     return when (fill) {
         PhraseFill.NONE -> null
-        // Two neutral tones as far apart as the surface scale allows (surface vs surfaceContainerHighest);
-        // onSurface stays well above 4.5:1 on both.
-        PhraseFill.ALTERNATING -> (if (index % 2 == 0) scheme.surface else scheme.surfaceContainerHighest) to null
+        // Two neutral tones a few percent apart (onSurface stays well above 4.5:1 on both). The tones alone are
+        // about 1.1:1 in light, so every second phrase also gets an `outline` edge (1.4.11).
+        PhraseFill.ALTERNATING -> if (index % 2 == 0) scheme.surfaceContainer to null else scheme.surfaceContainerHighest to scheme.outline
         // The `outline` token (about 4:1) so the bubble edge is visible in light as well as dark (1.4.11).
         PhraseFill.BUBBLES -> scheme.surfaceContainerHigh to scheme.outline
     }
@@ -358,7 +358,7 @@ private fun PhraseFlow(
                 }
                 if (phrase.unheard) dashed += start until length
                 if (active) activeRange = start until length
-                else tones[i]?.let { (bg, border) -> backgrounds += PhraseBackground(start until length, bg, border) }
+                else tones[i]?.let { (bg, border) -> backgrounds += PhraseBackground(start until length, bg, border, bubble = fill == PhraseFill.BUBBLES) }
             }
         }
     }
