@@ -466,7 +466,6 @@
     <string name="memorize_remove">Remove</string>
     <string name="memorize_remove_title">Remove from My hifz?</string>
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
-    <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_loops">Loops per segment</string>
     <string name="memorize_pause">Pause to repeat</string>
