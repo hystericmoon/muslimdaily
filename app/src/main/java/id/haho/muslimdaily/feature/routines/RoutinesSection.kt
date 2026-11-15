@@ -90,7 +90,7 @@ fun RoutinesCard(
                     }
                     if (!compact) {
                         IconButton(onClick = { onEdit(r) }) {
-                            Icon(painterResource(R.drawable.ic_tune), stringResource(R.string.routine_edit_named, r.name))
+                            Icon(painterResource(R.drawable.ic_edit), stringResource(R.string.routine_edit_named, r.name))
                         }
                     }
                     GlassButton(onClick = { onStart(r) }, enabled = r.duaIds.isNotEmpty()) {
@@ -145,7 +145,7 @@ fun RoutineCard(
                     )
                 }
                 IconButton(onClick = onEdit) {
-                    Icon(painterResource(R.drawable.ic_tune), stringResource(R.string.routine_edit_named, routine.name))
+                    Icon(painterResource(R.drawable.ic_edit), stringResource(R.string.routine_edit_named, routine.name))
                 }
                 GlassButton(onClick = onStart, enabled = routine.duaIds.isNotEmpty()) {
                     Icon(painterResource(R.drawable.ic_play_arrow), null, Modifier.size(HahoTheme.dimens.smallIcon))

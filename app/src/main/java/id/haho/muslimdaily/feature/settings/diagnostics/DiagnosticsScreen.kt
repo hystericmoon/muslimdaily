@@ -10,6 +10,7 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.text.format.DateFormat
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,7 +30,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -176,14 +182,22 @@ fun DiagnosticsContent(
         }
         item {
             SettingsGroup(stringResource(R.string.diag_permissions)) {
-                StatusRow(stringResource(R.string.diag_notifications), d.notifications, onOpenNotifications)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) StatusRow(stringResource(R.string.diag_exact), d.exact, onOpenExact)
-                StatusRow(stringResource(R.string.diag_battery), !d.batteryRestricted, onOpenBattery, okText = R.string.diag_battery_free, badText = R.string.diag_battery_restricted)
+                // Failing items first, so the problem is the first thing the reader sees.
+                buildList {
+                    add(PermissionItem(R.string.diag_notifications, d.notifications, onOpenNotifications))
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) add(PermissionItem(R.string.diag_exact, d.exact, onOpenExact))
+                    add(PermissionItem(R.string.diag_battery, !d.batteryRestricted, onOpenBattery, R.string.diag_battery_free, R.string.diag_battery_restricted))
+                }.sortedBy { it.ok }.forEach { StatusRow(it) }
                 if (d.mutedChannels.isNotEmpty()) {
                     InfoNote(stringResource(R.string.diag_muted, d.mutedChannels.joinToString()), Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm))
                 }
                 oemHint(d.manufacturer)?.let {
-                    InfoNote(stringResource(R.string.diag_oem, it), Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm))
+                    InfoNote(stringResource(R.string.diag_oem), Modifier.padding(horizontal = gutter, vertical = HahoTheme.spacing.sm))
+                    val context = LocalContext.current
+                    TextButton(
+                        onClick = { context.startActivitySafely(Intent(Intent.ACTION_VIEW, "https://dontkillmyapp.com/$it".toUri())) },
+                        modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm),
+                    ) { Text(stringResource(R.string.diag_oem_guide)) }
                 }
             }
         }
@@ -254,18 +268,35 @@ private fun WidgetGroup(w: WidgetDiagnostics, zone: ZoneId, time: TimeFormatter)
     }
 }
 
+private data class PermissionItem(
+    @StringRes val title: Int,
+    val ok: Boolean,
+    val onOpen: () -> Unit,
+    @StringRes val okText: Int = R.string.diag_allowed,
+    @StringRes val badText: Int = R.string.diag_not_allowed,
+)
+
+/** A failing item gets the error colour and a block icon, not only different words. */
 @Composable
-private fun StatusRow(
-    title: String,
-    ok: Boolean,
-    onOpen: () -> Unit,
-    okText: Int = R.string.diag_allowed,
-    badText: Int = R.string.diag_not_allowed,
-) {
+private fun StatusRow(item: PermissionItem) {
+    val colors = MaterialTheme.colorScheme
     Column {
-        InfoRow(title, summary = stringResource(if (ok) okText else badText))
-        if (!ok) {
-            TextButton(onClick = onOpen, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
+        ListItem(
+            headlineContent = { Text(stringResource(item.title)) },
+            supportingContent = {
+                Text(stringResource(if (item.ok) item.okText else item.badText), color = if (item.ok) colors.onSurfaceVariant else colors.error)
+            },
+            leadingContent = {
+                Icon(
+                    painterResource(if (item.ok) R.drawable.ic_check else R.drawable.ic_block),
+                    null,
+                    tint = if (item.ok) colors.onSurfaceVariant else colors.error,
+                )
+            },
+            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+        )
+        if (!item.ok) {
+            TextButton(onClick = item.onOpen, modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm)) {
                 Text(stringResource(R.string.diag_open_settings))
             }
         }
