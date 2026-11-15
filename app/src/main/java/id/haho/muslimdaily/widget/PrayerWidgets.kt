@@ -609,7 +609,9 @@ private class Layout(
         // Decided by the room there is, not the size class: names over the scale's times where
         // they fit, then the footer under them.
         val scale = if (avail >= base + withNames.height) withNames else Scale(inner, names = false)
-        val footerH = Space.M + maxOf(line(11f * k), 12.dp) + 2.dp
+        // The 4 dp matches what `fixed` reserves above: tall cards grow the clock to fill the height, so
+        // a footer admitted on less than that is squeezed and its letters are cut (audit M6).
+        val footerH = Space.M + maxOf(line(11f * k), 12.dp) + 4.dp
         val footer = avail >= base + withNames.height + footerH
         // Flexible gaps (short cards) can close to nothing; fixed ones (tall cards) cannot.
         val minGap = if (tall) gap else 0.dp
