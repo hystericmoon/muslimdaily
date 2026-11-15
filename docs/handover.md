@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.15.0 released; nothing in flight).
+Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit planned for a fresh session).
 
 ## In flight
 
@@ -21,6 +21,16 @@ Last updated: 15 Nov 2026 (1.15.0 released; nothing in flight).
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
+- **UX/UI audit: owner asked 15 Nov, to start in a fresh session (Opus; fixes after it are Sonnet).** Scope: the 160 screens in
+  `docs/screenshots` (light, dark, `-font200`, `-en`) plus all widget sizes, measured against `docs/accessibility.md` and
+  `docs/design-tokens.md`. Method: one reviewer per area (Today and onboarding; Duas; Run, routines and Memorize; Settings,
+  mosque, Qibla and fasting; widgets), each viewing light, dark and font200 of every screen and reading the matching code;
+  check each claim against the shot before it is reported. Output: one visual findings page (severity-ranked, 2-3 fixes each,
+  accessibility flagged), then fixes in small PRs. A first pass on 15 Nov was discarded: about 60 s per reviewer and large
+  coverage gaps, so reuse none of its claims. Confirmed by eye: fasting calendar at 200% font (legend one letter per line,
+  Hijri digits clipped: `96-fasting-month-font200`) and onboarding at 200% (sticky "Mulai" covers the last line, small
+  steppers: `100-onboarding-font200`). Code is clean on literal sp, unlabelled icon buttons and small touch targets; to verify:
+  the fasting legend dot uses raw gold `#C9A227` (about 2.3:1 on parchment). No mobile UX skill exists in the owner's catalog.
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
