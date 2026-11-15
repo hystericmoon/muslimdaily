@@ -323,7 +323,7 @@ private fun MoreCard(content: @Composable () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
             ) {
-                Icon(painterResource(R.drawable.ic_tune), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
+                Icon(painterResource(R.drawable.ic_settings), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.onboarding_more_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
                     Text(
