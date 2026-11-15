@@ -86,7 +86,7 @@ fun PrayerSettingsContent(
                 NavigationRow(
                     title = stringResource(R.string.settings_offsets),
                     summary = if (changed == 0) stringResource(R.string.settings_offsets_none) else pluralStringResource(R.plurals.settings_offsets_changed, changed, changed),
-                    icon = R.drawable.ic_tune,
+                    icon = R.drawable.ic_edit,
                     onClick = onOffsets,
                 )
                 val iqamah = (FIVE_PRAYERS + Prayer.JUMUAH).count { (settings.iqamahOffsets[it] ?: 0) != 0 }
