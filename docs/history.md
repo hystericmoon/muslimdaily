@@ -377,6 +377,15 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 
 ## Facts that cost time to find
 
+- Audit fixes (15 Nov): the Screenshots workflow commits the new shots as a bot, then dispatches the Android workflow on that
+  commit. The `pull_request` run on the bot's commit shows `action_required` (GitHub holds bot-pushed runs), so the PR reads
+  `unstable`; CI is green when the dispatched Android run passes on the final head. Don't push to the branch while the record job
+  runs (the bot's push would be rejected). A pre-record head always fails the screenshot comparison; that is expected.
+- Widget PNGs (`docs/screenshots/80-widget-*` and the other widget shots) are plain files written by `WidgetScreenshotTest`, not
+  Roborazzi: the Screenshots workflow doesn't record them and CI doesn't compare them, so they drift (80-widget-4x3 shows no footer
+  although the code draws one). `WidgetFitTest` is the guard; since M6 (#223) it also checks the footer lines fit their view's height.
+  The same height check on every text flags 56/76 dp cells at large fonts (prayer names, clock): not fixed.
+- Text-layout tests under Robolectric need `@GraphicsMode(NATIVE)`, or text never wraps and every layout looks one line high.
 - Promo (5 Nov): CI screenshots use the font-test string "هٰذَا نَصٌّ تَجْرِيبِيٌّ..." (reads "this is test
   text"), not a dua; `marketing/tools/prep_screens.py` turns it into empty boxes. The Google Drive
   connector takes file content inline only, so multi-MB media can't go to Drive from a session.
