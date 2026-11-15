@@ -1,27 +1,31 @@
 package id.haho.muslimdaily.core.designsystem.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.em
 import id.haho.muslimdaily.core.designsystem.theme.AmiriQuran
@@ -66,30 +70,75 @@ fun ArabicText(
         // Text drawn muted as a whole (a footnote, a preview line) keeps its commas muted too.
         if (color == noteColor) marked else withPauseCommas(marked, commaColor, noteColor)
     }
-    // A preview that is cut at the line limit ends at a whole word, never in the middle of one (audit M10).
-    var keep by remember(shown, maxLines, clampToWords) { mutableStateOf<Int?>(null) }
-    val displayed = remember(shown, keep) {
-        keep?.let { n -> buildAnnotatedString { append(shown.subSequence(0, n)); append(ELLIPSIS) } } ?: shown
-    }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        Text(
-            text = displayed,
-            modifier = modifier.fillMaxWidth(),
-            style = style,
-            color = color,
-            textAlign = textAlign,
-            maxLines = maxLines,
-            overflow = TextOverflow.Ellipsis,
-            onTextLayout = { layout ->
-                if (clampToWords && maxLines in 1 until Int.MAX_VALUE && layout.lineCount >= maxLines && (layout.hasVisualOverflow || layout.isLineEllipsized(maxLines - 1))) {
-                    val visibleEnd = layout.getLineEnd(maxLines - 1, visibleEnd = true)
-                    val limit = minOf(visibleEnd, keep ?: shown.length) - if (keep != null) 1 else 0
-                    keep = wordBoundaryBefore(shown.text, limit)
+        if (clampToWords && maxLines in 1 until Int.MAX_VALUE) {
+            // A preview that is cut at the line limit ends at a whole word, never in the middle of
+            // one (audit M10). The cut is measured here, in composition, so the first frame already
+            // shows the final text (no second pass after a layout callback).
+            val measurer = rememberTextMeasurer()
+            val density = LocalDensity.current
+            val resolved = LocalTextStyle.current.merge(style).copy(textAlign = textAlign)
+            BoxWithConstraints(modifier.fillMaxWidth()) {
+                val width = constraints.maxWidth
+                val displayed = remember(shown, maxLines, width, resolved, density) {
+                    clampedPreview(measurer, shown, resolved, maxLines, width, density)
                 }
-                onTextLayout(layout)
-            },
-        )
+                Text(
+                    text = displayed,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = style,
+                    color = color,
+                    textAlign = textAlign,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    onTextLayout = onTextLayout,
+                )
+            }
+        } else {
+            Text(
+                text = shown,
+                modifier = modifier.fillMaxWidth(),
+                style = style,
+                color = color,
+                textAlign = textAlign,
+                maxLines = maxLines,
+                overflow = TextOverflow.Ellipsis,
+                onTextLayout = onTextLayout,
+            )
+        }
     }
+}
+
+private fun TextLayoutResult.cutAt(maxLines: Int) =
+    lineCount >= maxLines && (hasVisualOverflow || isLineEllipsized(maxLines - 1))
+
+/**
+ * [text] as it fits in [maxLines] lines of [width] px: unchanged if it fits, otherwise the longest
+ * run of whole words plus "…". Falls back to [text] (the framework's own ellipsis) if not even the
+ * first word fits.
+ */
+private fun clampedPreview(
+    measurer: TextMeasurer,
+    text: AnnotatedString,
+    style: TextStyle,
+    maxLines: Int,
+    width: Int,
+    density: Density,
+): AnnotatedString {
+    if (width <= 0 || width == Constraints.Infinity) return text
+    fun measure(t: AnnotatedString) = measurer.measure(
+        t, style, overflow = TextOverflow.Ellipsis, maxLines = maxLines,
+        constraints = Constraints(maxWidth = width), layoutDirection = LayoutDirection.Rtl, density = density,
+    )
+    val first = measure(text)
+    if (!first.cutAt(maxLines)) return text
+    var end = wordBoundaryBefore(text.text, first.getLineEnd(maxLines - 1, visibleEnd = true))
+    while (end != null) {
+        val candidate = buildAnnotatedString { append(text.subSequence(0, end!!)); append(ELLIPSIS) }
+        if (!measure(candidate).cutAt(maxLines)) return candidate
+        end = wordBoundaryBefore(text.text, end!! - 1)
+    }
+    return text
 }
 
 private const val ELLIPSIS = "…"
