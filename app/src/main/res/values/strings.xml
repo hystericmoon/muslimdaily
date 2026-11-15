@@ -344,8 +344,6 @@
     <string name="run_from_memory_body">Doa ini ada di hafalan Anda. Bacalah tanpa melihat teks, lalu tampilkan untuk mencocokkan.</string>
     <string name="run_show_text">Tampilkan teks</string>
     <string name="run_recall_prompt">Hafal tanpa melihat teks?</string>
-    <string name="run_recall_knew">Hafal</string>
-    <string name="run_recall_needed">Perlu lihat teks</string>
     <string name="run_add_to_hifz">Tambah ke hafalan</string>
     <string name="run_in_hifz">Ada di Hafalan saya</string>
     <string name="run_restart">Mulai ulang</string>
@@ -452,9 +450,6 @@
         <item quantity="other">%d kata masih perlu dibuka. Coba sekali lagi.</item>
     </plurals>
     <string name="memorize_rate_prompt">Seberapa lancar hafalan Anda?</string>
-    <string name="memorize_rate_again">Ulangi lagi</string>
-    <string name="memorize_rate_hard">Sulit</string>
-    <string name="memorize_rate_easy">Mudah</string>
     <plurals name="memorize_next_in_days">
         <item quantity="other">Muncul lagi %d hari lagi</item>
     </plurals>

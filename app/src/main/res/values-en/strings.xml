@@ -352,8 +352,6 @@
     <string name="run_from_memory_body">This dua is in your memorization. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
     <string name="run_recall_prompt">Did you know it without the text?</string>
-    <string name="run_recall_knew">I knew it</string>
-    <string name="run_recall_needed">I needed the text</string>
     <string name="run_add_to_hifz">Add to My memorization</string>
     <string name="run_in_hifz">In My memorization</string>
     <string name="run_restart">Restart</string>
@@ -465,9 +463,6 @@
         <item quantity="other">%d words still needed revealing. Try once more.</item>
     </plurals>
     <string name="memorize_rate_prompt">How well do you know it?</string>
-    <string name="memorize_rate_again">Again</string>
-    <string name="memorize_rate_hard">Hard</string>
-    <string name="memorize_rate_easy">Easy</string>
     <plurals name="memorize_next_in_days">
         <item quantity="one">Comes back in %d day</item>
         <item quantity="other">Comes back in %d days</item>
