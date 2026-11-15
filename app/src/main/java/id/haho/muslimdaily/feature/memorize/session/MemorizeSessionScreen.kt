@@ -817,23 +817,25 @@ internal const val STACK_FONT_SCALE = 1.3f
 private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean): @Composable ColumnScope.() -> Unit = {
     val gaps = state.segmented && state.hasAudio
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
         FadeLevel.entries.forEach { level ->
             // While practising, the missed words are hidden, not a share of them: no level is current.
             FilterChip(
                 selected = !state.practising && state.fade == level,
                 onClick = { actions.onFade(level) },
+                modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
                 label = { Text(stringResource(R.string.memorize_fade_percent, (level.fraction * 100).toInt())) },
             )
         }
     }
     if (!state.practising && (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM)) {
         Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
             FadeOrder.entries.forEach { order ->
                 FilterChip(
                     selected = state.fadeOrder == order,
                     onClick = { actions.onFadeOrder(order) },
+                    modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
                     label = { Text(stringResource(order.labelRes())) },
                 )
             }
@@ -843,6 +845,7 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
         FilterChip(
             selected = state.firstLetters,
             onClick = { actions.onFirstLetters(!state.firstLetters) },
+            modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
             label = { Text(stringResource(R.string.memorize_first_letters)) },
         )
     }
