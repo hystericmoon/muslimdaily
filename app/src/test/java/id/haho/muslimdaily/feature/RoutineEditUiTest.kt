@@ -7,6 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
@@ -69,5 +72,14 @@ class RoutineEditUiTest {
         compose.runOnIdle { rows().last().config[SemanticsActions.CustomActions].single().action() }
         compose.waitForIdle()
         assertEquals(listOf("b", "c", "a"), items.map { it.id })
+    }
+
+    @Test
+    fun the_row_menu_reorders_without_dragging() {
+        setUp()
+        compose.onAllNodesWithContentDescription("Ubah urutan")[0].performClick()
+        compose.onNodeWithText("Pindah ke bawah").performClick()
+        compose.waitForIdle()
+        assertEquals(listOf("b", "a", "c"), items.map { it.id })
     }
 }

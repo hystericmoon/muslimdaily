@@ -922,6 +922,7 @@
     <string name="routine_intro">Drag the handle to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
     <string name="routine_add">Add duas</string>
     <string name="routine_remove">Remove from routine</string>
+    <string name="routine_reorder">Reorder</string>
     <string name="routine_need_duas">Add at least one dua.</string>
     <string name="routine_need_name">Give the routine a name.</string>
     <string name="routine_delete">Delete routine</string>
