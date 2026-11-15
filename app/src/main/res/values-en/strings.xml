@@ -93,7 +93,7 @@
     <string name="today_travel_chip">Travel mode</string>
     <string name="today_no_location_title">Location not set</string>
     <string name="today_no_location_body">Set a location to show prayer times. The location is stored only on this device.</string>
-    <string name="today_use_gps">Use current location</string>
+    <string name="today_use_gps">Use my location</string>
     <string name="today_pick_city">Choose city</string>
     <string name="today_adhkar_header">Daily adhkar</string>
     <string name="today_travel_suggestion">Your device is about %1$d km from %2$s. Update the location or turn on travel mode?</string>
@@ -176,7 +176,10 @@
     <!-- Settings -->
     <string name="settings_group_prayer">Prayer</string>
     <string name="settings_group_reading">Reading</string>
-    <string name="settings_group_trust">Trust</string>
+    <string name="settings_group_data">Data</string>
+    <string name="settings_group_app">App</string>
+    <string name="settings_feedback">Send feedback or check reminders</string>
+    <string name="settings_group_trust">Sources and help</string>
     <string name="settings_prayer">Prayer time calculation</string>
     <string name="settings_location">Location</string>
     <string name="settings_reminders">Reminders</string>
@@ -189,7 +192,7 @@
     <string name="settings_my_sets_summary">Back up and restore all your data</string>
     <string name="settings_methodology">Methodology</string>
     <string name="settings_methodology_summary">Sources and hadith grading policy</string>
-    <string name="settings_report">Report an error</string>
+    <string name="settings_report">Report a content error</string>
     <string name="settings_report_summary">Email the content maintainer</string>
     <string name="settings_about">About the app</string>
     <string name="settings_about_summary">Version, licenses, attribution</string>
@@ -318,7 +321,7 @@
     <string name="customize_move_down">Move down</string>
 
     <!-- Run mode -->
-    <string name="run_count">%1$d of %2$d</string>
+    <string name="run_count">%1$d of %2$d times</string>
     <string name="run_position">Dua %1$d of %2$d</string>
     <string name="run_summary">Summary</string>
     <string name="run_done">Done</string>
@@ -329,7 +332,7 @@
     <string name="run_tap_read_hint">Tap the card after reading</string>
     <string name="run_listen">Listen</string>
     <string name="run_listen_hidden">Show the text to listen</string>
-    <string name="run_undo">Undo</string>
+    <string name="run_undo">Undo count</string>
     <string name="run_previous">Previous</string>
     <string name="run_next">Next</string>
     <string name="run_auto_advance">Auto-advance</string>
@@ -337,8 +340,8 @@
     <string name="run_from_memory_body">This dua is in your memorization. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
     <string name="run_recall_prompt">Did you know it without the text?</string>
-    <string name="run_add_to_hifz">Add to My hifz</string>
-    <string name="run_in_hifz">In My hifz</string>
+    <string name="run_add_to_hifz">Add to My memorization</string>
+    <string name="run_in_hifz">In My memorization</string>
     <string name="run_restart">Restart</string>
     <string name="run_summary_done">%s complete</string>
     <string name="run_summary_partial">Not all read yet</string>
@@ -461,7 +464,7 @@
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
     <string name="memorize_remove">Remove</string>
-    <string name="memorize_remove_title">Remove from My hifz?</string>
+    <string name="memorize_remove_title">Remove from My memorization?</string>
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_loops">Loops per segment</string>
@@ -475,7 +478,7 @@
     <string name="memorize_add">Memorize a dua</string>
     <string name="memorize_empty_title">Nothing memorized yet</string>
     <string name="memorize_empty_body">Choose a dua to memorize. After you rate it, the dua joins the review schedule.</string>
-    <string name="memorize_my_hifz">My hifz</string>
+    <string name="memorize_my_hifz">My memorization</string>
     <string name="memorize_no_streaks">Reviews after 1, 3, 7, 14 and 30 days. No streaks or scores.</string>
     <string name="memorize_review_title">Today\'s review</string>
     <string name="memorize_review_none">Nothing to review today.</string>
@@ -491,7 +494,7 @@
     <string name="memorize_state_learning">Learning · next review %1$s</string>
     <string name="memorize_state_memorized">Memorized · next review %1$s</string>
     <string name="memorize_more_named">More options for %1$s</string>
-    <string name="memorize_remove_menu">Remove from My hifz</string>
+    <string name="memorize_remove_menu">Remove from My memorization</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>
     <string name="memorize_listen_only_start">Tap to start</string>
@@ -700,7 +703,7 @@
     <string name="mosque_allow_precise">Use precise location</string>
     <string name="mosque_origin_saved">From saved location, %s. Distances are approximate.</string>
     <string name="mosque_use_current">Use current location</string>
-    <string name="mosque_none_title">No mosque data within 5 km</string>
+    <string name="mosque_none_title">No mosque data within 5\u00A0km</string>
     <string name="mosque_none_body">Offline data comes from OpenStreetMap and is incomplete. Try searching in a maps app.</string>
     <string name="mosque_search_maps">Search mosques in a maps app</string>
     <string name="mosque_map_query">mosque</string>
@@ -824,6 +827,10 @@
     <string name="onboarding_exact_allow">Allow exact alarms</string>
     <string name="onboarding_later">Other settings, such as the calculation method and adhan sound, are in the Settings tab.</string>
     <string name="onboarding_start">Start</string>
+    <string name="onboarding_more_title">More</string>
+    <string name="onboarding_more_body">Text size and reminders</string>
+    <string name="onboarding_more_expand">Show</string>
+    <string name="onboarding_more_collapse">Hide</string>
     <string name="hijri_check_title">Start of %1$s</string>
     <string name="hijri_check_body">The government sets the start of the month at the sidang isbat on the evening of 29 %1$s. What was announced? The app\'s calendar will follow it.</string>
     <string name="hijri_check_new">Tomorrow is 1 %1$s</string>
@@ -844,7 +851,8 @@
     <string name="diag_battery_restricted">Restricted: Android may delay reminders</string>
     <string name="diag_open_settings">Open settings</string>
     <string name="diag_muted">Notification channels turned off: %1$s</string>
-    <string name="diag_oem">Phones of this brand often stop apps in the background. Steps to allow it: dontkillmyapp.com/%1$s</string>
+    <string name="diag_oem">Phones of this brand often stop apps in the background. The guide below shows how to allow it.</string>
+    <string name="diag_oem_guide">Open the guide</string>
     <string name="diag_next">Next reminders</string>
     <string name="diag_none_planned">No reminders are on</string>
     <string name="diag_recent">Recently rang</string>
@@ -882,7 +890,7 @@
     <string name="crash_prompt_send">Send report</string>
     <string name="crash_prompt_later">Later</string>
     <string name="event_start_all">Start reading (%1$d duas)</string>
-    <string name="library_tab_mine">My duas</string>
+    <string name="library_tab_mine">My routines</string>
     <string name="library_tab_all">All duas</string>
     <string name="library_browse_all">See all duas</string>
     <string name="library_expand_category">open category</string>
@@ -895,11 +903,11 @@
         <item quantity="one">+%d more dua</item>
         <item quantity="other">+%d more duas</item>
     </plurals>
-    <string name="routine_default_name">My duas</string>
+    <string name="routine_default_name">First routine</string>
     <string name="bookmark_label">Save to routine</string>
     <string name="bookmark_state_saved">in a routine</string>
     <string name="bookmark_state_not_saved">not in a routine</string>
-    <!-- After a bookmark: "Added to My duas". -->
+    <!-- After a bookmark: "Added to First routine". -->
     <string name="bookmark_added">Added to %1$s</string>
     <string name="bookmark_removed">Removed from %1$s</string>
     <string name="bookmark_change">Change</string>
@@ -914,7 +922,7 @@
     <string name="routine_save">Save</string>
     <string name="routine_name">Routine name</string>
     <string name="routine_name_hint">For example: Before leaving for work</string>
-    <string name="routine_intro">Drag the handle to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
+    <string name="routine_intro">Drag the handle or use the ⋮ menu to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
     <string name="routine_add">Add duas</string>
     <string name="routine_remove">Remove from routine</string>
     <string name="routine_reorder">Reorder</string>

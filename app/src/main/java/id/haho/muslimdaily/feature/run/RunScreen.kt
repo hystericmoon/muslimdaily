@@ -361,6 +361,10 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions, onPreviou
     }
     val tapLabel = stringResource(if (item.target != null) R.string.run_tap_count else R.string.run_tap_read)
 
+    // At large text the answers are pinned below the scrolling content, like Memorize's ratings,
+    // so both stay in view (audit M3).
+    val pinRecall = LocalDensity.current.fontScale >= LARGE_TEXT_SCALE && !state.isHidden(page) && state.asksRecall(page)
+
     GlassCard(
         shape = MaterialTheme.shapes.extraLarge,
         modifier = Modifier
@@ -387,7 +391,7 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions, onPreviou
                         ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
                     }
                     // Below the Arabic: the reader checks the recitation against the text, then answers.
-                    if (state.asksRecall(page)) {
+                    if (state.asksRecall(page) && !pinRecall) {
                         RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
                     }
                     state.recalled[page]?.let { due ->
@@ -400,6 +404,10 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions, onPreviou
                     }
                     DuaTranslations(dua, state.prefs)
                 }
+            }
+            if (pinRecall) {
+                Spacer(Modifier.height(HahoTheme.spacing.sm))
+                RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
             }
             CountArea(
                 done = done, countText = countText, isCurrent = isCurrent, count = count,
