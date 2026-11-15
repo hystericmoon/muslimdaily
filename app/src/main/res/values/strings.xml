@@ -379,7 +379,8 @@
     <string name="memorize_practising_guided">Hanya kata yang Anda tandai yang disembunyikan.</string>
     <string name="memorize_listen_only">Dengar saja</string>
     <string name="memorize_session_menu">Menu hafalan</string>
-    <string name="memorize_dock_less">Sedikit</string>
+    <string name="memorize_dock_more">Opsi</string>
+    <string name="memorize_dock_less">Tutup opsi</string>
     <string name="memorize_dock_state_collapsed">Tertutup</string>
     <string name="memorize_dock_state_expanded">Terbuka</string>
     <string name="memorize_step_listen">Dengar</string>

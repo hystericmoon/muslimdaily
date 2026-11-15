@@ -413,7 +413,7 @@ internal fun Dock(
 internal fun DockToggle(expanded: Boolean, onClick: () -> Unit) {
     val state = stringResource(if (expanded) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
     TextButton(onClick = onClick, modifier = Modifier.semantics { stateDescription = state }) {
-        Text(stringResource(if (expanded) R.string.memorize_dock_less else R.string.action_more))
+        Text(stringResource(if (expanded) R.string.memorize_dock_less else R.string.memorize_dock_more))
         Icon(
             painterResource(if (expanded) R.drawable.ic_keyboard_arrow_down else R.drawable.ic_keyboard_arrow_up),
             null,
