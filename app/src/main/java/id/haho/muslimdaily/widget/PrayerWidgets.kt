@@ -416,7 +416,8 @@ private class Layout(
         val pad = Space.Pad
         val inner = inner(pad)
         val dates = columns >= 4
-        val dateW = if (tight) fit.width(t.dateTiny, 11f * k) + Space.S.value + fit.width(t.hijriShort, 11f * k) else maxOf(fit.width(t.dateShort, 11f * k), fit.width(t.hijriShort, 11f * k))
+        // The short row drops the Hijri date: two bare numbers side by side read as one.
+        val dateW = if (tight) fit.width(t.dateShort, 11f * k) else maxOf(fit.width(t.dateShort, 11f * k), fit.width(t.hijriShort, 11f * k))
         val datesWidth = if (dates) dateW.dp + Space.L else 0.dp
         val vertical = if (tight) Space.S else Space.PadShort
         val timeSp = if (tight) 22f else 28f
@@ -451,11 +452,7 @@ private class Layout(
             if (dates) {
                 Spacer(GlanceModifier.width(Space.L))
                 if (tight) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Label(t.dateTiny, 11f * k)
-                        Spacer(GlanceModifier.width(Space.S))
-                        Label(t.hijriShort, 11f * k)
-                    }
+                    Label(t.dateShort, 11f * k)
                 } else {
                     Column(horizontalAlignment = Alignment.End) {
                         Label(t.dateShort, 11f * k)
