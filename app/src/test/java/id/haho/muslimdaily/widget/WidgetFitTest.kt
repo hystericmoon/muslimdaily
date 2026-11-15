@@ -77,6 +77,13 @@ class WidgetFitTest {
 
     @Test fun english12Hour() = everyTextFits(Locale.ENGLISH, is24 = false)
 
+    @Test fun debug4x3() = runTest(timeout = 5.minutes) {
+        val problems = mutableListOf<String>()
+        for ((h, m) in times) for (locale in listOf(indonesian, Locale.ENGLISH)) for (is24 in listOf(true, false))
+            problems += check(Case(locale, is24, h, m, DpSize(340.dp, 252.dp), 1f))
+        assertTrue("${problems.size} problems:\n" + problems.distinct().take(40).joinToString("\n"), problems.isEmpty())
+    }
+
     // Each locale renders ~2,100 widgets: more than runTest's default minute on a busy machine.
     private fun everyTextFits(locale: Locale, is24: Boolean) = runTest(timeout = 5.minutes) {
         val problems = mutableListOf<String>()
@@ -130,6 +137,8 @@ class WidgetFitTest {
                 ellipsized -> problems += "$case: \"$s\" ends in …"
                 needed > room + 1 -> problems += "$case: \"$s\" needs ${(needed / density).toInt()}dp, has ${(room / density).toInt()}dp"
                 rect.left < 0 || rect.top < 0 || rect.right > w || rect.bottom > h -> problems += "$case: \"$s\" runs past the widget"
+                // The glyphs must fit the view's own height too, or the launcher clips them through the letters.
+                heightNeeded(view) > view.height + 1 -> problems += "$case: \"$s\" needs ${(heightNeeded(view) / density).toInt()}dp of height, has ${(view.height / density).toInt()}dp"
             }
         }
         // Texts on the same line must not touch: "5:23 AM11:41" reads as one number.
@@ -143,6 +152,8 @@ class WidgetFitTest {
         }
         return problems
     }
+
+    private fun heightNeeded(v: TextView): Int = (v.layout?.height ?: 0) + v.totalPaddingTop + v.totalPaddingBottom
 
     /** Visible TextViews with their bounds in the widget, clipped by every parent as the launcher would. */
     private fun collect(view: View, out: MutableList<Pair<TextView, Rect>>, clip: Rect = Rect(0, 0, view.width, view.height), x: Int = 0, y: Int = 0) {
