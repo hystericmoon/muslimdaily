@@ -7,31 +7,21 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (#209 Qibla back fix and history restore merged; #210 Run audio dock).
+Last updated: 15 Nov 2026 (1.15.0 released; nothing in flight).
 
 ## In flight
 
-- **1.14.0 (versionCode 57) released 15 Nov WIB** with the Memorize revamp (PRs #196-#198, #200, #202; owner chose 1A-5A on
-  https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4"). `mem_advanced`
-  lives in the settings DataStore and rides in backups via the generic settings export. Owner has installed it.
-- Done 14-15 Nov (Sonnet): #205, #207, #208 (history, "Finished work"). Fresh phone check of the Check row still to do.
+- **1.15.0 (versionCode 58) released 15 Nov WIB**, release PR #211: #205 ("Buka kata"), #207 Check ratings in one row (owner
+  chose C), #208 plain rating card and honest "Belum", #209 Qibla back fix, #210 Run audio dock (owner chose B). Details: history,
+  "Shipped" and "Run audio and predictive back". No content, database or backup change. Nothing in flight, no PR open.
+- **Owner to check on a phone or emulator (cloud can't)**: (1) Check row: one-row dock, Indonesian labels on one line, 200% font
+  stacks; (2) Run audio dock: playback, lock-screen title (the run's name), Back closes the open dock, 200% font; (3) **Qibla
+  back overlap (#209, fix unverified on a device; Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold
+  at ~20% and ~50%, then release and cancel; expect one screen at a time, cancel returns to Qibla; repeat on dua detail and
+  with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **Run audio dock (#210, owner chose B on https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C)**: Memorize's `Dock` below the Run
-  card; collapsed = play + "Dengarkan" + status, Lainnya = phrase track, repeat, phrase skips, speed. Outside the card, so it
-  never counts; swiping, restarting or closing stops audio; hidden "from memory" text blocks play; Arabic highlights the
-  phrase heard. Shot 175 (open, playing); 123 shows the blocked state. To check on the phone: playback, lock-screen title
-  (the run's name), Back closes the open dock, 200% font.
-- **Qibla back overlap: fix merged in #209, unverified on a device**. Cause: every screen is transparent over the one
-  `GlassBackdrop` (MainActivity; `HahoScreen` Scaffold is transparent in haho-design), and the shared-axis pop fades
-  overlap (out 0-120 ms, in 60-320 ms); predictive back holds the seek part-way, so both screens drew on top of each other.
-  Fix in `navigation/AppNavHost.kt` only: `predictivePopEnter/ExitTransition` = fade through (out 150 ms + scale to 0.9,
-  then in 210 ms). No haho-design change. **Check on a phone/emulator (Android 14+, gesture nav)**: from Today open Qibla,
-  swipe back slowly and hold at ~20%, ~50%, then release and cancel; expect only one screen visible at a time, no flash of
-  the bare backdrop longer than a blink, cancel returns to Qibla. Repeat on one more pushed screen (dua detail) and with
-  Remove animations on (instant switch). If it still overlaps, the next step is an opaque per-screen backdrop (haho-design).
-- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205, #207-#210. Unreleased: #207-#210 (a minor, 1.15.0,
-  when the owner wants it).
+- Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -71,10 +61,9 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp PRs, 1.14.0 release, #205, #207, polish; child
-  Opus session_01W2ZFMud8U4wDYpiJN2KDT6 built Guided #202; child Opus session_01W2ZFMuXRfZyDLfuS5TnzLY for the Run media bar
-  and Qibla); session_01W2ZFMuXRfZyDLfuS5TnzLY (15 Nov, Opus child: #209, #210);
-  session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp PRs, 1.14.0 and 1.15.0 releases, #205, #207,
+  #208; child Opus session_01W2ZFMud8U4wDYpiJN2KDT6 built Guided #202, archived 15 Nov; child Opus session_01W2ZFMuXRfZyDLfuS5TnzLY,
+  15 Nov: #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 
