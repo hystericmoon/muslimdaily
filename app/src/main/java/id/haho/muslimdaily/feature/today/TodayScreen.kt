@@ -68,6 +68,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -499,6 +500,9 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
     }
 }
 
+/** Above this font scale the time no longer fits beside the prayer name and wraps below it. */
+private const val NEXT_PRAYER_WRAP_FONT_SCALE = 1.3f
+
 @Composable
 private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
@@ -525,7 +529,9 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                         Text(stringResource(R.string.today_tomorrow), style = MaterialTheme.typography.titleMedium)
                     }
                 }
-                Column(horizontalAlignment = Alignment.End) {
+                // Once the time has wrapped under the name (large text) it lines up with the name.
+                val wrapped = LocalDensity.current.fontScale > NEXT_PRAYER_WRAP_FONT_SCALE
+                Column(horizontalAlignment = if (wrapped) Alignment.Start else Alignment.End) {
                     Text(clock, style = MaterialTheme.typography.displayMedium)
                     val countdown = stringResource(R.string.countdown_in, durationLabel(next.remaining))
                     val motion = HahoTheme.motion
@@ -535,7 +541,7 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                             (slideInVertically(motion.layout()) { it / 2 } + fadeIn(motion.fade()))
                                 .togetherWith(slideOutVertically(motion.layout()) { -it / 2 } + fadeOut(motion.fade()))
                         },
-                        contentAlignment = Alignment.CenterEnd,
+                        contentAlignment = if (wrapped) Alignment.CenterStart else Alignment.CenterEnd,
                         label = "countdown",
                     ) { text ->
                         Text(text, style = MaterialTheme.typography.titleMedium)
