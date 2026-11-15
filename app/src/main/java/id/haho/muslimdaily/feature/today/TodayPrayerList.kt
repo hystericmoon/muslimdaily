@@ -33,7 +33,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -546,13 +549,16 @@ internal fun ProhibitedCard(data: TodayData, modifier: Modifier = Modifier) {
     val time = rememberTimeFormatter()
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
-            Text(
-                stringResource(R.string.today_prohibited_title),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
-            )
+            val title = stringResource(R.string.today_prohibited_title)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f).semantics { heading() },
+                )
+                NoteInfoButton(title, stringResource(R.string.note_prohibited_cause))
+            }
             data.prohibited.forEach { w -> ProhibitedRow(w, time.format(w.start, data.zone), time.format(w.end, data.zone)) }
-            InfoNote(stringResource(R.string.note_prohibited_cause))
         }
     }
 }
@@ -615,4 +621,32 @@ private fun variantLabel(label: String): String = when (label) {
     "2 rakaat" -> pluralStringResource(R.plurals.rakah_count, 2, 2)
     "4 rakaat" -> pluralStringResource(R.plurals.rakah_count, 4, 4)
     else -> label
+}
+
+/**
+ * An info icon that opens a card's permanent note in a sheet, so the note does not take lines from
+ * the schedule on every visit.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun NoteInfoButton(cardTitle: String, note: String, modifier: Modifier = Modifier) {
+    var open by remember { mutableStateOf(false) }
+    IconButton(onClick = { open = true }, modifier = modifier) {
+        Icon(
+            painterResource(R.drawable.ic_info),
+            contentDescription = stringResource(R.string.today_note_open, cardTitle),
+            modifier = Modifier.size(HahoTheme.dimens.icon),
+        )
+    }
+    if (open) {
+        ModalBottomSheet(onDismissRequest = { open = false }) {
+            Column(
+                Modifier.padding(horizontal = HahoTheme.spacing.lg).padding(bottom = HahoTheme.spacing.xl),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            ) {
+                Text(cardTitle, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                Text(note, style = MaterialTheme.typography.bodyLarge)
+            }
+        }
+    }
 }

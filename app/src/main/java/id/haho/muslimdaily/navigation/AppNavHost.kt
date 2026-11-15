@@ -28,6 +28,8 @@ import id.haho.muslimdaily.feature.settings.AboutRoute
 import id.haho.muslimdaily.feature.settings.diagnostics.DiagnosticsRoute
 import id.haho.muslimdaily.feature.settings.DisplaySettingsRoute
 import id.haho.muslimdaily.feature.settings.MethodologyRoute
+import id.haho.muslimdaily.feature.settings.IqamahRoute
+import id.haho.muslimdaily.feature.settings.PrayerOffsetsRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
 import id.haho.muslimdaily.feature.settings.RemindersRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
@@ -81,7 +83,13 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<FastingRoute> { FastingRoute(onBack = back) }
             composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
             composable<TodayLocationRoute> { LocationRoute(onBack = back) }
-            composable<TodayPrayerSettingsRoute> { PrayerSettingsRoute(onBack = back) }
+            composable<TodayPrayerSettingsRoute> {
+                PrayerSettingsRoute(
+                    onBack = back,
+                    onOffsets = { navController.navigate(PrayerOffsetsRoute) },
+                    onIqamah = { navController.navigate(IqamahRoute) },
+                )
+            }
             composable<MosquesRoute> { NearbyMosqueRoute(onBack = back) }
         }
         navigation<DuasGraph>(startDestination = DuaLibraryRoute) {
@@ -153,7 +161,15 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     ),
                 )
             }
-            composable<PrayerSettingsRoute> { PrayerSettingsRoute(onBack = back) }
+            composable<PrayerSettingsRoute> {
+                PrayerSettingsRoute(
+                    onBack = back,
+                    onOffsets = { navController.navigate(PrayerOffsetsRoute) },
+                    onIqamah = { navController.navigate(IqamahRoute) },
+                )
+            }
+            composable<PrayerOffsetsRoute> { PrayerOffsetsRoute(onBack = back) }
+            composable<IqamahRoute> { IqamahRoute(onBack = back) }
             composable<LocationRoute> { LocationRoute(onBack = back) }
             composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
             composable<AudioSettingsRoute> { AudioSettingsRoute(onBack = back) }

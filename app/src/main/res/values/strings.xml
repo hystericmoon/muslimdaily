@@ -85,6 +85,7 @@
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Jadwal shalat</string>
     <string name="today_prohibited_title">Waktu terlarang</string>
+    <string name="today_note_open">Catatan: %1$s</string>
     <string name="today_method_footer">%1$s · Ashar %2$s</string>
     <string name="today_change_method">Ubah perhitungan</string>
     <string name="today_location_chip">Lokasi: %s</string>
@@ -202,6 +203,14 @@
     <string name="settings_asr_standard">Standar (1×)</string>
     <string name="settings_asr_hanafi">Hanafi (2×)</string>
     <string name="settings_offsets">Penyesuaian menit</string>
+    <string name="settings_times_group">Waktu dan iqamah</string>
+    <string name="settings_offsets_none">Semua 0 mnt</string>
+    <plurals name="settings_offsets_changed">
+        <item quantity="other">%d waktu diubah</item>
+    </plurals>
+    <plurals name="settings_iqamah_set">
+        <item quantity="other">%d shalat diatur</item>
+    </plurals>
     <string name="settings_offsets_note">Geser waktu bila jadwal masjid setempat berbeda.</string>
     <string name="settings_iqamah">Jarak iqamah</string>
     <string name="settings_iqamah_note">Menit setelah adzan, sesuaikan dengan masjid Anda.</string>
@@ -260,6 +269,7 @@
     <string name="dua_virtue">Keutamaan</string>
     <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
     <string name="audio_failed">Audio tidak dapat diputar. Coba lagi; bila tetap gagal, laporkan dari halaman doa.</string>
+    <string name="dua_toggle_hint_dismiss">Mengerti</string>
     <string name="memorize_add_label">Tambah ke hafalan</string>
     <string name="memorize_state_in">ada di hafalan</string>
     <string name="memorize_state_not_in">belum di hafalan</string>
@@ -334,8 +344,6 @@
     <string name="run_from_memory_body">Doa ini ada di hafalan Anda. Bacalah tanpa melihat teks, lalu tampilkan untuk mencocokkan.</string>
     <string name="run_show_text">Tampilkan teks</string>
     <string name="run_recall_prompt">Hafal tanpa melihat teks?</string>
-    <string name="run_recall_knew">Hafal</string>
-    <string name="run_recall_needed">Perlu lihat teks</string>
     <string name="run_add_to_hifz">Tambah ke hafalan</string>
     <string name="run_in_hifz">Ada di Hafalan saya</string>
     <string name="run_restart">Mulai ulang</string>
@@ -442,9 +450,6 @@
         <item quantity="other">%d kata masih perlu dibuka. Coba sekali lagi.</item>
     </plurals>
     <string name="memorize_rate_prompt">Seberapa lancar hafalan Anda?</string>
-    <string name="memorize_rate_again">Ulangi lagi</string>
-    <string name="memorize_rate_hard">Sulit</string>
-    <string name="memorize_rate_easy">Mudah</string>
     <plurals name="memorize_next_in_days">
         <item quantity="other">Muncul lagi %d hari lagi</item>
     </plurals>

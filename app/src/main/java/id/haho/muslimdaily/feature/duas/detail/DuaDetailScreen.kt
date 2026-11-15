@@ -60,6 +60,7 @@ import id.haho.muslimdaily.feature.duas.components.CountBadge
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.PlayerBar
+import id.haho.muslimdaily.feature.duas.components.DuaToggleHint
 import id.haho.muslimdaily.feature.duas.components.HifzToggle
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.AlertDialog
@@ -87,6 +88,7 @@ data class DuaDetailActions(
     val onSaveNote: (String) -> Unit = {},
     val onSetInRoutine: (routineId: String, included: Boolean) -> Unit = { _, _ -> },
     val onNewRoutine: () -> Unit = {},
+    val onDismissToggleHint: () -> Unit = {},
 )
 
 @Composable
@@ -183,6 +185,7 @@ fun DuaDetailRoute(
                     onSaveNote = viewModel::saveNote,
                     onSetInRoutine = viewModel::setInRoutine,
                     onNewRoutine = { onNewRoutine(s.dua.id) },
+                    onDismissToggleHint = viewModel::dismissToggleHint,
                 ),
             )
         }
@@ -259,6 +262,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
                 toggles()
             }
         }
+        if (state.showToggleHint && dua.isRecitable) DuaToggleHint(actions.onDismissToggleHint)
         if (!dua.isRecitable) InfoNote(stringResource(R.string.dua_reading_card), icon = R.drawable.ic_menu_book)
         DuaTranslations(dua, state.prefs)
         if (dua.footnote.isNotBlank()) Footnote(dua)
