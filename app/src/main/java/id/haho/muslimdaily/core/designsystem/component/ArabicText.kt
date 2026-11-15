@@ -1,7 +1,9 @@
 package id.haho.muslimdaily.core.designsystem.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,16 +11,21 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.em
 import id.haho.muslimdaily.core.designsystem.theme.AmiriQuran
@@ -39,9 +46,10 @@ fun ArabicText(
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,
+    clampToWords: Boolean = false,
 ) {
     val annotated = remember(text) { arabicAnnotated(text) }
-    ArabicText(annotated, modifier, style, color, textAlign, maxLines = maxLines)
+    ArabicText(annotated, modifier, style, color, textAlign, maxLines = maxLines, clampToWords = clampToWords)
 }
 
 @Composable
@@ -52,6 +60,7 @@ fun ArabicText(
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,
+    clampToWords: Boolean = false,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     val noteColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -62,17 +71,87 @@ fun ArabicText(
         if (color == noteColor) marked else withPauseCommas(marked, commaColor, noteColor)
     }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        Text(
-            text = shown,
-            modifier = modifier.fillMaxWidth(),
-            style = style,
-            color = color,
-            textAlign = textAlign,
-            maxLines = maxLines,
-            overflow = TextOverflow.Ellipsis,
-            onTextLayout = onTextLayout,
-        )
+        if (clampToWords && maxLines in 1 until Int.MAX_VALUE) {
+            // A preview that is cut at the line limit ends at a whole word, never in the middle of
+            // one (audit M10). The cut is measured here, in composition, so the first frame already
+            // shows the final text (no second pass after a layout callback).
+            val measurer = rememberTextMeasurer()
+            val density = LocalDensity.current
+            val resolved = LocalTextStyle.current.merge(style).copy(textAlign = textAlign)
+            BoxWithConstraints(modifier.fillMaxWidth()) {
+                val width = constraints.maxWidth
+                val displayed = remember(shown, maxLines, width, resolved, density) {
+                    clampedPreview(measurer, shown, resolved, maxLines, width, density)
+                }
+                Text(
+                    text = displayed,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = style,
+                    color = color,
+                    textAlign = textAlign,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    onTextLayout = onTextLayout,
+                )
+            }
+        } else {
+            Text(
+                text = shown,
+                modifier = modifier.fillMaxWidth(),
+                style = style,
+                color = color,
+                textAlign = textAlign,
+                maxLines = maxLines,
+                overflow = TextOverflow.Ellipsis,
+                onTextLayout = onTextLayout,
+            )
+        }
     }
+}
+
+private fun TextLayoutResult.cutAt(maxLines: Int) =
+    lineCount >= maxLines && (hasVisualOverflow || isLineEllipsized(maxLines - 1))
+
+/**
+ * [text] as it fits in [maxLines] lines of [width] px: unchanged if it fits, otherwise the longest
+ * run of whole words plus "…". Falls back to [text] (the framework's own ellipsis) if not even the
+ * first word fits.
+ */
+private fun clampedPreview(
+    measurer: TextMeasurer,
+    text: AnnotatedString,
+    style: TextStyle,
+    maxLines: Int,
+    width: Int,
+    density: Density,
+): AnnotatedString {
+    if (width <= 0 || width == Constraints.Infinity) return text
+    fun measure(t: AnnotatedString) = measurer.measure(
+        t, style, overflow = TextOverflow.Ellipsis, maxLines = maxLines,
+        constraints = Constraints(maxWidth = width), layoutDirection = LayoutDirection.Rtl, density = density,
+    )
+    val first = measure(text)
+    if (!first.cutAt(maxLines)) return text
+    var end = wordBoundaryBefore(text.text, first.getLineEnd(maxLines - 1, visibleEnd = true))
+    while (end != null) {
+        val candidate = buildAnnotatedString { append(text.subSequence(0, end!!)); append(ELLIPSIS) }
+        if (!measure(candidate).cutAt(maxLines)) return candidate
+        end = wordBoundaryBefore(text.text, end!! - 1)
+    }
+    return text
+}
+
+private const val ELLIPSIS = "…"
+
+/** The end of the last whole word that fits in the first [limit] characters, or null if there is none. */
+internal fun wordBoundaryBefore(text: String, limit: Int): Int? {
+    var i = limit.coerceIn(0, text.length)
+    // Inside a word: step back to the space before it.
+    if (i < text.length && !text[i].isWhitespace()) {
+        while (i > 0 && !text[i - 1].isWhitespace()) i--
+    }
+    while (i > 0 && text[i - 1].isWhitespace()) i--
+    return i.takeIf { it > 0 }
 }
 
 /**

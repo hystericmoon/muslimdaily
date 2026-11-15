@@ -24,6 +24,10 @@ disc). In light mode the active-phrase underline uses the palette's primary colo
 gold on a light surface is below 3:1. The active phrase is marked by fill + underline + TalkBack
 state, never by colour alone.
 
+Small gold marks on a light page or card (the fasting dots and legend, the Ramadan crescent) use
+`AdwamTheme.colors.goldMark`: `#93750F` in light mode (3.7:1 or more on every light surface and
+container), raw `#C9A227` in dark (5.65:1). `ExtendedColorsContrastTest` checks it at 3:1 in every palette.
+
 The book's comma (،) in Arabic is drawn in the palette's `primary` (`withPauseCommas`, since
 1.12.0), except inside book notes and muted text; `ExtendedColorsContrastTest` checks it at 4.5:1
 on the surfaces and on `highlightFill` for every palette.

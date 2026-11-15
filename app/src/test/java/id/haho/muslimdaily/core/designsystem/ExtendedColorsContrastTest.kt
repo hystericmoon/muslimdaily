@@ -38,6 +38,14 @@ class ExtendedColorsContrastTest {
             assertRatio("$mode highlightIndicator/surface", c.highlightIndicator, surface, 3.0)
             assertRatio("$mode highlightIndicator/highlightFill", c.highlightIndicator, c.highlightFill, 3.0)
             assertRatio("$mode onCompleteFill/completeFill", c.onCompleteFill, c.completeFill, 4.5)
+            // The small gold marks (fasting dots, crescent) sit on the page and on cards.
+            val scheme = colorSchemeFor(palette, dark)
+            for ((name, bg) in listOf(
+                "surface" to scheme.surface,
+                "surfaceContainerLow" to scheme.surfaceContainerLow,
+                "surfaceContainer" to scheme.surfaceContainer,
+                "surfaceContainerHigh" to scheme.surfaceContainerHigh,
+            )) assertRatio("$mode goldMark/$name", c.goldMark, bg, 3.0)
         }
     }
 
