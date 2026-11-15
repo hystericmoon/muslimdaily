@@ -176,7 +176,10 @@
     <!-- Settings -->
     <string name="settings_group_prayer">Prayer</string>
     <string name="settings_group_reading">Reading</string>
-    <string name="settings_group_trust">Trust</string>
+    <string name="settings_group_data">Data</string>
+    <string name="settings_group_app">App</string>
+    <string name="settings_feedback">Send feedback or check reminders</string>
+    <string name="settings_group_trust">Sources and help</string>
     <string name="settings_prayer">Prayer time calculation</string>
     <string name="settings_location">Location</string>
     <string name="settings_reminders">Reminders</string>
@@ -189,7 +192,7 @@
     <string name="settings_my_sets_summary">Back up and restore all your data</string>
     <string name="settings_methodology">Methodology</string>
     <string name="settings_methodology_summary">Sources and hadith grading policy</string>
-    <string name="settings_report">Report an error</string>
+    <string name="settings_report">Report a content error</string>
     <string name="settings_report_summary">Email the content maintainer</string>
     <string name="settings_about">About the app</string>
     <string name="settings_about_summary">Version, licenses, attribution</string>
