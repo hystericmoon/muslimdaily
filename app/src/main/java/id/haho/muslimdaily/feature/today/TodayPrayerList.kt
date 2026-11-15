@@ -16,6 +16,7 @@ import id.haho.design.glass.Glass
 import id.haho.design.glass.chevronRotation
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,6 +52,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.unit.dp
 import id.haho.muslimdaily.R
 import id.haho.design.component.Badge
 import id.haho.muslimdaily.core.designsystem.component.AdwamCheckRow
@@ -427,6 +429,8 @@ private fun RailLine(visible: Boolean) {
     }
 }
 
+private val RING_STROKE = 2.dp
+
 @Composable
 private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean, checked: Boolean) {
     val lineColor = MaterialTheme.colorScheme.outlineVariant
@@ -451,7 +455,8 @@ private fun Rail(isFirst: Boolean, isLast: Boolean, emphasised: Boolean, checked
                     )
                 }
             } else {
-                Box(Modifier.size(AdwamDimens.timelineDot).background(dotColor, CircleShape))
+                // An empty ring reads as a checkbox; the small dot it replaced looked like a bullet (audit M5).
+                Box(Modifier.size(AdwamDimens.timelineCheck).border(RING_STROKE, dotColor, CircleShape))
             }
         }
         Box(Modifier.weight(1f).width(HahoTheme.dimens.divider * 2).background(if (isLast) lineColor.copy(alpha = 0f) else lineColor))
