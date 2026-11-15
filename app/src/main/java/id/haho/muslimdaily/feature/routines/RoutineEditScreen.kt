@@ -22,6 +22,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -275,6 +277,17 @@ private fun RoutineRow(
                 Icon(painterResource(R.drawable.ic_drag_indicator), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             DuaSummary(index + 1, dua, eventLabel, Modifier.weight(1f).padding(vertical = HahoTheme.spacing.sm))
+            // The visible alternative to dragging (WCAG 2.5.7), for anyone who can't drag.
+            var menu by remember { mutableStateOf(false) }
+            Box {
+                IconButton(onClick = { menu = true }, enabled = count > 1) {
+                    Icon(painterResource(R.drawable.ic_more_vert), stringResource(R.string.routine_reorder))
+                }
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    if (index > 0) DropdownMenuItem(text = { Text(moveUp) }, onClick = { menu = false; actions.onMove(dua.id, -1) })
+                    if (index < count - 1) DropdownMenuItem(text = { Text(moveDown) }, onClick = { menu = false; actions.onMove(dua.id, 1) })
+                }
+            }
             IconButton(onClick = { actions.onRemove(dua.id) }) {
                 Icon(painterResource(R.drawable.ic_close), stringResource(R.string.routine_remove))
             }

@@ -908,6 +908,7 @@
     <string name="routine_intro">Seret pegangan untuk mengubah urutan. Rangkaian dibaca satu doa per layar, sama seperti dzikir pagi.</string>
     <string name="routine_add">Tambah doa</string>
     <string name="routine_remove">Keluarkan dari rangkaian</string>
+    <string name="routine_reorder">Ubah urutan</string>
     <string name="routine_need_duas">Tambahkan setidaknya satu doa.</string>
     <string name="routine_need_name">Beri nama rangkaian.</string>
     <string name="routine_delete">Hapus rangkaian</string>
