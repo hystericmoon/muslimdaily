@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.feature.today
 
-import id.haho.muslimdaily.core.designsystem.component.filterChipBorder
 import id.haho.muslimdaily.core.designsystem.component.assistChipBorder
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -472,7 +471,6 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
             FilterChip(
                 selected = data.travelMode,
                 onClick = { actions.onSetTravelMode(!data.travelMode) },
-                border = filterChipBorder(data.travelMode),
                 label = { Text(stringResource(R.string.today_travel_chip)) },
                 // Selected is a solid primary fill with its outline kept: the default pale fill
                 // is about 1.07:1 against the page and reads as inactive.
@@ -481,9 +479,11 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
                     selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
                 ),
+                // Unselected: the outline token (audit R14); selected: a 1 dp primary outline (audit T6).
                 border = FilterChipDefaults.filterChipBorder(
                     enabled = true,
                     selected = data.travelMode,
+                    borderColor = MaterialTheme.colorScheme.outline,
                     selectedBorderColor = MaterialTheme.colorScheme.primary,
                     selectedBorderWidth = 1.dp,
                 ),
