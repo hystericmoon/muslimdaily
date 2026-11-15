@@ -455,6 +455,11 @@
         <item quantity="one">Comes back in %d day</item>
         <item quantity="other">Comes back in %d days</item>
     </plurals>
+    <plurals name="memorize_next_in_days_short">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="memorize_suggested_rating">Suggested: %s</string>
     <string name="memorize_scheduled">Review on %s</string>
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
