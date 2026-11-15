@@ -117,18 +117,19 @@ private fun TextLayoutResult.cutAt(maxLines: Int) =
  * run of whole words plus "…". Falls back to [text] (the framework's own ellipsis) if not even the
  * first word fits.
  */
-private fun clampedPreview(
+internal fun clampedPreview(
     measurer: TextMeasurer,
     text: AnnotatedString,
     style: TextStyle,
     maxLines: Int,
     width: Int,
     density: Density,
+    layoutDirection: LayoutDirection = LayoutDirection.Rtl,
 ): AnnotatedString {
     if (width <= 0 || width == Constraints.Infinity) return text
     fun measure(t: AnnotatedString) = measurer.measure(
         t, style, overflow = TextOverflow.Ellipsis, maxLines = maxLines,
-        constraints = Constraints(maxWidth = width), layoutDirection = LayoutDirection.Rtl, density = density,
+        constraints = Constraints(maxWidth = width), layoutDirection = layoutDirection, density = density,
     )
     val first = measure(text)
     if (!first.cutAt(maxLines)) return text

@@ -25,8 +25,9 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextOverflow
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
+import id.haho.muslimdaily.core.designsystem.component.WordClampedText
+import androidx.compose.ui.text.AnnotatedString
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.design.glass.GlassButton
@@ -171,15 +172,15 @@ fun RoutineCard(
                             dua.arabic,
                             style = AdwamTheme.arabic.arabicSmall,
                             maxLines = 1,
+                            clampToWords = true,
                             modifier = Modifier.fillMaxWidth(),
                         )
                         if (dua.transliteration.isNotBlank()) {
-                            Text(
-                                dua.transliteration,
+                            WordClampedText(
+                                AnnotatedString(dua.transliteration),
                                 style = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }
