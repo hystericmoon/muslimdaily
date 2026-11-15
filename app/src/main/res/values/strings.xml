@@ -315,7 +315,7 @@
     <string name="customize_move_down">Pindah ke bawah</string>
 
     <!-- Run mode -->
-    <string name="run_count">%1$d dari %2$d</string>
+    <string name="run_count">%1$d dari %2$d kali</string>
     <string name="run_position">Doa %1$d dari %2$d</string>
     <string name="run_summary">Ringkasan</string>
     <string name="run_done">Selesai</string>
@@ -326,7 +326,7 @@
     <string name="run_tap_read_hint">Ketuk kartu setelah membaca</string>
     <string name="run_listen">Dengarkan</string>
     <string name="run_listen_hidden">Tampilkan teks untuk mendengarkan</string>
-    <string name="run_undo">Kurangi</string>
+    <string name="run_undo">Batalkan hitungan</string>
     <string name="run_previous">Sebelumnya</string>
     <string name="run_next">Berikutnya</string>
     <string name="run_auto_advance">Lanjut otomatis</string>
