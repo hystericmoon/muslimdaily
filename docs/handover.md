@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit plan confirmed, to run in a fresh Opus session).
+Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit done, owner to pick fixes).
 
 ## In flight
 
@@ -21,23 +21,14 @@ Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit plan confirmed, to run i
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit: PLAN CONFIRMED by the owner 15 Nov; start it in a fresh Opus session (fixes after it are Sonnet).** Scope: the
-  screens in `docs/screenshots` (375 PNGs, about 100 distinct screens; light, dark, `-font200`, `-en`; the earlier "160" count
-  is unreconciled, so step 0 reconciles it and lists gaps) plus all widget sizes, measured against `docs/accessibility.md` and
-  `docs/design-tokens.md`. Steps: (0) inventory: map the PNGs to the 5 areas. (1) Read-only: read Impeccable's `critique` and
-  `audit` text (github.com/pbakaus/impeccable) and fold its hierarchy and clarity criteria into the reviewer brief; install
-  nothing, no third-party skill (owner chose this after comparing UI UX Pro Max, Taste/anti-slop, Android UX, Compose Audit,
-  Mobile UX Auditor: none fits, since they target generation or web). (2) Five reviewers in parallel, **sub-agents on Sonnet**
-  (owner chose; the Opus main session does the judgment): Today and onboarding; Duas; Run, routines and Memorize; Settings,
-  mosque, Qibla and fasting; widgets. Each views light, dark and font200 of every screen, reads the matching code, measures
-  contrast from pixels, and returns claims as {screen, shot file, what, WCAG criterion}. (3) Opus re-opens the shot for every
-  claim and drops what it cannot see; mark any unconfirmed one "unverified". (4) One visual findings page (Artifact; ranked
-  Blocker / Major / Minor; screenshot crop, 2-3 fixes with a recommendation marked, accessibility flagged with the WCAG SC).
-  (5) Stop; the owner picks fixes; small Sonnet PRs, run the Screenshots workflow after each UI change. A first pass on 15 Nov
-  was discarded (about 60 s per reviewer, large coverage gaps): reuse none of its claims. Confirmed by eye: fasting calendar at
-  200% font (legend one letter per line, Hijri digits clipped: `96-fasting-month-font200`) and onboarding at 200% (sticky
-  "Mulai" covers the last line, small steppers: `100-onboarding-font200`). Code is clean on literal sp, unlabelled icon buttons
-  and small touch targets; to verify: the fasting legend dot uses raw gold `#C9A227` (about 2.3:1 on parchment).
+- **UX/UI audit DONE 15 Nov (Opus): waiting on the owner to pick fixes.** Findings page:
+  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse (2 Blocker, 11 Major, 33 Minor; each verified against its shot; owner
+  ticks a fix per finding and pastes "Audit picks"). Fixes go to **Sonnet** sessions as small PRs (run Screenshots after each).
+  Blockers: B1 fasting calendar at 200% (FastingScreen.kt:282 aspectRatio, :337 legend Row); B2 sources sheet has no scroll
+  at 200% (DuaComponents.kt:175-186; GlassBottomSheet has none either). Patterns: fixed boxes at 200%; `outlineVariant` and raw
+  gold `#C9A227` on things that must be seen; one thing with two names. Refuted: onboarding "Mulai covers last line" and
+  "small steppers" (scroll column sits above the button; steppers 48 dp). `docs/accessibility.md` overclaims 2.5.7 and
+  "200% no clipping": correct it with the fixes. Inventory: 375 PNGs = 165 keys (≈120 screens); gaps listed on the page.
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
