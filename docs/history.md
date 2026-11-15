@@ -33,6 +33,12 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.15.0 (versionCode 58, 15 Nov WIB, release PR #211; #205, #207-#210): Check ratings in one row in the dock (#207, owner chose C
+on https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt; stacks from 1.15x font, suggested rating filled and named in text),
+rating card without the Leitner box number and Guided "Belum" subtitle says when the dua comes back (#208), Indonesian
+"Kata berikutnya" became "Buka kata" (#205), Qibla predictive-back fix (#209, unverified on a device), Run audio in a
+collapsible dock (#210, owner chose B on https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C). No content rows changed.
+
 1.14.0 (versionCode 57, 15 Nov WIB, release PR #203; features #196-#198, #200, #202): Memorize revamp (owner chose 1A-5A on
 https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK): list with Continue card (#196), bottom nav and dock (#197), A-B phrase
 rows (#198), Recall with Meaning link and hint level (#200), Guided mode with an Advanced switch per dua (#202, Opus child
