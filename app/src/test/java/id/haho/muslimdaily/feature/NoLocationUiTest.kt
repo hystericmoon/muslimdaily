@@ -55,6 +55,8 @@ class NoLocationUiTest {
         }
         compose.onNodeWithText("Pilih kota").performScrollTo().performClick()
         assertTrue(picked)
+        // Text size is folded into "Lainnya" and stays reachable from there.
+        compose.onNodeWithText("Lainnya").performScrollTo().performClick()
         compose.onNodeWithText("Teks Arab", useUnmergedTree = true).performScrollTo().assertIsDisplayed()
     }
 }
