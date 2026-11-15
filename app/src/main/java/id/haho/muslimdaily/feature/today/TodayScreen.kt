@@ -35,6 +35,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
@@ -460,7 +462,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                 onClick = actions.onOpenLocation,
                 // The chip's description already names the place; the visible name is not read twice.
                 label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.clearAndSetSemantics {}) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(HahoTheme.dimens.smallIcon)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(textIconSize())) },
                 modifier = Modifier.semantics { contentDescription = locationDescription },
             )
             FilterChip(
@@ -471,14 +473,14 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                     Icon(
                         painterResource(if (data.travelMode) R.drawable.ic_check else R.drawable.ic_luggage),
                         null,
-                        Modifier.size(HahoTheme.dimens.smallIcon),
+                        Modifier.size(textIconSize()),
                     )
                 },
             )
             AssistChip(
                 onClick = actions.onOpenFasting,
                 label = { Text(stringResource(R.string.fasting_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(HahoTheme.dimens.smallIcon)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(textIconSize())) },
             )
         }
     }
@@ -546,6 +548,10 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
     }
 }
 
+/** The small icon beside a label, growing with the system font size so it stays in step with the text (audit T2). */
+@Composable
+private fun textIconSize(): Dp = HahoTheme.dimens.smallIcon * LocalDensity.current.fontScale.coerceIn(1f, 2f)
+
 @Composable
 private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     GlassTonalButton(
@@ -553,7 +559,7 @@ private fun NextPrayerAction(icon: Int, label: String, onClick: () -> Unit, modi
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = HahoTheme.spacing.md, vertical = HahoTheme.spacing.sm),
     ) {
-        Icon(painterResource(icon), null, Modifier.size(HahoTheme.dimens.smallIcon))
+        Icon(painterResource(icon), null, Modifier.size(textIconSize()))
         Spacer(Modifier.width(HahoTheme.spacing.sm))
         Text(label)
     }
@@ -721,7 +727,7 @@ private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> U
                 style = MaterialTheme.typography.titleMedium,
             )
             GlassTonalButton(onClick = onIftarDua) {
-                Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                Icon(painterResource(R.drawable.ic_restaurant), null, Modifier.size(textIconSize()))
                 Spacer(Modifier.width(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.ramadan_iftar_dua))
             }
