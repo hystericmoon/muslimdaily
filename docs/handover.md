@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 01:30 WIB (1.15.1 released; UX/UI audit fixes #216-#269 merged).
+Last updated: 16 Nov 2026, 06:00 WIB (1.15.1 released; audit fixes #216-#269 and D10 #272 merged).
 
 ## In flight
 
@@ -20,14 +20,15 @@ Last updated: 16 Nov 2026, 01:30 WIB (1.15.1 released; UX/UI audit fixes #216-#2
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit: done for what the owner picked** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; list of fixes: history,
-  "Shipped" 1.15.1). Not done: W7 "next two prayers at 200%" (unreachable, see history); check the page for any Minor not in that
-  list (e.g. D10, raw gold as a mark). Not looked at after their last re-record: S6 (fasting upcoming list) shot.
-  **Owner to check on a device**: widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time,
-  the 4x2 scale with the bold next prayer and its dot.
-  **Loose ends**: routine-editor hint says "drag the handle" (R10 copy pass); `WidgetFitTest` flags 56/76 dp cells at large fonts;
-  Qibla tip draws raw gold; the Settings widget-opacity note for "lighter glass" is unreachable now that the floor (85%) equals the
-  default (M1), so the stepper can only go up. Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
+- **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) merged after it (#272, main
+  d70a1ec, not yet released; bubbles use the `outline` token, alternate phrases get an `outline` edge). Page
+  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
+  (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. **Owner to check on a device**:
+  widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time, the 4x2 scale with the bold next
+  prayer and its dot. **Loose ends**: `WidgetFitTest` flags 56/76 dp cells at large fonts; the Settings widget-opacity note for
+  "lighter glass" is unreachable now that the floor (85%) equals the default (M1), so the stepper can only go up. Not problems
+  (checked 16 Nov): the Qibla Kaaba gold stripe is fill on black; the routine-editor hint already names the handle and the menu.
+  Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
 - Main: 1.15.1 (versionCode 59, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
