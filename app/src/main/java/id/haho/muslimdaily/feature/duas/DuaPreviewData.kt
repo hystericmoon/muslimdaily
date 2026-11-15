@@ -5,6 +5,7 @@ import id.haho.muslimdaily.core.model.DuaAudio
 import id.haho.muslimdaily.core.model.DuaCategory
 import id.haho.muslimdaily.core.model.DuaEvent
 import id.haho.muslimdaily.core.model.Segment
+import id.haho.muslimdaily.core.model.SourceRef
 
 /**
  * Preview and screenshot data. The Arabic is a neutral typographic sample ("this is sample text to
@@ -31,7 +32,7 @@ object DuaPreviewData {
         translationEn = "[Sample text for typography testing.]",
         transliteration = "[contoh transliterasi]",
         count = count,
-        sources = emptyList(),
+        sources = listOf(SourceRef("Kitab contoh", "1")),
         reference = "",
         grading = null,
         altGradings = emptyList(),

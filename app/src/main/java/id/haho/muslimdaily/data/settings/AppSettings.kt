@@ -141,9 +141,16 @@ data class AppSettings(
     val hijriConfirmedFor: String = "",
     /** The reader dismissed Today's note asking for exact alarms so the widget changes on time. */
     val widgetAlarmNoteDismissed: Boolean = false,
+    /** The reader dismissed the one-time hint naming the Memorize and routine icons on a dua. */
+    val duaToggleHintSeen: Boolean = false,
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )
 
 const val WIDGET_OPACITY_DEFAULT = 0.85f
-const val WIDGET_OPACITY_MIN = 0.4f
+
+/**
+ * The lowest glass opacity the reader can pick: below it muted text (65% white) fails AA over a
+ * light wallpaper (4.2:1 at 80%, 2.1:1 at 50%). GlassContrastTest checks every step from here up.
+ */
+const val WIDGET_OPACITY_MIN = 0.85f

@@ -48,7 +48,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -63,6 +62,7 @@ import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.muslimdaily.core.designsystem.component.withBookNotes
 import id.haho.design.component.Badge
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.component.WordClampedText
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Dua
@@ -119,7 +119,7 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         val showId = dua.translationId.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)
         if (showId) {
             // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
-            Text(
+            WordClampedText(
                 withBookNotes(
                     androidx.compose.ui.text.buildAnnotatedString {
                         pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("id")))
@@ -130,12 +130,12 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 ),
                 style = reading.bodyLarge,
                 maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
-            Text(
+            WordClampedText(
                 withBookNotes(
                     androidx.compose.ui.text.buildAnnotatedString {
                         pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("en")))
@@ -147,7 +147,6 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 style = reading.bodyLarge,
                 color = if (showId) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
                 maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -158,6 +157,8 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
 fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     var open by remember { mutableStateOf(false) }
     val label = sourceChipLabel(dua)
+    // No source and no grading: an empty pill named "Sumber dan derajat: ." helps nobody (audit D6).
+    if (label.isBlank()) return
     val description = stringResource(R.string.dua_source_chip_description, label)
     AssistChip(
         onClick = { open = true },
@@ -306,6 +307,27 @@ fun HifzToggle(inHifz: Boolean, onToggle: () -> Unit, modifier: Modifier = Modif
             contentDescription = stringResource(R.string.memorize_add_label),
             tint = if (inHifz) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * A one-time legend for the two icon toggles on a dua (audit D7): they carry no visible label.
+ * Shown until the reader dismisses it; the state lives in settings.
+ */
+@Composable
+fun DuaToggleHint(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
+    GlassCard(modifier.fillMaxWidth()) {
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_record_voice_over), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.memorize_add_label), style = MaterialTheme.typography.bodyMedium)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_bookmark_add), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.bookmark_label), style = MaterialTheme.typography.bodyMedium)
+            }
+            TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.End)) { Text(stringResource(R.string.dua_toggle_hint_dismiss)) }
+        }
     }
 }
 
