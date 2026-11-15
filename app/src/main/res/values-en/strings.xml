@@ -705,7 +705,7 @@
     <string name="mosque_allow_precise">Use precise location</string>
     <string name="mosque_origin_saved">From saved location, %s. Distances are approximate.</string>
     <string name="mosque_use_current">Use current location</string>
-    <string name="mosque_none_title">No mosque data within 5 km</string>
+    <string name="mosque_none_title">No mosque data within 5\u00A0km</string>
     <string name="mosque_none_body">Offline data comes from OpenStreetMap and is incomplete. Try searching in a maps app.</string>
     <string name="mosque_search_maps">Search mosques in a maps app</string>
     <string name="mosque_map_query">mosque</string>
@@ -887,7 +887,7 @@
     <string name="crash_prompt_send">Send report</string>
     <string name="crash_prompt_later">Later</string>
     <string name="event_start_all">Start reading (%1$d duas)</string>
-    <string name="library_tab_mine">My duas</string>
+    <string name="library_tab_mine">My routines</string>
     <string name="library_tab_all">All duas</string>
     <string name="library_browse_all">See all duas</string>
     <string name="library_expand_category">open category</string>
@@ -900,11 +900,11 @@
         <item quantity="one">+%d more dua</item>
         <item quantity="other">+%d more duas</item>
     </plurals>
-    <string name="routine_default_name">My duas</string>
+    <string name="routine_default_name">First routine</string>
     <string name="bookmark_label">Save to routine</string>
     <string name="bookmark_state_saved">in a routine</string>
     <string name="bookmark_state_not_saved">not in a routine</string>
-    <!-- After a bookmark: "Added to My duas". -->
+    <!-- After a bookmark: "Added to First routine". -->
     <string name="bookmark_added">Added to %1$s</string>
     <string name="bookmark_removed">Removed from %1$s</string>
     <string name="bookmark_change">Change</string>
@@ -919,7 +919,7 @@
     <string name="routine_save">Save</string>
     <string name="routine_name">Routine name</string>
     <string name="routine_name_hint">For example: Before leaving for work</string>
-    <string name="routine_intro">Drag the handle to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
+    <string name="routine_intro">Drag the handle or use the ⋮ menu to change the order. A routine is read one dua per screen, like the morning adhkar.</string>
     <string name="routine_add">Add duas</string>
     <string name="routine_remove">Remove from routine</string>
     <string name="routine_reorder">Reorder</string>
