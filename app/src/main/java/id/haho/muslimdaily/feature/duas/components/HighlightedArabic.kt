@@ -215,9 +215,11 @@ private fun phraseBackground(fill: PhraseFill, index: Int): Pair<Color, Color?>?
     val scheme = MaterialTheme.colorScheme
     return when (fill) {
         PhraseFill.NONE -> null
-        // Two neutral tones a few percent apart; onSurface stays well above 4.5:1 on both.
-        PhraseFill.ALTERNATING -> (if (index % 2 == 0) scheme.surfaceContainer else scheme.surfaceContainerHighest) to null
-        PhraseFill.BUBBLES -> scheme.surfaceContainerHigh to scheme.outlineVariant
+        // Two neutral tones as far apart as the surface scale allows (surface vs surfaceContainerHighest);
+        // onSurface stays well above 4.5:1 on both.
+        PhraseFill.ALTERNATING -> (if (index % 2 == 0) scheme.surface else scheme.surfaceContainerHighest) to null
+        // The `outline` token (about 4:1) so the bubble edge is visible in light as well as dark (1.4.11).
+        PhraseFill.BUBBLES -> scheme.surfaceContainerHigh to scheme.outline
     }
 }
 
