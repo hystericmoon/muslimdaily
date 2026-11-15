@@ -377,6 +377,15 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 
 ## Facts that cost time to find
 
+- Audit fixes, session 2 (15 Nov night): (1) A text clamp that re-measures in `onTextLayout` (state change, second pass) renders
+  its first pass on CI: the M10 shots 61/66 showed the framework's mid-word ellipsis while a local run showed the clamp. `ArabicText`
+  now measures with a `TextMeasurer` inside `BoxWithConstraints`, so frame one is final. A layout-callback fix needs a CI shot
+  check, not just a local one. (2) Two open PRs that both re-record the same shots (M7 and T2: Ramadan and Isbat 200%) conflict on
+  the PNGs; merge main into the branch, take either side of the PNGs, re-run the Screenshots workflow. Keep one PR at a time per
+  screen group. (3) The clone's local `main` is the 31 Oct state (old CLAUDE.md, no `docs/history.md`): never `git checkout main`;
+  use `git checkout -b <branch> origin/main` or `git checkout --detach origin/main`. (4) Loose ends from the audit: the routine
+  editor hint still says "drag the handle" (R10 copy pass); `WidgetFitTest` height check on 56/76 dp cells flags names and clock at
+  large fonts (outside M6); the Qibla compass tip (`AppGold`, QiblaScreen.kt:267) draws raw gold on the dial, not in the audit.
 - Audit fixes (15 Nov): the Screenshots workflow commits the new shots as a bot, then dispatches the Android workflow on that
   commit. The `pull_request` run on the bot's commit shows `action_required` (GitHub holds bot-pushed runs), so the PR reads
   `unstable`; CI is green when the dispatched Android run passes on the final head. Don't push to the branch while the record job
