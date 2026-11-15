@@ -91,7 +91,7 @@
     <string name="today_travel_chip">Mode safar</string>
     <string name="today_no_location_title">Lokasi belum diatur</string>
     <string name="today_no_location_body">Atur lokasi untuk menampilkan jadwal shalat. Lokasi hanya disimpan di perangkat ini.</string>
-    <string name="today_use_gps">Gunakan lokasi saat ini</string>
+    <string name="today_use_gps">Gunakan lokasi saya</string>
     <string name="today_pick_city">Pilih kota</string>
     <string name="today_adhkar_header">Dzikir harian</string>
     <string name="today_travel_suggestion">Perangkat Anda sekitar %1$d km dari %2$s. Perbarui lokasi atau aktifkan mode safar?</string>
