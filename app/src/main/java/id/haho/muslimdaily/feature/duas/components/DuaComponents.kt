@@ -21,6 +21,8 @@ import id.haho.design.glass.GlassIconButton
 import id.haho.design.glass.DockedBar
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -173,9 +175,19 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
 
 @Composable
 fun SourceSheet(dua: Dua, onDismiss: () -> Unit) {
-    GlassBottomSheet(onDismissRequest = onDismiss) {
-        SourceDetails(dua, Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).padding(bottom = HahoTheme.spacing.xxl))
-    }
+    GlassBottomSheet(onDismissRequest = onDismiss) { SourceSheetContent(dua) }
+}
+
+/** The body of [SourceSheet]. Scrolls like ReadingSheet: at 200% text the grading policy sits below the screen otherwise. */
+@Composable
+internal fun SourceSheetContent(dua: Dua) {
+    SourceDetails(
+        dua,
+        Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = HahoTheme.dimens.screenGutter)
+            .padding(bottom = HahoTheme.spacing.xxl),
+    )
 }
 
 /** Sources, takhrij and grading of a dua: the body of [SourceSheet]. */
