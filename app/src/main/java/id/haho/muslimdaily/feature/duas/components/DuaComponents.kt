@@ -306,6 +306,27 @@ fun HifzToggle(inHifz: Boolean, onToggle: () -> Unit, modifier: Modifier = Modif
     }
 }
 
+/**
+ * A one-time legend for the two icon toggles on a dua (audit D7): they carry no visible label.
+ * Shown until the reader dismisses it; the state lives in settings.
+ */
+@Composable
+fun DuaToggleHint(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
+    GlassCard(modifier.fillMaxWidth()) {
+        Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_record_voice_over), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.memorize_add_label), style = MaterialTheme.typography.bodyMedium)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                Icon(painterResource(R.drawable.ic_bookmark_add), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.bookmark_label), style = MaterialTheme.typography.bodyMedium)
+            }
+            TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.End)) { Text(stringResource(R.string.dua_toggle_hint_dismiss)) }
+        }
+    }
+}
+
 /** Repeat, previous phrase, play/pause, next phrase and speed, in one compact row. Every control is at least 48dp. */
 @Composable
 fun PlayerBar(

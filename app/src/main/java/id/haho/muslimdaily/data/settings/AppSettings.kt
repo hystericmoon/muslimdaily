@@ -141,6 +141,8 @@ data class AppSettings(
     val hijriConfirmedFor: String = "",
     /** The reader dismissed Today's note asking for exact alarms so the widget changes on time. */
     val widgetAlarmNoteDismissed: Boolean = false,
+    /** The reader dismissed the one-time hint naming the Memorize and routine icons on a dua. */
+    val duaToggleHintSeen: Boolean = false,
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )

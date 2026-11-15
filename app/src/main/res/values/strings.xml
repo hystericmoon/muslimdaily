@@ -261,6 +261,7 @@
     <string name="dua_virtue">Keutamaan</string>
     <string name="dua_no_audio">Audio untuk doa ini belum tersedia.</string>
     <string name="audio_failed">Audio tidak dapat diputar. Coba lagi; bila tetap gagal, laporkan dari halaman doa.</string>
+    <string name="dua_toggle_hint_dismiss">Mengerti</string>
     <string name="memorize_add_label">Tambah ke hafalan</string>
     <string name="memorize_state_in">ada di hafalan</string>
     <string name="memorize_state_not_in">belum di hafalan</string>
