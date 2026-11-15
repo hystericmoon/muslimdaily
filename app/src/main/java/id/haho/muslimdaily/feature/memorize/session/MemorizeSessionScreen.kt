@@ -244,7 +244,7 @@ fun MemorizeSessionScreen(
             when (state.step) {
                 Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
                 Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle), recallMore(state, actions, talkBack))
+                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
             }
             SessionNavBar(state.step, actions.onStep)
@@ -760,7 +760,7 @@ internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Bool
 /** Practice hides the missed words whatever the fade level, so it always needs the reveal. */
 private fun hasHints(state: MemorizeUiState) = state.fade != FadeLevel.NONE || state.practising
 
-internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
+internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, showStage: Boolean = true, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
             if (state.playing == Playing.RECALL && state.playback.isPlaying) {
@@ -769,7 +769,8 @@ internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
-            if (state.stage >= 1 && !state.practising) {
+            // Guided has its own "Langkah n dari 4" in the header; a second counter would disagree.
+            if (showStage && state.stage >= 1 && !state.practising) {
                 Text(
                     stringResource(R.string.memorize_stage, state.stage, FadeLadder.LAST),
                     style = MaterialTheme.typography.labelLarge,
