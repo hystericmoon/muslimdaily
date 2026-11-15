@@ -160,7 +160,8 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     val description = stringResource(R.string.dua_source_chip_description, label)
     AssistChip(
         onClick = { open = true },
-        label = { Text(label, maxLines = 1) },
+        // Wraps rather than clipping: at large text the verse range of a Quran reference was cut off (audit M9).
+        label = { Text(label) },
         leadingIcon = {
             Icon(
                 painterResource(if (dua.grading != null) R.drawable.ic_verified else R.drawable.ic_menu_book),
