@@ -125,6 +125,8 @@ internal class WidgetText(private val context: Context, private val model: Widge
     val nextNameLong = if (model.nextSlot == PrayerTimeSlot.DHUHR && model.friday) s(R.string.widget_prayer_jumuah) else nextName
     val nextTime = time(model.next.time)
     val dateTiny = day("EEE, d")
+    /** "Jum 23 Okt": the weekday, day and month, for one-column widgets (no Hijri date beside it to blur into). */
+    val dateNarrow = day("EEE d MMM")
     val dateShort = day("EEE, d MMM")
     val dateMedium = day("EEE, d MMMM")
     val dateLong = day("EEEE, d MMMM")
@@ -474,21 +476,22 @@ private class Layout(
         val pad = Space.PadSmall
         val inner = inner(pad)
         val marker = t.clockMarker
-        val head = if (tall) line(11f * k) + line(10f * k) * 3 + Space.M else 0.dp
-        val rest = Space.XS + line(12f * k) + Space.S + line(11f * k) + Space.M + Space.BarThin + (if (marker != null) line(10f * k) else 0.dp)
+        val head = if (tall) line(11f * k) + Space.M else 0.dp
+        // The dot between hours and minutes takes a short line of its own.
+        val rest = Space.XS + line(12f * k) + Space.S + line(11f * k) + Space.M + Space.BarThin + line(10f * k) + (if (marker != null) line(10f * k) else 0.dp)
         // Two lines of figures share what the height leaves, at most 44sp each.
         val figSp = ((innerHeight(pad) - head - rest).value / 2 / 1.2f / fontScale.coerceAtLeast(1f)).coerceIn(18f, 44f)
         val f = k * (inner.value * 0.96f / fit.boldWidth("00", figSp * k)).coerceAtMost(1f)
         val s = k * fit.factor(inner, FitLine(0.dp, t.nextName to 12f * k), FitLine(0.dp, t.countdownShort to 11f * k))
         Column(GlanceModifier.fillMaxSize().padding(pad)) {
             if (tall) {
-                Label(t.dateTiny, 11f * s, GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
-                val word = t.hijriShort.split(' ').maxBy { fit.width(it, 10f * s) }
-                Label(t.hijriShort, 10f * s * fit.factor(inner, FitLine(0.dp, word to 10f * s)), GlanceModifier.fillMaxWidth().wrapContentHeight(), color = Muted, maxLines = 3, fill = true)
+                // The date alone, no Hijri date: two bare numbers side by side read as one.
+                Label(t.dateNarrow, 11f * s * fit.factor(inner, FitLine(0.dp, t.dateNarrow to 11f * s)), GlanceModifier.fillMaxWidth().wrapContentHeight(), fill = true)
                 Spacer(GlanceModifier.height(Space.M))
             }
             Column(GlanceModifier.defaultWeight(), verticalAlignment = Alignment.CenterVertically) {
                 Clock(t.clockHoursPattern, figSp * f, model.zone, now, live)
+                Label("\u2022", 10f * s, color = Muted)
                 Clock("mm", figSp * f, model.zone, now, live)
                 if (marker != null) Clock(marker, 10f * s, model.zone, now, live, color = Muted)
             }

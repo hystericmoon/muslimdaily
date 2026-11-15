@@ -225,7 +225,7 @@ fun LocationContent(
                     LinearProgressIndicator(Modifier.fillMaxWidth())
                 }
             }
-        } else if (list.isEmpty()) {
+        } else if (list.isEmpty() && query.isNotBlank()) {
             item {
                 Text(
                     stringResource(R.string.location_no_results),

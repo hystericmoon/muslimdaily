@@ -2,9 +2,11 @@ package id.haho.muslimdaily.feature.qibla
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +30,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -158,6 +162,7 @@ private fun Ready(state: QiblaUiState.Ready) {
             turn > 0 -> stringResource(R.string.qibla_turn_right, step!!)
             else -> stringResource(R.string.qibla_turn_left, step!!)
         }
+        if (!state.reliable) CalibrateWarning()
         Dial(
             heading = state.heading ?: 0.0,
             bearing = state.bearing,
@@ -191,8 +196,27 @@ private fun Ready(state: QiblaUiState.Ready) {
                 )
             }
         }
-        if (!state.reliable) InfoNote(stringResource(R.string.qibla_calibrate))
         InfoNote(stringResource(R.string.qibla_note))
+    }
+}
+
+/** The compass is unreliable: a wrong direction is the cost, so this is not styled as a hint. */
+@Composable
+private fun CalibrateWarning() {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.errorContainer, MaterialTheme.shapes.medium)
+            .padding(HahoTheme.spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(painterResource(R.drawable.ic_info), null, tint = MaterialTheme.colorScheme.onErrorContainer)
+        Text(
+            stringResource(R.string.qibla_calibrate),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onErrorContainer,
+        )
     }
 }
 
