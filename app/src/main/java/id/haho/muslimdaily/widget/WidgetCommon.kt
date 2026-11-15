@@ -96,11 +96,14 @@ fun rememberWidgetData(context: Context, initial: WidgetData): WidgetData {
 }
 
 /** Taps open the Today screen. */
-fun GlanceModifier.openToday(context: Context): GlanceModifier = clickable(
+fun GlanceModifier.openToday(context: Context): GlanceModifier = openScreen(context, Destination.TODAY)
+
+/** Taps open [destination] in the app. */
+fun GlanceModifier.openScreen(context: Context, destination: Destination): GlanceModifier = clickable(
     actionStartActivity(
         Intent(context, MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .putExtra(Notifier.EXTRA_DESTINATION, Destination.TODAY.name),
+            .putExtra(Notifier.EXTRA_DESTINATION, destination.name),
     ),
 )
 

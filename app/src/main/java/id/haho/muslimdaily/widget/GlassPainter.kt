@@ -44,6 +44,14 @@ object GlassPainter {
 
     fun withOpacity(opacity: Float): Int = ((opacity.coerceIn(0f, 1f) * 255).roundToInt() shl 24) or GRAPHITE
 
+    /** An accent pill, as a bitmap so its ends are round below Android 12 too (Glance's corner radius needs 12). */
+    fun pill(widthPx: Int, heightPx: Int): Bitmap {
+        val bmp = createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1))
+        val r = heightPx / 2f
+        Canvas(bmp).drawRoundRect(RectF(0f, 0f, widthPx.toFloat(), heightPx.toFloat()), r, r, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = ACCENT })
+        return bmp
+    }
+
     fun glass(widthPx: Int, heightPx: Int, density: Float, cornerPx: Float, opacity: Float = WIDGET_OPACITY_DEFAULT): Bitmap {
         val w = widthPx.toFloat()
         val h = heightPx.toFloat()

@@ -120,6 +120,7 @@ class WidgetScreenshotTest {
         render("82-widget-4x2-font200", DpSize(340.dp, 164.dp), morning, fontScale = 2f)
         render("83-widget-4x1-landscape", DpSize(340.dp, 56.dp), morning)
         render("84-widget-no-location", DpSize(164.dp, 164.dp), data(at(8, 30), located = false))
+        render("197-widget-no-location-1x1", DpSize(76.dp, 76.dp), data(at(8, 30), located = false))
         render("widget_preview", DpSize(340.dp, 164.dp), morning, preview = true)
         // After Isya: today's date stays, the countdown runs to tomorrow's Subuh.
         render("85-widget-2x2-2100", DpSize(164.dp, 164.dp), data(at(21, 0)))

@@ -635,6 +635,7 @@
     <string name="widget_about">± %s</string>
     <string name="widget_prayer_jumuah">Shalat Jumat</string>
     <string name="widget_no_location">Atur lokasi di aplikasi untuk melihat jadwal shalat.</string>
+    <string name="widget_set_location">Atur lokasi</string>
     <string name="handover_moved_title">Adwam sudah pindah</string>
     <string name="handover_moved_body">Data Anda sudah ada di aplikasi Adwam yang baru. Aplikasi ini tidak lagi mengirim pengingat, jadi bisa dihapus.</string>
     <string name="handover_open_new">Buka Adwam yang baru</string>
