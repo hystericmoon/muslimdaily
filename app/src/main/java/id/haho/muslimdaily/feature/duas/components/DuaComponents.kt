@@ -156,6 +156,8 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
 fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     var open by remember { mutableStateOf(false) }
     val label = sourceChipLabel(dua)
+    // No source and no grading: an empty pill named "Sumber dan derajat: ." helps nobody (audit D6).
+    if (label.isBlank()) return
     val description = stringResource(R.string.dua_source_chip_description, label)
     AssistChip(
         onClick = { open = true },
