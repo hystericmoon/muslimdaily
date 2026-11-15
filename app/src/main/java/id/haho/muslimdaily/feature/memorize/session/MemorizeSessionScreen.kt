@@ -244,7 +244,7 @@ fun MemorizeSessionScreen(
             when (state.step) {
                 Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
                 Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle), recallMore(state, actions, talkBack))
+                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
             }
             SessionNavBar(state.step, actions.onStep)
@@ -760,7 +760,7 @@ internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Bool
 /** Practice hides the missed words whatever the fade level, so it always needs the reveal. */
 private fun hasHints(state: MemorizeUiState) = state.fade != FadeLevel.NONE || state.practising
 
-internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
+internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, showStage: Boolean = true, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
             if (state.playing == Playing.RECALL && state.playback.isPlaying) {
@@ -769,7 +769,8 @@ internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, toggle
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
-            if (state.stage >= 1 && !state.practising) {
+            // Guided has its own "Langkah n dari 4" in the header; a second counter would disagree.
+            if (showStage && state.stage >= 1 && !state.practising) {
                 Text(
                     stringResource(R.string.memorize_stage, state.stage, FadeLadder.LAST),
                     style = MaterialTheme.typography.labelLarge,
@@ -816,23 +817,25 @@ internal const val STACK_FONT_SCALE = 1.3f
 private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean): @Composable ColumnScope.() -> Unit = {
     val gaps = state.segmented && state.hasAudio
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
         FadeLevel.entries.forEach { level ->
             // While practising, the missed words are hidden, not a share of them: no level is current.
             FilterChip(
                 selected = !state.practising && state.fade == level,
                 onClick = { actions.onFade(level) },
+                modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
                 label = { Text(stringResource(R.string.memorize_fade_percent, (level.fraction * 100).toInt())) },
             )
         }
     }
     if (!state.practising && (state.fade == FadeLevel.LIGHT || state.fade == FadeLevel.MEDIUM)) {
         Text(stringResource(R.string.memorize_fade_order), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
             FadeOrder.entries.forEach { order ->
                 FilterChip(
                     selected = state.fadeOrder == order,
                     onClick = { actions.onFadeOrder(order) },
+                    modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
                     label = { Text(stringResource(order.labelRes())) },
                 )
             }
@@ -842,6 +845,7 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
         FilterChip(
             selected = state.firstLetters,
             onClick = { actions.onFirstLetters(!state.firstLetters) },
+            modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
             label = { Text(stringResource(R.string.memorize_first_letters)) },
         )
     }
@@ -1015,7 +1019,7 @@ internal fun MarkMissed(state: MemorizeUiState, actions: MemorizeActions) {
 }
 
 internal fun Rating.labelRes() = when (this) {
-    Rating.AGAIN -> R.string.memorize_rate_again
-    Rating.HARD -> R.string.memorize_rate_hard
-    Rating.EASY -> R.string.memorize_rate_easy
+    Rating.AGAIN -> R.string.memorize_not_yet
+    Rating.HARD -> R.string.memorize_with_help
+    Rating.EASY -> R.string.memorize_knew_it
 }

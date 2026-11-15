@@ -87,6 +87,7 @@
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Prayer times</string>
     <string name="today_prohibited_title">Prohibited times</string>
+    <string name="today_note_open">Note: %1$s</string>
     <string name="today_method_footer">%1$s · Asr %2$s</string>
     <string name="today_change_method">Change calculation</string>
     <string name="today_location_chip">Location: %s</string>
@@ -205,6 +206,16 @@
     <string name="settings_asr_standard">Standard (1×)</string>
     <string name="settings_asr_hanafi">Hanafi (2×)</string>
     <string name="settings_offsets">Minute adjustments</string>
+    <string name="settings_times_group">Times and iqamah</string>
+    <string name="settings_offsets_none">All 0 min</string>
+    <plurals name="settings_offsets_changed">
+        <item quantity="one">%d time adjusted</item>
+        <item quantity="other">%d times adjusted</item>
+    </plurals>
+    <plurals name="settings_iqamah_set">
+        <item quantity="one">%d prayer set</item>
+        <item quantity="other">%d prayers set</item>
+    </plurals>
     <string name="settings_offsets_note">Shift times if your local mosque\'s schedule differs.</string>
     <string name="settings_iqamah">Iqamah delay</string>
     <string name="settings_iqamah_note">Minutes after the adhan. Match your mosque.</string>
@@ -265,6 +276,7 @@
     <string name="dua_virtue">Virtue</string>
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
     <string name="audio_failed">The audio couldn\'t be played. Try again; if it keeps failing, report it from the dua\'s page.</string>
+    <string name="dua_toggle_hint_dismiss">Got it</string>
     <string name="memorize_add_label">Add to Memorize</string>
     <string name="memorize_state_in">in Memorize</string>
     <string name="memorize_state_not_in">not in Memorize</string>
@@ -340,8 +352,6 @@
     <string name="run_from_memory_body">This dua is in your memorization. Recite it without looking, then show the text to check.</string>
     <string name="run_show_text">Show the text</string>
     <string name="run_recall_prompt">Did you know it without the text?</string>
-    <string name="run_recall_knew">I knew it</string>
-    <string name="run_recall_needed">I needed the text</string>
     <string name="run_add_to_hifz">Add to My memorization</string>
     <string name="run_in_hifz">In My memorization</string>
     <string name="run_restart">Restart</string>
@@ -454,9 +464,6 @@
         <item quantity="other">%d words still needed revealing. Try once more.</item>
     </plurals>
     <string name="memorize_rate_prompt">How well do you know it?</string>
-    <string name="memorize_rate_again">Again</string>
-    <string name="memorize_rate_hard">Hard</string>
-    <string name="memorize_rate_easy">Easy</string>
     <plurals name="memorize_next_in_days">
         <item quantity="one">Comes back in %d day</item>
         <item quantity="other">Comes back in %d days</item>
