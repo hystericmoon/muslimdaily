@@ -262,6 +262,7 @@
     <string name="dua_virtue">Virtue</string>
     <string name="dua_no_audio">Audio for this dua is not available yet.</string>
     <string name="audio_failed">The audio couldn\'t be played. Try again; if it keeps failing, report it from the dua\'s page.</string>
+    <string name="dua_toggle_hint_dismiss">Got it</string>
     <string name="memorize_add_label">Add to Memorize</string>
     <string name="memorize_state_in">in Memorize</string>
     <string name="memorize_state_not_in">not in Memorize</string>

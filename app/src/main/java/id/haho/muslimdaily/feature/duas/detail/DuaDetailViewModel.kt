@@ -46,6 +46,8 @@ data class DuaDetailState(
     val settings: AppSettings = AppSettings(),
     /** Whether the dua is in the Memorize tab (My hifz). */
     val inHifz: Boolean = false,
+    /** Show the one-time hint naming the two icons next to the source chip. */
+    val showToggleHint: Boolean = false,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -78,6 +80,7 @@ class DuaDetailViewModel @Inject constructor(
                 event = e,
                 prefs = ReadingPrefs(s.translationMode, s.showTransliteration, s.phraseLayout, s.phraseFill, s.hideFillWhilePlaying),
                 settings = s,
+                showToggleHint = !s.duaToggleHintSeen,
                 playback = if (playback.duaId == it.id) playback else PlaybackState(speed = s.audioSpeed, repeat = playback.repeat),
             )
         }
@@ -91,6 +94,10 @@ class DuaDetailViewModel @Inject constructor(
     /** Changes from the reading sheet: the same settings as Display settings. */
     fun updateSettings(block: SettingsEditor.() -> Unit) {
         viewModelScope.launch { settings.update(block) }
+    }
+
+    fun dismissToggleHint() {
+        viewModelScope.launch { settings.update { duaToggleHintSeen = true } }
     }
 
     fun saveNote(text: String) {
