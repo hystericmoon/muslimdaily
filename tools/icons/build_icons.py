@@ -17,7 +17,7 @@ OUT = HERE.parent.parent / "app/src/main/res/drawable"
 ICONS = [
     "wb_twilight", "menu_book", "record_voice_over", "settings", "play_arrow", "pause", "skip_next",
     "skip_previous", "replay", "repeat", "headphones", "search", "close",
-    "chevron_right", "chevron_left", "check", "drag_indicator", "tune", "restart_alt", "location_on", "my_location",
+    "chevron_right", "chevron_left", "check", "drag_indicator", "edit", "restart_alt", "location_on", "my_location",
     "schedule", "notifications", "text_fields", "info", "flag", "bookmark_add", "ios_share",
     "download", "mosque", "luggage", "block", "add", "remove", "more_vert", "verified",
     "keyboard_arrow_down", "wb_sunny", "bedtime", "done_all",
