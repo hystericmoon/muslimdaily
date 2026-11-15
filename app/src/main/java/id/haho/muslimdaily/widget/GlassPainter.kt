@@ -206,7 +206,7 @@ object GlassPainter {
      * The progress bar: the accent from the start up to [progress] along [stopsPx] (the x of each
      * stop, under its label), then a dashed track to the end.
      */
-    fun bar(widthPx: Int, heightPx: Int, density: Float, stopsPx: FloatArray, progress: Float): Bitmap {
+    fun bar(widthPx: Int, heightPx: Int, density: Float, stopsPx: FloatArray, progress: Float, mark: Int = -1): Bitmap {
         val bmp = createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1))
         val c = Canvas(bmp)
         val w = widthPx.toFloat()
@@ -225,6 +225,12 @@ object GlassPainter {
         while (x + dash <= w) {
             c.drawRect(x, 0f, x + dash, h, p)
             x += dash + gap
+        }
+        // The next prayer's stop, a dot on the track: its time on the scale is also set apart by weight, not colour alone.
+        if (mark in stopsPx.indices) {
+            val r = h / 2f
+            p.color = ACCENT
+            c.drawCircle(stopsPx[mark].coerceIn(r, (w - r).coerceAtLeast(r)), r, r, p)
         }
         return bmp
     }
