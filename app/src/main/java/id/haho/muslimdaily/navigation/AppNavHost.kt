@@ -9,6 +9,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import id.haho.design.theme.HahoTheme
@@ -57,6 +58,12 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         exitTransition = { if (reduced) ExitTransition.None else sharedAxisOut(forward = true) },
         popEnterTransition = { if (reduced) EnterTransition.None else sharedAxisIn(forward = false) },
         popExitTransition = { if (reduced) ExitTransition.None else sharedAxisOut(forward = false) },
+        // Predictive back seeks the transition with the finger and can hold it part-way. Screens are
+        // transparent over one shared backdrop, so the overlapping fades of the shared axis showed both
+        // screens' content on top of each other (seen on Qibla). Fade through instead: the leaving
+        // screen shrinks and fades out first, then the one below fades in, so one is visible at a time.
+        predictivePopEnterTransition = { if (reduced) EnterTransition.None else fadeThroughIn() },
+        predictivePopExitTransition = { if (reduced) ExitTransition.None else fadeThroughOut() },
     ) {
         navigation<TodayGraph>(startDestination = TodayRoute) {
             composable<TodayRoute> {
@@ -168,6 +175,17 @@ private fun sharedAxisIn(forward: Boolean): EnterTransition =
         slideInHorizontally(tween(AXIS_IN_MS + AXIS_OUT_MS / 2, easing = FastOutSlowInEasing)) { w ->
             (if (forward) w else -w) / 12
         }
+
+private const val PREDICTIVE_OUT_MS = 150
+private const val PREDICTIVE_IN_MS = 210
+private const val PREDICTIVE_SCALE = 0.9f
+
+private fun fadeThroughIn(): EnterTransition =
+    fadeIn(tween(PREDICTIVE_IN_MS, delayMillis = PREDICTIVE_OUT_MS, easing = LinearOutSlowInEasing))
+
+private fun fadeThroughOut(): ExitTransition =
+    fadeOut(tween(PREDICTIVE_OUT_MS, easing = FastOutLinearInEasing)) +
+        scaleOut(tween(PREDICTIVE_OUT_MS + PREDICTIVE_IN_MS, easing = FastOutSlowInEasing), targetScale = PREDICTIVE_SCALE)
 
 private fun sharedAxisOut(forward: Boolean): ExitTransition =
     fadeOut(tween(AXIS_OUT_MS, easing = FastOutLinearInEasing)) +

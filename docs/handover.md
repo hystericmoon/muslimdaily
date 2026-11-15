@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.14.0 released; #205 merged; Check dock and promo refresh await the owner).
+Last updated: 15 Nov 2026 (Qibla back fix; Run audio page awaits the owner; history.md restored).
 
 ## In flight
 
@@ -26,24 +26,27 @@ Last updated: 15 Nov 2026 (1.14.0 released; #205 merged; Check dock and promo re
   from the new shots and push to `promo-assets` (ask first); the owner has not yet said whether to. The 9/10 Nov dates have passed.
 - Small open polish (Sonnet): (1) the rating card still says "Kotak N" as Check always has; (2) "Not yet" schedules the dua
   for tomorrow (Leitner Again = box 1) while its subtitle says "Latih sekarang", as the mock does.
-- Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent
-  screens; needs an emulator, may touch haho-design); (2) media bar inside Run (no audio there; Opus feature; concepts page above).
+- **Run audio: owner decision pending** (15 Nov, Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY). The old concepts page
+  (Q2C54...) was for the dua detail bar; its A shipped in 1.13.0. Run page https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C:
+  A full PlayerBar docked, B collapsible dock like Memorize (recommended), C top-bar listen + strip. Build after the choice.
+- **Qibla back overlap: fix merged, unverified** (#PR below). Cause: every screen is transparent over the one
+  `GlassBackdrop` (MainActivity; `HahoScreen` Scaffold is transparent in haho-design), and the shared-axis pop fades
+  overlap (out 0-120 ms, in 60-320 ms); predictive back holds the seek part-way, so both screens drew on top of each other.
+  Fix in `navigation/AppNavHost.kt` only: `predictivePopEnter/ExitTransition` = fade through (out 150 ms + scale to 0.9,
+  then in 210 ms). No haho-design change. **Check on a phone/emulator (Android 14+, gesture nav)**: from Today open Qibla,
+  swipe back slowly and hold at ~20%, ~50%, then release and cancel; expect only one screen visible at a time, no flash of
+  the bare backdrop longer than a blink, cancel returns to Qibla. Repeat on one more pushed screen (dua detail) and with
+  Remove animations on (instant switch). If it still overlaps, the next step is an opaque per-screen backdrop (haho-design).
 - Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205. No PR open.
 
-## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
+## Promo campaign (6 Nov)
 
-34 posts, Mon 9 Nov to Tue 5 Jan, all with media, copy and alt text. The owner posts; nothing posted yet.
-Source of truth `marketing/calendar.csv` (Notion calendar mirrors it). Media: orphan branch `promo-assets`
-(never merge; ask before pushing, except the campaign's pushes the owner always allowed). Rules: no
-IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Pitfall: the Screenshots workflow
-does a plain `git push`; push your own commits after it ends. Links, decisions, thumbnails: history,
-"Promo campaign (moved from handover, 14 Nov)".
+34 posts, 9 Nov to 5 Jan, built; the owner posts. Source `marketing/calendar.csv`; media on orphan branch `promo-assets`
+(never merge; ask before pushing). Details and pitfalls: history, "Promo campaign (moved from handover, 14 Nov)".
 
 ## Waiting on the owner
 
-- **IslamHouse licence reply**: arrived ~01:00 WIB 3 Nov (recorded in `docs/islamhouse-licence-request.md`,
-  "Reply"). Credits done (1.12.5). Nothing owed. Possible follow-up: a release-checklist step to
-  re-check sources for corrections (`tools/check_sources.py` already is the gate in `docs/release.md`).
+- IslamHouse licence: reply recorded (`docs/islamhouse-licence-request.md`), credits done; nothing owed.
 - **Oppo user's widget feedback** via Diagnostics (1.5.0): no reply recorded.
 - Cloud environment: decided, stay on Default (see "Session setup").
 
