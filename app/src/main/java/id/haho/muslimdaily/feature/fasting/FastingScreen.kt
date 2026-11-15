@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
@@ -228,6 +233,8 @@ private fun TodayCard(today: FastDay, tomorrow: FastDay, modifier: Modifier = Mo
 }
 
 private val GoldMark = Color(0xFFC9A227)
+private val DAY_CELL_MIN_HEIGHT = 56.dp
+private const val ONE_LETTER_FONT_SCALE = 1.5f
 
 @Composable
 private fun MonthCard(
@@ -248,7 +255,7 @@ private fun MonthCard(
                 }
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "${months[first.hijri.month - 1]} ${first.hijri.year} H",
+                        "${months[first.hijri.month - 1]} ${first.hijri.year}\u00A0H",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
@@ -263,10 +270,12 @@ private fun MonthCard(
                 }
             }
             // Week starts on Monday, as Indonesian calendars print it.
+            // From 1.5x text the three-letter names no longer fit a column ("Kam" splits), so use one letter.
+            val oneLetter = LocalDensity.current.fontScale >= ONE_LETTER_FONT_SCALE
             Row(Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.sm)) {
                 DayOfWeek.entries.forEach {
                     Text(
-                        it.getDisplayName(TextStyle.SHORT, AppLocale),
+                        it.getDisplayName(TextStyle.SHORT, AppLocale).let { name -> if (oneLetter) name.take(1) else name },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
@@ -277,9 +286,10 @@ private fun MonthCard(
             val lead = first.date.dayOfWeek.value - 1
             val cells: List<FastDay?> = List(lead) { null } + state.month
             cells.chunked(7).forEach { week ->
-                Row(Modifier.fillMaxWidth()) {
+                // Height follows the text (min 56 dp = the old 0.86 ratio on a phone), so 200% text isn't clipped.
+                Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
                     week.forEach { day ->
-                        Box(Modifier.weight(1f).aspectRatio(0.86f)) {
+                        Box(Modifier.weight(1f).fillMaxHeight().heightIn(min = DAY_CELL_MIN_HEIGHT)) {
                             if (day != null) DayCell(day, day.date == state.today.date, day.date == state.selected.date) { onSelect(day.date) }
                         }
                     }
@@ -335,7 +345,11 @@ private fun Dot(color: Color) = Box(Modifier.size(5.dp).clip(CircleShape).backgr
 
 @Composable
 private fun Legend(modifier: Modifier = Modifier) {
-    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md, Alignment.CenterHorizontally)) {
+    FlowRow(
+        modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
+    ) {
         for ((color, label) in listOf(
             GoldMark to R.string.fasting_legend_special,
             MaterialTheme.colorScheme.primary to R.string.fasting_legend_weekly,
