@@ -691,7 +691,7 @@
     <string name="mosque_allow_precise">Gunakan lokasi akurat</string>
     <string name="mosque_origin_saved">Dari lokasi tersimpan, %s. Jarak hanya perkiraan.</string>
     <string name="mosque_use_current">Gunakan lokasi saat ini</string>
-    <string name="mosque_none_title">Tidak ada data masjid dalam 5 km</string>
+    <string name="mosque_none_title">Tidak ada data masjid dalam 5\u00A0km</string>
     <string name="mosque_none_body">Data offline berasal dari OpenStreetMap dan belum lengkap. Coba cari di aplikasi peta.</string>
     <string name="mosque_search_maps">Cari masjid di aplikasi peta</string>
     <string name="mosque_map_query">masjid</string>
@@ -879,7 +879,7 @@
     <string name="crash_prompt_send">Kirim laporan</string>
     <string name="crash_prompt_later">Nanti</string>
     <string name="event_start_all">Mulai baca (%1$d doa)</string>
-    <string name="library_tab_mine">Doa saya</string>
+    <string name="library_tab_mine">Rangkaian saya</string>
     <string name="library_tab_all">Semua doa</string>
     <string name="library_browse_all">Lihat semua doa</string>
     <string name="library_expand_category">buka kategori</string>
@@ -890,11 +890,11 @@
     <plurals name="routine_more">
         <item quantity="other">+%d doa lainnya</item>
     </plurals>
-    <string name="routine_default_name">Doa saya</string>
+    <string name="routine_default_name">Rangkaian pertama</string>
     <string name="bookmark_label">Simpan ke rangkaian</string>
     <string name="bookmark_state_saved">ada di rangkaian</string>
     <string name="bookmark_state_not_saved">belum di rangkaian</string>
-    <!-- After a bookmark: "Ditambahkan ke Doa saya". -->
+    <!-- After a bookmark: "Ditambahkan ke Rangkaian pertama". -->
     <string name="bookmark_added">Ditambahkan ke %1$s</string>
     <string name="bookmark_removed">Dihapus dari %1$s</string>
     <string name="bookmark_change">Ubah</string>
@@ -909,7 +909,7 @@
     <string name="routine_save">Simpan</string>
     <string name="routine_name">Nama rangkaian</string>
     <string name="routine_name_hint">Misalnya: Doa sebelum berangkat kerja</string>
-    <string name="routine_intro">Seret pegangan untuk mengubah urutan. Rangkaian dibaca satu doa per layar, sama seperti dzikir pagi.</string>
+    <string name="routine_intro">Seret pegangan atau pakai menu ⋮ untuk mengubah urutan. Rangkaian dibaca satu doa per layar, sama seperti dzikir pagi.</string>
     <string name="routine_add">Tambah doa</string>
     <string name="routine_remove">Keluarkan dari rangkaian</string>
     <string name="routine_reorder">Ubah urutan</string>

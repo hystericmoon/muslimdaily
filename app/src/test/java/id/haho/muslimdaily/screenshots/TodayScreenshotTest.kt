@@ -1,6 +1,7 @@
 package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import id.haho.muslimdaily.data.location.City
 import id.haho.muslimdaily.feature.settings.PrayerSettingsContent
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
 import id.haho.muslimdaily.feature.settings.SettingsHomeContent
@@ -81,6 +82,12 @@ class TodayScreenshotTest {
 
     @Test
     fun location() = captureVariants("42-settings-location") {
-        LocationContent(TodayPreviewData.settings.location, "", emptyList(), false, {}, {}, {})
+        LocationContent(TodayPreviewData.settings.location, "", popularCities, false, {}, {}, {})
     }
+
+    private val popularCities = listOf(
+        City(1, "Jakarta", "DKI Jakarta", "ID", "Indonesia", -6.2, 106.8, "Asia/Jakarta"),
+        City(2, "Surabaya", "Jawa Timur", "ID", "Indonesia", -7.25, 112.75, "Asia/Jakarta"),
+        City(3, "Makassar", "Sulawesi Selatan", "ID", "Indonesia", -5.14, 119.41, "Asia/Makassar"),
+    )
 }
