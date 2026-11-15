@@ -92,7 +92,7 @@
     <string name="today_travel_chip">Mode safar</string>
     <string name="today_no_location_title">Lokasi belum diatur</string>
     <string name="today_no_location_body">Atur lokasi untuk menampilkan jadwal shalat. Lokasi hanya disimpan di perangkat ini.</string>
-    <string name="today_use_gps">Gunakan lokasi saat ini</string>
+    <string name="today_use_gps">Gunakan lokasi saya</string>
     <string name="today_pick_city">Pilih kota</string>
     <string name="today_adhkar_header">Dzikir harian</string>
     <string name="today_travel_suggestion">Perangkat Anda sekitar %1$d km dari %2$s. Perbarui lokasi atau aktifkan mode safar?</string>
@@ -174,7 +174,10 @@
     <!-- Settings -->
     <string name="settings_group_prayer">Shalat</string>
     <string name="settings_group_reading">Bacaan</string>
-    <string name="settings_group_trust">Kepercayaan</string>
+    <string name="settings_group_data">Data</string>
+    <string name="settings_group_app">Aplikasi</string>
+    <string name="settings_feedback">Kirim masukan atau cek pengingat</string>
+    <string name="settings_group_trust">Sumber dan bantuan</string>
     <string name="settings_prayer">Perhitungan waktu shalat</string>
     <string name="settings_location">Lokasi</string>
     <string name="settings_reminders">Pengingat</string>
@@ -187,7 +190,7 @@
     <string name="settings_my_sets_summary">Cadangkan dan pulihkan semua data Anda</string>
     <string name="settings_methodology">Metodologi</string>
     <string name="settings_methodology_summary">Sumber dan kebijakan derajat hadits</string>
-    <string name="settings_report">Laporkan kesalahan</string>
+    <string name="settings_report">Laporkan kesalahan konten</string>
     <string name="settings_report_summary">Kirim email kepada pengelola konten</string>
     <string name="settings_about">Tentang aplikasi</string>
     <string name="settings_about_summary">Versi, lisensi, atribusi</string>
@@ -313,7 +316,7 @@
     <string name="customize_move_down">Pindah ke bawah</string>
 
     <!-- Run mode -->
-    <string name="run_count">%1$d dari %2$d</string>
+    <string name="run_count">%1$d dari %2$d kali</string>
     <string name="run_position">Doa %1$d dari %2$d</string>
     <string name="run_summary">Ringkasan</string>
     <string name="run_done">Selesai</string>
@@ -324,7 +327,7 @@
     <string name="run_tap_read_hint">Ketuk kartu setelah membaca</string>
     <string name="run_listen">Dengarkan</string>
     <string name="run_listen_hidden">Tampilkan teks untuk mendengarkan</string>
-    <string name="run_undo">Kurangi</string>
+    <string name="run_undo">Batalkan hitungan</string>
     <string name="run_previous">Sebelumnya</string>
     <string name="run_next">Berikutnya</string>
     <string name="run_auto_advance">Lanjut otomatis</string>
@@ -816,6 +819,10 @@
     <string name="onboarding_exact_allow">Izinkan alarm tepat waktu</string>
     <string name="onboarding_later">Pengaturan lain, seperti metode perhitungan dan suara adzan, ada di tab Pengaturan.</string>
     <string name="onboarding_start">Mulai</string>
+    <string name="onboarding_more_title">Lainnya</string>
+    <string name="onboarding_more_body">Ukuran teks dan pengingat</string>
+    <string name="onboarding_more_expand">Tampilkan</string>
+    <string name="onboarding_more_collapse">Sembunyikan</string>
     <string name="hijri_check_title">Awal %1$s</string>
     <string name="hijri_check_body">Pemerintah menetapkan awal bulan lewat sidang isbat pada petang tanggal 29 %1$s. Apa hasilnya? Kalender di aplikasi akan menyesuaikan.</string>
     <string name="hijri_check_new">Besok sudah 1 %1$s</string>
@@ -838,7 +845,8 @@
     <string name="diag_battery_restricted">Dibatasi: Android bisa menunda pengingat</string>
     <string name="diag_open_settings">Buka pengaturan</string>
     <string name="diag_muted">Saluran notifikasi yang dimatikan: %1$s</string>
-    <string name="diag_oem">Ponsel merek ini sering menghentikan aplikasi di latar belakang. Langkah untuk mengizinkannya: dontkillmyapp.com/%1$s</string>
+    <string name="diag_oem">Ponsel merek ini sering menghentikan aplikasi di latar belakang. Panduan cara mengizinkannya ada di tombol di bawah.</string>
+    <string name="diag_oem_guide">Buka panduan</string>
     <string name="diag_next">Pengingat berikutnya</string>
     <string name="diag_none_planned">Tidak ada pengingat yang aktif</string>
     <string name="diag_recent">Terakhir berbunyi</string>
