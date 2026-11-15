@@ -55,13 +55,14 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.AdwamScreen
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
+import id.haho.muslimdaily.core.designsystem.component.WordClampedText
+import androidx.compose.ui.text.AnnotatedString
 import id.haho.design.component.InfoNote
 import id.haho.design.component.SectionHeader
 import id.haho.design.glass.DockedBar
@@ -318,11 +319,11 @@ private fun DuaSummary(number: Int?, dua: Dua, eventLabel: String, modifier: Mod
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
         )
-        Text(
-            dua.translationId.ifBlank { dua.arabic },
+        // A cut preview ends at a whole word (audit M10); the Arabic fallback is cut the same way.
+        WordClampedText(
+            AnnotatedString(dua.translationId.ifBlank { dua.arabic }),
             style = MaterialTheme.typography.bodyMedium,
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
         )
     }
 }
@@ -425,7 +426,7 @@ private fun PickSummary(dua: Dua, eventLabel: String, prefs: ReadingPrefs, modif
         if (eventLabel.isNotBlank()) {
             Text(eventLabel, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
         }
-        ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = PICK_ARABIC_LINES)
+        ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = PICK_ARABIC_LINES, clampToWords = true)
         DuaTranslations(dua, prefs, maxLines = PICK_TRANSLATION_LINES)
     }
 }
