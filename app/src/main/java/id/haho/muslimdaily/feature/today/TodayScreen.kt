@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.today
 
+import id.haho.muslimdaily.core.designsystem.component.assistChipBorder
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
@@ -461,6 +462,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
         ) {
             AssistChip(
                 onClick = actions.onOpenLocation,
+                border = assistChipBorder(),
                 // The chip's description already names the place; the visible name is not read twice.
                 label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.clearAndSetSemantics {}) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(textIconSize())) },
@@ -477,9 +479,11 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
                     selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
                 ),
+                // Unselected: the outline token (audit R14); selected: a 1 dp primary outline (audit T6).
                 border = FilterChipDefaults.filterChipBorder(
                     enabled = true,
                     selected = data.travelMode,
+                    borderColor = MaterialTheme.colorScheme.outline,
                     selectedBorderColor = MaterialTheme.colorScheme.primary,
                     selectedBorderWidth = 1.dp,
                 ),
@@ -493,6 +497,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
             )
             AssistChip(
                 onClick = actions.onOpenFasting,
+                border = assistChipBorder(),
                 label = { Text(stringResource(R.string.fasting_open)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(textIconSize())) },
             )

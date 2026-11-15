@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.duas.components
 
+import id.haho.muslimdaily.core.designsystem.component.assistChipBorder
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
@@ -161,6 +162,7 @@ fun SourceChip(dua: Dua, modifier: Modifier = Modifier) {
     val description = stringResource(R.string.dua_source_chip_description, label)
     AssistChip(
         onClick = { open = true },
+        border = assistChipBorder(),
         // Wraps rather than clipping: at large text the verse range of a Quran reference was cut off (audit M9).
         label = { Text(label) },
         leadingIcon = {

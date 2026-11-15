@@ -1,5 +1,6 @@
 package id.haho.muslimdaily.feature.duas.event
 
+import id.haho.muslimdaily.core.designsystem.component.filterChipBorder
 import id.haho.design.glass.glassSegmentedColors
 import id.haho.design.component.isLargeFontScale
 import androidx.compose.ui.text.style.TextAlign
@@ -279,6 +280,7 @@ private fun ItemHeader(
                     FilterChip(
                         selected = form.id == resolved.form.id,
                         onClick = { onChooseForm(item.group, form.id) },
+                        border = filterChipBorder(form.id == resolved.form.id),
                         label = { Text(stringResource(R.string.event_form_n, i + 1)) },
                         leadingIcon = if (form.id == resolved.form.id) {
                             { Icon(painterResource(R.drawable.ic_check), null) }

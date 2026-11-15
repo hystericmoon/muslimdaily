@@ -64,7 +64,7 @@ fun MissedWords(
                                     .background(MaterialTheme.colorScheme.errorContainer, shape)
                                     .border(2.dp, MaterialTheme.colorScheme.error, shape)
                             } else {
-                                Modifier.border(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outlineVariant, shape)
+                                Modifier.border(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outline, shape)
                             },
                         )
                         .toggleable(value = marked, role = Role.Checkbox, onValueChange = { onToggle(w.index) })
