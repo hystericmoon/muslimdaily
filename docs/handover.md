@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (1.14.0 released; #205 and #207 merged; Opus child session running the Run media bar and Qibla items).
+Last updated: 15 Nov 2026 (#207, #208 merged; Qibla back fix #209; Run audio dock B being built).
 
 ## In flight
 
@@ -19,33 +19,33 @@ Last updated: 15 Nov 2026 (1.14.0 released; #205 and #207 merged; Opus child ses
 - Done (Sonnet): "Kata berikutnya" is now "Buka kata" (#205). Check ratings docked in one row, option C (#207, owner chose it
   15 Nov; page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt): stacks from 1.15x font, suggested rating filled and named in
   text; Guided already docked its ratings. Rating card drops "Kotak N" (box number is internal; "Hafal" stays when memorized);
-  Guided "Belum" subtitle now says when the dua comes back, "Latih sekarang" is the result button (this PR). Fresh phone check
+  Guided "Belum" subtitle now says when the dua comes back, "Latih sekarang" is the result button (#208). Fresh phone check
   of the Check row and Indonesian labels still to do.
 - **Promo media is stale (read-only check 14 Nov)**: Video 1 `v1-memorize-*` (IG Reel 9 Nov, LinkedIn 10 Nov) and Carousel A
   were rendered from `marketing/build/screens/50-53-memorize-*` (5 Nov: top tabs, Cue card, inline buttons). The shipped app
   has the bottom nav and dock (shots 150-153, 161, 165). Copy and alt text still hold; only visuals differ. Fix = re-render
   from the new shots and push to `promo-assets` (ask first); owner said hold (15 Nov). The 9/10 Nov dates have passed.
-- **Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY (started 15 Nov at the owner's request)**: (1) media bar inside Run (no audio there;
-  concepts page above; the owner's concept choice is not recorded, so it makes a decision page and waits for the owner in
-  its own chat); (2) Qibla back-transition overlap (predictive back over transparent screens): code diagnosis only, no
-  emulator in the cloud, so the owner or the Mac must verify; may touch haho-design (owner decides). Its PRs and handover
-  notes land on main; check there before starting either item again.
-- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205 and #207. No PR open (this polish PR aside).
+- **Run audio: owner chose B (15 Nov)**, collapsible dock like Memorize, on https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C
+  (the old Q2C54 page was the dua detail bar; its A shipped in 1.13.0). Built by Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY
+  on branch `claude/run-audio-dock`.
+- **Qibla back overlap: fix in #209, unverified**. Cause: every screen is transparent over the one
+  `GlassBackdrop` (MainActivity; `HahoScreen` Scaffold is transparent in haho-design), and the shared-axis pop fades
+  overlap (out 0-120 ms, in 60-320 ms); predictive back holds the seek part-way, so both screens drew on top of each other.
+  Fix in `navigation/AppNavHost.kt` only: `predictivePopEnter/ExitTransition` = fade through (out 150 ms + scale to 0.9,
+  then in 210 ms). No haho-design change. **Check on a phone/emulator (Android 14+, gesture nav)**: from Today open Qibla,
+  swipe back slowly and hold at ~20%, ~50%, then release and cancel; expect only one screen visible at a time, no flash of
+  the bare backdrop longer than a blink, cancel returns to Qibla. Repeat on one more pushed screen (dua detail) and with
+  Remove animations on (instant switch). If it still overlaps, the next step is an opaque per-screen backdrop (haho-design).
+- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205, #207, #208.
 
-## Promo campaign: built, scheduled, waiting to be posted (6 Nov)
+## Promo campaign (6 Nov)
 
-34 posts, Mon 9 Nov to Tue 5 Jan, all with media, copy and alt text. The owner posts; nothing posted yet.
-Source of truth `marketing/calendar.csv` (Notion calendar mirrors it). Media: orphan branch `promo-assets`
-(never merge; ask before pushing, except the campaign's pushes the owner always allowed). Rules: no
-IslamHouse/HadeethEnc material, no religious text, no faces, no streaks. Pitfall: the Screenshots workflow
-does a plain `git push`; push your own commits after it ends. Links, decisions, thumbnails: history,
-"Promo campaign (moved from handover, 14 Nov)".
+34 posts, 9 Nov to 5 Jan, built; the owner posts. Source `marketing/calendar.csv`; media on orphan branch `promo-assets`
+(never merge; ask before pushing). Details and pitfalls: history, "Promo campaign (moved from handover, 14 Nov)".
 
 ## Waiting on the owner
 
-- **IslamHouse licence reply**: arrived ~01:00 WIB 3 Nov (recorded in `docs/islamhouse-licence-request.md`,
-  "Reply"). Credits done (1.12.5). Nothing owed. Possible follow-up: a release-checklist step to
-  re-check sources for corrections (`tools/check_sources.py` already is the gate in `docs/release.md`).
+- IslamHouse licence: reply recorded (`docs/islamhouse-licence-request.md`), credits done; nothing owed.
 - **Oppo user's widget feedback** via Diagnostics (1.5.0): no reply recorded.
 - Cloud environment: decided, stay on Default (see "Session setup").
 
