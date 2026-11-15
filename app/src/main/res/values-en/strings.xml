@@ -457,13 +457,17 @@
         <item quantity="one">Comes back in %d day</item>
         <item quantity="other">Comes back in %d days</item>
     </plurals>
+    <plurals name="memorize_next_in_days_short">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="memorize_suggested_rating">Suggested: %s</string>
     <string name="memorize_scheduled">Review on %s</string>
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
     <string name="memorize_remove">Remove</string>
     <string name="memorize_remove_title">Remove from My hifz?</string>
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
-    <string name="memorize_box_n">Box %d</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_loops">Loops per segment</string>
     <string name="memorize_pause">Pause to repeat</string>

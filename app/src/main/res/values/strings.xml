@@ -445,13 +445,16 @@
     <plurals name="memorize_next_in_days">
         <item quantity="other">Muncul lagi %d hari lagi</item>
     </plurals>
+    <plurals name="memorize_next_in_days_short">
+        <item quantity="other">%d hari</item>
+    </plurals>
+    <string name="memorize_suggested_rating">Disarankan: %s</string>
     <string name="memorize_scheduled">Diulang pada %s</string>
     <string name="memorize_memorized">Hafal</string>
     <string name="memorize_not_started">Belum dipelajari</string>
     <string name="memorize_remove">Hapus</string>
     <string name="memorize_remove_title">Hapus dari Hafalan saya?</string>
     <string name="memorize_remove_body">Jadwal ulangnya ikut terhapus. Doanya tetap ada di daftar doa, dan bisa dihafalkan lagi kapan saja.</string>
-    <string name="memorize_box_n">Kotak %d</string>
     <string name="memorize_next_review">Doa berikutnya</string>
     <string name="memorize_loops">Putaran per potongan</string>
     <string name="memorize_pause">Jeda untuk mengulang</string>
