@@ -953,6 +953,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_15_0">
+        <item>Start reading now has an audio player in a collapsible sheet at the bottom, as in Memorize: play or pause, then More for phrases, repeat, previous or next phrase, and speed. The Arabic highlights the phrase you are hearing.</item>
+        <item>Memorize, Check step: the ratings now sit in the bottom sheet in one row, so they stay within thumb reach on a long dua. The result card no longer shows a box number, and in Guided mode the Not yet button says when the dua comes back.</item>
+        <item>Swiping back from Qibla no longer shows two screens on top of each other.</item>
+    </string-array>
     <string-array name="whats_new_1_14_0">
         <item>Memorize is redesigned. The list has a Continue card and compact rows, and a session now has bottom navigation (Listen, Build, Recall, Check) with a docked sheet for the main action. More controls open from it.</item>
         <item>New Guided mode, the default for every dua: Listen, Repeat after it, Read with gaps, then Test yourself, where you reveal the text, tap the words you missed and rate it Knew it, With help or Not yet. Advanced controls stay one switch away in the menu, remembered per dua.</item>
