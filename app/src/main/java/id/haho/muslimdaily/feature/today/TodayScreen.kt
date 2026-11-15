@@ -82,6 +82,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.feature.routines.RoutinesCard
 import id.haho.design.component.EmptyState
@@ -689,8 +690,6 @@ private fun TodayNoLocationPreview() = PreviewSurface {
     TodayScreen(TodayUiState.NoLocation, TodayActions())
 }
 
-private val CrescentGold = androidx.compose.ui.graphics.Color(0xFFC9A227)
-
 /** Ramadan: day N, when suhur ends and when to break the fast, with a countdown to the next. */
 @Composable
 private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> Unit, modifier: Modifier = Modifier) {
@@ -699,7 +698,7 @@ private fun RamadanCardView(r: RamadanCard, data: TodayData, onIftarDua: () -> U
     GlassCard(modifier.fillMaxWidth()) {
         Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(HahoTheme.dimens.icon))
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = AdwamTheme.colors.goldMark, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Text(
                     stringResource(R.string.ramadan_day, r.day),
                     style = MaterialTheme.typography.titleLarge,
@@ -747,7 +746,7 @@ private fun HijriCheckCard(check: HijriCheck, onAnswer: (HijriCheck, Boolean?) -
     GlassCard(modifier.fillMaxWidth()) {
         Column(Modifier.padding(HahoTheme.dimens.cardPadding), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = CrescentGold, modifier = Modifier.size(HahoTheme.dimens.icon))
+                Icon(painterResource(R.drawable.ic_dark_mode), null, tint = AdwamTheme.colors.goldMark, modifier = Modifier.size(HahoTheme.dimens.icon))
                 Text(
                     stringResource(R.string.hijri_check_title, next),
                     style = MaterialTheme.typography.titleMedium,

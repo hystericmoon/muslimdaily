@@ -59,6 +59,7 @@ import id.haho.design.component.SectionHeader
 import id.haho.design.glass.Glass
 import id.haho.design.glass.GlassCard
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -232,7 +233,6 @@ private fun TodayCard(today: FastDay, tomorrow: FastDay, modifier: Modifier = Mo
     }
 }
 
-private val GoldMark = Color(0xFFC9A227)
 private val DAY_CELL_MIN_HEIGHT = 56.dp
 private const val ONE_LETTER_FONT_SCALE = 1.5f
 
@@ -334,7 +334,7 @@ private fun DayCell(day: FastDay, isToday: Boolean, selected: Boolean, onClick: 
         Text(day.hijri.day.toString(), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant)
         Row(Modifier.padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             if (day.forbidden) Dot(colors.error)
-            if (special) Dot(GoldMark)
+            if (special) Dot(AdwamTheme.colors.goldMark)
             if (weekly) Dot(colors.primary)
         }
     }
@@ -351,7 +351,7 @@ private fun Legend(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
     ) {
         for ((color, label) in listOf(
-            GoldMark to R.string.fasting_legend_special,
+            AdwamTheme.colors.goldMark to R.string.fasting_legend_special,
             MaterialTheme.colorScheme.primary to R.string.fasting_legend_weekly,
             MaterialTheme.colorScheme.error to R.string.fasting_legend_forbidden,
         )) {
