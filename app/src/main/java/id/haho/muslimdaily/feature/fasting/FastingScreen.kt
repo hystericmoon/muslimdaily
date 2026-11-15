@@ -255,7 +255,7 @@ private fun MonthCard(
                 }
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "${months[first.hijri.month - 1]} ${first.hijri.year} H",
+                        "${months[first.hijri.month - 1]} ${first.hijri.year}\u00A0H",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.semantics { heading() },
                     )
