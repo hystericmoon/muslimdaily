@@ -29,6 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.ui.semantics.Role
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -260,28 +263,32 @@ fun OnboardingScreen(
                 }
             }
 
-            // Readers who need larger Arabic set it before their first dua, not after finding Settings.
-            Step(R.drawable.ic_text_fields, stringResource(R.string.display_text_size), stringResource(R.string.onboarding_text_size_body)) {
-                TextSizeRows(settings, actions.onUpdateSettings)
-            }
-
-            Step(R.drawable.ic_notifications, stringResource(R.string.onboarding_reminders_title), stringResource(R.string.onboarding_reminders_body)) {
-                SwitchRow(
-                    title = stringResource(R.string.onboarding_reminders_prayer),
-                    checked = prayerOn,
-                    onCheckedChange = actions.onPrayerReminders,
-                )
-                SwitchRow(
-                    title = stringResource(R.string.onboarding_reminders_adhkar),
-                    checked = adhkarOn,
-                    onCheckedChange = actions.onAdhkarReminders,
-                )
-                if ((prayerOn || adhkarOn) && !notificationsAllowed) {
-                    InfoNote(stringResource(R.string.onboarding_notifications_denied))
+            // Text size and reminders are optional and both live in Settings, so they sit folded
+            // away: location is the one choice the page asks for.
+            MoreCard {
+                // Readers who need larger Arabic set it before their first dua, not after finding Settings.
+                StepBody(R.drawable.ic_text_fields, stringResource(R.string.display_text_size), stringResource(R.string.onboarding_text_size_body)) {
+                    TextSizeRows(settings, actions.onUpdateSettings)
                 }
-                if (prayerOn && !exactAllowed && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    InfoNote(stringResource(R.string.onboarding_exact_body))
-                    TextButton(onClick = actions.onAllowExact) { Text(stringResource(R.string.onboarding_exact_allow)) }
+
+                StepBody(R.drawable.ic_notifications, stringResource(R.string.onboarding_reminders_title), stringResource(R.string.onboarding_reminders_body)) {
+                    SwitchRow(
+                        title = stringResource(R.string.onboarding_reminders_prayer),
+                        checked = prayerOn,
+                        onCheckedChange = actions.onPrayerReminders,
+                    )
+                    SwitchRow(
+                        title = stringResource(R.string.onboarding_reminders_adhkar),
+                        checked = adhkarOn,
+                        onCheckedChange = actions.onAdhkarReminders,
+                    )
+                    if ((prayerOn || adhkarOn) && !notificationsAllowed) {
+                        InfoNote(stringResource(R.string.onboarding_notifications_denied))
+                    }
+                    if (prayerOn && !exactAllowed && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        InfoNote(stringResource(R.string.onboarding_exact_body))
+                        TextButton(onClick = actions.onAllowExact) { Text(stringResource(R.string.onboarding_exact_allow)) }
+                    }
                 }
             }
             InfoNote(stringResource(R.string.onboarding_later))
@@ -300,15 +307,62 @@ fun OnboardingScreen(
 }
 
 @Composable
+private fun MoreCard(content: @Composable () -> Unit) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    GlassCard(Modifier.fillMaxWidth()) {
+        Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = HahoTheme.dimens.minTouchTarget)
+                    .clickable(role = Role.Button, onClickLabel = stringResource(if (expanded) R.string.onboarding_more_collapse else R.string.onboarding_more_expand)) {
+                        expanded = !expanded
+                    }
+                    .padding(HahoTheme.spacing.lg)
+                    .semantics(mergeDescendants = true) {},
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            ) {
+                Icon(painterResource(R.drawable.ic_tune), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.onboarding_more_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                    Text(
+                        stringResource(R.string.onboarding_more_body),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Icon(
+                    painterResource(if (expanded) R.drawable.ic_keyboard_arrow_up else R.drawable.ic_keyboard_arrow_down),
+                    null,
+                    modifier = Modifier.size(HahoTheme.dimens.icon),
+                )
+            }
+            if (expanded) {
+                Column(
+                    Modifier.padding(start = HahoTheme.spacing.md, end = HahoTheme.spacing.md, bottom = HahoTheme.spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
+                ) { content() }
+            }
+        }
+    }
+}
+
+@Composable
 private fun Step(@DrawableRes icon: Int, title: String, body: String, content: @Composable () -> Unit) {
     GlassCard(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(HahoTheme.spacing.lg), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-                Icon(painterResource(icon), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
-                Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
-            }
-            Text(body, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            content()
+        StepBody(icon, title, body, Modifier.padding(HahoTheme.spacing.lg), content)
+    }
+}
+
+@Composable
+private fun StepBody(@DrawableRes icon: Int, title: String, body: String, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            Icon(painterResource(icon), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(HahoTheme.dimens.icon))
+            Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
         }
+        Text(body, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        content()
     }
 }
