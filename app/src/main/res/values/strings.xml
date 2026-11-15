@@ -691,7 +691,7 @@
     <string name="mosque_allow_precise">Gunakan lokasi akurat</string>
     <string name="mosque_origin_saved">Dari lokasi tersimpan, %s. Jarak hanya perkiraan.</string>
     <string name="mosque_use_current">Gunakan lokasi saat ini</string>
-    <string name="mosque_none_title">Tidak ada data masjid dalam 5 km</string>
+    <string name="mosque_none_title">Tidak ada data masjid dalam 5\u00A0km</string>
     <string name="mosque_none_body">Data offline berasal dari OpenStreetMap dan belum lengkap. Coba cari di aplikasi peta.</string>
     <string name="mosque_search_maps">Cari masjid di aplikasi peta</string>
     <string name="mosque_map_query">masjid</string>
