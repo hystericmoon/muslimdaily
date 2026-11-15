@@ -15,15 +15,15 @@ Last updated: 15 Nov 2026 (1.14.0 released; #205 merged; Check dock and promo re
   Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
 - **1.14.0 (versionCode 57) released 15 Nov WIB** with the Memorize revamp (PRs #196-#198, #200, #202; owner chose 1A-5A on
   https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4"). `mem_advanced`
-  lives in the settings DataStore and rides in backups via the generic settings export. Owner has installed it; phone notes
-  not yet given (the 14 Nov message had a literal `<your notes>` placeholder).
+  lives in the settings DataStore and rides in backups via the generic settings export. Owner has installed it.
 - Done 14 Nov (Sonnet): Indonesian "Kata berikutnya" is now "Buka kata" (#205, shots re-recorded).
-- **Owner decision pending**: dock the Check ratings? Page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt (A leave, B stacked
-  dock, C one-row dock = recommended; B/C re-record Check shots, C adds 2 short interval strings, stacks from 1.3x font).
+- Check ratings dock: owner chose C on 15 Nov (page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt). One row in the dock;
+  stacks full width from 1.15x font; suggested rating is filled and named above the row. Advanced Check only: Guided already
+  docks its ratings stacked (unchanged). Check shots re-record on CI; fresh phone check still to do.
 - **Promo media is stale (read-only check 14 Nov)**: Video 1 `v1-memorize-*` (IG Reel 9 Nov, LinkedIn 10 Nov) and Carousel A
   were rendered from `marketing/build/screens/50-53-memorize-*` (5 Nov: top tabs, Cue card, inline buttons). The shipped app
   has the bottom nav and dock (shots 150-153, 161, 165). Copy and alt text still hold; only visuals differ. Fix = re-render
-  from the new shots and push to `promo-assets` (ask first); the owner has not yet said whether to. The 9/10 Nov dates have passed.
+  from the new shots and push to `promo-assets` (ask first); owner said hold (15 Nov). The 9/10 Nov dates have passed.
 - Small open polish (Sonnet): (1) the rating card still says "Kotak N" as Check always has; (2) "Not yet" schedules the dua
   for tomorrow (Leitner Again = box 1) while its subtitle says "Latih sekarang", as the mock does.
 - Open, needs the owner (Opus or the owner's Mac): (1) Qibla back-transition overlap (predictive back over transparent

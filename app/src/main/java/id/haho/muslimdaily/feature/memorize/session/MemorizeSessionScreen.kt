@@ -15,6 +15,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CircleShape
@@ -240,7 +245,7 @@ fun MemorizeSessionScreen(
                 Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
                 Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
                 Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle), recallMore(state, actions, talkBack))
-                Step.CHECK -> Unit
+                Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
             }
             SessionNavBar(state.step, actions.onStep)
         }
@@ -890,38 +895,73 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
     } else {
         ArabicCard(state, active = -1)
     }
-    if (rated == null) {
-        Text(stringResource(R.string.memorize_rate_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
-        val current = state.review?.state
-        // Only words marked count as evidence; with none marked, nothing is suggested.
-        val suggested = if (state.missedWords.isEmpty()) null else Leitner.suggestedRating(state.missedWords.size, markable)
+    // The ratings live in the dock (checkDock), so they stay at the thumb however long the dua is.
+    if (rated != null) RatedResult(state, rated, actions)
+}
+
+/**
+ * Check's main action. Three equal buttons in one row, each with its interval underneath; from a larger
+ * font they stack full width with the full wording. The suggested rating (only when words were marked) is
+ * filled and named in text, so colour is not the only cue.
+ */
+private fun checkDock(state: MemorizeUiState, actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
+    val markable = Recall.recallable(state.words).size
+    val current = state.review?.state
+    // Only words marked count as evidence; with none marked, nothing is suggested.
+    val suggested = if (state.missedWords.isEmpty()) null else Leitner.suggestedRating(state.missedWords.size, markable)
+    Text(stringResource(R.string.memorize_rate_prompt), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+    if (suggested != null) {
+        Text(
+            stringResource(R.string.memorize_suggested_rating, stringResource(suggested.labelRes())),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+    val stacked = LocalDensity.current.fontScale > RATING_ROW_MAX_FONT_SCALE
+    val today = java.time.LocalDate.now()
+    val buttons: @Composable (Modifier) -> Unit = { m ->
         Rating.entries.forEach { rating ->
-            val next = Leitner.rate(current, rating, java.time.LocalDate.now())
-            val days = Leitner.INTERVALS[next.box - 1]
-            val content: @Composable () -> Unit = {
-                Column(Modifier.padding(vertical = HahoTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(stringResource(rating.labelRes()), style = MaterialTheme.typography.titleSmall)
-                    Text(
-                        if (rating == suggested) {
-                            stringResource(R.string.memorize_suggested_in_days, pluralStringResource(R.plurals.memorize_next_in_days, days, days))
-                        } else {
-                            pluralStringResource(R.plurals.memorize_next_in_days, days, days)
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
-            if (rating == suggested) {
-                GlassButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) { content() }
-            } else {
-                GlassOutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) { content() }
-            }
+            val days = Leitner.INTERVALS[Leitner.rate(current, rating, today).box - 1]
+            RatingButton(rating, days, rating == suggested, compact = !stacked, onClick = { actions.onRate(rating) }, modifier = m)
+        }
+    }
+    if (stacked) {
+        Column(Modifier.padding(top = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            buttons(Modifier.fillMaxWidth())
         }
     } else {
-        RatedResult(state, rated, actions)
+        Row(
+            Modifier.padding(top = HahoTheme.spacing.sm).height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+        ) {
+            buttons(Modifier.weight(1f).fillMaxHeight())
+        }
     }
 }
+
+/** Row mode shortens the interval to "3 days" and trims the side padding; TalkBack always hears the full wording. */
+@Composable
+private fun RatingButton(rating: Rating, days: Int, suggested: Boolean, compact: Boolean, onClick: () -> Unit, modifier: Modifier) {
+    val full = pluralStringResource(R.plurals.memorize_next_in_days, days, days)
+    val spoken = stringResource(rating.labelRes()) + ", " + if (suggested) stringResource(R.string.memorize_suggested_in_days, full) else full
+    val interval = if (compact) pluralStringResource(R.plurals.memorize_next_in_days_short, days, days) else full
+    val content: @Composable RowScope.() -> Unit = {
+        Column(Modifier.padding(vertical = HahoTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(stringResource(rating.labelRes()), style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center)
+            Text(interval, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
+        }
+    }
+    val m = modifier.semantics { contentDescription = spoken }
+    val padding = if (compact) PaddingValues(horizontal = HahoTheme.spacing.sm, vertical = HahoTheme.spacing.sm) else ButtonDefaults.ContentPadding
+    if (suggested) {
+        GlassButton(onClick = onClick, modifier = m, contentPadding = padding, content = content)
+    } else {
+        GlassOutlinedButton(onClick = onClick, modifier = m, contentPadding = padding, content = content)
+    }
+}
+
+/** Three equal buttons need the width: from this font scale they stack instead. */
+private const val RATING_ROW_MAX_FONT_SCALE = 1.15f
 
 /** After rating: when the dua comes back, then the next due dua (in a review) or Done. */
 @Composable
