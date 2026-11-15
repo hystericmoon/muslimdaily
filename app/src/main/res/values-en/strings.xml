@@ -206,6 +206,16 @@
     <string name="settings_asr_standard">Standard (1×)</string>
     <string name="settings_asr_hanafi">Hanafi (2×)</string>
     <string name="settings_offsets">Minute adjustments</string>
+    <string name="settings_times_group">Times and iqamah</string>
+    <string name="settings_offsets_none">All 0 min</string>
+    <plurals name="settings_offsets_changed">
+        <item quantity="one">%d time adjusted</item>
+        <item quantity="other">%d times adjusted</item>
+    </plurals>
+    <plurals name="settings_iqamah_set">
+        <item quantity="one">%d prayer set</item>
+        <item quantity="other">%d prayers set</item>
+    </plurals>
     <string name="settings_offsets_note">Shift times if your local mosque\'s schedule differs.</string>
     <string name="settings_iqamah">Iqamah delay</string>
     <string name="settings_iqamah_note">Minutes after the adhan. Match your mosque.</string>
