@@ -192,12 +192,4 @@ class RoutineScreenshotTest {
             dockExpanded = true,
         )
     }
-
-    /** Reciting from memory: listening waits until the text is shown, since the audio would give it away. */
-    @Test
-    @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
-    fun runAudioHidden() = captureVariants("176-run-audio-hidden") {
-        val s = run()
-        RunScreen(s.copy(hifz = setOf(s.duas[1].id), fromMemory = true), RunActions())
-    }
 }

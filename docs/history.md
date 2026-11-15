@@ -131,6 +131,16 @@ words; #84 reading view (one phrase per line, tap to play from a phrase, muted b
 
 ## Finished work, details (was "In flight")
 
+- **Memorize polish, 14-15 Nov (Sonnet)**: "Kata berikutnya" is now "Buka kata" (#205). Check ratings docked in one row, option C (#207, owner chose it
+  15 Nov; page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt): stacks from 1.15x font, suggested rating filled and named in
+  text; Guided already docked its ratings. Rating card drops "Kotak N" (box number is internal; "Hafal" stays when memorized);
+  Guided "Belum" subtitle now says when the dua comes back, "Latih sekarang" is the result button (#208). Fresh phone check
+  of the Check row and Indonesian labels still to do.
+- **Run audio and predictive back, 15 Nov (Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY)**: the Q2C54 concepts page was for the
+  dua detail bar (A shipped 1.13.0); Run got its own page https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C and the owner chose B,
+  a collapsible dock (#210; `RepeatToggle`, `SpeedButton`, `PhraseTrack` split out of `PlayerBar`; Memorize's `Dock` and
+  `DockToggle` internal). #209: predictive pop = fade through in `AppNavHost` (screens are transparent over one
+  `GlassBackdrop`, the shared-axis fades overlapped); restored this file after 98dc8d6 replaced it with the handover.
 - **Memorize revamp PRs 1-4** (14 Nov; PR 4 Recall #200: cue card replaced by an underlined "Meaning" link in the top-bar subtitle (FlowRow, 48dp, wraps to its own line at large text), dock line "Hints · N% hidden" / "off" / "missed words only", reveal button "Next word"; Check unchanged; owner chose 1A 2A 3A 4A 5A on the decision page
   https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK): PR 1 list #196 (Continue card, compact rows sorted due > learning >
   not started > memorized, state in words, remove behind a row menu). PR 2 dock #197: bottom NavigationBar, `Dock` with
