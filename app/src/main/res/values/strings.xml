@@ -938,6 +938,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_15_0">
+        <item>Sesi Mulai membaca kini punya pemutar audio di lembar bawah yang bisa dilipat, seperti di Hafalan: putar atau jeda, lalu Lainnya untuk frasa, ulangi, frasa sebelumnya atau berikutnya, dan kecepatan. Teks Arab menyorot frasa yang sedang terdengar.</item>
+        <item>Hafalan, langkah Cek: penilaian kini ada di lembar bawah dalam satu baris, jadi tetap terjangkau jempol pada doa panjang. Kartu hasil tidak lagi menampilkan nomor kotak, dan di mode Terpandu tombol Belum menyebut kapan doa muncul lagi.</item>
+        <item>Menggeser kembali dari Kiblat tidak lagi menampilkan dua layar bertumpuk.</item>
+    </string-array>
     <string-array name="whats_new_1_14_0">
         <item>Hafalan didesain ulang. Daftarnya punya kartu Lanjutkan dan baris ringkas, dan sesi kini punya navigasi bawah (Dengar, Bangun, Ingat, Cek) dengan lembar di bawah untuk aksi utama. Kontrol lainnya terbuka dari sana.</item>
         <item>Mode Terpandu baru, bawaan untuk setiap doa: Dengar, Tirukan, Baca teks rumpang, lalu Uji hafalan, tempat Anda membuka teks, mengetuk kata yang terlewat, dan menilai Sudah hafal, Dengan bantuan, atau Belum. Kontrol lanjutan tetap satu sakelar di menu, diingat untuk tiap doa.</item>
