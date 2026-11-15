@@ -5,10 +5,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
+import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -32,11 +35,11 @@ class GlassContrastTest {
         return Color.rgb(ch(Color.red(bg), Color.red(fg)), ch(Color.green(bg), Color.green(fg)), ch(Color.blue(bg), Color.blue(fg)))
     }
 
-    @Test
-    fun `muted text passes AA on the glass over a white wallpaper`() {
+    /** The lowest contrast of [fg] on the glass at [opacity] over a pure white wallpaper. */
+    private fun worstContrast(fg: Int, opacity: Float): Double {
         var worst = Double.MAX_VALUE
         for ((w, h) in listOf(340 to 164, 164 to 340)) {
-            val glass = GlassPainter.glass(w, h, 1f, cornerPx = 0f)
+            val glass = GlassPainter.glass(w, h, 1f, cornerPx = 0f, opacity = opacity)
             val shot = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
             Canvas(shot).apply {
                 drawColor(Color.WHITE)
@@ -44,11 +47,28 @@ class GlassContrastTest {
             }
             for (y in 2 until h - 2 step 2) for (x in 2 until w - 2 step 2) {
                 val bg = shot.getPixel(x, y)
-                val ratio = (luminance(over(bg, Muted)) + 0.05) / (luminance(bg) + 0.05)
+                val ratio = (luminance(over(bg, fg)) + 0.05) / (luminance(bg) + 0.05)
                 if (ratio < worst) worst = ratio
             }
         }
+        return worst
+    }
+
+    @Test
+    fun `muted text passes AA on the glass over a white wallpaper`() {
+        val worst = worstContrast(Muted, WIDGET_OPACITY_DEFAULT)
         assertTrue(worst >= 4.5, "muted text on the glass over white is %.2f:1".format(worst))
+    }
+
+    @Test
+    fun `text passes AA at every opacity the reader can pick`() {
+        // The Settings stepper moves in 5% steps from the floor to fully opaque.
+        for (pct in (WIDGET_OPACITY_MIN * 100).roundToInt()..100 step 5) {
+            for ((name, fg) in listOf("muted" to Muted, "accent" to Accent, "white" to Color.WHITE)) {
+                val worst = worstContrast(fg, pct / 100f)
+                assertTrue(worst >= 4.5, "$name text on the glass at $pct%% over white is %.2f:1".format(worst))
+            }
+        }
     }
 
     @Test
