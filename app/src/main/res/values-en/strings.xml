@@ -298,8 +298,8 @@
 
     <!-- Search -->
     <string name="search_title">Search duas</string>
-    <string name="search_hint">Words in Arabic, Indonesian or English</string>
-    <string name="search_supporting">No need to type diacritics.</string>
+    <string name="search_hint">Search duas</string>
+    <string name="search_supporting">Words in Arabic, Indonesian or English. No need to type diacritics.</string>
     <string name="search_empty_title">No results</string>
     <string name="search_empty_body">Try other words or a different spelling.</string>
     <plurals name="search_count">

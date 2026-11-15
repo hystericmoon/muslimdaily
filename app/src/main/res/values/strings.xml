@@ -293,8 +293,8 @@
 
     <!-- Search -->
     <string name="search_title">Cari doa</string>
-    <string name="search_hint">Kata dalam Arab, Indonesia, atau Inggris</string>
-    <string name="search_supporting">Harakat tidak perlu diketik.</string>
+    <string name="search_hint">Cari doa</string>
+    <string name="search_supporting">Kata dalam Arab, Indonesia, atau Inggris. Harakat tidak perlu diketik.</string>
     <string name="search_empty_title">Tidak ditemukan</string>
     <string name="search_empty_body">Coba kata lain atau ejaan yang berbeda.</string>
     <plurals name="search_count">

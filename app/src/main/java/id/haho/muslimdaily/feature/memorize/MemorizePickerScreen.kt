@@ -104,6 +104,7 @@ fun MemorizePickerContent(
                     value = query,
                     onValueChange = onQuery,
                     label = { Text(stringResource(R.string.search_hint)) },
+                    supportingText = { Text(stringResource(R.string.search_supporting)) },
                     leadingIcon = { Icon(painterResource(R.drawable.ic_search), null) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),

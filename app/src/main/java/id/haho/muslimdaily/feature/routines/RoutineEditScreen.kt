@@ -325,6 +325,7 @@ private fun PickerContent(state: RoutineEditState, actions: RoutineEditActions) 
                     value = state.query,
                     onValueChange = actions.onSearch,
                     label = { Text(stringResource(R.string.search_hint)) },
+                    supportingText = { Text(stringResource(R.string.search_supporting)) },
                     leadingIcon = { Icon(painterResource(R.drawable.ic_search), null) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
