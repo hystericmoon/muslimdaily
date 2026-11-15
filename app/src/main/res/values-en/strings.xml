@@ -829,6 +829,10 @@
     <string name="onboarding_exact_allow">Allow exact alarms</string>
     <string name="onboarding_later">Other settings, such as the calculation method and adhan sound, are in the Settings tab.</string>
     <string name="onboarding_start">Start</string>
+    <string name="onboarding_more_title">More</string>
+    <string name="onboarding_more_body">Text size and reminders</string>
+    <string name="onboarding_more_expand">Show</string>
+    <string name="onboarding_more_collapse">Hide</string>
     <string name="hijri_check_title">Start of %1$s</string>
     <string name="hijri_check_body">The government sets the start of the month at the sidang isbat on the evening of 29 %1$s. What was announced? The app\'s calendar will follow it.</string>
     <string name="hijri_check_new">Tomorrow is 1 %1$s</string>

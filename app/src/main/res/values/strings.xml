@@ -815,6 +815,10 @@
     <string name="onboarding_exact_allow">Izinkan alarm tepat waktu</string>
     <string name="onboarding_later">Pengaturan lain, seperti metode perhitungan dan suara adzan, ada di tab Pengaturan.</string>
     <string name="onboarding_start">Mulai</string>
+    <string name="onboarding_more_title">Lainnya</string>
+    <string name="onboarding_more_body">Ukuran teks dan pengingat</string>
+    <string name="onboarding_more_expand">Tampilkan</string>
+    <string name="onboarding_more_collapse">Sembunyikan</string>
     <string name="hijri_check_title">Awal %1$s</string>
     <string name="hijri_check_body">Pemerintah menetapkan awal bulan lewat sidang isbat pada petang tanggal 29 %1$s. Apa hasilnya? Kalender di aplikasi akan menyesuaikan.</string>
     <string name="hijri_check_new">Besok sudah 1 %1$s</string>
