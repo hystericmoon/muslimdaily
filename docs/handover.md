@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026, 22:10 WIB (UX/UI audit fixes: 12 merged, T2 open; decision page for M1/M3/M10; owner clearing).
+Last updated: 15 Nov 2026, 22:25 WIB (UX/UI audit fixes: 12 merged, T2 open, five streams running, 1.15.1 release planned).
 
 ## In flight
 
@@ -26,14 +26,13 @@ Last updated: 15 Nov 2026, 22:10 WIB (UX/UI audit fixes: 12 merged, T2 open; dec
   **Open:** T2 #231 (Today icons scale with the font; shared `smallIcon` is haho-design, untouched). Main was merged into it (M7 and
   T2 both re-recorded the Ramadan/Isbat 200% shots) and the Screenshots workflow re-run on the merge. Merge on a green dispatched
   Android run once shots 14, 15, 101 `-font200` show the darker crescent and scaled icons.
-  **Resume (owner, 15 Nov night: "clear, then you resume and finish all of them"):** the remaining Minors in the page's order, two
-  streams in parallel, one PR at a time inside each (merge before the next branch; same-screen PRs conflict on PNGs). Stream A
-  Widgets: W2, W4, W5, W7, W9 (`PrayerWidgets.kt`). Stream B Settings: S7, S9, S10, S11. Then T3, T6, T7, T8, T10, S4, S6, S14, S15,
-  R4, R6, R9-R15, R18, D6-D8. Skip and note any that need a haho-design release.
-  **Held for the owner, one decision page:** https://claude.ai/artifact/VpwqEFFuCvQdiPEzi9Lqcj (rec marked): M1 glass floor (rec A:
-  floor 85%; over white, muted text passes 4.5:1 only from 83%, a black tint only gets 73%), M3 remainder (rec A: pin Hafal /
-  Perlu lihat teks in the dock at 200%), M10 scope (rec C: word clamp on card translation and routine-picker rows too, as a
-  follow-up to #226). Build the owner's pick; if they say "all recommended", A, A, C.
+  **Overnight run (owner, 15 Nov night: "make sure everything is done, the new APK released with all the fixes").** Five sub-agent
+  streams (worktrees, one PR at a time each, branches `claude/audit-<id>-*`) are doing the rest: A Widgets W2 W4 W5 W7 W9 then M1
+  (floor 85%); B S10 S14 S15 S11 S9 S7; C T3 T7 T6 T8 T10 S4 S6; D1 M3-rest (answers pinned in the dock at >=1.5x) R13 R9 R4 R6 R12;
+  D2 R10 R15 R18 D6 R14 R11 D7 D8 then M10 (word clamp on translation and picker rows). The decision-page picks were built as
+  recommended (A, A, C) since the owner asked for everything done. Anything needing haho-design, content, database or backup was to
+  be skipped and reported. Lead ships **1.15.1 (versionCode 59)** after all merge (release skill; owner approved the release).
+  If you find this unfinished: list open PRs `claude/audit-*`, merge the green ones (look at the shots), then do the release.
   **Loose ends** (history, "Facts that cost time to find", audit session 2): routine-editor hint says "drag the handle" (R10 copy pass); `WidgetFitTest` flags 56/76 dp cells at large fonts; Qibla tip draws raw gold.
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
