@@ -274,7 +274,7 @@ fun DuaCard(
         ) {
             header?.invoke()
             // A preview: long texts (e.g. Ayat al-Kursi) are clamped; the detail shows them in full.
-            ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES)
+            ArabicText(dua.arabic, style = AdwamTheme.arabic.body(dua.isQuran), maxLines = CARD_ARABIC_LINES, clampToWords = true)
             DuaTranslations(dua, prefs, maxLines = CARD_TRANSLATION_LINES)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
