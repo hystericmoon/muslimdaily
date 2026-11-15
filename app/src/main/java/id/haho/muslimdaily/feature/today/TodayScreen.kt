@@ -1,5 +1,7 @@
 package id.haho.muslimdaily.feature.today
 
+import id.haho.muslimdaily.core.designsystem.component.filterChipBorder
+import id.haho.muslimdaily.core.designsystem.component.assistChipBorder
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
@@ -459,6 +461,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
         ) {
             AssistChip(
                 onClick = actions.onOpenLocation,
+                border = assistChipBorder(),
                 // The chip's description already names the place; the visible name is not read twice.
                 label = { Text(data.locationName, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.clearAndSetSemantics {}) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_location_on), null, Modifier.size(textIconSize())) },
@@ -467,6 +470,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
             FilterChip(
                 selected = data.travelMode,
                 onClick = { actions.onSetTravelMode(!data.travelMode) },
+                border = filterChipBorder(data.travelMode),
                 label = { Text(stringResource(R.string.today_travel_chip)) },
                 leadingIcon = {
                     Icon(
@@ -478,6 +482,7 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
             )
             AssistChip(
                 onClick = actions.onOpenFasting,
+                border = assistChipBorder(),
                 label = { Text(stringResource(R.string.fasting_open)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(textIconSize())) },
             )
