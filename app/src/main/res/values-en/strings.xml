@@ -949,6 +949,10 @@
         <item quantity="one">%d dua</item>
         <item quantity="other">%d duas</item>
     </plurals>
+    <plurals name="routine_add_selected">
+        <item quantity="one">Add %d dua</item>
+        <item quantity="other">Add %d duas</item>
+    </plurals>
     <plurals name="routine_selected">
         <item quantity="one">%d selected</item>
         <item quantity="other">%d selected</item>

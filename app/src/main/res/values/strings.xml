@@ -932,6 +932,9 @@
     <plurals name="routine_count">
         <item quantity="other">%d doa</item>
     </plurals>
+    <plurals name="routine_add_selected">
+        <item quantity="other">Tambahkan %d doa</item>
+    </plurals>
     <plurals name="routine_selected">
         <item quantity="other">%d dipilih</item>
     </plurals>

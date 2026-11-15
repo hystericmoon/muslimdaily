@@ -55,6 +55,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -65,6 +66,7 @@ import id.haho.muslimdaily.core.designsystem.component.WordClampedText
 import androidx.compose.ui.text.AnnotatedString
 import id.haho.design.component.InfoNote
 import id.haho.design.component.SectionHeader
+import id.haho.design.glass.DockedBar
 import id.haho.design.glass.Glass
 import id.haho.design.glass.GlassAlertDialog
 import id.haho.design.glass.GlassButton
@@ -129,10 +131,23 @@ fun RoutineEditScreen(state: RoutineEditState, onBack: () -> Unit, actions: Rout
         ),
         onBack = onBack,
         actions = {
-            if (state.picking) {
-                TextButton(onClick = { actions.onPick(false) }) { Text(stringResource(R.string.routine_pick_done)) }
-            } else {
+            // The picker confirms in the docked bar below, within thumb reach (audit R11).
+            if (!state.picking) {
                 TextButton(onClick = actions.onSave, enabled = state.canSave) { Text(stringResource(R.string.routine_save)) }
+            }
+        },
+        bottomBar = {
+            if (state.picking) {
+                val n = state.selectedIds.size
+                DockedBar {
+                    GlassButton(onClick = { actions.onPick(false) }, modifier = Modifier.weight(1f)) {
+                        Text(
+                            if (n > 0) pluralStringResource(R.plurals.routine_add_selected, n, n) else stringResource(R.string.routine_pick_done),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
             }
         },
     ) {
