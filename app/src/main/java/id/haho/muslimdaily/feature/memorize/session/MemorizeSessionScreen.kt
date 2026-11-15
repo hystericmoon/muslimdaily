@@ -367,7 +367,7 @@ private fun SessionNavBar(selected: Step, onStep: (Step) -> Unit) {
  * needs; [more] holds the optional tuning and opens from the toggle inside [collapsed].
  */
 @Composable
-private fun Dock(
+internal fun Dock(
     expanded: Boolean,
     maxHeight: Dp,
     collapsed: @Composable ColumnScope.() -> Unit,
@@ -410,7 +410,7 @@ private fun Dock(
 }
 
 @Composable
-private fun DockToggle(expanded: Boolean, onClick: () -> Unit) {
+internal fun DockToggle(expanded: Boolean, onClick: () -> Unit) {
     val state = stringResource(if (expanded) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
     TextButton(onClick = onClick, modifier = Modifier.semantics { stateDescription = state }) {
         Text(stringResource(if (expanded) R.string.memorize_dock_less else R.string.action_more))

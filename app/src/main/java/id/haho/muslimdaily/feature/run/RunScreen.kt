@@ -69,6 +69,23 @@ import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.unit.Dp
+import id.haho.design.glass.GlassIconButton
+import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
+import id.haho.muslimdaily.feature.duas.components.PhraseTrack
+import id.haho.muslimdaily.feature.duas.components.RepeatToggle
+import id.haho.muslimdaily.feature.duas.components.SpeedButton
+import id.haho.muslimdaily.feature.duas.components.speedLabel
+import id.haho.muslimdaily.feature.memorize.session.Dock
+import id.haho.muslimdaily.feature.memorize.session.DockToggle
+import id.haho.muslimdaily.feature.memorize.session.STACK_FONT_SCALE
 import kotlinx.coroutines.launch
 
 data class RunActions(
@@ -82,6 +99,11 @@ data class RunActions(
     val onRecall: (Int, Boolean) -> Unit = { _, _ -> },
     val onAddToHifz: (Int) -> Unit = {},
     val onClose: () -> Unit = {},
+    val onPlay: () -> Unit = {},
+    val onPlayFrom: (phrase: Int) -> Unit = {},
+    val onSkipPhrase: (delta: Int) -> Unit = {},
+    val onSpeed: (Float) -> Unit = {},
+    val onRepeat: (Boolean) -> Unit = {},
 )
 
 @Composable
@@ -122,13 +144,18 @@ fun RunRoute(onClose: () -> Unit, viewModel: RunViewModel = hiltViewModel()) {
                 onRecall = viewModel::recall,
                 onAddToHifz = viewModel::addToHifz,
                 onClose = onClose,
+                onPlay = viewModel::togglePlay,
+                onPlayFrom = viewModel::playFrom,
+                onSkipPhrase = viewModel::skipPhrase,
+                onSpeed = viewModel::setSpeed,
+                onRepeat = viewModel::setRepeat,
             ),
         )
     }
 }
 
 @Composable
-fun RunScreen(state: RunUiState, actions: RunActions) {
+fun RunScreen(state: RunUiState, actions: RunActions, dockExpanded: Boolean = false) {
     val pageCount = state.items.size + 1
     val pager = rememberPagerState(initialPage = state.index) { pageCount }
     val motion = HahoTheme.motion
@@ -142,7 +169,11 @@ fun RunScreen(state: RunUiState, actions: RunActions) {
         snapshotFlow { pager.settledPage }.collect { actions.onPage(it) }
     }
 
-    Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
+    var expanded by rememberSaveable { mutableStateOf(dockExpanded) }
+    BackHandler(enabled = expanded) { expanded = false }
+    BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
+      val dockMax = maxHeight * DOCK_MAX_SHARE
+      Column(Modifier.fillMaxSize()) {
         RunTopBar(state, pager, actions)
         HorizontalPager(
             state = pager,
@@ -161,7 +192,89 @@ fun RunScreen(state: RunUiState, actions: RunActions) {
                 SummaryPage(state, actions)
             }
         }
-        if (pager.currentPage >= state.items.size) RunBottomBar(pager)
+        if (pager.currentPage >= state.items.size) {
+            RunBottomBar(pager)
+        } else {
+            RunAudioDock(state, pager.currentPage, actions, expanded, dockMax) { expanded = !expanded }
+        }
+      }
+    }
+}
+
+private const val DOCK_MAX_SHARE = 0.6f
+
+/**
+ * The card's audio, docked like Memorize's: play and what will play stay in view; repeat, the
+ * phrase track and speed open from the toggle. It sits outside the card, so no tap on it counts.
+ */
+@Composable
+private fun RunAudioDock(state: RunUiState, page: Int, actions: RunActions, expanded: Boolean, maxHeight: Dp, onToggleExpanded: () -> Unit) {
+    val dua = state.duas.getOrNull(page) ?: return
+    val playback = state.playbackFor(page)
+    val canListen = state.canListen(page)
+    val segmented = dua.isSegmented && dua.phrases.size >= 2
+    val toggle: @Composable () -> Unit = { DockToggle(expanded, onToggleExpanded) }
+    val stacked = LocalDensity.current.fontScale > STACK_FONT_SCALE
+    val status = when {
+        dua.audio == null -> stringResource(R.string.dua_no_audio)
+        !canListen -> stringResource(R.string.run_listen_hidden)
+        segmented && playback.activePhrase >= 0 ->
+            stringResource(R.string.dua_phrase_position, playback.activePhrase + 1, dua.phrases.size) + " · " + speedLabel(playback.speed)
+        else -> speedLabel(playback.speed)
+    }
+    Column {
+        Dock(
+            expanded = expanded && canListen,
+            maxHeight = maxHeight,
+            collapsed = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                    GlassIconButton(onClick = actions.onPlay, enabled = canListen, modifier = Modifier.size(AdwamDimens.playerCompactButton)) {
+                        Icon(
+                            painterResource(if (playback.isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
+                            stringResource(if (playback.isPlaying) R.string.player_pause else R.string.player_play),
+                            Modifier.size(HahoTheme.dimens.icon * 1.25f),
+                        )
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.run_listen), style = MaterialTheme.typography.titleSmall)
+                        // Open, the phrase track and the speed button below say the same.
+                        if (!(expanded && canListen)) {
+                            Text(status, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        if (stacked && canListen) Box(Modifier.align(Alignment.End)) { toggle() }
+                    }
+                    if (!stacked && canListen) toggle()
+                }
+            },
+            more = if (canListen) {
+                {
+                    if (segmented) {
+                        PhraseTrack(dua.phrases.size, playback.activePhrase, enabled = true, onSeek = actions.onPlayFrom)
+                    }
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                        RepeatToggle(playback.repeat, enabled = true, onRepeat = actions.onRepeat)
+                        if (segmented) {
+                            IconButton(onClick = { actions.onSkipPhrase(-1) }, enabled = playback.activePhrase > 0) {
+                                Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.player_previous_phrase))
+                            }
+                            IconButton(onClick = { actions.onSkipPhrase(1) }, enabled = playback.activePhrase < dua.phrases.lastIndex) {
+                                Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.player_next_phrase))
+                            }
+                        }
+                        SpeedButton(playback.speed, enabled = true, onSpeed = actions.onSpeed)
+                    }
+                }
+            } else {
+                null
+            },
+        )
+        // The dock's surface runs under the gesture bar.
+        Spacer(
+            Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                .windowInsetsBottomHeight(WindowInsets.navigationBars),
+        )
     }
 }
 
@@ -266,7 +379,13 @@ private fun RunCard(state: RunUiState, page: Int, actions: RunActions, onPreviou
                     // The meaning stays as the cue; transliteration would give the Arabic away.
                     DuaTranslations(dua, state.prefs.copy(transliteration = false))
                 } else {
-                    ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
+                    val active = state.playbackFor(page).activePhrase
+                    // Follows the audio like the dua page: the phrase being heard is highlighted.
+                    if (active >= 0) {
+                        HighlightedArabic(dua.arabic, dua.phrases, active, AdwamTheme.arabic.large(dua.isQuran))
+                    } else {
+                        ArabicText(dua.arabic, style = AdwamTheme.arabic.large(dua.isQuran))
+                    }
                     // Below the Arabic: the reader checks the recitation against the text, then answers.
                     if (state.asksRecall(page)) {
                         RecallCheck(onAnswer = { knew -> actions.onRecall(page, knew) })
@@ -408,7 +527,7 @@ private fun CountArea(
 private fun RunBottomBar(pager: PagerState) {
     val scope = rememberCoroutineScope()
     Row(
-        Modifier.fillMaxWidth().heightIn(min = HahoTheme.dimens.largeTouchTarget).padding(horizontal = HahoTheme.spacing.sm),
+        Modifier.fillMaxWidth().navigationBarsPadding().heightIn(min = HahoTheme.dimens.largeTouchTarget).padding(horizontal = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(

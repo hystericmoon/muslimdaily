@@ -7,28 +7,22 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026 (#207, #208 merged; Qibla back fix #209; Run audio dock B being built).
+Last updated: 15 Nov 2026 (#209 Qibla back fix and history restore merged; #210 Run audio dock).
 
 ## In flight
 
-- 1.13.0 shipped 11 Nov. History, "Shipped".
-  Review page https://claude.ai/artifact/HhVZ1irubHyv8ZpEX6ob2v, media bar concepts https://claude.ai/artifact/Q2C54rfAhT6May8h3kuEsA.
 - **1.14.0 (versionCode 57) released 15 Nov WIB** with the Memorize revamp (PRs #196-#198, #200, #202; owner chose 1A-5A on
   https://claude.ai/artifact/3y4w5pvLiG7rvTxnkiDWLK; details: history, "Shipped" and "Memorize revamp PRs 1-4"). `mem_advanced`
   lives in the settings DataStore and rides in backups via the generic settings export. Owner has installed it.
-- Done (Sonnet): "Kata berikutnya" is now "Buka kata" (#205). Check ratings docked in one row, option C (#207, owner chose it
-  15 Nov; page https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt): stacks from 1.15x font, suggested rating filled and named in
-  text; Guided already docked its ratings. Rating card drops "Kotak N" (box number is internal; "Hafal" stays when memorized);
-  Guided "Belum" subtitle now says when the dua comes back, "Latih sekarang" is the result button (#208). Fresh phone check
-  of the Check row and Indonesian labels still to do.
-- **Promo media is stale (read-only check 14 Nov)**: Video 1 `v1-memorize-*` (IG Reel 9 Nov, LinkedIn 10 Nov) and Carousel A
-  were rendered from `marketing/build/screens/50-53-memorize-*` (5 Nov: top tabs, Cue card, inline buttons). The shipped app
-  has the bottom nav and dock (shots 150-153, 161, 165). Copy and alt text still hold; only visuals differ. Fix = re-render
-  from the new shots and push to `promo-assets` (ask first); owner said hold (15 Nov). The 9/10 Nov dates have passed.
-- **Run audio: owner chose B (15 Nov)**, collapsible dock like Memorize, on https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C
-  (the old Q2C54 page was the dua detail bar; its A shipped in 1.13.0). Built by Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY
-  on branch `claude/run-audio-dock`.
-- **Qibla back overlap: fix in #209, unverified**. Cause: every screen is transparent over the one
+- Done 14-15 Nov (Sonnet): #205, #207, #208 (history, "Finished work"). Fresh phone check of the Check row still to do.
+- **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
+  push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
+- **Run audio dock (#210, owner chose B on https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C)**: Memorize's `Dock` below the Run
+  card; collapsed = play + "Dengarkan" + status, Lainnya = phrase track, repeat, phrase skips, speed. Outside the card, so it
+  never counts; swiping, restarting or closing stops audio; hidden "from memory" text blocks play; Arabic highlights the
+  phrase heard. Shot 175 (open, playing); 123 shows the blocked state. To check on the phone: playback, lock-screen title
+  (the run's name), Back closes the open dock, 200% font.
+- **Qibla back overlap: fix merged in #209, unverified on a device**. Cause: every screen is transparent over the one
   `GlassBackdrop` (MainActivity; `HahoScreen` Scaffold is transparent in haho-design), and the shared-axis pop fades
   overlap (out 0-120 ms, in 60-320 ms); predictive back holds the seek part-way, so both screens drew on top of each other.
   Fix in `navigation/AppNavHost.kt` only: `predictivePopEnter/ExitTransition` = fade through (out 150 ms + scale to 0.9,
@@ -36,7 +30,8 @@ Last updated: 15 Nov 2026 (#207, #208 merged; Qibla back fix #209; Run audio doc
   swipe back slowly and hold at ~20%, ~50%, then release and cancel; expect only one screen visible at a time, no flash of
   the bare backdrop longer than a blink, cancel returns to Qibla. Repeat on one more pushed screen (dua detail) and with
   Remove animations on (instant switch). If it still overlaps, the next step is an opaque per-screen backdrop (haho-design).
-- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205, #207, #208.
+- Main: 1.14.0 (versionCode 57, content_version 55, 329 rows), plus #205, #207-#210. Unreleased: #207-#210 (a minor, 1.15.0,
+  when the owner wants it).
 
 ## Promo campaign (6 Nov)
 
@@ -78,7 +73,8 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Clearing routine: the `session-clear` skill.
 - Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp PRs, 1.14.0 release, #205, #207, polish; child
   Opus session_01W2ZFMud8U4wDYpiJN2KDT6 built Guided #202; child Opus session_01W2ZFMuXRfZyDLfuS5TnzLY for the Run media bar
-  and Qibla); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
+  and Qibla); session_01W2ZFMuXRfZyDLfuS5TnzLY (15 Nov, Opus child: #209, #210);
+  session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
 

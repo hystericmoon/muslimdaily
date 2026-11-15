@@ -321,6 +321,8 @@
     <string name="run_tap_read">Tandai sudah dibaca</string>
     <string name="run_tap_hint">Ketuk kartu untuk menghitung</string>
     <string name="run_tap_read_hint">Ketuk kartu setelah membaca</string>
+    <string name="run_listen">Dengarkan</string>
+    <string name="run_listen_hidden">Tampilkan teks untuk mendengarkan</string>
     <string name="run_undo">Kurangi</string>
     <string name="run_previous">Sebelumnya</string>
     <string name="run_next">Berikutnya</string>

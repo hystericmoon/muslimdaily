@@ -314,7 +314,6 @@ fun PlayerBar(
     activePhrase: Int = -1,
     onSeekPhrase: (Int) -> Unit = {},
 ) {
-    var speedMenu by remember { mutableStateOf(false) }
     // Docked on the bottom navigation, full width, like a media mini-player.
     DockedBar(modifier) {
       Column(Modifier.fillMaxWidth()) {
@@ -326,21 +325,7 @@ fun PlayerBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            val repeatState = stringResource(if (repeat) R.string.state_enabled else R.string.state_disabled)
-            IconToggleButton(
-                checked = repeat,
-                onCheckedChange = onRepeat,
-                enabled = enabled,
-                modifier = Modifier
-                    .size(PLAYER_TARGET)
-                    .semantics { stateDescription = repeatState },
-            ) {
-                Icon(
-                    painterResource(R.drawable.ic_repeat),
-                    contentDescription = stringResource(R.string.player_repeat),
-                    tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            RepeatToggle(repeat, enabled, onRepeat)
             IconButton(onClick = onPreviousPhrase, enabled = enabled && canPrevious, modifier = Modifier.size(PLAYER_TARGET)) {
                 Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.player_previous_phrase))
             }
@@ -358,30 +343,57 @@ fun PlayerBar(
             IconButton(onClick = onNextPhrase, enabled = enabled && canNext, modifier = Modifier.size(PLAYER_TARGET)) {
                 Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.player_next_phrase))
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                val speedDescription = stringResource(R.string.player_speed, speedLabel(speed))
-                TextButton(
-                    onClick = { speedMenu = true },
-                    enabled = enabled,
-                    modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = PLAYER_TARGET * 1.25f, height = PLAYER_TARGET),
-                ) {
-                    Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
-                }
-                DropdownMenu(expanded = speedMenu, onDismissRequest = { speedMenu = false }) {
-                    SPEEDS.forEach { s ->
-                        DropdownMenuItem(
-                            text = { Text(speedLabel(s)) },
-                            onClick = {
-                                onSpeed(s)
-                                speedMenu = false
-                            },
-                            leadingIcon = if (s == speed) { { Icon(painterResource(R.drawable.ic_check), null) } } else null,
-                        )
-                    }
-                }
-            }
+            SpeedButton(speed, enabled, onSpeed)
         }
       }
+    }
+}
+
+/** Repeat on and off, with its state for TalkBack. 48dp. */
+@Composable
+internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean) -> Unit) {
+    val repeatState = stringResource(if (repeat) R.string.state_enabled else R.string.state_disabled)
+    IconToggleButton(
+        checked = repeat,
+        onCheckedChange = onRepeat,
+        enabled = enabled,
+        modifier = Modifier
+            .size(PLAYER_TARGET)
+            .semantics { stateDescription = repeatState },
+    ) {
+        Icon(
+            painterResource(R.drawable.ic_repeat),
+            contentDescription = stringResource(R.string.player_repeat),
+            tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** The speed as text ("0.75×"), opening a menu of speeds. */
+@Composable
+internal fun SpeedButton(speed: Float, enabled: Boolean, onSpeed: (Float) -> Unit) {
+    var speedMenu by remember { mutableStateOf(false) }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        val speedDescription = stringResource(R.string.player_speed, speedLabel(speed))
+        TextButton(
+            onClick = { speedMenu = true },
+            enabled = enabled,
+            modifier = Modifier.semantics { contentDescription = speedDescription }.size(width = PLAYER_TARGET * 1.25f, height = PLAYER_TARGET),
+        ) {
+            Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
+        }
+        DropdownMenu(expanded = speedMenu, onDismissRequest = { speedMenu = false }) {
+            SPEEDS.forEach { s ->
+                DropdownMenuItem(
+                    text = { Text(speedLabel(s)) },
+                    onClick = {
+                        onSpeed(s)
+                        speedMenu = false
+                    },
+                    leadingIcon = if (s == speed) { { Icon(painterResource(R.drawable.ic_check), null) } } else null,
+                )
+            }
+        }
     }
 }
 
@@ -391,7 +403,7 @@ fun PlayerBar(
  * for TalkBack ("Phrase 4 of 24"), which steps with the volume keys or the swipe actions.
  */
 @Composable
-private fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int) -> Unit) {
+internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int) -> Unit) {
     var width by remember { mutableStateOf(1) }
     var dragging by remember { mutableStateOf<Int?>(null) }
     val shown = dragging ?: active

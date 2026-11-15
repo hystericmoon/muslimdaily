@@ -327,6 +327,8 @@
     <string name="run_tap_read">Mark as read</string>
     <string name="run_tap_hint">Tap the card to count</string>
     <string name="run_tap_read_hint">Tap the card after reading</string>
+    <string name="run_listen">Listen</string>
+    <string name="run_listen_hidden">Show the text to listen</string>
     <string name="run_undo">Undo</string>
     <string name="run_previous">Previous</string>
     <string name="run_next">Next</string>
