@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026, 20:10 WIB (UX/UI audit fixes: 8 merged, 3 PRs open; owner cleared the session).
+Last updated: 15 Nov 2026, 21:45 WIB (UX/UI audit fixes: 10 merged, 3 PRs open, decision page for M1/M3/M10).
 
 ## In flight
 
@@ -22,15 +22,18 @@ Last updated: 15 Nov 2026, 20:10 WIB (UX/UI audit fixes: 8 merged, 3 PRs open; o
 - **UX/UI audit fixes IN PROGRESS (Sonnet, from 15 Nov 18:30 WIB).** Page: https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse
   (2 Blocker, 11 Major, 33 Minor). Owner's picks: the rec option on every finding, order B1, B2, M1-M11, then Minors; one small PR
   each, Screenshots workflow after each UI change; ask before any PR that needs a haho-design release.
-  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224, M9 #225.
-  **Open, CI or shots running (look at the re-recorded shots, then merge on green):** M10 #226, M11 #227. Then take M11 out of the
-  200% row in `docs/accessibility.md` (T3 stays).
-  **Held for the owner, bring as one visual decision page:** M1 (rec option leaves widget glass 85-100%: over white, muted text
-  passes AA only from ~83%; options: keep floor + darken tint as opacity drops, or accept); M3 rest ("Perlu lihat teks" still below
-  the card's scroll at 200%: pin the row in the dock, or a fade); M10: clamp the card translation at a word too?
+  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224, M9 #225, M11 #227 (docs #229).
+  **Open, shots recorded or recording; merge each on a green dispatched Android run after looking at the shots:** M10 #226 (clamp
+  now measured in composition: the first version showed mid-word cuts on CI because the second pass hadn't run; shots 61/66 now
+  whole words), M7 #230 (`ExtendedColors.goldMark` #93750F light; token is in this repo, no haho-design), T2 #231 (Today icons scale
+  with font size; shared `smallIcon` is haho-design and untouched). Next: the Minors in the page's order, from T3.
+  **Held for the owner, one decision page:** https://claude.ai/artifact/VpwqEFFuCvQdiPEzi9Lqcj (rec marked): M1 glass floor (rec A:
+  floor 85%; over white, muted text passes 4.5:1 only from 83%, a black tint only gets 73%), M3 remainder (rec A: pin Hafal /
+  Perlu lihat teks in the dock at 200%), M10 scope (rec C: word clamp on card translation and routine-picker rows too, as a
+  follow-up to #226). Build the owner's pick; if they say "all recommended", A, A, C.
   **Loose ends:** routine editor hint still says "drag the handle" (fix in the R10 copy pass); `WidgetFitTest` height check on 56/76 dp
-  cells flags names and clock at large fonts (outside M6). **Next:** M7 (a darker light-theme gold; find where `ExtendedColors` live,
-  haho-design means ask first), then the Minors in the page's order.
+  cells flags names and clock at large fonts (outside M6); Qibla compass tip draws raw gold (`AppGold`, QiblaScreen.kt:267), not in
+  the audit.
   CI after the Screenshots workflow and the stale widget PNGs: history, "Facts that cost time to find" (15 Nov audit).
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
