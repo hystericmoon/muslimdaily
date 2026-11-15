@@ -115,12 +115,6 @@ fun PrayerSettingsContent(
                     onSelect = { v -> update { dhuhrQabliyahRakah = v } },
                     label = { pluralStringResource(R.plurals.rakah_count, it, it) },
                 )
-                SwitchRow(
-                    title = stringResource(R.string.settings_checklist_history),
-                    summary = stringResource(R.string.settings_checklist_history_summary),
-                    checked = settings.keepChecklistHistory,
-                    onCheckedChange = { v -> update { keepChecklistHistory = v } },
-                )
             }
         }
         item {

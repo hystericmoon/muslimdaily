@@ -22,7 +22,7 @@ class FastingScreenshotTest {
         tomorrow = FastingCalendar.day(today.plusDays(1), 0),
         month = FastingCalendar.month(today, 0),
         selected = FastingCalendar.day(selected, 0),
-        upcoming = FastingCalendar.upcoming(today, 0, includeWeekly = false, limit = 6),
+        upcoming = FastingCalendar.upcomingGroups(today, 0, limit = 6),
     )
 
     private fun shot(name: String, s: FastingUiState) = captureVariants(name) {
