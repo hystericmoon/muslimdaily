@@ -29,7 +29,7 @@ Last updated: 15 Nov 2026 (Qibla back fix; Run audio page awaits the owner; hist
 - **Run audio: owner decision pending** (15 Nov, Opus child session_01W2ZFMuXRfZyDLfuS5TnzLY). The old concepts page
   (Q2C54...) was for the dua detail bar; its A shipped in 1.13.0. Run page https://claude.ai/artifact/C2CocS4eNGcNrR5LS1ZX3C:
   A full PlayerBar docked, B collapsible dock like Memorize (recommended), C top-bar listen + strip. Build after the choice.
-- **Qibla back overlap: fix merged, unverified** (#PR below). Cause: every screen is transparent over the one
+- **Qibla back overlap: fix in #209, unverified**. Cause: every screen is transparent over the one
   `GlassBackdrop` (MainActivity; `HahoScreen` Scaffold is transparent in haho-design), and the shared-axis pop fades
   overlap (out 0-120 ms, in 60-320 ms); predictive back holds the seek part-way, so both screens drew on top of each other.
   Fix in `navigation/AppNavHost.kt` only: `predictivePopEnter/ExitTransition` = fade through (out 150 ms + scale to 0.9,
