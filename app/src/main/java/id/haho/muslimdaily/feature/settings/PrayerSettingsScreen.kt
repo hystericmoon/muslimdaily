@@ -124,12 +124,6 @@ fun PrayerSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                     onSelect = { v -> update { dhuhrQabliyahRakah = v } },
                     label = { androidx.compose.ui.res.pluralStringResource(R.plurals.rakah_count, it, it) },
                 )
-                SwitchRow(
-                    title = stringResource(R.string.settings_checklist_history),
-                    summary = stringResource(R.string.settings_checklist_history_summary),
-                    checked = settings.keepChecklistHistory,
-                    onCheckedChange = { v -> update { keepChecklistHistory = v } },
-                )
             }
         }
         item {

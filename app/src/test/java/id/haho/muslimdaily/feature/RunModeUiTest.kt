@@ -77,13 +77,13 @@ class RunModeUiTest {
     @Test
     fun tapping_the_card_counts_and_announces_progress() {
         setUp()
-        compose.onNodeWithText("0 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("0 dari 3 kali").assertIsDisplayed()
         card().performClick()
-        compose.onNodeWithText("1 dari 3")
+        compose.onNodeWithText("1 dari 3 kali")
             .assertIsDisplayed()
             .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.LiveRegion))
         card().performClick()
-        compose.onNodeWithText("2 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("2 dari 3 kali").assertIsDisplayed()
         assertEquals(listOf(RunEffect.Tick, RunEffect.Tick), effects)
     }
 
@@ -101,8 +101,8 @@ class RunModeUiTest {
         setUp()
         card().performClick()
         card().performClick()
-        compose.onNodeWithText("Kurangi").performClick()
-        compose.onNodeWithText("1 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("Batalkan hitungan").performClick()
+        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
     }
 
     @Test
@@ -139,11 +139,11 @@ class RunModeUiTest {
         compose.onAllNodesWithText("Baca dari hafalan").onFirst().assertIsDisplayed()
         // Counting still works while the text is hidden.
         card().performClick()
-        compose.onNodeWithText("1 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
         compose.onNodeWithText("Tampilkan teks").performClick()
         assertEquals(0, revealed)
         compose.onAllNodesWithText("Baca dari hafalan").assertCountEquals(0)
-        compose.onNodeWithText("1 dari 3").assertIsDisplayed()
+        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
     }
 
     @Test
