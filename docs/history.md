@@ -395,6 +395,10 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
   counts. (4) `update_pull_request_branch` fails on PNG conflicts: merge locally. (5) The widget scale is deliberately the mono
   label; a semibold label (google-sans-flex) is taller and cut the footer by 2 dp (`WidgetFitTest`), hence `widget_text_mono_bold`.
   Card's `fixed` height budget and the scale share `ScaleNameSp`/`ScaleTimeSp`; change them together.
+- D10 (16 Nov, #272): (1) `git add -A` after a local `testDebugUnitTest` also stages `app/src/main/res/drawable-nodpi/widget_preview.png`
+  (`WidgetScreenshotTest` rewrites it with local fonts); check `git status` and restore it from main before committing. (2) A fixture whose
+  active phrase is the one being fixed hides the fix: shot 140 showed no change until the active phrase moved to 0. (3) Surface-scale
+  pairs in light are about 1.1:1 on the glass card, so a fill alone never passes 1.4.11; pair it with an `outline` edge.
 - Audit fixes, session 2 (15 Nov night): (1) A text clamp that re-measures in `onTextLayout` (state change, second pass) renders
   its first pass on CI: the M10 shots 61/66 showed the framework's mid-word ellipsis while a local run showed the clamp. `ArabicText`
   now measures with a `TextMeasurer` inside `BoxWithConstraints`, so frame one is final. A layout-callback fix needs a CI shot
