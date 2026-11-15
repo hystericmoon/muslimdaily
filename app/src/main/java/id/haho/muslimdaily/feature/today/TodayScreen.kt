@@ -43,6 +43,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -466,6 +467,19 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                 selected = data.travelMode,
                 onClick = { actions.onSetTravelMode(!data.travelMode) },
                 label = { Text(stringResource(R.string.today_travel_chip)) },
+                // Selected is a solid primary fill with its outline kept: the default pale fill
+                // is about 1.07:1 against the page and reads as inactive.
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                    selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                ),
+                border = FilterChipDefaults.filterChipBorder(
+                    enabled = true,
+                    selected = data.travelMode,
+                    selectedBorderColor = MaterialTheme.colorScheme.primary,
+                    selectedBorderWidth = 1.dp,
+                ),
                 leadingIcon = {
                     Icon(
                         painterResource(if (data.travelMode) R.drawable.ic_check else R.drawable.ic_luggage),
