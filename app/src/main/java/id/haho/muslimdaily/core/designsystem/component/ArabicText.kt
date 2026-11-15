@@ -117,18 +117,19 @@ private fun TextLayoutResult.cutAt(maxLines: Int) =
  * run of whole words plus "…". Falls back to [text] (the framework's own ellipsis) if not even the
  * first word fits.
  */
-private fun clampedPreview(
+internal fun clampedPreview(
     measurer: TextMeasurer,
     text: AnnotatedString,
     style: TextStyle,
     maxLines: Int,
     width: Int,
     density: Density,
+    layoutDirection: LayoutDirection = LayoutDirection.Rtl,
 ): AnnotatedString {
     if (width <= 0 || width == Constraints.Infinity) return text
     fun measure(t: AnnotatedString) = measurer.measure(
         t, style, overflow = TextOverflow.Ellipsis, maxLines = maxLines,
-        constraints = Constraints(maxWidth = width), layoutDirection = LayoutDirection.Rtl, density = density,
+        constraints = Constraints(maxWidth = width), layoutDirection = layoutDirection, density = density,
     )
     val first = measure(text)
     if (!first.cutAt(maxLines)) return text
@@ -159,7 +160,7 @@ internal fun wordBoundaryBefore(text: String, limit: Int): Int? {
  * every typeface: Naskh-style UI faces draw them as a plain circle and brace-like brackets, which
  * read as stray punctuation inside a dua.
  */
-private val ORNAMENTS = setOf('\u06DD', '\uFD3E', '\uFD3F')
+internal val ORNAMENTS = setOf('\u06DD', '\uFD3E', '\uFD3F')
 
 private fun withQuranOrnaments(text: AnnotatedString): AnnotatedString {
     if (text.none { it in ORNAMENTS }) return text

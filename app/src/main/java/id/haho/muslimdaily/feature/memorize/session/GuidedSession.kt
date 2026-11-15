@@ -43,7 +43,6 @@ import id.haho.design.glass.GlassButton
 import id.haho.design.glass.GlassCard
 import id.haho.design.glass.GlassIconButton
 import id.haho.design.glass.GlassOutlinedButton
-import id.haho.design.glass.GlassTonalButton
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
@@ -100,7 +99,7 @@ internal fun ColumnScope.GuidedSession(state: MemorizeUiState, actions: Memorize
             if (loaded) BuildProgress(state)
             PlayRow(state, loaded, stringResource(R.string.memorize_build_start), actions.onBuild, actions.onToggle, next)
         }
-        GuidedStep.GAPS -> GuidedDock(dockMax, recallDock(state, actions) { NextButton(next, filled = false) })
+        GuidedStep.GAPS -> GuidedDock(dockMax, recallDock(state, actions, showStage = false) { NextButton(next, filled = false) })
         GuidedStep.TEST -> when {
             state.rated != null -> Unit
             !state.testRevealed -> GuidedDock(dockMax) {
@@ -281,11 +280,11 @@ private fun TestStep(state: MemorizeUiState, actions: MemorizeActions, meaning: 
 private fun RatingButtons(state: MemorizeUiState, actions: MemorizeActions) {
     val current = state.review?.state
     val today = LocalDate.now()
-    listOf(Rating.EASY, Rating.HARD, Rating.AGAIN).forEach { rating ->
+    listOf(Rating.AGAIN, Rating.HARD, Rating.EASY).forEach { rating ->
         val days = Leitner.INTERVALS[Leitner.rate(current, rating, today).box - 1]
         val content: @Composable () -> Unit = {
             Column(Modifier.padding(vertical = HahoTheme.spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(stringResource(rating.guidedRes()), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(rating.labelRes()), style = MaterialTheme.typography.titleSmall)
                 // Every rating says when the dua comes back; "Practise now" is offered on the result after Not yet.
                 Text(
                     pluralStringResource(R.plurals.memorize_next_in_days, days, days),
@@ -294,18 +293,7 @@ private fun RatingButtons(state: MemorizeUiState, actions: MemorizeActions) {
                 )
             }
         }
-        val onClick = { actions.onRate(rating) }
-        val m = Modifier.fillMaxWidth()
-        when (rating) {
-            Rating.EASY -> GlassButton(onClick = onClick, modifier = m) { content() }
-            Rating.HARD -> GlassTonalButton(onClick = onClick, modifier = m) { content() }
-            Rating.AGAIN -> GlassOutlinedButton(onClick = onClick, modifier = m) { content() }
-        }
+        GlassOutlinedButton(onClick = { actions.onRate(rating) }, modifier = Modifier.fillMaxWidth()) { content() }
     }
 }
 
-private fun Rating.guidedRes() = when (this) {
-    Rating.EASY -> R.string.memorize_knew_it
-    Rating.HARD -> R.string.memorize_with_help
-    Rating.AGAIN -> R.string.memorize_not_yet
-}

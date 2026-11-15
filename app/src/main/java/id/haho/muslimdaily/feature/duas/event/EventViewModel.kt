@@ -38,6 +38,8 @@ data class EventUiState(
     val hifz: Set<String> = emptySet(),
     /** The reader's routines, for the bookmark on each dua. */
     val routines: List<Routine> = emptyList(),
+    /** Show the one-time hint naming the Memorize and routine icons. */
+    val showToggleHint: Boolean = false,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -46,7 +48,7 @@ class EventViewModel @Inject constructor(
     savedState: SavedStateHandle,
     content: ContentRepository,
     private val mySets: MySetRepository,
-    settings: SettingsRepository,
+    private val settings: SettingsRepository,
     private val reviews: ReviewRepository,
     private val clock: Clock,
     private val routines: RoutineRepository,
@@ -60,7 +62,7 @@ class EventViewModel @Inject constructor(
         settings.settings,
         reviews.items().mapLatest { items -> reviews.withTwins(items.map { it.duaId }.toSet()) },
     ) { event, duas, custom, s, hifz ->
-        build(event, ActiveSet.canonical(duas), custom, ReadingPrefs(s.translationMode, s.showTransliteration)).copy(hifz = hifz)
+        build(event, ActiveSet.canonical(duas), custom, ReadingPrefs(s.translationMode, s.showTransliteration)).copy(hifz = hifz, showToggleHint = !s.duaToggleHintSeen)
     }.combine(routines.routines()) { st, list -> st.copy(routines = list) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -69,6 +71,10 @@ class EventViewModel @Inject constructor(
         // reader's own lists).
         EventUiState(event = event, items = ActiveSet.items(canonical, custom.copy(useMySet = false, entries = emptyList())), prefs = prefs)
 
+
+    fun dismissToggleHint() {
+        viewModelScope.launch { settings.update { duaToggleHintSeen = true } }
+    }
 
     /** Saves a dua to "My hifz" to learn later, as Run mode does. */
     fun addToHifz(duaId: String) {

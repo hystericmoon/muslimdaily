@@ -669,8 +669,8 @@ private fun AdhkarCardView(card: AdhkarCard, data: TodayData, actions: TodayActi
                         )
                     }
                 }
+                NoteInfoButton(title, stringResource(R.string.note_adhkar_window))
             }
-            InfoNote(stringResource(R.string.note_adhkar_window), Modifier.padding(top = HahoTheme.spacing.sm))
             FlowRow(
                 Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.md),
                 horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm, Alignment.End),

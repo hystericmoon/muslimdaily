@@ -358,12 +358,15 @@ private class Layout(
     fun OneByOne() {
         val pad = Space.PadSmall
         val inner = inner(pad)
-        val s = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), clockFit(inner, 22f * k))
+        // The big line is when the next prayer is: the current time here (08.30 next to "Jumat")
+        // read as that prayer's time. The clock starts at 2x1.
+        val timeFit = shrink(inner) { fit.boldWidth(t.nextTime, 22f * k * it) }
+        val s = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), timeFit)
         val head = line(22f * s) + Space.XS + line(11f * s)
         val showCountdown = innerHeight(pad) >= head + line(10f * s)
         val showBar = innerHeight(pad) >= head + line(10f * s) + Space.M + Space.BarThin
         Column(GlanceModifier.fillMaxSize().padding(pad), verticalAlignment = Alignment.CenterVertically) {
-            Now(22f * s)
+            Label(t.nextTime, 22f * s, bold = true)
             Spacer(GlanceModifier.height(Space.XS))
             Label(t.nextName, 11f * s, semibold = true, color = Accent)
             if (showCountdown) Label(t.countdownShort, 10f * s, color = Muted)
@@ -414,7 +417,8 @@ private class Layout(
         val pad = Space.Pad
         val inner = inner(pad)
         val dates = columns >= 4
-        val dateW = if (tight) fit.width(t.dateTiny, 11f * k) + Space.S.value + fit.width(t.hijriShort, 11f * k) else maxOf(fit.width(t.dateShort, 11f * k), fit.width(t.hijriShort, 11f * k))
+        // The short row drops the Hijri date: two bare numbers side by side read as one.
+        val dateW = if (tight) fit.width(t.dateShort, 11f * k) else maxOf(fit.width(t.dateShort, 11f * k), fit.width(t.hijriShort, 11f * k))
         val datesWidth = if (dates) dateW.dp + Space.L else 0.dp
         val vertical = if (tight) Space.S else Space.PadShort
         val timeSp = if (tight) 22f else 28f
@@ -449,11 +453,7 @@ private class Layout(
             if (dates) {
                 Spacer(GlanceModifier.width(Space.L))
                 if (tight) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Label(t.dateTiny, 11f * k)
-                        Spacer(GlanceModifier.width(Space.S))
-                        Label(t.hijriShort, 11f * k)
-                    }
+                    Label(t.dateShort, 11f * k)
                 } else {
                     Column(horizontalAlignment = Alignment.End) {
                         Label(t.dateShort, 11f * k)

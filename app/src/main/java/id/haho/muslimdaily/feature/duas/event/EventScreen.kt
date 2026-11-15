@@ -64,6 +64,7 @@ import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.domain.myset.ResolvedItem
 import id.haho.muslimdaily.domain.myset.SetItem
 import id.haho.muslimdaily.feature.duas.components.DuaCard
+import id.haho.muslimdaily.feature.duas.components.DuaToggleHint
 import id.haho.muslimdaily.feature.duas.components.HifzToggle
 
 @Composable
@@ -153,6 +154,7 @@ fun EventRoute(
                 },
                 onRemoveFromHifz = viewModel::removeFromHifz,
                 onBookmark = onBookmark,
+                onDismissToggleHint = viewModel::dismissToggleHint,
             )
         }
     }
@@ -166,6 +168,7 @@ fun EventContent(
     onAddToHifz: (String) -> Unit = {},
     onRemoveFromHifz: (String) -> Unit = {},
     onBookmark: (String) -> Unit = {},
+    onDismissToggleHint: () -> Unit = {},
 ) {
     val saved = remember(state.routines) { state.routines.flatMap { it.duaIds }.toSet() }
     // Removing drops the dua's review schedule, so it is confirmed as on the Hafalan page.
@@ -198,6 +201,9 @@ fun EventContent(
                     body = stringResource(R.string.event_empty_body),
                 )
             }
+        }
+        if (state.showToggleHint && state.items.any { it.form.isRecitable }) {
+            item(key = "toggle-hint") { DuaToggleHint(onDismissToggleHint) }
         }
         itemsIndexed(state.items, key = { _, it -> it.item.key }) { index, resolved ->
             DuaCard(
