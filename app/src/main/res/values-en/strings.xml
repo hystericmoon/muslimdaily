@@ -705,7 +705,7 @@
     <string name="mosque_allow_precise">Use precise location</string>
     <string name="mosque_origin_saved">From saved location, %s. Distances are approximate.</string>
     <string name="mosque_use_current">Use current location</string>
-    <string name="mosque_none_title">No mosque data within 5 km</string>
+    <string name="mosque_none_title">No mosque data within 5\u00A0km</string>
     <string name="mosque_none_body">Offline data comes from OpenStreetMap and is incomplete. Try searching in a maps app.</string>
     <string name="mosque_search_maps">Search mosques in a maps app</string>
     <string name="mosque_map_query">mosque</string>
