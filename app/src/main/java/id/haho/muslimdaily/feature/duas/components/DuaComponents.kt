@@ -421,9 +421,10 @@ internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int
     val shown = dragging ?: active
     fun indexAt(x: Float) = ((x / width) * count).toInt().coerceIn(0, count - 1)
     val position = stringResource(R.string.dua_phrase_position, shown.coerceAtLeast(0) + 1, count)
-    val heard = MaterialTheme.colorScheme.primary.copy(alpha = 0.45f)
+    // outline (about 4:1) not outlineVariant (about 1.4:1): the ticks are a seek control (WCAG 1.4.11).
+    val heard = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
     val lit = MaterialTheme.colorScheme.primary
-    val rest = MaterialTheme.colorScheme.outlineVariant
+    val rest = MaterialTheme.colorScheme.outline
     Column(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xxs)) {
         Box(
             Modifier
@@ -473,7 +474,7 @@ internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int
     }
 }
 
-private val PLAYER_TRACK_TARGET = 32.dp
+private val PLAYER_TRACK_TARGET = 48.dp
 private val PLAYER_TARGET = 48.dp
 private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 
