@@ -100,7 +100,7 @@ internal fun ColumnScope.GuidedSession(state: MemorizeUiState, actions: Memorize
             if (loaded) BuildProgress(state)
             PlayRow(state, loaded, stringResource(R.string.memorize_build_start), actions.onBuild, actions.onToggle, next)
         }
-        GuidedStep.GAPS -> GuidedDock(dockMax, recallDock(state, actions) { NextButton(next, filled = false) })
+        GuidedStep.GAPS -> GuidedDock(dockMax, recallDock(state, actions, showStage = false) { NextButton(next, filled = false) })
         GuidedStep.TEST -> when {
             state.rated != null -> Unit
             !state.testRevealed -> GuidedDock(dockMax) {
