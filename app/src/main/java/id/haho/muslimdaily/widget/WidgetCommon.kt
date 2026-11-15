@@ -129,6 +129,8 @@ fun Label(
     semibold: Boolean = false,
     medium: Boolean = false,
     mono: Boolean = false,
+    /** The mono label in bold (the next prayer on the bar's scale). */
+    monoBold: Boolean = false,
     bold: Boolean = false,
     color: Int = OnSky,
     maxLines: Int = 1,
@@ -141,6 +143,7 @@ fun Label(
         semibold -> R.layout.widget_text_semibold
         bold -> R.layout.widget_text_bold
         medium -> R.layout.widget_text_medium
+        monoBold -> R.layout.widget_text_mono_bold
         mono -> R.layout.widget_text_mono
         center -> R.layout.widget_text_center
         else -> R.layout.widget_text
@@ -191,6 +194,7 @@ class TextFit(context: Context) {
     private val inflater = LayoutInflater.from(context)
     private val paint = TextPaint((inflater.inflate(R.layout.widget_text_semibold, null) as TextView).paint)
     private val monoPaint = TextPaint((inflater.inflate(R.layout.widget_text_mono, null) as TextView).paint)
+    private val monoBoldPaint = TextPaint((inflater.inflate(R.layout.widget_text_mono_bold, null) as TextView).paint)
     private val boldPaint = TextPaint((inflater.inflate(R.layout.widget_text_bold, null) as TextView).paint)
 
     /** Width in dp, like the widget's size; sp follow the system font size as the label's do. */
@@ -198,6 +202,9 @@ class TextFit(context: Context) {
 
     /** The same, for a mono label (letter-spaced, so measured with its own paint). */
     fun monoWidth(text: String, sp: Float): Float = measure(monoPaint, text, sp)
+
+    /** The same, for the bold mono label. */
+    fun monoBoldWidth(text: String, sp: Float): Float = measure(monoBoldPaint, text, sp)
 
     /** The same, for the Bold clock. */
     fun boldWidth(text: String, sp: Float): Float = measure(boldPaint, text, sp)

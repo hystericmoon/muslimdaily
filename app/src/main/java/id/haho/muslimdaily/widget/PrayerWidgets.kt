@@ -103,6 +103,10 @@ private fun corner(context: Context): Dp =
     }
 
 private val DividerColor = Color(0x1AFFFFFF)
+/** The bar's scale type, in sp: the prayer names and the times. Card's height budget uses the same sizes. */
+private const val ScaleNameSp = 10f
+private const val ScaleTimeSp = 10.5f
+
 private val MutedTint = ColorProvider(Color(Muted))
 
 /**
@@ -295,6 +299,8 @@ private class Layout(
     private val live: Boolean,
 ) {
     val next = model.nextSlot
+    /** Where the next prayer sits among the bar's stops, or -1. */
+    val nextStop = model.track.stops.indexOfFirst { it.slot == next && it.time == model.next.time }
 
     /** A line of [sp] text, in dp, for deciding what fits the height (labels use no font padding). */
     fun line(sp: Float): Dp = (sp * fontScale.coerceAtLeast(1f) * 1.2f).dp
@@ -569,7 +575,7 @@ private class Layout(
         // The card's height inside its padding (more below the scale than above the header).
         val avail = height - Space.L - Space.Pad
         // Tall cells: spare height goes to the time and the time left (up to 2x, capped by width), not to gaps.
-        val fixed = line(12f * k) + Space.M + 1.dp + (Space.L + Space.S) * 2 + Space.XS * 2 + line(baseCdSp * k) * 2 + Space.Bar + Space.S + line(9f * k) + line(8.5f * k) + Space.XS + Space.M + line(11f * k) + 4.dp
+        val fixed = line(12f * k) + Space.M + 1.dp + (Space.L + Space.S) * 2 + Space.XS * 2 + line(baseCdSp * k) * 2 + Space.Bar + Space.S + line(ScaleTimeSp * k) + line(ScaleNameSp * k) + Space.XS * 2 + Space.M + line(11f * k) + 4.dp
         val grow = if (tall) ((avail - fixed) / line(baseTimeSp * k)).coerceIn(1f, 2f) else 1f
         val timeSp = baseTimeSp * grow
         val cdSp = baseCdSp * (1f + (grow - 1f) / 2)
@@ -661,7 +667,7 @@ private class Layout(
                 }
                 Spacer(if (tall) GlanceModifier.height(gap) else GlanceModifier.defaultWeight())
                 Column(GlanceModifier.fillMaxWidth()) {
-                    Bar(inner, Space.Bar, scale.stops)
+                    Bar(inner, Space.Bar, scale.stops, markNext = showScale)
                     if (showScale) {
                         Spacer(GlanceModifier.height(Space.S))
                         scale.Draw()
@@ -686,12 +692,12 @@ private class Layout(
 
     /** The bar of the day (or night): accent up to now, dashed after. [stops] in dp from the start. */
     @Composable
-    fun Bar(barWidth: Dp, barHeight: Dp, stops: List<Dp>? = null) {
+    fun Bar(barWidth: Dp, barHeight: Dp, stops: List<Dp>? = null, markNext: Boolean = false) {
         val context = LocalContext.current
         val d = context.resources.displayMetrics.density
         val n = model.track.stops.size
         val at = stops ?: List(n) { i -> barWidth * (i.toFloat() / (n - 1)) }
-        val bitmap = GlassPainter.bar((barWidth.value * d).toInt(), (barHeight.value * d).toInt(), d, FloatArray(n) { at[it].value * d }, model.track.progress)
+        val bitmap = GlassPainter.bar((barWidth.value * d).toInt(), (barHeight.value * d).toInt(), d, FloatArray(n) { at[it].value * d }, model.track.progress, if (markNext) nextStop else -1)
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.width(barWidth).height(barHeight))
     }
 
@@ -702,10 +708,18 @@ private class Layout(
      */
     inner class Scale(private val inner: Dp, private val names: Boolean) {
         private val items = model.track.stops
-        private val nameSp = 8.5f * k
-        private val baseSp = 9f * k
+        private val nameSp = ScaleNameSp * k
+        private val baseSp = ScaleTimeSp * k
+        private fun isNext(i: Int) = i == nextStop
         private fun timeOf(i: Int) = clockDigits(t.time(items[i].time))
-        private val raw = items.indices.map { i -> fit.monoWidth(timeOf(i), baseSp) to if (names) fit.monoWidth(t.name(items[i].slot), nameSp) else 0f }
+        // The next prayer is bold (in the scale's own mono font, so the line height is the same), so it is measured bold.
+        private fun timeW(i: Int) = if (isNext(i)) fit.monoBoldWidth(timeOf(i), baseSp) else fit.monoWidth(timeOf(i), baseSp)
+        private fun nameW(i: Int) = when {
+            !names -> 0f
+            isNext(i) -> fit.monoBoldWidth(t.name(items[i].slot), nameSp)
+            else -> fit.monoWidth(t.name(items[i].slot), nameSp)
+        }
+        private val raw = items.indices.map { i -> timeW(i) to nameW(i) }
         /** Shrinks the scale's type until every item has 6dp between it and the next. */
         private val f = run {
             val total = raw.sumOf { (a, b) -> maxOf(a, b).toDouble() }.toFloat()
@@ -715,7 +729,8 @@ private class Layout(
         private val widths = raw.map { (a, b) -> maxOf(a, b) * f to a * f }
         /** Too small to read (under three-quarters size): the scale is left out rather than shown tiny. */
         val small = f < 0.75f
-        val height: Dp = line(baseSp * f) + if (names) line(nameSp * f) + Space.XS else 0.dp
+        /** Plus 2 dp for the labels' rounding up: the bold next prayer sits on a tight budget (see Card's `fixed`). */
+        val height: Dp = line(baseSp * f) + (if (names) line(nameSp * f) + Space.XS else 0.dp) + Space.XS
         val stops: List<Dp> = run {
             val gap = (inner.value - widths.sumOf { it.first.toDouble() }.toFloat()) / (items.size - 1)
             var x = 0f
@@ -733,9 +748,8 @@ private class Layout(
         @Composable
         fun Draw() {
             Row(GlanceModifier.fillMaxWidth()) {
-                items.forEachIndexed { i, item ->
-                    val isNext = item.slot == next && item.time == model.next.time
-                    val color = if (isNext) Accent else Muted
+                items.indices.forEach { i ->
+                    val color = if (isNext(i)) Accent else Muted
                     val align = when (i) {
                         0 -> Alignment.Start
                         items.size - 1 -> Alignment.End
@@ -743,10 +757,10 @@ private class Layout(
                     }
                     Column(horizontalAlignment = align) {
                         if (names) {
-                            Label(t.name(item.slot), nameSp * f, mono = true, color = color)
+                            Label(t.name(items[i].slot), nameSp * f, monoBold = isNext(i), mono = !isNext(i), color = color)
                             Spacer(GlanceModifier.height(Space.XS))
                         }
-                        Label(timeOf(i), baseSp * f, mono = true, color = color)
+                        Label(timeOf(i), baseSp * f, monoBold = isNext(i), mono = !isNext(i), color = color)
                     }
                     if (i < items.size - 1) Spacer(GlanceModifier.defaultWeight())
                 }
