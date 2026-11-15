@@ -93,7 +93,7 @@
     <string name="today_travel_chip">Travel mode</string>
     <string name="today_no_location_title">Location not set</string>
     <string name="today_no_location_body">Set a location to show prayer times. The location is stored only on this device.</string>
-    <string name="today_use_gps">Use current location</string>
+    <string name="today_use_gps">Use my location</string>
     <string name="today_pick_city">Choose city</string>
     <string name="today_adhkar_header">Daily adhkar</string>
     <string name="today_travel_suggestion">Your device is about %1$d km from %2$s. Update the location or turn on travel mode?</string>
