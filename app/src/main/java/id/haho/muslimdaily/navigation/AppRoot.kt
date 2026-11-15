@@ -82,6 +82,7 @@ fun AppRoot(
             Destination.MEMORIZE -> MemorizeGraph
             Destination.MOSQUES -> MosquesRoute
             Destination.FASTING -> FastingRoute
+            Destination.LOCATION -> TodayLocationRoute
         }
         navController.navigate(target) { launchSingleTop = true }
         onDestinationHandled()

@@ -46,6 +46,7 @@ import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.core.ui.AppLocale
 import id.haho.muslimdaily.core.ui.TimeFormatter
+import id.haho.muslimdaily.notifications.Destination
 import id.haho.muslimdaily.core.ui.clockPattern
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.data.handover.Handover
@@ -215,7 +216,7 @@ internal class WidgetText(private val context: Context, private val model: Widge
 
 @Composable
 internal fun PrayerWidgetContent(data: WidgetData) {
-    val model = data.model ?: return NoLocation()
+    val model = data.model ?: return NoLocation(data.opacity)
     val context = LocalContext.current
     val size = LocalSize.current
     val grid = WidgetGrid.of(size.width.value, size.height.value, context.resources.configuration.fontScale)
@@ -779,23 +780,50 @@ private class Layout(
     }
 }
 
+/** The label on the accent pill: the glass graphite, 14:1 on the accent. */
+private const val PillInk = 0xFF1F1F1F.toInt()
+
+/**
+ * No location yet: a pin, what to do, and an "Atur lokasi" pill; a tap opens the location screen
+ * itself. Small cells keep just the pin and the short label. Drawn on the reader's glass opacity.
+ */
 @Composable
-private fun NoLocation() {
+private fun NoLocation(opacity: Float) {
     val context = LocalContext.current
     val size = LocalSize.current
     val d = scale(context)
-    val bitmap = remember(size) {
-        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d)
+    val bitmap = remember(size, opacity) {
+        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d, opacity)
     }
-    Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context), contentAlignment = Alignment.Center) {
+    val fontScale = context.resources.configuration.fontScale.coerceAtLeast(1f)
+    val sentence = context.getString(R.string.widget_no_location)
+    val action = context.getString(R.string.widget_set_location)
+    // The sentence and the pill need room (more at large type); small cells get the pin and the label.
+    val roomy = size.width.value >= 150f && size.height.value >= 104f * fontScale
+    Box(
+        GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openScreen(context, Destination.LOCATION)
+            .semantics { contentDescription = "$sentence $action" },
+        contentAlignment = Alignment.Center,
+    ) {
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
-        Label(
-            context.getString(R.string.widget_no_location),
-            13f,
-            GlanceModifier.padding(horizontal = 16.dp),
-            maxLines = 4,
-            center = true,
-        )
+        Column(GlanceModifier.padding(horizontal = if (roomy) Space.L else Space.S), horizontalAlignment = Alignment.CenterHorizontally, verticalAlignment = Alignment.CenterVertically) {
+            Image(ImageProvider(R.drawable.ic_location_on), contentDescription = null, modifier = GlanceModifier.size(20.dp), colorFilter = ColorFilter.tint(ColorProvider(Color(Accent))))
+            Spacer(GlanceModifier.height(Space.S))
+            if (roomy) {
+                Label(sentence, 12f, maxLines = 3, center = true)
+                Spacer(GlanceModifier.height(Space.M))
+                val fit = remember(context) { TextFit(context) }
+                val pillW = fit.width(action, 12f) + 28f
+                val pillH = 12f * fontScale * 1.2f + 12f
+                val pill = remember(pillW, pillH) { GlassPainter.pill((pillW * d).toInt(), (pillH * d).toInt()) }
+                Box(GlanceModifier.width(pillW.dp).height(pillH.dp), contentAlignment = Alignment.Center) {
+                    Image(ImageProvider(pill), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
+                    Label(action, 12f, semibold = true, color = PillInk)
+                }
+            } else {
+                Label(action, 11f, semibold = true, color = Accent, maxLines = 2, center = true)
+            }
+        }
     }
 }
 

@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /** Where a notification tap should land. */
-enum class Destination { TODAY, MORNING_RUN, EVENING_RUN, SLEEP_EVENT, MEMORIZE, MOSQUES, FASTING }
+enum class Destination { TODAY, MORNING_RUN, EVENING_RUN, SLEEP_EVENT, MEMORIZE, MOSQUES, FASTING, LOCATION }
 
 @Singleton
 class Notifier @Inject constructor(@ApplicationContext private val context: Context) {
