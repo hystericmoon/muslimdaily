@@ -87,6 +87,7 @@
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Prayer times</string>
     <string name="today_prohibited_title">Prohibited times</string>
+    <string name="today_note_open">Note: %1$s</string>
     <string name="today_method_footer">%1$s · Asr %2$s</string>
     <string name="today_change_method">Change calculation</string>
     <string name="today_location_chip">Location: %s</string>

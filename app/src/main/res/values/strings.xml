@@ -85,6 +85,7 @@
     <string name="today_iqamah">Iqamah %s</string>
     <string name="today_schedule">Jadwal shalat</string>
     <string name="today_prohibited_title">Waktu terlarang</string>
+    <string name="today_note_open">Catatan: %1$s</string>
     <string name="today_method_footer">%1$s · Ashar %2$s</string>
     <string name="today_change_method">Ubah perhitungan</string>
     <string name="today_location_chip">Lokasi: %s</string>
