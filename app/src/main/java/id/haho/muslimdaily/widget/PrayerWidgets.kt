@@ -357,12 +357,15 @@ private class Layout(
     fun OneByOne() {
         val pad = Space.PadSmall
         val inner = inner(pad)
-        val s = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), clockFit(inner, 22f * k))
+        // The big line is when the next prayer is: the current time here (08.30 next to "Jumat")
+        // read as that prayer's time. The clock starts at 2x1.
+        val timeFit = shrink(inner) { fit.boldWidth(t.nextTime, 22f * k * it) }
+        val s = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), timeFit)
         val head = line(22f * s) + Space.XS + line(11f * s)
         val showCountdown = innerHeight(pad) >= head + line(10f * s)
         val showBar = innerHeight(pad) >= head + line(10f * s) + Space.M + Space.BarThin
         Column(GlanceModifier.fillMaxSize().padding(pad), verticalAlignment = Alignment.CenterVertically) {
-            Now(22f * s)
+            Label(t.nextTime, 22f * s, bold = true)
             Spacer(GlanceModifier.height(Space.XS))
             Label(t.nextName, 11f * s, semibold = true, color = Accent)
             if (showCountdown) Label(t.countdownShort, 10f * s, color = Muted)
