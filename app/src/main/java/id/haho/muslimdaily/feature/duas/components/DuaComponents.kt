@@ -47,7 +47,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -62,6 +61,7 @@ import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.muslimdaily.core.designsystem.component.withBookNotes
 import id.haho.design.component.Badge
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.component.WordClampedText
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.model.Dua
@@ -118,7 +118,7 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
         val showId = dua.translationId.isNotBlank() && (prefs.translation != TranslationMode.ENGLISH || !showEn)
         if (showId) {
             // Tagged as Indonesian so TalkBack keeps the Indonesian voice in the English UI.
-            Text(
+            WordClampedText(
                 withBookNotes(
                     androidx.compose.ui.text.buildAnnotatedString {
                         pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("id")))
@@ -129,12 +129,12 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 ),
                 style = reading.bodyLarge,
                 maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
         if (showEn) {
             // Tagged as English so TalkBack switches voice inside the Indonesian UI.
-            Text(
+            WordClampedText(
                 withBookNotes(
                     androidx.compose.ui.text.buildAnnotatedString {
                         pushStyle(androidx.compose.ui.text.SpanStyle(localeList = androidx.compose.ui.text.intl.LocaleList("en")))
@@ -146,7 +146,6 @@ fun DuaTranslations(dua: Dua, prefs: ReadingPrefs, modifier: Modifier = Modifier
                 style = reading.bodyLarge,
                 color = if (showId) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
                 maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis,
             )
         }
     }
