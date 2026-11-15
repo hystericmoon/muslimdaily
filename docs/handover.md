@@ -21,14 +21,14 @@ Last updated: 15 Nov 2026 (1.15.0 released; UX/UI audit done, owner to pick fixe
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit DONE 15 Nov (Opus): waiting on the owner to pick fixes.** Findings page:
-  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse (2 Blocker, 11 Major, 33 Minor; each verified against its shot; owner
-  ticks a fix per finding and pastes "Audit picks"). Fixes go to **Sonnet** sessions as small PRs (run Screenshots after each).
-  Blockers: B1 fasting calendar at 200% (FastingScreen.kt:282 aspectRatio, :337 legend Row); B2 sources sheet has no scroll
-  at 200% (DuaComponents.kt:175-186; GlassBottomSheet has none either). Patterns: fixed boxes at 200%; `outlineVariant` and raw
-  gold `#C9A227` on things that must be seen; one thing with two names. Refuted: onboarding "Mulai covers last line" and
-  "small steppers" (scroll column sits above the button; steppers 48 dp). `docs/accessibility.md` overclaims 2.5.7 and
-  "200% no clipping": correct it with the fixes. Inventory: 375 PNGs = 165 keys (≈120 screens); gaps listed on the page.
+- **UX/UI audit fixes IN PROGRESS (Sonnet, started 15 Nov 18:30 WIB).** Findings page:
+  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse (2 Blocker, 11 Major, 33 Minor). Owner's picks: the recommended
+  (rec) option on every finding, in order B1, B2, M1-M11, then Minors; one small PR each, Screenshots workflow after each UI
+  change. Hold (ask owner) any PR that needs a haho-design release (B2 option b; token swaps M2/M7/R14 if they touch it).
+  **Done:** B1 #216 (fasting calendar at 200%), B2 #217 (sources sheet scroll; `SourceSheetScrollUiTest`). **Next:** M1.
+  `docs/accessibility.md` 200% row lists the gaps still open (remove each as its fix lands); fix the 2.5.7 row with M4.
+  Lesson: the Screenshots workflow commits the shots as a bot and dispatches the Android run; the `pull_request` run on the
+  bot commit shows `action_required` (PR reads `unstable`). CI is green when the dispatched Android run passes on the final head.
 - Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
