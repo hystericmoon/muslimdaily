@@ -12,6 +12,11 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.text.Layout
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.MetricAffectingSpan
+import android.text.style.RelativeSizeSpan
 import android.text.StaticLayout
 import android.text.TextDirectionHeuristics
 import android.text.TextPaint
@@ -24,6 +29,8 @@ import id.haho.muslimdaily.R
 import id.haho.design.theme.HahoPalette
 import id.haho.muslimdaily.core.designsystem.theme.ArabicFont
 import id.haho.design.theme.colorSchemeFor
+import id.haho.muslimdaily.core.designsystem.component.ORNAMENTS
+import id.haho.muslimdaily.core.designsystem.component.bookNoteRanges
 import id.haho.muslimdaily.core.model.Dua
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -67,7 +74,7 @@ object DuaShareCard {
         val inner = (WIDTH - 2 * PAD - 2 * CARD_PAD).toInt()
 
         fun layout(
-            text: String,
+            text: CharSequence,
             face: Typeface,
             size: Float,
             color: Int,
@@ -92,8 +99,12 @@ object DuaShareCard {
         val onSurface = scheme.onSurface.toArgb()
         val muted = scheme.onSurfaceVariant.toArgb()
         val label = layout(title.uppercase(AppLocale), latinFace, 30f * textScale, scheme.primary.toArgb(), bold = true)
-        val arabic = layout(dua.arabic, arabicFace, 64f * textScale, onSurface, rtl = true, spacing = 1.3f)
-        val translation = dua.translationId.takeIf { it.isNotBlank() }?.let { layout(it, latinFace, 36f * textScale, onSurface, spacing = 1.35f) }
+        // The same ornament and note spans the app draws (ArabicText, withBookNotes), so the image
+        // matches the screen: ornate verse marks, and the book's bracketed notes smaller and muted.
+        val ornamentFace = ResourcesCompat.getFont(context, R.font.amiri_quran) ?: arabicFace
+        val arabic = layout(withShareNotes(withShareOrnaments(dua.arabic, ornamentFace), muted), arabicFace, 64f * textScale, onSurface, rtl = true, spacing = 1.3f)
+        val translation = dua.translationId.takeIf { it.isNotBlank() }
+            ?.let { layout(withShareNotes(SpannableString(it), muted), latinFace, 36f * textScale, onSurface, spacing = 1.35f) }
         val sourceLayout = layout(source, latinFace, 28f * textScale, muted)
         val footer = layout(res.getString(R.string.share_footer), latinFace, 26f, muted, bold = true, align = Layout.Alignment.ALIGN_CENTER)
 
@@ -144,6 +155,32 @@ object DuaShareCard {
         y = card.bottom + 28f
         draw(footer)
         return bmp
+    }
+
+    /** Verse-end sign and ornate brackets drawn in [face] (Amiri Quran), as in the app. */
+    internal fun withShareOrnaments(text: String, face: Typeface): SpannableString {
+        val out = SpannableString(text)
+        text.forEachIndexed { i, c ->
+            if (c in ORNAMENTS) out.setSpan(FaceSpan(face), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+        return out
+    }
+
+    /** The book's single-bracket notes at 0.85 size in [color], as withBookNotes does on screen. */
+    internal fun withShareNotes(text: SpannableString, color: Int): SpannableString {
+        bookNoteRanges(text.toString()).forEach { r ->
+            text.setSpan(RelativeSizeSpan(NOTE_SCALE), r.first, r.last + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(ForegroundColorSpan(color), r.first, r.last + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+        return text
+    }
+
+    private const val NOTE_SCALE = 0.85f
+
+    /** minSdk 26: TypefaceSpan(Typeface) needs 28. */
+    internal class FaceSpan(private val face: Typeface) : MetricAffectingSpan() {
+        override fun updateDrawState(p: TextPaint) { p.typeface = face }
+        override fun updateMeasureState(p: TextPaint) { p.typeface = face }
     }
 
     /** Renders and hands the image to the share sheet, with the source as text alongside. */

@@ -159,7 +159,7 @@ internal fun wordBoundaryBefore(text: String, limit: Int): Int? {
  * every typeface: Naskh-style UI faces draw them as a plain circle and brace-like brackets, which
  * read as stray punctuation inside a dua.
  */
-private val ORNAMENTS = setOf('\u06DD', '\uFD3E', '\uFD3F')
+internal val ORNAMENTS = setOf('\u06DD', '\uFD3E', '\uFD3F')
 
 private fun withQuranOrnaments(text: AnnotatedString): AnnotatedString {
     if (text.none { it in ORNAMENTS }) return text
