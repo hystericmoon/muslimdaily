@@ -464,6 +464,9 @@ private fun CountArea(
 ) {
     val scale = remember { Animatable(1f) }
     val motion = HahoTheme.motion
+    // At large text the big count and the hint take half the card and push the answer buttons
+    // out of sight, so the footer shrinks to one line between the arrows (audit M3).
+    val compact = LocalDensity.current.fontScale >= LARGE_TEXT_SCALE
     LaunchedEffect(count) {
         if (count > 0 && !motion.reduced) {
             scale.snapTo(1.15f)
@@ -472,7 +475,7 @@ private fun CountArea(
     }
     // Previous and next sit in line with the tap hint; they take their own taps, so the card's
     // "count" tap does not fire from them.
-    Row(Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.lg), verticalAlignment = Alignment.Bottom) {
+    Row(Modifier.fillMaxWidth().padding(top = HahoTheme.spacing.lg), verticalAlignment = if (compact) Alignment.CenterVertically else Alignment.Bottom) {
         Box(Modifier.size(HahoTheme.dimens.largeTouchTarget)) {
             if (onPrevious != null) {
                 IconButton(onClick = onPrevious, modifier = Modifier.fillMaxSize()) {
@@ -498,14 +501,16 @@ private fun CountArea(
             } else if (countText != null) {
                 Text(
                     countText,
-                    style = MaterialTheme.typography.displaySmall,
+                    style = if (compact) MaterialTheme.typography.titleLarge else MaterialTheme.typography.displaySmall,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .graphicsLayer { scaleX = scale.value; scaleY = scale.value }
                         .then(if (isCurrent) Modifier.semantics { liveRegion = LiveRegionMode.Polite } else Modifier),
                 )
-                Text(stringResource(R.string.run_tap_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-            } else {
+                if (!compact) {
+                    Text(stringResource(R.string.run_tap_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                }
+            } else if (!compact) {
                 Spacer(Modifier.height(HahoTheme.spacing.sm))
                 Text(stringResource(R.string.run_tap_read_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             }
