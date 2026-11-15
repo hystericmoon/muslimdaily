@@ -339,8 +339,8 @@
     <string name="run_recall_prompt">Did you know it without the text?</string>
     <string name="run_recall_knew">I knew it</string>
     <string name="run_recall_needed">I needed the text</string>
-    <string name="run_add_to_hifz">Add to My hifz</string>
-    <string name="run_in_hifz">In My hifz</string>
+    <string name="run_add_to_hifz">Add to My memorization</string>
+    <string name="run_in_hifz">In My memorization</string>
     <string name="run_restart">Restart</string>
     <string name="run_summary_done">%s complete</string>
     <string name="run_summary_partial">Not all read yet</string>
@@ -466,7 +466,7 @@
     <string name="memorize_memorized">Memorized</string>
     <string name="memorize_not_started">Not started</string>
     <string name="memorize_remove">Remove</string>
-    <string name="memorize_remove_title">Remove from My hifz?</string>
+    <string name="memorize_remove_title">Remove from My memorization?</string>
     <string name="memorize_remove_body">Its review schedule is removed too. The dua stays in the library, and you can memorize it again any time.</string>
     <string name="memorize_next_review">Next dua</string>
     <string name="memorize_loops">Loops per segment</string>
@@ -480,7 +480,7 @@
     <string name="memorize_add">Memorize a dua</string>
     <string name="memorize_empty_title">Nothing memorized yet</string>
     <string name="memorize_empty_body">Choose a dua to memorize. After you rate it, the dua joins the review schedule.</string>
-    <string name="memorize_my_hifz">My hifz</string>
+    <string name="memorize_my_hifz">My memorization</string>
     <string name="memorize_no_streaks">Reviews after 1, 3, 7, 14 and 30 days. No streaks or scores.</string>
     <string name="memorize_review_title">Today\'s review</string>
     <string name="memorize_review_none">Nothing to review today.</string>
@@ -496,7 +496,7 @@
     <string name="memorize_state_learning">Learning · next review %1$s</string>
     <string name="memorize_state_memorized">Memorized · next review %1$s</string>
     <string name="memorize_more_named">More options for %1$s</string>
-    <string name="memorize_remove_menu">Remove from My hifz</string>
+    <string name="memorize_remove_menu">Remove from My memorization</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>
     <string name="memorize_listen_only_start">Tap to start</string>
