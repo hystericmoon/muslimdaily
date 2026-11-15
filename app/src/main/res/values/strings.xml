@@ -173,7 +173,10 @@
     <!-- Settings -->
     <string name="settings_group_prayer">Shalat</string>
     <string name="settings_group_reading">Bacaan</string>
-    <string name="settings_group_trust">Kepercayaan</string>
+    <string name="settings_group_data">Data</string>
+    <string name="settings_group_app">Aplikasi</string>
+    <string name="settings_feedback">Kirim masukan atau cek pengingat</string>
+    <string name="settings_group_trust">Sumber dan bantuan</string>
     <string name="settings_prayer">Perhitungan waktu shalat</string>
     <string name="settings_location">Lokasi</string>
     <string name="settings_reminders">Pengingat</string>
@@ -186,7 +189,7 @@
     <string name="settings_my_sets_summary">Cadangkan dan pulihkan semua data Anda</string>
     <string name="settings_methodology">Metodologi</string>
     <string name="settings_methodology_summary">Sumber dan kebijakan derajat hadits</string>
-    <string name="settings_report">Laporkan kesalahan</string>
+    <string name="settings_report">Laporkan kesalahan konten</string>
     <string name="settings_report_summary">Kirim email kepada pengelola konten</string>
     <string name="settings_about">Tentang aplikasi</string>
     <string name="settings_about_summary">Versi, lisensi, atribusi</string>
