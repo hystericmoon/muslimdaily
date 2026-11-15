@@ -6,7 +6,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -39,9 +42,10 @@ fun ArabicText(
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,
+    clampToWords: Boolean = false,
 ) {
     val annotated = remember(text) { arabicAnnotated(text) }
-    ArabicText(annotated, modifier, style, color, textAlign, maxLines = maxLines)
+    ArabicText(annotated, modifier, style, color, textAlign, maxLines = maxLines, clampToWords = clampToWords)
 }
 
 @Composable
@@ -52,6 +56,7 @@ fun ArabicText(
     color: Color = LocalContentColor.current,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = Int.MAX_VALUE,
+    clampToWords: Boolean = false,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     val noteColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -61,18 +66,43 @@ fun ArabicText(
         // Text drawn muted as a whole (a footnote, a preview line) keeps its commas muted too.
         if (color == noteColor) marked else withPauseCommas(marked, commaColor, noteColor)
     }
+    // A preview that is cut at the line limit ends at a whole word, never in the middle of one (audit M10).
+    var keep by remember(shown, maxLines, clampToWords) { mutableStateOf<Int?>(null) }
+    val displayed = remember(shown, keep) {
+        keep?.let { n -> buildAnnotatedString { append(shown.subSequence(0, n)); append(ELLIPSIS) } } ?: shown
+    }
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Text(
-            text = shown,
+            text = displayed,
             modifier = modifier.fillMaxWidth(),
             style = style,
             color = color,
             textAlign = textAlign,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
-            onTextLayout = onTextLayout,
+            onTextLayout = { layout ->
+                if (clampToWords && maxLines in 1 until Int.MAX_VALUE && layout.lineCount >= maxLines && (layout.hasVisualOverflow || layout.isLineEllipsized(maxLines - 1))) {
+                    val visibleEnd = layout.getLineEnd(maxLines - 1, visibleEnd = true)
+                    val limit = minOf(visibleEnd, keep ?: shown.length) - if (keep != null) 1 else 0
+                    keep = wordBoundaryBefore(shown.text, limit)
+                }
+                onTextLayout(layout)
+            },
         )
     }
+}
+
+private const val ELLIPSIS = "…"
+
+/** The end of the last whole word that fits in the first [limit] characters, or null if there is none. */
+internal fun wordBoundaryBefore(text: String, limit: Int): Int? {
+    var i = limit.coerceIn(0, text.length)
+    // Inside a word: step back to the space before it.
+    if (i < text.length && !text[i].isWhitespace()) {
+        while (i > 0 && !text[i - 1].isWhitespace()) i--
+    }
+    while (i > 0 && text[i - 1].isWhitespace()) i--
+    return i.takeIf { it > 0 }
 }
 
 /**
