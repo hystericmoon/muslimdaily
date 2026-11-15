@@ -52,7 +52,6 @@ import id.haho.design.component.SwitchRow
 import id.haho.design.glass.GlassButton
 import id.haho.design.glass.GlassCard
 import id.haho.design.glass.GlassOutlinedButton
-import id.haho.design.glass.GlassTonalButton
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.data.location.LocationRepository
@@ -250,7 +249,8 @@ fun OnboardingScreen(
                 if (location != null) {
                     InfoNote(stringResource(R.string.onboarding_location_set, location.name), icon = R.drawable.ic_location_on)
                 } else {
-                    GlassTonalButton(onClick = actions.onUseLocation, modifier = Modifier.fillMaxWidth()) {
+                    // Filled: the main choice. Tonal measured 1.11:1 on its card and read as disabled next to the outlined fallback.
+                    GlassButton(onClick = actions.onUseLocation, modifier = Modifier.fillMaxWidth()) {
                         Text(stringResource(R.string.onboarding_location_use))
                     }
                     GlassOutlinedButton(onClick = actions.onPickCity, modifier = Modifier.fillMaxWidth()) {
