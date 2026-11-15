@@ -22,9 +22,9 @@ Last updated: 15 Nov 2026, 20:10 WIB (UX/UI audit fixes: 8 merged, 3 PRs open; o
 - **UX/UI audit fixes IN PROGRESS (Sonnet, from 15 Nov 18:30 WIB).** Page: https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse
   (2 Blocker, 11 Major, 33 Minor). Owner's picks: the rec option on every finding, order B1, B2, M1-M11, then Minors; one small PR
   each, Screenshots workflow after each UI change; ask before any PR that needs a haho-design release.
-  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224.
-  **Open, CI or shots running (look at the re-recorded shots, then merge on green):** M9 #225, M10 #226, M11 #227. Then take M9, M11
-  out of the 200% row in `docs/accessibility.md` (T3 stays).
+  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224, M9 #225.
+  **Open, CI or shots running (look at the re-recorded shots, then merge on green):** M10 #226, M11 #227. Then take M11 out of the
+  200% row in `docs/accessibility.md` (T3 stays).
   **Held for the owner, bring as one visual decision page:** M1 (rec option leaves widget glass 85-100%: over white, muted text
   passes AA only from ~83%; options: keep floor + darken tint as opacity drops, or accept); M3 rest ("Perlu lihat teks" still below
   the card's scroll at 200%: pin the row in the dock, or a fade); M10: clamp the card translation at a word too?
