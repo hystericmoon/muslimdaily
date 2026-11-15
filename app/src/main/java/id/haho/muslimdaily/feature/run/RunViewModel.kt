@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.haho.muslimdaily.audio.AudioEngine
+import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.myset.MySetRepository
@@ -53,7 +55,19 @@ data class RunUiState(
     val revealed: Set<Int> = emptySet(),
     /** Pages recited from memory and answered "knew it / needed the text", with the next review date. */
     val recalled: Map<Int, LocalDate> = emptyMap(),
+    /** The shared player's state; it belongs to a page only while it plays that page's dua. */
+    val playback: PlaybackState = PlaybackState(),
+    val audioSpeed: Float = 1f,
 ) {
+    /** The player's state for [page]: idle (at the chosen speed) unless it is playing that page's dua. */
+    fun playbackFor(page: Int): PlaybackState {
+        val id = duas.getOrNull(page)?.id
+        return if (id != null && playback.duaId == id && !playback.ended) playback else PlaybackState(speed = audioSpeed, repeat = playback.repeat)
+    }
+
+    /** Audio can play on [page]: the dua has a recording and its text is not hidden for reciting from memory. */
+    fun canListen(page: Int): Boolean = duas.getOrNull(page)?.audio != null && !isHidden(page)
+
     /** Recited from memory and checked, but not yet answered. */
     fun asksRecall(page: Int): Boolean =
         fromMemory && page in revealed && page !in recalled && duas.getOrNull(page)?.id?.let { it in hifz } == true
@@ -102,6 +116,7 @@ class RunViewModel @Inject constructor(
     private val settings: SettingsRepository,
     private val routines: RoutineRepository,
     private val reviews: ReviewRepository,
+    private val audio: AudioEngine,
     private val clock: Clock,
 ) : ViewModel() {
     /** An occasion id, or a routine's run key ("routine:<id>"). */
@@ -145,12 +160,14 @@ class RunViewModel @Inject constructor(
                 hifz = reviews.withTwins(hifz.filterNot { it.notStarted }.map { it.duaId }.toSet()),
                 saved = reviews.withTwins(hifz.map { it.duaId }.toSet()),
                 fromMemory = s.runFromMemory,
+                audioSpeed = s.audioSpeed,
             )
             launch {
                 settings.settings.collect { st ->
-                    _state.update { it?.copy(autoAdvance = st.autoAdvance, haptics = st.haptics, fromMemory = st.runFromMemory) }
+                    _state.update { it?.copy(autoAdvance = st.autoAdvance, haptics = st.haptics, fromMemory = st.runFromMemory, audioSpeed = st.audioSpeed) }
                 }
             }
+            launch { audio.state.collect { p -> _state.update { it?.copy(playback = p) } } }
         }
     }
 
@@ -200,11 +217,14 @@ class RunViewModel @Inject constructor(
         val s = _state.value ?: return
         advanceJob?.cancel()
         if (index == s.index) return
+        // Audio belongs to the card on screen: moving on stops it.
+        stopAudio()
         _state.value = RunLogic.goTo(s, index)
         persist()
     }
 
     fun restart() {
+        stopAudio()
         viewModelScope.launch {
             sessions.clear(eventId)
             val (session, duas) = newSession()
@@ -239,6 +259,45 @@ class RunViewModel @Inject constructor(
             val twins = reviews.withTwins(setOf(id))
             _state.update { it?.copy(saved = it.saved + twins) }
         }
+    }
+
+    /** Plays or pauses the dua on the current card. Listening never changes a count. */
+    fun togglePlay() {
+        val s = _state.value ?: return
+        if (!s.canListen(s.index)) return
+        val dua = s.duas[s.index]
+        if (s.playbackFor(s.index).duaId == dua.id) audio.toggle() else audio.playDua(dua, s.audioSpeed, title = s.eventLabel)
+    }
+
+    fun playFrom(phrase: Int) {
+        val s = _state.value ?: return
+        if (!s.canListen(s.index)) return
+        audio.playDua(s.duas[s.index], s.audioSpeed, fromPhrase = phrase, title = s.eventLabel)
+    }
+
+    /** Previous (-1) or next (+1) phrase of the current dua. */
+    fun skipPhrase(delta: Int) {
+        val s = _state.value ?: return
+        val last = s.duas.getOrNull(s.index)?.phrases?.lastIndex ?: return
+        if (last < 0) return
+        playFrom((s.playbackFor(s.index).activePhrase.coerceAtLeast(0) + delta).coerceIn(0, last))
+    }
+
+    fun setSpeed(speed: Float) {
+        audio.setSpeed(speed)
+        viewModelScope.launch { settings.update { audioSpeed = speed } }
+    }
+
+    fun setRepeat(repeat: Boolean) = audio.setRepeat(repeat)
+
+    /** Stops the player only when it is playing one of this run's duas. */
+    private fun stopAudio() {
+        val playing = audio.state.value.duaId ?: return
+        if (_state.value?.duas?.any { it.id == playing } == true) audio.stop()
+    }
+
+    override fun onCleared() {
+        stopAudio()
     }
 
     fun setFromMemory(enabled: Boolean) {

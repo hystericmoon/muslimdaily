@@ -1,7 +1,13 @@
 package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.data.routine.Routine
+import id.haho.muslimdaily.data.run.RunItem
+import id.haho.muslimdaily.feature.duas.components.ReadingPrefs
+import id.haho.muslimdaily.feature.run.RunActions
+import id.haho.muslimdaily.feature.run.RunScreen
+import id.haho.muslimdaily.feature.run.RunUiState
 import id.haho.muslimdaily.feature.duas.DuaPreviewData
 import id.haho.muslimdaily.feature.duas.library.DuaLibraryContent
 import id.haho.muslimdaily.feature.duas.library.LibraryTab
@@ -158,5 +164,40 @@ class RoutineScreenshotTest {
     @Config(qualifiers = "id-w400dp-h2400dp-xhdpi")
     fun todayQuiet() = captureVariants("120-today-quiet") {
         TodayScreen(TodayPreviewData.ready(at = LocalDateTime.of(2026, 10, 21, 13, 0), checked = emptySet(), progress = emptyMap()), TodayActions())
+    }
+
+    private fun run(): RunUiState {
+        val duas = DuaPreviewData.duas.take(3)
+        return RunUiState(
+            eventLabel = "Dzikir pagi",
+            duas = duas,
+            items = duas.map { RunItem(it.id, it.count) },
+            counts = listOf(1, 0, 0),
+            index = 1,
+            completed = false,
+            prefs = ReadingPrefs(),
+            autoAdvance = true,
+            haptics = true,
+        )
+    }
+
+    /** Run with audio: the dua plays from the dock, its phrase highlighted; repeat, phrases and speed open. */
+    @Test
+    @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
+    fun runAudioPlaying() = captureVariants("175-run-audio-playing") {
+        val s = run()
+        RunScreen(
+            s.copy(playback = PlaybackState(duaId = s.duas[1].id, isPlaying = true, activePhrase = 1)),
+            RunActions(),
+            dockExpanded = true,
+        )
+    }
+
+    /** Reciting from memory: listening waits until the text is shown, since the audio would give it away. */
+    @Test
+    @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
+    fun runAudioHidden() = captureVariants("176-run-audio-hidden") {
+        val s = run()
+        RunScreen(s.copy(hifz = setOf(s.duas[1].id), fromMemory = true), RunActions())
     }
 }
