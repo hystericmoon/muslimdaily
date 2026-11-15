@@ -22,8 +22,8 @@ Last updated: 15 Nov 2026, 21:45 WIB (UX/UI audit fixes: 10 merged, 3 PRs open, 
 - **UX/UI audit fixes IN PROGRESS (Sonnet, from 15 Nov 18:30 WIB).** Page: https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse
   (2 Blocker, 11 Major, 33 Minor). Owner's picks: the rec option on every finding, order B1, B2, M1-M11, then Minors; one small PR
   each, Screenshots workflow after each UI change; ask before any PR that needs a haho-design release.
-  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M8 #224, M9 #225, M10 #226, M11 #227 (docs #229).
-  **Open, shots recording; merge each on a green dispatched Android run after looking at the shots:** M7 #230 (`ExtendedColors.goldMark` #93750F light; token is in this repo, no haho-design), T2 #231 (Today icons scale
+  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M7 #230, M8 #224, M9 #225, M10 #226, M11 #227 (docs #229).
+  **Open, shots recording; merge on a green dispatched Android run after looking at the shots:** T2 #231 (Today icons scale
   with font size; shared `smallIcon` is haho-design and untouched). Next: the Minors in the page's order, from T3.
   **Held for the owner, one decision page (M10's clamp is merged and now measured in composition, since a layout-callback second pass showed mid-word cuts on CI):** https://claude.ai/artifact/VpwqEFFuCvQdiPEzi9Lqcj (rec marked): M1 glass floor (rec A:
   floor 85%; over white, muted text passes 4.5:1 only from 83%, a black tint only gets 73%), M3 remainder (rec A: pin Hafal /
