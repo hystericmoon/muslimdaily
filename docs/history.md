@@ -33,6 +33,15 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.15.1 (versionCode 59, 16 Nov 01:15 WIB, release PR #270; UX/UI audit fixes #216-#269, page
+https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse): Blockers B1 (fasting calendar reflows at 200%) and B2 (sources sheet scrolls);
+Majors M1 (widget glass floor 85%, `GlassContrastTest` over every step), M2-M11; Minors T2/T3/T6/T7/T8/T10, W2/W4/W5/W7/W9,
+S4/S6/S7/S9/S10/S11/S14/S15, R4/R6/R9/R10/R11/R12/R13/R14/R15/R18, D6/D7/D8. New `Destination.LOCATION` (widget tap opens the
+location screen), `widget_text_mono_bold` layout, `GlassPainter.pill` and `bar(mark=)`. D7 adds the `duaToggleHintSeen` DataStore
+flag (in backups via the generic settings export, no `BackupRepository` change). Not done: W7 "keep the next two prayers at
+200%" (from 1.7x font the cards use layouts with no scale, up to 1.5x all five fit: no size reaches it). No content rows changed.
+APK `adwam-1.15.1.apk` (39.9 MB) on the GitHub Release; main CI green on the last audit merge d91866c.
+
 1.15.0 (versionCode 58, 15 Nov WIB, release PR #211; #205, #207-#210): Check ratings in one row in the dock (#207, owner chose C
 on https://claude.ai/artifact/FSxKFgGjG6SeKML9KGX3Wt; stacks from 1.15x font, suggested rating filled and named in text),
 rating card without the Leitner box number and Guided "Belum" subtitle says when the dua comes back (#208), Indonesian
@@ -377,6 +386,15 @@ imported), microphone in Memorise (no), #107 (disable the old widget).
 
 ## Facts that cost time to find
 
+- Merging many PRs in a row (16 Nov, audit): (1) Main broke once: #253 used `ic_tune`, which R15 had removed after #253 branched;
+  green CI on a stale base proves nothing. Merge `origin/main` into each branch and compile (`:app:compileDebugKotlin
+  :app:compileDebugUnitTestKotlin`, about 1 min) before pushing; it caught `ic_tune` (S7), a `TextOverflow` import dropped by an
+  auto-merge (R11) and two `border =` arguments on the travel chip (R14 + T6). (2) PNG conflicts: take either side, push, and only
+  then dispatch Screenshots (a run queued before the push records on the old head). A red pre-record head is screenshot tests only;
+  check the failing test names. (3) Main's Android run is cancelled by the next push, so after a burst only the last merge's run
+  counts. (4) `update_pull_request_branch` fails on PNG conflicts: merge locally. (5) The widget scale is deliberately the mono
+  label; a semibold label (google-sans-flex) is taller and cut the footer by 2 dp (`WidgetFitTest`), hence `widget_text_mono_bold`.
+  Card's `fixed` height budget and the scale share `ScaleNameSp`/`ScaleTimeSp`; change them together.
 - Audit fixes, session 2 (15 Nov night): (1) A text clamp that re-measures in `onTextLayout` (state change, second pass) renders
   its first pass on CI: the M10 shots 61/66 showed the framework's mid-word ellipsis while a local run showed the clamp. `ArabicText`
   now measures with a `TextMeasurer` inside `BoxWithConstraints`, so frame one is final. A layout-callback fix needs a CI shot

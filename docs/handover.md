@@ -7,11 +7,12 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 15 Nov 2026, 22:50 WIB (UX/UI audit: stream PRs #236-#261 open, 5 merged; 1.15.1 not cut).
+Last updated: 16 Nov 2026, 01:30 WIB (1.15.1 released; UX/UI audit fixes #216-#269 merged).
 
 ## In flight
 
-- **1.15.0 (versionCode 58) released 15 Nov WIB** (release PR #211; details: history, "Shipped"). No content, database or backup change.
+- **1.15.1 (versionCode 59) released 16 Nov 01:15 WIB** (release PR #270, APK on the Release; details: history, "Shipped"). No
+  content, database or backup change. Nothing in flight; no open PRs.
 - **Owner to check on a phone or emulator (cloud can't)**: (1) Check row: one-row dock, Indonesian labels on one line, 200% font
   stacks; (2) Run audio dock: playback, lock-screen title (the run's name), Back closes the open dock, 200% font; (3) **Qibla
   back overlap (#209, fix unverified on a device; Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold
@@ -19,25 +20,15 @@ Last updated: 15 Nov 2026, 22:50 WIB (UX/UI audit: stream PRs #236-#261 open, 5 
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit fixes IN PROGRESS (Sonnet, from 15 Nov 18:30 WIB).** Page: https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse
-  (2 Blocker, 11 Major, 33 Minor). Owner's picks: the rec option on every finding, order B1, B2, M1-M11, then Minors; one small PR
-  each, Screenshots workflow after each UI change; ask before any PR that needs a haho-design release.
-  **Merged:** B1 #216, B2 #217, M2 #219, M4 #220, M3 #221 (partly), M5 #222, M6 #223, M7 #230, M8 #224, M9 #225, M10 #226, M11 #227 (docs #229).
-  **Open:** T2 #231 (Today icons scale with the font; shared `smallIcon` is haho-design, untouched). Main was merged into it (M7 and
-  T2 both re-recorded the Ramadan/Isbat 200% shots) and the Screenshots workflow re-run on the merge. Merge on a green dispatched
-  Android run once shots 14, 15, 101 `-font200` show the darker crescent and scaled icons.
-  **State (15 Nov 22:50 WIB; usage limit near, so streams were told to merge open PRs only).** Stream PRs merged: S10 #234, S14 #235,
-  M3 #238, R10 #239, S15 #240. **Open (each: look at its shots, merge on a green dispatched Android run; a red pre-record head is
-  expected):** #236 T3, #237 T7, #241 R13, #242 R15, #243 R18, #244 T6, #245 S11, #246 D6, #247 R9, #248 W2, #249 T8, #250 R14,
-  #251 R4, #252 R11, #253 T10 (its `record` job failed once, re-run it), #254 R6, #255 S9, #256 S4, #257 R12, #258 D7, #259 S6,
-  #260 D8, #261 M10 (word clamp for translations and picker rows; decision page pick C). CI is backed up, so allow time.
-  **Never started:** W4, W5, W7, W9 (widgets, `PrayerWidgets.kt`), M1 (WIDGET_OPACITY_MIN 0.85 + GlassContrastTest over the range),
-  S7 (prayer settings: minute steppers onto own screens). One PR each, Sonnet.
-  **Release:** owner asked for it ("everything done, new APK released"). Ship **1.15.1 (versionCode 59)** with what merged (release
-  skill; say the version first; Screenshots re-record covers the What's New shot). Not cut yet. Merge conflicts between PRs are
-  PNG/strings: merge origin/main into the branch, take either PNG, re-run `screenshots.yml`.
-  **Loose ends** (history, "Facts that cost time to find", audit session 2): routine-editor hint says "drag the handle" (R10 copy pass); `WidgetFitTest` flags 56/76 dp cells at large fonts; Qibla tip draws raw gold.
-- Main: 1.15.0 (versionCode 58, content_version 55, 329 rows).
+- **UX/UI audit: done for what the owner picked** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; list of fixes: history,
+  "Shipped" 1.15.1). Not done: W7 "next two prayers at 200%" (unreachable, see history); check the page for any Minor not in that
+  list (e.g. D10, raw gold as a mark). Not looked at after their last re-record: S6 (fasting upcoming list) shot.
+  **Owner to check on a device**: widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time,
+  the 4x2 scale with the bold next prayer and its dot.
+  **Loose ends**: routine-editor hint says "drag the handle" (R10 copy pass); `WidgetFitTest` flags 56/76 dp cells at large fonts;
+  Qibla tip draws raw gold; the Settings widget-opacity note for "lighter glass" is unreachable now that the floor (85%) equals the
+  default (M1), so the stepper can only go up. Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
+- Main: 1.15.1 (versionCode 59, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -77,7 +68,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-15 Nov, Sonnet: Memorize revamp, 1.14.0 and 1.15.0, audit fixes #216-#227;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0, 1.15.0 and 1.15.1, audit fixes #216-#270;
   child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
