@@ -975,6 +975,9 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_15_2">
+        <item>Phrase colour is easier to see in the light theme: each bubble has a clear edge, and alternating phrases have an outline so you can tell them apart.</item>
+    </string-array>
     <string-array name="whats_new_1_15_1">
         <item>Large text is tidier: the fasting calendar reflows at 200%, the Sources and grading sheet scrolls, the search field has a short label, the Quran reference and the buttons under it are no longer cut off, and the icons on Today grow with the text.</item>
         <item>Memorize and Start reading: ratings use one set of words (Not yet, With help, Knew it) in one button style. Guided shows a single step counter, the bottom sheet toggle is named Options, the count reads \"2 of 3 times\" with an Undo count button, and the hide-level choices are larger.</item>

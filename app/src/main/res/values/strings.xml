@@ -957,6 +957,9 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_15_2">
+        <item>Warna frasa lebih jelas di tema terang: batas tiap gelembung kini tegas, dan frasa selang-seling punya tepi sehingga mudah dibedakan.</item>
+    </string-array>
     <string-array name="whats_new_1_15_1">
         <item>Teks besar lebih rapi: kalender puasa tersusun ulang di ukuran 200%, lembar Sumber dan derajat bisa digulir, kolom cari punya label pendek, rujukan Al-Qur\'an dan tombol di bawahnya tidak lagi terpotong, dan ikon di Hari ini ikut membesar.</item>
         <item>Hafalan dan Mulai membaca: penilaian memakai satu kata yang sama (Belum, Dengan bantuan, Sudah hafal) dengan gaya tombol yang sama. Mode Terpandu hanya menampilkan satu penghitung langkah, tombol di lembar bawah bernama Opsi, hitungan berbunyi \"2 dari 3 kali\" dengan tombol Batalkan hitungan, dan pilihan tingkat sembunyi lebih besar.</item>
