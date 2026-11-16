@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.feature.memorize.session
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.role
@@ -32,7 +31,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import id.haho.design.glass.Glass
-import id.haho.muslimdaily.feature.memorize.MemorizeSpeedControl
 import id.haho.muslimdaily.navigation.NavLabel
 import androidx.compose.ui.platform.LocalDensity
 import id.haho.design.glass.GlassIconButton
@@ -105,10 +103,7 @@ import id.haho.muslimdaily.feature.duas.components.speedLabel
 import kotlin.math.roundToInt
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.toggleableState
-import androidx.compose.ui.state.ToggleableState
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.Switch
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 
 data class MemorizeActions(
@@ -201,11 +196,7 @@ fun MemorizeSessionScreen(
     state: MemorizeUiState,
     actions: MemorizeActions,
     talkBack: Boolean = talkBackOn(),
-    startExpanded: Boolean = false,
 ) {
-    // Each step opens with its sheet collapsed; Back closes an open sheet before it leaves the screen.
-    var expanded by rememberSaveable(state.step) { mutableStateOf(startExpanded) }
-    BackHandler(enabled = expanded) { expanded = false }
     // A–B: true between the first and the second phrase tap. Held here so closing the sheet keeps it.
     var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     // Recall: the meaning opens from the top bar's title line, the cue to recite from.
@@ -232,8 +223,7 @@ fun MemorizeSessionScreen(
                 verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
             ) {
                 val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
-                // The step hint gives way to the text while the sheet is open.
-                if (!expanded) InfoNote(stringResource(hint))
+                InfoNote(stringResource(hint))
                 when (state.step) {
                     Step.LISTEN -> ListenStep(state)
                     Step.BUILD -> BuildStep(state)
@@ -241,12 +231,12 @@ fun MemorizeSessionScreen(
                     Step.CHECK -> CheckStep(state, actions)
                 }
             }
-            // Big text at 200% font: an open sheet takes at most 60% of the screen and scrolls inside.
-            val toggle: @Composable () -> Unit = { DockToggle(expanded) { expanded = !expanded } }
+            // Advanced shows every control of the step, always: no Options toggle. At 200% font the dock takes at most 60% of the screen and scrolls inside.
+            val toggle: @Composable () -> Unit = {}
             when (state.step) {
-                Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
-                Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
+                Step.LISTEN -> Dock(true, dockMax, listenDock(state, actions, toggle), if (listenLoaded(state)) listenMore(actions) else null)
+                Step.BUILD -> Dock(true, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
+                Step.RECALL -> Dock(true, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
             }
             SessionNavBar(state.step, actions.onStep)
@@ -282,12 +272,12 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.memorize_listen_only)) },
+                        text = { Text(stringResource(R.string.memorize_switch_listen)) },
                         leadingIcon = { Icon(painterResource(R.drawable.ic_headphones), null) },
                         enabled = state.hasAudio,
                         onClick = { menu = false; actions.onListenOnly() },
                     )
-                    AdvancedItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
+                    ModeSwitchItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
                 }
             }
         }
@@ -321,26 +311,24 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
     }
 }
 
-/** A labelled switch with its state (not an icon toggle), and what it changes. */
+/** One row that names the other mode and what it gives, instead of a switch whose "on" has to be decoded. */
 @Composable
-private fun AdvancedItem(on: Boolean, onClick: () -> Unit) {
+private fun ModeSwitchItem(advanced: Boolean, onClick: () -> Unit) {
     DropdownMenuItem(
         text = {
             Column(Modifier.widthIn(max = 280.dp).padding(vertical = HahoTheme.spacing.xs)) {
-                Text(stringResource(R.string.memorize_advanced), style = MaterialTheme.typography.bodyLarge)
                 Text(
-                    stringResource(R.string.memorize_advanced_body),
+                    stringResource(if (advanced) R.string.memorize_switch_easy else R.string.memorize_switch_advanced),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    stringResource(if (advanced) R.string.memorize_mode_easy_body else R.string.memorize_advanced_body),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         },
-        trailingIcon = { Switch(checked = on, onCheckedChange = null) },
         onClick = onClick,
-        modifier = Modifier.semantics(mergeDescendants = true) {
-            role = Role.Switch
-            toggleableState = ToggleableState(on)
-        },
     )
 }
 
@@ -362,7 +350,7 @@ private fun SessionNavBar(selected: Step, onStep: (Step) -> Unit) {
 
 /**
  * The docked sheet. [collapsed] holds the step's main action and its status, every action the step
- * needs; [more] holds the optional tuning and opens from the toggle inside [collapsed].
+ * needs; [more] holds the step's other controls, shown under it in Advanced.
  */
 @Composable
 internal fun Dock(
@@ -612,9 +600,9 @@ private fun listenDock(state: MemorizeUiState, actions: MemorizeActions, toggle:
     )
 }
 
-private fun listenMore(state: MemorizeUiState, actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
-    if (listenLoaded(state)) RestartButton(actions.onListen)
-    MemorizeSpeedControl(state.settings, actions.onSpeed)
+private fun listenMore(actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
+    // The speed is in the start button; once playing, Restart is the only other control.
+    RestartButton(actions.onListen)
 }
 
 @Composable

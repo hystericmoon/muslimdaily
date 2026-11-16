@@ -121,17 +121,17 @@ class MemorizeScreenshotTest {
 
     @Test
     fun buildSheetOpen() = captureVariants("160-memorize-build-sheet") {
-        MemorizeSessionScreen(state(Step.BUILD), MemorizeActions(), talkBack = false, startExpanded = true)
+        MemorizeSessionScreen(state(Step.BUILD), MemorizeActions(), talkBack = false)
     }
 
     @Test
     fun recallSheetOpen() = captureVariants("161-memorize-recall-sheet") {
-        MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.MEDIUM), MemorizeActions(), talkBack = false, startExpanded = true)
+        MemorizeSessionScreen(state(Step.RECALL, fade = FadeLevel.MEDIUM), MemorizeActions(), talkBack = false)
     }
 
     @Test
     fun listenSheetOpen() = captureVariants("162-memorize-listen-sheet") {
-        MemorizeSessionScreen(state(Step.LISTEN), MemorizeActions(), talkBack = false, startExpanded = true)
+        MemorizeSessionScreen(state(Step.LISTEN), MemorizeActions(), talkBack = false)
     }
 
     // Guided mode (the default): one step per screen.
