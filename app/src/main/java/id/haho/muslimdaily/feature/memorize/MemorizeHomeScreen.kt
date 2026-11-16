@@ -6,7 +6,6 @@ import id.haho.design.glass.Glass
 import id.haho.design.glass.GlassAlertDialog
 import id.haho.design.glass.GlassBottomSheet
 import androidx.annotation.StringRes
-import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.design.glass.GlassExtendedFab
 import id.haho.design.glass.GlassButton
 import id.haho.design.glass.GlassCard
@@ -21,8 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.key
@@ -30,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import id.haho.muslimdaily.core.ui.formatDayMonth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -73,8 +69,8 @@ import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
-/** How the learner starts a dua from its row: guided steps, the four tabs, or hands-free audio. */
-enum class StartMode { EASY, ADVANCED, LISTEN }
+/** How the learner starts a dua from its row: the four tabs, or hands-free audio. */
+enum class StartMode { ADVANCED, LISTEN }
 
 /** Where a dua stands, in the order the list shows them: what needs the reader first. */
 enum class HifzStatus { DUE, LEARNING, NOT_STARTED, MEMORIZED }
@@ -104,7 +100,6 @@ data class MemorizeHomeState(val today: LocalDate, val entries: List<HifzEntry>)
 class MemorizeHomeViewModel @Inject constructor(
     private val reviews: ReviewRepository,
     private val content: ContentRepository,
-    private val settings: SettingsRepository,
     clock: Clock,
 ) : ViewModel() {
     private val today = LocalDate.now(clock)
@@ -125,14 +120,6 @@ class MemorizeHomeViewModel @Inject constructor(
             },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-
-    /** Saves the mode the learner chose for this dua, then opens it; the session reads the mode when it starts. */
-    fun start(duaId: String, advanced: Boolean, open: () -> Unit) {
-        viewModelScope.launch {
-            settings.update { setAdvanced(duaId, advanced) }
-            open()
-        }
-    }
 
     /** Takes a dua out of "My hifz", with its review schedule. The dua itself stays in the library. */
     fun remove(duaId: String) {
@@ -166,7 +153,7 @@ fun MemorizeHomeRoute(
                 onStart = { id, review, mode ->
                     when (mode) {
                         StartMode.LISTEN -> onListenOnly(id)
-                        else -> viewModel.start(id, mode == StartMode.ADVANCED) { onOpen(id, review) }
+                        StartMode.ADVANCED -> onOpen(id, review)
                     }
                 },
             )
@@ -232,7 +219,7 @@ fun MemorizeHomeContent(
                         state.sorted.forEachIndexed { i, entry ->
                             key(entry.item.duaId) {
                                 if (i > 0) HorizontalDivider(Modifier.padding(start = HahoTheme.spacing.lg + StatusDot + HahoTheme.spacing.md))
-                                HifzRow(entry, onRemove = { removing = entry }) { sheetFor = entry }
+                                HifzRow(entry) { sheetFor = entry }
                             }
                         }
                     }
@@ -277,19 +264,18 @@ private fun ContinueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> 
 private val StatusDot = 32.dp
 
 /**
- * One dua: its state as an icon and in words, so nothing rests on colour alone. Removing sits
- * behind the overflow menu and a confirmation, away from the row's main tap.
+ * One dua: its state as an icon and in words, so nothing rests on colour alone. The row is one
+ * tap to the start sheet (the chevron says so); removing lives there, behind a confirmation.
  */
 @Composable
-private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit) {
-    var menu by remember { mutableStateOf(false) }
+private fun HifzRow(entry: HifzEntry, onClick: () -> Unit) {
     val status = statusText(entry)
     Row(
         Modifier
             .fillMaxWidth()
             .heightIn(min = 64.dp)
             .clickable(role = Role.Button, onClickLabel = stringResource(R.string.memorize_open), onClick = onClick)
-            .padding(start = HahoTheme.spacing.lg, end = HahoTheme.spacing.xs, top = HahoTheme.spacing.sm, bottom = HahoTheme.spacing.sm),
+            .padding(start = HahoTheme.spacing.lg, end = HahoTheme.spacing.md, top = HahoTheme.spacing.sm, bottom = HahoTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         val (container, content, icon) = when (entry.status) {
@@ -310,21 +296,7 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
             Text(entry.eventLabel, style = MaterialTheme.typography.titleSmall)
             Text(status, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        Box {
-            IconButton(onClick = { menu = true }) {
-                Icon(
-                    painterResource(R.drawable.ic_more_vert),
-                    stringResource(R.string.memorize_more_named, entry.eventLabel),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.memorize_remove_menu)) },
-                    onClick = { menu = false; onRemove() },
-                )
-            }
-        }
+        Icon(painterResource(R.drawable.ic_chevron_right), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -338,7 +310,6 @@ private fun StartSheet(entry: HifzEntry, onChoose: (StartMode) -> Unit, onRemove
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm).semantics { heading() },
             )
-            ModeRow(R.string.memorize_mode_easy, R.string.memorize_mode_easy_body) { onChoose(StartMode.EASY) }
             ModeRow(R.string.memorize_mode_advanced, R.string.memorize_advanced_body) { onChoose(StartMode.ADVANCED) }
             ModeRow(R.string.memorize_mode_listen, R.string.memorize_mode_listen_body) { onChoose(StartMode.LISTEN) }
             HorizontalDivider(Modifier.padding(vertical = HahoTheme.spacing.sm))
@@ -358,16 +329,19 @@ private fun StartSheet(entry: HifzEntry, onChoose: (StartMode) -> Unit, onRemove
 
 @Composable
 private fun ModeRow(@StringRes title: Int, @StringRes body: Int, onClick: () -> Unit) {
-    Column(
+    Row(
         Modifier
             .fillMaxWidth()
             .heightIn(min = HahoTheme.dimens.largeTouchTarget)
             .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md)
-            .semantics(mergeDescendants = true) {},
+            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(stringResource(title), style = MaterialTheme.typography.titleMedium)
-        Text(stringResource(body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}) {
+            Text(stringResource(title), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.padding(start = HahoTheme.spacing.md), tint = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

@@ -277,7 +277,6 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                         enabled = state.hasAudio,
                         onClick = { menu = false; actions.onListenOnly() },
                     )
-                    ModeSwitchItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
                 }
             }
         }
@@ -309,27 +308,6 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
             )
         }
     }
-}
-
-/** One row that names the other mode and what it gives, instead of a switch whose "on" has to be decoded. */
-@Composable
-private fun ModeSwitchItem(advanced: Boolean, onClick: () -> Unit) {
-    DropdownMenuItem(
-        text = {
-            Column(Modifier.widthIn(max = 280.dp).padding(vertical = HahoTheme.spacing.xs)) {
-                Text(
-                    stringResource(if (advanced) R.string.memorize_switch_easy else R.string.memorize_switch_advanced),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-                Text(
-                    stringResource(if (advanced) R.string.memorize_mode_easy_body else R.string.memorize_advanced_body),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        },
-        onClick = onClick,
-    )
 }
 
 @Composable
