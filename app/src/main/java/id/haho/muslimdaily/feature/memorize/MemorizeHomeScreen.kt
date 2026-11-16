@@ -202,7 +202,7 @@ private fun ContinueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> 
                 Text(stringResource(R.string.memorize_review_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
             } else {
-                Text(stringResource(R.string.memorize_continue), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
+                Text(stringResource(if (next.due) R.string.memorize_continue else R.string.memorize_start_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
                 Column(Modifier.semantics(mergeDescendants = true) {}) {
                     Text(next.eventLabel, style = MaterialTheme.typography.titleLarge)
                     val due = state.dueEntries.size
