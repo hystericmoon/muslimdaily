@@ -81,6 +81,18 @@ class MemorizePlanTest {
     }
 
     @Test
+    fun `listen can start at a phrase and play a set number of times`() {
+        val once = MemorizePlan.listen(dua, "", fromPhrase = 1, times = 1)
+        assertEquals(1, once.size)
+        val clip = once.filterIsInstance<SequenceItem.Clip>().single()
+        assertEquals(1600L, clip.startMs)
+        assertEquals(1..2, clip.phrases)
+        assertEquals(3, MemorizePlan.listen(dua, "", times = 2).size) // clip, pause, clip
+        val clamped = MemorizePlan.listen(dua, "", fromPhrase = 9, times = 1).filterIsInstance<SequenceItem.Clip>().single()
+        assertEquals(2..2 to 3400L, clamped.phrases to clamped.startMs)
+    }
+
+    @Test
     fun `with an audio range only the dua's part plays`() {
         val ranged = dua.copy(audio = dua.audio!!.copy(segments = emptyList(), range = id.haho.muslimdaily.core.model.Segment(2.0, 6.5)))
         val clip = MemorizePlan.listen(ranged, "").filterIsInstance<SequenceItem.Clip>().first()

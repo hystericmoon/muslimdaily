@@ -413,6 +413,9 @@
     <string name="memorize_attempt_done">Anda membacanya tanpa petunjuk. Lanjutkan ke Cek.</string>
     <string name="memorize_hint_check">Buka teks lengkap dan nilai hafalan Anda dengan jujur.</string>
     <string name="memorize_listen_twice">Dengar 2×</string>
+    <string name="memorize_repeat_twice">Putar dua kali</string>
+    <string name="memorize_repeat_loop">Ulangi terus</string>
+    <string name="memorize_repeat_once">Putar sekali</string>
     <string name="memorize_restart">Dari awal</string>
     <string name="memorize_not_segmented">Audio doa ini belum dipotong per frasa, jadi latihan memakai doa utuh.</string>
     <string name="memorize_build_start">Mulai bangun hafalan</string>

@@ -101,11 +101,14 @@ import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
+import id.haho.muslimdaily.feature.duas.components.SPEEDS
+import id.haho.muslimdaily.feature.duas.components.PlayerControls
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import kotlin.math.roundToInt
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.offset
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 
 data class MemorizeActions(
@@ -115,6 +118,10 @@ data class MemorizeActions(
     val onAdvanced: (Boolean) -> Unit = {},
     val onPractiseNow: () -> Unit = {},
     val onListen: () -> Unit = {},
+    val onListenFrom: (Int) -> Unit = {},
+    val onListenSkip: (Int) -> Unit = {},
+    val onListenRepeat: () -> Unit = {},
+    val onPhraseLayout: (PhraseLayout) -> Unit = {},
     val onBuild: () -> Unit = {},
     val onAb: () -> Unit = {},
     val onSetAb: (IntRange) -> Unit = {},
@@ -155,6 +162,10 @@ fun MemorizeSessionRoute(
                 onAdvanced = viewModel::setAdvanced,
                 onPractiseNow = viewModel::practiseNow,
                 onListen = viewModel::playListen,
+                onListenFrom = viewModel::playListen,
+                onListenSkip = viewModel::skipListenPhrase,
+                onListenRepeat = viewModel::cycleListenRepeat,
+                onPhraseLayout = viewModel::setPhraseLayout,
                 onBuild = viewModel::playBuild,
                 onAb = viewModel::playAb,
                 onSetAb = viewModel::setAb,
@@ -227,7 +238,7 @@ fun MemorizeSessionScreen(
                 val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
                 InfoNote(stringResource(hint))
                 when (state.step) {
-                    Step.LISTEN -> ListenStep(state)
+                    Step.LISTEN -> ListenStep(state, actions)
                     Step.BUILD -> BuildStep(state)
                     Step.RECALL -> RecallStep(state, talkBack, meaning)
                     Step.CHECK -> CheckStep(state, actions)
@@ -239,7 +250,7 @@ fun MemorizeSessionScreen(
             BackHandler(enabled = dockOpen) { dockOpen = false }
             val toggle: @Composable () -> Unit = { DockToggle(dockOpen) { dockOpen = !dockOpen } }
             when (state.step) {
-                Step.LISTEN -> Dock(dockOpen, dockMax, listenDock(state, actions, toggle), if (listenLoaded(state)) listenMore(actions) else null)
+                Step.LISTEN -> Dock(false, dockMax, listenDock(state, actions), null) // the media bar is the whole dock
                 Step.BUILD -> Dock(dockOpen, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
                 Step.RECALL -> Dock(dockOpen, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> Unit // the ratings are the end of the content, see CheckStep
@@ -417,12 +428,19 @@ private fun Step.hintRes() = when (this) {
  * shows the whole text, to compare the recital with.
  */
 @Composable
-internal fun ArabicCard(state: MemorizeUiState, active: Int = state.playback.activePhrase, focus: Boolean = false) {
+internal fun ArabicCard(
+    state: MemorizeUiState,
+    active: Int = state.playback.activePhrase,
+    focus: Boolean = false,
+    layout: PhraseLayout = PhraseLayout.FOCUS,
+    focusNav: Boolean = true,
+    onPlayFrom: ((Int) -> Unit)? = null,
+) {
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(HahoTheme.spacing.xl)) {
             val style = AdwamTheme.arabic.large(state.dua.isQuran)
             if (focus) {
-                PhraseLines(state.dua.arabic, state.dua.phrases, active, style, layout = PhraseLayout.FOCUS)
+                PhraseLines(state.dua.arabic, state.dua.phrases, active, style, layout = layout, focusNav = focusNav, onPlayFrom = onPlayFrom)
             } else {
                 HighlightedArabic(state.dua.arabic, state.dua.phrases, active, style)
             }
@@ -550,8 +568,16 @@ internal fun RestartButton(onStart: () -> Unit) {
 }
 
 @Composable
-internal fun ListenStep(state: MemorizeUiState) {
-    ArabicCard(state, focus = true)
+internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null) {
+    // With the media bar below, the card needs no Back/Next of its own. Without audio there is no bar, so it keeps them.
+    if (actions != null) PhraseLayoutChips(state.phraseLayout, actions.onPhraseLayout)
+    ArabicCard(
+        state,
+        focus = true,
+        layout = if (actions != null) state.phraseLayout else PhraseLayout.FOCUS,
+        focusNav = actions == null || !state.hasAudio,
+        onPlayFrom = if (actions != null && state.hasAudio) actions.onListenFrom else null,
+    )
     if (!state.hasAudio) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
     if (state.playback.failed) {
         InfoNote(
@@ -562,30 +588,87 @@ internal fun ListenStep(state: MemorizeUiState) {
     }
 }
 
+/** The dua's three layouts, the same setting as Settings, Display and text. The choice is kept for every dua. */
+@Composable
+private fun PhraseLayoutChips(selected: PhraseLayout, onSelect: (PhraseLayout) -> Unit) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+        PhraseLayout.entries.sortedBy { if (it == PhraseLayout.FOCUS) 0 else if (it == PhraseLayout.LINES) 1 else 2 }.forEach { layout ->
+            FilterChip(
+                selected = layout == selected,
+                onClick = { onSelect(layout) },
+                modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
+                leadingIcon = selectedCheck(layout == selected),
+                label = {
+                    Text(
+                        stringResource(
+                            when (layout) {
+                                PhraseLayout.FOCUS -> R.string.display_phrase_focus
+                                PhraseLayout.LINES -> R.string.display_phrase_lines
+                                PhraseLayout.INLINE -> R.string.display_phrase_inline
+                            },
+                        ),
+                    )
+                },
+            )
+        }
+    }
+}
+
 internal fun listenLoaded(state: MemorizeUiState) = state.playing == Playing.LISTEN && !state.playback.ended
 
-private fun listenDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
-    PlayDock(
-        loaded = listenLoaded(state),
-        isPlaying = state.playback.isPlaying,
-        enabled = state.hasAudio,
-        startLabel = stringResource(R.string.memorize_listen_twice),
-        onStart = actions.onListen,
-        onToggle = actions.onToggle,
-        toggle = toggle,
-        status = if (listenLoaded(state)) {
-            { Text(speedLabel(state.settings.speed), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-        } else {
-            null
-        },
+/** Listen's transport is the same media bar as the dua player: track, repeat, previous, play, next, speed. */
+private fun listenDock(state: MemorizeUiState, actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
+    val loaded = listenLoaded(state)
+    val active = if (loaded) state.playback.activePhrase else -1
+    PlayerControls(
+        isPlaying = loaded && state.playback.isPlaying,
         speed = state.settings.speed,
+        repeat = false,
+        enabled = state.hasAudio,
+        onToggle = if (loaded) actions.onToggle else actions.onListen,
         onSpeed = actions.onSpeed,
+        onRepeat = {},
+        onPreviousPhrase = { actions.onListenSkip(-1) },
+        onNextPhrase = { actions.onListenSkip(1) },
+        canPrevious = active > 0,
+        canNext = active < state.dua.phrases.lastIndex,
+        phraseCount = state.dua.phrases.size,
+        activePhrase = active,
+        onSeekPhrase = actions.onListenFrom,
+        repeatControl = { ListenRepeatButton(state.listenRepeat, state.hasAudio, actions.onListenRepeat) },
+        speeds = LISTEN_SPEEDS,
     )
 }
 
-private fun listenMore(actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
-    // The speed is in the start button; once playing, Restart is the only other control.
-    RestartButton(actions.onListen)
+private val LISTEN_SPEEDS = SPEEDS.filter { it <= 1f }
+
+/** One button that cycles twice, loop, once; the mode is a badge and is spoken. 48 dp. */
+@Composable
+private fun ListenRepeatButton(mode: ListenRepeat, enabled: Boolean, onCycle: () -> Unit) {
+    val state = stringResource(
+        when (mode) {
+            ListenRepeat.TWICE -> R.string.memorize_repeat_twice
+            ListenRepeat.LOOP -> R.string.memorize_repeat_loop
+            ListenRepeat.ONCE -> R.string.memorize_repeat_once
+        },
+    )
+    IconButton(onClick = onCycle, enabled = enabled, modifier = Modifier.size(HahoTheme.dimens.minTouchTarget).semantics { stateDescription = state }) {
+        Box(contentAlignment = Alignment.Center) {
+            Icon(
+                painterResource(R.drawable.ic_repeat),
+                stringResource(R.string.player_repeat),
+                tint = if (mode == ListenRepeat.ONCE) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary,
+            )
+            val badge = when (mode) {
+                ListenRepeat.TWICE -> "2"
+                ListenRepeat.LOOP -> "∞"
+                ListenRepeat.ONCE -> null
+            }
+            if (badge != null) {
+                Text(badge, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.offset(x = 12.dp, y = (-10).dp))
+            }
+        }
+    }
 }
 
 @Composable
