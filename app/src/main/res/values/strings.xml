@@ -966,6 +966,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_17_0">
+        <item>Hafalan: lembar untuk memulai kini menawarkan mode Lanjutan atau Dengar. Mode Mudah dihapus, jadi setiap doa dibuka dengan empat tab. Baris di daftar punya tanda panah, menu tiga titik hilang, dan Hapus ada di lembar untuk memulai.</item>
+        <item>Hafalan: lembar di bawah (Dengar, Bangun, Ingat) kini tertutup lebih dulu agar teks doa tidak tertutup. Ketuk panahnya untuk membuka kontrol lainnya; tombol Kembali menutupnya. Di langkah Cek, penilaian ada di akhir isi. Pilihan yang aktif diberi tanda centang.</item>
+        <item>Hafalan, Dengar: memakai pemutar yang sama seperti di halaman doa, dengan frasa sebelumnya dan berikutnya serta kecepatan. Tombol Ulangi bergantian antara putar dua kali (seperti sebelumnya), ulangi terus, dan putar sekali. Teks bisa ditampilkan satu frasa sekaligus, satu frasa per baris, atau mengalir, dan pilihan itu berlaku untuk semua doa.</item>
+    </string-array>
     <string-array name="whats_new_1_16_0">
         <item>Widget: kaca kini bisa jauh lebih transparan (sampai 10%), dengan pengaturan Warna teks (Terang atau Gelap) di Pengaturan, Tampilan dan teks, untuk wallpaper yang terang. Di bawah 85%, keterbacaan bergantung pada wallpaper. Widget yang pendek atau sempit tidak lagi memotong waktu atau nama shalat di teks besar.</item>
         <item>Hafalan: mengetuk satu doa membuka lembar untuk mulai di mode Mudah, Lanjutan, atau Dengar, atau menghapusnya. Nama doa kini menjadi judul, dengan posisi dan Arti di bawahnya. Di Dengar, kecepatan ada di tombol mulai, dan mode Lanjutan selalu menampilkan kontrolnya. Menu punya \"Beralih ke mode dengar\" dan satu baris untuk beralih antara Mudah dan Lanjutan. Kartu teratas bertuliskan Mulai bila doa belum dimulai.</item>

@@ -984,6 +984,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_17_0">
+        <item>Memorize: the sheet for starting a dua now offers Advanced or Listen mode. Easy is gone, so every dua opens with the four tabs. Rows in the list have an arrow, the three-dot menu is gone, and Remove is in the start sheet.</item>
+        <item>Memorize: the sheet at the bottom (Listen, Build, Recall) now starts closed so it no longer covers the dua text. Tap its arrow to open the other controls; Back closes it. In the Check step the ratings sit at the end of the content. Selected options show a check mark.</item>
+        <item>Memorize, Listen: uses the same player as the dua page, with previous and next phrase and speed. The Repeat button cycles between playing twice (as before), looping, and playing once. The text can show one phrase at a time, one phrase per line, or flowing, and the choice applies to every dua.</item>
+    </string-array>
     <string-array name="whats_new_1_16_0">
         <item>Widgets: the glass can now be much more transparent (down to 10%), with a Text colour setting (Light or Dark) in Settings, Display and text, for light wallpapers. Below 85%, readability depends on your wallpaper. Short and narrow widgets no longer cut off the time or the prayer name at large text.</item>
         <item>Memorize: tapping a dua opens a sheet to start in Easy, Advanced or Listen mode, or to remove it. The dua\'s name is now the heading, with its position and Meaning below it. In Listen, the speed is in the start button, and Advanced always shows its controls. The menu has \"Switch to Listen mode\" and one row to switch between Easy and Advanced. The top card says Start when a dua has not been started.</item>
