@@ -986,6 +986,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_16_0">
+        <item>Widgets: the glass can now be much more transparent (down to 10%), with a Text colour setting (Light or Dark) in Settings, Display and text, for light wallpapers. Below 85%, readability depends on your wallpaper. Short and narrow widgets no longer cut off the time or the prayer name at large text.</item>
+        <item>Memorize: tapping a dua opens a sheet to start in Easy, Advanced or Listen mode, or to remove it. The dua\'s name is now the heading, with its position and Meaning below it. In Listen, the speed is in the start button, and Advanced always shows its controls. The menu has \"Switch to Listen mode\" and one row to switch between Easy and Advanced. The top card says Start when a dua has not been started.</item>
+        <item>Listen mode: a long dua now scrolls, so the play button is no longer squashed.</item>
+    </string-array>
     <string-array name="whats_new_1_15_2">
         <item>Phrase colour is easier to see in the light theme: each bubble has a clear edge, and alternating phrases have an outline so you can tell them apart.</item>
     </string-array>
