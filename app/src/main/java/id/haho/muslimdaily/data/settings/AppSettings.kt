@@ -113,6 +113,8 @@ data class AppSettings(
     val phraseFill: PhraseFill = PhraseFill.NONE,
     /** While the audio plays, only the gold phrase keeps a background. */
     val hideFillWhilePlaying: Boolean = true,
+    /** The segmented progress line above the media bar's controls (dua player, Listen, Listen only). */
+    val showPhraseTrack: Boolean = true,
     val arabicScale: Float = 1f,
     val arabicFont: ArabicFont = ArabicFont.NASKH,
     val translationScale: Float = 1f,

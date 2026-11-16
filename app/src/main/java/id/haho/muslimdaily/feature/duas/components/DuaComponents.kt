@@ -350,12 +350,14 @@ fun PlayerBar(
     phraseCount: Int = 0,
     activePhrase: Int = -1,
     onSeekPhrase: (Int) -> Unit = {},
+    showTrack: Boolean = true,
 ) {
     // Docked on the bottom navigation, full width, like a media mini-player.
     DockedBar(modifier) {
         PlayerControls(
             isPlaying, speed, repeat, enabled, onToggle, onSpeed, onRepeat, onPreviousPhrase, onNextPhrase,
             canPrevious, canNext, phraseCount = phraseCount, activePhrase = activePhrase, onSeekPhrase = onSeekPhrase,
+            showTrack = showTrack,
         )
     }
 }
@@ -384,10 +386,17 @@ internal fun PlayerControls(
     onSeekPhrase: (Int) -> Unit = {},
     repeatControl: (@Composable () -> Unit)? = null,
     speeds: List<Float> = SPEEDS,
+    /** The reader's Show progress line setting; the phrase position is still spoken to TalkBack when the line is hidden. */
+    showTrack: Boolean = true,
+    /** False where a phrase cannot be jumped to (Listen only plays a queue): the line shows the place and is read aloud, nothing more. */
+    trackSeekable: Boolean = true,
+    /** Spoken names of the skip buttons, for a queue whose steps are parts rather than phrases. */
+    previousLabel: String = stringResource(R.string.player_previous_phrase),
+    nextLabel: String = stringResource(R.string.player_next_phrase),
 ) {
     Column(modifier.fillMaxWidth()) {
-        if (phraseCount >= 2) {
-            PhraseTrack(phraseCount, activePhrase, enabled, onSeekPhrase)
+        if (phraseCount >= 2 && showTrack) {
+            PhraseTrack(phraseCount, activePhrase, enabled, onSeekPhrase, seekable = trackSeekable)
         }
         Row(
             Modifier.fillMaxWidth(),
@@ -396,7 +405,7 @@ internal fun PlayerControls(
         ) {
             if (repeatControl != null) repeatControl() else RepeatToggle(repeat, enabled, onRepeat)
             IconButton(onClick = onPreviousPhrase, enabled = enabled && canPrevious, modifier = Modifier.size(PLAYER_TARGET)) {
-                Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.player_previous_phrase))
+                Icon(painterResource(R.drawable.ic_skip_previous), previousLabel)
             }
             GlassIconButton(
                 onClick = onToggle,
@@ -410,7 +419,7 @@ internal fun PlayerControls(
                 )
             }
             IconButton(onClick = onNextPhrase, enabled = enabled && canNext, modifier = Modifier.size(PLAYER_TARGET)) {
-                Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.player_next_phrase))
+                Icon(painterResource(R.drawable.ic_skip_next), nextLabel)
             }
             SpeedButton(speed, enabled, onSpeed, speeds)
         }
@@ -419,7 +428,13 @@ internal fun PlayerControls(
 
 /** Repeat on and off, with its state for TalkBack. 48dp. */
 @Composable
-internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean) -> Unit) {
+internal fun RepeatToggle(
+    repeat: Boolean,
+    enabled: Boolean,
+    onRepeat: (Boolean) -> Unit,
+    /** What the button does, when it is not a plain repeat (Build: "Repeat phrases 1-2"). */
+    description: String = stringResource(R.string.player_repeat),
+) {
     val repeatState = stringResource(if (repeat) R.string.state_enabled else R.string.state_disabled)
     IconToggleButton(
         checked = repeat,
@@ -431,7 +446,7 @@ internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean)
     ) {
         Icon(
             painterResource(R.drawable.ic_repeat),
-            contentDescription = stringResource(R.string.player_repeat),
+            contentDescription = description,
             tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
@@ -471,7 +486,7 @@ internal fun SpeedButton(speed: Float, enabled: Boolean, onSpeed: (Float) -> Uni
  * for TalkBack ("Phrase 4 of 24"), which steps with the volume keys or the swipe actions.
  */
 @Composable
-internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int) -> Unit) {
+internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int) -> Unit, seekable: Boolean = true) {
     var width by remember { mutableStateOf(1) }
     var dragging by remember { mutableStateOf<Int?>(null) }
     val shown = dragging ?: active
@@ -487,11 +502,11 @@ internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int
                 .fillMaxWidth()
                 .height(PLAYER_TRACK_TARGET)
                 .onSizeChanged { width = it.width.coerceAtLeast(1) }
-                .pointerInput(count, enabled) {
-                    if (enabled) detectTapGestures { onSeek(indexAt(it.x)) }
+                .pointerInput(count, enabled, seekable) {
+                    if (enabled && seekable) detectTapGestures { onSeek(indexAt(it.x)) }
                 }
-                .pointerInput(count, enabled) {
-                    if (enabled) detectHorizontalDragGestures(
+                .pointerInput(count, enabled, seekable) {
+                    if (enabled && seekable) detectHorizontalDragGestures(
                         onDragStart = { dragging = indexAt(it.x) },
                         onDragEnd = { dragging?.let(onSeek); dragging = null },
                         onDragCancel = { dragging = null },
@@ -500,7 +515,7 @@ internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int
                 .clearAndSetSemantics {
                     contentDescription = position
                     progressBarRangeInfo = ProgressBarRangeInfo(shown.coerceAtLeast(0).toFloat(), 0f..(count - 1).toFloat(), count - 2)
-                    setProgress { target -> onSeek(target.toInt().coerceIn(0, count - 1)); true }
+                    if (seekable) setProgress { target -> onSeek(target.toInt().coerceIn(0, count - 1)); true }
                 },
             contentAlignment = Alignment.Center,
         ) {
