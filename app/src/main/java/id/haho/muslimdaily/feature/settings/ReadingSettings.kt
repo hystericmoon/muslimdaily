@@ -26,8 +26,17 @@ import id.haho.muslimdaily.data.settings.TranslationMode
 
 /** How a dua's phrases are laid out and filled; in Display settings and the dua page's sheet. */
 @Composable
-fun PhraseLayoutGroup(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
+fun PhraseLayoutGroup(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit, layoutAppliesNot: Boolean = false) {
     SettingsGroup(stringResource(R.string.display_phrase_layout)) {
+        if (layoutAppliesNot) {
+            // Recall always flows, so the choice is kept for the other screens but has no effect here.
+            Text(
+                stringResource(R.string.display_phrase_layout_recall),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+            )
+        }
         RadioGroup(
             options = PhraseLayout.entries,
             selected = settings.phraseLayout,
@@ -123,7 +132,7 @@ fun TranslationGroup(settings: AppSettings, update: (SettingsEditor.() -> Unit) 
  * them where they read and see the result behind the sheet. Same settings as Display settings.
  */
 @Composable
-fun ReadingSheet(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit, onDismiss: () -> Unit) {
+fun ReadingSheet(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit, layoutAppliesNot: Boolean = false, onDismiss: () -> Unit) {
     // Opens at full height: the layout, translation and text size groups are long, and a half-open sheet cut the third layout.
     GlassBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = HahoTheme.spacing.xxl)) {
@@ -134,7 +143,7 @@ fun ReadingSheet(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> U
                     .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm)
                     .semantics { heading() },
             )
-            PhraseLayoutGroup(settings, update)
+            PhraseLayoutGroup(settings, update, layoutAppliesNot)
             SettingsGroup(stringResource(R.string.display_player)) {
                 SwitchRow(
                     title = stringResource(R.string.display_show_progress),

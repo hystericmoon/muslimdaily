@@ -72,18 +72,19 @@ class RunModeUiTest {
         }
     }
 
-    private fun card() = compose.onAllNodesWithText("Ketuk kartu untuk menghitung").onFirst()
+    /** The mark button in the bar: counts on a counted dua, marks read on one read once. */
+    private fun card() = compose.onNodeWithContentDescription("Hitung")
 
     @Test
     fun tapping_the_card_counts_and_announces_progress() {
         setUp()
-        compose.onNodeWithText("0 dari 3 kali").assertIsDisplayed()
+        compose.onNodeWithText("0/3").assertIsDisplayed()
         card().performClick()
-        compose.onNodeWithText("1 dari 3 kali")
+        compose.onNodeWithText("1/3")
             .assertIsDisplayed()
             .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.LiveRegion))
         card().performClick()
-        compose.onNodeWithText("2 dari 3 kali").assertIsDisplayed()
+        compose.onNodeWithText("2/3").assertIsDisplayed()
         assertEquals(listOf(RunEffect.Tick, RunEffect.Tick), effects)
     }
 
@@ -91,7 +92,8 @@ class RunModeUiTest {
     fun reaching_the_count_completes_the_card() {
         setUp()
         repeat(3) { card().performClick() }
-        compose.onAllNodesWithText("Selesai").onFirst().assertIsDisplayed()
+        // Gold with a check at the target, and the state is spoken.
+        compose.onNodeWithContentDescription("Hitung").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Selesai"))
         assertEquals(RunEffect.ItemComplete, effects.last())
         compose.onNodeWithText("Doa 1 dari 2").assertIsDisplayed()
     }
@@ -101,14 +103,14 @@ class RunModeUiTest {
         setUp()
         card().performClick()
         card().performClick()
-        compose.onNodeWithText("Batalkan hitungan").performClick()
-        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Batalkan hitungan").performClick()
+        compose.onNodeWithText("1/3").assertIsDisplayed()
     }
 
     @Test
     fun card_without_count_is_marked_read_with_one_tap() {
         setUp(initial().copy(counts = listOf(3, 0), index = 1))
-        compose.onAllNodesWithText("Ketuk kartu setelah membaca").onFirst().performClick()
+        compose.onNodeWithContentDescription("Tandai sudah dibaca").performClick()
         assertEquals(RunEffect.SessionComplete, effects.last())
     }
 
@@ -139,11 +141,11 @@ class RunModeUiTest {
         compose.onAllNodesWithText("Baca dari hafalan").onFirst().assertIsDisplayed()
         // Counting still works while the text is hidden.
         card().performClick()
-        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
+        compose.onNodeWithText("1/3").assertIsDisplayed()
         compose.onNodeWithText("Tampilkan teks").performClick()
         assertEquals(0, revealed)
         compose.onAllNodesWithText("Baca dari hafalan").assertCountEquals(0)
-        compose.onNodeWithText("1 dari 3 kali").assertIsDisplayed()
+        compose.onNodeWithText("1/3").assertIsDisplayed()
     }
 
     @Test

@@ -16,6 +16,8 @@ import id.haho.muslimdaily.data.routine.RoutineRepository
 import id.haho.muslimdaily.data.run.RunItem
 import id.haho.muslimdaily.data.run.RunSession
 import id.haho.muslimdaily.data.run.RunSessionRepository
+import id.haho.muslimdaily.data.settings.AppSettings
+import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.memorize.Leitner
 import id.haho.muslimdaily.domain.myset.ActiveSet
@@ -58,6 +60,10 @@ data class RunUiState(
     /** The shared player's state; it belongs to a page only while it plays that page's dua. */
     val playback: PlaybackState = PlaybackState(),
     val audioSpeed: Float = 1f,
+    /** Every setting, for the Reading display sheet (layout, progress line, translation, text size). */
+    val appSettings: AppSettings = AppSettings(),
+    /** The one-time hint naming the mark-as-read check is still to be dismissed. */
+    val showMarkHint: Boolean = false,
 ) {
     /** The player's state for [page]: idle (at the chosen speed) unless it is playing that page's dua. */
     fun playbackFor(page: Int): PlaybackState {
@@ -136,7 +142,7 @@ class RunViewModel @Inject constructor(
         viewModelScope.launch {
             val s = settings.current()
             val label = routineId?.let { routines.routine(it)?.name } ?: content.eventOnce(eventId)?.label.orEmpty()
-            val prefs = ReadingPrefs(s.translationMode, s.showTransliteration)
+            val prefs = readingPrefs(s)
             // An edited routine starts afresh rather than resuming a list it no longer has.
             val routineIds = routineId?.let { routines.routine(it)?.duaIds }
             val resumed = sessions.load(eventId, today)?.takeIf { session ->
@@ -161,10 +167,17 @@ class RunViewModel @Inject constructor(
                 saved = reviews.withTwins(hifz.map { it.duaId }.toSet()),
                 fromMemory = s.runFromMemory,
                 audioSpeed = s.audioSpeed,
+                appSettings = s,
+                showMarkHint = !s.runMarkHintSeen,
             )
             launch {
                 settings.settings.collect { st ->
-                    _state.update { it?.copy(autoAdvance = st.autoAdvance, haptics = st.haptics, fromMemory = st.runFromMemory, audioSpeed = st.audioSpeed) }
+                    _state.update {
+                        it?.copy(
+                            autoAdvance = st.autoAdvance, haptics = st.haptics, fromMemory = st.runFromMemory, audioSpeed = st.audioSpeed,
+                            prefs = readingPrefs(st), appSettings = st, showMarkHint = !st.runMarkHintSeen,
+                        )
+                    }
                 }
             }
             launch { audio.state.collect { p -> _state.update { it?.copy(playback = p) } } }
@@ -299,6 +312,18 @@ class RunViewModel @Inject constructor(
     override fun onCleared() {
         stopAudio()
     }
+
+    /** The Reading display sheet's choices: dua layout, progress line, translation, text size. Kept for every dua. */
+    fun updateReading(block: SettingsEditor.() -> Unit) {
+        viewModelScope.launch { settings.update(block) }
+    }
+
+    fun dismissMarkHint() {
+        viewModelScope.launch { settings.update { runMarkHintSeen = true } }
+    }
+
+    private fun readingPrefs(s: AppSettings) =
+        ReadingPrefs(s.translationMode, s.showTransliteration, s.phraseLayout, s.phraseFill, s.hideFillWhilePlaying)
 
     fun setFromMemory(enabled: Boolean) {
         viewModelScope.launch { settings.update { runFromMemory = enabled } }

@@ -49,6 +49,9 @@ import id.haho.muslimdaily.data.settings.PhraseFill
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.PlayerControls
+import id.haho.muslimdaily.core.designsystem.component.GlassBarHost
+import id.haho.muslimdaily.feature.duas.components.rememberFollowPhrase
+import id.haho.muslimdaily.core.designsystem.component.GlassBarSurface
 import id.haho.muslimdaily.feature.duas.components.SPEEDS
 import id.haho.muslimdaily.feature.settings.ReadingSheet
 import androidx.compose.runtime.mutableStateOf
@@ -173,11 +176,8 @@ fun ListenOnlyContent(
 ) {
     var readingSheet by rememberSaveable { mutableStateOf(false) }
     if (readingSheet) ReadingSheet(s.settings, onUpdateReading) { readingSheet = false }
-    Column(
-        Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(HahoTheme.dimens.screenGutter),
-        verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xl),
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+    Column(Modifier.fillMaxSize().statusBarsPadding()) {
+        Row(Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
             Text(
                 stringResource(R.string.memorize_listen_only),
@@ -189,54 +189,72 @@ fun ListenOnlyContent(
                 Icon(painterResource(R.drawable.ic_text_fields), stringResource(R.string.dua_reading_settings))
             }
         }
-        // A long dua scrolls in the space between the title and the controls. Before, it took all the height,
-        // the controls column was squeezed to nothing and the play button drew as a clipped pill over the note.
-        Box(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())) {
-            val fill = if (s.playback.isPlaying && s.settings.hideFillWhilePlaying) PhraseFill.NONE else s.settings.phraseFill
-            // The bar below skips parts of the queue, not phrases, so focus mode shows the phrase alone, no Back and Next.
-            PhraseLines(
-                s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AdwamTheme.arabic.large(s.dua.isQuran),
-                layout = s.settings.phraseLayout, fill = fill, focusNav = false,
-            )
-        }
-        Column(Modifier.fillMaxWidth()) {
-            val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
-            // Whose turn it is, spoken to TalkBack as it changes. Nothing before the start: the play button is the cue.
-            val status = when {
-                s.playback.ended -> stringResource(R.string.memorize_listen_done)
-                s.playback.inPause -> stringResource(R.string.memorize_your_turn)
-                loaded -> stringResource(R.string.memorize_listen_now)
-                else -> null
-            }
-            if (status != null) {
-                Text(
-                    status,
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(bottom = HahoTheme.spacing.sm).semantics { liveRegion = LiveRegionMode.Polite },
+        val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
+        // The text scrolls under the glass bar and pads its end by the bar's height, so a long dua is never cut off by the controls.
+        GlassBarHost(
+            modifier = Modifier.weight(1f),
+            bar = {
+                GlassBarSurface(insets = true) {
+                    Column(Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm)) {
+                        // Whose turn it is, spoken to TalkBack as it changes. Nothing before the start: the play button is the cue.
+                        val status = when {
+                            s.playback.ended -> stringResource(R.string.memorize_listen_done)
+                            s.playback.inPause -> stringResource(R.string.memorize_your_turn)
+                            loaded -> stringResource(R.string.memorize_listen_now)
+                            else -> null
+                        }
+                        if (status != null) {
+                            Text(
+                                status,
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth().padding(bottom = HahoTheme.spacing.sm).semantics { liveRegion = LiveRegionMode.Polite },
+                            )
+                        }
+                        PlayerControls(
+                            isPlaying = s.playback.isPlaying,
+                            speed = s.settings.memorize.speed,
+                            repeat = s.playback.repeat,
+                            enabled = s.dua.audio != null,
+                            onToggle = { if (loaded) onToggle() else onStart() },
+                            onSpeed = onSpeed,
+                            onRepeat = onRepeat,
+                            onPreviousPhrase = { onSkip(-1) },
+                            onNextPhrase = { onSkip(1) },
+                            canPrevious = s.canPrevious,
+                            canNext = s.canNext,
+                            phraseCount = s.dua.phrases.size,
+                            activePhrase = s.playback.activePhrase,
+                            speeds = LISTEN_ONLY_SPEEDS,
+                            showTrack = s.settings.showPhraseTrack,
+                            trackSeekable = false,
+                            previousLabel = stringResource(R.string.player_previous_part),
+                            nextLabel = stringResource(R.string.player_next_part),
+                        )
+                    }
+                }
+            },
+        ) { barHeight ->
+            val scroll = rememberScrollState()
+            // The text scrolls to the phrase that plays (the queue's current clip), above the bar.
+            val follow = rememberFollowPhrase(scroll, if (loaded) s.playback.activePhrase else -1, barHeight)
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .then(follow.viewportModifier)
+                    .verticalScroll(scroll)
+                    .padding(HahoTheme.dimens.screenGutter)
+                    .padding(bottom = barHeight),
+                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xl),
+            ) {
+                val fill = if (s.playback.isPlaying && s.settings.hideFillWhilePlaying) PhraseFill.NONE else s.settings.phraseFill
+                // The bar below skips parts of the queue, not phrases, so focus mode shows the phrase alone, no Back and Next.
+                PhraseLines(
+                    s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AdwamTheme.arabic.large(s.dua.isQuran),
+                    layout = s.settings.phraseLayout, fill = fill, focusNav = false, follow = follow,
                 )
+                InfoNote(stringResource(R.string.memorize_listen_only_note), icon = R.drawable.ic_mobile_off)
             }
-            PlayerControls(
-                isPlaying = s.playback.isPlaying,
-                speed = s.settings.memorize.speed,
-                repeat = s.playback.repeat,
-                enabled = s.dua.audio != null,
-                onToggle = { if (loaded) onToggle() else onStart() },
-                onSpeed = onSpeed,
-                onRepeat = onRepeat,
-                onPreviousPhrase = { onSkip(-1) },
-                onNextPhrase = { onSkip(1) },
-                canPrevious = s.canPrevious,
-                canNext = s.canNext,
-                phraseCount = s.dua.phrases.size,
-                activePhrase = s.playback.activePhrase,
-                speeds = LISTEN_ONLY_SPEEDS,
-                showTrack = s.settings.showPhraseTrack,
-                trackSeekable = false,
-                previousLabel = stringResource(R.string.player_previous_part),
-                nextLabel = stringResource(R.string.player_next_part),
-            )
         }
-        InfoNote(stringResource(R.string.memorize_listen_only_note), icon = R.drawable.ic_mobile_off)
     }
 }

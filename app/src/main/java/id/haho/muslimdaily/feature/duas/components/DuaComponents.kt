@@ -19,7 +19,7 @@ import androidx.compose.material3.ripple
 import id.haho.design.glass.pressScale
 import id.haho.design.glass.GlassBottomSheet
 import id.haho.design.glass.GlassIconButton
-import id.haho.design.glass.DockedBar
+import id.haho.muslimdaily.core.designsystem.component.GlassBarSurface
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
@@ -352,11 +352,13 @@ fun PlayerBar(
     onSeekPhrase: (Int) -> Unit = {},
     showTrack: Boolean = true,
 ) {
-    // Docked on the bottom navigation, full width, like a media mini-player.
-    DockedBar(modifier) {
+    // Full-width glass at the bottom edge, like a media mini-player; the text scrolls behind it (see GlassBarHost).
+    GlassBarSurface(modifier, insets = true) {
         PlayerControls(
             isPlaying, speed, repeat, enabled, onToggle, onSpeed, onRepeat, onPreviousPhrase, onNextPhrase,
-            canPrevious, canNext, phraseCount = phraseCount, activePhrase = activePhrase, onSeekPhrase = onSeekPhrase,
+            canPrevious, canNext,
+            modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm),
+            phraseCount = phraseCount, activePhrase = activePhrase, onSeekPhrase = onSeekPhrase,
             showTrack = showTrack,
         )
     }

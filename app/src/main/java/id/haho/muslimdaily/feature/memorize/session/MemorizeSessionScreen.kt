@@ -34,6 +34,10 @@ import id.haho.design.glass.Glass
 import id.haho.muslimdaily.navigation.NavLabel
 import androidx.compose.ui.platform.LocalDensity
 import id.haho.design.glass.GlassIconButton
+import id.haho.muslimdaily.core.designsystem.component.GlassBarHost
+import id.haho.muslimdaily.feature.duas.components.FollowPhrase
+import id.haho.muslimdaily.feature.duas.components.rememberFollowPhrase
+import id.haho.muslimdaily.core.designsystem.component.GlassBarSurface
 import id.haho.design.glass.GlassOutlinedButton
 import id.haho.design.glass.GlassTonalButton
 import id.haho.design.glass.GlassButton
@@ -127,8 +131,7 @@ data class MemorizeActions(
     val onListenRepeat: () -> Unit = {},
     val onUpdateReading: (SettingsEditor.() -> Unit) -> Unit = {},
     val onBuild: () -> Unit = {},
-    val onAb: () -> Unit = {},
-    val onStopAb: () -> Unit = {},
+    val onBuildRepeat: (Boolean) -> Unit = {},
     val onBuildSkip: (Int) -> Unit = {},
     val onSetAb: (IntRange) -> Unit = {},
     val onRecallGaps: () -> Unit = {},
@@ -173,8 +176,7 @@ fun MemorizeSessionRoute(
                 onListenRepeat = viewModel::cycleListenRepeat,
                 onUpdateReading = viewModel::updateReading,
                 onBuild = viewModel::playBuild,
-                onAb = viewModel::playAb,
-                onStopAb = viewModel::stopAb,
+                onBuildRepeat = viewModel::setBuildRepeat,
                 onBuildSkip = viewModel::skipBuildChunk,
                 onSetAb = viewModel::setAb,
                 onRecallGaps = viewModel::playRecallWithGaps,
@@ -224,7 +226,7 @@ fun MemorizeSessionScreen(
     var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     // Reading display: dua layout, progress line, translation and text size, from the top bar on every step.
     var readingSheet by rememberSaveable { mutableStateOf(false) }
-    if (readingSheet) ReadingSheet(state.appSettings, actions.onUpdateReading) { readingSheet = false }
+    if (readingSheet) ReadingSheet(state.appSettings, actions.onUpdateReading, layoutAppliesNot = state.step == Step.RECALL) { readingSheet = false }
     if (!state.advanced) {
         BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
             val dockMax = maxHeight * DOCK_MAX_SHARE
@@ -239,32 +241,40 @@ fun MemorizeSessionScreen(
         val dockMax = maxHeight * DOCK_MAX_SHARE
         Column(Modifier.fillMaxSize()) {
             SessionTopBar(state, actions, meaning, onReading = { readingSheet = true }) { meaning = !meaning }
-            Column(
-                Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(HahoTheme.dimens.screenGutter),
-                verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
-            ) {
-                val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
-                InfoNote(stringResource(hint))
-                when (state.step) {
-                    Step.LISTEN -> ListenStep(state, actions)
-                    Step.BUILD -> BuildStep(state, bar = true)
-                    Step.RECALL -> RecallStep(state, talkBack, meaning, bar = true)
-                    Step.CHECK -> CheckStep(state, actions)
-                }
-            }
             // The dock starts collapsed on every step: the step's main action and status stay in view, the chevron opens
             // the rest. Back closes it first. At 200% font the open dock takes at most 60% of the screen and scrolls inside.
             var dockOpen by rememberSaveable(state.dua.id, state.step) { mutableStateOf(false) }
             BackHandler(enabled = dockOpen) { dockOpen = false }
             val toggle: @Composable () -> Unit = { DockToggle(dockOpen) { dockOpen = !dockOpen } }
-            when (state.step) {
-                Step.LISTEN -> Dock(false, dockMax, listenDock(state, actions), null) // the media bar is the whole dock
-                Step.BUILD -> Dock(dockOpen, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(dockOpen, dockMax, recallBarDock(state, actions, toggle), recallMore(state, actions, talkBack))
-                Step.CHECK -> Unit // the ratings are the end of the content, see CheckStep
+            val dock: (@Composable () -> Unit)? = when (state.step) {
+                Step.LISTEN -> {{ Dock(false, dockMax, listenDock(state, actions), null) }} // the media bar is the whole dock
+                Step.BUILD -> {{ Dock(dockOpen, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it }) }}
+                Step.RECALL -> {{ Dock(dockOpen, dockMax, recallBarDock(state, actions, toggle), recallMore(state, actions, talkBack)) }}
+                Step.CHECK -> null // the ratings are the end of the content, see CheckStep
+            }
+            // The text runs under the glass dock and pads its end by the dock's height, so the last line scrolls clear of it.
+            GlassBarHost(bar = dock, modifier = Modifier.weight(1f)) { barHeight ->
+                val scroll = rememberScrollState()
+                // Listen: the text scrolls to the phrase that plays, above the dock.
+                val follow = rememberFollowPhrase(scroll, if (state.step == Step.LISTEN) state.playback.activePhrase else -1, barHeight)
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .then(follow.viewportModifier)
+                        .verticalScroll(scroll)
+                        .padding(HahoTheme.dimens.screenGutter)
+                        .padding(bottom = barHeight),
+                    verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
+                ) {
+                    val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
+                    InfoNote(stringResource(hint))
+                    when (state.step) {
+                        Step.LISTEN -> ListenStep(state, actions, follow)
+                        Step.BUILD -> BuildStep(state, bar = true)
+                        Step.RECALL -> RecallStep(state, talkBack, meaning, bar = true)
+                        Step.CHECK -> CheckStep(state, actions)
+                    }
+                }
             }
             SessionNavBar(state.step, actions.onStep)
         }
@@ -366,28 +376,17 @@ internal fun Dock(
     maxHeight: Dp,
     collapsed: @Composable ColumnScope.() -> Unit,
     more: (@Composable ColumnScope.() -> Unit)?,
+    /** Pad the gesture bar: on for a screen with no tab bar under the dock. */
+    insets: Boolean = false,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        shape = MaterialTheme.shapes.extraLarge.copy(bottomStart = CornerSize(0.dp), bottomEnd = CornerSize(0.dp)),
-        shadowElevation = 6.dp,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
+    GlassBarSurface(expanded = expanded && more != null, insets = insets) {
         Column(
             Modifier
                 .heightIn(max = maxHeight)
                 .animateContentSize()
                 .padding(horizontal = HahoTheme.dimens.screenGutter)
-                .padding(top = HahoTheme.spacing.sm, bottom = HahoTheme.spacing.md),
+                .padding(vertical = HahoTheme.spacing.sm),
         ) {
-            // Decorative: the toggle button is the control, and a drag would break WCAG 2.5.7.
-            Box(
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .size(width = 32.dp, height = 4.dp)
-                    .background(MaterialTheme.colorScheme.outline, CircleShape),
-            )
-            Spacer(Modifier.height(HahoTheme.spacing.sm))
             collapsed()
             if (expanded && more != null) {
                 Column(
@@ -449,12 +448,13 @@ internal fun ArabicCard(
     layout: PhraseLayout = PhraseLayout.FOCUS,
     focusNav: Boolean = true,
     onPlayFrom: ((Int) -> Unit)? = null,
+    follow: FollowPhrase? = null,
 ) {
     GlassCard(shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.padding(HahoTheme.spacing.xl)) {
             val style = AdwamTheme.arabic.large(state.dua.isQuran)
             if (focus) {
-                PhraseLines(state.dua.arabic, state.dua.phrases, active, style, layout = layout, focusNav = focusNav, onPlayFrom = onPlayFrom)
+                PhraseLines(state.dua.arabic, state.dua.phrases, active, style, layout = layout, focusNav = focusNav, onPlayFrom = onPlayFrom, follow = follow)
             } else {
                 HighlightedArabic(state.dua.arabic, state.dua.phrases, active, style)
             }
@@ -471,7 +471,7 @@ internal fun RestartButton(onStart: () -> Unit) {
 }
 
 @Composable
-internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null) {
+internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null, follow: FollowPhrase? = null) {
     // With the media bar below, the card needs no Back/Next of its own. Without audio there is no bar, so it keeps them.
     ArabicCard(
         state,
@@ -479,6 +479,7 @@ internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null
         layout = if (actions != null) state.phraseLayout else PhraseLayout.FOCUS,
         focusNav = actions == null || !state.hasAudio,
         onPlayFrom = if (actions != null && state.hasAudio) actions.onListenFrom else null,
+        follow = follow,
     )
     if (!state.hasAudio) InfoNote(stringResource(R.string.dua_no_audio), icon = R.drawable.ic_volume_off)
     if (state.playback.failed) {
@@ -560,15 +561,23 @@ internal fun BuildStep(state: MemorizeUiState, bar: Boolean = false) {
     if (state.hasAudio && state.dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
 }
 
-/** Build's transport is the standard media bar: repeat a part (the A–B loop), previous and next segment, play, speed. */
+/**
+ * Build's transport is the standard media bar: repeat (loop what plays until stopped), previous and next segment, play, speed.
+ * Play plays the picked part, the whole dua by default (the cumulative build).
+ */
 private fun buildDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     val building = state.playing == Playing.BUILD && !state.playback.ended
-    val looping = state.playing == Playing.AB && !state.playback.ended
-    val loaded = building || looping
+    val loaded = building || (state.playing == Playing.AB && !state.playback.ended)
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             if (loaded) {
                 BuildProgress(state)
+            } else if (partPicked(state)) {
+                Text(
+                    stringResource(R.string.memorize_build_part, state.ab.first + 1, state.ab.last + 1),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             } else {
                 Text(stringResource(R.string.memorize_build_start), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -576,29 +585,20 @@ private fun buildDock(state: MemorizeUiState, actions: MemorizeActions, toggle: 
         toggle()
     }
     val chunk = buildChunk(state)
-    val canLoop = state.hasAudio && state.segmented && state.dua.phrases.size > 1
     PlayerControls(
         isPlaying = loaded && state.playback.isPlaying,
         speed = state.settings.speed,
-        repeat = looping,
+        repeat = state.buildRepeat,
         enabled = state.hasAudio,
         onToggle = if (loaded) actions.onToggle else actions.onBuild,
         onSpeed = actions.onSpeed,
-        onRepeat = { on -> if (on) actions.onAb() else actions.onStopAb() },
+        onRepeat = actions.onBuildRepeat,
         onPreviousPhrase = { actions.onBuildSkip(-1) },
         onNextPhrase = { actions.onBuildSkip(1) },
         canPrevious = building && chunk > 0,
         canNext = building && chunk < buildChunks(state) - 1,
         phraseCount = state.dua.phrases.size,
         activePhrase = if (loaded) state.playback.activePhrase else -1,
-        repeatControl = {
-            RepeatToggle(
-                repeat = looping,
-                enabled = canLoop,
-                onRepeat = { on -> if (on) actions.onAb() else actions.onStopAb() },
-                description = stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
-            )
-        },
         speeds = LISTEN_SPEEDS,
         showTrack = state.appSettings.showPhraseTrack,
         trackSeekable = false,
@@ -606,6 +606,9 @@ private fun buildDock(state: MemorizeUiState, actions: MemorizeActions, toggle: 
         nextLabel = stringResource(R.string.player_next_segment),
     )
 }
+
+/** A part of the dua is picked (not the whole), so play plays that part. */
+private fun partPicked(state: MemorizeUiState) = state.segmented && state.ab != AbSelection.whole(state.dua.phrases.size).range
 
 /** Build repeats each segment [MemorizeSettings.loopsPerChunk] times, a play and a pause per loop. */
 private fun buildChunks(state: MemorizeUiState) = if (state.segmented && state.playing == Playing.BUILD) state.dua.phrases.count { it.segment != null } else 1
@@ -629,29 +632,31 @@ private fun buildMore(
     )
 }
 
-/** Whose turn it is and where in the build: a live region, so TalkBack announces each change. */
+/** What plays and whose turn it is, or "Paused": a live region, so TalkBack announces each change. */
 @Composable
 internal fun BuildProgress(state: MemorizeUiState) {
     val loops = state.settings.loopsPerChunk.coerceIn(1, 10)
     val i = state.playback.sequenceIndex.coerceAtLeast(0)
-    val chunk = buildChunk(state)
-    val loop = (i % (2 * loops)) / 2 + 1
+    val part = state.playing == Playing.AB
     val chunks = buildChunks(state)
+    val detail = if (part) {
+        stringResource(R.string.memorize_build_part_progress, state.ab.first + 1, state.ab.last + 1, (i / 2 + 1).coerceAtMost(loops), loops)
+    } else {
+        stringResource(R.string.memorize_build_progress, (buildChunk(state) + 1).coerceAtMost(chunks), chunks, (i % (2 * loops)) / 2 + 1, loops)
+    }
+    val title = when {
+        !state.playback.isPlaying -> stringResource(R.string.memorize_paused)
+        state.playback.inPause -> stringResource(R.string.memorize_your_turn)
+        else -> stringResource(R.string.memorize_listen_now)
+    }
     Column(Modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
-        Text(
-            if (state.playback.inPause) stringResource(R.string.memorize_your_turn) else stringResource(R.string.memorize_listen_now),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        Text(
-            stringResource(R.string.memorize_build_progress, (chunk + 1).coerceAtMost(chunks), chunks, loop, loops),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        Text(title, style = MaterialTheme.typography.titleMedium)
+        Text(detail, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
 /**
- * Repeat a part: the dua's phrases are the targets. The first tap sets one end, the second the other
+ * Pick the part Play plays: the dua's phrases are the targets. The first tap sets one end, the second the other
  * (either order), a third starts over. Taps only, no dragging (WCAG 2.5.7).
  */
 @Composable
@@ -786,9 +791,6 @@ internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Bool
             ),
             firstLetters = state.firstLetters,
             modifier = Modifier.padding(HahoTheme.spacing.xl),
-            layout = if (bar) state.phraseLayout else PhraseLayout.INLINE,
-            // One phrase at a time follows the reader: the phrase with the next hidden word, else the one revealed last.
-            focusPhrase = (Recall.nextHidden(state.words, state.hiddenWords) ?: state.lastRevealed)?.phrase ?: 0,
         )
     }
     // The word shown last by "reveal as you go" is announced as Arabic text (a stateDescription can't
@@ -838,9 +840,10 @@ internal fun recallBarDock(state: MemorizeUiState, actions: MemorizeActions, tog
     }
     val next: (@Composable (Modifier) -> Unit)? = if (hasHints(state)) {
         { m ->
-            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m) {
-                Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = HahoTheme.spacing.xs))
+            // "Next" in the bar; TalkBack still says what it opens.
+            val spoken = stringResource(R.string.memorize_reveal_next_description)
+            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m.semantics { contentDescription = spoken }) {
+                Text(stringResource(R.string.memorize_reveal_next))
             }
         }
     } else {
@@ -918,9 +921,9 @@ internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, showSt
     val stacked = LocalDensity.current.fontScale > STACK_FONT_SCALE
     val buttons: @Composable (Modifier) -> Unit = { m ->
         if (hasHints(state)) {
-            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m) {
-                Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = HahoTheme.spacing.sm))
+            val spoken = stringResource(R.string.memorize_reveal_next_description)
+            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m.semantics { contentDescription = spoken }) {
+                Text(stringResource(R.string.memorize_reveal_next))
             }
         }
         GlassButton(onClick = actions.onFinishRecital, modifier = m) { Text(stringResource(R.string.memorize_recited)) }

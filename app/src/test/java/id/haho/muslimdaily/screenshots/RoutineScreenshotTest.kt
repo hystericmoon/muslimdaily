@@ -183,7 +183,7 @@ class RoutineScreenshotTest {
         )
     }
 
-    /** Run with audio: the dua plays from the dock, its phrase highlighted; repeat, phrases and speed open. */
+    /** Run with audio: the dua plays from the bar, its phrase highlighted. */
     @Test
     @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
     fun runAudioPlaying() = captureVariants("175-run-audio-playing") {
@@ -191,7 +191,6 @@ class RoutineScreenshotTest {
         RunScreen(
             s.copy(playback = PlaybackState(duaId = s.duas[1].id, isPlaying = true, activePhrase = 1)),
             RunActions(),
-            dockExpanded = true,
         )
     }
 

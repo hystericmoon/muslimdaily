@@ -3,6 +3,11 @@ package id.haho.muslimdaily.feature.duas.detail
 import id.haho.design.glass.GlassCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import id.haho.muslimdaily.core.designsystem.component.GlassBarHost
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -134,7 +139,6 @@ fun DuaDetailRoute(
     AdwamScreen(
         title = title,
         onBack = onBack,
-        snackbarHostState = snackbar,
         actions = {
             // Reading display: layout, phrase fill, translation and text size, adjusted in place.
             IconButton(onClick = { readingSheet = true }) {
@@ -153,48 +157,55 @@ fun DuaDetailRoute(
                 Icon(painterResource(R.drawable.ic_flag), stringResource(R.string.settings_report))
             }
         },
-        bottomBar = {
-            if (s != null) {
-                PlayerBar(
-                    isPlaying = s.playback.isPlaying,
-                    speed = s.playback.speed,
-                    repeat = s.playback.repeat,
-                    enabled = s.dua.audio != null,
-                    onToggle = { viewModel.togglePlay(title) },
-                    onSpeed = viewModel::setSpeed,
-                    onRepeat = viewModel::setRepeat,
-                    onPreviousPhrase = { viewModel.skipPhrase(-1, title) },
-                    onNextPhrase = { viewModel.skipPhrase(1, title) },
-                    canPrevious = s.playback.activePhrase > 0,
-                    canNext = s.playback.activePhrase < s.dua.phrases.lastIndex,
-                    phraseCount = s.dua.phrases.size,
-                    activePhrase = s.playback.activePhrase,
-                    onSeekPhrase = { viewModel.playFrom(it, title) },
-                    showTrack = s.settings.showPhraseTrack,
-                )
-            }
-        },
     ) {
         if (s != null) {
-            DuaDetailContent(
-                state = s,
-                actions = DuaDetailActions(
-                    onToggleHifz = {
-                        if (s.inHifz) confirmRemove = true else addToHifz()
-                    },
-                    onPlayFrom = { viewModel.playFrom(it, title) },
-                    onSaveNote = viewModel::saveNote,
-                    onSetInRoutine = viewModel::setInRoutine,
-                    onNewRoutine = { onNewRoutine(s.dua.id) },
-                    onDismissToggleHint = viewModel::dismissToggleHint,
-                ),
-            )
+            // The player bar is glass over the text (it scrolls behind, and pads its end by the bar's height). The snackbar
+            // sits above the bar, so the screen hosts it here instead of in the scaffold.
+            GlassBarHost(
+                bar = {
+                    PlayerBar(
+                        isPlaying = s.playback.isPlaying,
+                        speed = s.playback.speed,
+                        repeat = s.playback.repeat,
+                        enabled = s.dua.audio != null,
+                        onToggle = { viewModel.togglePlay(title) },
+                        onSpeed = viewModel::setSpeed,
+                        onRepeat = viewModel::setRepeat,
+                        onPreviousPhrase = { viewModel.skipPhrase(-1, title) },
+                        onNextPhrase = { viewModel.skipPhrase(1, title) },
+                        canPrevious = s.playback.activePhrase > 0,
+                        canNext = s.playback.activePhrase < s.dua.phrases.lastIndex,
+                        phraseCount = s.dua.phrases.size,
+                        activePhrase = s.playback.activePhrase,
+                        onSeekPhrase = { viewModel.playFrom(it, title) },
+                        showTrack = s.settings.showPhraseTrack,
+                    )
+                },
+            ) { barHeight ->
+                Box(Modifier.fillMaxSize()) {
+                    DuaDetailContent(
+                        state = s,
+                        actions = DuaDetailActions(
+                            onToggleHifz = {
+                                if (s.inHifz) confirmRemove = true else addToHifz()
+                            },
+                            onPlayFrom = { viewModel.playFrom(it, title) },
+                            onSaveNote = viewModel::saveNote,
+                            onSetInRoutine = viewModel::setInRoutine,
+                            onNewRoutine = { onNewRoutine(s.dua.id) },
+                            onDismissToggleHint = viewModel::dismissToggleHint,
+                        ),
+                        bottomPadding = barHeight,
+                    )
+                    SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter).padding(bottom = barHeight))
+                }
+            }
         }
     }
 }
 
 @Composable
-fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntryOpen: Boolean = false) {
+fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntryOpen: Boolean = false, bottomPadding: Dp = 0.dp) {
     var routineSheet by remember { mutableStateOf(false) }
     if (routineSheet) RoutineSheet(state.dua.id, state.routines, actions.onSetInRoutine, actions.onNewRoutine) { routineSheet = false }
     val dua = state.dua
@@ -203,7 +214,7 @@ fun DuaDetailContent(state: DuaDetailState, actions: DuaDetailActions, fullEntry
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = HahoTheme.dimens.screenGutter)
-            .padding(bottom = HahoTheme.spacing.xxl),
+            .padding(bottom = HahoTheme.spacing.xxl + bottomPadding),
         verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
     ) {
         GlassCard(shape = MaterialTheme.shapes.extraLarge) {

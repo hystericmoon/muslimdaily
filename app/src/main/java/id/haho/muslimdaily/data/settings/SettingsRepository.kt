@@ -166,6 +166,7 @@ class SettingsRepository @Inject constructor(
             hijriConfirmedFor = this[K.hijriConfirmedFor] ?: d.hijriConfirmedFor,
             widgetAlarmNoteDismissed = this[K.widgetAlarmNoteDismissed] ?: d.widgetAlarmNoteDismissed,
             duaToggleHintSeen = this[K.duaToggleHintSeen] ?: d.duaToggleHintSeen,
+            runMarkHintSeen = this[K.runMarkHintSeen] ?: d.runMarkHintSeen,
             memorize = MemorizeSettings(
                 loopsPerChunk = this[K.memLoops] ?: m.loopsPerChunk,
                 pauseMode = enumOr(K.memPauseMode, m.pauseMode),
@@ -220,6 +221,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
     var widgetAlarmNoteDismissed: Boolean by key(K.widgetAlarmNoteDismissed, false)
     var duaToggleHintSeen: Boolean by key(K.duaToggleHintSeen, false)
+    var runMarkHintSeen: Boolean by key(K.runMarkHintSeen, false)
     var memLoops: Int by key(K.memLoops, 3)
     var memPauseMode: PauseMode by enumKey(K.memPauseMode, PauseMode.AUTO)
     var memPauseSeconds: Int by key(K.memPauseSeconds, 3)
@@ -324,6 +326,7 @@ internal object K {
     val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")
     val widgetAlarmNoteDismissed = booleanPreferencesKey("widget_alarm_note_dismissed")
     val duaToggleHintSeen = booleanPreferencesKey("dua_toggle_hint_seen")
+    val runMarkHintSeen = booleanPreferencesKey("run_mark_hint_seen")
     val memLoops = intPreferencesKey("mem_loops")
     val memPauseMode = stringPreferencesKey("mem_pause_mode")
     val memPauseSeconds = intPreferencesKey("mem_pause_seconds")

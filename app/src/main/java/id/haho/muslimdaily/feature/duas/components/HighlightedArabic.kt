@@ -44,6 +44,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -112,10 +117,20 @@ private fun HighlightedText(
     color: Color,
     backgrounds: List<PhraseBackground> = emptyList(),
     dashed: List<IntRange> = emptyList(),
+    follow: FollowPhrase? = null,
 ) {
     val colors = AdwamTheme.colors
     val dashColor = MaterialTheme.colorScheme.onSurfaceVariant
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+    var coordinates by remember { mutableStateOf<LayoutCoordinates?>(null) }
+    // The lines the active range covers, in the window, for the scrolling parent.
+    fun reportRange() {
+        val l = layout ?: return
+        val c = coordinates ?: return
+        if (follow == null || range == null || range.isEmpty() || !c.isAttached) return
+        val top = c.positionInRoot().y
+        follow.report(Rect(0f, top + l.getLineTop(l.getLineForOffset(range.first)), c.size.width.toFloat(), top + l.getLineBottom(l.getLineForOffset(range.last))))
+    }
     val density = LocalDensity.current
     val underline = with(density) { AdwamDimens.highlightUnderline.toPx() }
     val radius = with(density) { HahoTheme.spacing.xs.toPx() }
@@ -127,9 +142,10 @@ private fun HighlightedText(
         text = annotated,
         style = style,
         color = color,
-        onTextLayout = { layout = it },
+        onTextLayout = { layout = it; reportRange() },
         modifier = modifier
             .fillMaxWidth()
+            .onGloballyPositioned { coordinates = it; reportRange() }
             .drawBehind {
                 val l = layout ?: return@drawBehind
                 backgrounds.forEach { bg ->
@@ -199,13 +215,15 @@ fun PhraseLines(
     onPlayFrom: ((Int) -> Unit)? = null,
     /** False when the player bar below has the phrase track and previous/next: focus mode shows the phrase alone. */
     focusNav: Boolean = true,
+    /** Told where the active phrase is, so a scrolling parent can keep it in view. */
+    follow: FollowPhrase? = null,
 ) {
     when {
         phrases.size < 2 -> HighlightedArabic(text, phrases, activePhrase, style, modifier)
-        layout == PhraseLayout.INLINE -> PhraseFlow(phrases, activePhrase, style, modifier, fill, onPlayFrom)
+        layout == PhraseLayout.INLINE -> PhraseFlow(phrases, activePhrase, style, modifier, fill, onPlayFrom, follow)
         // One phrase on screen has nothing to tell apart, so focus mode draws no fill.
         layout == PhraseLayout.FOCUS -> PhraseFocus(phrases, activePhrase, style, modifier, onPlayFrom, focusNav)
-        else -> PhraseColumn(phrases, activePhrase, style, modifier, fill, onPlayFrom)
+        else -> PhraseColumn(phrases, activePhrase, style, modifier, fill, onPlayFrom, follow)
     }
 }
 
@@ -232,11 +250,16 @@ private fun PhraseColumn(
     modifier: Modifier,
     fill: PhraseFill,
     onPlayFrom: ((Int) -> Unit)?,
+    follow: FollowPhrase? = null,
 ) {
     val gap = if (fill == PhraseFill.BUBBLES) HahoTheme.spacing.sm else HahoTheme.spacing.xs
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(gap)) {
         phrases.forEach { phrase ->
-            PhraseRow(phrase, phrase.index == activePhrase, style, onPlayFrom, background = phraseBackground(fill, phrase.index), bubble = fill == PhraseFill.BUBBLES)
+            PhraseRow(
+                phrase, phrase.index == activePhrase, style, onPlayFrom,
+                modifier = if (follow != null && phrase.index == activePhrase) Modifier.onGloballyPositioned { follow.report(it.boundsInRoot()) } else Modifier,
+                background = phraseBackground(fill, phrase.index), bubble = fill == PhraseFill.BUBBLES,
+            )
         }
     }
 }
@@ -320,6 +343,7 @@ private fun PhraseFlow(
     modifier: Modifier,
     fill: PhraseFill,
     onPlayFrom: ((Int) -> Unit)?,
+    follow: FollowPhrase? = null,
 ) {
     val colors = AdwamTheme.colors
     val markColor = MaterialTheme.colorScheme.primary
@@ -362,7 +386,7 @@ private fun PhraseFlow(
             }
         }
     }
-    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current, backgrounds, dashed)
+    HighlightedText(annotated, activeRange, style, modifier, androidx.compose.material3.LocalContentColor.current, backgrounds, dashed, follow)
 }
 
 /**

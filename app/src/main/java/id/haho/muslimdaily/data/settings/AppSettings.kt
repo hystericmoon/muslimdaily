@@ -149,6 +149,8 @@ data class AppSettings(
     val widgetAlarmNoteDismissed: Boolean = false,
     /** The reader dismissed the one-time hint naming the Memorize and routine icons on a dua. */
     val duaToggleHintSeen: Boolean = false,
+    /** The reader dismissed the one-time hint on the Routine screen's mark-as-read check. */
+    val runMarkHintSeen: Boolean = false,
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )
