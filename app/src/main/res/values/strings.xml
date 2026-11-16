@@ -392,7 +392,7 @@
     <string name="memorize_step_check">Cek</string>
     <string name="memorize_hint_listen">Dengarkan doa lengkap dua kali sambil membaca teksnya.</string>
     <string name="memorize_hint_build">Potongan bertambah satu frasa setiap kali. Setelah tiap putaran, ulangi dengan suara pada jeda.</string>
-    <string name="memorize_hint_recall">Baca dari ingatan, buka kata berikutnya bila lupa, lalu tekan Selesai membaca. Bila lancar tanpa bantuan, lebih banyak kata disembunyikan.</string>
+    <string name="memorize_hint_recall">Baca dari ingatan, buka kata berikutnya bila lupa, lalu tekan Selesai. Bila lancar tanpa bantuan, lebih banyak kata disembunyikan.</string>
     <string name="memorize_hint_review">Baca dari ingatan dulu dengan petunjuk di bawah, lalu cek teks lengkapnya.</string>
     <string name="memorize_cue_meaning">Arti</string>
     <string name="memorize_hints_hidden">Petunjuk · %1$d%% disembunyikan</string>
@@ -405,7 +405,8 @@
     <string name="memorize_fade_from_end">Dari akhir</string>
     <string name="memorize_first_letters">Tampilkan huruf awal</string>
     <string name="memorize_reveal_next">Buka kata</string>
-    <string name="memorize_recited">Selesai membaca</string>
+    <string name="memorize_recited">Selesai</string>
+    <string name="memorize_recited_description">Selesai membaca</string>
     <string name="memorize_stage">Tahap %1$d dari %2$d</string>
     <string name="memorize_attempt_up">Lebih banyak kata kini disembunyikan.</string>
     <string name="memorize_attempt_same">Coba sekali lagi dengan petunjuk yang sama.</string>
@@ -574,6 +575,8 @@
     <string name="display_text_size">Ukuran teks</string>
     <string name="display_player">Pemutar</string>
     <string name="player_previous_part">Bagian sebelumnya</string>
+    <string name="player_previous_segment">Segmen sebelumnya</string>
+    <string name="player_next_segment">Segmen berikutnya</string>
     <string name="player_next_part">Bagian berikutnya</string>
     <string name="display_show_progress">Tampilkan garis kemajuan</string>
     <string name="display_show_progress_summary">Satu garis per frasa di atas tombol pemutar.</string>
@@ -1080,7 +1083,7 @@
         <item>Kategori baru, Doa dari As-Sunnah: 16 doa sahih dan hasan yang tidak ada di Hisnul Muslim, seperti Yā muqallibal-qulūb, doa memohon perbaikan agama, dunia, dan akhirat, serta doa berlindung dari hilangnya nikmat. Sumbernya HadeethEnc.com, dan hadis utuhnya ada di bawah setiap doa.</item>
         <item>Teks lengkap di kitab kini juga tampil dalam bahasa Inggris bila Anda memilih terjemah bahasa Inggris.</item>
         <item>Transliterasi Latin lebih rapi: lafal Allah yang ditulis tanpa syaddah kini terbaca, min sebelum al- dibaca minal-, dan akhir kalimat memakai bentuk waqaf.</item>
-        <item>Hafalan: tekan Selesai membaca setelah menghafal tanpa melihat. Bila Anda tidak membuka satu kata pun, petunjuk memudar satu tahap dengan sendirinya; bila banyak kata dibuka, petunjuk kembali.</item>
+        <item>Hafalan: tekan Selesai setelah menghafal tanpa melihat. Bila Anda tidak membuka satu kata pun, petunjuk memudar satu tahap dengan sendirinya; bila banyak kata dibuka, petunjuk kembali.</item>
         <item>Saat menjalankan rangkaian, doa yang Anda baca dari hafalan kini dihitung sebagai murajaah bila sudah waktunya diulang.</item>
     </string-array>
     <string-array name="whats_new_1_5_0">

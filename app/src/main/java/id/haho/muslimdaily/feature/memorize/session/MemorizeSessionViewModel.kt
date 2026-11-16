@@ -287,6 +287,22 @@ class MemorizeSessionViewModel @Inject constructor(
         viewModelScope.launch { settingsRepository.update(block) }
     }
 
+    /** Previous (-1) or next (+1) segment of the build: the sequence repeats each segment [loops] times, a play and a pause per loop. */
+    fun skipBuildChunk(delta: Int) {
+        val s = state.value ?: return
+        if (s.playing != Playing.BUILD) return
+        val perChunk = 2 * s.settings.loopsPerChunk.coerceIn(1, 10)
+        val chunks = if (s.segmented) s.dua.phrases.count { it.segment != null } else 1
+        val chunk = s.playback.sequenceIndex.coerceAtLeast(0) / perChunk
+        audio.skipTo((chunk + delta).coerceIn(0, chunks - 1) * perChunk)
+    }
+
+    /** Ends the A–B loop and leaves the build where it was not started. */
+    fun stopAb() {
+        audio.stop()
+        local.value = local.value.copy(playing = Playing.NONE)
+    }
+
     fun playBuild() = play(Playing.BUILD) { MemorizePlan.build(it.dua, it.settings, it.eventLabel) }
     fun playAb() = play(Playing.AB) { MemorizePlan.abLoop(it.dua, it.ab.first, it.ab.last, it.settings, it.eventLabel) }
     fun playRecallWithGaps() = play(Playing.RECALL) {

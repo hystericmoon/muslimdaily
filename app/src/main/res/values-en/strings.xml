@@ -401,7 +401,7 @@
     <string name="memorize_step_check">Check</string>
     <string name="memorize_hint_listen">Listen to the full dua twice while reading the text.</string>
     <string name="memorize_hint_build">The segment grows by one phrase each time. After each loop, repeat it aloud during the pause.</string>
-    <string name="memorize_hint_recall">Recite from memory, show the next word if you get stuck, then tap Done reciting. When you recite without help, more words are hidden.</string>
+    <string name="memorize_hint_recall">Recite from memory, show the next word if you get stuck, then tap Done. When you recite without help, more words are hidden.</string>
     <string name="memorize_hint_review">Recite from memory first, using the cue below, then check the full text.</string>
     <string name="memorize_cue_meaning">Meaning</string>
     <string name="memorize_hints_hidden">Hints · %1$d%% hidden</string>
@@ -414,7 +414,8 @@
     <string name="memorize_fade_from_end">From the end</string>
     <string name="memorize_first_letters">Show first letters</string>
     <string name="memorize_reveal_next">Next word</string>
-    <string name="memorize_recited">Done reciting</string>
+    <string name="memorize_recited">Done</string>
+    <string name="memorize_recited_description">Done reciting</string>
     <string name="memorize_stage">Stage %1$d of %2$d</string>
     <string name="memorize_attempt_up">More words are hidden now.</string>
     <string name="memorize_attempt_same">Try once more with the same hints.</string>
@@ -590,6 +591,8 @@
     <string name="display_text_size">Text size</string>
     <string name="display_player">Player</string>
     <string name="player_previous_part">Previous part</string>
+    <string name="player_previous_segment">Previous segment</string>
+    <string name="player_next_segment">Next segment</string>
     <string name="player_next_part">Next part</string>
     <string name="display_show_progress">Show progress line</string>
     <string name="display_show_progress_summary">One segment per phrase above the player controls.</string>
@@ -1098,7 +1101,7 @@
         <item>A new category, Duas from the Sunnah: 16 sahih and hasan duas that are not in Hisn al-Muslim, such as Yā muqallibal-qulūb, the dua for setting right one\'s religion, world and Hereafter, and seeking refuge from the loss of blessings. They come from HadeethEnc.com, with the whole hadith under each dua.</item>
         <item>The full text from the source now also shows in English when you choose the English translation.</item>
         <item>Tidier Latin transliteration: the name of Allah written without its shadda now reads, min before al- reads minal-, and the ends of phrases take their pausal form.</item>
-        <item>Memorization: tap Done reciting after reciting without looking. If you revealed no word, the hints fade one stage on their own; if you revealed many, a hint comes back.</item>
+        <item>Memorization: tap Done after reciting without looking. If you revealed no word, the hints fade one stage on their own; if you revealed many, a hint comes back.</item>
         <item>When running a routine, a dua you recite from memory now counts as a review when it is due.</item>
     </string-array>
     <string-array name="whats_new_1_5_0">

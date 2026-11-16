@@ -105,9 +105,11 @@ import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.SPEEDS
 import id.haho.muslimdaily.feature.duas.components.PlayerControls
+import id.haho.muslimdaily.feature.duas.components.RepeatToggle
 import id.haho.muslimdaily.feature.duas.components.speedLabel
 import kotlin.math.roundToInt
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
+import id.haho.muslimdaily.feature.memorize.MemorizeSpeedControl
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.offset
@@ -126,6 +128,8 @@ data class MemorizeActions(
     val onUpdateReading: (SettingsEditor.() -> Unit) -> Unit = {},
     val onBuild: () -> Unit = {},
     val onAb: () -> Unit = {},
+    val onStopAb: () -> Unit = {},
+    val onBuildSkip: (Int) -> Unit = {},
     val onSetAb: (IntRange) -> Unit = {},
     val onRecallGaps: () -> Unit = {},
     val onToggle: () -> Unit = {},
@@ -170,6 +174,8 @@ fun MemorizeSessionRoute(
                 onUpdateReading = viewModel::updateReading,
                 onBuild = viewModel::playBuild,
                 onAb = viewModel::playAb,
+                onStopAb = viewModel::stopAb,
+                onBuildSkip = viewModel::skipBuildChunk,
                 onSetAb = viewModel::setAb,
                 onRecallGaps = viewModel::playRecallWithGaps,
                 onToggle = viewModel::toggle,
@@ -244,8 +250,8 @@ fun MemorizeSessionScreen(
                 InfoNote(stringResource(hint))
                 when (state.step) {
                     Step.LISTEN -> ListenStep(state, actions)
-                    Step.BUILD -> BuildStep(state)
-                    Step.RECALL -> RecallStep(state, talkBack, meaning)
+                    Step.BUILD -> BuildStep(state, bar = true)
+                    Step.RECALL -> RecallStep(state, talkBack, meaning, bar = true)
                     Step.CHECK -> CheckStep(state, actions)
                 }
             }
@@ -257,7 +263,7 @@ fun MemorizeSessionScreen(
             when (state.step) {
                 Step.LISTEN -> Dock(false, dockMax, listenDock(state, actions), null) // the media bar is the whole dock
                 Step.BUILD -> Dock(dockOpen, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(dockOpen, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
+                Step.RECALL -> Dock(dockOpen, dockMax, recallBarDock(state, actions, toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> Unit // the ratings are the end of the content, see CheckStep
             }
             SessionNavBar(state.step, actions.onStep)
@@ -456,117 +462,6 @@ internal fun ArabicCard(
     }
 }
 
-/** The step's transport: pause and play once a sequence is loaded, its start button before that. */
-@Composable
-private fun PlayDock(
-    loaded: Boolean,
-    isPlaying: Boolean,
-    enabled: Boolean,
-    startLabel: String,
-    onStart: () -> Unit,
-    onToggle: () -> Unit,
-    toggle: @Composable () -> Unit,
-    status: (@Composable () -> Unit)? = null,
-    /** Listen: the speed lives inside the start button. */
-    speed: Float? = null,
-    onSpeed: ((Float) -> Unit)? = null,
-) {
-    // A start button beside the toggle gets squeezed into a blob at large text: stack them from 1.3x.
-    val stacked = !loaded && LocalDensity.current.fontScale > STACK_FONT_SCALE
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
-        if (loaded) {
-            GlassIconButton(onClick = onToggle, modifier = Modifier.size(AdwamDimens.playerMainButton)) {
-                Icon(
-                    painterResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
-                    stringResource(if (isPlaying) R.string.player_pause else R.string.player_play),
-                    Modifier.size(HahoTheme.dimens.icon * 1.5f),
-                )
-            }
-        }
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-            status?.invoke()
-            if (!loaded) {
-                if (speed != null && onSpeed != null) {
-                    SplitStartButton(startLabel, speed, enabled, onStart, onSpeed)
-                } else {
-                    GlassButton(onClick = onStart, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
-                        Icon(painterResource(R.drawable.ic_play_arrow), null)
-                        Spacer(Modifier.width(HahoTheme.spacing.sm))
-                        Text(startLabel)
-                    }
-                }
-            }
-            if (stacked) Box(Modifier.align(Alignment.End)) { toggle() }
-        }
-        if (!stacked) toggle()
-    }
-}
-
-/** The start button with the playback speed in its right segment, which opens the speeds. */
-@Composable
-private fun SplitStartButton(label: String, speed: Float, enabled: Boolean, onStart: () -> Unit, onSpeed: (Float) -> Unit) {
-    val g = Glass.colors
-    var menu by remember { mutableStateOf(false) }
-    val speedText = speedLabel(speed)
-    val speedSpoken = stringResource(R.string.memorize_speed_button, speedText)
-    Surface(
-        shape = CircleShape,
-        color = if (enabled) g.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-        contentColor = if (enabled) g.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
-        border = if (enabled && g.enabled) g.rimStroke() else null,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Row(Modifier.height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
-            Row(
-                Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .heightIn(min = 48.dp)
-                    .clickable(enabled = enabled, role = Role.Button, onClick = onStart)
-                    .padding(horizontal = HahoTheme.spacing.lg),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(painterResource(R.drawable.ic_play_arrow), null)
-                Spacer(Modifier.width(HahoTheme.spacing.sm))
-                Text(label, style = MaterialTheme.typography.labelLarge)
-            }
-            Box(Modifier.width(1.dp).fillMaxHeight(0.5f).background(LocalContentColor.current.copy(alpha = 0.35f)))
-            Box {
-                Row(
-                    Modifier
-                        .fillMaxHeight()
-                        .heightIn(min = 48.dp)
-                        .clickable(enabled = enabled, role = Role.Button) { menu = true }
-                        .padding(horizontal = HahoTheme.spacing.md)
-                        .semantics { contentDescription = speedSpoken },
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(speedText, style = MaterialTheme.typography.labelLarge)
-                    Icon(painterResource(R.drawable.ic_keyboard_arrow_down), null, Modifier.size(HahoTheme.dimens.smallIcon))
-                }
-                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                    for (step in SPEED_MIN_STEP..SPEED_MAX_STEP) {
-                        val value = step / 20f
-                        DropdownMenuItem(
-                            text = { Text(speedLabel(value)) },
-                            leadingIcon = if (step == (speed * 20).roundToInt()) {
-                                { Icon(painterResource(R.drawable.ic_check), null) }
-                            } else {
-                                null
-                            },
-                            onClick = { menu = false; onSpeed(value) },
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-private const val SPEED_MIN_STEP = 10 // 0.5x in 0.05 steps
-private const val SPEED_MAX_STEP = 20 // 1.0x
-
 @Composable
 internal fun RestartButton(onStart: () -> Unit) {
     TextButton(onClick = onStart) {
@@ -654,25 +549,68 @@ private fun ListenRepeatButton(mode: ListenRepeat, enabled: Boolean, onCycle: ()
 }
 
 @Composable
-internal fun BuildStep(state: MemorizeUiState) {
-    ArabicCard(state, focus = true)
+internal fun BuildStep(state: MemorizeUiState, bar: Boolean = false) {
+    // With the media bar the card follows the reader's layout and has no Back/Next of its own (it keeps them without audio).
+    if (bar) {
+        ArabicCard(state, focus = true, layout = state.phraseLayout, focusNav = !state.hasAudio)
+    } else {
+        ArabicCard(state, focus = true)
+    }
     if (!state.segmented) InfoNote(stringResource(R.string.memorize_not_segmented))
     if (state.hasAudio && state.dua.hasUnheardPhrases) InfoNote(stringResource(R.string.dua_unheard_note), icon = R.drawable.ic_volume_off)
 }
 
+/** Build's transport is the standard media bar: repeat a part (the A–B loop), previous and next segment, play, speed. */
 private fun buildDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
-    val progress = (state.playing == Playing.BUILD || state.playing == Playing.AB) && !state.playback.ended
-    PlayDock(
-        loaded = state.playing == Playing.BUILD && !state.playback.ended,
-        isPlaying = state.playback.isPlaying,
+    val building = state.playing == Playing.BUILD && !state.playback.ended
+    val looping = state.playing == Playing.AB && !state.playback.ended
+    val loaded = building || looping
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            if (loaded) {
+                BuildProgress(state)
+            } else {
+                Text(stringResource(R.string.memorize_build_start), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        toggle()
+    }
+    val chunk = buildChunk(state)
+    val canLoop = state.hasAudio && state.segmented && state.dua.phrases.size > 1
+    PlayerControls(
+        isPlaying = loaded && state.playback.isPlaying,
+        speed = state.settings.speed,
+        repeat = looping,
         enabled = state.hasAudio,
-        startLabel = stringResource(R.string.memorize_build_start),
-        onStart = actions.onBuild,
-        onToggle = actions.onToggle,
-        toggle = toggle,
-        status = if (progress) ({ BuildProgress(state) }) else null,
+        onToggle = if (loaded) actions.onToggle else actions.onBuild,
+        onSpeed = actions.onSpeed,
+        onRepeat = { on -> if (on) actions.onAb() else actions.onStopAb() },
+        onPreviousPhrase = { actions.onBuildSkip(-1) },
+        onNextPhrase = { actions.onBuildSkip(1) },
+        canPrevious = building && chunk > 0,
+        canNext = building && chunk < buildChunks(state) - 1,
+        phraseCount = state.dua.phrases.size,
+        activePhrase = if (loaded) state.playback.activePhrase else -1,
+        repeatControl = {
+            RepeatToggle(
+                repeat = looping,
+                enabled = canLoop,
+                onRepeat = { on -> if (on) actions.onAb() else actions.onStopAb() },
+                description = stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
+            )
+        },
+        speeds = LISTEN_SPEEDS,
+        showTrack = state.appSettings.showPhraseTrack,
+        trackSeekable = false,
+        previousLabel = stringResource(R.string.player_previous_segment),
+        nextLabel = stringResource(R.string.player_next_segment),
     )
 }
+
+/** Build repeats each segment [MemorizeSettings.loopsPerChunk] times, a play and a pause per loop. */
+private fun buildChunks(state: MemorizeUiState) = if (state.segmented && state.playing == Playing.BUILD) state.dua.phrases.count { it.segment != null } else 1
+
+private fun buildChunk(state: MemorizeUiState) = state.playback.sequenceIndex.coerceAtLeast(0) / (2 * state.settings.loopsPerChunk.coerceIn(1, 10))
 
 private fun buildMore(
     state: MemorizeUiState,
@@ -696,9 +634,9 @@ private fun buildMore(
 internal fun BuildProgress(state: MemorizeUiState) {
     val loops = state.settings.loopsPerChunk.coerceIn(1, 10)
     val i = state.playback.sequenceIndex.coerceAtLeast(0)
-    val chunk = i / (2 * loops)
+    val chunk = buildChunk(state)
     val loop = (i % (2 * loops)) / 2 + 1
-    val chunks = if (state.segmented && state.playing == Playing.BUILD) state.dua.phrases.count { it.segment != null } else 1
+    val chunks = buildChunks(state)
     Column(Modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite }) {
         Text(
             if (state.playback.inPause) stringResource(R.string.memorize_your_turn) else stringResource(R.string.memorize_listen_now),
@@ -751,13 +689,6 @@ private fun AbLoop(state: MemorizeUiState, actions: MemorizeActions, awaitingSec
                     actions.onSetAb(next.range)
                     onAwaiting(next.awaitingSecond)
                 },
-            )
-        }
-        GlassButton(onClick = actions.onAb, enabled = state.hasAudio, modifier = Modifier.fillMaxWidth()) {
-            Icon(painterResource(R.drawable.ic_repeat), null, Modifier.size(HahoTheme.dimens.smallIcon))
-            Text(
-                stringResource(R.string.memorize_ab_play, state.ab.first + 1, state.ab.last + 1),
-                Modifier.padding(start = HahoTheme.spacing.sm),
             )
         }
     }
@@ -828,7 +759,9 @@ private fun RangeTag(label: String) {
 }
 
 @Composable
-internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boolean) {
+internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Boolean, bar: Boolean = false) {
+    // With the action row in the dock, the stage and hint level sit above the text instead of taking a row in the dock.
+    if (bar) RecallStageLine(state)
     if (meaning) {
         GlassCard(shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
             Column(Modifier.padding(HahoTheme.spacing.lg)) { DuaTranslations(state.dua, state.reading) }
@@ -853,6 +786,9 @@ internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Bool
             ),
             firstLetters = state.firstLetters,
             modifier = Modifier.padding(HahoTheme.spacing.xl),
+            layout = if (bar) state.phraseLayout else PhraseLayout.INLINE,
+            // One phrase at a time follows the reader: the phrase with the next hidden word, else the one revealed last.
+            focusPhrase = (Recall.nextHidden(state.words, state.hiddenWords) ?: state.lastRevealed)?.phrase ?: 0,
         )
     }
     // The word shown last by "reveal as you go" is announced as Arabic text (a stateDescription can't
@@ -870,6 +806,83 @@ internal fun RecallStep(state: MemorizeUiState, talkBack: Boolean, meaning: Bool
 
 /** Practice hides the missed words whatever the fade level, so it always needs the reveal. */
 private fun hasHints(state: MemorizeUiState) = state.fade != FadeLevel.NONE || state.practising
+
+/** The stage and the hint level in words, above the text: where the learner is, not a control. */
+@Composable
+private fun RecallStageLine(state: MemorizeUiState) {
+    val hints = when {
+        state.practising -> stringResource(R.string.memorize_hints_missed)
+        state.fade == FadeLevel.NONE -> stringResource(R.string.memorize_hints_off)
+        else -> stringResource(R.string.memorize_hints_hidden, (state.fade.fraction * 100).toInt())
+    }
+    val line = if (state.stage >= 1 && !state.practising) "${stringResource(R.string.memorize_stage, state.stage, FadeLadder.LAST)} · $hints" else hints
+    Text(line, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+}
+
+/**
+ * Recall's dock: Done on the left, play with gaps in the centre, Next word on the right (it is the action tapped most, so it sits under the
+ * right thumb), and the settings chevron. Speed lives in the settings; there is no repeat here.
+ */
+internal fun recallBarDock(state: MemorizeUiState, actions: MemorizeActions, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
+    val playing = state.playing == Playing.RECALL && !state.playback.ended
+    val doneDescription = stringResource(R.string.memorize_recited_description)
+    if (playing) {
+        Text(
+            if (state.playback.inPause) stringResource(R.string.memorize_your_turn) else stringResource(R.string.memorize_listen_now),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+    }
+    val done: @Composable (Modifier) -> Unit = { m ->
+        GlassButton(onClick = actions.onFinishRecital, modifier = m.semantics { contentDescription = doneDescription }) { Text(stringResource(R.string.memorize_recited)) }
+    }
+    val next: (@Composable (Modifier) -> Unit)? = if (hasHints(state)) {
+        { m ->
+            GlassOutlinedButton(onClick = actions.onRevealNext, enabled = state.hiddenWords.isNotEmpty(), modifier = m) {
+                Icon(painterResource(R.drawable.ic_chevron_right), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                Text(stringResource(R.string.memorize_reveal_next), Modifier.padding(start = HahoTheme.spacing.xs))
+            }
+        }
+    } else {
+        null
+    }
+    // Play with gaps needs phrase segments and audio, like the A–B loop: hidden rather than disabled until the audio is marked.
+    val play: (@Composable () -> Unit)? = if (state.segmented) {
+        {
+            GlassIconButton(
+                onClick = if (playing) actions.onToggle else actions.onRecallGaps,
+                enabled = state.hasAudio && (playing || state.hiddenWords.isNotEmpty()),
+                modifier = Modifier.size(AdwamDimens.playerCompactButton),
+            ) {
+                Icon(
+                    painterResource(if (playing && state.playback.isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow),
+                    stringResource(if (playing && state.playback.isPlaying) R.string.player_pause else R.string.memorize_play_with_gaps),
+                    Modifier.size(HahoTheme.dimens.icon * 1.25f),
+                )
+            }
+        }
+    } else {
+        null
+    }
+    // Three buttons and a chevron do not fit side by side at large text: from 1.3x they stack, as the old row did.
+    if (LocalDensity.current.fontScale > STACK_FONT_SCALE) {
+        Column(verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            done(Modifier.fillMaxWidth())
+            next?.invoke(Modifier.fillMaxWidth())
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                if (play != null) play() else Spacer(Modifier.size(AdwamDimens.playerCompactButton))
+                toggle()
+            }
+        }
+    } else {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+            done(Modifier.weight(1f))
+            play?.invoke()
+            next?.invoke(Modifier.weight(1f))
+            toggle()
+        }
+    }
+}
 
 internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, showStage: Boolean = true, toggle: @Composable () -> Unit): @Composable ColumnScope.() -> Unit = {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -972,13 +985,8 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
         )
     }
     if (talkBack && gaps) InfoNote(stringResource(R.string.memorize_talkback_recall), icon = R.drawable.ic_headphones)
-    // Gaps need phrase segments, like the A–B loop: hidden rather than shown disabled until the audio is marked.
-    if (state.segmented) {
-        GlassTonalButton(onClick = actions.onRecallGaps, enabled = state.hasAudio && state.hiddenWords.isNotEmpty()) {
-            Icon(painterResource(R.drawable.ic_graphic_eq), null, Modifier.size(HahoTheme.dimens.smallIcon))
-            Text(stringResource(R.string.memorize_play_with_gaps), Modifier.padding(start = HahoTheme.spacing.sm))
-        }
-    }
+    // Play with gaps plays at the speed Listen and Build use; the bar has no speed button here.
+    if (state.segmented) MemorizeSpeedControl(state.settings, actions.onSpeed)
 }
 
 /** How the last recital moved the hints (vanishing cues), and how many missed words are left in practice. */

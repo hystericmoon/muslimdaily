@@ -3,6 +3,7 @@ package id.haho.muslimdaily.feature.memorize.session
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.component.arabicAnnotated
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
 
@@ -31,7 +33,8 @@ import id.haho.muslimdaily.domain.memorize.Word
  * Recall view. Hidden words become blank boxes exactly as wide as the word they replace, so the
  * line layout never shifts and nothing is shown as faint grey text. TalkBack users get a single
  * description instead of the hidden words; their recall happens by ear (hidden phrases muted).
- * With [firstLetters] each box starts with the word's first letter as a cue.
+ * With [firstLetters] each box starts with the word's first letter as a cue. [layout] is the reader's dua layout:
+ * flowing text, one phrase per line, or (focus) only [focusPhrase], the phrase being recited.
  */
 @Composable
 fun RecallText(
@@ -41,6 +44,8 @@ fun RecallText(
     hiddenDescription: String,
     modifier: Modifier = Modifier,
     firstLetters: Boolean = false,
+    layout: PhraseLayout = PhraseLayout.INLINE,
+    focusPhrase: Int = 0,
 ) {
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -53,37 +58,46 @@ fun RecallText(
     } else {
         Modifier.clearAndSetSemantics { contentDescription = hiddenDescription }
     }
+    val container = modifier.fillMaxWidth().then(semanticsModifier)
+    val spacing = Arrangement.spacedBy(HahoTheme.spacing.sm)
+    val rows = Arrangement.spacedBy(HahoTheme.spacing.xs)
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        FlowRow(
-            modifier = modifier.fillMaxWidth().then(semanticsModifier),
-            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.xs),
-        ) {
-            words.forEach { w ->
-                if (w.index in hidden) {
-                    Box(Modifier.size(width = widths.getValue(w.index), height = with(density) { style.lineHeight.toDp() })) {
-                        Surface(
-                            color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                            shape = MaterialTheme.shapes.extraSmall,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .size(width = widths.getValue(w.index), height = lineHeight)
-                                .align(androidx.compose.ui.Alignment.Center)
-                                .border(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
-                        ) {}
-                        if (firstLetters) {
-                            Text(
-                                arabicAnnotated(Recall.firstLetterCue(w.text)),
-                                style = style,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                maxLines = 1,
-                                modifier = Modifier.align(androidx.compose.ui.Alignment.CenterStart).padding(horizontal = HahoTheme.spacing.xs),
-                            )
+        @Composable
+        fun Words(shown: List<Word>, m: Modifier) {
+            FlowRow(modifier = m, horizontalArrangement = spacing, verticalArrangement = rows) {
+                shown.forEach { w ->
+                    if (w.index in hidden) {
+                        Box(Modifier.size(width = widths.getValue(w.index), height = with(density) { style.lineHeight.toDp() })) {
+                            Surface(
+                                color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                                shape = MaterialTheme.shapes.extraSmall,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .size(width = widths.getValue(w.index), height = lineHeight)
+                                    .align(androidx.compose.ui.Alignment.Center)
+                                    .border(HahoTheme.dimens.divider, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
+                            ) {}
+                            if (firstLetters) {
+                                Text(
+                                    arabicAnnotated(Recall.firstLetterCue(w.text)),
+                                    style = style,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 1,
+                                    modifier = Modifier.align(androidx.compose.ui.Alignment.CenterStart).padding(horizontal = HahoTheme.spacing.xs),
+                                )
+                            }
                         }
+                    } else {
+                        Text(arabicAnnotated(w.text), style = style, color = LocalContentColor.current)
                     }
-                } else {
-                    Text(arabicAnnotated(w.text), style = style, color = LocalContentColor.current)
                 }
+            }
+        }
+        when (layout) {
+            PhraseLayout.INLINE -> Words(words, container)
+            PhraseLayout.FOCUS -> Words(words.filter { it.phrase == focusPhrase }, container)
+            PhraseLayout.LINES -> Column(container, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
+                words.groupBy { it.phrase }.values.forEach { Words(it, Modifier.fillMaxWidth()) }
             }
         }
     }

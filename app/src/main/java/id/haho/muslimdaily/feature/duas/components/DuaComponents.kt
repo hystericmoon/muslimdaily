@@ -428,7 +428,13 @@ internal fun PlayerControls(
 
 /** Repeat on and off, with its state for TalkBack. 48dp. */
 @Composable
-internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean) -> Unit) {
+internal fun RepeatToggle(
+    repeat: Boolean,
+    enabled: Boolean,
+    onRepeat: (Boolean) -> Unit,
+    /** What the button does, when it is not a plain repeat (Build: "Repeat phrases 1-2"). */
+    description: String = stringResource(R.string.player_repeat),
+) {
     val repeatState = stringResource(if (repeat) R.string.state_enabled else R.string.state_disabled)
     IconToggleButton(
         checked = repeat,
@@ -440,7 +446,7 @@ internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean)
     ) {
         Icon(
             painterResource(R.drawable.ic_repeat),
-            contentDescription = stringResource(R.string.player_repeat),
+            contentDescription = description,
             tint = if (repeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
