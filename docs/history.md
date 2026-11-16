@@ -39,6 +39,7 @@ checks both looks); Memorize review fixes: dua name as the heading, split Listen
 mode-switch menu, Advanced dock always open, "Start" on the top card; B1 (empty pill in Listen mode) was layout: a long dua squeezed the controls, the Arabic now
 scrolls; widget 56/76 dp cells at 1.3x/2x font (`OneByOne` sized to the height, `Narrow` from measured font height; `WidgetFitTest` checks every text's height).
 All Sonnet (owner: no Opus budget). Fact: `DockToggle` is also used by RunScreen, keep it. No content, database or backup change.
+APK `adwam-1.16.0.apk` (39.9 MB) on the GitHub Release, published 10:30 WIB; Release workflow run 79 green; the Screenshots run found nothing new to record for the What's New dialog.
 
 1.15.2 (versionCode 60, 16 Nov 07:58 WIB, release PR #274; #272): audit D10, the "alternating" and "bubbles" phrase fills show in the
 light theme (bubble edge on the `outline` token, about 4.1:1; alternate phrases get an `outline` edge). No content, database or backup
