@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 06:00 WIB (1.15.1 released; audit fixes #216-#269 and D10 #272 merged).
+Last updated: 16 Nov 2026, 08:05 WIB (1.15.2 released; audit fixes #216-#269 and D10 #272 merged).
 
 ## In flight
 
-- **1.15.1 (versionCode 59) released 16 Nov 01:15 WIB** (release PR #270, APK on the Release; details: history, "Shipped"). No
+- **1.15.2 (versionCode 60) released 16 Nov 07:58 WIB** (release PR #274, APK on the Release; details: history, "Shipped"). No
   content, database or backup change. Nothing in flight; no open PRs.
 - **Owner to check on a phone or emulator (cloud can't)**: (1) Check row: one-row dock, Indonesian labels on one line, 200% font
   stacks; (2) Run audio dock: playback, lock-screen title (the run's name), Back closes the open dock, 200% font; (3) **Qibla
@@ -20,8 +20,8 @@ Last updated: 16 Nov 2026, 06:00 WIB (1.15.1 released; audit fixes #216-#269 and
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) merged after it (#272, main
-  d70a1ec, not yet released; bubbles use the `outline` token, alternate phrases get an `outline` edge). Page
+- **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) shipped in 1.15.2 (#272; bubbles
+  use the `outline` token, alternate phrases get an `outline` edge). Page
   https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
   (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. **Owner to check on a device**:
   widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time, the 4x2 scale with the bold next
@@ -29,7 +29,7 @@ Last updated: 16 Nov 2026, 06:00 WIB (1.15.1 released; audit fixes #216-#269 and
   "lighter glass" is unreachable now that the floor (85%) equals the default (M1), so the stepper can only go up. Not problems
   (checked 16 Nov): the Qibla Kaaba gold stripe is fill on black; the routine-editor hint already names the handle and the menu.
   Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
-- Main: 1.15.1 (versionCode 59, content_version 55, 329 rows).
+- Main: 1.15.2 (versionCode 60, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -69,7 +69,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0, 1.15.0 and 1.15.1, audit fixes #216-#270;
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0, 1.15.0, 1.15.1 and 1.15.2, audit fixes #216-#272;
   child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)

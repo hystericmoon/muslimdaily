@@ -33,6 +33,10 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.15.2 (versionCode 60, 16 Nov 07:58 WIB, release PR #274; #272): audit D10, the "alternating" and "bubbles" phrase fills show in the
+light theme (bubble edge on the `outline` token, about 4.1:1; alternate phrases get an `outline` edge). No content, database or backup
+change. APK `adwam-1.15.2.apk` (39.9 MB) on the GitHub Release; Release workflow run 78 green, shot 115 unchanged.
+
 1.15.1 (versionCode 59, 16 Nov 01:15 WIB, release PR #270; UX/UI audit fixes #216-#269, page
 https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse): Blockers B1 (fasting calendar reflows at 200%) and B2 (sources sheet scrolls);
 Majors M1 (widget glass floor 85%, `GlassContrastTest` over every step), M2-M11; Minors T2/T3/T6/T7/T8/T10, W2/W4/W5/W7/W9,
