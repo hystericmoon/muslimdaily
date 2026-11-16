@@ -500,7 +500,6 @@
     <string name="memorize_remove_menu">Hapus dari Hafalan saya</string>
     <string name="memorize_pick_title">Pilih doa untuk dihafal</string>
     <string name="memorize_listen_done">Selesai</string>
-    <string name="memorize_listen_only_start">Ketuk untuk mulai</string>
     <string name="memorize_listen_only_note">Layar boleh dimatikan. Kontrol tersedia di layar kunci dan tombol headset.</string>
 
     <!-- Audio settings -->
@@ -573,6 +572,11 @@
     <string name="display_transliteration">Transliterasi Latin</string>
     <string name="display_transliteration_summary">Mati secara bawaan. Dibuat otomatis dari teks Arab menurut pedoman transliterasi Kemenag–Kemendikbud 1987: bantu membaca, bukan pengganti teks Arab.</string>
     <string name="display_text_size">Ukuran teks</string>
+    <string name="display_player">Pemutar</string>
+    <string name="player_previous_part">Bagian sebelumnya</string>
+    <string name="player_next_part">Bagian berikutnya</string>
+    <string name="display_show_progress">Tampilkan garis kemajuan</string>
+    <string name="display_show_progress_summary">Satu garis per frasa di atas tombol pemutar.</string>
     <string name="display_arabic_size">Teks Arab</string>
     <string name="display_translation_size">Terjemahan</string>
     <string name="display_size_note">Terpisah dari ukuran huruf sistem; keduanya digabungkan.</string>

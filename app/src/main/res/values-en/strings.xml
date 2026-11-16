@@ -516,7 +516,6 @@
     <string name="memorize_remove_menu">Remove from My memorization</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>
-    <string name="memorize_listen_only_start">Tap to start</string>
     <string name="memorize_listen_only_note">You can turn off the screen. Controls are available on the lock screen and headset buttons.</string>
 
     <!-- Audio settings -->
@@ -589,6 +588,11 @@
     <string name="display_transliteration">Latin transliteration</string>
     <string name="display_transliteration_summary">Off by default. Generated from the Arabic text following the Indonesian transliteration standard (Kemenag–Kemendikbud 1987): a reading aid, not a replacement for the Arabic.</string>
     <string name="display_text_size">Text size</string>
+    <string name="display_player">Player</string>
+    <string name="player_previous_part">Previous part</string>
+    <string name="player_next_part">Next part</string>
+    <string name="display_show_progress">Show progress line</string>
+    <string name="display_show_progress_summary">One segment per phrase above the player controls.</string>
     <string name="display_arabic_size">Arabic text</string>
     <string name="display_translation_size">Translation</string>
     <string name="display_size_note">Separate from the system font size; the two are combined.</string>

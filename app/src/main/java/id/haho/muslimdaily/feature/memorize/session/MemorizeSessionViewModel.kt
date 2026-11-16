@@ -15,6 +15,7 @@ import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
+import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
@@ -110,6 +111,8 @@ data class MemorizeUiState(
     /** Listen: what the repeat control is set to, and the dua layout (the Settings value) the card shows. */
     val listenRepeat: ListenRepeat = ListenRepeat.TWICE,
     val phraseLayout: PhraseLayout = PhraseLayout.FOCUS,
+    /** Every setting, for the Reading display sheet the top bar opens. */
+    val appSettings: AppSettings = AppSettings(),
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.isSegmented
@@ -181,6 +184,7 @@ class MemorizeSessionViewModel @Inject constructor(
             settings = memorize,
             listenRepeat = l.listenRepeat,
             phraseLayout = settings.phraseLayout,
+            appSettings = settings,
             fade = l.fade,
             words = words,
             hiddenWords = (l.practice ?: Recall.hiddenWords(words, l.fade, dua.id, l.order)) - l.revealed.toSet(),
@@ -278,9 +282,11 @@ class MemorizeSessionViewModel @Inject constructor(
         if (local.value.playing == Playing.LISTEN) audio.setRepeat(next == ListenRepeat.LOOP)
     }
 
-    fun setPhraseLayout(layout: PhraseLayout) {
-        viewModelScope.launch { settingsRepository.update { phraseLayout = layout } }
+    /** The Reading display sheet's choices: dua layout, progress line, translation, text size. Kept for every dua. */
+    fun updateReading(block: SettingsEditor.() -> Unit) {
+        viewModelScope.launch { settingsRepository.update(block) }
     }
+
     fun playBuild() = play(Playing.BUILD) { MemorizePlan.build(it.dua, it.settings, it.eventLabel) }
     fun playAb() = play(Playing.AB) { MemorizePlan.abLoop(it.dua, it.ab.first, it.ab.last, it.settings, it.eventLabel) }
     fun playRecallWithGaps() = play(Playing.RECALL) {

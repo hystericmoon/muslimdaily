@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -123,7 +124,8 @@ fun TranslationGroup(settings: AppSettings, update: (SettingsEditor.() -> Unit) 
  */
 @Composable
 fun ReadingSheet(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit, onDismiss: () -> Unit) {
-    GlassBottomSheet(onDismissRequest = onDismiss) {
+    // Opens at full height: the layout, translation and text size groups are long, and a half-open sheet cut the third layout.
+    GlassBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = HahoTheme.spacing.xxl)) {
             Text(
                 stringResource(R.string.dua_reading_settings),
@@ -133,6 +135,14 @@ fun ReadingSheet(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> U
                     .semantics { heading() },
             )
             PhraseLayoutGroup(settings, update)
+            SettingsGroup(stringResource(R.string.display_player)) {
+                SwitchRow(
+                    title = stringResource(R.string.display_show_progress),
+                    summary = stringResource(R.string.display_show_progress_summary),
+                    checked = settings.showPhraseTrack,
+                    onCheckedChange = { v -> update { showPhraseTrack = v } },
+                )
+            }
             TranslationGroup(settings, update)
             SettingsGroup(stringResource(R.string.display_text_size)) {
                 TextSizeRows(settings, update)

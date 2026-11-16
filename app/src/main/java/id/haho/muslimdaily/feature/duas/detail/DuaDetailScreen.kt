@@ -170,6 +170,7 @@ fun DuaDetailRoute(
                     phraseCount = s.dua.phrases.size,
                     activePhrase = s.playback.activePhrase,
                     onSeekPhrase = { viewModel.playFrom(it, title) },
+                    showTrack = s.settings.showPhraseTrack,
                 )
             }
         },

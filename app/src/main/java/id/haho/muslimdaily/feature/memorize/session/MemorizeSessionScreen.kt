@@ -91,6 +91,8 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.core.ui.formatLongDate
 import id.haho.muslimdaily.data.settings.PauseMode
 import id.haho.muslimdaily.data.settings.PhraseLayout
+import id.haho.muslimdaily.data.settings.SettingsEditor
+import id.haho.muslimdaily.feature.settings.ReadingSheet
 import id.haho.muslimdaily.domain.memorize.FadeLadder
 import id.haho.muslimdaily.domain.memorize.FadeLevel
 import id.haho.muslimdaily.domain.memorize.FadeOrder
@@ -121,7 +123,7 @@ data class MemorizeActions(
     val onListenFrom: (Int) -> Unit = {},
     val onListenSkip: (Int) -> Unit = {},
     val onListenRepeat: () -> Unit = {},
-    val onPhraseLayout: (PhraseLayout) -> Unit = {},
+    val onUpdateReading: (SettingsEditor.() -> Unit) -> Unit = {},
     val onBuild: () -> Unit = {},
     val onAb: () -> Unit = {},
     val onSetAb: (IntRange) -> Unit = {},
@@ -165,7 +167,7 @@ fun MemorizeSessionRoute(
                 onListenFrom = viewModel::playListen,
                 onListenSkip = viewModel::skipListenPhrase,
                 onListenRepeat = viewModel::cycleListenRepeat,
-                onPhraseLayout = viewModel::setPhraseLayout,
+                onUpdateReading = viewModel::updateReading,
                 onBuild = viewModel::playBuild,
                 onAb = viewModel::playAb,
                 onSetAb = viewModel::setAb,
@@ -214,11 +216,14 @@ fun MemorizeSessionScreen(
     var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     // Recall: the meaning opens from the top bar's title line, the cue to recite from.
     var meaning by rememberSaveable(state.dua.id) { mutableStateOf(false) }
+    // Reading display: dua layout, progress line, translation and text size, from the top bar on every step.
+    var readingSheet by rememberSaveable { mutableStateOf(false) }
+    if (readingSheet) ReadingSheet(state.appSettings, actions.onUpdateReading) { readingSheet = false }
     if (!state.advanced) {
         BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
             val dockMax = maxHeight * DOCK_MAX_SHARE
             Column(Modifier.fillMaxSize()) {
-                SessionTopBar(state, actions, meaning) { meaning = !meaning }
+                SessionTopBar(state, actions, meaning, onReading = { readingSheet = true }) { meaning = !meaning }
                 GuidedSession(state, actions, talkBack, meaning, dockMax)
             }
         }
@@ -227,7 +232,7 @@ fun MemorizeSessionScreen(
     BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding()) {
         val dockMax = maxHeight * DOCK_MAX_SHARE
         Column(Modifier.fillMaxSize()) {
-            SessionTopBar(state, actions, meaning) { meaning = !meaning }
+            SessionTopBar(state, actions, meaning, onReading = { readingSheet = true }) { meaning = !meaning }
             Column(
                 Modifier
                     .weight(1f)
@@ -270,7 +275,7 @@ private fun offersMeaning(state: MemorizeUiState) = if (state.advanced) {
 }
 
 @Composable
-private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, meaning: Boolean, onMeaning: () -> Unit) {
+private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, meaning: Boolean, onReading: () -> Unit, onMeaning: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxWidth()) {
         // The bar is the same on every Memorize screen; the dua is the heading under it.
@@ -282,6 +287,9 @@ private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, mean
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.weight(1f),
             )
+            IconButton(onClick = onReading) {
+                Icon(painterResource(R.drawable.ic_text_fields), stringResource(R.string.dua_reading_settings))
+            }
             Box {
                 IconButton(onClick = { menu = true }) {
                     Icon(painterResource(R.drawable.ic_more_vert), stringResource(R.string.memorize_session_menu))
@@ -570,7 +578,6 @@ internal fun RestartButton(onStart: () -> Unit) {
 @Composable
 internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null) {
     // With the media bar below, the card needs no Back/Next of its own. Without audio there is no bar, so it keeps them.
-    if (actions != null) PhraseLayoutChips(state.phraseLayout, actions.onPhraseLayout)
     ArabicCard(
         state,
         focus = true,
@@ -585,32 +592,6 @@ internal fun ListenStep(state: MemorizeUiState, actions: MemorizeActions? = null
             Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             icon = R.drawable.ic_volume_off,
         )
-    }
-}
-
-/** The dua's three layouts, the same setting as Settings, Display and text. The choice is kept for every dua. */
-@Composable
-private fun PhraseLayoutChips(selected: PhraseLayout, onSelect: (PhraseLayout) -> Unit) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
-        PhraseLayout.entries.sortedBy { if (it == PhraseLayout.FOCUS) 0 else if (it == PhraseLayout.LINES) 1 else 2 }.forEach { layout ->
-            FilterChip(
-                selected = layout == selected,
-                onClick = { onSelect(layout) },
-                modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
-                leadingIcon = selectedCheck(layout == selected),
-                label = {
-                    Text(
-                        stringResource(
-                            when (layout) {
-                                PhraseLayout.FOCUS -> R.string.display_phrase_focus
-                                PhraseLayout.LINES -> R.string.display_phrase_lines
-                                PhraseLayout.INLINE -> R.string.display_phrase_inline
-                            },
-                        ),
-                    )
-                },
-            )
-        }
     }
 }
 
@@ -637,6 +618,7 @@ private fun listenDock(state: MemorizeUiState, actions: MemorizeActions): @Compo
         onSeekPhrase = actions.onListenFrom,
         repeatControl = { ListenRepeatButton(state.listenRepeat, state.hasAudio, actions.onListenRepeat) },
         speeds = LISTEN_SPEEDS,
+        showTrack = state.appSettings.showPhraseTrack,
     )
 }
 
