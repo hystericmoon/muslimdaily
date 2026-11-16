@@ -7,25 +7,26 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 16:00 WIB (PR #287 open).
+Last updated: 16 Nov 2026, 16:10 WIB (1.18.0 released).
 
 ## In flight
 
-- **PR #287 (open, not merged): standard player bar** (owner's design pages, 16 Nov). Show progress line switch (Reading display sheet, DataStore `show_phrase_track`); Reading display icon in the Memorize top bar (chips gone); Listen only, Build and Recall use the bar. Recall: Done | play with gaps | Next word, "Done reciting" renamed "Done". Build repeat = the A-B loop.
-  Decided with the owner: progress line global; Next word stays in the dock; Back/Next off the Build card; all three layouts in Build and Recall (Recall one-phrase shows the phrase with the next hidden word, my assumption). Run the Screenshots workflow, wait for CI, then merge; no version bump. Owner to check on a phone: Listen only previous/next (queue clips), Build repeat toggle, Recall layouts and the 1.3x stacked row.
+- **1.18.0 (versionCode 63) released 16 Nov 16:03 WIB** (release PR #288, feature PR #287; details: history, "Shipped"). Standard player bar in Memorize and Listen only, Show progress line switch, Reading display icon. No content, database or backup change.
+  **Owner to check on a phone (cloud can't)**: Listen only previous/next (jump between queue clips), Build repeat toggle and segment skip, Recall layouts (one phrase at a time is my assumption), the stacked Recall row at large font, the full-height Reading display sheet.
+  Open question: Recall has no repeat button; the owner did not say whether they want one.
 - **1.17.0 (versionCode 62) released 16 Nov 12:50 WIB** (release PR #285; #282 start sheet and list, #283 docks, #284 Listen media bar; details: history, "Shipped").
   No content, database or backup change. Nothing in flight; no open PRs.
 - **Owner to check on a phone (cloud can't)**: (1) Listen: repeat button (twice, loop, once), previous/next phrase, the three layout chips, tapping a phrase in line/flowing;
   after a loop, Build and Recall must not loop. (2) Docks: collapsed by default on Listen-less steps (Build, Recall), chevron, Back closes; Check ratings at the end of the content;
   check marks on selected chips. (3) Start sheet (Advanced, Listen mode, Remove) and list rows. (4) Earlier checks still open: widget Dark text and large-font fits (1.16.0),
   Run audio dock, widget taps, **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design).
-- **Follow-ups from the s3 review (not done)**: media bar in Build, Recall and Run (their sequences make previous/next mean chunks, not phrases); delete the unreachable
+- **Follow-ups from the s3 review (not done)**: media bar in Run (Build and Recall have it since 1.18.0); delete the unreachable
   `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (the stored `advancedDuas` flag stays for backups); Undo for Remove needs Opus or an owner decision (restores a review schedule).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - **UX/UI audit: done** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1, D10 in 1.15.2). Not done: W7 "next two
   prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
-- Main: 1.17.0 (versionCode 62, content_version 55, 329 rows).
+- Main: 1.18.0 (versionCode 63, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 

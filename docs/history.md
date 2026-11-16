@@ -33,6 +33,15 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.18.0 (versionCode 63, 16 Nov 16:03 WIB, release PR #288; feature PR #287; decisions from the owner's design pages, https://claude.ai/artifact/B8eN3U9j7U4HHwKKBmcKin, https://claude.ai/artifact/QNus1tC1Un4R57QNcCmacE, https://claude.ai/artifact/XJMdJoCcECMNqt3nwVkZaK):
+the standard media bar everywhere in Memorize. New setting `showPhraseTrack` (DataStore key `show_phrase_track`, default on; global; switch in the Reading display sheet; not in backups, like `phraseLayout`);
+`PlayerControls` takes `showTrack`, `trackSeekable`, skip-button labels; `RepeatToggle` takes a description. `ReadingSheet` opens full height (`skipPartiallyExpanded`) and is opened from a Reading display icon in the Memorize top bar
+and in Listen only (`MemorizeUiState.appSettings`, `MemorizeActions.onUpdateReading`); the Listen layout chips are gone. Listen only: bar with repeat (loops the whole queue), previous/next part (jumps between queue clips,
+`ListenOnlyViewModel.skip`), play, speed; the track is display-only; "Tap to start" removed. Build: the dock is the bar; repeat = the A-B loop of the chosen range (`stopAb`), previous/next = segment (`skipBuildChunk`, index = chunk * 2 * loops),
+the "Repeat phrases" button and `PlayDock`/`SplitStartButton` removed, card follows `phraseLayout` and has no Back/Next while there is audio. Recall: `recallBarDock` (Done | play with gaps | Next word | chevron; stacked from 1.3x),
+stage and hint level above the text (`RecallStageLine`), speed moved into the expanded settings, no repeat; `RecallText` takes `layout` and `focusPhrase` (one phrase at a time shows the phrase with the next hidden word, an assumption).
+"Done reciting" is "Done" / "Selesai" (`memorize_recited`; TalkBack keeps `memorize_recited_description`); the old `recallDock` is kept for the unreachable `GuidedSession`. All Sonnet; no content, database or backup change.
+Untested on a device: Listen only skip, Build repeat toggle and segment skip, Recall layouts and stacked row, the sheet height. Screenshots workflow: the first run raced a handover push and failed to push; run it again after pushing (never push during a run).
 1.17.0 (versionCode 62, 16 Nov 12:50 WIB, release PR #285; #282, #283, #284 from the owner's s3 screenshot review, decisions on https://claude.ai/artifact/B8yqj9QF9ZBLMfvMBzizUi):
 start sheet offers Advanced or Listen mode (option B: Easy/guided removed from the sheet and the in-session menu; `MemorizeUiState.advanced` is now always true, the stored
 per-dua flag and backups are untouched; `GuidedSession` and its tests are unreachable, delete later); list rows have a chevron, no overflow menu, Remove only in the sheet
