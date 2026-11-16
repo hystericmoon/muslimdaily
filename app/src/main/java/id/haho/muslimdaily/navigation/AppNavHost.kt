@@ -127,6 +127,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<MemorizeHomeRoute> {
                 MemorizeHomeRoute(
                     onOpen = { id, fromReview -> navController.navigate(MemorizeSessionRoute(id, fromReview)) },
+                    onListenOnly = { navController.navigate(ListenOnlyRoute(it)) },
                     onPick = { navController.navigate(MemorizePickerRoute) },
                 )
             }

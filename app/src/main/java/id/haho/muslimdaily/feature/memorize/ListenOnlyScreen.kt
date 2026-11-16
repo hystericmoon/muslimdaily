@@ -2,6 +2,9 @@ package id.haho.muslimdaily.feature.memorize
 
 import id.haho.design.glass.GlassIconButton
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,8 +109,12 @@ fun ListenOnlyContent(s: ListenOnlyState, onStart: () -> Unit, onToggle: () -> U
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
             Text(stringResource(R.string.memorize_listen_only), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
         }
-        HighlightedArabic(s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AdwamTheme.arabic.large(s.dua.isQuran))
-        Column(Modifier.fillMaxWidth().weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        // A long dua scrolls in the space between the title and the controls. Before, it took all the height,
+        // the controls column was squeezed to nothing and the play button drew as a clipped pill over the note.
+        Box(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())) {
+            HighlightedArabic(s.dua.arabic, s.dua.phrases, s.playback.activePhrase, AdwamTheme.arabic.large(s.dua.isQuran))
+        }
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             val loaded = s.playback.sequenceIndex >= 0 && !s.playback.ended
             GlassIconButton(
                 onClick = { if (loaded) onToggle() else onStart() },

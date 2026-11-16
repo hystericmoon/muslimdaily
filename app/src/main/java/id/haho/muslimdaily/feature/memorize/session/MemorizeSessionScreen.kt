@@ -1,6 +1,5 @@
 package id.haho.muslimdaily.feature.memorize.session
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.role
@@ -32,7 +31,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import id.haho.design.glass.Glass
-import id.haho.muslimdaily.feature.memorize.MemorizeSpeedControl
 import id.haho.muslimdaily.navigation.NavLabel
 import androidx.compose.ui.platform.LocalDensity
 import id.haho.design.glass.GlassIconButton
@@ -56,6 +54,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -101,12 +100,10 @@ import id.haho.muslimdaily.feature.duas.components.DuaTranslations
 import id.haho.muslimdaily.feature.duas.components.HighlightedArabic
 import id.haho.muslimdaily.feature.duas.components.PhraseLines
 import id.haho.muslimdaily.feature.duas.components.speedLabel
+import kotlin.math.roundToInt
 import id.haho.muslimdaily.feature.memorize.MemorizeSettingsControls
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.toggleableState
-import androidx.compose.ui.state.ToggleableState
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.Switch
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 
 data class MemorizeActions(
@@ -199,11 +196,7 @@ fun MemorizeSessionScreen(
     state: MemorizeUiState,
     actions: MemorizeActions,
     talkBack: Boolean = talkBackOn(),
-    startExpanded: Boolean = false,
 ) {
-    // Each step opens with its sheet collapsed; Back closes an open sheet before it leaves the screen.
-    var expanded by rememberSaveable(state.step) { mutableStateOf(startExpanded) }
-    BackHandler(enabled = expanded) { expanded = false }
     // A–B: true between the first and the second phrase tap. Held here so closing the sheet keeps it.
     var abAwaiting by rememberSaveable(state.dua.id) { mutableStateOf(false) }
     // Recall: the meaning opens from the top bar's title line, the cue to recite from.
@@ -230,8 +223,7 @@ fun MemorizeSessionScreen(
                 verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.lg),
             ) {
                 val hint = if (state.fromReview && state.step == Step.RECALL) R.string.memorize_hint_review else state.step.hintRes()
-                // The step hint gives way to the text while the sheet is open.
-                if (!expanded) InfoNote(stringResource(hint))
+                InfoNote(stringResource(hint))
                 when (state.step) {
                     Step.LISTEN -> ListenStep(state)
                     Step.BUILD -> BuildStep(state)
@@ -239,12 +231,12 @@ fun MemorizeSessionScreen(
                     Step.CHECK -> CheckStep(state, actions)
                 }
             }
-            // Big text at 200% font: an open sheet takes at most 60% of the screen and scrolls inside.
-            val toggle: @Composable () -> Unit = { DockToggle(expanded) { expanded = !expanded } }
+            // Advanced shows every control of the step, always: no Options toggle. At 200% font the dock takes at most 60% of the screen and scrolls inside.
+            val toggle: @Composable () -> Unit = {}
             when (state.step) {
-                Step.LISTEN -> Dock(expanded, dockMax, listenDock(state, actions, toggle), listenMore(state, actions))
-                Step.BUILD -> Dock(expanded, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(expanded, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
+                Step.LISTEN -> Dock(true, dockMax, listenDock(state, actions, toggle), if (listenLoaded(state)) listenMore(actions) else null)
+                Step.BUILD -> Dock(true, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
+                Step.RECALL -> Dock(true, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
                 Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
             }
             SessionNavBar(state.step, actions.onStep)
@@ -264,85 +256,79 @@ private fun offersMeaning(state: MemorizeUiState) = if (state.advanced) {
 @Composable
 private fun SessionTopBar(state: MemorizeUiState, actions: MemorizeActions, meaning: Boolean, onMeaning: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
-    Row(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.xs), verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = actions.onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
-        Column(Modifier.weight(1f).semantics(mergeDescendants = true) { heading() }) {
-            Text(stringResource(R.string.memorize_session_title), style = MaterialTheme.typography.titleMedium)
-            val positioned = state.positionOf > 1 && state.position > 0
-            val subtitle = if (positioned) {
-                stringResource(R.string.memorize_event_position, state.eventLabel, state.position, state.positionOf)
-            } else {
-                state.eventLabel
-            }
-            // "·" is dropped or spelled out by TTS engines; TalkBack hears "Dzikir pagi, doa 3 dari 19".
-            val spoken = if (positioned) {
-                stringResource(R.string.memorize_event_position_spoken, state.eventLabel, state.position, state.positionOf)
-            } else {
-                subtitle
-            }
-            // A flow, not a row: at large text the link drops to its own line instead of breaking inside the word.
-            FlowRow(verticalArrangement = Arrangement.Center, itemVerticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.semantics { contentDescription = spoken },
-                )
-                if (offersMeaning(state)) {
-                    // The cue is the title line; its meaning is one tap away. 48 dp target, and a button for TalkBack.
-                    val shown = stringResource(if (meaning) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
-                    Text(
-                        stringResource(R.string.memorize_cue_meaning),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline,
-                        softWrap = false,
-                        modifier = Modifier
-                            .clickable(role = Role.Button, onClick = onMeaning)
-                            .minimumInteractiveComponentSize()
-                            .padding(horizontal = HahoTheme.spacing.sm)
-                            .semantics { stateDescription = shown },
+    Column(Modifier.fillMaxWidth()) {
+        // The bar is the same on every Memorize screen; the dua is the heading under it.
+        Row(Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.xs), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = actions.onClose) { Icon(painterResource(R.drawable.ic_close), stringResource(R.string.action_close)) }
+            Text(
+                stringResource(R.string.memorize_session_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+            Box {
+                IconButton(onClick = { menu = true }) {
+                    Icon(painterResource(R.drawable.ic_more_vert), stringResource(R.string.memorize_session_menu))
+                }
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.memorize_switch_listen)) },
+                        leadingIcon = { Icon(painterResource(R.drawable.ic_headphones), null) },
+                        enabled = state.hasAudio,
+                        onClick = { menu = false; actions.onListenOnly() },
                     )
+                    ModeSwitchItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
                 }
             }
         }
-        Box {
-            IconButton(onClick = { menu = true }) {
-                Icon(painterResource(R.drawable.ic_more_vert), stringResource(R.string.memorize_session_menu))
-            }
-            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.memorize_listen_only)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.ic_headphones), null) },
-                    enabled = state.hasAudio,
-                    onClick = { menu = false; actions.onListenOnly() },
+        Column(Modifier.padding(horizontal = HahoTheme.dimens.screenGutter).semantics(mergeDescendants = true) { heading() }) {
+            Text(state.eventLabel, style = MaterialTheme.typography.titleLarge)
+            if (state.positionOf > 1 && state.position > 0) {
+                Text(
+                    stringResource(R.string.memorize_position, state.position, state.positionOf),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                AdvancedItem(state.advanced) { menu = false; actions.onAdvanced(!state.advanced) }
             }
+        }
+        if (offersMeaning(state)) {
+            // The cue is the heading; its meaning is one tap away, on its own line so it never breaks inside the word.
+            val shown = stringResource(if (meaning) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
+            Text(
+                stringResource(R.string.memorize_cue_meaning),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+                softWrap = false,
+                modifier = Modifier
+                    .padding(start = HahoTheme.dimens.screenGutter - HahoTheme.spacing.sm)
+                    .clickable(role = Role.Button, onClick = onMeaning)
+                    .minimumInteractiveComponentSize()
+                    .padding(horizontal = HahoTheme.spacing.sm)
+                    .semantics { stateDescription = shown },
+            )
         }
     }
 }
 
-/** A labelled switch with its state (not an icon toggle), and what it changes. */
+/** One row that names the other mode and what it gives, instead of a switch whose "on" has to be decoded. */
 @Composable
-private fun AdvancedItem(on: Boolean, onClick: () -> Unit) {
+private fun ModeSwitchItem(advanced: Boolean, onClick: () -> Unit) {
     DropdownMenuItem(
         text = {
             Column(Modifier.widthIn(max = 280.dp).padding(vertical = HahoTheme.spacing.xs)) {
-                Text(stringResource(R.string.memorize_advanced), style = MaterialTheme.typography.bodyLarge)
                 Text(
-                    stringResource(R.string.memorize_advanced_body),
+                    stringResource(if (advanced) R.string.memorize_switch_easy else R.string.memorize_switch_advanced),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    stringResource(if (advanced) R.string.memorize_mode_easy_body else R.string.memorize_advanced_body),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         },
-        trailingIcon = { Switch(checked = on, onCheckedChange = null) },
         onClick = onClick,
-        modifier = Modifier.semantics(mergeDescendants = true) {
-            role = Role.Switch
-            toggleableState = ToggleableState(on)
-        },
     )
 }
 
@@ -364,7 +350,7 @@ private fun SessionNavBar(selected: Step, onStep: (Step) -> Unit) {
 
 /**
  * The docked sheet. [collapsed] holds the step's main action and its status, every action the step
- * needs; [more] holds the optional tuning and opens from the toggle inside [collapsed].
+ * needs; [more] holds the step's other controls, shown under it in Advanced.
  */
 @Composable
 internal fun Dock(
@@ -412,12 +398,11 @@ internal fun Dock(
 @Composable
 internal fun DockToggle(expanded: Boolean, onClick: () -> Unit) {
     val state = stringResource(if (expanded) R.string.memorize_dock_state_expanded else R.string.memorize_dock_state_collapsed)
-    TextButton(onClick = onClick, modifier = Modifier.semantics { stateDescription = state }) {
-        Text(stringResource(if (expanded) R.string.memorize_dock_less else R.string.memorize_dock_more))
+    // Icon only: the label is spoken, and the 48 dp button sits centred on the main button.
+    IconButton(onClick = onClick, modifier = Modifier.semantics { stateDescription = state }) {
         Icon(
             painterResource(if (expanded) R.drawable.ic_keyboard_arrow_down else R.drawable.ic_keyboard_arrow_up),
-            null,
-            Modifier.padding(start = HahoTheme.spacing.xs).size(HahoTheme.dimens.smallIcon),
+            stringResource(if (expanded) R.string.memorize_dock_less else R.string.memorize_dock_more),
         )
     }
 }
@@ -473,6 +458,9 @@ private fun PlayDock(
     onToggle: () -> Unit,
     toggle: @Composable () -> Unit,
     status: (@Composable () -> Unit)? = null,
+    /** Listen: the speed lives inside the start button. */
+    speed: Float? = null,
+    onSpeed: ((Float) -> Unit)? = null,
 ) {
     // A start button beside the toggle gets squeezed into a blob at large text: stack them from 1.3x.
     val stacked = !loaded && LocalDensity.current.fontScale > STACK_FONT_SCALE
@@ -489,10 +477,14 @@ private fun PlayDock(
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
             status?.invoke()
             if (!loaded) {
-                GlassButton(onClick = onStart, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
-                    Icon(painterResource(R.drawable.ic_play_arrow), null)
-                    Spacer(Modifier.width(HahoTheme.spacing.sm))
-                    Text(startLabel)
+                if (speed != null && onSpeed != null) {
+                    SplitStartButton(startLabel, speed, enabled, onStart, onSpeed)
+                } else {
+                    GlassButton(onClick = onStart, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
+                        Icon(painterResource(R.drawable.ic_play_arrow), null)
+                        Spacer(Modifier.width(HahoTheme.spacing.sm))
+                        Text(startLabel)
+                    }
                 }
             }
             if (stacked) Box(Modifier.align(Alignment.End)) { toggle() }
@@ -500,6 +492,71 @@ private fun PlayDock(
         if (!stacked) toggle()
     }
 }
+
+/** The start button with the playback speed in its right segment, which opens the speeds. */
+@Composable
+private fun SplitStartButton(label: String, speed: Float, enabled: Boolean, onStart: () -> Unit, onSpeed: (Float) -> Unit) {
+    val g = Glass.colors
+    var menu by remember { mutableStateOf(false) }
+    val speedText = speedLabel(speed)
+    val speedSpoken = stringResource(R.string.memorize_speed_button, speedText)
+    Surface(
+        shape = CircleShape,
+        color = if (enabled) g.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+        contentColor = if (enabled) g.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+        border = if (enabled && g.enabled) g.rimStroke() else null,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(Modifier.height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .heightIn(min = 48.dp)
+                    .clickable(enabled = enabled, role = Role.Button, onClick = onStart)
+                    .padding(horizontal = HahoTheme.spacing.lg),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(painterResource(R.drawable.ic_play_arrow), null)
+                Spacer(Modifier.width(HahoTheme.spacing.sm))
+                Text(label, style = MaterialTheme.typography.labelLarge)
+            }
+            Box(Modifier.width(1.dp).fillMaxHeight(0.5f).background(LocalContentColor.current.copy(alpha = 0.35f)))
+            Box {
+                Row(
+                    Modifier
+                        .fillMaxHeight()
+                        .heightIn(min = 48.dp)
+                        .clickable(enabled = enabled, role = Role.Button) { menu = true }
+                        .padding(horizontal = HahoTheme.spacing.md)
+                        .semantics { contentDescription = speedSpoken },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(speedText, style = MaterialTheme.typography.labelLarge)
+                    Icon(painterResource(R.drawable.ic_keyboard_arrow_down), null, Modifier.size(HahoTheme.dimens.smallIcon))
+                }
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    for (step in SPEED_MIN_STEP..SPEED_MAX_STEP) {
+                        val value = step / 20f
+                        DropdownMenuItem(
+                            text = { Text(speedLabel(value)) },
+                            leadingIcon = if (step == (speed * 20).roundToInt()) {
+                                { Icon(painterResource(R.drawable.ic_check), null) }
+                            } else {
+                                null
+                            },
+                            onClick = { menu = false; onSpeed(value) },
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+private const val SPEED_MIN_STEP = 10 // 0.5x in 0.05 steps
+private const val SPEED_MAX_STEP = 20 // 1.0x
 
 @Composable
 internal fun RestartButton(onStart: () -> Unit) {
@@ -533,13 +590,19 @@ private fun listenDock(state: MemorizeUiState, actions: MemorizeActions, toggle:
         onStart = actions.onListen,
         onToggle = actions.onToggle,
         toggle = toggle,
-        status = { Text(speedLabel(state.settings.speed), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        status = if (listenLoaded(state)) {
+            { Text(speedLabel(state.settings.speed), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        } else {
+            null
+        },
+        speed = state.settings.speed,
+        onSpeed = actions.onSpeed,
     )
 }
 
-private fun listenMore(state: MemorizeUiState, actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
-    if (listenLoaded(state)) RestartButton(actions.onListen)
-    MemorizeSpeedControl(state.settings, actions.onSpeed)
+private fun listenMore(actions: MemorizeActions): @Composable ColumnScope.() -> Unit = {
+    // The speed is in the start button; once playing, Restart is the only other control.
+    RestartButton(actions.onListen)
 }
 
 @Composable

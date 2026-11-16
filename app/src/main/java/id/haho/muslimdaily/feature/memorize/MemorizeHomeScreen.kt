@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Box
 import id.haho.design.glass.enterReveal
 import id.haho.design.glass.Glass
 import id.haho.design.glass.GlassAlertDialog
+import id.haho.design.glass.GlassBottomSheet
+import androidx.annotation.StringRes
+import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.design.glass.GlassExtendedFab
 import id.haho.design.glass.GlassButton
 import id.haho.design.glass.GlassCard
@@ -70,6 +73,9 @@ import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
+/** How the learner starts a dua from its row: guided steps, the four tabs, or hands-free audio. */
+enum class StartMode { EASY, ADVANCED, LISTEN }
+
 /** Where a dua stands, in the order the list shows them: what needs the reader first. */
 enum class HifzStatus { DUE, LEARNING, NOT_STARTED, MEMORIZED }
 
@@ -98,6 +104,7 @@ data class MemorizeHomeState(val today: LocalDate, val entries: List<HifzEntry>)
 class MemorizeHomeViewModel @Inject constructor(
     private val reviews: ReviewRepository,
     private val content: ContentRepository,
+    private val settings: SettingsRepository,
     clock: Clock,
 ) : ViewModel() {
     private val today = LocalDate.now(clock)
@@ -119,6 +126,14 @@ class MemorizeHomeViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
+    /** Saves the mode the learner chose for this dua, then opens it; the session reads the mode when it starts. */
+    fun start(duaId: String, advanced: Boolean, open: () -> Unit) {
+        viewModelScope.launch {
+            settings.update { setAdvanced(duaId, advanced) }
+            open()
+        }
+    }
+
     /** Takes a dua out of "My hifz", with its review schedule. The dua itself stays in the library. */
     fun remove(duaId: String) {
         viewModelScope.launch { reviews.remove(duaId) }
@@ -128,6 +143,7 @@ class MemorizeHomeViewModel @Inject constructor(
 @Composable
 fun MemorizeHomeRoute(
     onOpen: (duaId: String, fromReview: Boolean) -> Unit,
+    onListenOnly: (duaId: String) -> Unit,
     onPick: () -> Unit,
     viewModel: MemorizeHomeViewModel = hiltViewModel(),
 ) {
@@ -142,12 +158,51 @@ fun MemorizeHomeRoute(
             )
         },
     ) {
-        state?.let { MemorizeHomeContent(it, onRemove = viewModel::remove, onOpen = onOpen) }
+        state?.let {
+            MemorizeHomeContent(
+                it,
+                onRemove = viewModel::remove,
+                onOpen = onOpen,
+                onStart = { id, review, mode ->
+                    when (mode) {
+                        StartMode.LISTEN -> onListenOnly(id)
+                        else -> viewModel.start(id, mode == StartMode.ADVANCED) { onOpen(id, review) }
+                    }
+                },
+            )
+        }
     }
 }
 
 @Composable
-fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {}, onOpen: (String, Boolean) -> Unit) {
+fun MemorizeHomeContent(
+    state: MemorizeHomeState,
+    onRemove: (String) -> Unit = {},
+    onStart: (String, Boolean, StartMode) -> Unit = { _, _, _ -> },
+    onOpen: (String, Boolean) -> Unit,
+) {
+    // A row opens a sheet to pick how to start (and to remove); the top card opens the remembered mode.
+    var sheetFor by remember { mutableStateOf<HifzEntry?>(null) }
+    var removing by remember { mutableStateOf<HifzEntry?>(null) }
+    sheetFor?.let { entry ->
+        StartSheet(
+            entry,
+            onChoose = { mode -> sheetFor = null; onStart(entry.dua.id, entry.due, mode) },
+            onRemove = { sheetFor = null; removing = entry },
+            onDismiss = { sheetFor = null },
+        )
+    }
+    removing?.let { entry ->
+        GlassAlertDialog(
+            onDismissRequest = { removing = null },
+            title = { Text(stringResource(R.string.memorize_remove_title)) },
+            text = { Text(stringResource(R.string.memorize_remove_body)) },
+            confirmButton = {
+                TextButton(onClick = { removing = null; onRemove(entry.dua.id) }) { Text(stringResource(R.string.memorize_remove)) }
+            },
+            dismissButton = { TextButton(onClick = { removing = null }) { Text(stringResource(R.string.action_cancel)) } },
+        )
+    }
     LazyColumn(
         Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = HahoTheme.dimens.screenGutter, end = HahoTheme.dimens.screenGutter, bottom = HahoTheme.spacing.xxxl * 2),
@@ -177,7 +232,7 @@ fun MemorizeHomeContent(state: MemorizeHomeState, onRemove: (String) -> Unit = {
                         state.sorted.forEachIndexed { i, entry ->
                             key(entry.item.duaId) {
                                 if (i > 0) HorizontalDivider(Modifier.padding(start = HahoTheme.spacing.lg + StatusDot + HahoTheme.spacing.md))
-                                HifzRow(entry, onRemove = { onRemove(entry.dua.id) }) { onOpen(entry.dua.id, entry.due) }
+                                HifzRow(entry, onRemove = { removing = entry }) { sheetFor = entry }
                             }
                         }
                     }
@@ -202,7 +257,7 @@ private fun ContinueCard(state: MemorizeHomeState, onOpen: (String, Boolean) -> 
                 Text(stringResource(R.string.memorize_review_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
                 Text(stringResource(R.string.memorize_review_none), style = MaterialTheme.typography.titleLarge)
             } else {
-                Text(stringResource(R.string.memorize_continue), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
+                Text(stringResource(if (next.due) R.string.memorize_continue else R.string.memorize_start_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.semantics { heading() })
                 Column(Modifier.semantics(mergeDescendants = true) {}) {
                     Text(next.eventLabel, style = MaterialTheme.typography.titleLarge)
                     val due = state.dueEntries.size
@@ -228,7 +283,6 @@ private val StatusDot = 32.dp
 @Composable
 private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
-    var confirmRemove by remember { mutableStateOf(false) }
     val status = statusText(entry)
     Row(
         Modifier
@@ -267,21 +321,53 @@ private fun HifzRow(entry: HifzEntry, onRemove: () -> Unit, onClick: () -> Unit)
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.memorize_remove_menu)) },
-                    onClick = { menu = false; confirmRemove = true },
+                    onClick = { menu = false; onRemove() },
                 )
             }
         }
     }
-    if (confirmRemove) {
-        GlassAlertDialog(
-            onDismissRequest = { confirmRemove = false },
-            title = { Text(stringResource(R.string.memorize_remove_title)) },
-            text = { Text(stringResource(R.string.memorize_remove_body)) },
-            confirmButton = {
-                TextButton(onClick = { confirmRemove = false; onRemove() }) { Text(stringResource(R.string.memorize_remove)) }
-            },
-            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.action_cancel)) } },
-        )
+}
+
+/** Starting a dua: pick how to learn it, or remove it. Each choice is one 48 dp+ row with what it gives. */
+@Composable
+private fun StartSheet(entry: HifzEntry, onChoose: (StartMode) -> Unit, onRemove: () -> Unit, onDismiss: () -> Unit) {
+    GlassBottomSheet(onDismissRequest = onDismiss) {
+        Column(Modifier.padding(bottom = HahoTheme.spacing.xxl)) {
+            Text(
+                entry.eventLabel,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm).semantics { heading() },
+            )
+            ModeRow(R.string.memorize_mode_easy, R.string.memorize_mode_easy_body) { onChoose(StartMode.EASY) }
+            ModeRow(R.string.memorize_mode_advanced, R.string.memorize_advanced_body) { onChoose(StartMode.ADVANCED) }
+            ModeRow(R.string.memorize_mode_listen, R.string.memorize_mode_listen_body) { onChoose(StartMode.LISTEN) }
+            HorizontalDivider(Modifier.padding(vertical = HahoTheme.spacing.sm))
+            Text(
+                stringResource(R.string.memorize_remove_menu),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+                    .clickable(role = Role.Button, onClick = onRemove)
+                    .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md),
+            )
+        }
+    }
+}
+
+@Composable
+private fun ModeRow(@StringRes title: Int, @StringRes body: Int, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = HahoTheme.dimens.largeTouchTarget)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.md)
+            .semantics(mergeDescendants = true) {},
+    ) {
+        Text(stringResource(title), style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(body), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

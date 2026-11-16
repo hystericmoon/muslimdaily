@@ -371,7 +371,10 @@ private class Layout(
         // The big line is when the next prayer is: the current time here (08.30 next to "Jumat")
         // read as that prayer's time. The clock starts at 2x1.
         val timeFit = shrink(inner) { fit.boldWidth(t.nextTime, 22f * k * it) }
-        val s = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), timeFit)
+        val widthFit = k * minOf(fit.factor(inner, FitLine(0.dp, t.nextName to 11f * k), FitLine(0.dp, t.countdownShort to 10f * k)), timeFit)
+        // The time and the prayer's name must also fit the height (large fonts in a short cell); measured, not guessed.
+        val heightFit = shrink(innerHeight(pad) - Space.XS) { f -> fit.boldHeight(22f * widthFit * f) + fit.boldHeight(11f * widthFit * f) }
+        val s = widthFit * heightFit
         val head = line(22f * s) + Space.XS + line(11f * s)
         val showCountdown = innerHeight(pad) >= head + line(10f * s)
         val showBar = innerHeight(pad) >= head + line(10f * s) + Space.M + Space.BarThin
@@ -490,8 +493,12 @@ private class Layout(
         val head = if (tall) line(11f * k) + Space.M else 0.dp
         // The dot between hours and minutes takes a short line of its own.
         val rest = Space.XS + line(12f * k) + Space.S + line(11f * k) + Space.M + Space.BarThin + line(10f * k) + (if (marker != null) line(10f * k) else 0.dp)
-        // Two lines of figures share what the height leaves, at most 44sp each.
-        val figSp = ((innerHeight(pad) - head - rest).value / 2 / 1.2f / fontScale.coerceAtLeast(1f)).coerceIn(18f, 44f)
+        // Two lines of figures share what the height leaves, at most 44sp each. Sized from the font's own
+        // line height: the 1.2 rule of thumb left the minutes up to 7 dp short in a 76 dp-wide cell.
+        val perLine = (innerHeight(pad) - head - rest).value / 2
+        var figSp = 40f
+        repeat(4) { figSp *= perLine / fit.boldHeight(figSp) }
+        figSp = figSp.coerceIn(18f, 44f)
         val f = k * (inner.value * 0.96f / fit.boldWidth("00", figSp * k)).coerceAtMost(1f)
         val s = k * fit.factor(inner, FitLine(0.dp, t.nextName to 12f * k), FitLine(0.dp, t.countdownShort to 11f * k))
         Column(GlanceModifier.fillMaxSize().padding(pad)) {

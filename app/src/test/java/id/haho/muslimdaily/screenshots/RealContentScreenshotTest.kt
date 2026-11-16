@@ -4,7 +4,11 @@ import id.haho.design.theme.HahoPalette
 import id.haho.muslimdaily.feature.duas.components.sourceLabel
 import id.haho.muslimdaily.feature.duas.detail.DuaShareCard
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import id.haho.muslimdaily.feature.memorize.ListenOnlyContent
+import id.haho.muslimdaily.feature.memorize.ListenOnlyState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -193,6 +197,14 @@ class RealContentScreenshotTest {
                     }
                 }
             }
+        }
+    }
+
+    /** Hands-free Listen only on the longest dua, in a phone-height frame: the text scrolls and the play button keeps its shape (B1). */
+    @Test
+    fun listenOnlyLongest() = captureVariants("176-real-listen-only-longest") {
+        Box(Modifier.height(800.dp)) {
+            ListenOnlyContent(ListenOnlyState(duas.maxBy { it.arabic.length }, PlaybackState()), {}, {}, {})
         }
     }
 
