@@ -7,20 +7,22 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 16:10 WIB (1.18.0 released).
+Last updated: 16 Nov 2026, 17:15 WIB (1.18.0 released; next batch decided).
 
 ## In flight
 
+- **NEXT BATCH (owner decided 16 Nov, pages: glass https://claude.ai/artifact/E7v45m4W2EkABJPW6rR9qP, Routine https://claude.ai/artifact/7F2Go9nFWNdutJSc2bJkwY, https://claude.ai/artifact/NU2jnrD9vZDzgoSyHLFsxh). Owner's rule: show visuals before building; these are decided, build in this order, Sonnet is fine:**
+  1. Glass media bar on every bar (Dua Details, Listen, Listen only, Build, Recall, Routine): full-width translucent glass, blur, light top rim, no handle line (remove it from `Dock`/`PlayerBar`); content pads by the bar height; Glass effect off gives a solid surface. Build/Recall opened settings use a more opaque frosted sheet. Check contrast 3:1 in the screenshots.
+  2. Build: play plays the picked range (whole dua = default); repeat = loop the selection until stopped (engine repeat); status line shows what plays and "Paused" (it says "Listen" when paused today, `BuildProgress`).
+  3. Routine (`feature/run/RunScreen.kt`): the standard bar (no chevron dock), Reading display icon and layouts like Dua Details; a Mark-as-read icon row above the bar: read-once = check toggle (outline then gold, tap to undo), counted = button showing "2/3" plus an undo icon, dua arrows as chevrons ("Previous dua"), one-time hint, tighter buttons (30dp side, 38dp main, 5dp gaps); card tap stays a shortcut; remove the gold disc, "Done" and "Undo count".
+  4. Auto-scroll: Listen, Listen only and Routine scroll the text to the playing phrase on next, previous and audio; a manual scroll wins until the next phrase change; no animation with reduce motion.
+  5. Recall: always flowing text (drop the per-layout code in `RecallText` use; the Reading sheet says layout does not apply in Recall); "Next word" becomes "Next" with no icon ("Next word" for TalkBack; Indonesian "Buka").
+  Answered for the owner: Auto-advance = next dua 0.6 s after a count completes; Recite from memory = routine duas from My hifz open hidden, then Not yet / Knew it updates the review schedule. Recall has no repeat (owner never asked for one). Run was not covered by #287.
 - **1.18.0 (versionCode 63) released 16 Nov 16:03 WIB** (release PR #288, feature PR #287; details: history, "Shipped"). Standard player bar in Memorize and Listen only, Show progress line switch, Reading display icon. No content, database or backup change.
   **Owner to check on a phone (cloud can't)**: Listen only previous/next (jump between queue clips), Build repeat toggle and segment skip, Recall layouts (one phrase at a time is my assumption), the stacked Recall row at large font, the full-height Reading display sheet.
-  Open question: Recall has no repeat button; the owner did not say whether they want one.
-- **1.17.0 (versionCode 62) released 16 Nov 12:50 WIB** (release PR #285; #282 start sheet and list, #283 docks, #284 Listen media bar; details: history, "Shipped").
-  No content, database or backup change. Nothing in flight; no open PRs.
-- **Owner to check on a phone (cloud can't)**: (1) Listen: repeat button (twice, loop, once), previous/next phrase, the three layout chips, tapping a phrase in line/flowing;
-  after a loop, Build and Recall must not loop. (2) Docks: collapsed by default on Listen-less steps (Build, Recall), chevron, Back closes; Check ratings at the end of the content;
-  check marks on selected chips. (3) Start sheet (Advanced, Listen mode, Remove) and list rows. (4) Earlier checks still open: widget Dark text and large-font fits (1.16.0),
-  Run audio dock, widget taps, **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design).
-- **Follow-ups from the s3 review (not done)**: media bar in Run (Build and Recall have it since 1.18.0); delete the unreachable
+- **Earlier checks still open (owner, on a phone; cloud can't)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps,
+  **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design). 1.17.0 details: history, "Shipped".
+- **Follow-ups from the s3 review (not done)**: delete the unreachable
   `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (the stored `advancedDuas` flag stays for backups); Undo for Remove needs Opus or an owner decision (restores a review schedule).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
