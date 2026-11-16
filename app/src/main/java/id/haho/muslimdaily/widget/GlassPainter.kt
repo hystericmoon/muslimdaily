@@ -30,9 +30,6 @@ import kotlin.math.sqrt
  */
 object GlassPainter {
 
-    /** The glass's colour, without its alpha: Google's dark surface graphite. */
-    private const val GRAPHITE = 0x1F1F1F
-
     /**
      * The glass at the default opacity (85%): enough that muted text (65% white) still passes AA
      * where the wallpaper behind is pure white, sheen included (see GlassContrastTest). Readers
@@ -40,26 +37,26 @@ object GlassPainter {
      */
     val GLASS: Int = withOpacity(WIDGET_OPACITY_DEFAULT)
     const val ACCENT = 0xFFEEF26B.toInt()
-    private const val TRACK = 0x38FFFFFF
 
-    fun withOpacity(opacity: Float): Int = ((opacity.coerceIn(0f, 1f) * 255).roundToInt() shl 24) or GRAPHITE
+    /** The glass's colour at [opacity]: Google's dark surface graphite, or white in the Dark look. */
+    fun withOpacity(opacity: Float, tint: Int = WidgetInk.Light.tint): Int = ((opacity.coerceIn(0f, 1f) * 255).roundToInt() shl 24) or tint
 
     /** An accent pill, as a bitmap so its ends are round below Android 12 too (Glance's corner radius needs 12). */
-    fun pill(widthPx: Int, heightPx: Int): Bitmap {
+    fun pill(widthPx: Int, heightPx: Int, color: Int = ACCENT): Bitmap {
         val bmp = createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1))
         val r = heightPx / 2f
-        Canvas(bmp).drawRoundRect(RectF(0f, 0f, widthPx.toFloat(), heightPx.toFloat()), r, r, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = ACCENT })
+        Canvas(bmp).drawRoundRect(RectF(0f, 0f, widthPx.toFloat(), heightPx.toFloat()), r, r, Paint(Paint.ANTI_ALIAS_FLAG).apply { this.color = color })
         return bmp
     }
 
-    fun glass(widthPx: Int, heightPx: Int, density: Float, cornerPx: Float, opacity: Float = WIDGET_OPACITY_DEFAULT): Bitmap {
+    fun glass(widthPx: Int, heightPx: Int, density: Float, cornerPx: Float, opacity: Float = WIDGET_OPACITY_DEFAULT, ink: WidgetInk = WidgetInk.Light): Bitmap {
         val w = widthPx.toFloat()
         val h = heightPx.toFloat()
         val bmp = createBitmap(widthPx, heightPx)
         val c = Canvas(bmp)
         val box = RectF(0f, 0f, w, h)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
-        p.color = withOpacity(opacity)
+        p.color = withOpacity(opacity, ink.tint)
         c.drawRoundRect(box, cornerPx, cornerPx, p)
         // The sheen: light catching the glass from the top left, fading across it.
         p.shader = LinearGradient(0f, 0f, w * 0.6f, h, intArrayOf(0x0FFFFFFF, 0x05FFFFFF, 0x08FFFFFF), floatArrayOf(0f, 0.4f, 1f), Shader.TileMode.CLAMP)
@@ -68,7 +65,7 @@ object GlassPainter {
         val edge = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
             strokeWidth = 1f * density
-            color = 0x24FFFFFF
+            color = ink.edge
         }
         val half = edge.strokeWidth / 2
         c.drawRoundRect(RectF(half, half, w - half, h - half), cornerPx - half, cornerPx - half, edge)
@@ -214,7 +211,7 @@ object GlassPainter {
      * The progress bar: the accent from the start up to [progress] along [stopsPx] (the x of each
      * stop, under its label), then a dashed track to the end.
      */
-    fun bar(widthPx: Int, heightPx: Int, density: Float, stopsPx: FloatArray, progress: Float, mark: Int = -1): Bitmap {
+    fun bar(widthPx: Int, heightPx: Int, density: Float, stopsPx: FloatArray, progress: Float, mark: Int = -1, ink: WidgetInk = WidgetInk.Light): Bitmap {
         val bmp = createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1))
         val c = Canvas(bmp)
         val w = widthPx.toFloat()
@@ -224,9 +221,9 @@ object GlassPainter {
         val end = if (progress >= 1f) w else stopsPx[i] + (stopsPx[i + 1] - stopsPx[i]) * (pos - i)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
         val radius = density
-        p.color = ACCENT
+        p.color = ink.accent
         if (end > 0f) c.drawRoundRect(RectF(0f, 0f, end, h), radius, radius, p)
-        p.color = TRACK
+        p.color = ink.track
         val dash = 2f * density
         val gap = 2f * density
         var x = end + gap * 1.5f
@@ -237,7 +234,7 @@ object GlassPainter {
         // The next prayer's stop, a dot on the track: its time on the scale is also set apart by weight, not colour alone.
         if (mark in stopsPx.indices) {
             val r = h / 2f
-            p.color = ACCENT
+            p.color = ink.accent
             c.drawCircle(stopsPx[mark].coerceIn(r, (w - r).coerceAtLeast(r)), r, r, p)
         }
         return bmp

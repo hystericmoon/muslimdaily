@@ -41,6 +41,7 @@ import java.time.Instant
 import java.time.ZoneId
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
+import id.haho.muslimdaily.data.settings.WidgetTextMode
 import java.time.format.DateTimeFormatter
 
 @EntryPoint
@@ -65,6 +66,8 @@ class WidgetData(
     val liveClock: Boolean = true,
     /** The glass's opacity (see [AppSettings.widgetOpacity]). */
     val opacity: Float = WIDGET_OPACITY_DEFAULT,
+    /** Light or dark text and glass (see [AppSettings.widgetTextMode]). */
+    val textMode: WidgetTextMode = WidgetTextMode.LIGHT,
 )
 
 suspend fun loadWidgetData(context: Context): WidgetData {
@@ -77,6 +80,7 @@ suspend fun loadWidgetData(context: Context): WidgetData {
         now = now,
         precise = WidgetTicker.precise(context),
         opacity = settings.widgetOpacity,
+        textMode = settings.widgetTextMode,
     )
 }
 
@@ -107,7 +111,7 @@ fun GlanceModifier.openScreen(context: Context, destination: Destination): Glanc
     ),
 )
 
-/** Text on the glass: white, a muted white for labels, and the accent for the next prayer. */
+/** Text roles on the glass, as their Light values: white, a muted white for labels, and the accent for the next prayer. [WidgetInk.resolve] swaps in the Dark look's. */
 const val OnSky: Int = 0xFFFFFFFF.toInt()
 const val Muted: Int = 0xA6FFFFFF.toInt()
 const val Accent: Int = GlassPainter.ACCENT
@@ -139,6 +143,7 @@ fun Label(
     fill: Boolean = false,
 ) {
     val context = LocalContext.current
+    val ink = LocalInk.current
     val layout = when {
         semibold -> R.layout.widget_text_semibold
         bold -> R.layout.widget_text_bold
@@ -151,7 +156,7 @@ fun Label(
     val views = RemoteViews(context.packageName, layout).apply {
         setTextViewText(R.id.text, text)
         setTextViewTextSize(R.id.text, TypedValue.COMPLEX_UNIT_SP, sizeSp)
-        setTextColor(R.id.text, color)
+        setTextColor(R.id.text, ink.resolve(color))
         if (maxLines != 1) setInt(R.id.text, "setMaxLines", maxLines)
     }
     // An embedded RemoteViews fills its parent unless told otherwise, pushing siblings out.
@@ -252,12 +257,13 @@ fun Clock(pattern: String, sizeSp: Float, zone: ZoneId, now: Instant, live: Bool
         return
     }
     val context = LocalContext.current
+    val ink = LocalInk.current
     val views = RemoteViews(context.packageName, if (regular) R.layout.widget_clock_regular else R.layout.widget_clock).apply {
         setCharSequence(R.id.text, "setFormat12Hour", pattern)
         setCharSequence(R.id.text, "setFormat24Hour", pattern)
         setString(R.id.text, "setTimeZone", zone.id)
         setTextViewTextSize(R.id.text, TypedValue.COMPLEX_UNIT_SP, sizeSp)
-        setTextColor(R.id.text, color)
+        setTextColor(R.id.text, ink.resolve(color))
     }
     AndroidRemoteViews(views, modifier.wrapContentSize())
 }
