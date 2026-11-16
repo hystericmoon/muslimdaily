@@ -382,14 +382,10 @@
     <string name="memorize_with_help">With help</string>
     <string name="memorize_not_yet">Not yet</string>
     <string name="memorize_practise_now">Practise now</string>
-    <string name="memorize_mode_easy">Easy</string>
-    <string name="memorize_mode_easy_body">One step at a time, with Next.</string>
     <string name="memorize_mode_advanced">Advanced</string>
     <string name="memorize_mode_listen">Listen mode</string>
     <string name="memorize_mode_listen_body">Hands-free audio. The screen can be off.</string>
     <string name="memorize_switch_listen">Switch to Listen mode</string>
-    <string name="memorize_switch_easy">Switch to Easy mode</string>
-    <string name="memorize_switch_advanced">Switch to Advanced mode</string>
     <string name="memorize_dock_more">Options</string>
     <string name="memorize_dock_less">Close options</string>
     <string name="memorize_advanced_body">All four steps as tabs, with A–B, speed and hint levels. Remembered for this dua.</string>
@@ -514,7 +510,6 @@
     <string name="memorize_start_learning">Start learning</string>
     <string name="memorize_state_learning">Learning · next review %1$s</string>
     <string name="memorize_state_memorized">Memorized · next review %1$s</string>
-    <string name="memorize_more_named">More options for %1$s</string>
     <string name="memorize_remove_menu">Remove from My memorization</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>

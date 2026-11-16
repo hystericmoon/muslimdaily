@@ -186,7 +186,8 @@ class MemorizeSessionViewModel @Inject constructor(
             missedWords = l.missed,
             practising = l.practice != null,
             practiceLeft = l.practiceLeft,
-            advanced = dua.id in memorize.advancedDuas,
+            // Easy (guided) is out of the start sheet and the menu: every dua opens the four tabs. The stored per-dua flag stays untouched.
+            advanced = true,
             guided = l.guided,
             testRevealed = l.testRevealed,
             ratedWith = l.ratedWith,
