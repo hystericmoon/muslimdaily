@@ -33,6 +33,13 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.16.0 (versionCode 61, 16 Nov 10:22 WIB, release PR #279; #276, #278): widget Text colour (Light or Dark, `WidgetInk`; Dark is near-black text on a
+white glass with a dark olive accent) and glass down to 10% (floor was 85%; below the default AA holds only on the matching wallpaper, GlassContrastTest
+checks both looks); Memorize review fixes: dua name as the heading, split Listen button with the speed, start sheet (Easy, Advanced, Listen mode, Remove),
+mode-switch menu, Advanced dock always open, "Start" on the top card; B1 (empty pill in Listen mode) was layout: a long dua squeezed the controls, the Arabic now
+scrolls; widget 56/76 dp cells at 1.3x/2x font (`OneByOne` sized to the height, `Narrow` from measured font height; `WidgetFitTest` checks every text's height).
+All Sonnet (owner: no Opus budget). Fact: `DockToggle` is also used by RunScreen, keep it. No content, database or backup change.
+
 1.15.2 (versionCode 60, 16 Nov 07:58 WIB, release PR #274; #272): audit D10, the "alternating" and "bubbles" phrase fills show in the
 light theme (bubble edge on the `outline` token, about 4.1:1; alternate phrases get an `outline` edge). No content, database or backup
 change. APK `adwam-1.15.2.apk` (39.9 MB) on the GitHub Release; Release workflow run 78 green, shot 115 unchanged.
