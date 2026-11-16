@@ -973,6 +973,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_18_0">
+        <item>Pemutar yang sama kini ada di Hafalan: Bangun dan Ingat, serta di Dengar saja. Di Bangun, tombol Ulangi memutar frasa yang Anda pilih, dan sebelumnya atau berikutnya berpindah segmen. Di Ingat, Selesai, Putar dengan jeda, dan Buka kata ada dalam satu baris; tahap dan tingkat petunjuk dipindah ke atas teks, dan kecepatan ada di pengaturan. Tombol \"Selesai membaca\" kini bernama Selesai.</item>
+        <item>Tampilan bacaan: ikon di bagian atas layar Hafalan dan Dengar saja membuka lembar tampilan, yang kini terbuka penuh. Pilihan tata letak doa berlaku juga di Bangun dan Ingat, dan tombol pilihan tata letak di layar Dengar dihapus.</item>
+        <item>Tampilan bacaan: sakelar baru Tampilkan garis kemajuan menyembunyikan garis per frasa di atas tombol pemutar, di halaman doa dan semua layar Hafalan.</item>
+    </string-array>
     <string-array name="whats_new_1_17_0">
         <item>Hafalan: lembar untuk memulai kini menawarkan mode Lanjutan atau Dengar. Mode Mudah dihapus, jadi setiap doa dibuka dengan empat tab. Baris di daftar punya tanda panah, menu tiga titik hilang, dan Hapus ada di lembar untuk memulai.</item>
         <item>Hafalan: lembar di bawah (Dengar, Bangun, Ingat) kini tertutup lebih dulu agar teks doa tidak tertutup. Ketuk panahnya untuk membuka kontrol lainnya; tombol Kembali menutupnya. Di langkah Cek, penilaian ada di akhir isi. Pilihan yang aktif diberi tanda centang.</item>

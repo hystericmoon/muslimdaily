@@ -991,6 +991,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_18_0">
+        <item>The same player is now in Memorize: Build and Recall, and in Listen only. In Build, the Repeat button plays the phrases you choose, and previous and next move a segment. In Recall, Done, Play with gaps and Next word share one row; the stage and hint level moved above the text, and speed is in the settings. The \"Done reciting\" button is now called Done.</item>
+        <item>Reading display: an icon at the top of the Memorize and Listen only screens opens the display sheet, which now opens at full height. The dua layout you choose also applies in Build and Recall, and the layout buttons on the Listen screen are gone.</item>
+        <item>Reading display: a new Show progress line switch hides the per-phrase line above the player buttons, on the dua page and every Memorize screen.</item>
+    </string-array>
     <string-array name="whats_new_1_17_0">
         <item>Memorize: the sheet for starting a dua now offers Advanced or Listen mode. Easy is gone, so every dua opens with the four tabs. Rows in the list have an arrow, the three-dot menu is gone, and Remove is in the start sheet.</item>
         <item>Memorize: the sheet at the bottom (Listen, Build, Recall) now starts closed so it no longer covers the dua text. Tap its arrow to open the other controls; Back closes it. In the Check step the ratings sit at the end of the content. Selected options show a check mark.</item>
