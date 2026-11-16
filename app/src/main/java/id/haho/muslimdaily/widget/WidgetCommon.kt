@@ -214,6 +214,12 @@ class TextFit(context: Context) {
     /** The same, for the Bold clock. */
     fun boldWidth(text: String, sp: Float): Float = measure(boldPaint, text, sp)
 
+    /** The height of one line of the Bold clock at [sp], in dp, in this phone's font (no font padding). */
+    fun boldHeight(sp: Float): Float {
+        boldPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)
+        return (boldPaint.fontMetrics.bottom - boldPaint.fontMetrics.top) / metrics.density
+    }
+
     /** How far the clock's text box reaches below its baseline at [sp], in dp (no font padding). */
     fun descent(sp: Float): Float {
         boldPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, metrics)

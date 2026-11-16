@@ -131,9 +131,9 @@ class WidgetFitTest {
                 ellipsized -> problems += "$case: \"$s\" ends in …"
                 needed > room + 1 -> problems += "$case: \"$s\" needs ${(needed / density).toInt()}dp, has ${(room / density).toInt()}dp"
                 rect.left < 0 || rect.top < 0 || rect.right > w || rect.bottom > h -> problems += "$case: \"$s\" runs past the widget"
-                // The footer's glyphs must fit the view's own height, or the launcher clips them through the
-                // letters (audit M6). Other short-cell layouts are not held to this yet.
-                s in footer && heightNeeded(view) > view.height + 1 -> problems += "$case: \"$s\" needs ${(heightNeeded(view) / density).toInt()}dp of height, has ${(view.height / density).toInt()}dp"
+                // Every text's glyphs must fit its view's own height, or the launcher clips them through the
+                // letters (audit M6; extended from the footer to all texts when the 56/76 dp cells at large fonts were fixed).
+                heightNeeded(view) > view.height + 1 -> problems += "$case: \"$s\" needs ${(heightNeeded(view) / density).toInt()}dp of height, has ${(view.height / density).toInt()}dp"
             }
         }
         // Texts on the same line must not touch: "5:23 AM11:41" reads as one number.
