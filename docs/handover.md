@@ -7,11 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 17:15 WIB (1.18.0 released; next batch decided).
+Last updated: 16 Nov 2026, 18:30 WIB (1.19.0 released).
 
 ## In flight
 
-- **Batch built 16 Nov (PR on branch claude/notion-promo-batch-1-o2p0c4, unreleased, no versionName change):** glass bar on Dua Details, Listen, Listen only, Build, Recall, Routine (`core/designsystem/component/GlassBar.kt`: blur on Android 12+, off in screenshots); Build play = picked part (whole = cumulative build), repeat = loop until stopped, "Paused"; Routine standard bar + mark row (48/60dp, not the 30/38dp of the page: touch targets) + one-time hint (`runMarkHintSeen`) + Reading display; auto-scroll (`FollowPhrase.kt`) in Listen, Listen only, Routine; Recall always flowing, "Next"/"Buka". Not built: long-press name on the check. **Owner to check on a phone:** blur and contrast over text, auto-scroll, Build part/repeat, Routine row. Next: release when the owner asks (minor).
+- **1.19.0 (versionCode 64) released 16 Nov 18:23 WIB** (release PR #292, feature PR #291; details: history, "Shipped"). **Owner to check on a phone (cloud can't)**: glass bar blur and icon contrast over scrolling text, auto-scroll on next/previous/audio, Build part and repeat, the Routine mark row and one-time hint, Recall "Next".
 - **1.18.0 (versionCode 63) released 16 Nov 16:03 WIB** (release PR #288, feature PR #287; details: history, "Shipped"). Standard player bar in Memorize and Listen only, Show progress line switch, Reading display icon. No content, database or backup change.
   **Owner to check on a phone (cloud can't)**: Listen only previous/next (jump between queue clips), Build repeat toggle and segment skip, Recall layouts (one phrase at a time is my assumption), the stacked Recall row at large font, the full-height Reading display sheet.
 - **Earlier checks still open (owner, on a phone; cloud can't)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps,
@@ -22,7 +22,7 @@ Last updated: 16 Nov 2026, 17:15 WIB (1.18.0 released; next batch decided).
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - **UX/UI audit: done** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1, D10 in 1.15.2). Not done: W7 "next two
   prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
-- Main: 1.18.0 (versionCode 63, content_version 55, 329 rows).
+- Main: 1.19.0 (versionCode 64, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -58,7 +58,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
-- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.18.0 plus the unreleased batch (#291); 1.19.0 is proposed, awaiting the owner's yes.
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.19.0.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
