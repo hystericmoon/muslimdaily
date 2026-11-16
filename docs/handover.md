@@ -7,38 +7,30 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026 (1.15.2 released; widget text mode #276 merged, unreleased).
+Last updated: 16 Nov 2026, 10:30 WIB (1.16.0 released).
 
 ## In flight
 
-- **1.15.2 (versionCode 60) released 16 Nov 07:58 WIB** (release PR #274, APK on the Release; details: history, "Shipped"). No
-  content, database or backup change. Nothing in flight; no open PRs.
-- **Owner to check on a phone or emulator (cloud can't)**: (1) Check row: one-row dock, Indonesian labels on one line, 200% font
-  stacks; (2) Run audio dock: playback, lock-screen title (the run's name), Back closes the open dock, 200% font; (3) **Qibla
-  back overlap (#209, fix unverified on a device; Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold
-  at ~20% and ~50%, then release and cancel; expect one screen at a time, cancel returns to Qibla; repeat on dua detail and
-  with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
-- **Owner's Memorize review (S2, 16 Nov; zip in the session uploads, decision page https://claude.ai/artifact/8jeXrKLhqnPuhbEzyfQ2C9)**:
-  pins U1 header, U2/U3 dock, U4 advanced controls, U1 start sheet, B1 empty pill. Recommended, awaiting the owner's pick:
-  header B (dua name as heading, Meaning on its own line), dock A (split button `Listen 2x | 0.95x`, A-B and repeat always shown in Advanced),
-  start sheet plus a one-line "Switch to..." menu row. **Sonnet**: header, split button, labelled Options, Memorize tab row overlap
-  (subtitle meets the divider), "Continue" card says "Start" when not started. **Opus**: B1 (empty blue pill over the Listen-only
-  footer, cause unknown, no content description), start sheet and mode switch, advanced controls always visible.
+- **1.16.0 (versionCode 61) released 16 Nov 10:22 WIB** (release PR #279; #276 widget text mode, #278 Memorize review fixes and widget fit;
+  details: history, "Shipped"). No content, database or backup change. Nothing in flight; no open PRs.
+- **Owner to check on a phone or emulator (cloud can't)**:
+  (1) **Widget Dark text**: Settings → Display and text → Home screen widgets, Text colour Dark, opacity ~20% over a light wallpaper (Light text over a dark one).
+  Below 85% AA holds only for the matching wallpaper (mid-grey fails below ~55%); the note says so.
+  (2) **Memorize** (all Sonnet, no Opus review): tap a row → start sheet (Easy = guided, Advanced = tabs, Listen mode = hands-free, Remove); the dua name
+  heading and Meaning line; the Listen split button (right part opens the speeds); Advanced shows its controls with no Options toggle (Run still has one);
+  menu "Switch to Listen mode" and the Easy/Advanced row; Listen mode on a long dua keeps its play button. "Easy" is my label for the guided mode, so ask the owner if it is the word they meant.
+  (3) Widgets at large fonts: 56/76 dp cells and the 76 dp-wide tall cell at 1.3x and 2x (WidgetFitTest covers all texts now).
+  (4) Check row, Run audio dock (Back closes the dock, 200% font), widget taps and 1x1 / 4x2 scale, and **Qibla back overlap (#209, unverified on a device;
+  Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold at ~20% and ~50%, release and cancel; one screen at a time.
+  If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) shipped in 1.15.2 (#272; bubbles
   use the `outline` token, alternate phrases get an `outline` edge). Page
   https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
-  (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. **Owner to check on a device**:
-  widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time, the 4x2 scale with the bold next
-  prayer and its dot. **Widget text mode (#276, merged 16 Nov)**: Settings → Display → Widget → Text colour (Light default / Dark:
-  white glass, dark olive accent; `WidgetInk`); opacity floor 85% → 10%, so the low-opacity note is reachable again. Below 85% AA
-  holds only for light text on dark wallpapers and dark text on light ones (mid-grey fails below ~55%); owner chose to allow it
-  with the warning. Not shipped until a release; owner to check Dark text at ~20% on a light wallpaper. **Loose end left**:
-  widening `WidgetFitTest`'s height check to every text (drop `s in footer &&`) fails: "Jumat" squeezed in 56/76 dp cells at 2x font,
-  clock digits short at 2x, minutes in the 76 dp column at 1x. Layout rework in `PrayerWidgets.kt`, not verifiable from the cloud.
+  (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. Widget loose ends are closed (1.16.0).
   Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
-- Main: 1.15.2 (versionCode 60, content_version 55, 329 rows).
+- Main: 1.16.0 (versionCode 61, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
