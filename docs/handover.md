@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 10:30 WIB (1.16.0 released).
+Last updated: 16 Nov 2026, 10:40 WIB (1.16.0 released, session clearing).
 
 ## In flight
 
@@ -25,11 +25,8 @@ Last updated: 16 Nov 2026, 10:30 WIB (1.16.0 released).
   If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) shipped in 1.15.2 (#272; bubbles
-  use the `outline` token, alternate phrases get an `outline` edge). Page
-  https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
-  (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. Widget loose ends are closed (1.16.0).
-  Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
+- **UX/UI audit: done** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1, D10 in 1.15.2). Not done: W7 "next two
+  prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
 - Main: 1.16.0 (versionCode 61, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
@@ -70,7 +67,8 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0, 1.15.0, 1.15.1 and 1.15.2, audit fixes #216-#272;
+- **No Opus budget (owner, 16 Nov)**: work CLAUDE.md routes to Opus is done on Sonnet while this holds (1.16.0 did B1, the start sheet and the mode switch that way). Ask the owner before assuming it has changed.
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0 to 1.16.0, audit fixes #216-#272, widget text mode #276, Memorize review fixes #278;
   child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
