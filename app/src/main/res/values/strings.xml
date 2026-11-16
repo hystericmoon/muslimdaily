@@ -968,6 +968,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_16_0">
+        <item>Widget: kaca kini bisa jauh lebih transparan (sampai 10%), dengan pengaturan Warna teks (Terang atau Gelap) di Pengaturan, Tampilan dan teks, untuk wallpaper yang terang. Di bawah 85%, keterbacaan bergantung pada wallpaper. Widget yang pendek atau sempit tidak lagi memotong waktu atau nama shalat di teks besar.</item>
+        <item>Hafalan: mengetuk satu doa membuka lembar untuk mulai di mode Mudah, Lanjutan, atau Dengar, atau menghapusnya. Nama doa kini menjadi judul, dengan posisi dan Arti di bawahnya. Di Dengar, kecepatan ada di tombol mulai, dan mode Lanjutan selalu menampilkan kontrolnya. Menu punya \"Beralih ke mode dengar\" dan satu baris untuk beralih antara Mudah dan Lanjutan. Kartu teratas bertuliskan Mulai bila doa belum dimulai.</item>
+        <item>Mode dengar: doa yang panjang kini bisa digulir, sehingga tombol putar tidak lagi tergencet.</item>
+    </string-array>
     <string-array name="whats_new_1_15_2">
         <item>Warna frasa lebih jelas di tema terang: batas tiap gelembung kini tegas, dan frasa selang-seling punya tepi sehingga mudah dibedakan.</item>
     </string-array>
