@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026 (1.15.2 released; widget text mode in PR #276, unreleased).
+Last updated: 16 Nov 2026 (1.15.2 released; widget text mode #276 merged, unreleased).
 
 ## In flight
 
@@ -18,6 +18,12 @@ Last updated: 16 Nov 2026 (1.15.2 released; widget text mode in PR #276, unrelea
   back overlap (#209, fix unverified on a device; Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold
   at ~20% and ~50%, then release and cancel; expect one screen at a time, cancel returns to Qibla; repeat on dua detail and
   with Remove animations on. If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
+- **Owner's Memorize review (S2, 16 Nov; zip in the session uploads, decision page https://claude.ai/artifact/8jeXrKLhqnPuhbEzyfQ2C9)**:
+  pins U1 header, U2/U3 dock, U4 advanced controls, U1 start sheet, B1 empty pill. Recommended, awaiting the owner's pick:
+  header B (dua name as heading, Meaning on its own line), dock A (split button `Listen 2x | 0.95x`, A-B and repeat always shown in Advanced),
+  start sheet plus a one-line "Switch to..." menu row. **Sonnet**: header, split button, labelled Options, Memorize tab row overlap
+  (subtitle meets the divider), "Continue" card says "Start" when not started. **Opus**: B1 (empty blue pill over the Listen-only
+  footer, cause unknown, no content description), start sheet and mode switch, advanced controls always visible.
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - **UX/UI audit: done.** Every finding the owner picked shipped in 1.15.1; D10 (phrase fills in light) shipped in 1.15.2 (#272; bubbles
@@ -25,14 +31,12 @@ Last updated: 16 Nov 2026 (1.15.2 released; widget text mode in PR #276, unrelea
   https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
   (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. **Owner to check on a device**:
   widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time, the 4x2 scale with the bold next
-  prayer and its dot. **Widget text mode (PR #276, 16 Nov)**: Settings → Display → Widget → Text colour (Light default / Dark:
+  prayer and its dot. **Widget text mode (#276, merged 16 Nov)**: Settings → Display → Widget → Text colour (Light default / Dark:
   white glass, dark olive accent; `WidgetInk`); opacity floor 85% → 10%, so the low-opacity note is reachable again. Below 85% AA
   holds only for light text on dark wallpapers and dark text on light ones (mid-grey fails below ~55%); owner chose to allow it
   with the warning. Not shipped until a release; owner to check Dark text at ~20% on a light wallpaper. **Loose end left**:
-  widening `WidgetFitTest`'s height check (`heightNeeded(view) > view.height` for every text, not only the footer) fails with real
-  clipping: weekday "Jumat" squeezed to 0-13 dp in 56/76 dp cells at 2x font, clock digits 1-4 dp short at 2x, and the minutes in
-  the 76 dp-wide column at 1x font (needs 40 dp, has 34). A layout rework in `PrayerWidgets.kt`, not verifiable from the cloud. Not problems
-  (checked 16 Nov): the Qibla Kaaba gold stripe is fill on black; the routine-editor hint already names the handle and the menu.
+  widening `WidgetFitTest`'s height check to every text (drop `s in footer &&`) fails: "Jumat" squeezed in 56/76 dp cells at 2x font,
+  clock digits short at 2x, minutes in the 76 dp column at 1x. Layout rework in `PrayerWidgets.kt`, not verifiable from the cloud.
   Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
 - Main: 1.15.2 (versionCode 60, content_version 55, 329 rows).
 
