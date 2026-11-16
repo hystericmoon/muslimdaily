@@ -33,6 +33,15 @@ The owner posts; nothing has been posted. Details of batch 2: history, "Promo ba
 
 ## Shipped
 
+1.17.0 (versionCode 62, 16 Nov 12:50 WIB, release PR #285; #282, #283, #284 from the owner's s3 screenshot review, decisions on https://claude.ai/artifact/B8yqj9QF9ZBLMfvMBzizUi):
+start sheet offers Advanced or Listen mode (option B: Easy/guided removed from the sheet and the in-session menu; `MemorizeUiState.advanced` is now always true, the stored
+per-dua flag and backups are untouched; `GuidedSession` and its tests are unreachable, delete later); list rows have a chevron, no overflow menu, Remove only in the sheet
+(confirmation kept; an Undo snackbar was left out because restoring a review schedule touches user data). Advanced docks start collapsed on every step (`dockOpen`, Back closes;
+reverses "Advanced dock always open" from 1.16.0), Check ratings at the end of the content (reverses #207's dock), selected Recall chips show a check (`selectedCheck`).
+Listen uses the dua player's bar (`PlayerControls` extracted from `PlayerBar`; `Dock` has no chevron there), repeat cycles twice / loop / once (`ListenRepeat`; `MemorizePlan.listen(dua, title, fromPhrase, times)`;
+only Listen's loop sets the engine's shared repeat flag, `play()` clears it for every other sequence, `onCleared` clears it), the card follows the global `phraseLayout` with chips (kept for all duas).
+Build, Recall and Run keep their own transport. All Sonnet; no content, database or backup change. Untested on a device: repeat modes, phrase stepping, layout chips, docks.
+APK `adwam-1.17.0.apk` (39.9 MB) on the GitHub Release, published 12:50 WIB; Release workflow run 80 green. Screenshots workflow: each PR needed one run after push (CI is red on the first commit until the shots are recorded; that is expected).
 1.16.0 (versionCode 61, 16 Nov 10:22 WIB, release PR #279; #276, #278): widget Text colour (Light or Dark, `WidgetInk`; Dark is near-black text on a
 white glass with a dark olive accent) and glass down to 10% (floor was 85%; below the default AA holds only on the matching wallpaper, GlassContrastTest
 checks both looks); Memorize review fixes: dua name as the heading, split Listen button with the speed, start sheet (Easy, Advanced, Listen mode, Remove),
