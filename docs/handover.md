@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 08:05 WIB (1.15.2 released; audit fixes #216-#269 and D10 #272 merged).
+Last updated: 16 Nov 2026 (1.15.2 released; widget text mode in PR #276, unreleased).
 
 ## In flight
 
@@ -25,8 +25,13 @@ Last updated: 16 Nov 2026, 08:05 WIB (1.15.2 released; audit fixes #216-#269 and
   https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1. Not done: W7 "next two prayers at 200%"
   (unreachable, see history). S6 shot (fasting upcoming list) checked 16 Nov: grouped ranges, fine. **Owner to check on a device**:
   widget taps (no-location widget opens the location screen), 1x1 shows the next prayer's time, the 4x2 scale with the bold next
-  prayer and its dot. **Loose ends**: `WidgetFitTest` flags 56/76 dp cells at large fonts; the Settings widget-opacity note for
-  "lighter glass" is unreachable now that the floor (85%) equals the default (M1), so the stepper can only go up. Not problems
+  prayer and its dot. **Widget text mode (PR #276, 16 Nov)**: Settings → Display → Widget → Text colour (Light default / Dark:
+  white glass, dark olive accent; `WidgetInk`); opacity floor 85% → 10%, so the low-opacity note is reachable again. Below 85% AA
+  holds only for light text on dark wallpapers and dark text on light ones (mid-grey fails below ~55%); owner chose to allow it
+  with the warning. Not shipped until a release; owner to check Dark text at ~20% on a light wallpaper. **Loose end left**:
+  widening `WidgetFitTest`'s height check (`heightNeeded(view) > view.height` for every text, not only the footer) fails with real
+  clipping: weekday "Jumat" squeezed to 0-13 dp in 56/76 dp cells at 2x font, clock digits 1-4 dp short at 2x, and the minutes in
+  the 76 dp-wide column at 1x font (needs 40 dp, has 34). A layout rework in `PrayerWidgets.kt`, not verifiable from the cloud. Not problems
   (checked 16 Nov): the Qibla Kaaba gold stripe is fill on black; the routine-editor hint already names the handle and the menu.
   Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
 - Main: 1.15.2 (versionCode 60, content_version 55, 329 rows).

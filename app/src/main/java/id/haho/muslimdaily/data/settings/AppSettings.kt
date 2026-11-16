@@ -16,6 +16,9 @@ enum class TranslationMode { INDONESIAN, ENGLISH, BOTH }
  * How the dua page lays out a dua's phrases: one per line (the default), flowing text with a
  * pause mark between phrases, or one phrase at a time with Back and Next.
  */
+/** The widgets' text and glass: white on graphite, or near-black on white (for a very transparent glass over a light wallpaper). */
+enum class WidgetTextMode { LIGHT, DARK }
+
 enum class PhraseLayout { LINES, INLINE, FOCUS }
 
 /**
@@ -127,8 +130,9 @@ data class AppSettings(
     val haptics: Boolean = true,
     /** Run mode hides the Arabic of duas in "My hifz" until revealed, to recite them from memory. */
     val runFromMemory: Boolean = true,
-    /** How opaque the home-screen widgets' glass is, 0.4–1. The default keeps text AA over any wallpaper. */
+    /** How opaque the home-screen widgets' glass is, 0.1–1. The default keeps text AA over any wallpaper. */
     val widgetOpacity: Float = WIDGET_OPACITY_DEFAULT,
+    val widgetTextMode: WidgetTextMode = WidgetTextMode.LIGHT,
     /** The Duas page's last tab, "mine" or "all"; blank until one is chosen (see DuaLibraryRoute). */
     val duaLibraryTab: String = "",
     /** The first-launch setup was finished or skipped. */
@@ -150,7 +154,9 @@ data class AppSettings(
 const val WIDGET_OPACITY_DEFAULT = 0.85f
 
 /**
- * The lowest glass opacity the reader can pick: below it muted text (65% white) fails AA over a
- * light wallpaper (4.2:1 at 80%, 2.1:1 at 50%). GlassContrastTest checks every step from here up.
+ * The lowest glass opacity the reader can pick. Below the default, whether text passes AA depends
+ * on the wallpaper: light text needs a dark one, dark text a light one (and mid-tones fail either
+ * way below about 55%), so Settings says so. GlassContrastTest checks the guaranteed range
+ * (default and up, any wallpaper) and each mode on its own kind of wallpaper below it.
  */
-const val WIDGET_OPACITY_MIN = 0.85f
+const val WIDGET_OPACITY_MIN = 0.1f

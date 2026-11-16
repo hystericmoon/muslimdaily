@@ -35,19 +35,20 @@ class GlassContrastTest {
         return Color.rgb(ch(Color.red(bg), Color.red(fg)), ch(Color.green(bg), Color.green(fg)), ch(Color.blue(bg), Color.blue(fg)))
     }
 
-    /** The lowest contrast of [fg] on the glass at [opacity] over a pure white wallpaper. */
-    private fun worstContrast(fg: Int, opacity: Float): Double {
+    /** The lowest contrast of [fg] on the glass in [ink]'s look at [opacity] over a flat [wallpaper]. */
+    private fun worstContrast(fg: Int, opacity: Float, ink: WidgetInk = WidgetInk.Light, wallpaper: Int = Color.WHITE): Double {
         var worst = Double.MAX_VALUE
         for ((w, h) in listOf(340 to 164, 164 to 340)) {
-            val glass = GlassPainter.glass(w, h, 1f, cornerPx = 0f, opacity = opacity)
+            val glass = GlassPainter.glass(w, h, 1f, cornerPx = 0f, opacity = opacity, ink = ink)
             val shot = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
             Canvas(shot).apply {
-                drawColor(Color.WHITE)
+                drawColor(wallpaper)
                 drawBitmap(glass, 0f, 0f, null)
             }
             for (y in 2 until h - 2 step 2) for (x in 2 until w - 2 step 2) {
                 val bg = shot.getPixel(x, y)
-                val ratio = (luminance(over(bg, fg)) + 0.05) / (luminance(bg) + 0.05)
+                val (hi, lo) = luminance(over(bg, fg)).let { t -> luminance(bg).let { g -> maxOf(t, g) to minOf(t, g) } }
+                val ratio = (hi + 0.05) / (lo + 0.05)
                 if (ratio < worst) worst = ratio
             }
         }
@@ -60,13 +61,31 @@ class GlassContrastTest {
         assertTrue(worst >= 4.5, "muted text on the glass over white is %.2f:1".format(worst))
     }
 
+    private val looks = mapOf("light" to WidgetInk.Light, "dark" to WidgetInk.Dark)
+
     @Test
-    fun `text passes AA at every opacity the reader can pick`() {
-        // The Settings stepper moves in 5% steps from the floor to fully opaque.
-        for (pct in (WIDGET_OPACITY_MIN * 100).roundToInt()..100 step 5) {
-            for ((name, fg) in listOf("muted" to Muted, "accent" to Accent, "white" to Color.WHITE)) {
-                val worst = worstContrast(fg, pct / 100f)
-                assertTrue(worst >= 4.5, "$name text on the glass at $pct%% over white is %.2f:1".format(worst))
+    fun `text passes AA over any wallpaper from the default opacity up, in both looks`() {
+        // The Settings stepper moves in 5% steps; white and black are the extremes of any wallpaper.
+        for (pct in (WIDGET_OPACITY_DEFAULT * 100).roundToInt()..100 step 5) {
+            for ((look, ink) in looks) for ((wp, wallpaper) in listOf("white" to Color.WHITE, "black" to Color.BLACK)) {
+                for ((name, fg) in listOf("muted" to ink.muted, "accent" to ink.accent, "text" to ink.on)) {
+                    val worst = worstContrast(fg, pct / 100f, ink, wallpaper)
+                    assertTrue(worst >= 4.5, "$look $name text at $pct%% over $wp is %.2f:1".format(worst))
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `below the default each look passes AA on the kind of wallpaper it is for`() {
+        // Light text on a dark wallpaper, dark text on a light one, down to the lowest opacity.
+        // Mid-tones fail either way, which Settings says in words.
+        for (pct in (WIDGET_OPACITY_MIN * 100).roundToInt() until (WIDGET_OPACITY_DEFAULT * 100).roundToInt() step 5) {
+            for ((look, ink, wallpaper) in listOf(Triple("light", WidgetInk.Light, Color.BLACK), Triple("dark", WidgetInk.Dark, Color.WHITE))) {
+                for ((name, fg) in listOf("muted" to ink.muted, "accent" to ink.accent, "text" to ink.on)) {
+                    val worst = worstContrast(fg, pct / 100f, ink, wallpaper)
+                    assertTrue(worst >= 4.5, "$look $name text at $pct%% is %.2f:1".format(worst))
+                }
             }
         }
     }

@@ -42,6 +42,7 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_DEFAULT
 import id.haho.muslimdaily.data.settings.WIDGET_OPACITY_MIN
+import id.haho.muslimdaily.data.settings.WidgetTextMode
 import kotlin.math.roundToInt
 
 @Composable
@@ -132,6 +133,20 @@ fun DisplaySettingsContent(settings: AppSettings, update: (SettingsEditor.() -> 
                     incrementDescription = stringResource(R.string.settings_increase, title),
                     canDecrement = opacity > WIDGET_OPACITY_MIN,
                     canIncrement = opacity < 1f,
+                )
+                SegmentedRow(
+                    title = stringResource(R.string.display_widget_text),
+                    options = WidgetTextMode.entries,
+                    selected = settings.widgetTextMode,
+                    onSelect = { m -> update { widgetTextMode = m } },
+                    label = {
+                        stringResource(
+                            when (it) {
+                                WidgetTextMode.LIGHT -> R.string.display_widget_text_light
+                                WidgetTextMode.DARK -> R.string.display_widget_text_dark
+                            },
+                        )
+                    },
                 )
                 Text(
                     stringResource(

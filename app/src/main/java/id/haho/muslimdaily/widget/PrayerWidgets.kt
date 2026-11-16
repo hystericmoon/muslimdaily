@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -102,12 +103,9 @@ private fun corner(context: Context): Dp =
         24.dp
     }
 
-private val DividerColor = Color(0x1AFFFFFF)
 /** The bar's scale type, in sp: the prayer names and the times. Card's height budget uses the same sizes. */
 private const val ScaleNameSp = 10f
 private const val ScaleTimeSp = 10.5f
-
-private val MutedTint = ColorProvider(Color(Muted))
 
 /**
  * The glass is drawn at up to 2x and stretched by the launcher: a tint and a hairline edge look
@@ -116,7 +114,7 @@ private val MutedTint = ColorProvider(Color(Muted))
 private fun scale(context: Context) = min(context.resources.displayMetrics.density, 2f)
 
 /** The words the widget shows, in the app's language. */
-internal class WidgetText(private val context: Context, private val model: WidgetModel, private val clock: TimeFormatter, now: Instant = Instant.now(), private val precise: Boolean = true) {
+internal class WidgetText(private val context: Context, private val model: WidgetModel, private val clock: TimeFormatter, now: Instant = Instant.now(), private val precise: Boolean = true, private val ink: WidgetInk = WidgetInk.Light) {
     private fun s(id: Int, vararg args: Any) = context.getString(id, *args)
     private fun day(pattern: String): String = DateTimeFormatter.ofPattern(pattern, AppLocale).format(model.today)
     private val month = context.resources.getStringArray(R.array.hijri_months)[(model.todayHijri.month - 1).coerceIn(0, 11)]
@@ -175,7 +173,7 @@ internal class WidgetText(private val context: Context, private val model: Widge
 
     private fun accent(text: String, part: String): CharSequence = SpannableString(text).apply {
         val i = text.lastIndexOf(part)
-        if (i >= 0) setSpan(ForegroundColorSpan(Accent), i, i + part.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        if (i >= 0) setSpan(ForegroundColorSpan(ink.accent), i, i + part.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
     val now: String = model.now.let { line ->
@@ -204,7 +202,7 @@ internal class WidgetText(private val context: Context, private val model: Widge
 
     /** "Jakarta / Sen, 26 Okt": the place muted, the date white. */
     fun crumb(date: String): CharSequence = SpannableString("$place / $date").apply {
-        setSpan(ForegroundColorSpan(Muted), 0, place.length + 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        setSpan(ForegroundColorSpan(ink.muted), 0, place.length + 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
     /** TalkBack hears the widget as one sentence. */
@@ -220,14 +218,20 @@ internal class WidgetText(private val context: Context, private val model: Widge
 
 @Composable
 internal fun PrayerWidgetContent(data: WidgetData) {
-    val model = data.model ?: return NoLocation(data.opacity)
+    val ink = WidgetInk.of(data.textMode)
+    CompositionLocalProvider(LocalInk provides ink) { PrayerWidgetBody(data, ink) }
+}
+
+@Composable
+private fun PrayerWidgetBody(data: WidgetData, ink: WidgetInk) {
+    val model = data.model ?: return NoLocation(data.opacity, ink)
     val context = LocalContext.current
     val size = LocalSize.current
     val grid = WidgetGrid.of(size.width.value, size.height.value, context.resources.configuration.fontScale)
     // Built on every composition (cheap), so a language switch shows at the next update.
-    val t = WidgetText(context, model, data.time, data.now, data.precise)
+    val t = WidgetText(context, model, data.time, data.now, data.precise, ink)
     Box(GlanceModifier.fillMaxSize().cornerRadius(corner(context)).openToday(context).semantics { contentDescription = t.description }) {
-        GlassBackground(data.opacity)
+        GlassBackground(data.opacity, ink)
         val l = Layout(model, t, grid.scale, grid.tight, size.width, size.height, TextFit(context), context.resources.configuration.fontScale, data.now, data.liveClock)
         when (grid.rows) {
             1 -> when (grid.columns) {
@@ -246,13 +250,13 @@ internal fun PrayerWidgetContent(data: WidgetData) {
 }
 
 @Composable
-private fun GlassBackground(opacity: Float) {
+private fun GlassBackground(opacity: Float, ink: WidgetInk) {
     val context = LocalContext.current
     val size = LocalSize.current
     val d = scale(context)
     val corner = corner(context)
-    val bitmap = remember(size, opacity) {
-        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner.value * d, opacity)
+    val bitmap = remember(size, opacity, ink) {
+        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner.value * d, opacity, ink)
     }
     Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
 }
@@ -651,7 +655,7 @@ private class Layout(
                         Label(hijri, hijriSp * v)
                     }
                     Spacer(GlanceModifier.height(Space.M))
-                    Box(GlanceModifier.fillMaxWidth().height(1.dp).background(DividerColor)) {}
+                    Box(GlanceModifier.fillMaxWidth().height(1.dp).background(Color(LocalInk.current.divider))) {}
                 }
                 Spacer(if (tall) GlanceModifier.height(gap) else GlanceModifier.defaultWeight())
                 Column(GlanceModifier.fillMaxWidth()) {
@@ -697,7 +701,7 @@ private class Layout(
         val d = context.resources.displayMetrics.density
         val n = model.track.stops.size
         val at = stops ?: List(n) { i -> barWidth * (i.toFloat() / (n - 1)) }
-        val bitmap = GlassPainter.bar((barWidth.value * d).toInt(), (barHeight.value * d).toInt(), d, FloatArray(n) { at[it].value * d }, model.track.progress, if (markNext) nextStop else -1)
+        val bitmap = GlassPainter.bar((barWidth.value * d).toInt(), (barHeight.value * d).toInt(), d, FloatArray(n) { at[it].value * d }, model.track.progress, if (markNext) nextStop else -1, LocalInk.current)
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.width(barWidth).height(barHeight))
     }
 
@@ -782,7 +786,7 @@ private class Layout(
         Spacer(GlanceModifier.height(Space.M))
         Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             if (showNow) {
-                Image(ImageProvider(t.nowIcon), contentDescription = null, modifier = GlanceModifier.size(12.dp), colorFilter = ColorFilter.tint(MutedTint))
+                Image(ImageProvider(t.nowIcon), contentDescription = null, modifier = GlanceModifier.size(12.dp), colorFilter = ColorFilter.tint(ColorProvider(Color(LocalInk.current.muted))))
                 Spacer(GlanceModifier.width(Space.S + Space.XS))
                 Label(t.now, sp)
             }
@@ -794,20 +798,17 @@ private class Layout(
     }
 }
 
-/** The label on the accent pill: the glass graphite, 14:1 on the accent. */
-private const val PillInk = 0xFF1F1F1F.toInt()
-
 /**
  * No location yet: a pin, what to do, and an "Atur lokasi" pill; a tap opens the location screen
  * itself. Small cells keep just the pin and the short label. Drawn on the reader's glass opacity.
  */
 @Composable
-private fun NoLocation(opacity: Float) {
+private fun NoLocation(opacity: Float, ink: WidgetInk) {
     val context = LocalContext.current
     val size = LocalSize.current
     val d = scale(context)
-    val bitmap = remember(size, opacity) {
-        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d, opacity)
+    val bitmap = remember(size, opacity, ink) {
+        GlassPainter.glass((size.width.value * d).toInt().coerceAtLeast(1), (size.height.value * d).toInt().coerceAtLeast(1), d, corner(context).value * d, opacity, ink)
     }
     val fontScale = context.resources.configuration.fontScale.coerceAtLeast(1f)
     val sentence = context.getString(R.string.widget_no_location)
@@ -821,7 +822,7 @@ private fun NoLocation(opacity: Float) {
     ) {
         Image(ImageProvider(bitmap), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
         Column(GlanceModifier.padding(horizontal = if (roomy) Space.L else Space.S), horizontalAlignment = Alignment.CenterHorizontally, verticalAlignment = Alignment.CenterVertically) {
-            Image(ImageProvider(R.drawable.ic_location_on), contentDescription = null, modifier = GlanceModifier.size(20.dp), colorFilter = ColorFilter.tint(ColorProvider(Color(Accent))))
+            Image(ImageProvider(R.drawable.ic_location_on), contentDescription = null, modifier = GlanceModifier.size(20.dp), colorFilter = ColorFilter.tint(ColorProvider(Color(ink.accent))))
             Spacer(GlanceModifier.height(Space.S))
             if (roomy) {
                 Label(sentence, 12f, maxLines = 3, center = true)
@@ -829,7 +830,7 @@ private fun NoLocation(opacity: Float) {
                 val fit = remember(context) { TextFit(context) }
                 val pillW = fit.width(action, 12f) + 28f
                 val pillH = 12f * fontScale * 1.2f + 12f
-                val pill = remember(pillW, pillH) { GlassPainter.pill((pillW * d).toInt(), (pillH * d).toInt()) }
+                val pill = remember(pillW, pillH, ink) { GlassPainter.pill((pillW * d).toInt(), (pillH * d).toInt(), ink.accent) }
                 Box(GlanceModifier.width(pillW.dp).height(pillH.dp), contentAlignment = Alignment.Center) {
                     Image(ImageProvider(pill), contentDescription = null, contentScale = ContentScale.FillBounds, modifier = GlanceModifier.fillMaxSize())
                     Label(action, 12f, semibold = true, color = PillInk)

@@ -156,6 +156,7 @@ class SettingsRepository @Inject constructor(
             haptics = this[K.haptics] ?: d.haptics,
             runFromMemory = this[K.runFromMemory] ?: d.runFromMemory,
             widgetOpacity = (this[K.widgetOpacity] ?: d.widgetOpacity).coerceIn(WIDGET_OPACITY_MIN, 1f),
+            widgetTextMode = enumOr(K.widgetTextMode, d.widgetTextMode),
             arabicFont = enumOr(K.arabicFont, d.arabicFont),
             duaLibraryTab = this[K.duaLibraryTab] ?: d.duaLibraryTab,
             onboardingDone = this[K.onboardingDone] ?: d.onboardingDone,
@@ -205,6 +206,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var haptics: Boolean by key(K.haptics, true)
     var runFromMemory: Boolean by key(K.runFromMemory, true)
     var widgetOpacity: Float by key(K.widgetOpacity, WIDGET_OPACITY_DEFAULT)
+    var widgetTextMode: WidgetTextMode by enumKey(K.widgetTextMode, WidgetTextMode.LIGHT)
     var arabicFont: ArabicFont by enumKey(K.arabicFont, ArabicFont.NASKH)
     var phraseLayout: PhraseLayout by enumKey(K.phraseLayout, PhraseLayout.LINES)
     var phraseFill: PhraseFill by enumKey(K.phraseFill, PhraseFill.NONE)
@@ -307,6 +309,7 @@ internal object K {
     val haptics = booleanPreferencesKey("haptics")
     val runFromMemory = booleanPreferencesKey("run_from_memory")
     val widgetOpacity = floatPreferencesKey("widget_opacity")
+    val widgetTextMode = stringPreferencesKey("widget_text_mode")
     val arabicFont = stringPreferencesKey("arabic_font")
     val phraseLayout = stringPreferencesKey("phrase_layout")
     val phraseFill = stringPreferencesKey("phrase_fill")
