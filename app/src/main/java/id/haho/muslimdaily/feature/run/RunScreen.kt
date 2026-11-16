@@ -294,7 +294,7 @@ private fun MarkRow(state: RunUiState, page: Int, actions: RunActions, onPreviou
             done -> stringResource(R.string.run_read_undo)
             else -> stringResource(R.string.run_tap_read)
         }
-        val mainState = countText ?: stringResource(if (done) R.string.run_done else R.string.run_not_read)
+        val mainState = if (done) stringResource(R.string.run_done) else countText ?: stringResource(R.string.run_not_read)
         RoundControl(
             onClick = if (!counted && done) actions.onUndo else actions.onTap,
             enabled = !(counted && done),
