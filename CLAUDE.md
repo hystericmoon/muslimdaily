@@ -49,6 +49,7 @@ python -m unittest discover -s tools          # content pipeline
 - Stable by default: minor for features, patch for fixes; beta only when the owner asks. Say
   which version you will ship before merging. Merging a `versionName` change publishes a GitHub
   Release. Steps: the `release` skill (`.claude/skills/release/`), `docs/release.md`, `docs/beta.md`.
+- Standing wish from the owner (16 Nov 2026): always wants the latest APK with all the new fixes. After merging work, never leave it only on main: say the version you propose (the owner's yes to the release is still needed) and where the APK is, or point to the CI `apks` artifact meanwhile.
 - Feedback/report email: `muslimdaily.reportEmail` in `gradle.properties`.
 
 ## Workflow

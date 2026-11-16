@@ -977,6 +977,13 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_19_0">
+        <item>Bilah pemutar kini berupa kaca transparan selebar layar tanpa garis pegangan, di halaman doa, Dengar, Dengar saja, Bangun, Ingat, dan Mulai membaca. Teks bergulir di belakangnya dan tetap bisa digulir hingga ke atasnya. Dengan Efek kaca dimatikan, bilah berwarna solid.</item>
+        <item>Mulai membaca: bilah pemutar yang sama dengan halaman doa, tombol ikon Tampilan bacaan, dan tata letak doa yang sama. Di atas bilah ada baris tanda baca: panah doa sebelumnya dan berikutnya, tombol centang untuk menandai sudah dibaca (ketuk lagi untuk membatalkan), atau tombol hitungan seperti 2/3 dengan ikon batal. Lingkaran emas, tulisan Selesai, dan Batalkan hitungan dihapus; mengetuk kartu tetap bisa dipakai.</item>
+        <item>Bangun: Putar memutar bagian yang Anda pilih (seluruh doa jika belum memilih), dan Ulangi mengulangnya sampai Anda berhenti. Status menunjukkan apa yang diputar, atau Dijeda.</item>
+        <item>Dengar, Dengar saja, dan Mulai membaca: teks bergulir ke frasa yang sedang diputar saat audio berlanjut atau Anda menekan sebelumnya dan berikutnya. Jika Anda menggulir sendiri, teks dibiarkan sampai frasa berganti. Tanpa animasi jika Kurangi gerakan aktif.</item>
+        <item>Ingat: teks selalu mengalir, apa pun tata letak yang dipilih, dan tombol kini bernama Buka (untuk TalkBack tetap Buka kata berikutnya).</item>
+    </string-array>
     <string-array name="whats_new_1_18_0">
         <item>Pemutar yang sama kini ada di Hafalan: Bangun dan Ingat, serta di Dengar saja. Di Bangun, tombol Ulangi memutar frasa yang Anda pilih, dan sebelumnya atau berikutnya berpindah segmen. Di Ingat, Selesai, Putar dengan jeda, dan Buka kata ada dalam satu baris; tahap dan tingkat petunjuk dipindah ke atas teks, dan kecepatan ada di pengaturan. Tombol \"Selesai membaca\" kini bernama Selesai.</item>
         <item>Tampilan bacaan: ikon di bagian atas layar Hafalan dan Dengar saja membuka lembar tampilan, yang kini terbuka penuh. Pilihan tata letak doa berlaku juga di Bangun dan Ingat, dan tombol pilihan tata letak di layar Dengar dihapus.</item>

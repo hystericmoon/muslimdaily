@@ -995,6 +995,13 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_19_0">
+        <item>The player bar is now full-width transparent glass with no handle line, on the dua page, Listen, Listen only, Build, Recall and Routine. The text scrolls behind it and can still scroll clear of it. With Glass effect off the bar is solid.</item>
+        <item>Routine: the same player bar as the dua page, a Reading display icon, and the same dua layouts. Above the bar is a mark row: previous and next dua arrows, a check button to mark as read (tap again to undo), or a count button such as 2/3 with an undo icon. The gold disc, the Done label and Undo count are gone; tapping the card still works.</item>
+        <item>Build: Play plays the part you picked (the whole dua if you have not picked one), and Repeat loops it until you stop. The status shows what plays, or Paused.</item>
+        <item>Listen, Listen only and Routine: the text scrolls to the phrase that plays as the audio moves on or when you press previous or next. If you scroll yourself, it leaves the text alone until the phrase changes. No animation when Reduce motion is on.</item>
+        <item>Recall: the text always flows, whatever layout you chose, and the button is now called Next (TalkBack still says Next word).</item>
+    </string-array>
     <string-array name="whats_new_1_18_0">
         <item>The same player is now in Memorize: Build and Recall, and in Listen only. In Build, the Repeat button plays the phrases you choose, and previous and next move a segment. In Recall, Done, Play with gaps and Next word share one row; the stage and hint level moved above the text, and speed is in the settings. The \"Done reciting\" button is now called Done.</item>
         <item>Reading display: an icon at the top of the Memorize and Listen only screens opens the display sheet, which now opens at full height. The dua layout you choose also applies in Build and Recall, and the layout buttons on the Listen screen are gone.</item>

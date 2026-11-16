@@ -58,6 +58,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.18.0 plus the unreleased batch (#291); 1.19.0 is proposed, awaiting the owner's yes.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
