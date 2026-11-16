@@ -53,6 +53,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.IconButton
@@ -60,6 +61,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -231,13 +233,16 @@ fun MemorizeSessionScreen(
                     Step.CHECK -> CheckStep(state, actions)
                 }
             }
-            // Advanced shows every control of the step, always: no Options toggle. At 200% font the dock takes at most 60% of the screen and scrolls inside.
-            val toggle: @Composable () -> Unit = {}
+            // The dock starts collapsed on every step: the step's main action and status stay in view, the chevron opens
+            // the rest. Back closes it first. At 200% font the open dock takes at most 60% of the screen and scrolls inside.
+            var dockOpen by rememberSaveable(state.dua.id, state.step) { mutableStateOf(false) }
+            BackHandler(enabled = dockOpen) { dockOpen = false }
+            val toggle: @Composable () -> Unit = { DockToggle(dockOpen) { dockOpen = !dockOpen } }
             when (state.step) {
-                Step.LISTEN -> Dock(true, dockMax, listenDock(state, actions, toggle), if (listenLoaded(state)) listenMore(actions) else null)
-                Step.BUILD -> Dock(true, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
-                Step.RECALL -> Dock(true, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
-                Step.CHECK -> if (state.rated == null) Dock(false, dockMax, checkDock(state, actions), null)
+                Step.LISTEN -> Dock(dockOpen, dockMax, listenDock(state, actions, toggle), if (listenLoaded(state)) listenMore(actions) else null)
+                Step.BUILD -> Dock(dockOpen, dockMax, buildDock(state, actions, toggle), buildMore(state, actions, abAwaiting) { abAwaiting = it })
+                Step.RECALL -> Dock(dockOpen, dockMax, recallDock(state, actions, toggle = toggle), recallMore(state, actions, talkBack))
+                Step.CHECK -> Unit // the ratings are the end of the content, see CheckStep
             }
             SessionNavBar(state.step, actions.onStep)
         }
@@ -855,6 +860,14 @@ internal fun recallDock(state: MemorizeUiState, actions: MemorizeActions, showSt
 
 internal const val STACK_FONT_SCALE = 1.3f
 
+/** A check mark on a selected chip, so the state is not carried by the fill alone (WCAG 1.4.1, 1.4.11). */
+private fun selectedCheck(selected: Boolean): (@Composable () -> Unit)? =
+    if (selected) {
+        { Icon(painterResource(R.drawable.ic_check), null, Modifier.size(FilterChipDefaults.IconSize)) }
+    } else {
+        null
+    }
+
 private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBack: Boolean): @Composable ColumnScope.() -> Unit = {
     val gaps = state.segmented && state.hasAudio
     Text(stringResource(R.string.memorize_fade_level), style = MaterialTheme.typography.titleSmall, modifier = Modifier.semantics { heading() })
@@ -865,6 +878,7 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
                 selected = !state.practising && state.fade == level,
                 onClick = { actions.onFade(level) },
                 modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
+                leadingIcon = selectedCheck(!state.practising && state.fade == level),
                 label = { Text(stringResource(R.string.memorize_fade_percent, (level.fraction * 100).toInt())) },
             )
         }
@@ -877,6 +891,7 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
                     selected = state.fadeOrder == order,
                     onClick = { actions.onFadeOrder(order) },
                     modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
+                    leadingIcon = selectedCheck(state.fadeOrder == order),
                     label = { Text(stringResource(order.labelRes())) },
                 )
             }
@@ -887,6 +902,7 @@ private fun recallMore(state: MemorizeUiState, actions: MemorizeActions, talkBac
             selected = state.firstLetters,
             onClick = { actions.onFirstLetters(!state.firstLetters) },
             modifier = Modifier.heightIn(min = HahoTheme.dimens.minTouchTarget),
+            leadingIcon = selectedCheck(state.firstLetters),
             label = { Text(stringResource(R.string.memorize_first_letters)) },
         )
     }
@@ -940,12 +956,12 @@ private fun CheckStep(state: MemorizeUiState, actions: MemorizeActions) {
     } else {
         ArabicCard(state, active = -1)
     }
-    // The ratings live in the dock (checkDock), so they stay at the thumb however long the dua is.
-    if (rated != null) RatedResult(state, rated, actions)
+    // The ratings close the content instead of floating over it: the word grid is never covered.
+    if (rated != null) RatedResult(state, rated, actions) else Column { checkDock(state, actions).invoke(this) }
 }
 
 /**
- * Check's main action. Three equal buttons in one row, each with its interval underneath; from a larger
+ * Check's ratings, at the end of the content. Three equal buttons in one row, each with its interval underneath; from a larger
  * font they stack full width with the full wording. The suggested rating (only when words were marked) is
  * filled and named in text, so colour is not the only cue.
  */
