@@ -11,6 +11,7 @@ import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.review.ReviewItem
 import id.haho.muslimdaily.data.review.ReviewRepository
+import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.MemorizeSettings
 import id.haho.muslimdaily.data.settings.PauseMode
@@ -58,6 +59,13 @@ enum class GuidedStep(val advanced: Step) {
     }
 }
 
+/** What Listen does at the end of the dua: play it twice (the Sunnah-friendly default of the step), loop it, or play it once. */
+enum class ListenRepeat {
+    TWICE, LOOP, ONCE;
+
+    fun next() = entries[(ordinal + 1) % entries.size]
+}
+
 /** Which sequence is loaded, so the screen can describe progress. */
 enum class Playing { NONE, LISTEN, BUILD, AB, RECALL }
 
@@ -99,6 +107,9 @@ data class MemorizeUiState(
     val testRevealed: Boolean = false,
     /** The rating given in this session, so Not yet can lead straight back to practice. */
     val ratedWith: Rating? = null,
+    /** Listen: what the repeat control is set to, and the dua layout (the Settings value) the card shows. */
+    val listenRepeat: ListenRepeat = ListenRepeat.TWICE,
+    val phraseLayout: PhraseLayout = PhraseLayout.FOCUS,
 ) {
     val hasAudio: Boolean get() = dua.audio != null
     val segmented: Boolean get() = dua.isSegmented
@@ -140,6 +151,7 @@ class MemorizeSessionViewModel @Inject constructor(
         val guided: GuidedStep = GuidedStep.LISTEN,
         val testRevealed: Boolean = false,
         val ratedWith: Rating? = null,
+        val listenRepeat: ListenRepeat = ListenRepeat.TWICE,
     )
 
     private val today: LocalDate get() = LocalDate.now(clock)
@@ -167,6 +179,8 @@ class MemorizeSessionViewModel @Inject constructor(
             playing = if (playback.duaId == dua.id) l.playing else Playing.NONE,
             playback = if (playback.duaId == dua.id) playback else PlaybackState(),
             settings = memorize,
+            listenRepeat = l.listenRepeat,
+            phraseLayout = settings.phraseLayout,
             fade = l.fade,
             words = words,
             hiddenWords = (l.practice ?: Recall.hiddenWords(words, l.fade, dua.id, l.order)) - l.revealed.toSet(),
@@ -231,15 +245,42 @@ class MemorizeSessionViewModel @Inject constructor(
         }
     }
 
-    private fun play(kind: Playing, build: (MemorizeUiState) -> List<id.haho.muslimdaily.audio.SequenceItem>) {
+    private fun play(kind: Playing, loop: Boolean = false, build: (MemorizeUiState) -> List<id.haho.muslimdaily.audio.SequenceItem>) {
         val s = state.value ?: return
         val items = build(s)
         if (items.isEmpty()) return
         local.value = local.value.copy(playing = kind)
+        // The engine's repeat flag is shared with the dua player: only Listen's loop sets it, every other sequence clears it.
+        audio.setRepeat(loop)
         audio.playSequence(s.dua, items, s.settings.speed)
     }
 
-    fun playListen() = play(Playing.LISTEN) { MemorizePlan.listen(it.dua, it.eventLabel) }
+    /** Listen from [fromPhrase] (the whole dua by default), repeated as the repeat control says. */
+    fun playListen(fromPhrase: Int = 0) {
+        val mode = local.value.listenRepeat
+        play(Playing.LISTEN, loop = mode == ListenRepeat.LOOP) {
+            MemorizePlan.listen(it.dua, it.eventLabel, fromPhrase, times = if (mode == ListenRepeat.TWICE) 2 else 1)
+        }
+    }
+
+    /** Previous (-1) or next (+1) phrase: restarts Listen there, like the dua player. */
+    fun skipListenPhrase(delta: Int) {
+        val s = state.value ?: return
+        val last = s.dua.phrases.lastIndex
+        if (last < 0) return
+        playListen((s.playback.activePhrase.coerceAtLeast(0) + delta).coerceIn(0, last))
+    }
+
+    /** Twice, loop, once. A loop applies at once; twice and once apply from the next start. */
+    fun cycleListenRepeat() {
+        val next = local.value.listenRepeat.next()
+        local.value = local.value.copy(listenRepeat = next)
+        if (local.value.playing == Playing.LISTEN) audio.setRepeat(next == ListenRepeat.LOOP)
+    }
+
+    fun setPhraseLayout(layout: PhraseLayout) {
+        viewModelScope.launch { settingsRepository.update { phraseLayout = layout } }
+    }
     fun playBuild() = play(Playing.BUILD) { MemorizePlan.build(it.dua, it.settings, it.eventLabel) }
     fun playAb() = play(Playing.AB) { MemorizePlan.abLoop(it.dua, it.ab.first, it.ab.last, it.settings, it.eventLabel) }
     fun playRecallWithGaps() = play(Playing.RECALL) {
@@ -345,5 +386,6 @@ class MemorizeSessionViewModel @Inject constructor(
 
     override fun onCleared() {
         audio.stop()
+        audio.setRepeat(false)
     }
 }

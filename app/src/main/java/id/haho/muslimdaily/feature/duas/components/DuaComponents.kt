@@ -353,7 +353,39 @@ fun PlayerBar(
 ) {
     // Docked on the bottom navigation, full width, like a media mini-player.
     DockedBar(modifier) {
-      Column(Modifier.fillMaxWidth()) {
+        PlayerControls(
+            isPlaying, speed, repeat, enabled, onToggle, onSpeed, onRepeat, onPreviousPhrase, onNextPhrase,
+            canPrevious, canNext, phraseCount = phraseCount, activePhrase = activePhrase, onSeekPhrase = onSeekPhrase,
+        )
+    }
+}
+
+/**
+ * The media bar's contents: the phrase track, then repeat, previous, play/pause, next and speed. Shared by
+ * the dua player and Memorize's Listen step. [repeatControl] replaces the on/off repeat button, and
+ * [speeds] limits the speed menu, for a screen that has its own.
+ */
+@Composable
+internal fun PlayerControls(
+    isPlaying: Boolean,
+    speed: Float,
+    repeat: Boolean,
+    enabled: Boolean,
+    onToggle: () -> Unit,
+    onSpeed: (Float) -> Unit,
+    onRepeat: (Boolean) -> Unit,
+    onPreviousPhrase: () -> Unit,
+    onNextPhrase: () -> Unit,
+    canPrevious: Boolean,
+    canNext: Boolean,
+    modifier: Modifier = Modifier,
+    phraseCount: Int = 0,
+    activePhrase: Int = -1,
+    onSeekPhrase: (Int) -> Unit = {},
+    repeatControl: (@Composable () -> Unit)? = null,
+    speeds: List<Float> = SPEEDS,
+) {
+    Column(modifier.fillMaxWidth()) {
         if (phraseCount >= 2) {
             PhraseTrack(phraseCount, activePhrase, enabled, onSeekPhrase)
         }
@@ -362,7 +394,7 @@ fun PlayerBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            RepeatToggle(repeat, enabled, onRepeat)
+            if (repeatControl != null) repeatControl() else RepeatToggle(repeat, enabled, onRepeat)
             IconButton(onClick = onPreviousPhrase, enabled = enabled && canPrevious, modifier = Modifier.size(PLAYER_TARGET)) {
                 Icon(painterResource(R.drawable.ic_skip_previous), stringResource(R.string.player_previous_phrase))
             }
@@ -380,9 +412,8 @@ fun PlayerBar(
             IconButton(onClick = onNextPhrase, enabled = enabled && canNext, modifier = Modifier.size(PLAYER_TARGET)) {
                 Icon(painterResource(R.drawable.ic_skip_next), stringResource(R.string.player_next_phrase))
             }
-            SpeedButton(speed, enabled, onSpeed)
+            SpeedButton(speed, enabled, onSpeed, speeds)
         }
-      }
     }
 }
 
@@ -408,7 +439,7 @@ internal fun RepeatToggle(repeat: Boolean, enabled: Boolean, onRepeat: (Boolean)
 
 /** The speed as text ("0.75×"), opening a menu of speeds. */
 @Composable
-internal fun SpeedButton(speed: Float, enabled: Boolean, onSpeed: (Float) -> Unit) {
+internal fun SpeedButton(speed: Float, enabled: Boolean, onSpeed: (Float) -> Unit, speeds: List<Float> = SPEEDS) {
     var speedMenu by remember { mutableStateOf(false) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         val speedDescription = stringResource(R.string.player_speed, speedLabel(speed))
@@ -420,7 +451,7 @@ internal fun SpeedButton(speed: Float, enabled: Boolean, onSpeed: (Float) -> Uni
             Text(speedLabel(speed), style = MaterialTheme.typography.labelLarge)
         }
         DropdownMenu(expanded = speedMenu, onDismissRequest = { speedMenu = false }) {
-            SPEEDS.forEach { s ->
+            speeds.forEach { s ->
                 DropdownMenuItem(
                     text = { Text(speedLabel(s)) },
                     onClick = {
@@ -501,7 +532,7 @@ internal fun PhraseTrack(count: Int, active: Int, enabled: Boolean, onSeek: (Int
 
 private val PLAYER_TRACK_TARGET = 48.dp
 private val PLAYER_TARGET = 48.dp
-private val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
+internal val SPEEDS = listOf(0.5f, 0.75f, 0.85f, 1f, 1.25f)
 
 fun speedLabel(speed: Float): String = String.format(AppLocale, "%.2f×", speed).replace(Regex("[.,]00×"), "×").replace(Regex("([.,]\\d)0×"), "$1×")
 

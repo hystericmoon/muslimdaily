@@ -75,14 +75,16 @@ object MemorizePlan {
         PauseMode.MANUAL -> settings.manualPauseSeconds * 1000L
     }
 
-    /** Step 1: the full dua, twice. */
-    fun listen(dua: Dua, title: String): List<SequenceItem> {
+    /** Step 1: the full dua, [times] times (twice by default), from [fromPhrase] on. */
+    fun listen(dua: Dua, title: String, fromPhrase: Int = 0, times: Int = LISTEN_TIMES): List<SequenceItem> {
         val audio = dua.audio ?: return emptyList()
-        val all = dua.phrases.indices
+        val from = fromPhrase.coerceIn(0, dua.phrases.lastIndex.coerceAtLeast(0))
+        val range = from..dua.phrases.lastIndex.coerceAtLeast(from)
+        val startMs = if (from > 0) dua.phrases.getOrNull(from)?.segment?.startMs ?: audio.startMs else audio.startMs
         return buildList {
-            repeat(LISTEN_TIMES) { i ->
-                add(SequenceItem.Clip(dua.id, audio.file, audio.startMs, audio.endMs ?: androidx.media3.common.C.TIME_END_OF_SOURCE, all, title))
-                if (i < LISTEN_TIMES - 1) add(SequenceItem.Pause(LISTEN_GAP_MS, all, title))
+            repeat(times) { i ->
+                add(SequenceItem.Clip(dua.id, audio.file, startMs, audio.endMs ?: androidx.media3.common.C.TIME_END_OF_SOURCE, range, title))
+                if (i < times - 1) add(SequenceItem.Pause(LISTEN_GAP_MS, range, title))
             }
         }
     }

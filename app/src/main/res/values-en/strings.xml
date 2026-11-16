@@ -422,6 +422,9 @@
     <string name="memorize_attempt_done">You recited it with no hints. Continue to Check.</string>
     <string name="memorize_hint_check">Reveal the full text and rate your memorization honestly.</string>
     <string name="memorize_listen_twice">Listen 2×</string>
+    <string name="memorize_repeat_twice">Plays twice</string>
+    <string name="memorize_repeat_loop">Loops</string>
+    <string name="memorize_repeat_once">Plays once</string>
     <string name="memorize_restart">From the start</string>
     <string name="memorize_not_segmented">The audio for this dua isn\'t split into phrases yet, so practice uses the whole dua.</string>
     <string name="memorize_build_start">Start building</string>
