@@ -7,27 +7,23 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 10:40 WIB (1.16.0 released, session clearing).
+Last updated: 16 Nov 2026, 13:00 WIB (1.17.0 released).
 
 ## In flight
 
-- **1.16.0 (versionCode 61) released 16 Nov 10:22 WIB** (release PR #279; #276 widget text mode, #278 Memorize review fixes and widget fit;
-  details: history, "Shipped"). No content, database or backup change. Nothing in flight; no open PRs.
-- **Owner to check on a phone or emulator (cloud can't)**:
-  (1) **Widget Dark text**: Settings → Display and text → Home screen widgets, Text colour Dark, opacity ~20% over a light wallpaper (Light text over a dark one).
-  Below 85% AA holds only for the matching wallpaper (mid-grey fails below ~55%); the note says so.
-  (2) **Memorize** (all Sonnet, no Opus review): tap a row → start sheet (Easy = guided, Advanced = tabs, Listen mode = hands-free, Remove); the dua name
-  heading and Meaning line; the Listen split button (right part opens the speeds); Advanced shows its controls with no Options toggle (Run still has one);
-  menu "Switch to Listen mode" and the Easy/Advanced row; Listen mode on a long dua keeps its play button. "Easy" is my label for the guided mode, so ask the owner if it is the word they meant.
-  (3) Widgets at large fonts: 56/76 dp cells and the 76 dp-wide tall cell at 1.3x and 2x (WidgetFitTest covers all texts now).
-  (4) Check row, Run audio dock (Back closes the dock, 200% font), widget taps and 1x1 / 4x2 scale, and **Qibla back overlap (#209, unverified on a device;
-  Android 14+, gesture nav)**: from Today open Qibla, swipe back slowly and hold at ~20% and ~50%, release and cancel; one screen at a time.
-  If it still overlaps, next step is an opaque per-screen backdrop (haho-design).
+- **1.17.0 (versionCode 62) released 16 Nov 12:50 WIB** (release PR #285; #282 start sheet and list, #283 docks, #284 Listen media bar; details: history, "Shipped").
+  No content, database or backup change. Nothing in flight; no open PRs.
+- **Owner to check on a phone (cloud can't)**: (1) Listen: repeat button (twice, loop, once), previous/next phrase, the three layout chips, tapping a phrase in line/flowing;
+  after a loop, Build and Recall must not loop. (2) Docks: collapsed by default on Listen-less steps (Build, Recall), chevron, Back closes; Check ratings at the end of the content;
+  check marks on selected chips. (3) Start sheet (Advanced, Listen mode, Remove) and list rows. (4) Earlier checks still open: widget Dark text and large-font fits (1.16.0),
+  Run audio dock, widget taps, **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design).
+- **Follow-ups from the s3 review (not done)**: media bar in Build, Recall and Run (their sequences make previous/next mean chunks, not phrases); delete the unreachable
+  `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (the stored `advancedDuas` flag stays for backups); Undo for Remove needs Opus or an owner decision (restores a review schedule).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - **UX/UI audit: done** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1, D10 in 1.15.2). Not done: W7 "next two
   prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
-- Main: 1.16.0 (versionCode 61, content_version 55, 329 rows).
+- Main: 1.17.0 (versionCode 62, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -67,8 +63,8 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
-- **No Opus budget (owner, 16 Nov)**: work CLAUDE.md routes to Opus is done on Sonnet while this holds (1.16.0 did B1, the start sheet and the mode switch that way). Ask the owner before assuming it has changed.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0 to 1.16.0, audit fixes #216-#272, widget text mode #276, Memorize review fixes #278;
+- **No Opus budget (owner, 16 Nov)**: work CLAUDE.md routes to Opus is done on Sonnet while this holds (1.16.0 and 1.17.0 did it that way). Ask the owner before assuming it has changed.
+- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0 to 1.17.0, audit fixes #216-#272, widget text mode #276, Memorize review fixes #278, s3 review #282-#284;
   child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
 
 ## Session setup (cloud)
