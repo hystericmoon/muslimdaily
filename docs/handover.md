@@ -7,10 +7,12 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 13:00 WIB (1.17.0 released).
+Last updated: 16 Nov 2026, 16:00 WIB (PR #287 open).
 
 ## In flight
 
+- **PR #287 (open, not merged): standard player bar** (owner's design pages, 16 Nov). Show progress line switch (Reading display sheet, DataStore `show_phrase_track`); Reading display icon in the Memorize top bar (chips gone); Listen only, Build and Recall use the bar. Recall: Done | play with gaps | Next word, "Done reciting" renamed "Done". Build repeat = the A-B loop.
+  Decided with the owner: progress line global; Next word stays in the dock; Back/Next off the Build card; all three layouts in Build and Recall (Recall one-phrase shows the phrase with the next hidden word, my assumption). Run the Screenshots workflow, wait for CI, then merge; no version bump. Owner to check on a phone: Listen only previous/next (queue clips), Build repeat toggle, Recall layouts and the 1.3x stacked row.
 - **1.17.0 (versionCode 62) released 16 Nov 12:50 WIB** (release PR #285; #282 start sheet and list, #283 docks, #284 Listen media bar; details: history, "Shipped").
   No content, database or backup change. Nothing in flight; no open PRs.
 - **Owner to check on a phone (cloud can't)**: (1) Listen: repeat button (twice, loop, once), previous/next phrase, the three layout chips, tapping a phrase in line/flowing;
