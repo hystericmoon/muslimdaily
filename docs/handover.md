@@ -7,21 +7,22 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 18:30 WIB (1.19.0 released).
+Last updated: 16 Nov 2026, 19:50 WIB (1.19.0 released; prayer-time accuracy question open).
 
 ## In flight
 
 - **1.19.0 (versionCode 64) released 16 Nov 18:23 WIB** (release PR #292, feature PR #291; details: history, "Shipped"). **Owner to check on a phone (cloud can't)**: glass bar blur and icon contrast over scrolling text, auto-scroll on next/previous/audio, Build part and repeat, the Routine mark row and one-time hint, Recall "Next".
-- **1.18.0 (versionCode 63) released 16 Nov 16:03 WIB** (release PR #288, feature PR #287; details: history, "Shipped"). Standard player bar in Memorize and Listen only, Show progress line switch, Reading display icon. No content, database or backup change.
-  **Owner to check on a phone (cloud can't)**: Listen only previous/next (jump between queue clips), Build repeat toggle and segment skip, Recall layouts (one phrase at a time is my assumption), the stacked Recall row at large font, the full-height Reading display sheet.
+- 1.18.0 (versionCode 63, 16 Nov) shipped the standard player bar in Memorize and Listen only; its phone checks (Listen only skip, Build repeat, stacked Recall row at large font, full-height Reading sheet) are still the owner's, with 1.19.0's.
+- **Prayer-time accuracy (owner asked 16 Nov, nothing changed)**: times are computed from coordinates (adhan + Kemenag preset), no API, no internet permission. GPS is exact; the manual picker has 484 Indonesian places (GeoNames pop >= 5,000). eQuran API (Kemenag data per kab/kota, needs internet): not adopted. Ask where the owner saw "province based". Options: show "exact GPS" on Today; kecamatan in `tools/build_cities.py` (Opus: data); coordinates entry; dev-only comparison script against eQuran.
+- **LinkedIn post for 1.19 (owner posts)**: text, dark image and carousel lived in the scratchpad (lost on clear). The owner wants the Arabic unblurred; Build, Routine and Recall slides need real device screenshots. Site: https://hystericmoon.github.io/muslimdaily/.
+- Stray branch `claude/handover-1-19-0`: the owner deletes it on GitHub.
 - **Earlier checks still open (owner, on a phone; cloud can't)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps,
   **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design). 1.17.0 details: history, "Shipped".
 - **Follow-ups from the s3 review (not done)**: delete the unreachable
   `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (the stored `advancedDuas` flag stays for backups); Undo for Remove needs Opus or an owner decision (restores a review schedule).
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- **UX/UI audit: done** (page https://claude.ai/artifact/GXE91xqQ9eAig4qHkDhcse; fix list: history, "Shipped" 1.15.1, D10 in 1.15.2). Not done: W7 "next two
-  prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find" (16 Nov).
+- UX/UI audit done (history, "Shipped" 1.15.1, 1.15.2). Not done: W7 "next two prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find".
 - Main: 1.19.0 (versionCode 64, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
