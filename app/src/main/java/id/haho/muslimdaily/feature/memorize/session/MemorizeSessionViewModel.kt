@@ -110,6 +110,8 @@ data class MemorizeUiState(
     val ratedWith: Rating? = null,
     /** Listen: what the repeat control is set to, and the dua layout (the Settings value) the card shows. */
     val listenRepeat: ListenRepeat = ListenRepeat.TWICE,
+    /** Build: keep looping the build (or the picked part) until stopped. */
+    val buildRepeat: Boolean = false,
     val phraseLayout: PhraseLayout = PhraseLayout.FOCUS,
     /** Every setting, for the Reading display sheet the top bar opens. */
     val appSettings: AppSettings = AppSettings(),
@@ -155,6 +157,7 @@ class MemorizeSessionViewModel @Inject constructor(
         val testRevealed: Boolean = false,
         val ratedWith: Rating? = null,
         val listenRepeat: ListenRepeat = ListenRepeat.TWICE,
+        val buildRepeat: Boolean = false,
     )
 
     private val today: LocalDate get() = LocalDate.now(clock)
@@ -183,6 +186,7 @@ class MemorizeSessionViewModel @Inject constructor(
             playback = if (playback.duaId == dua.id) playback else PlaybackState(),
             settings = memorize,
             listenRepeat = l.listenRepeat,
+            buildRepeat = l.buildRepeat,
             phraseLayout = settings.phraseLayout,
             appSettings = settings,
             fade = l.fade,
@@ -297,14 +301,23 @@ class MemorizeSessionViewModel @Inject constructor(
         audio.skipTo((chunk + delta).coerceIn(0, chunks - 1) * perChunk)
     }
 
-    /** Ends the A–B loop and leaves the build where it was not started. */
-    fun stopAb() {
-        audio.stop()
-        local.value = local.value.copy(playing = Playing.NONE)
+    /** Build's repeat: loop what plays (the build, or the picked part) until stopped. Applies at once while it plays. */
+    fun setBuildRepeat(on: Boolean) {
+        local.value = local.value.copy(buildRepeat = on)
+        if (local.value.playing == Playing.BUILD || local.value.playing == Playing.AB) audio.setRepeat(on)
     }
 
-    fun playBuild() = play(Playing.BUILD) { MemorizePlan.build(it.dua, it.settings, it.eventLabel) }
-    fun playAb() = play(Playing.AB) { MemorizePlan.abLoop(it.dua, it.ab.first, it.ab.last, it.settings, it.eventLabel) }
+    /** Play plays the picked part; with the whole dua picked (the default) it is the cumulative build. */
+    fun playBuild() {
+        val s = state.value ?: return
+        if (s.segmented && s.ab != AbSelection.whole(s.dua.phrases.size).range) {
+            playAb()
+        } else {
+            play(Playing.BUILD, loop = local.value.buildRepeat) { MemorizePlan.build(it.dua, it.settings, it.eventLabel) }
+        }
+    }
+
+    private fun playAb() = play(Playing.AB, loop = local.value.buildRepeat) { MemorizePlan.abLoop(it.dua, it.ab.first, it.ab.last, it.settings, it.eventLabel) }
     fun playRecallWithGaps() = play(Playing.RECALL) {
         MemorizePlan.recallWithGaps(it.dua, Recall.hiddenPhrases(it.words, it.hiddenWords), it.settings, it.eventLabel)
     }

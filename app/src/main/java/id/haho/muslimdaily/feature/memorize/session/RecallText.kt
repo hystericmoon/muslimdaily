@@ -3,7 +3,6 @@ package id.haho.muslimdaily.feature.memorize.session
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,7 +24,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.LayoutDirection
 import id.haho.muslimdaily.core.designsystem.component.arabicAnnotated
 import id.haho.design.theme.HahoTheme
-import id.haho.muslimdaily.data.settings.PhraseLayout
 import id.haho.muslimdaily.domain.memorize.Recall
 import id.haho.muslimdaily.domain.memorize.Word
 
@@ -33,8 +31,8 @@ import id.haho.muslimdaily.domain.memorize.Word
  * Recall view. Hidden words become blank boxes exactly as wide as the word they replace, so the
  * line layout never shifts and nothing is shown as faint grey text. TalkBack users get a single
  * description instead of the hidden words; their recall happens by ear (hidden phrases muted).
- * With [firstLetters] each box starts with the word's first letter as a cue. [layout] is the reader's dua layout:
- * flowing text, one phrase per line, or (focus) only [focusPhrase], the phrase being recited.
+ * With [firstLetters] each box starts with the word's first letter as a cue. Always flowing text, whatever dua
+ * layout the reader chose: a phrase per line or one phrase at a time would give the order of the phrases away.
  */
 @Composable
 fun RecallText(
@@ -44,8 +42,6 @@ fun RecallText(
     hiddenDescription: String,
     modifier: Modifier = Modifier,
     firstLetters: Boolean = false,
-    layout: PhraseLayout = PhraseLayout.INLINE,
-    focusPhrase: Int = 0,
 ) {
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -93,12 +89,6 @@ fun RecallText(
                 }
             }
         }
-        when (layout) {
-            PhraseLayout.INLINE -> Words(words, container)
-            PhraseLayout.FOCUS -> Words(words.filter { it.phrase == focusPhrase }, container)
-            PhraseLayout.LINES -> Column(container, verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md)) {
-                words.groupBy { it.phrase }.values.forEach { Words(it, Modifier.fillMaxWidth()) }
-            }
-        }
+        Words(words, container)
     }
 }
