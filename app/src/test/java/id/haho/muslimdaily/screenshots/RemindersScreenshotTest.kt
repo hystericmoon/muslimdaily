@@ -5,6 +5,7 @@ import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.ReminderSettings
 import id.haho.muslimdaily.feature.settings.AudioSettingsContent
+import id.haho.muslimdaily.feature.settings.IslandSettingsContent
 import id.haho.muslimdaily.feature.settings.PermissionState
 import id.haho.muslimdaily.feature.settings.RemindersContent
 import id.haho.muslimdaily.feature.today.TodayPreviewData
@@ -36,4 +37,7 @@ class RemindersScreenshotTest {
 
     @Test
     fun audio() = captureVariants("44-settings-audio") { AudioSettingsContent(TodayPreviewData.settings) {} }
+
+    @Test
+    fun island() = captureVariants("198-settings-island") { IslandSettingsContent(TodayPreviewData.settings) {} }
 }

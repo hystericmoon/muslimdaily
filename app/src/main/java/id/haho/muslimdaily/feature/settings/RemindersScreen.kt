@@ -100,7 +100,7 @@ class RemindersViewModel @Inject constructor(
 data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean, val overlay: Boolean = true)
 
 @Composable
-fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewModel()) {
+fun RemindersRoute(onBack: () -> Unit, onIsland: () -> Unit = {}, viewModel: RemindersViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val context = LocalContext.current
     fun overlayAllowed() = Settings.canDrawOverlays(context)
@@ -138,6 +138,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
                 onAskNotifications = askNotifications,
                 onAskExact = askExact,
                 onAskOverlay = askOverlay,
+                onIsland = onIsland,
                 refocus = refocus,
                 update = { block ->
                     viewModel.update(block)
@@ -161,6 +162,7 @@ fun RemindersContent(
     onAskExact: () -> Unit,
     update: (SettingsEditor.() -> Unit) -> Unit,
     onAskOverlay: () -> Unit = {},
+    onIsland: () -> Unit = {},
     /** Bumped after a permission prompt closes: focus returns to the group that asked for it. */
     refocus: Int = 0,
 ) {
@@ -272,6 +274,14 @@ fun RemindersContent(
                     },
                     icon = R.drawable.ic_notifications,
                 )
+                if (r.nextPrayerIsland) {
+                    NavigationRow(
+                        title = stringResource(R.string.island_settings_title),
+                        summary = stringResource(R.string.island_settings_summary),
+                        onClick = onIsland,
+                        icon = R.drawable.ic_notifications,
+                    )
+                }
                 InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(HahoTheme.dimens.screenGutter))
             }
         }

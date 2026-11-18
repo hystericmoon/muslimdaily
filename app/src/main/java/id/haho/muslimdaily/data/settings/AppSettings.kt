@@ -91,6 +91,39 @@ data class ReminderSettings(
     val fastingWeekly: Boolean = true,
 )
 
+/** What the right side of the island pill shows. */
+enum class IslandRight { COUNTDOWN, TIME }
+
+/**
+ * How the island looks and where it sits (all in dp unless stated). The ranges keep the pill
+ * tappable (the touch target stays 48 dp) and on screen; [gapAdjustDp] is added to the camera gap
+ * measured from the cutout, so it also sets the gap on a phone where the cutout cannot be read.
+ */
+data class IslandSettings(
+    val heightDp: Int = 36,
+    val paddingDp: Int = 14,
+    val fontSp: Int = 12,
+    val gapAdjustDp: Int = 0,
+    val offsetXDp: Int = 0,
+    val offsetYDp: Int = 0,
+    val opacityPercent: Int = 100,
+    val right: IslandRight = IslandRight.COUNTDOWN,
+    val bigCard: Boolean = true,
+    val bigCardLeadMinutes: Int = 10,
+    val hideInLandscape: Boolean = true,
+) {
+    companion object {
+        val HEIGHT = 28..52
+        val PADDING = 4..28
+        val FONT = 10..20
+        val GAP = -24..60
+        val OFFSET_X = -160..160
+        val OFFSET_Y = -8..80
+        val OPACITY = 50..100
+        val LEAD = 5..30
+    }
+}
+
 data class MemorizeSettings(
     val loopsPerChunk: Int = 3,
     val pauseMode: PauseMode = PauseMode.AUTO,
@@ -104,6 +137,7 @@ data class MemorizeSettings(
 )
 
 data class AppSettings(
+    val island: IslandSettings = IslandSettings(),
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val dynamicColor: Boolean = false,
     val palette: HahoPalette = HahoPalette.Default,

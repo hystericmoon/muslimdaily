@@ -6,6 +6,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.content.res.Configuration
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
@@ -37,6 +38,8 @@ import id.haho.muslimdaily.MainActivity
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.core.ui.labelRes
+import id.haho.muslimdaily.data.settings.IslandRight
+import id.haho.muslimdaily.data.settings.IslandSettings
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
@@ -77,7 +80,9 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     private var big by mutableStateOf(false)
     private var alertedFor: Instant? = null
     private var firstRefresh = true
-    private var gapDp by mutableStateOf(0)
+    private var baseGapDp = 0
+    private var config by mutableStateOf(IslandSettings())
+    private var params: WindowManager.LayoutParams? = null
 
     override val lifecycle: Lifecycle get() = registry
     override val savedStateRegistry: SavedStateRegistry get() = savedState.savedStateRegistry
@@ -102,6 +107,14 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             registry.currentState = Lifecycle.State.RESUMED
             addOverlay()
             val s = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate).also { scope = it }
+            s.launch {
+                // Look and position follow the settings screen live; switching the island off stops the service.
+                settings.settings.collect { app ->
+                    config = app.island
+                    applyLayout()
+                    if (!app.reminders.nextPrayerIsland) stopSelf()
+                }
+            }
             s.launch {
                 while (true) {
                     if (!refresh()) {
@@ -132,7 +145,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         val snapshot = PrayerSnapshots.at(now, s, calculator) ?: return false
         val m = IslandModel.from(now, snapshot)
         model = m
-        if (IslandAlert.shouldAlert(m.minutesLeft, m.time, alertedFor, firstRefresh)) showBig(m.time)
+        if (config.bigCard && IslandAlert.shouldAlert(m.minutesLeft, m.time, alertedFor, firstRefresh, config.bigCardLeadMinutes)) showBig(m.time)
         // At the prayer time the big card has done its job.
         if (m.minutesLeft == 0) big = false
         firstRefresh = false
@@ -141,7 +154,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
 
     private fun addOverlay() {
         val wm = getSystemService(WindowManager::class.java)
-        gapDp = IslandGeometry.gapDp(cutoutWidthPx(wm), resources.displayMetrics.density)
+        baseGapDp = IslandGeometry.gapDp(cutoutWidthPx(wm), resources.displayMetrics.density)
         val composeView = ComposeView(this).apply {
             setViewTreeLifecycleOwner(this@IslandService)
             setViewTreeSavedStateRegistryOwner(this@IslandService)
@@ -152,11 +165,15 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                 if (m != null) {
                     IslandOverlay(
                         texts = texts(m),
-                        gapDp = gapDp,
-                        expanded = expanded,
+                        config = config,
+                        gapDp = IslandGeometry.withAdjust(baseGapDp, config.gapAdjustDp),
+                        mode = when {
+                            big -> IslandMode.BIG
+                            expanded -> IslandMode.CARD
+                            else -> IslandMode.PILL
+                        },
                         onToggle = ::toggle,
                         onOpen = ::openApp,
-                        big = big,
                         onDismiss = ::dismissBig,
                     )
                 }
@@ -166,7 +183,10 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            // Without FLAG_HARDWARE_ACCELERATED an overlay window draws in software, which is why
+            // the first version stuttered when it expanded.
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -178,7 +198,25 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             }
             title = getString(R.string.app_name)
         }
-        runCatching { wm.addView(composeView, params) }.onSuccess { view = composeView }.onFailure { stopSelf() }
+        this.params = params
+        runCatching { wm.addView(composeView, params) }.onSuccess { view = composeView; applyLayout() }.onFailure { stopSelf() }
+    }
+
+    /** Moves the window to the chosen offsets and hides it in landscape when asked. */
+    private fun applyLayout() {
+        val v = view ?: return
+        val p = params ?: return
+        val density = resources.displayMetrics.density
+        p.x = (config.offsetXDp * density).toInt()
+        p.y = (config.offsetYDp * density).toInt()
+        runCatching { getSystemService(WindowManager::class.java).updateViewLayout(v, p) }
+        val landscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        v.visibility = if (landscape && config.hideInLandscape) View.GONE else View.VISIBLE
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        applyLayout()
     }
 
     private fun removeOverlay() {
@@ -245,6 +283,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             prayerName = name,
             clock = clockText,
             left = left,
+            pillRight = if (config.right == IslandRight.TIME) clockText else left,
             place = m.place,
             openLabel = getString(R.string.island_open),
             dismissLabel = getString(R.string.island_dismiss),
