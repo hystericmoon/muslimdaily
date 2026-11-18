@@ -7,13 +7,13 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 18 Nov 2026, 14:50 WIB (1.20.0 released, #298 on main; decisions saved in docs/roadmap-2026-11.md).
+Last updated: 18 Nov 2026, 15:10 WIB (1.21.0 released; decisions saved in docs/roadmap-2026-11.md).
 
 ## In flight
 
 - **Owner approved everything on 18 Nov** (free features, motion, third accent, the new DND permission, the version numbers below). The record, order and notes: `docs/roadmap-2026-11.md`. Start with item 1.
-- **1.21.0 is not released yet.** Main has what it will ship: Island settings, fast expand, centred camera gap (#298, after 1.20.0). Still to add before releasing it: the third accent on Today and the first motion pieces. Say 1.21.0 before merging the release PR (the owner said yes).
-- **Main**: 1.20.0 released 18 Nov 13:11 WIB (versionCode 65, PRs #295 feature, #296 release); #298 merged after it. content_version 55, 329 rows.
+- **1.21.0 (versionCode 66) released 18 Nov** (island settings, fast expand, centred camera gap; #298 feature, release in PR #299). The third accent and the first motion pieces are 1.22.0.
+- **Main**: 1.21.0 (versionCode 66), content_version 55, 329 rows. 1.20.0 shipped 13:11 WIB (#295, #296).
 - **Owner to check on a phone (cloud can't)**: island (pill hugs the camera, expand is fast, "Open Adwam" lands on Today, the 10-minute card, each Island settings slider moves the real island, survives screen off, reboot and the battery killer); 1.19.0 and 1.18.0: glass bar blur and icon contrast, auto-scroll, Build part and repeat, the Routine mark row, Recall "Next", Listen only skip, stacked Recall row at large font, full-height Reading sheet.
 - **Prayer-time accuracy**: nothing changed. The owner never said where they saw "province based". Recommendation (page in the roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
 - **LinkedIn post for 1.19**: waits for the owner's device screenshots of Build, Routine and Recall; Arabic unblurred. Site: https://hystericmoon.github.io/muslimdaily/.
@@ -25,7 +25,7 @@ Last updated: 18 Nov 2026, 14:50 WIB (1.20.0 released, #298 on main; decisions s
 
 1. **Third accent** (Sonnet): `docs/accent.md` has the 16 values, the rule and the build plan; `tools/accent_palette.py` regenerates them. Today first, then re-record screenshots (run the Screenshots workflow right after pushing).
 2. **Motion** (Sonnet): load the `motion` skill; Today ring and sliding highlight, then mark as read.
-3. Release 1.21.0 (release skill). Then the free features: timetable and Imsakiyah (1.22.0), saved places and dhikr counter (1.23.0), silence during prayer (1.24.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
+3. Release 1.22.0 with 1 and 2 (release skill). Then the free features: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 
 ## Promo campaign (6 Nov)
 
@@ -61,7 +61,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
-- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.20.0 plus #298.
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.21.0.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).

@@ -1037,6 +1037,11 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_21_0">
+        <item>Island settings: in Settings, Reminders, Island (beta), Island settings you can change the height, inner padding, text size, the gap for the camera, the position (left, right, up, down), the opacity, and whether the right side shows the countdown or the time. A live preview shows each change; Reset to default brings the original look back.</item>
+        <item>The big card before a prayer can be turned off, and you choose how many minutes before it opens (5 to 30). The island can also hide when the phone is in landscape.</item>
+        <item>The island now expands smoothly instead of lagging, and the camera gap sits in the middle of the pill.</item>
+    </string-array>
     <string-array name="whats_new_1_20_0">
         <item>Island (beta): a small pill at the camera shows the next prayer and a countdown. Tap it to expand it, then open Adwam on Today. It is off by default: turn it on in Settings, Reminders, Island (beta). It needs \"Display over other apps\" and shows a silent notification while it runs.</item>
         <item>Ten minutes before each prayer, the island opens a large card with the prayer and its time. Close it or open Adwam; it closes itself after a minute.</item>

@@ -15,7 +15,7 @@ and the missed-prayers log. State the version before each release.
 
 Asked for "like the Dynamic Island" (a status-bar chip was not what they meant). Shipped: 1.20.0
 (#295, #296) a pill at the camera cutout with the next prayer, a big card 10 minutes before each
-prayer; on main after it (#298, in 1.21.0): Island settings (height, inner padding, text size, camera
+prayer; shipped after it in 1.21.0 (#298): Island settings (height, inner padding, text size, camera
 gap adjust, X/Y offset, opacity, right side countdown or time, big card on/off and lead 5-30,
 hide in landscape, live preview), the hardware-acceleration fix (the overlay drew in software and
 expanded slowly), the animation that no longer resizes the window, and equal-width sides so the
@@ -45,9 +45,11 @@ Left out: premium adhan voices (needs licensed audio, licence first), a full Qur
 
 ## Release plan (versions are stated before each release)
 
-- **1.21.0**: Island settings (merged), the third accent on Today, the first motion pieces.
-- **1.22.0**: monthly timetable and Imsakiyah. **1.23.0**: saved places and the dhikr counter.
-  **1.24.0**: silence during prayer. Then 5 and 6; 7 and 8 when sourced or designed.
+- **1.21.0** (shipped 18 Nov, the lightest push: it was already on main): Island settings, fast
+  expand, centred camera gap. The third accent and the first motion pieces moved to 1.22.0.
+- **1.22.0**: the third accent on Today (colours only first) and the first motion pieces.
+- **1.23.0**: monthly timetable and Imsakiyah. **1.24.0**: saved places and the dhikr counter.
+  **1.25.0**: silence during prayer. Then 5 and 6; 7 and 8 when sourced or designed.
 
 ## Motion (skill: `.claude/skills/motion/`)
 
