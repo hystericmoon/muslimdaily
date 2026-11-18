@@ -12,6 +12,7 @@ import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.notifications.Notifier
 import java.time.Clock
+import id.haho.muslimdaily.island.IslandService
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,10 +36,12 @@ class GlanceRefresher @Inject constructor(
         if (Handover.movedTo(context) != null) {
             // Moved to the new app: the widgets say so, and the ongoing notification goes.
             notifier.cancelNextPrayerOngoing()
+            IslandService.sync(context, false)
             return
         }
         val s = settings.current()
         val snapshot = PrayerSnapshots.at(Instant.now(clock), s, calculator)
+        IslandService.sync(context, s.reminders.nextPrayerIsland && snapshot != null)
         if (s.reminders.nextPrayerOngoing && snapshot != null) {
             notifier.nextPrayerOngoing(snapshot, DateFormat.is24HourFormat(context))
         } else {

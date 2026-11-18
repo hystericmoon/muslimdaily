@@ -97,15 +97,16 @@ class RemindersViewModel @Inject constructor(
     }
 }
 
-data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean)
+data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean, val overlay: Boolean = true)
 
 @Composable
 fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var permissions by remember { mutableStateOf(PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())) }
+    fun overlayAllowed() = Settings.canDrawOverlays(context)
+    var permissions by remember { mutableStateOf(PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed(), overlayAllowed())) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())
+        permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed(), overlayAllowed())
         viewModel.reschedule()
     }
     var refocus by remember { mutableIntStateOf(0) }
@@ -126,6 +127,9 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
             context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
         }
     }
+    val askOverlay = {
+        context.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:${context.packageName}".toUri()))
+    }
     AdwamScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
         settings?.let { s ->
             RemindersContent(
@@ -133,6 +137,7 @@ fun RemindersRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewM
                 permissions = permissions,
                 onAskNotifications = askNotifications,
                 onAskExact = askExact,
+                onAskOverlay = askOverlay,
                 refocus = refocus,
                 update = { block ->
                     viewModel.update(block)
@@ -155,6 +160,7 @@ fun RemindersContent(
     onAskNotifications: () -> Unit,
     onAskExact: () -> Unit,
     update: (SettingsEditor.() -> Unit) -> Unit,
+    onAskOverlay: () -> Unit = {},
     /** Bumped after a permission prompt closes: focus returns to the group that asked for it. */
     refocus: Int = 0,
 ) {
@@ -187,6 +193,9 @@ fun RemindersContent(
         }
         if (!permissions.exactAlarms) {
             item(key = "perm-exact") { PermissionCard(stringResource(R.string.reminders_exact_permission), stringResource(R.string.reminders_allow_exact), onAskExact) }
+        }
+        if (r.nextPrayerIsland && !permissions.overlay) {
+            item(key = "perm-overlay") { PermissionCard(stringResource(R.string.reminders_island_permission), stringResource(R.string.reminders_island_allow), onAskOverlay) }
         }
         item(key = "adhan") {
             val update = inGroup("adhan")
@@ -252,6 +261,16 @@ fun RemindersContent(
                     checked = r.nextPrayerOngoing,
                     onCheckedChange = { v -> update { remOngoing = v } },
                     icon = R.drawable.ic_schedule,
+                )
+                SwitchRow(
+                    title = stringResource(R.string.reminders_island_title),
+                    summary = stringResource(R.string.reminders_island_summary),
+                    checked = r.nextPrayerIsland,
+                    onCheckedChange = { v ->
+                        update { remIsland = v }
+                        if (v && !permissions.overlay) onAskOverlay()
+                    },
+                    icon = R.drawable.ic_notifications,
                 )
                 InfoNote(stringResource(R.string.reminders_widget_note), Modifier.padding(HahoTheme.dimens.screenGutter))
             }
