@@ -89,7 +89,7 @@ and the owner starts and clears them. Don't start or archive sessions yourself.
 - The test: if a wrong call could put wrong religious content in front of users or lose their
   data, Opus; if it is specified and a mistake shows in review or screenshots, Sonnet.
 
-More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, `docs/fonts.md`.
+More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accent.md`, `docs/accessibility.md`, `docs/fonts.md`, `docs/roadmap-2026-11.md` (decisions and build order for the free features, motion and the third accent).
 
 ## Token guard
 
@@ -98,6 +98,6 @@ More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accessibility.md`, 
 - Exception: never hand a Haiku sub-agent anything that touches religious content or user data (see "Sessions" for which work needs Opus).
 - Never suggest `/compact` as a cost-saving measure. Suggest `/clear` between unrelated jobs instead.
 - Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache, so start each session on the model its task needs (see "Sessions").
-- Project skills hold the repeated procedures and load only when used: `content-import`, `audio-recut`, `release`, `session-clear`. Use them instead of re-reading the long docs; read a doc section only when the skill points to it.
+- Project skills hold the repeated procedures and load only when used: `content-import`, `audio-recut`, `release`, `session-clear`, `motion` (any animation work). Use them instead of re-reading the long docs; read a doc section only when the skill points to it.
 - Searches across many files or docs (e.g. "where is X handled"): use the Explore sub-agent and keep only its conclusion.
 - Noisy install, build and test output is trimmed by `.claude/hooks/trim-output.py` to the error lines plus the last 30 lines. If you need the full log, rerun the command with `> /tmp/log.txt` and grep that file.

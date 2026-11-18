@@ -5,26 +5,27 @@ when the conversation is getting long. Keep it under ~6 KB: replace what is done
 open, facts only (PR numbers, ids, counts, decisions), each with where to check it. Finished
 work, release details and hard-won facts go to `docs/history.md` (search it by row id, PR or
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
-skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
+skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 18 Nov 2026, 13:15 WIB (1.20.0 released; prayer-time accuracy question open).
+Last updated: 18 Nov 2026, 15:10 WIB (1.21.0 released; decisions saved in docs/roadmap-2026-11.md).
 
 ## In flight
 
-- **1.19.0 (versionCode 64, 16 Nov 18:23 WIB)** (release PR #292, feature PR #291; details: history, "Shipped"). **Owner to check on a phone (cloud can't)**: glass bar blur and icon contrast over scrolling text, auto-scroll on next/previous/audio, Build part and repeat, the Routine mark row and one-time hint, Recall "Next".
-- 1.18.0 (versionCode 63, 16 Nov) shipped the standard player bar in Memorize and Listen only; its phone checks (Listen only skip, Build repeat, stacked Recall row at large font, full-height Reading sheet) are still the owner's, with 1.19.0's.
-- **Prayer-time accuracy (owner asked 16 Nov, nothing changed)**: times are computed from coordinates (adhan + Kemenag preset), no API, no internet permission. GPS is exact; the manual picker has 484 Indonesian places (GeoNames pop >= 5,000). eQuran API (Kemenag data per kab/kota, needs internet): not adopted. Ask where the owner saw "province based". Options: show "exact GPS" on Today; kecamatan in `tools/build_cities.py` (Opus: data); coordinates entry; dev-only comparison script against eQuran.
-- **LinkedIn post for 1.19 (owner posts)**: text, dark image and carousel lived in the scratchpad (lost on clear). The owner wants the Arabic unblurred; Build, Routine and Recall slides need real device screenshots. Site: https://hystericmoon.github.io/muslimdaily/.
-- **1.20.0 (versionCode 65) released 18 Nov ~13:10 WIB** (release PR #296, feature PR #295): Island (beta), Reminders, off by default: a pill at the camera cutout (`island/IslandService.kt`, `IslandOverlay.kt`, `IslandModel.kt`), a big card 10 min before each prayer (once per prayer, closes after 60 s or Close). Adds `SYSTEM_ALERT_WINDOW` and a `specialUse` foreground service (owner approved). **Owner to check on a phone (cloud can't)**: pill hugs the camera and stays slim without a cutout, expand/collapse/Open lands on Today, permission card appears and the island starts after granting, the 10-minute card, survives screen off, reboot and the OEM battery killer. The Live Update chip ("Next prayer on lock screen") already existed. **Island settings + lag fix (18 Nov, branch claude/notion-promo-batch-1-o2p0c4, PR open)**: the owner's screenshot showed the pill working but the expand slow and the gap off-centre. Fixes: `FLAG_HARDWARE_ACCELERATED` on the overlay window (it drew in software), size snaps with a fade/scale instead of `animateContentSize`, equal-width sides so the camera sits mid-pill. New screen Reminders, Island (beta), Island settings (`IslandSettingsScreen.kt`, `IslandSettings` in `AppSettings`, settings keys `island_*`, carried by backups through the generic settings export): height, inner padding, text size, camera gap adjust, X/Y offset, opacity, right side countdown or time, big card on/off and lead (5-30 min), hide in landscape, live preview. Proposed version 1.21.0 (not released; the owner's yes needed). Next island ideas (not built): Listen controls, after-salah shortcut, Build position, travel prompt.
+- **Owner approved everything on 18 Nov** (free features, motion, third accent, the new DND permission, the version numbers below). The record, order and notes: `docs/roadmap-2026-11.md`. Start with item 1.
+- **1.21.0 (versionCode 66) released 18 Nov** (island settings, fast expand, centred camera gap; #298 feature, release in PR #299). The third accent and the first motion pieces are 1.22.0.
+- **Main**: 1.21.0 (versionCode 66), content_version 55, 329 rows. 1.20.0 shipped 13:11 WIB (#295, #296).
+- **Owner to check on a phone (cloud can't)**: island (pill hugs the camera, expand is fast, "Open Adwam" lands on Today, the 10-minute card, each Island settings slider moves the real island, survives screen off, reboot and the battery killer); 1.19.0 and 1.18.0: glass bar blur and icon contrast, auto-scroll, Build part and repeat, the Routine mark row, Recall "Next", Listen only skip, stacked Recall row at large font, full-height Reading sheet.
+- **Prayer-time accuracy**: nothing changed. The owner never said where they saw "province based". Recommendation (page in the roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
+- **LinkedIn post for 1.19**: waits for the owner's device screenshots of Build, Routine and Recall; Arabic unblurred. Site: https://hystericmoon.github.io/muslimdaily/.
 - Stray branch `claude/handover-1-19-0`: the owner deletes it on GitHub.
-- **Earlier checks still open (owner, on a phone; cloud can't)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps,
-  **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design). 1.17.0 details: history, "Shipped".
-- **Follow-ups from the s3 review (not done)**: delete the unreachable
-  `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (the stored `advancedDuas` flag stays for backups); Undo for Remove needs Opus or an owner decision (restores a review schedule).
-- **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
-  push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
-- UX/UI audit done (history, "Shipped" 1.15.1, 1.15.2). Not done: W7 "next two prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find".
-- Main: 1.20.0 (versionCode 65, content_version 55, 329 rows).
+- **Earlier checks still open (owner, phone)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps; **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design).
+- **Follow-ups (not done)**: delete the unreachable `GuidedSession.kt`, `GuidedStep`, their tests and screenshots 163-168 (keep the stored `advancedDuas` flag); Undo for Remove needs an owner decision (restores a review schedule). Promo media is stale (Video 1 and Carousel A show the old Memorize; re-render from shots 150-153, 161, 165, push to `promo-assets` only when the owner says). Not done: W7 "next two prayers at 200%" (unreachable, see history).
+
+## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
+
+1. **Third accent** (Sonnet): `docs/accent.md` has the 16 values, the rule and the build plan; `tools/accent_palette.py` regenerates them. Today first, then re-record screenshots (run the Screenshots workflow right after pushing).
+2. **Motion** (Sonnet): load the `motion` skill; Today ring and sliding highlight, then mark as read.
+3. Release 1.22.0 with 1 and 2 (release skill). Then the free features: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 
 ## Promo campaign (6 Nov)
 
@@ -60,14 +61,13 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
-- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.20.0.
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.21.0.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
 - Clearing routine: the `session-clear` skill.
 - **No Opus budget (owner, 16 Nov)**: work CLAUDE.md routes to Opus is done on Sonnet while this holds (1.16.0 and 1.17.0 did it that way). Ask the owner before assuming it has changed.
-- Last sessions: session_01W2ZFMsFLyhveJYKUstp4CY (5-16 Nov, Sonnet: Memorize revamp, 1.14.0 to 1.17.0, audit fixes #216-#272, widget text mode #276, Memorize review fixes #278, s3 review #282-#284;
-  child Opus sessions archived: Guided #202, #209, #210); session_01W2ZFMu64SGUJb7ZB37ryAj (3-6 Nov; promo batch 1). Older ids in history, "Finished work".
+- Last session: session_01W2ZFMsFLyhveJYKUstp4CY (5-18 Nov, Sonnet). Older ids and what each did: history, "Sessions (archive)".
 
 ## Session setup (cloud)
 

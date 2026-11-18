@@ -1019,6 +1019,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_21_0">
+        <item>Pengaturan island: di Pengaturan, Pengingat, Island (beta), Pengaturan island Anda bisa mengubah tinggi, jarak dalam, ukuran teks, celah untuk kamera, posisi (kiri, kanan, atas, bawah), kepekatan, dan apakah sisi kanan menampilkan hitung mundur atau waktu. Pratinjau langsung menunjukkan tiap perubahan; Kembalikan ke bawaan memulihkan tampilan awal.</item>
+        <item>Kartu besar sebelum shalat bisa dimatikan, dan Anda memilih berapa menit sebelum kartu terbuka (5 sampai 30). Island juga bisa disembunyikan saat ponsel dalam posisi landscape.</item>
+        <item>Island kini membuka dengan mulus, tidak lagi tersendat, dan celah kamera berada di tengah pil.</item>
+    </string-array>
     <string-array name="whats_new_1_20_0">
         <item>Island (beta): pil kecil di sekitar kamera menampilkan shalat berikutnya dan hitung mundur. Ketuk untuk memperluas, lalu buka Adwam di Hari ini. Mati secara bawaan: nyalakan di Pengaturan, Pengingat, Island (beta). Perlu izin \"Tampil di atas aplikasi lain\" dan menampilkan notifikasi senyap selama berjalan.</item>
         <item>Sepuluh menit sebelum tiap shalat, island membuka kartu besar berisi nama dan waktu shalat. Tutup, atau buka Adwam; kartu menutup sendiri setelah satu menit.</item>
