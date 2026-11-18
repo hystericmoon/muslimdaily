@@ -18,7 +18,8 @@ set; "Implemented" means built to the rule but needs a device pass with TalkBack
 | Arabic voice | Every Arabic string carries an Arabic `LocaleList` span (exported as `LocaleSpan`); English translations an English one | Implemented |
 | Bidi isolation | City names inside Indonesian sentences wrapped in FSI…PDI | Implemented |
 | Timing adjustable (2.2.1) | Auto-advance toggle (run mode menu and settings); memorize pauses auto or manual; no timeouts | Implemented |
-| Reduced motion | `ANIMATOR_DURATION_SCALE == 0` → all springs snap; only count tap and card advance animate | Implemented |
+| Reduced motion | `ANIMATOR_DURATION_SCALE == 0` → all springs snap; only count tap and card advance animate. The Today highlight slide and the mark-as-read check and pulse (1.22.0) also snap: `AdwamMotion` specs take `HahoTheme.motion.reduced`, and the state (the highlight, the check) is correct with motion off | Implemented |
+| Third accent text | The accent carries text only where its contrast was checked: 4.5:1 on the page and on the glass cards, `onAccent` on the accent 4.5:1, `onAccentContainer` on its container 7:1, in every palette and mode (`ExtendedColorsContrastTest`). The countdown also says "dalam …" in words and the current prayer also has the "Sekarang" label, so colour is never the only cue | Verified (unit test) |
 | Recall without vision | Hidden words are blank boxes of the word's width (never faint text); TalkBack hears one description and uses "Putar dengan jeda" (hidden phrases muted) | Implemented |
 | Drag alternatives (2.5.7) | Routine editor rows have a visible ⋮ menu with "Pindah ke atas / bawah" for everyone (tap, switch access, tremor); TalkBack gets the same as custom actions | Implemented (`RoutineEditUiTest`) |
 | Keyboard / switch access | All actions are standard clickable/toggleable/selectable nodes | Implemented |

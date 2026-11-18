@@ -6,7 +6,6 @@ import id.haho.design.component.checkRowTitleInset
 import id.haho.design.component.CheckRowAnchor
 import id.haho.design.glass.GlassBottomSheet
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -40,11 +39,23 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalDensity
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -62,7 +73,9 @@ import id.haho.muslimdaily.core.designsystem.component.AdwamCheckRow
 import id.haho.design.component.InfoNote
 import id.haho.muslimdaily.core.designsystem.component.TierBadge
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.AdwamMotion
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
+import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.core.model.Rawatib
 import id.haho.muslimdaily.core.ui.durationLabel
@@ -84,35 +97,92 @@ internal fun PrayerListCard(
 ) {
     var evidenceFor by remember { mutableStateOf<RawatibLine?>(null) }
     val time = rememberTimeFormatter()
+    // Where each prayer row sits in the list (top, height in px), so one highlight can slide to the current one.
+    val places = remember { mutableStateMapOf<String, RowPlace>() }
+    val current = data.rows.firstOrNull { it.isCurrent }?.slot?.name
     GlassCard(modifier = modifier.fillMaxWidth(), shape = MaterialTheme.shapes.extraLarge) {
-        Column {
-            data.rows.forEachIndexed { i, row ->
-                if (i > 0) ListDivider()
-                PrayerRowView(
-                    row = row,
-                    data = data,
-                    expanded = row.slot.name in expanded,
-                    onExpandToggle = { onExpandToggle(row.slot.name) },
-                    onToggle = onToggle,
-                    onShowEvidence = { evidenceFor = it },
-                )
-                // Dhuha joins the list after Subuh only while its time is running.
-                val duha = data.duha
-                if (row.slot == PrayerTimeSlot.FAJR && duha != null) {
-                    ListDivider()
-                    SunnahWindowRow(
-                        title = stringResource(R.string.duha_title),
-                        range = stringResource(R.string.window_range, time.format(duha.start, data.zone), time.format(duha.end, data.zone)),
-                        note = stringResource(R.string.note_duha_best),
-                        checked = ChecklistRepository.DUHA in data.checked,
-                        onCheckedChange = { onToggle(ChecklistRepository.DUHA, it) },
+        Box {
+            CurrentRowHighlight(current = current, place = current?.let { places[it] })
+            Column {
+                data.rows.forEachIndexed { i, row ->
+                    if (i > 0) ListDivider()
+                    PrayerRowView(
+                        row = row,
+                        data = data,
+                        expanded = row.slot.name in expanded,
+                        onExpandToggle = { onExpandToggle(row.slot.name) },
+                        onToggle = onToggle,
+                        onShowEvidence = { evidenceFor = it },
+                        modifier = Modifier.onGloballyPositioned {
+                            places[row.slot.name] = RowPlace(it.positionInParent().y, it.size.height)
+                        },
                     )
+                    // Dhuha joins the list after Subuh only while its time is running.
+                    val duha = data.duha
+                    if (row.slot == PrayerTimeSlot.FAJR && duha != null) {
+                        ListDivider()
+                        SunnahWindowRow(
+                            title = stringResource(R.string.duha_title),
+                            range = stringResource(R.string.window_range, time.format(duha.start, data.zone), time.format(duha.end, data.zone)),
+                            note = stringResource(R.string.note_duha_best),
+                            checked = ChecklistRepository.DUHA in data.checked,
+                            onCheckedChange = { onToggle(ChecklistRepository.DUHA, it) },
+                        )
+                    }
                 }
             }
         }
     }
     evidenceFor?.let { line -> EvidenceSheet(line) { evidenceFor = null } }
 }
+
+/** A prayer row's top and height inside the list, in px. */
+private data class RowPlace(val top: Float, val height: Int)
+
+/**
+ * The tinted band behind the current prayer: one shared highlight that glides to the next row when
+ * the current prayer changes, instead of each row fading its own. Only a transform moves (translate
+ * and scale of a flat band), never layout. When the row grows or shrinks (it is expanded or
+ * collapsed) or the rows above it move, the band follows at once; with the system's
+ * remove-animations setting on it snaps.
+ */
+@Composable
+private fun CurrentRowHighlight(current: String?, place: RowPlace?) {
+    val reduced = HahoTheme.motion.reduced
+    val top = remember { Animatable(0f) }
+    val height = remember { Animatable(0f) }
+    var shown by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(current, place, reduced) {
+        if (current == null || place == null) return@LaunchedEffect
+        if (shown == null || shown == current || reduced) {
+            top.snapTo(place.top)
+            height.snapTo(place.height.toFloat())
+        } else {
+            coroutineScope {
+                launch { top.animateTo(place.top, AdwamMotion.slide(reduced)) }
+                launch { height.animateTo(place.height.toFloat(), AdwamMotion.slide(reduced)) }
+            }
+        }
+        shown = current
+    }
+    val alpha by animateFloatAsState(if (current != null && place != null) 1f else 0f, HahoTheme.motion.fade(), label = "highlightAlpha")
+    val band = LocalDensity.current.run { BAND_LAYOUT_HEIGHT.toPx() }
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(BAND_LAYOUT_HEIGHT)
+            .graphicsLayer {
+                this.alpha = alpha
+                transformOrigin = TransformOrigin(0.5f, 0f)
+                translationY = top.value
+                scaleY = height.value / band
+            }
+            .background(Glass.colors.tinted),
+    )
+}
+
+/** The band is laid out once at this height and scaled to each row's height. */
+private val BAND_LAYOUT_HEIGHT = 10.dp
 
 /** One "until ..." line in an expanded prayer row; [countdown] only on the nearest end of Isya. */
 private data class EndLine(val text: String, val countdown: String? = null, val past: Boolean = false)
@@ -125,6 +195,7 @@ private fun PrayerRowView(
     onExpandToggle: () -> Unit,
     onToggle: (String, Boolean) -> Unit,
     onShowEvidence: (RawatibLine) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val time = rememberTimeFormatter()
     // Nothing to expand when no reviewed rawatib or fard data has shipped yet.
@@ -161,14 +232,10 @@ private fun PrayerRowView(
     val expandable = plan != null || ends != null || witr != null
     val expandLabel = stringResource(if (expanded) R.string.today_collapse_rawatib else R.string.today_expand_rawatib)
     val stateLabel = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)
-    val rowBackground by animateColorAsState(
-        if (row.isCurrent) Glass.colors.tinted else Color.Transparent,
-        HahoTheme.motion.fade(),
-        label = "rowBackground",
-    )
     val contentColor = MaterialTheme.colorScheme.onSurface
 
-    Column(Modifier.background(rowBackground)) {
+    // The current row's band is drawn once behind the list (CurrentRowHighlight), not per row.
+    Column(modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -199,8 +266,8 @@ private fun PrayerRowView(
                     if (row.isCurrent) {
                         Badge(
                             stringResource(R.string.today_now_badge),
-                            container = MaterialTheme.colorScheme.primary,
-                            content = MaterialTheme.colorScheme.onPrimary,
+                            container = AdwamTheme.colors.accent,
+                            content = AdwamTheme.colors.onAccent,
                             modifier = Modifier.align(Alignment.CenterVertically),
                         )
                     }
@@ -210,7 +277,7 @@ private fun PrayerRowView(
                     Text(
                         stringResource(R.string.countdown_in, durationLabel(data.next.remaining)),
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = AdwamTheme.colors.accent,
                     )
                 }
                 row.iqamah?.let {

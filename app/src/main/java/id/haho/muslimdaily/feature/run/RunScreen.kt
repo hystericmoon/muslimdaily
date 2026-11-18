@@ -67,6 +67,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.haho.muslimdaily.R
 import id.haho.muslimdaily.core.designsystem.component.ArabicText
 import id.haho.design.theme.HahoTheme
+import id.haho.muslimdaily.core.designsystem.component.DrawnCheck
+import id.haho.muslimdaily.core.designsystem.component.markPulse
+import id.haho.muslimdaily.core.designsystem.component.rememberMarkMotion
 import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.designsystem.theme.AdwamDimens
 import id.haho.muslimdaily.feature.duas.components.DuaTranslations
@@ -276,6 +279,8 @@ private fun MarkRow(state: RunUiState, page: Int, actions: RunActions, onPreviou
     val counted = item.target != null
     val countText = item.target?.let { stringResource(R.string.run_count, count, it) }
     val colors = AdwamTheme.colors
+    // The check draws itself and the control pulses once when this dua turns done (not on arriving at a done one).
+    val mark = rememberMarkMotion(done, page)
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(MARK_GAP, Alignment.CenterHorizontally),
@@ -305,7 +310,7 @@ private fun MarkRow(state: RunUiState, page: Int, actions: RunActions, onPreviou
             border = if (done) null else BorderStroke(MARK_BORDER, MaterialTheme.colorScheme.primary),
             // A completed count keeps its gold: only the tap is switched off.
             dimWhenDisabled = false,
-            modifier = Modifier.semantics {
+            modifier = Modifier.markPulse(mark).semantics {
                 stateDescription = mainState
                 liveRegion = LiveRegionMode.Polite
             },
@@ -313,7 +318,7 @@ private fun MarkRow(state: RunUiState, page: Int, actions: RunActions, onPreviou
             if (counted && !done) {
                 Text(stringResource(R.string.run_count_short, count, item.target ?: 0), style = MaterialTheme.typography.labelLarge)
             } else {
-                Icon(painterResource(R.drawable.ic_check), null)
+                DrawnCheck(progress = { mark.drawProgress })
             }
         }
         RoundControl(onClick = onNext, size = MARK_SIDE, description = stringResource(R.string.run_next_dua)) {
