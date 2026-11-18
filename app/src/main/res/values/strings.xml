@@ -990,6 +990,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_20_0">
+        <item>Island (beta): pil kecil di sekitar kamera menampilkan shalat berikutnya dan hitung mundur. Ketuk untuk memperluas, lalu buka Adwam di Hari ini. Mati secara bawaan: nyalakan di Pengaturan, Pengingat, Island (beta). Perlu izin \"Tampil di atas aplikasi lain\" dan menampilkan notifikasi senyap selama berjalan.</item>
+        <item>Sepuluh menit sebelum tiap shalat, island membuka kartu besar berisi nama dan waktu shalat. Tutup, atau buka Adwam; kartu menutup sendiri setelah satu menit.</item>
+    </string-array>
     <string-array name="whats_new_1_19_0">
         <item>Bilah pemutar kini berupa kaca transparan selebar layar tanpa garis pegangan, di halaman doa, Dengar, Dengar saja, Bangun, Ingat, dan Mulai membaca. Teks bergulir di belakangnya dan tetap bisa digulir hingga ke atasnya. Dengan Efek kaca dimatikan, bilah berwarna solid.</item>
         <item>Mulai membaca: bilah pemutar yang sama dengan halaman doa, tombol ikon Tampilan bacaan, dan tata letak doa yang sama. Di atas bilah ada baris tanda baca: panah doa sebelumnya dan berikutnya, tombol centang untuk menandai sudah dibaca (ketuk lagi untuk membatalkan), atau tombol hitungan seperti 2/3 dengan ikon batal. Lingkaran emas, tulisan Selesai, dan Batalkan hitungan dihapus; mengetuk kartu tetap bisa dipakai.</item>

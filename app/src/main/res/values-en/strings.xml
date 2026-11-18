@@ -1008,6 +1008,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_20_0">
+        <item>Island (beta): a small pill at the camera shows the next prayer and a countdown. Tap it to expand it, then open Adwam on Today. It is off by default: turn it on in Settings, Reminders, Island (beta). It needs \"Display over other apps\" and shows a silent notification while it runs.</item>
+        <item>Ten minutes before each prayer, the island opens a large card with the prayer and its time. Close it or open Adwam; it closes itself after a minute.</item>
+    </string-array>
     <string-array name="whats_new_1_19_0">
         <item>The player bar is now full-width transparent glass with no handle line, on the dua page, Listen, Listen only, Build, Recall and Routine. The text scrolls behind it and can still scroll clear of it. With Glass effect off the bar is solid.</item>
         <item>Routine: the same player bar as the dua page, a Reading display icon, and the same dua layouts. Above the bar is a mark row: previous and next dua arrows, a check button to mark as read (tap again to undo), or a count button such as 2/3 with an undo icon. The gold disc, the Done label and Undo count are gone; tapping the card still works.</item>
