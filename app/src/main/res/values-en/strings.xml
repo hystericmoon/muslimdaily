@@ -1037,6 +1037,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_22_0">
+        <item>A third accent colour on Today: the countdown on the Next card, the Now label on the current prayer and the countdown on the next prayer row now use one colour of their own in each palette. The text still meets WCAG AA contrast in light and dark mode.</item>
+        <item>Gentler motion: the highlight on the current prayer in Today slides to the next row when the prayer changes, and the mark-as-read check in Routine draws itself with one small pulse. All motion stops when animations are turned off in the system settings.</item>
+    </string-array>
     <string-array name="whats_new_1_21_0">
         <item>Island settings: in Settings, Reminders, Island (beta), Island settings you can change the height, inner padding, text size, the gap for the camera, the position (left, right, up, down), the opacity, and whether the right side shows the countdown or the time. A live preview shows each change; Reset to default brings the original look back.</item>
         <item>The big card before a prayer can be turned off, and you choose how many minutes before it opens (5 to 30). The island can also hide when the phone is in landscape.</item>

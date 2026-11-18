@@ -549,7 +549,7 @@ private fun NextPrayerCard(data: TodayData, actions: TodayActions, modifier: Mod
                         contentAlignment = if (wrapped) Alignment.CenterStart else Alignment.CenterEnd,
                         label = "countdown",
                     ) { text ->
-                        Text(text, style = MaterialTheme.typography.titleMedium)
+                        Text(text, style = MaterialTheme.typography.titleMedium, color = AdwamTheme.colors.accent)
                     }
                 }
             }

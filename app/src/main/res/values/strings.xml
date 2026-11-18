@@ -1019,6 +1019,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_22_0">
+        <item>Warna aksen ketiga di Hari ini: hitung mundur di kartu Berikutnya, label Sekarang pada shalat yang sedang berlangsung, dan hitung mundur di baris shalat berikutnya kini memakai satu warna tersendiri untuk tiap palet. Teksnya tetap memenuhi kontras WCAG AA di mode terang dan gelap.</item>
+        <item>Gerak yang lebih halus: sorotan shalat yang sedang berlangsung di Hari ini bergeser ke baris berikutnya saat waktu shalat berganti, dan tanda centang sudah dibaca di rutinitas tergambar sendiri dengan satu denyut kecil. Semua gerak berhenti bila animasi dimatikan di pengaturan sistem.</item>
+    </string-array>
     <string-array name="whats_new_1_21_0">
         <item>Pengaturan island: di Pengaturan, Pengingat, Island (beta), Pengaturan island Anda bisa mengubah tinggi, jarak dalam, ukuran teks, celah untuk kamera, posisi (kiri, kanan, atas, bawah), kepekatan, dan apakah sisi kanan menampilkan hitung mundur atau waktu. Pratinjau langsung menunjukkan tiap perubahan; Kembalikan ke bawaan memulihkan tampilan awal.</item>
         <item>Kartu besar sebelum shalat bisa dimatikan, dan Anda memilih berapa menit sebelum kartu terbuka (5 sampai 30). Island juga bisa disembunyikan saat ponsel dalam posisi landscape.</item>

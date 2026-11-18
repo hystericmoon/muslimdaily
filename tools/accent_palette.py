@@ -4,7 +4,7 @@
 Reads the palette tokens in docs/design-tokens.md, takes the accent hue for each palette from
 HUES (spread around the OKLCH wheel, at least 50 degrees from the palette's own colour and clear
 of gold at 90 and the error red at 28), then picks the lightest or darkest tone that reaches the
-contrast targets. Prints a markdown table, or JSON with --json. Decided 18 Nov 2026, see
+contrast targets (on the surface, on the highest container and, in dark mode, on the glass cards). Prints a markdown table, or JSON with --json. Decided 18 Nov 2026, see
 docs/accent.md. Run: python3 tools/accent_palette.py [--json]
 """
 import json
@@ -17,6 +17,15 @@ HUES = {"TEAL": 295, "NAVY": 130, "FOREST": 325, "SLATE": 200, "OLIVE": 350, "RO
 CHROMA = 0.13
 TEXT_ON_SURFACE = 4.6  # needs 4.5
 TEXT_ON_CONTAINER = 7.0
+# The countdowns sit on the glass cards, which are lighter than the dark surface. The lightest
+# composite a dark card reaches (the Next card's tint plus sheen over the stacked backdrop glows),
+# per palette, from haho-design 0.2.0 via ExtendedColorsContrastTest. A dark accent is lighter than
+# its background, so the lightest one is the worst case. Light mode already passes on glass. If the
+# glass changes, that test fails: dump the new composites and update this table.
+DARK_GLASS_WORST = {
+    "TEAL": "#40504D", "NAVY": "#4D4D57", "FOREST": "#405246", "SLATE": "#4D4F4E",
+    "OLIVE": "#4B513A", "ROSE": "#5F4A40", "LAVENDER": "#5A4B51", "PEACH": "#5C4C37",
+}
 DOCS = Path(__file__).resolve().parent.parent / "docs" / "design-tokens.md"
 
 
@@ -109,6 +118,8 @@ def build():
             accent = tone_for(hue, CHROMA, t["surface"], TEXT_ON_SURFACE, dark)
             if contrast(accent, t["surfaceContainerHighest"]) < 4.5:
                 accent = tone_for(hue, CHROMA, t["surfaceContainerHighest"], TEXT_ON_SURFACE, dark)
+            if dark and contrast(accent, DARK_GLASS_WORST[palette]) < TEXT_ON_SURFACE:
+                accent = tone_for(hue, CHROMA, DARK_GLASS_WORST[palette], TEXT_ON_SURFACE, True)
             on = "#FFFFFF" if contrast("#FFFFFF", accent) >= contrast("#000000", accent) else "#000000"
             container = make(hue, 0.05, 0.32) if dark else make(hue, 0.045, 0.92)
             on_container = tone_for(hue, 0.06, container, TEXT_ON_CONTAINER, dark)
@@ -119,6 +130,7 @@ def build():
                 "onAccentContainer": on_container,
                 "accentOnSurface": round(contrast(accent, t["surface"]), 2),
                 "accentOnHighest": round(contrast(accent, t["surfaceContainerHighest"]), 2),
+                "accentOnGlass": round(contrast(accent, DARK_GLASS_WORST[palette]), 2) if dark else None,
                 "onAccentOnAccent": round(contrast(on, accent), 2),
                 "onContainerOnContainer": round(contrast(on_container, container), 2),
             }
@@ -130,14 +142,15 @@ def main():
     if "--json" in sys.argv:
         print(json.dumps(result, indent=2))
         return
-    print("| Palette | Hue | Mode | accent | onAccent | accentContainer | onAccentContainer | on surface | on highest |")
-    print("|---|---|---|---|---|---|---|---|---|")
+    print("| Palette | Hue | Mode | accent | onAccent | accentContainer | onAccentContainer | on surface | on highest | on glass |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
     for palette, v in result.items():
         for mode in ("light", "dark"):
             d = v[mode]
-            print("| %s | %d | %s | `%s` | `%s` | `%s` | `%s` | %.2f | %.2f |" % (
+            glass = "%.2f" % d["accentOnGlass"] if d["accentOnGlass"] else "n/a"
+            print("| %s | %d | %s | `%s` | `%s` | `%s` | `%s` | %.2f | %.2f | %s |" % (
                 palette, v["hue"], mode, d["accent"], d["onAccent"], d["accentContainer"],
-                d["onAccentContainer"], d["accentOnSurface"], d["accentOnHighest"]))
+                d["onAccentContainer"], d["accentOnSurface"], d["accentOnHighest"], glass))
 
 
 if __name__ == "__main__":

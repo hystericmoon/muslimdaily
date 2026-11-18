@@ -7,13 +7,13 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 18 Nov 2026, 15:10 WIB (1.21.0 released; decisions saved in docs/roadmap-2026-11.md).
+Last updated: 18 Nov 2026 (1.22.0 built, waiting for the owner's yes to merge; decisions in docs/roadmap-2026-11.md).
 
 ## In flight
 
-- **Owner approved everything on 18 Nov** (free features, motion, third accent, the new DND permission, the version numbers below). The record, order and notes: `docs/roadmap-2026-11.md`. Start with item 1.
-- **1.21.0 (versionCode 66) released 18 Nov** (island settings, fast expand, centred camera gap; #298 feature, release in PR #299). The third accent and the first motion pieces are 1.22.0.
-- **Main**: 1.21.0 (versionCode 66), content_version 55, 329 rows. 1.20.0 shipped 13:11 WIB (#295, #296).
+- **1.22.0 (versionCode 67) built on branch `claude/notion-promo-batch-1-o2p0c4`, PR open, not merged** (merging publishes the release, so the owner's yes is needed). Third accent on Today (countdown on the Next card, "Now" chip, next-row countdown; colours only) and the first motion pieces (one shared highlight slides between prayer rows; the mark-as-read check draws itself with one 1.08 pulse). **Decision for the owner**: the dark accents are lighter than the 16 approved values because the approved ones were 3.1 to 4.2:1 on the dark glass cards (AA needs 4.5); details and the way back in `docs/accent.md`, "Values". The Screenshots workflow must run on the branch after the push.
+- **Owner approved everything on 18 Nov** (free features, motion, third accent, the DND permission, the version numbers). Record, order and notes: `docs/roadmap-2026-11.md`.
+- **Main**: 1.21.0 (versionCode 66), content_version 55, 329 rows, until 1.22.0 merges.
 - **Owner to check on a phone (cloud can't)**: island (pill hugs the camera, expand is fast, "Open Adwam" lands on Today, the 10-minute card, each Island settings slider moves the real island, survives screen off, reboot and the battery killer); 1.19.0 and 1.18.0: glass bar blur and icon contrast, auto-scroll, Build part and repeat, the Routine mark row, Recall "Next", Listen only skip, stacked Recall row at large font, full-height Reading sheet.
 - **Prayer-time accuracy**: nothing changed. The owner never said where they saw "province based". Recommendation (page in the roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
 - **LinkedIn post for 1.19**: waits for the owner's device screenshots of Build, Routine and Recall; Arabic unblurred. Site: https://hystericmoon.github.io/muslimdaily/.
@@ -23,9 +23,8 @@ Last updated: 18 Nov 2026, 15:10 WIB (1.21.0 released; decisions saved in docs/r
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. **Third accent** (Sonnet): `docs/accent.md` has the 16 values, the rule and the build plan; `tools/accent_palette.py` regenerates them. Today first, then re-record screenshots (run the Screenshots workflow right after pushing).
-2. **Motion** (Sonnet): load the `motion` skill; Today ring and sliding highlight, then mark as read.
-3. Release 1.22.0 with 1 and 2 (release skill). Then the free features: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
+1. **Merge 1.22.0** after the owner's yes and green CI. Not built from the plan: the thin progress line under the Next card (drop it if the owner prefers colours only), the Today ring, and the accent on the island, calendars, "New" chip and Qibla "Aligned" (one screen per PR). Next motion pieces: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
+2. The free features: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 
 ## Promo campaign (6 Nov)
 
