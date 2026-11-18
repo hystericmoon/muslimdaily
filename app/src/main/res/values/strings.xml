@@ -701,6 +701,18 @@
     <string name="reminders_lead">Sebelum adzan</string>
     <string name="reminders_ongoing_title">Shalat berikutnya di layar kunci</string>
     <string name="reminders_ongoing_summary">Notifikasi senyap dengan hitung mundur. Di Android 16 tampil sebagai Live Update.</string>
+    <string name="channel_island">Island</string>
+    <string name="channel_island_desc">Menjaga island tetap jalan. Senyap dan diperkecil.</string>
+    <string name="island_notification_title">Island aktif</string>
+    <string name="island_notification_text">Ketuk untuk membuka Adwam. Matikan di Pengaturan, Pengingat.</string>
+    <string name="island_minutes">%d mnt</string>
+    <string name="island_hours_minutes">%1$d j %2$d mnt</string>
+    <string name="island_open">Buka Adwam</string>
+    <string name="island_description">%1$s pukul %2$s, %3$s lagi. Ketuk untuk detail.</string>
+    <string name="reminders_island_title">Island (beta)</string>
+    <string name="reminders_island_summary">Pil kecil di sekitar kamera berisi shalat berikutnya. Ketuk untuk memperluas. Perlu izin \"Tampil di atas aplikasi lain\".</string>
+    <string name="reminders_island_permission">Island belum bisa tampil sampai Anda mengizinkan \"Tampil di atas aplikasi lain\" untuk Adwam.</string>
+    <string name="reminders_island_allow">Izinkan</string>
     <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Adwam.</string>
 
     <!-- Nearby mosques -->

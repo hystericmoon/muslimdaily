@@ -53,6 +53,10 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
                     setShowBadge(false)
                     lockscreenVisibility = android.app.Notification.VISIBILITY_PUBLIC
                 },
+                NotificationChannel(CHANNEL_ISLAND, context.getString(R.string.channel_island), NotificationManager.IMPORTANCE_MIN).apply {
+                    description = context.getString(R.string.channel_island_desc)
+                    setShowBadge(false)
+                },
             ),
         )
     }
@@ -182,6 +186,7 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
         const val CHANNEL_REMINDERS = "reminders"
         const val CHANNEL_PRE_PRAYER = "pre_prayer"
         const val CHANNEL_NEXT_PRAYER = "next_prayer"
+        const val CHANNEL_ISLAND = "island"
         private const val ID_NEXT_PRAYER = 100
         const val EXTRA_DESTINATION = "destination"
     }

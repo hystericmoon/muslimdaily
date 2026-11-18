@@ -122,6 +122,7 @@ class SettingsRepository @Inject constructor(
             mosqueBefore = this[K.remMosque] ?: r.mosqueBefore,
             mosqueBeforeMinutes = this[K.remMosqueMinutes] ?: r.mosqueBeforeMinutes,
             nextPrayerOngoing = this[K.remOngoing] ?: r.nextPrayerOngoing,
+            nextPrayerIsland = this[K.remIsland] ?: r.nextPrayerIsland,
             fasting = this[K.remFasting] ?: r.fasting,
             fastingTime = this[K.remFastingTime]?.let { LocalTime.ofSecondOfDay(it.toLong()) } ?: r.fastingTime,
             fastingWeekly = this[K.remFastingWeekly] ?: r.fastingWeekly,
@@ -241,6 +242,7 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var remMosque: Boolean by key(K.remMosque, false)
     var remMosqueMinutes: Int by key(K.remMosqueMinutes, 10)
     var remOngoing: Boolean by key(K.remOngoing, false)
+    var remIsland: Boolean by key(K.remIsland, false)
     var remFasting: Boolean by key(K.remFasting, false)
     var remFastingWeekly: Boolean by key(K.remFastingWeekly, true)
     fun setFastingTime(time: LocalTime) { p[K.remFastingTime] = time.toSecondOfDay() }
@@ -345,6 +347,7 @@ internal object K {
     val remMosque = booleanPreferencesKey("rem_mosque")
     val remMosqueMinutes = intPreferencesKey("rem_mosque_minutes")
     val remOngoing = booleanPreferencesKey("rem_next_prayer_ongoing")
+    val remIsland = booleanPreferencesKey("rem_next_prayer_island")
     val remFasting = booleanPreferencesKey("rem_fasting")
     val remFastingTime = intPreferencesKey("rem_fasting_time")
     val remFastingWeekly = booleanPreferencesKey("rem_fasting_weekly")

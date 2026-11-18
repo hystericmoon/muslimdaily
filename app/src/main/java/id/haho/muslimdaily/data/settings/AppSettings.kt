@@ -82,6 +82,8 @@ data class ReminderSettings(
     val mosqueBeforeMinutes: Int = 10,
     /** A quiet ongoing notification with the next prayer and a countdown, shown on the lock screen. */
     val nextPrayerOngoing: Boolean = false,
+    /** A small pill at the camera cutout with the next prayer; tap to open it (beta, needs "Display over other apps"). */
+    val nextPrayerIsland: Boolean = false,
     /** The evening before a sunnah fast. */
     val fasting: Boolean = false,
     val fastingTime: LocalTime = LocalTime.of(20, 0),

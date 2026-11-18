@@ -717,6 +717,18 @@
     <string name="reminders_lead">Before the adhan</string>
     <string name="reminders_ongoing_title">Next prayer on lock screen</string>
     <string name="reminders_ongoing_summary">A silent notification with a countdown. Shown as a Live Update on Android 16.</string>
+    <string name="channel_island">Island</string>
+    <string name="channel_island_desc">Keeps the island running. Silent and minimised.</string>
+    <string name="island_notification_title">Island is on</string>
+    <string name="island_notification_text">Tap to open Adwam. Turn it off in Settings, Reminders.</string>
+    <string name="island_minutes">%d min</string>
+    <string name="island_hours_minutes">%1$dh %2$dm</string>
+    <string name="island_open">Open Adwam</string>
+    <string name="island_description">%1$s at %2$s, in %3$s. Tap for details.</string>
+    <string name="reminders_island_title">Island (beta)</string>
+    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. Needs \"Display over other apps\".</string>
+    <string name="reminders_island_permission">The island cannot show until you allow \"Display over other apps\" for Adwam.</string>
+    <string name="reminders_island_allow">Allow</string>
     <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Adwam.</string>
 
     <!-- Nearby mosques -->
