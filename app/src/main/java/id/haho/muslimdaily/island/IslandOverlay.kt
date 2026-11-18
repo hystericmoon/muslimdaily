@@ -20,7 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +43,7 @@ data class IslandTexts(
     val left: String,
     val place: String,
     val openLabel: String,
+    val dismissLabel: String,
     val description: String,
 )
 
@@ -56,9 +59,55 @@ fun IslandOverlay(
     expanded: Boolean,
     onToggle: () -> Unit,
     onOpen: () -> Unit,
+    big: Boolean = false,
+    onDismiss: () -> Unit = {},
 ) {
     Box(modifier = Modifier.animateContentSize()) {
-        if (expanded) {
+        if (big) {
+            // Ten minutes before a prayer: a large card that announces itself to TalkBack once.
+            Column(
+                modifier = Modifier
+                    .width(340.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(IslandBlack)
+                    .padding(horizontal = 24.dp, vertical = 20.dp)
+                    .semantics {
+                        liveRegion = LiveRegionMode.Polite
+                        contentDescription = texts.description
+                    },
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(texts.left, color = IslandAccent, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                Text(texts.prayerName, color = IslandText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
+                Text(texts.clock, color = IslandText, fontSize = 24.sp)
+                Text(texts.place, color = IslandMuted, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .defaultMinSize(minHeight = 48.dp, minWidth = 48.dp)
+                            .clip(RoundedCornerShape(24.dp))
+                            .clickable(role = Role.Button, onClick = onDismiss)
+                            .padding(horizontal = 20.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(texts.dismissLabel, color = IslandText, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                    }
+                    Box(
+                        modifier = Modifier
+                            .defaultMinSize(minHeight = 48.dp, minWidth = 48.dp)
+                            .clip(RoundedCornerShape(24.dp))
+                            .background(IslandAccent)
+                            .clickable(role = Role.Button, onClick = onOpen)
+                            .padding(horizontal = 24.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(texts.openLabel, color = IslandBlack, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+        } else if (expanded) {
             Column(
                 modifier = Modifier
                     .width(300.dp)

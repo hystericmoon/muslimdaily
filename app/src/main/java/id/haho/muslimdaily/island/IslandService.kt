@@ -74,6 +74,9 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
 
     private var model by mutableStateOf<IslandModel?>(null)
     private var expanded by mutableStateOf(false)
+    private var big by mutableStateOf(false)
+    private var alertedFor: Instant? = null
+    private var firstRefresh = true
     private var gapDp by mutableStateOf(0)
 
     override val lifecycle: Lifecycle get() = registry
@@ -127,7 +130,12 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         if (!s.reminders.nextPrayerIsland) return false
         val now = Instant.now(clock)
         val snapshot = PrayerSnapshots.at(now, s, calculator) ?: return false
-        model = IslandModel.from(now, snapshot)
+        val m = IslandModel.from(now, snapshot)
+        model = m
+        if (IslandAlert.shouldAlert(m.minutesLeft, m.time, alertedFor, firstRefresh)) showBig(m.time)
+        // At the prayer time the big card has done its job.
+        if (m.minutesLeft == 0) big = false
+        firstRefresh = false
         return true
     }
 
@@ -148,6 +156,8 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                         expanded = expanded,
                         onToggle = ::toggle,
                         onOpen = ::openApp,
+                        big = big,
+                        onDismiss = ::dismissBig,
                     )
                 }
             }
@@ -186,6 +196,22 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             ?.takeIf { it > 0 }
     }
 
+    private fun showBig(time: Instant) {
+        alertedFor = time
+        big = true
+        expanded = false
+        collapseJob?.cancel()
+        collapseJob = scope?.launch {
+            delay(BIG_MS)
+            big = false
+        }
+    }
+
+    private fun dismissBig() {
+        collapseJob?.cancel()
+        big = false
+    }
+
     private fun toggle() {
         expanded = !expanded
         collapseJob?.cancel()
@@ -199,6 +225,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
 
     private fun openApp() {
         expanded = false
+        dismissBig()
         startActivity(
             Intent(this, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -220,6 +247,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             left = left,
             place = m.place,
             openLabel = getString(R.string.island_open),
+            dismissLabel = getString(R.string.island_dismiss),
             description = getString(R.string.island_description, name, clockText, left),
         )
     }
@@ -253,6 +281,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         private const val NOTIFICATION_ID = 101
         private const val REFRESH_MS = 20_000L
         private const val COLLAPSE_MS = 6_000L
+        private const val BIG_MS = 60_000L
 
         /**
          * Starts the island when [wanted] and the permission is granted, stops it otherwise. Safe to

@@ -32,3 +32,24 @@ class IslandModelTest {
         assertEquals(0, IslandGeometry.gapDp(90, 0f))
     }
 }
+
+class IslandAlertTest {
+    private val time = java.time.Instant.parse("2026-11-18T08:00:00Z")
+
+    @Test fun alertsOnceInsideTheLeadWindow() {
+        assertEquals(false, IslandAlert.shouldAlert(11, time, null, first = false))
+        assertEquals(true, IslandAlert.shouldAlert(10, time, null, first = false))
+        assertEquals(true, IslandAlert.shouldAlert(7, time, null, first = false))
+        assertEquals(false, IslandAlert.shouldAlert(7, time, time, first = false))
+        assertEquals(false, IslandAlert.shouldAlert(0, time, null, first = false))
+    }
+
+    @Test fun nextPrayerAlertsAgain() {
+        assertEquals(true, IslandAlert.shouldAlert(10, time.plusSeconds(3600), time, first = false))
+    }
+
+    @Test fun startingLateStaysQuiet() {
+        assertEquals(false, IslandAlert.shouldAlert(4, time, null, first = true))
+        assertEquals(true, IslandAlert.shouldAlert(10, time, null, first = true))
+    }
+}

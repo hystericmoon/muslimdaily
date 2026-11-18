@@ -43,3 +43,19 @@ object IslandGeometry {
         return Math.ceil((cutoutWidthPx / density).toDouble()).toInt() + 2 * GAP_PADDING_DP
     }
 }
+
+/** When the island opens its big card on its own: once per prayer, 10 minutes before. */
+object IslandAlert {
+    const val LEAD_MINUTES = 10
+
+    /**
+     * [alertedFor] is the prayer time already announced. [first] is the first refresh after the
+     * service starts: it only announces at exactly 10 minutes, so turning the island on or a
+     * reboot at 4 minutes does not pop a big card.
+     */
+    fun shouldAlert(minutesLeft: Int, time: Instant, alertedFor: Instant?, first: Boolean): Boolean {
+        if (minutesLeft <= 0 || minutesLeft > LEAD_MINUTES) return false
+        if (alertedFor == time) return false
+        return !first || minutesLeft == LEAD_MINUTES
+    }
+}
