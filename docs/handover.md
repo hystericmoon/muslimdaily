@@ -7,15 +7,15 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`.
 
-Last updated: 16 Nov 2026, 19:50 WIB (1.19.0 released; prayer-time accuracy question open).
+Last updated: 18 Nov 2026, 13:15 WIB (1.20.0 released; prayer-time accuracy question open).
 
 ## In flight
 
-- **1.19.0 (versionCode 64) released 16 Nov 18:23 WIB** (release PR #292, feature PR #291; details: history, "Shipped"). **Owner to check on a phone (cloud can't)**: glass bar blur and icon contrast over scrolling text, auto-scroll on next/previous/audio, Build part and repeat, the Routine mark row and one-time hint, Recall "Next".
+- **1.19.0 (versionCode 64, 16 Nov 18:23 WIB)** (release PR #292, feature PR #291; details: history, "Shipped"). **Owner to check on a phone (cloud can't)**: glass bar blur and icon contrast over scrolling text, auto-scroll on next/previous/audio, Build part and repeat, the Routine mark row and one-time hint, Recall "Next".
 - 1.18.0 (versionCode 63, 16 Nov) shipped the standard player bar in Memorize and Listen only; its phone checks (Listen only skip, Build repeat, stacked Recall row at large font, full-height Reading sheet) are still the owner's, with 1.19.0's.
 - **Prayer-time accuracy (owner asked 16 Nov, nothing changed)**: times are computed from coordinates (adhan + Kemenag preset), no API, no internet permission. GPS is exact; the manual picker has 484 Indonesian places (GeoNames pop >= 5,000). eQuran API (Kemenag data per kab/kota, needs internet): not adopted. Ask where the owner saw "province based". Options: show "exact GPS" on Today; kecamatan in `tools/build_cities.py` (Opus: data); coordinates entry; dev-only comparison script against eQuran.
 - **LinkedIn post for 1.19 (owner posts)**: text, dark image and carousel lived in the scratchpad (lost on clear). The owner wants the Arabic unblurred; Build, Routine and Recall slides need real device screenshots. Site: https://hystericmoon.github.io/muslimdaily/.
-- **Island (owner asked twice, 18 Nov: "like the Dynamic Island")**: branch `claude/notion-promo-batch-1-o2p0c4`, PR open. Overlay pill at the camera cutout (`island/IslandService.kt`, `IslandOverlay.kt`, `IslandModel.kt`), Settings, Reminders, "Island (beta)", off by default. Adds `SYSTEM_ALERT_WINDOW` and `FOREGROUND_SERVICE_SPECIAL_USE`: **needs the owner's yes before merge**, and the owner must test placement, expand/collapse and kill-by-OEM on a phone (cloud can't). Opens a big card 10 min before each prayer (once per prayer, 60 s or Close). Proposed version 1.20.0. The Live Update chip already exists ("Next prayer on lock screen"), so it is not new work. Next ideas: Listen controls, after-salah shortcut (decision page in this session's artifacts, lost on clear).
+- **1.20.0 (versionCode 65) released 18 Nov ~13:10 WIB** (release PR #296, feature PR #295): Island (beta), Reminders, off by default: a pill at the camera cutout (`island/IslandService.kt`, `IslandOverlay.kt`, `IslandModel.kt`), a big card 10 min before each prayer (once per prayer, closes after 60 s or Close). Adds `SYSTEM_ALERT_WINDOW` and a `specialUse` foreground service (owner approved). **Owner to check on a phone (cloud can't)**: pill hugs the camera and stays slim without a cutout, expand/collapse/Open lands on Today, permission card appears and the island starts after granting, the 10-minute card, survives screen off, reboot and the OEM battery killer. The Live Update chip ("Next prayer on lock screen") already existed. Next island ideas (not built): Listen controls, after-salah shortcut, Build position, travel prompt.
 - Stray branch `claude/handover-1-19-0`: the owner deletes it on GitHub.
 - **Earlier checks still open (owner, on a phone; cloud can't)**: 1.17.0 start sheet and list rows, Listen repeat modes, docks collapsed by default; widget Dark text and large-font fits (1.16.0), widget taps,
   **Qibla back overlap (#209)**: Android 14+, gesture nav, swipe back slowly at ~20% and ~50%; if it still overlaps, next is an opaque per-screen backdrop (haho-design). 1.17.0 details: history, "Shipped".
@@ -24,7 +24,7 @@ Last updated: 16 Nov 2026, 19:50 WIB (1.19.0 released; prayer-time accuracy ques
 - **Promo media is stale**: Video 1 and Carousel A show the old Memorize (shots 50-53); re-render from 150-153, 161, 165 and
   push to `promo-assets` only when the owner says (hold, 15 Nov). Copy and alt text still hold.
 - UX/UI audit done (history, "Shipped" 1.15.1, 1.15.2). Not done: W7 "next two prayers at 200%" (unreachable, see history). Before merging a batch of PRs read history, "Facts that cost time to find".
-- Main: 1.19.0 (versionCode 64, content_version 55, 329 rows).
+- Main: 1.20.0 (versionCode 65, content_version 55, 329 rows).
 
 ## Promo campaign (6 Nov)
 
@@ -60,7 +60,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
-- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.19.0.
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.20.0.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
