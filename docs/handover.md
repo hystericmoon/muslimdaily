@@ -7,12 +7,12 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 18 Nov 2026 (1.22.0 built in PR #300, waiting for the owner's yes to merge).
+Last updated: 18 Nov 2026 (1.22.0 merged, release run 85).
 
 ## In flight
 
-- **1.22.0 (versionCode 67): PR #300, not merged** (changes `versionName`, so the owner's yes is needed; CI and the Screenshots re-record were running on `6f8472d`). Third accent on Today (colours only) and the first motion pieces (shared highlight slide; mark-as-read check). **Ask the owner at merge**: the 8 dark accents are lighter than the 16 approved values (the approved ones were 3.1 to 4.2:1 on dark glass cards, AA needs 4.5); show before/after as UI on a page, recommendation: keep the new ones. Details and the way back: `docs/accent.md`, "Values"; history, "Shipped" 1.22.0. If CI is red, fix it (a PR-event run showing `action_required` is the bot's, ignore it); then give the owner the version, the merge ask and the APK from the release or the CI `apks` artifact.
-- **Owner approved everything on 18 Nov** (free features, motion, third accent, the DND permission, the version numbers): `docs/roadmap-2026-11.md`. **Main** is 1.21.0 (versionCode 66), content_version 55, 329 rows, until #300 merges.
+- **1.22.0 (versionCode 67) merged 18 Nov ~16:02 WIB (PR #300), release run 85**: third accent on Today (colours only) and the first motion pieces (shared highlight slide, mark-as-read check). The owner said "merge" with the dark accents paler than the 16 approved values (the approved ones were 3.1 to 4.2:1 on dark glass cards, AA needs 4.5; `docs/accent.md`, "Values"). APK: https://github.com/hystericmoon/muslimdaily/releases/download/v1.22.0/adwam-1.22.0.apk once the release run is done. Owner to eyeball the dark accents on a phone; if they dislike the pale look, the way back is in `docs/accent.md`.
+- **Owner approved everything on 18 Nov** (free features, motion, third accent, the DND permission, the version numbers): `docs/roadmap-2026-11.md`. **Main** is 1.22.0 (versionCode 67), content_version 55, 329 rows.
 - **Owner to check on a phone (cloud can't)**: island (hugs the camera, fast expand, 10-minute card, each Island settings slider, survives screen off, reboot, battery killer); 1.18.0 to 1.19.0 (glass bar, auto-scroll, Build, Routine mark row, Recall, Listen only, full-height Reading sheet); 1.17.0 and 1.16.0 (start sheet, repeat modes, widget fits and taps); Qibla back overlap (#209, Android 14+ gesture nav, if still overlapping: opaque per-screen backdrop in haho-design). New in 1.22.0: accent colours in all 8 palettes (Navy and Lavender greens 35 degrees apart), the highlight slide at a prayer change, the check draw.
 - **Prayer-time accuracy**: nothing changed. The owner never said where they saw "province based". Recommendation (page in the roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
 - **LinkedIn post for 1.19**: waits for the owner's device screenshots of Build, Routine and Recall; Arabic unblurred. Site: https://hystericmoon.github.io/muslimdaily/.
@@ -21,8 +21,8 @@ Last updated: 18 Nov 2026 (1.22.0 built in PR #300, waiting for the owner's yes 
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. **Merge 1.22.0** (above). Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on the island, calendars, "New" chip and Qibla "Aligned" (one screen per PR). Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
-2. The free features: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
+1. **Next: the free features** (below). Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on the island, calendars, "New" chip and Qibla "Aligned" (one screen per PR). Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
+2. Free features order: timetable and Imsakiyah (1.23.0), saved places and dhikr counter (1.24.0), silence during prayer (1.25.0, needs the DND permission, approved), then last third of the night and Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 
 ## Promo campaign (6 Nov)
 
@@ -54,7 +54,7 @@ sleep_08, fear_05, news_05; shown muted since 1.7.0).
 
 ## Sessions
 
-- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.21.0.
+- **Owner wants the latest APK with all new fixes, always (16 Nov)**: after each merge offer the release (version first) or the CI `apks` artifact. Main is 1.22.0.
 - Give every time to the owner in WIB (UTC+7); tool results print UTC.
 - Work on Adwam only: don't read, archive or change other projects' sessions, repos or
   artifacts (owner, 31 Oct).
