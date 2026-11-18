@@ -53,3 +53,20 @@ class IslandAlertTest {
         assertEquals(true, IslandAlert.shouldAlert(10, time, null, first = true))
     }
 }
+
+class IslandLeadTest {
+    private val time = java.time.Instant.parse("2026-11-18T08:00:00Z")
+
+    @Test fun leadIsConfigurable() {
+        assertEquals(false, IslandAlert.shouldAlert(12, time, null, first = false, lead = 10))
+        assertEquals(true, IslandAlert.shouldAlert(12, time, null, first = false, lead = 15))
+        assertEquals(true, IslandAlert.shouldAlert(15, time, null, first = true, lead = 15))
+        assertEquals(false, IslandAlert.shouldAlert(14, time, null, first = true, lead = 15))
+    }
+
+    @Test fun gapAdjustmentNeverGoesNegative() {
+        assertEquals(30, IslandGeometry.withAdjust(40, -10))
+        assertEquals(0, IslandGeometry.withAdjust(10, -24))
+        assertEquals(24, IslandGeometry.withAdjust(0, 24))
+    }
+}

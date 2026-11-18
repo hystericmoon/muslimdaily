@@ -31,6 +31,7 @@ import id.haho.muslimdaily.feature.settings.MethodologyRoute
 import id.haho.muslimdaily.feature.settings.IqamahRoute
 import id.haho.muslimdaily.feature.settings.PrayerOffsetsRoute
 import id.haho.muslimdaily.feature.settings.PrayerSettingsRoute
+import id.haho.muslimdaily.feature.settings.IslandSettingsRoute
 import id.haho.muslimdaily.feature.settings.RemindersRoute
 import id.haho.muslimdaily.feature.settings.SettingsDestinations
 import id.haho.muslimdaily.feature.memorize.ListenOnlyRoute
@@ -174,7 +175,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             composable<LocationRoute> { LocationRoute(onBack = back) }
             composable<MySetsDataRoute> { MySetsDataRoute(onBack = back) }
             composable<AudioSettingsRoute> { AudioSettingsRoute(onBack = back) }
-            composable<RemindersRoute> { RemindersRoute(onBack = back) }
+            composable<RemindersRoute> { RemindersRoute(onBack = back, onIsland = { navController.navigate(IslandSettingsRoute) }) }
+            composable<IslandSettingsRoute> { IslandSettingsRoute(onBack = back) }
             composable<DisplaySettingsRoute> { DisplaySettingsRoute(onBack = back) }
             composable<MethodologyRoute> { MethodologyRoute(onBack = back) }
             composable<AboutRoute> { AboutRoute(onBack = back) }

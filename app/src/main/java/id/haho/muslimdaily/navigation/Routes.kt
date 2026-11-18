@@ -43,6 +43,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object IqamahRoute
 @Serializable data object LocationRoute
 @Serializable data object RemindersRoute
+@Serializable data object IslandSettingsRoute
 @Serializable data object DisplaySettingsRoute
 @Serializable data object AudioSettingsRoute
 @Serializable data object MethodologyRoute

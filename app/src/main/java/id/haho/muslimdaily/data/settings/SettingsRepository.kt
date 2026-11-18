@@ -128,7 +128,22 @@ class SettingsRepository @Inject constructor(
             fastingWeekly = this[K.remFastingWeekly] ?: r.fastingWeekly,
         )
         val m = d.memorize
+        val i = d.island
+        val island = IslandSettings(
+            heightDp = (this[K.islandHeight] ?: i.heightDp).coerceIn(IslandSettings.HEIGHT),
+            paddingDp = (this[K.islandPadding] ?: i.paddingDp).coerceIn(IslandSettings.PADDING),
+            fontSp = (this[K.islandFont] ?: i.fontSp).coerceIn(IslandSettings.FONT),
+            gapAdjustDp = (this[K.islandGap] ?: i.gapAdjustDp).coerceIn(IslandSettings.GAP),
+            offsetXDp = (this[K.islandX] ?: i.offsetXDp).coerceIn(IslandSettings.OFFSET_X),
+            offsetYDp = (this[K.islandY] ?: i.offsetYDp).coerceIn(IslandSettings.OFFSET_Y),
+            opacityPercent = (this[K.islandOpacity] ?: i.opacityPercent).coerceIn(IslandSettings.OPACITY),
+            right = enumOr(K.islandRight, i.right),
+            bigCard = this[K.islandBig] ?: i.bigCard,
+            bigCardLeadMinutes = (this[K.islandLead] ?: i.bigCardLeadMinutes).coerceIn(IslandSettings.LEAD),
+            hideInLandscape = this[K.islandLandscape] ?: i.hideInLandscape,
+        )
         return AppSettings(
+            island = island,
             themeMode = enumOr(K.theme, d.themeMode),
             dynamicColor = this[K.dynamicColor] ?: d.dynamicColor,
             palette = enumOr(K.palette, d.palette),
@@ -243,6 +258,17 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var remMosqueMinutes: Int by key(K.remMosqueMinutes, 10)
     var remOngoing: Boolean by key(K.remOngoing, false)
     var remIsland: Boolean by key(K.remIsland, false)
+    var islandHeight: Int by key(K.islandHeight, 36)
+    var islandPadding: Int by key(K.islandPadding, 14)
+    var islandFont: Int by key(K.islandFont, 12)
+    var islandGap: Int by key(K.islandGap, 0)
+    var islandX: Int by key(K.islandX, 0)
+    var islandY: Int by key(K.islandY, 0)
+    var islandOpacity: Int by key(K.islandOpacity, 100)
+    var islandRight: IslandRight by enumKey(K.islandRight, IslandRight.COUNTDOWN)
+    var islandBig: Boolean by key(K.islandBig, true)
+    var islandLead: Int by key(K.islandLead, 10)
+    var islandLandscape: Boolean by key(K.islandLandscape, true)
     var remFasting: Boolean by key(K.remFasting, false)
     var remFastingWeekly: Boolean by key(K.remFastingWeekly, true)
     fun setFastingTime(time: LocalTime) { p[K.remFastingTime] = time.toSecondOfDay() }
@@ -348,6 +374,17 @@ internal object K {
     val remMosqueMinutes = intPreferencesKey("rem_mosque_minutes")
     val remOngoing = booleanPreferencesKey("rem_next_prayer_ongoing")
     val remIsland = booleanPreferencesKey("rem_next_prayer_island")
+    val islandHeight = intPreferencesKey("island_height")
+    val islandPadding = intPreferencesKey("island_padding")
+    val islandFont = intPreferencesKey("island_font")
+    val islandGap = intPreferencesKey("island_gap")
+    val islandX = intPreferencesKey("island_x")
+    val islandY = intPreferencesKey("island_y")
+    val islandOpacity = intPreferencesKey("island_opacity")
+    val islandRight = stringPreferencesKey("island_right")
+    val islandBig = booleanPreferencesKey("island_big")
+    val islandLead = intPreferencesKey("island_lead")
+    val islandLandscape = booleanPreferencesKey("island_landscape")
     val remFasting = booleanPreferencesKey("rem_fasting")
     val remFastingTime = intPreferencesKey("rem_fasting_time")
     val remFastingWeekly = booleanPreferencesKey("rem_fasting_weekly")
