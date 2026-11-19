@@ -1019,6 +1019,11 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_23_0">
+        <item>Jadwal salat bulanan: tombol Jadwal di Hari ini membuka tabel waktu shalat satu bulan penuh untuk lokasi Anda, lengkap dengan tanggal Hijriah. Geser ke bulan sebelum atau sesudahnya.</item>
+        <item>Imsakiyah Ramadan: tab Ramadan menampilkan jadwal seluruh Ramadan, dari hari pertama sampai terakhir. Jadwal dihitung di ponsel dengan metode yang sama seperti Hari ini, tanpa data atau izin tambahan.</item>
+        <item>Bagikan jadwal sebagai gambar atau PDF lewat tombol bagikan, siap dikirim atau dicetak.</item>
+    </string-array>
     <string-array name="whats_new_1_22_0">
         <item>Warna aksen ketiga di Hari ini: hitung mundur di kartu Berikutnya, label Sekarang pada shalat yang sedang berlangsung, dan hitung mundur di baris shalat berikutnya kini memakai satu warna tersendiri untuk tiap palet. Teksnya tetap memenuhi kontras WCAG AA di mode terang dan gelap.</item>
         <item>Gerak yang lebih halus: sorotan shalat yang sedang berlangsung di Hari ini bergeser ke baris berikutnya saat waktu shalat berganti, dan tanda centang sudah dibaca di rutinitas tergambar sendiri dengan satu denyut kecil. Semua gerak berhenti bila animasi dimatikan di pengaturan sistem.</item>
@@ -1260,4 +1265,24 @@
         <item>Rangkaian saya: pilih doa dari mana saja, urutkan, lalu baca berurutan seperti dzikir pagi.</item>
         <item>Warna tema kini memenuhi lebar layar.</item>
     </string-array>
+    <!-- Timetable -->
+    <string name="timetable_title">Jadwal salat</string>
+    <string name="timetable_open">Jadwal</string>
+    <string name="timetable_month">Bulan</string>
+    <string name="timetable_ramadan">Ramadan</string>
+    <string name="timetable_ramadan_title">Imsakiyah Ramadan %d H</string>
+    <string name="timetable_date">Tanggal</string>
+    <string name="timetable_hijri">Hijriah</string>
+    <string name="timetable_hijri_short">%1$d %2$s</string>
+    <string name="timetable_hijri_single">%1$s %2$d H</string>
+    <string name="timetable_hijri_range">%1$s – %2$s %3$d H</string>
+    <string name="timetable_hijri_range_years">%1$s %2$d – %3$s %4$d H</string>
+    <string name="timetable_today">hari ini</string>
+    <string name="timetable_basis">%1$s · %2$s</string>
+    <string name="timetable_ramadan_note">%1$s: %2$s · %3$s: %4$s</string>
+    <string name="timetable_share">Bagikan jadwal</string>
+    <string name="timetable_share_image">Gambar (PNG)</string>
+    <string name="timetable_share_pdf">PDF</string>
+    <string name="timetable_share_failed">Jadwal tidak bisa dibagikan.</string>
+    <string name="timetable_no_location">Atur lokasi untuk menampilkan jadwal bulanan.</string>
 </resources>

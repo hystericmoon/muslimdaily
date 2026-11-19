@@ -16,6 +16,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object MosquesRoute
 @Serializable data object QiblaRoute
 @Serializable data object FastingRoute
+@Serializable data object TimetableRoute
 // The location and prayer-calculation screens opened from Today stay in Today's tab, so the
 // bottom bar (and TalkBack) doesn't jump to Settings.
 @Serializable data object TodayLocationRoute
