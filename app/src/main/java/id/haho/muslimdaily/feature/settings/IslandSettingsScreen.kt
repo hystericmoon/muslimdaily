@@ -119,6 +119,14 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                 )
             }
         }
+        item(key = "card") {
+            SettingsGroup(stringResource(R.string.island_group_card)) {
+                SliderRow(stringResource(R.string.island_width), c.cardWidthDp, IslandSettings.CARD_WIDTH, "dp") { v -> update { islandCardWidth = v } }
+                SliderRow(stringResource(R.string.island_font), c.cardFontSp, IslandSettings.CARD_FONT, "sp") { v -> update { islandCardFont = v } }
+                SliderRow(stringResource(R.string.island_seconds), c.cardSeconds, IslandSettings.CARD_SECONDS, " s") { v -> update { islandCardSeconds = v } }
+                InfoNote(stringResource(R.string.island_card_gesture_note), Modifier.padding(HahoTheme.dimens.screenGutter))
+            }
+        }
         item(key = "big") {
             SettingsGroup(stringResource(R.string.island_group_big)) {
                 SwitchRow(
@@ -130,6 +138,9 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                 )
                 if (c.bigCard) {
                     SliderRow(stringResource(R.string.island_lead), c.bigCardLeadMinutes, IslandSettings.LEAD, " min") { v -> update { islandLead = v } }
+                    SliderRow(stringResource(R.string.island_width), c.bigWidthDp, IslandSettings.BIG_WIDTH, "dp") { v -> update { islandBigWidth = v } }
+                    SliderRow(stringResource(R.string.island_font), c.bigFontSp, IslandSettings.BIG_FONT, "sp") { v -> update { islandBigFont = v } }
+                    SliderRow(stringResource(R.string.island_seconds), c.bigSeconds, IslandSettings.BIG_SECONDS, " s") { v -> update { islandBigSeconds = v } }
                 }
             }
         }
@@ -150,6 +161,8 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                             islandGap = d.gapAdjustDp; islandX = d.offsetXDp; islandY = d.offsetYDp
                             islandOpacity = d.opacityPercent; islandRight = d.right
                             islandBig = d.bigCard; islandLead = d.bigCardLeadMinutes; islandLandscape = d.hideInLandscape
+                            islandCardWidth = d.cardWidthDp; islandCardFont = d.cardFontSp; islandCardSeconds = d.cardSeconds
+                            islandBigWidth = d.bigWidthDp; islandBigFont = d.bigFontSp; islandBigSeconds = d.bigSeconds
                         }
                     },
                     modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm),
@@ -212,6 +225,7 @@ private fun previewTexts(c: IslandSettings): IslandTexts {
         openLabel = stringResource(R.string.island_open),
         dismissLabel = stringResource(R.string.island_dismiss),
         description = "$name $clock $left",
+        cardDescription = "$name $clock $left",
     )
 }
 

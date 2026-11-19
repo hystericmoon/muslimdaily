@@ -58,7 +58,7 @@ import javax.inject.Inject
 
 /**
  * The island: a small black pill drawn over other apps around the camera cutout, with the next
- * prayer and a countdown. Tap it to expand, tap "Open" to go to Today. Off by default (beta);
+ * prayer and a countdown. Tap it to expand; tap the card to go to Today, swipe it away to close it. Off by default (beta);
  * it needs the "Display over other apps" permission, and a foreground service keeps it alive.
  * The Live Update notification stays the accessible, system-owned way to see the same thing.
  */
@@ -174,7 +174,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                         },
                         onToggle = ::toggle,
                         onOpen = ::openApp,
-                        onDismiss = ::dismissBig,
+                        onDismiss = ::dismiss,
                     )
                 }
             }
@@ -240,8 +240,18 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         expanded = false
         collapseJob?.cancel()
         collapseJob = scope?.launch {
-            delay(BIG_MS)
+            delay(config.bigSeconds * 1000L)
             big = false
+        }
+    }
+
+    /** A swipe on the card goes back to the pill; on the big card it removes it. */
+    private fun dismiss() {
+        if (big) {
+            dismissBig()
+        } else {
+            expanded = false
+            collapseJob?.cancel()
         }
     }
 
@@ -255,7 +265,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         collapseJob?.cancel()
         if (expanded) {
             collapseJob = scope?.launch {
-                delay(COLLAPSE_MS)
+                delay(config.cardSeconds * 1000L)
                 expanded = false
             }
         }
@@ -288,6 +298,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             openLabel = getString(R.string.island_open),
             dismissLabel = getString(R.string.island_dismiss),
             description = getString(R.string.island_description, name, clockText, left),
+            cardDescription = getString(R.string.island_card_description, name, clockText, left),
         )
     }
 
@@ -319,8 +330,6 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     companion object {
         private const val NOTIFICATION_ID = 101
         private const val REFRESH_MS = 20_000L
-        private const val COLLAPSE_MS = 6_000L
-        private const val BIG_MS = 60_000L
 
         /**
          * Starts the island when [wanted] and the permission is granted, stops it otherwise. Safe to

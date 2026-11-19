@@ -141,6 +141,12 @@ class SettingsRepository @Inject constructor(
             bigCard = this[K.islandBig] ?: i.bigCard,
             bigCardLeadMinutes = (this[K.islandLead] ?: i.bigCardLeadMinutes).coerceIn(IslandSettings.LEAD),
             hideInLandscape = this[K.islandLandscape] ?: i.hideInLandscape,
+            cardWidthDp = (this[K.islandCardWidth] ?: i.cardWidthDp).coerceIn(IslandSettings.CARD_WIDTH),
+            cardFontSp = (this[K.islandCardFont] ?: i.cardFontSp).coerceIn(IslandSettings.CARD_FONT),
+            cardSeconds = (this[K.islandCardSeconds] ?: i.cardSeconds).coerceIn(IslandSettings.CARD_SECONDS),
+            bigWidthDp = (this[K.islandBigWidth] ?: i.bigWidthDp).coerceIn(IslandSettings.BIG_WIDTH),
+            bigFontSp = (this[K.islandBigFont] ?: i.bigFontSp).coerceIn(IslandSettings.BIG_FONT),
+            bigSeconds = (this[K.islandBigSeconds] ?: i.bigSeconds).coerceIn(IslandSettings.BIG_SECONDS),
         )
         return AppSettings(
             island = island,
@@ -269,6 +275,12 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var islandBig: Boolean by key(K.islandBig, true)
     var islandLead: Int by key(K.islandLead, 10)
     var islandLandscape: Boolean by key(K.islandLandscape, true)
+    var islandCardWidth: Int by key(K.islandCardWidth, 300)
+    var islandCardFont: Int by key(K.islandCardFont, 20)
+    var islandCardSeconds: Int by key(K.islandCardSeconds, 6)
+    var islandBigWidth: Int by key(K.islandBigWidth, 340)
+    var islandBigFont: Int by key(K.islandBigFont, 40)
+    var islandBigSeconds: Int by key(K.islandBigSeconds, 60)
     var remFasting: Boolean by key(K.remFasting, false)
     var remFastingWeekly: Boolean by key(K.remFastingWeekly, true)
     fun setFastingTime(time: LocalTime) { p[K.remFastingTime] = time.toSecondOfDay() }
@@ -385,6 +397,12 @@ internal object K {
     val islandBig = booleanPreferencesKey("island_big")
     val islandLead = intPreferencesKey("island_lead")
     val islandLandscape = booleanPreferencesKey("island_landscape")
+    val islandCardWidth = intPreferencesKey("island_card_width")
+    val islandCardFont = intPreferencesKey("island_card_font")
+    val islandCardSeconds = intPreferencesKey("island_card_seconds")
+    val islandBigWidth = intPreferencesKey("island_big_width")
+    val islandBigFont = intPreferencesKey("island_big_font")
+    val islandBigSeconds = intPreferencesKey("island_big_seconds")
     val remFasting = booleanPreferencesKey("rem_fasting")
     val remFastingTime = intPreferencesKey("rem_fasting_time")
     val remFastingWeekly = booleanPreferencesKey("rem_fasting_weekly")

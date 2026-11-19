@@ -111,6 +111,14 @@ data class IslandSettings(
     val bigCard: Boolean = true,
     val bigCardLeadMinutes: Int = 10,
     val hideInLandscape: Boolean = true,
+    /** The card opened by a tap: width, size of the main line (the rest scales with it), seconds before it closes. */
+    val cardWidthDp: Int = 300,
+    val cardFontSp: Int = 20,
+    val cardSeconds: Int = 6,
+    /** The big card before a prayer, same three. */
+    val bigWidthDp: Int = 340,
+    val bigFontSp: Int = 40,
+    val bigSeconds: Int = 60,
 ) {
     companion object {
         val HEIGHT = 28..52
@@ -121,6 +129,12 @@ data class IslandSettings(
         val OFFSET_Y = -8..80
         val OPACITY = 50..100
         val LEAD = 5..30
+        val CARD_WIDTH = 240..360
+        val CARD_FONT = 16..28
+        val CARD_SECONDS = 3..30
+        val BIG_WIDTH = 280..400
+        val BIG_FONT = 28..56
+        val BIG_SECONDS = 15..120
     }
 }
 

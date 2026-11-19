@@ -1,6 +1,21 @@
 package id.haho.muslimdaily.island
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.animation.core.VectorConverter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.dismiss
+import kotlinx.coroutines.launch
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.snap
@@ -58,6 +73,8 @@ data class IslandTexts(
     val openLabel: String,
     val dismissLabel: String,
     val description: String,
+    /** What the card and big card say to TalkBack: tapping opens Adwam, swiping closes. */
+    val cardDescription: String,
 )
 
 enum class IslandMode { PILL, CARD, BIG }
@@ -95,8 +112,8 @@ fun IslandOverlay(
         label = "island",
     ) { target ->
         when (target) {
-            IslandMode.BIG -> BigCard(texts, ink, onOpen, onDismiss)
-            IslandMode.CARD -> Card(texts, ink, onToggle, onOpen)
+            IslandMode.BIG -> BigCard(texts, config, ink, onOpen, onDismiss)
+            IslandMode.CARD -> Card(texts, config, ink, onOpen, onDismiss)
             IslandMode.PILL -> Pill(texts, config, gapDp, ink, onToggle)
         }
     }
@@ -134,87 +151,85 @@ private fun Pill(texts: IslandTexts, config: IslandSettings, gapDp: Int, ink: Co
     }
 }
 
+/**
+ * The card and big card are one control: tap anywhere to open Adwam, swipe any way to close.
+ * TalkBack gets the same two as actions (activate, and a "close" custom action), so no gesture is
+ * needed. The drag moves and fades the card with layer transforms only.
+ */
 @Composable
-private fun Card(texts: IslandTexts, ink: Color, onToggle: () -> Unit, onOpen: () -> Unit) {
+private fun Modifier.swipeToDismiss(onDismiss: () -> Unit): Modifier {
+    val offset = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+    val scope = rememberCoroutineScope()
+    val threshold = with(LocalDensity.current) { 48.dp.toPx() }
+    val current by rememberUpdatedState(onDismiss)
+    return this
+        .graphicsLayer {
+            translationX = offset.value.x
+            translationY = offset.value.y
+            alpha = 1f - (offset.value.getDistance() / (threshold * 4)).coerceIn(0f, 0.6f)
+        }
+        .pointerInput(Unit) {
+            detectDragGestures(
+                onDragEnd = {
+                    if (offset.value.getDistance() > threshold) current() else scope.launch { offset.animateTo(Offset.Zero) }
+                },
+                onDragCancel = { scope.launch { offset.animateTo(Offset.Zero) } },
+            ) { change, drag ->
+                change.consume()
+                scope.launch { offset.snapTo(offset.value + drag) }
+            }
+        }
+}
+
+private fun Modifier.openOrDismiss(texts: IslandTexts, onOpen: () -> Unit, onDismiss: () -> Unit): Modifier = this
+    .clickable(onClickLabel = texts.openLabel, role = Role.Button, onClick = onOpen)
+    .semantics {
+        contentDescription = texts.cardDescription
+        customActions = listOf(CustomAccessibilityAction(texts.dismissLabel) { onDismiss(); true })
+        dismiss { onDismiss(); true }
+    }
+
+@Composable
+private fun Card(texts: IslandTexts, config: IslandSettings, ink: Color, onOpen: () -> Unit, onDismiss: () -> Unit) {
+    val k = config.cardFontSp / 20f
     Column(
         modifier = Modifier
-            .width(300.dp)
+            .width(config.cardWidthDp.dp)
+            .swipeToDismiss(onDismiss)
             .clip(RoundedCornerShape(28.dp))
             .background(ink)
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .openOrDismiss(texts, onOpen, onDismiss)
+            .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 48.dp)
-                .clickable(role = Role.Button, onClick = onToggle)
-                .semantics { contentDescription = texts.description },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(texts.prayerName, color = IslandText, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-            Text(texts.clock, color = IslandText, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(texts.prayerName, color = IslandText, fontSize = config.cardFontSp.sp, fontWeight = FontWeight.SemiBold)
+            Text(texts.clock, color = IslandText, fontSize = config.cardFontSp.sp, fontWeight = FontWeight.SemiBold)
         }
-        Text(texts.left, color = IslandAccent, fontSize = 15.sp)
-        Text(texts.place, color = IslandMuted, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        Box(
-            modifier = Modifier
-                .defaultMinSize(minHeight = 48.dp, minWidth = 48.dp)
-                .clip(RoundedCornerShape(24.dp))
-                .background(IslandAccent)
-                .clickable(role = Role.Button, onClick = onOpen)
-                .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(texts.openLabel, color = IslandInk, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-        }
+        Text(texts.left, color = IslandAccent, fontSize = (15 * k).sp)
+        Text(texts.place, color = IslandMuted, fontSize = (13 * k).sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
 @Composable
-private fun BigCard(texts: IslandTexts, ink: Color, onOpen: () -> Unit, onDismiss: () -> Unit) {
+private fun BigCard(texts: IslandTexts, config: IslandSettings, ink: Color, onOpen: () -> Unit, onDismiss: () -> Unit) {
+    val k = config.bigFontSp / 40f
     // Announces itself to TalkBack once when it appears.
     Column(
         modifier = Modifier
-            .width(340.dp)
+            .width(config.bigWidthDp.dp)
+            .swipeToDismiss(onDismiss)
             .clip(RoundedCornerShape(32.dp))
             .background(ink)
-            .padding(horizontal = 24.dp, vertical = 20.dp)
-            .semantics {
-                liveRegion = LiveRegionMode.Polite
-                contentDescription = texts.description
-            },
+            .openOrDismiss(texts, onOpen, onDismiss)
+            .padding(horizontal = 24.dp, vertical = 24.dp)
+            .semantics { liveRegion = LiveRegionMode.Polite },
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(texts.left, color = IslandAccent, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-        Text(texts.prayerName, color = IslandText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
-        Text(texts.clock, color = IslandText, fontSize = 24.sp)
-        Text(texts.place, color = IslandMuted, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        Spacer(Modifier.height(8.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Box(
-                modifier = Modifier
-                    .defaultMinSize(minHeight = 48.dp, minWidth = 48.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .clickable(role = Role.Button, onClick = onDismiss)
-                    .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(texts.dismissLabel, color = IslandText, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-            }
-            Box(
-                modifier = Modifier
-                    .defaultMinSize(minHeight = 48.dp, minWidth = 48.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(IslandAccent)
-                    .clickable(role = Role.Button, onClick = onOpen)
-                    .padding(horizontal = 24.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(texts.openLabel, color = IslandInk, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-            }
-        }
+        Text(texts.left, color = IslandAccent, fontSize = (20 * k).sp, fontWeight = FontWeight.SemiBold)
+        Text(texts.prayerName, color = IslandText, fontSize = config.bigFontSp.sp, fontWeight = FontWeight.Bold)
+        Text(texts.clock, color = IslandText, fontSize = (24 * k).sp)
+        Text(texts.place, color = IslandMuted, fontSize = (14 * k).coerceAtLeast(12f).sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
