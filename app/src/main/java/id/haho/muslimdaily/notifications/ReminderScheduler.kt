@@ -30,6 +30,7 @@ class ReminderScheduler @Inject constructor(
     private val settings: SettingsRepository,
     private val calculator: PrayerCalculator,
     private val clock: Clock,
+    private val silencer: PrayerSilencer,
 ) {
     private val alarms = context.getSystemService(AlarmManager::class.java)
     private val mutex = Mutex()
@@ -39,7 +40,10 @@ class ReminderScheduler @Inject constructor(
 
     suspend fun rescheduleAll() = mutex.withLock {
         // After handing its data to the new app, this one sends nothing (the new app does).
-        val planned = if (Handover.movedTo(context) != null) emptyList() else ReminderPlanner.plan(Instant.now(clock), settings.current(), calculator)
+        val moved = Handover.movedTo(context) != null
+        // A window that ended while no alarm was awake (reboot, Doze) is closed here, on any re-plan.
+        silencer.reconcile(force = moved)
+        val planned = if (moved) emptyList() else ReminderPlanner.plan(Instant.now(clock), settings.current(), calculator)
         val byType = planned.associateBy { it.type }
         ReminderType.entries.forEach { type ->
             val next = byType[type]

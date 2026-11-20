@@ -62,6 +62,7 @@ import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.data.settings.SettingsEditor
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.notifications.Notifier
+import id.haho.muslimdaily.notifications.PrayerSilencer
 import id.haho.muslimdaily.notifications.ReminderScheduler
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,11 +79,13 @@ class RemindersViewModel @Inject constructor(
     private val scheduler: ReminderScheduler,
     private val notifier: Notifier,
     private val glance: GlanceRefresher,
+    private val silencer: PrayerSilencer,
 ) : ViewModel() {
     val settings: StateFlow<AppSettings?> = repository.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun exactAllowed() = scheduler.canScheduleExact()
     fun notificationsAllowed() = notifier.canPost()
+    fun dndAllowed() = silencer.hasAccess()
 
     fun update(block: SettingsEditor.() -> Unit) {
         viewModelScope.launch { repository.update(block) }
@@ -97,15 +100,16 @@ class RemindersViewModel @Inject constructor(
     }
 }
 
-data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean)
+/** [dnd]: Do Not Disturb access, needed only for "silence during prayer". */
+data class PermissionState(val notifications: Boolean, val exactAlarms: Boolean, val dnd: Boolean = true)
 
 @Composable
 fun RemindersRoute(onBack: () -> Unit, onIsland: () -> Unit = {}, viewModel: RemindersViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var permissions by remember { mutableStateOf(PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())) }
+    var permissions by remember { mutableStateOf(PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed(), viewModel.dndAllowed())) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed())
+        permissions = PermissionState(viewModel.notificationsAllowed(), viewModel.exactAllowed(), viewModel.dndAllowed())
         viewModel.reschedule()
     }
     var refocus by remember { mutableIntStateOf(0) }
@@ -126,6 +130,7 @@ fun RemindersRoute(onBack: () -> Unit, onIsland: () -> Unit = {}, viewModel: Rem
             context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri()))
         }
     }
+    val askDnd = { context.startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)) }
     AdwamScreen(title = stringResource(R.string.settings_reminders), onBack = onBack) {
         settings?.let { s ->
             RemindersContent(
@@ -133,6 +138,7 @@ fun RemindersRoute(onBack: () -> Unit, onIsland: () -> Unit = {}, viewModel: Rem
                 permissions = permissions,
                 onAskNotifications = askNotifications,
                 onAskExact = askExact,
+                onAskDnd = askDnd,
                 onIsland = onIsland,
                 refocus = refocus,
                 update = { block ->
@@ -157,6 +163,7 @@ fun RemindersContent(
     onAskExact: () -> Unit,
     update: (SettingsEditor.() -> Unit) -> Unit,
     onIsland: () -> Unit = {},
+    onAskDnd: () -> Unit = {},
     /** Bumped after a permission prompt closes: focus returns to the group that asked for it. */
     refocus: Int = 0,
 ) {
@@ -214,6 +221,19 @@ fun RemindersContent(
                     )
                 }
                 InfoNote(stringResource(R.string.reminders_adhan_note), Modifier.padding(HahoTheme.dimens.screenGutter))
+                SwitchRow(
+                    title = stringResource(R.string.reminders_silence_title),
+                    summary = stringResource(R.string.reminders_silence_summary),
+                    checked = r.silence,
+                    onCheckedChange = { v -> update { remSilence = v } },
+                    icon = R.drawable.ic_notifications_off,
+                )
+                if (r.silence) {
+                    SilenceStepper(r.silenceMinutes) { v -> update { remSilenceMinutes = v } }
+                    if (!permissions.dnd) {
+                        PermissionCard(stringResource(R.string.reminders_silence_permission), stringResource(R.string.reminders_silence_allow), onAskDnd)
+                    }
+                }
             }
         }
         item(key = "adhkar") {
@@ -298,6 +318,14 @@ fun RemindersContent(
                     )
                 }
                 SwitchRow(
+                    title = stringResource(R.string.reminders_islamic_title),
+                    summary = stringResource(R.string.reminders_islamic_summary),
+                    checked = r.islamicDates,
+                    onCheckedChange = { v -> update { remIslamicDates = v } },
+                    icon = R.drawable.ic_event,
+                )
+                if (r.islamicDates) TimeRow(r.islamicDatesTime) { timeDialog = TimeTarget.ISLAMIC }
+                SwitchRow(
                     title = stringResource(R.string.notif_review_title),
                     summary = stringResource(R.string.reminders_review_summary),
                     checked = r.reviewQueue,
@@ -314,6 +342,7 @@ fun RemindersContent(
             TimeTarget.FRIDAY -> r.fridayTime
             TimeTarget.REVIEW -> r.reviewTime
             TimeTarget.FASTING -> r.fastingTime
+            TimeTarget.ISLAMIC -> r.islamicDatesTime
         }
         TimeDialog(initial, onDismiss = { timeDialog = null }) { time ->
             update {
@@ -322,6 +351,7 @@ fun RemindersContent(
                     TimeTarget.FRIDAY -> setFridayTime(time)
                     TimeTarget.REVIEW -> setReviewTime(time)
                     TimeTarget.FASTING -> setFastingTime(time)
+                    TimeTarget.ISLAMIC -> setIslamicDatesTime(time)
                 }
             }
             timeDialog = null
@@ -329,7 +359,7 @@ fun RemindersContent(
     }
 }
 
-private enum class TimeTarget { SLEEP, FRIDAY, REVIEW, FASTING }
+private enum class TimeTarget { SLEEP, FRIDAY, REVIEW, FASTING, ISLAMIC }
 
 @Composable
 internal fun PermissionCard(text: String, action: String, onClick: () -> Unit) {
@@ -358,6 +388,21 @@ private fun OffsetStepper(value: Int, onChange: (Int) -> Unit) {
         incrementDescription = stringResource(R.string.settings_increase, title),
         canDecrement = value > 0,
         canIncrement = value < 120,
+    )
+}
+
+@Composable
+private fun SilenceStepper(value: Int, onChange: (Int) -> Unit) {
+    val title = stringResource(R.string.reminders_silence_length)
+    StepperRow(
+        title = title,
+        valueText = stringResource(R.string.settings_minutes, value),
+        onDecrement = { onChange((value - 5).coerceIn(5, 60)) },
+        onIncrement = { onChange((value + 5).coerceIn(5, 60)) },
+        decrementDescription = stringResource(R.string.settings_decrease, title),
+        incrementDescription = stringResource(R.string.settings_increase, title),
+        canDecrement = value > 5,
+        canIncrement = value < 60,
     )
 }
 

@@ -89,6 +89,12 @@ data class ReminderSettings(
     val fastingTime: LocalTime = LocalTime.of(20, 0),
     /** Whether Mondays and Thursdays count for the fasting reminder. */
     val fastingWeekly: Boolean = true,
+    /** Alarms-only Do Not Disturb from each prayer's time for [silenceMinutes], then back as it was. */
+    val silence: Boolean = false,
+    val silenceMinutes: Int = 15,
+    /** The evening before an Islamic date (new year, Asyura, Ramadan, the two Eids, Arafah). */
+    val islamicDates: Boolean = false,
+    val islamicDatesTime: LocalTime = LocalTime.of(20, 0),
 )
 
 /** What the right side of the island pill shows. */
@@ -123,6 +129,11 @@ data class IslandSettings(
     val bigUntilPrayer: Boolean = false,
     /** A light that travels round the edge of an open card; a still edge when animations are off. */
     val glow: Boolean = true,
+    /** Where the card and the alert sit; null follows the pill's [offsetXDp] and [offsetYDp]. */
+    val cardOffsetXDp: Int? = null,
+    val cardOffsetYDp: Int? = null,
+    val bigOffsetXDp: Int? = null,
+    val bigOffsetYDp: Int? = null,
 ) {
     companion object {
         val HEIGHT = 28..52

@@ -3,6 +3,7 @@ package id.haho.muslimdaily.notifications
 import id.haho.muslimdaily.core.model.Prayer
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.ReminderSettings
+import id.haho.muslimdaily.domain.fasting.IslamicDates
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.feature.today.TodayPreviewData
 import org.junit.Test
@@ -105,5 +106,37 @@ class ReminderPlannerTest {
         // Without the weekly fasts it waits for the next special day, so later than tonight.
         val special = plan(ReminderSettings(fasting = true, fastingWeekly = false)).single { it.type == ReminderType.FASTING }
         assertTrue(special.at.isAfter(at(2026, 10, 21, 20, 0)))
+    }
+
+    @Test
+    fun `silence starts at the next prayer and ends after the chosen minutes`() {
+        val now = at(2026, 10, 21, 14, 0) // after Dhuhr's window, before Asr
+        val p = plan(ReminderSettings(silence = true, silenceMinutes = 20), now)
+        val start = p.single { it.type == ReminderType.SILENCE_START }
+        val end = p.single { it.type == ReminderType.SILENCE_END }
+        val asr = planAll(ReminderSettings(), now).single { it.type == ReminderType.REFRESH }.at
+        assertEquals(asr, start.at)
+        assertEquals(Duration.ofMinutes(20), Duration.between(start.at, end.at))
+    }
+
+    @Test
+    fun `silence off plans nothing, and its end waits for a window already open`() {
+        assertTrue(plan(ReminderSettings()).none { it.type == ReminderType.SILENCE_START || it.type == ReminderType.SILENCE_END })
+        // Ten minutes after Asr a window of 20 is open: the end is still ahead, the next start is Maghrib.
+        val asr = planAll(ReminderSettings()).single { it.type == ReminderType.REFRESH }.at
+        val p = plan(ReminderSettings(silence = true, silenceMinutes = 20), asr.plus(Duration.ofMinutes(10)))
+        assertEquals(asr.plus(Duration.ofMinutes(20)), p.single { it.type == ReminderType.SILENCE_END }.at)
+        assertTrue(p.single { it.type == ReminderType.SILENCE_START }.at.isAfter(asr))
+    }
+
+    @Test
+    fun `the Islamic date reminder comes the evening before the next named date`() {
+        val now = at(2026, 10, 21, 12, 0)
+        val adj = TodayPreviewData.settings.hijriAdjustment
+        val next = IslamicDates.upcoming(java.time.LocalDate.of(2026, 10, 22), adj, limit = 1).single()
+        val p = plan(ReminderSettings(islamicDates = true, islamicDatesTime = LocalTime.of(20, 0)), now)
+            .single { it.type == ReminderType.ISLAMIC_DATE }
+        assertEquals(LocalDateTime.of(next.date.minusDays(1), LocalTime.of(20, 0)), p.at.atZone(zone).toLocalDateTime())
+        assertTrue(plan(ReminderSettings(), now).none { it.type == ReminderType.ISLAMIC_DATE })
     }
 }

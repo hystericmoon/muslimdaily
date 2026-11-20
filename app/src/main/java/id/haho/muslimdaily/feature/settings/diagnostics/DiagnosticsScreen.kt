@@ -316,6 +316,7 @@ private fun typeLabel(context: Context, type: ReminderType): String = type.praye
             ReminderType.REVIEW -> R.string.diag_type_review
             ReminderType.PRE_PRAYER -> R.string.diag_type_pre_prayer
             ReminderType.FASTING -> R.string.diag_type_fasting
+            ReminderType.ISLAMIC_DATE -> R.string.diag_type_islamic
             else -> R.string.diag_type_other
         },
     )

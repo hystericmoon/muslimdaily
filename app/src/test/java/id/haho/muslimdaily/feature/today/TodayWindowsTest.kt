@@ -152,4 +152,22 @@ class TodayWindowsTest {
         assertTrue(d.rows.none { it.isNext })
         assertTrue(d.next.isTomorrow)
     }
+
+    /** Maghrib to the next Subuh is the night; its last third ends at Subuh. */
+    @Test
+    fun `the last third is the final third of Maghrib to Subuh`() {
+        val tomorrow = schedule(day.plusDays(1))
+        val d = data(at(today.dhuhr, 30))
+        val night = Duration.between(today.maghrib, tomorrow.fajr)
+        assertEquals(tomorrow.fajr, d.lastThird?.end)
+        assertEquals(night.dividedBy(3), Duration.between(d.lastThird!!.start, d.lastThird!!.end))
+    }
+
+    @Test
+    fun `before Subuh the last third is last night's`() {
+        val yesterday = schedule(day.minusDays(1))
+        val d = data(at(today.fajr, -30))
+        assertEquals(today.fajr, d.lastThird?.end)
+        assertEquals(LastThird.of(yesterday.maghrib, today.fajr), d.lastThird)
+    }
 }

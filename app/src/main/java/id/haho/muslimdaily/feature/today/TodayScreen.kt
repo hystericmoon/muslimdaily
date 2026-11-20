@@ -2,6 +2,12 @@ package id.haho.muslimdaily.feature.today
 
 import id.haho.muslimdaily.core.designsystem.component.assistChipBorder
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.FlowRowScope
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextAlign
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
@@ -501,25 +507,38 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                     )
                 },
             )
-            AssistChip(
-                onClick = actions.onOpenFasting,
-                border = assistChipBorder(),
-                label = { Text(stringResource(R.string.fasting_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(textIconSize())) },
-            )
-            AssistChip(
-                onClick = actions.onOpenTimetable,
-                border = assistChipBorder(),
-                label = { Text(stringResource(R.string.timetable_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_schedule), null, Modifier.size(textIconSize())) },
-            )
-            AssistChip(
-                onClick = actions.onOpenDhikr,
-                border = assistChipBorder(),
-                label = { Text(stringResource(R.string.dhikr_open)) },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_touch_app), null, Modifier.size(textIconSize())) },
-            )
         }
+        // Shortcuts to other screens are a row of equal tiles, apart from the two chips above that
+        // show state (place, travel mode). They wrap as a group at large text, never leave one orphan.
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm),
+            modifier = Modifier.padding(top = HahoTheme.spacing.sm).fillMaxWidth(),
+        ) {
+            ShortcutTile(R.string.fasting_open, R.drawable.ic_calendar_month, actions.onOpenFasting)
+            ShortcutTile(R.string.timetable_open, R.drawable.ic_schedule, actions.onOpenTimetable)
+            ShortcutTile(R.string.dhikr_open, R.drawable.ic_touch_app, actions.onOpenDhikr)
+        }
+    }
+}
+
+@Composable
+private fun FlowRowScope.ShortcutTile(@StringRes label: Int, @DrawableRes icon: Int, onClick: () -> Unit) {
+    val shape = MaterialTheme.shapes.medium
+    Column(
+        modifier = Modifier
+            .weight(1f)
+            .widthIn(min = 96.dp)
+            .heightIn(min = 56.dp)
+            .clip(shape)
+            .border(1.dp, MaterialTheme.colorScheme.outline, shape)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = HahoTheme.spacing.sm, vertical = HahoTheme.spacing.sm),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(painterResource(icon), null, Modifier.size(textIconSize() + 4.dp))
+        Text(stringResource(label), style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
     }
 }
 

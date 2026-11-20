@@ -6,6 +6,7 @@ import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.data.settings.AdhanMode
 import id.haho.muslimdaily.data.settings.AppSettings
 import id.haho.muslimdaily.domain.fasting.FastingCalendar
+import id.haho.muslimdaily.domain.fasting.IslamicDates
 import id.haho.muslimdaily.domain.prayer.PrayerCalculator
 import id.haho.muslimdaily.domain.prayer.PrayerSchedule
 import java.time.DayOfWeek
@@ -25,6 +26,12 @@ enum class ReminderType(val requestCode: Int) {
 
     /** The evening before a sunnah fast. */
     FASTING(22),
+
+    /** The evening before an Islamic date. */
+    ISLAMIC_DATE(25),
+
+    /** Not a notification: Do Not Disturb (alarms only) from a prayer's time, and back after N minutes. */
+    SILENCE_START(23), SILENCE_END(24),
 
     /** Not a notification: redraws widgets and the lock-screen countdown when the next prayer changes. */
     REFRESH(21),
@@ -93,6 +100,13 @@ object ReminderPlanner {
                     .minOrNull()
                     ?.let { result += PlannedReminder(ReminderType.PRE_PRAYER, it) }
             }
+            if (r.silence) {
+                val length = Duration.ofMinutes(r.silenceMinutes.toLong())
+                val times = schedules.flatMap { s -> FIVE_PRAYERS.map { s.time(it) } }
+                times.filter { it.isAfter(now) }.minOrNull()?.let { result += PlannedReminder(ReminderType.SILENCE_START, it) }
+                times.map { it.plus(length) }.filter { it.isAfter(now) }.minOrNull()
+                    ?.let { result += PlannedReminder(ReminderType.SILENCE_END, it) }
+            }
             schedules.flatMap { s -> PrayerTimeSlot.entries.map { s.time(it) } + s.date.plusDays(1).atStartOfDay(zone).toInstant() }
                 .filter { it.isAfter(now) }
                 .minOrNull()
@@ -105,6 +119,13 @@ object ReminderPlanner {
                 val tomorrow = evening.atZone(zone).toLocalDate().plusDays(1)
                 FastingCalendar.day(tomorrow, settings.hijriAdjustment).sunnah(r.fastingWeekly).isNotEmpty()
             }?.let { result += PlannedReminder(ReminderType.FASTING, it) }
+        }
+        if (r.islamicDates) {
+            // The first evening (at the chosen time) whose next day is a named Islamic date.
+            val first = nextDaily(now, zone, r.islamicDatesTime)
+            generateSequence(first) { it.plusSeconds(86_400) }.take(400).firstOrNull { evening ->
+                IslamicDates.on(evening.atZone(zone).toLocalDate().plusDays(1), settings.hijriAdjustment) != null
+            }?.let { result += PlannedReminder(ReminderType.ISLAMIC_DATE, it) }
         }
         if (r.beforeSleep) result += PlannedReminder(ReminderType.BEFORE_SLEEP, nextDaily(now, zone, r.beforeSleepTime))
         if (r.reviewQueue) result += PlannedReminder(ReminderType.REVIEW, nextDaily(now, zone, r.reviewTime))

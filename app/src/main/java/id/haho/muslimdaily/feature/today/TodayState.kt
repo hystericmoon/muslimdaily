@@ -56,6 +56,8 @@ data class TodayData(
     val ramadan: RamadanCard? = null,
     /** Asks, around the government's month-start announcement, which day the new month begins. */
     val hijriCheck: HijriCheck? = null,
+    /** The last third of the night that is running or next: last night's after midnight, tonight's otherwise. */
+    val lastThird: LastThird? = null,
 )
 
 /**
@@ -119,6 +121,17 @@ data class IshaEnds(val thirdOfNight: Instant, val midnight: Instant, val fajr: 
             val night = Duration.between(maghrib, nextFajr)
             return IshaEnds(maghrib.plus(night.dividedBy(3)), maghrib.plus(night.dividedBy(2)), nextFajr)
         }
+    }
+}
+
+/**
+ * The last third of the night, as time arithmetic only: the night runs from Maghrib to the next
+ * Subuh, and its last third is the final third of that stretch, ending at Subuh.
+ */
+data class LastThird(val start: Instant, val end: Instant) {
+    companion object {
+        fun of(maghrib: Instant, nextFajr: Instant): LastThird =
+            LastThird(nextFajr.minus(Duration.between(maghrib, nextFajr).dividedBy(3)), nextFajr)
     }
 }
 
@@ -204,6 +217,8 @@ object TodayStateBuilder {
                 travelSuggestionKm = travelSuggestionKm,
                 ramadan = ramadanCard(now, date, today, tomorrow, settings.hijriAdjustment),
                 hijriCheck = hijriCheck(now, date, today, settings),
+                // Before Subuh it is still last night; after it, tonight's.
+                lastThird = if (now.isBefore(today.fajr)) LastThird.of(yesterday.maghrib, today.fajr) else LastThird.of(today.maghrib, tomorrow.fajr),
             ),
         )
     }

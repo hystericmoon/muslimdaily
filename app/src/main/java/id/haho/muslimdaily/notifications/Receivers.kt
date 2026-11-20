@@ -24,8 +24,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.time.Clock
 import id.haho.muslimdaily.domain.fasting.FastingCalendar
+import id.haho.muslimdaily.domain.fasting.IslamicDates
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.feature.fasting.labelRes
+import id.haho.muslimdaily.feature.fasting.occasionLabelRes
 import id.haho.muslimdaily.widget.GlanceRefresher
 import java.time.DayOfWeek
 import java.time.Duration
@@ -46,6 +48,7 @@ class ReminderReceiver : BroadcastReceiver() {
     @Inject lateinit var calculator: PrayerCalculator
     @Inject lateinit var clock: Clock
     @Inject lateinit var glance: GlanceRefresher
+    @Inject lateinit var silencer: PrayerSilencer
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ReminderScheduler.ACTION_REMINDER) return
@@ -63,7 +66,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val pending = goAsync()
         receiverScope.launch {
             try {
-                deliver(context, type, silent)
+                deliver(context, type, silent, due)
                 scheduler.rescheduleAll()
             } finally {
                 pending.finish()
@@ -71,7 +74,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
     }
 
-    private suspend fun deliver(context: Context, type: ReminderType, silent: Boolean) {
+    private suspend fun deliver(context: Context, type: ReminderType, silent: Boolean, due: Long) {
         val s = settings.current()
         val location = s.location
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
@@ -79,6 +82,16 @@ class ReminderReceiver : BroadcastReceiver() {
         val today = now.atZone(zone).toLocalDate()
         if (type == ReminderType.REFRESH) {
             glance.refresh()
+            return
+        }
+        if (type == ReminderType.SILENCE_START) {
+            // A late alarm (Doze, inexact fallback) that lands after the window has nothing to silence.
+            val late = due > 0 && Duration.between(Instant.ofEpochMilli(due), now).toMinutes() >= s.reminders.silenceMinutes
+            if (!late) silencer.start()
+            return
+        }
+        if (type == ReminderType.SILENCE_END) {
+            silencer.reconcile()
             return
         }
         if (type == ReminderType.PRE_PRAYER) {
@@ -118,6 +131,12 @@ class ReminderReceiver : BroadcastReceiver() {
                 } else {
                     context.getString(R.string.notif_fasting_text, names)
                 }
+            }
+            ReminderType.ISLAMIC_DATE -> {
+                val tomorrow = IslamicDates.on(today.plusDays(1), s.hijriAdjustment) ?: return
+                val months = context.resources.getStringArray(R.array.hijri_months)
+                val hijri = context.getString(R.string.hijri_date, tomorrow.hijri.day, months[(tomorrow.hijri.month - 1).coerceIn(0, 11)], tomorrow.hijri.year)
+                context.getString(R.string.notif_islamic_text, context.getString(tomorrow.occasion.occasionLabelRes()), hijri)
             }
             ReminderType.REVIEW -> {
                 val due = reviews.dueCountOnce(today)

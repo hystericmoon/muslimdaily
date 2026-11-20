@@ -1,6 +1,7 @@
 package id.haho.muslimdaily.island
 
 import android.graphics.Matrix
+import android.os.Build
 import android.graphics.RectF
 import android.graphics.SweepGradient
 import android.provider.Settings
@@ -34,7 +35,16 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.detectDragGestures
+import android.view.HapticFeedbackConstants
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
@@ -65,6 +75,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -140,8 +151,21 @@ fun IslandOverlay(
     onToggle: () -> Unit,
     onOpen: () -> Unit,
     onDismiss: () -> Unit = {},
+    haptics: Boolean = true,
+    /** Height of the system status bar; the open card and alert cover it with a solid band. */
+    statusBarDp: Int = 0,
 ) {
     val ink = IslandInk.copy(alpha = config.opacityPercent / 100f)
+    // Haptics go through the overlay's own View (no VIBRATE permission) and follow the Settings switch.
+    // No tick when an alert appears: only touch, the close threshold, and open or close.
+    val view = LocalView.current
+    val tick = remember(view, haptics) { { type: Int -> if (haptics) view.performHapticFeedback(type) } }
+    val openTick = { tick(HapticFeedbackConstants.CONTEXT_CLICK); Unit }
+    val closeTick = { tick(doneHaptic()); Unit }
+    val toggleTick = { openTick(); onToggle() }
+    val openAppTick = { openTick(); onOpen() }
+    val dismissTick = { closeTick(); onDismiss() }
+    CompositionLocalProvider(LocalIslandTick provides tick) {
     AnimatedContent(
         targetState = mode,
         transitionSpec = {
@@ -155,9 +179,59 @@ fun IslandOverlay(
         label = "island",
     ) { target ->
         when (target) {
-            IslandMode.BIG -> AlertCard(texts, config, gapDp, ink, onOpen, onDismiss)
-            IslandMode.CARD -> ArcCard(texts, config, gapDp, ink, onOpen, onDismiss)
-            IslandMode.PILL -> Pill(texts, config, gapDp, ink, onToggle)
+            IslandMode.BIG -> OpenFrame(config, IslandMode.BIG, statusBarDp) { AlertCard(texts, config, gapDp, ink, openAppTick, dismissTick) }
+            IslandMode.CARD -> OpenFrame(config, IslandMode.CARD, statusBarDp) { ArcCard(texts, config, gapDp, ink, openAppTick, dismissTick) }
+            IslandMode.PILL -> Pill(texts, config, gapDp, ink, toggleTick)
+        }
+    }
+    }
+}
+
+/** The pill's own place, or the card's or alert's (which follow the pill's until set). */
+fun IslandSettings.offsetX(mode: IslandMode): Int = when (mode) {
+    IslandMode.PILL -> offsetXDp
+    IslandMode.CARD -> cardOffsetXDp ?: offsetXDp
+    IslandMode.BIG -> bigOffsetXDp ?: offsetXDp
+}
+
+fun IslandSettings.offsetY(mode: IslandMode): Int = when (mode) {
+    IslandMode.PILL -> offsetYDp
+    IslandMode.CARD -> cardOffsetYDp ?: offsetYDp
+    IslandMode.BIG -> bigOffsetYDp ?: offsetYDp
+}
+
+/**
+ * The open card and alert live in a window as wide as the screen. Its top band, as tall as the
+ * status bar, is solid black whatever the opacity, so the clock and icons never show through or
+ * collide with the prayer name. The card sits on it at its own place; moved down past the bar, the
+ * band is left out and the bar shows as it is.
+ */
+@Composable
+private fun OpenFrame(config: IslandSettings, mode: IslandMode, statusBarDp: Int, content: @Composable () -> Unit) {
+    val x = config.offsetX(mode)
+    val y = config.offsetY(mode)
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+        if (statusBarDp > 0 && y <= statusBarDp) {
+            Box(Modifier.fillMaxWidth().height(statusBarDp.dp).background(IslandInk))
+        }
+        Box(Modifier.offset(x = x.dp, y = y.dp)) { content() }
+    }
+}
+
+private val LocalIslandTick = staticCompositionLocalOf<(Int) -> Unit> { {} }
+
+/** The haptic for a finished close (Confirm from Android 11, a context click before). */
+private fun doneHaptic(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.CONFIRM else HapticFeedbackConstants.CONTEXT_CLICK
+
+/** One light tick when a finger lands. Watches the touch on the initial pass, so it never consumes it. */
+@Composable
+private fun Modifier.touchDownTick(): Modifier {
+    val tick = LocalIslandTick.current
+    return pointerInput(tick) {
+        awaitEachGesture {
+            awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+            tick(HapticFeedbackConstants.CLOCK_TICK)
         }
     }
 }
@@ -168,6 +242,7 @@ private fun Pill(texts: IslandTexts, config: IslandSettings, gapDp: Int, ink: Co
     Box(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
+            .touchDownTick()
             .clickable(role = Role.Button, onClick = onToggle)
             .semantics { contentDescription = texts.description },
         contentAlignment = Alignment.TopCenter,
@@ -205,21 +280,31 @@ private fun Modifier.swipeToDismiss(onDismiss: () -> Unit): Modifier {
     val scope = rememberCoroutineScope()
     val threshold = with(LocalDensity.current) { 48.dp.toPx() }
     val current by rememberUpdatedState(onDismiss)
+    val tick = LocalIslandTick.current
+    var pastThreshold by remember { mutableStateOf(false) }
     return this
         .graphicsLayer {
             translationX = offset.value.x
             translationY = offset.value.y
             alpha = 1f - (offset.value.getDistance() / (threshold * 4)).coerceIn(0f, 0.6f)
         }
+        .touchDownTick()
         .pointerInput(Unit) {
             detectDragGestures(
                 onDragEnd = {
+                    pastThreshold = false
                     if (offset.value.getDistance() > threshold) current() else scope.launch { offset.animateTo(Offset.Zero) }
                 },
-                onDragCancel = { scope.launch { offset.animateTo(Offset.Zero) } },
+                onDragCancel = { pastThreshold = false; scope.launch { offset.animateTo(Offset.Zero) } },
             ) { change, drag ->
                 change.consume()
                 scope.launch { offset.snapTo(offset.value + drag) }
+                // One tick each time the drag crosses the 48 dp close line, so the finger knows it will close.
+                val past = (offset.value + drag).getDistance() > threshold
+                if (past != pastThreshold) {
+                    pastThreshold = past
+                    if (past) tick(HapticFeedbackConstants.CLOCK_TICK)
+                }
             }
         }
 }

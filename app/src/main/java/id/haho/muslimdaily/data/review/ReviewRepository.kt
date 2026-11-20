@@ -21,6 +21,9 @@ data class ReviewItem(val duaId: String, val state: LeitnerState, val lastReview
     val notStarted: Boolean get() = lastReviewed == null
 }
 
+/** The review rows a Remove deleted (the dua and its twins), kept in memory so Undo can put them back. */
+class RemovedReviews(internal val rows: List<ReviewItemEntity>)
+
 /** Duas with the same Arabic, each id mapped to its group; the first id is the one memorised. */
 fun interface DuaTwins {
     suspend fun groups(): Map<String, List<String>>
@@ -113,8 +116,17 @@ class ReviewRepository @Inject constructor(
         dao.upsert(ReviewItemEntity(id, box = 1, dueEpochDay = today.toEpochDay(), lastReviewedEpochDay = null, addedEpochDay = today.toEpochDay()))
     }
 
-    suspend fun remove(duaId: String) {
-        twins.groups()[duaId].orEmpty().plus(duaId).forEach { dao.delete(it) }
+    /** Takes the dua and its twins out; returns the rows it deleted, for [restore] (Undo). */
+    suspend fun remove(duaId: String): RemovedReviews {
+        val ids = twins.groups()[duaId].orEmpty().plus(duaId).distinct()
+        val rows = ids.mapNotNull { dao.item(it) }
+        db.withTransaction { ids.forEach { dao.delete(it) } }
+        return RemovedReviews(rows)
+    }
+
+    /** Puts back exactly the rows [remove] deleted, schedule and dates included. */
+    suspend fun restore(removed: RemovedReviews) {
+        if (removed.rows.isNotEmpty()) dao.insertAll(removed.rows)
     }
 
     /**
