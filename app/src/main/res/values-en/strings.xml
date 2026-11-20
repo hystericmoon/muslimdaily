@@ -117,6 +117,7 @@
     <string name="window_evening_adhkar">Evening adhkar time</string>
     <string name="window_witr">Witr time</string>
     <string name="today_fajr_ends">Until sunrise %s</string>
+    <string name="today_last_third">Last third of the night</string>
     <string name="today_isha_ends_third">Until a third of the night %s</string>
     <string name="today_isha_ends_middle">Until the middle of the night %s</string>
     <string name="today_isha_ends_fajr">Until Fajr %s</string>
@@ -715,6 +716,11 @@
     <string name="reminders_glance">Lock screen and widgets</string>
     <string name="reminders_mosque_title">Remind before prayer</string>
     <string name="reminders_mosque_summary">%d minutes before the adhan, with nearby mosques</string>
+    <string name="reminders_silence_title">Silence the phone during prayer</string>
+    <string name="reminders_silence_summary">Do Not Disturb, alarms only, from each prayer\'s time for a few minutes, then back as it was.</string>
+    <string name="reminders_silence_length">Length</string>
+    <string name="reminders_silence_permission">Needs Do Not Disturb access, granted once in system settings.</string>
+    <string name="reminders_silence_allow">Allow access</string>
     <string name="reminders_lead">Before the adhan</string>
     <string name="reminders_ongoing_title">Next prayer on lock screen</string>
     <string name="reminders_ongoing_summary">A silent notification with a countdown. Shown as a Live Update on Android 16.</string>
@@ -753,6 +759,8 @@
     <string name="island_x">Horizontal offset</string>
     <string name="island_y">Vertical offset</string>
     <string name="island_gap_note">The gap starts from the camera width Android reports. Add or remove space until the camera sits in the middle of the pill.</string>
+    <string name="island_follow_pill">Same place as the pill</string>
+    <string name="island_follows_pill_note">Follows the pill\'s place. Move it to give it a place of its own.</string>
     <string name="island_group_look">Look</string>
     <string name="island_opacity">Opacity</string>
     <string name="island_right">Right side shows</string>
@@ -768,7 +776,7 @@
     <string name="island_reset">Reset to default</string>
     <string name="island_sample_place">Your city</string>
     <string name="reminders_island_title">Island (beta)</string>
-    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. It shows a prayer alert 10 minutes before each prayer. Needs \"Display over other apps\".</string>
+    <string name="reminders_island_summary">Next prayer at the camera. Tap to expand.</string>
     <string name="reminders_island_permission">The island cannot show until you allow \"Display over other apps\" for Adwam.</string>
     <string name="reminders_island_allow">Allow</string>
     <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Adwam.</string>
@@ -854,6 +862,22 @@
     <string name="fast_dalil_thursday">at-Tirmidhi no. 747, graded sahih by al-Albani</string>
     <string name="fast_dalil_eid">al-Bukhari no. 1990, Muslim no. 1137</string>
     <string name="fast_dalil_tashriq">Muslim no. 1141</string>
+    <string name="islamic_dates_title">Islamic dates</string>
+    <string name="islamic_new_year">Islamic New Year</string>
+    <string name="islamic_ashura">Day of \'Ashura</string>
+    <string name="islamic_ramadan">Start of Ramadan</string>
+    <string name="islamic_eid_fitr">Eid al-Fitr</string>
+    <string name="islamic_arafah">Day of Arafah</string>
+    <string name="islamic_eid_adha">Eid al-Adha</string>
+    <plurals name="islamic_days_away">
+        <item quantity="one">%d day to go</item>
+        <item quantity="other">%d days to go</item>
+    </plurals>
+    <string name="notif_islamic_title">Islamic date tomorrow</string>
+    <string name="notif_islamic_text">Tomorrow: %1$s, %2$s.</string>
+    <string name="reminders_islamic_title">Islamic dates</string>
+    <string name="reminders_islamic_summary">The evening before Islamic New Year, \'Ashura, the start of Ramadan, both Eids and Arafah. Dates are calculated like the fasting calendar.</string>
+    <string name="diag_type_islamic">Islamic date</string>
     <string name="notif_fasting_title">Sunnah fast tomorrow</string>
     <string name="notif_fasting_text">Tomorrow: %s.</string>
     <string name="notif_fasting_text_fajr">Tomorrow: %1$s. Suhur before Fajr, at %2$s.</string>
@@ -1049,9 +1073,14 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
-    <string-array name="whats_new_1_24_1">
-        <item>Removing from My memorization no longer asks first. The dua goes at once and an Undo button brings it back with its review schedule.</item>
-        <item>The island gives a light vibration when touched, when a swipe has gone far enough to close, and when it opens or closes. It follows the Vibration switch in Settings; no extra permission.</item>
+    <string-array name="whats_new_1_25_0">
+        <item>Silence the phone during prayer: in Reminders, the phone goes to Do Not Disturb, alarms only, from each prayer\'s time for a few minutes, then back as it was. It needs Do Not Disturb access, granted once in system settings. Off by default.</item>
+        <item>The last third of the night shows on Today with its times, calculated from Maghrib to Fajr.</item>
+        <item>Islamic dates: Islamic New Year, \'Ashura, the start of Ramadan, both Eids and Arafah are on the Fasting screen, with an optional reminder the evening before (in Reminders).</item>
+        <item>A tidier Today: place and Travel mode on one line, then three equal shortcuts (Fasting, Timetable, Counter).</item>
+        <item>Island: the card and the alert have their own position, cover the whole status bar, and the preview now matches the phone. The Pill, Card, Alert switch sits at the bottom of the screen and decides which settings show. The setting text is shorter.</item>
+        <item>The island gives a light vibration when touched, when a swipe has gone far enough to close, and when it opens or closes. It follows the Vibration switch; no extra permission.</item>
+        <item>Removing from My memorization no longer asks first: the dua goes at once and Undo brings it back with its review schedule.</item>
     </string-array>
     <string-array name="whats_new_1_24_0">
         <item>Saved places: save home, work or another place under your own name, then switch with one tap in Location. Prayer times, Qibla and the timetable follow. \"Use my location\" still follows GPS. Saved places stay on your phone and are included in backups.</item>

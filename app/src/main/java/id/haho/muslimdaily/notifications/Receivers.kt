@@ -24,8 +24,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.time.Clock
 import id.haho.muslimdaily.domain.fasting.FastingCalendar
+import id.haho.muslimdaily.domain.fasting.IslamicDates
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshots
 import id.haho.muslimdaily.feature.fasting.labelRes
+import id.haho.muslimdaily.feature.fasting.occasionLabelRes
 import id.haho.muslimdaily.widget.GlanceRefresher
 import java.time.DayOfWeek
 import java.time.Duration
@@ -129,6 +131,12 @@ class ReminderReceiver : BroadcastReceiver() {
                 } else {
                     context.getString(R.string.notif_fasting_text, names)
                 }
+            }
+            ReminderType.ISLAMIC_DATE -> {
+                val tomorrow = IslamicDates.on(today.plusDays(1), s.hijriAdjustment) ?: return
+                val months = context.resources.getStringArray(R.array.hijri_months)
+                val hijri = context.getString(R.string.hijri_date, tomorrow.hijri.day, months[(tomorrow.hijri.month - 1).coerceIn(0, 11)], tomorrow.hijri.year)
+                context.getString(R.string.notif_islamic_text, context.getString(tomorrow.occasion.occasionLabelRes()), hijri)
             }
             ReminderType.REVIEW -> {
                 val due = reviews.dueCountOnce(today)

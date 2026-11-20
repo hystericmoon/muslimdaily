@@ -115,6 +115,7 @@
     <string name="window_evening_adhkar">Waktu dzikir petang</string>
     <string name="window_witr">Waktu Witir</string>
     <string name="today_fajr_ends">Hingga syuruq %s</string>
+    <string name="today_last_third">Sepertiga malam terakhir</string>
     <string name="today_isha_ends_third">Hingga sepertiga malam %s</string>
     <string name="today_isha_ends_middle">Hingga tengah malam %s</string>
     <string name="today_isha_ends_fajr">Hingga Subuh %s</string>
@@ -699,6 +700,11 @@
     <string name="reminders_glance">Layar kunci dan widget</string>
     <string name="reminders_mosque_title">Ingatkan sebelum shalat</string>
     <string name="reminders_mosque_summary">%d menit sebelum adzan, dengan masjid terdekat</string>
+    <string name="reminders_silence_title">Senyapkan ponsel saat shalat</string>
+    <string name="reminders_silence_summary">Jangan Ganggu "hanya alarm" mulai waktu shalat selama beberapa menit, lalu kembali seperti semula.</string>
+    <string name="reminders_silence_length">Lama</string>
+    <string name="reminders_silence_permission">Perlu akses Jangan Ganggu. Diberikan sekali di pengaturan sistem.</string>
+    <string name="reminders_silence_allow">Beri akses</string>
     <string name="reminders_lead">Sebelum adzan</string>
     <string name="reminders_ongoing_title">Shalat berikutnya di layar kunci</string>
     <string name="reminders_ongoing_summary">Notifikasi senyap dengan hitung mundur. Di Android 16 tampil sebagai Live Update.</string>
@@ -737,6 +743,8 @@
     <string name="island_x">Geser horizontal</string>
     <string name="island_y">Geser vertikal</string>
     <string name="island_gap_note">Celah dimulai dari lebar kamera yang dilaporkan Android. Tambah atau kurangi ruang sampai kamera tepat di tengah pil.</string>
+    <string name="island_follow_pill">Sama seperti pil</string>
+    <string name="island_follows_pill_note">Mengikuti letak pil. Geser untuk memberinya tempat sendiri.</string>
     <string name="island_group_look">Tampilan</string>
     <string name="island_opacity">Kepekatan</string>
     <string name="island_right">Sisi kanan menampilkan</string>
@@ -752,7 +760,7 @@
     <string name="island_reset">Kembalikan ke bawaan</string>
     <string name="island_sample_place">Kota Anda</string>
     <string name="reminders_island_title">Island (beta)</string>
-    <string name="reminders_island_summary">Pil kecil di sekitar kamera berisi shalat berikutnya. Ketuk untuk memperluas. Peringatan shalat muncul 10 menit sebelum tiap shalat. Perlu izin \"Tampil di atas aplikasi lain\".</string>
+    <string name="reminders_island_summary">Shalat berikutnya di dekat kamera. Ketuk untuk memperluas.</string>
     <string name="reminders_island_permission">Island belum bisa tampil sampai Anda mengizinkan \"Tampil di atas aplikasi lain\" untuk Adwam.</string>
     <string name="reminders_island_allow">Izinkan</string>
     <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Adwam.</string>
@@ -838,6 +846,21 @@
     <string name="fast_dalil_thursday">HR. At-Tirmidzi no. 747, dishahihkan al-Albani</string>
     <string name="fast_dalil_eid">HR. Al-Bukhari no. 1990, Muslim no. 1137</string>
     <string name="fast_dalil_tashriq">HR. Muslim no. 1141</string>
+    <string name="islamic_dates_title">Tanggal Islam</string>
+    <string name="islamic_new_year">Tahun Baru Hijriah</string>
+    <string name="islamic_ashura">Hari Asyura</string>
+    <string name="islamic_ramadan">Awal Ramadan</string>
+    <string name="islamic_eid_fitr">Idul Fitri</string>
+    <string name="islamic_arafah">Hari Arafah</string>
+    <string name="islamic_eid_adha">Idul Adha</string>
+    <plurals name="islamic_days_away">
+        <item quantity="other">%d hari lagi</item>
+    </plurals>
+    <string name="notif_islamic_title">Tanggal Islam besok</string>
+    <string name="notif_islamic_text">Besok: %1$s, %2$s.</string>
+    <string name="reminders_islamic_title">Tanggal Islam</string>
+    <string name="reminders_islamic_summary">Malam sebelum Tahun Baru Hijriah, Asyura, awal Ramadan, kedua hari raya, dan Arafah. Tanggal dihitung seperti kalender puasa.</string>
+    <string name="diag_type_islamic">Tanggal Islam</string>
     <string name="notif_fasting_title">Puasa sunnah besok</string>
     <string name="notif_fasting_text">Besok: %s.</string>
     <string name="notif_fasting_text_fajr">Besok: %1$s. Sahur sebelum Subuh, pukul %2$s.</string>
@@ -1031,9 +1054,14 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
-    <string-array name="whats_new_1_24_1">
-        <item>Hapus dari Hafalan saya kini tanpa pertanyaan. Doa langsung terhapus dan muncul \"Urungkan\" untuk mengembalikannya dengan jadwal ulangnya.</item>
-        <item>Island memberi getaran halus saat disentuh, saat geseran sudah cukup jauh untuk menutup, dan saat dibuka atau ditutup. Mengikuti saklar Getaran di Pengaturan; tanpa izin tambahan.</item>
+    <string-array name="whats_new_1_25_0">
+        <item>Senyapkan ponsel saat shalat: di Pengingat, ponsel masuk mode Jangan Ganggu \"hanya alarm\" dari waktu shalat selama beberapa menit, lalu kembali seperti semula. Perlu akses Jangan Ganggu, diberikan sekali di pengaturan sistem. Mati secara bawaan.</item>
+        <item>Sepertiga malam terakhir tampil di Hari ini, lengkap dengan jamnya. Dihitung dari Maghrib sampai Subuh.</item>
+        <item>Tanggal Islam: Tahun Baru Hijriah, Asyura, awal Ramadan, kedua hari raya, dan Arafah ada di layar Puasa, dengan pengingat malam sebelumnya (opsional di Pengingat).</item>
+        <item>Hari ini lebih rapi: tempat dan mode bepergian di satu baris, lalu tiga pintasan sama besar (Puasa, Jadwal, Penghitung).</item>
+        <item>Island: kartu dan peringatan punya posisi sendiri, menutup seluruh bilah status, dan pratinjaunya kini sama dengan di ponsel. Pilihan Pil, Kartu, Peringatan menempel di bawah layar dan menentukan pengaturan yang tampil. Teks pengaturannya diringkas.</item>
+        <item>Island memberi getaran halus saat disentuh, saat geseran cukup jauh untuk menutup, dan saat dibuka atau ditutup. Mengikuti saklar Getaran; tanpa izin tambahan.</item>
+        <item>Hapus dari Hafalan saya tanpa pertanyaan: doa langsung terhapus dan tombol \"Urungkan\" mengembalikannya beserta jadwal ulangnya.</item>
     </string-array>
     <string-array name="whats_new_1_24_0">
         <item>Tempat tersimpan: simpan rumah, tempat kerja, atau tempat lain dengan nama Anda, lalu pindah dengan satu ketukan di Lokasi. Waktu shalat, kiblat, dan jadwal ikut berpindah. \"Gunakan lokasi saya\" tetap mengikuti GPS. Tempat tersimpan hanya ada di ponsel dan ikut dalam cadangan.</item>

@@ -130,10 +130,27 @@ internal fun PrayerListCard(
                         )
                     }
                 }
+                data.lastThird?.let { third ->
+                    ListDivider()
+                    LastThirdRow(time.format(third.start, data.zone), time.format(third.end, data.zone))
+                }
             }
         }
     }
     evidenceFor?.let { line -> EvidenceSheet(line) { evidenceFor = null } }
+}
+
+/** The last third of the night: its name and times only, nothing to check off. */
+@Composable
+private fun LastThirdRow(start: String, end: String) {
+    Row(
+        Modifier.fillMaxWidth().padding(HahoTheme.dimens.cardPadding).semantics(mergeDescendants = true) {},
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(stringResource(R.string.today_last_third), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f).padding(end = HahoTheme.spacing.md))
+        Text(stringResource(R.string.window_range, start, end), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
 }
 
 /** A prayer row's top and height inside the list, in px. */

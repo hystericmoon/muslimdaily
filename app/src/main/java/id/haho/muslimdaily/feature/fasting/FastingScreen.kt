@@ -69,6 +69,11 @@ import id.haho.muslimdaily.data.settings.SettingsRepository
 import id.haho.muslimdaily.domain.fasting.FastDay
 import id.haho.muslimdaily.domain.fasting.FastKind
 import id.haho.muslimdaily.domain.fasting.FastingCalendar
+import id.haho.muslimdaily.domain.fasting.IslamicDates
+import id.haho.muslimdaily.domain.fasting.IslamicDay
+import id.haho.muslimdaily.domain.fasting.IslamicOccasion
+import androidx.compose.ui.res.pluralStringResource
+import java.time.temporal.ChronoUnit
 import id.haho.muslimdaily.domain.prayer.HijriDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -100,6 +105,17 @@ fun FastKind.labelRes(): Int = when (this) {
     FastKind.TASHRIQ -> R.string.fast_tashriq
 }
 
+/** The plain name of an Islamic date: no ruling, no virtue. */
+@StringRes
+fun IslamicOccasion.occasionLabelRes(): Int = when (this) {
+    IslamicOccasion.NEW_YEAR -> R.string.islamic_new_year
+    IslamicOccasion.ASHURA -> R.string.islamic_ashura
+    IslamicOccasion.RAMADAN -> R.string.islamic_ramadan
+    IslamicOccasion.EID_FITR -> R.string.islamic_eid_fitr
+    IslamicOccasion.ARAFAH -> R.string.islamic_arafah
+    IslamicOccasion.EID_ADHA -> R.string.islamic_eid_adha
+}
+
 /** Where the day's ruling comes from, cited by collection and number. */
 @StringRes
 fun FastKind.dalilRes(): Int = when (this) {
@@ -121,6 +137,8 @@ data class FastingUiState(
     val selected: FastDay,
     /** Runs of consecutive days of one fast, soonest first. */
     val upcoming: List<List<FastDay>>,
+    /** The next named Islamic dates, soonest first. */
+    val islamicDates: List<IslamicDay> = emptyList(),
 )
 
 @HiltViewModel
@@ -145,6 +163,7 @@ class FastingViewModel @Inject constructor(settings: SettingsRepository, clock: 
             month = month,
             selected = FastingCalendar.day(sel, adj),
             upcoming = FastingCalendar.upcomingGroups(todayDate, adj, limit = 6),
+            islamicDates = IslamicDates.upcoming(todayDate, adj, limit = 4),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -194,6 +213,19 @@ fun FastingContent(
                     state.upcoming.forEachIndexed { i, run ->
                         if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                         UpcomingRow(run) { onSelect(run.first().date) }
+                    }
+                }
+            }
+        }
+        if (state.islamicDates.isNotEmpty()) {
+            item { SectionHeader(stringResource(R.string.islamic_dates_title)) }
+            item {
+                GlassCard(Modifier.fillMaxWidth().padding(horizontal = gutter)) {
+                    Column {
+                        state.islamicDates.forEachIndexed { i, day ->
+                            if (i > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                            IslamicDateRow(day, state.today.date)
+                        }
                     }
                 }
             }
@@ -403,6 +435,35 @@ private fun DayDetails(day: FastDay, modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
+}
+
+/** A named Islamic date: its name, the date in both calendars, and how far away it is. */
+@Composable
+private fun IslamicDateRow(day: IslamicDay, today: LocalDate) {
+    val away = ChronoUnit.DAYS.between(today, day.date).toInt()
+    Row(
+        Modifier.fillMaxWidth().padding(horizontal = HahoTheme.spacing.lg, vertical = HahoTheme.spacing.md).semantics(mergeDescendants = true) {},
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.md),
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(stringResource(day.occasion.occasionLabelRes()), style = MaterialTheme.typography.titleSmall)
+            Text(
+                formatLongDate(day.date) + " · " + hijriText(day.hijri),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Text(
+            when (away) {
+                0 -> stringResource(R.string.fasting_today)
+                1 -> stringResource(R.string.fasting_tomorrow)
+                else -> pluralStringResource(R.plurals.islamic_days_away, away, away)
+            },
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

@@ -128,6 +128,8 @@ class SettingsRepository @Inject constructor(
             fastingWeekly = this[K.remFastingWeekly] ?: r.fastingWeekly,
             silence = this[K.remSilence] ?: r.silence,
             silenceMinutes = (this[K.remSilenceMinutes] ?: r.silenceMinutes).coerceIn(5, 60),
+            islamicDates = this[K.remIslamicDates] ?: r.islamicDates,
+            islamicDatesTime = this[K.remIslamicDatesTime]?.let { LocalTime.ofSecondOfDay(it.toLong()) } ?: r.islamicDatesTime,
         )
         val m = d.memorize
         val i = d.island
@@ -151,6 +153,10 @@ class SettingsRepository @Inject constructor(
             bigSeconds = (this[K.islandBigSeconds] ?: i.bigSeconds).coerceIn(IslandSettings.BIG_SECONDS),
             bigUntilPrayer = this[K.islandBigUntil] ?: i.bigUntilPrayer,
             glow = this[K.islandGlow] ?: i.glow,
+            cardOffsetXDp = this[K.islandCardX]?.coerceIn(IslandSettings.OFFSET_X),
+            cardOffsetYDp = this[K.islandCardY]?.coerceIn(IslandSettings.OFFSET_Y),
+            bigOffsetXDp = this[K.islandBigX]?.coerceIn(IslandSettings.OFFSET_X),
+            bigOffsetYDp = this[K.islandBigY]?.coerceIn(IslandSettings.OFFSET_Y),
         )
         return AppSettings(
             island = island,
@@ -291,10 +297,21 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var islandBigSeconds: Int by key(K.islandBigSeconds, 60)
     var islandBigUntil: Boolean by key(K.islandBigUntil, false)
     var islandGlow: Boolean by key(K.islandGlow, true)
+
+    /** The card's and the alert's own place; null goes back to following the pill. */
+    fun setIslandCardPosition(x: Int?, y: Int?) = setPosition(K.islandCardX, x, K.islandCardY, y)
+    fun setIslandBigPosition(x: Int?, y: Int?) = setPosition(K.islandBigX, x, K.islandBigY, y)
+
+    private fun setPosition(kx: Preferences.Key<Int>, x: Int?, ky: Preferences.Key<Int>, y: Int?) {
+        if (x == null) p.remove(kx) else p[kx] = x
+        if (y == null) p.remove(ky) else p[ky] = y
+    }
     var remFasting: Boolean by key(K.remFasting, false)
     var remFastingWeekly: Boolean by key(K.remFastingWeekly, true)
     var remSilence: Boolean by key(K.remSilence, false)
     var remSilenceMinutes: Int by key(K.remSilenceMinutes, 15)
+    var remIslamicDates: Boolean by key(K.remIslamicDates, false)
+    fun setIslamicDatesTime(time: LocalTime) { p[K.remIslamicDatesTime] = time.toSecondOfDay() }
     fun setFastingTime(time: LocalTime) { p[K.remFastingTime] = time.toSecondOfDay() }
 
     fun setOffset(slot: String, minutes: Int) { p[K.offset(slot)] = minutes }
@@ -419,9 +436,15 @@ internal object K {
     val islandBigSeconds = intPreferencesKey("island_big_seconds")
     val islandBigUntil = booleanPreferencesKey("island_big_until_prayer")
     val islandGlow = booleanPreferencesKey("island_glow")
+    val islandCardX = intPreferencesKey("island_card_x")
+    val islandCardY = intPreferencesKey("island_card_y")
+    val islandBigX = intPreferencesKey("island_big_x")
+    val islandBigY = intPreferencesKey("island_big_y")
     val remFasting = booleanPreferencesKey("rem_fasting")
     val remFastingTime = intPreferencesKey("rem_fasting_time")
     val remFastingWeekly = booleanPreferencesKey("rem_fasting_weekly")
     val remSilence = booleanPreferencesKey("rem_silence")
     val remSilenceMinutes = intPreferencesKey("rem_silence_minutes")
+    val remIslamicDates = booleanPreferencesKey("rem_islamic_dates")
+    val remIslamicDatesTime = intPreferencesKey("rem_islamic_dates_time")
 }

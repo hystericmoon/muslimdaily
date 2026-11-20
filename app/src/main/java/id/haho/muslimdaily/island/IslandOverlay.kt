@@ -75,6 +75,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -151,6 +152,8 @@ fun IslandOverlay(
     onOpen: () -> Unit,
     onDismiss: () -> Unit = {},
     haptics: Boolean = true,
+    /** Height of the system status bar; the open card and alert cover it with a solid band. */
+    statusBarDp: Int = 0,
 ) {
     val ink = IslandInk.copy(alpha = config.opacityPercent / 100f)
     // Haptics go through the overlay's own View (no VIBRATE permission) and follow the Settings switch.
@@ -176,11 +179,42 @@ fun IslandOverlay(
         label = "island",
     ) { target ->
         when (target) {
-            IslandMode.BIG -> AlertCard(texts, config, gapDp, ink, openAppTick, dismissTick)
-            IslandMode.CARD -> ArcCard(texts, config, gapDp, ink, openAppTick, dismissTick)
+            IslandMode.BIG -> OpenFrame(config, IslandMode.BIG, statusBarDp) { AlertCard(texts, config, gapDp, ink, openAppTick, dismissTick) }
+            IslandMode.CARD -> OpenFrame(config, IslandMode.CARD, statusBarDp) { ArcCard(texts, config, gapDp, ink, openAppTick, dismissTick) }
             IslandMode.PILL -> Pill(texts, config, gapDp, ink, toggleTick)
         }
     }
+    }
+}
+
+/** The pill's own place, or the card's or alert's (which follow the pill's until set). */
+fun IslandSettings.offsetX(mode: IslandMode): Int = when (mode) {
+    IslandMode.PILL -> offsetXDp
+    IslandMode.CARD -> cardOffsetXDp ?: offsetXDp
+    IslandMode.BIG -> bigOffsetXDp ?: offsetXDp
+}
+
+fun IslandSettings.offsetY(mode: IslandMode): Int = when (mode) {
+    IslandMode.PILL -> offsetYDp
+    IslandMode.CARD -> cardOffsetYDp ?: offsetYDp
+    IslandMode.BIG -> bigOffsetYDp ?: offsetYDp
+}
+
+/**
+ * The open card and alert live in a window as wide as the screen. Its top band, as tall as the
+ * status bar, is solid black whatever the opacity, so the clock and icons never show through or
+ * collide with the prayer name. The card sits on it at its own place; moved down past the bar, the
+ * band is left out and the bar shows as it is.
+ */
+@Composable
+private fun OpenFrame(config: IslandSettings, mode: IslandMode, statusBarDp: Int, content: @Composable () -> Unit) {
+    val x = config.offsetX(mode)
+    val y = config.offsetY(mode)
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+        if (statusBarDp > 0 && y <= statusBarDp) {
+            Box(Modifier.fillMaxWidth().height(statusBarDp.dp).background(IslandInk))
+        }
+        Box(Modifier.offset(x = x.dp, y = y.dp)) { content() }
     }
 }
 

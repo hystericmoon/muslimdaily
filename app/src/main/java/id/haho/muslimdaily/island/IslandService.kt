@@ -17,6 +17,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -85,6 +86,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     private var baseGapDp = 0
     private var config by mutableStateOf(IslandSettings())
     private var haptics by mutableStateOf(true)
+    private var statusBarDp = 0
     private var params: WindowManager.LayoutParams? = null
 
     override val lifecycle: Lifecycle get() = registry
@@ -119,6 +121,8 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                     if (!app.reminders.nextPrayerIsland) stopSelf()
                 }
             }
+            // The window's width and place depend on the mode (pill, card, alert): follow it.
+            s.launch { snapshotFlow { big || expanded }.collect { applyLayout() } }
             s.launch {
                 while (true) {
                     if (!refresh()) {
@@ -159,6 +163,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     private fun addOverlay() {
         val wm = getSystemService(WindowManager::class.java)
         baseGapDp = IslandGeometry.gapDp(cutoutWidthPx(wm), resources.displayMetrics.density)
+        statusBarDp = statusBarHeightDp()
         val composeView = ComposeView(this).apply {
             setViewTreeLifecycleOwner(this@IslandService)
             setViewTreeSavedStateRegistryOwner(this@IslandService)
@@ -180,6 +185,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                         onOpen = ::openApp,
                         onDismiss = ::dismiss,
                         haptics = haptics,
+                        statusBarDp = statusBarDp,
                     )
                 }
             }
@@ -212,8 +218,11 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         val v = view ?: return
         val p = params ?: return
         val density = resources.displayMetrics.density
-        p.x = (config.offsetXDp * density).toInt()
-        p.y = (config.offsetYDp * density).toInt()
+        // The pill is placed by the window; the open card and alert fill the width and place themselves.
+        val open = big || expanded
+        p.width = if (open) WindowManager.LayoutParams.MATCH_PARENT else WindowManager.LayoutParams.WRAP_CONTENT
+        p.x = if (open) 0 else (config.offsetXDp * density).toInt()
+        p.y = if (open) 0 else (config.offsetYDp * density).toInt()
         runCatching { getSystemService(WindowManager::class.java).updateViewLayout(v, p) }
         val landscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         v.visibility = if (landscape && config.hideInLandscape) View.GONE else View.VISIBLE
@@ -228,6 +237,12 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
         val v = view ?: return
         view = null
         runCatching { getSystemService(WindowManager::class.java).removeView(v) }
+    }
+
+    /** The status bar's height, so the open card can cover it. 0 when the system does not say. */
+    private fun statusBarHeightDp(): Int {
+        val id = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (id > 0) (resources.getDimensionPixelSize(id) / resources.displayMetrics.density).toInt() else 0
     }
 
     /** Width of the camera cutout at the top, or null on a phone without one or before Android 11. */

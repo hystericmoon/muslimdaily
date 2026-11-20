@@ -93,6 +93,7 @@ class Notifier @Inject constructor(@ApplicationContext private val context: Cont
             ReminderType.FRIDAY -> R.string.notif_friday_title to Destination.TODAY
             ReminderType.REVIEW -> R.string.notif_review_title to Destination.MEMORIZE
             ReminderType.FASTING -> R.string.notif_fasting_title to Destination.FASTING
+            ReminderType.ISLAMIC_DATE -> R.string.notif_islamic_title to Destination.FASTING
             else -> return
         }
         post(type.requestCode, CHANNEL_REMINDERS, context.getString(title), text, destination)

@@ -31,6 +31,7 @@ Play reviews these against its policies. The answers below are what the code act
 | Permission | Why | Policy notes |
 |---|---|---|
 | `SCHEDULE_EXACT_ALARM` | Prayer-time reminders at the exact minute. | Play restricts `USE_EXACT_ALARM` to alarm/calendar apps; the app uses `SCHEDULE_EXACT_ALARM`, which the user grants, and falls back to inexact (10-minute window) alarms when denied. Declare it under "Exact alarm" with the reminders as the core use. |
+| `ACCESS_NOTIFICATION_POLICY` | Optional "silence during prayer": Do Not Disturb (alarms only) for a few minutes from a prayer's time, then back as it was. | Special access the user grants once in system settings; off by default. Only the filter the app set itself is restored. Declare it as the core use of an opt-in feature. |
 | `ACCESS_COARSE_LOCATION` / `ACCESS_FINE_LOCATION` | Prayer times and qibla (coarse); nearby mosques while that screen is open (fine). | Foreground only, no background location, so no background-location declaration is needed. |
 | `POST_NOTIFICATIONS` | Reminders the user turns on. | Requested at the moment a reminder is switched on. |
 | `FOREGROUND_SERVICE_MEDIA_PLAYBACK` | Playing dua audio with the screen off. | Declare the media-playback foreground service type with a short video of audio playback, if asked. |
