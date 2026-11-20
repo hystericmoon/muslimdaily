@@ -7,22 +7,22 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 20 Nov 2026 (1.23.0 released; 1.24.0 built, PR open for the owner's yes).
+Last updated: 20 Nov 2026 (1.24.0 merged, release run to check).
 
 ## In flight
 
 - **1.23.0 is released** (run 86 green, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.23.0/adwam-1.23.0.apk, 40 MB, published 20 Nov 09:59 WIB). Details: history, "Shipped" 1.23.0.
-- **1.24.0 (versionCode 69), PR open, waits for the owner's yes** (changes `UserDatabase`, `BackupRepository`, `versionName`): saved places (Room v3 to v4 auto-migration, `app/schemas/.../4.json`, table `saved_places`; backup VERSION 4, a v3 file restores with no places, test `BackupRepositoryTest`) and the dhikr counter (DataStore `dhikr_count`/`dhikr_target`, so the existing settings backup carries them; Today chip "Penghitung"). Home and Work hold one place each, Other many with the user's name; the active place is the one whose coordinates match the current location (nothing stored); "Gunakan lokasi saya" is the follow-GPS path. Not built: a one-tap switch on Today itself (switch is on Settings, Location: open, tap). Screenshots 192-194 are new; run the Screenshots workflow after each push.
+- **1.24.0 (versionCode 69) merged** (PR #303, 20 Nov): saved places and the dhikr counter; details in history, "Shipped" 1.24.0. After the merge: check the release run built the APK (https://github.com/hystericmoon/muslimdaily/releases/download/v1.24.0/adwam-1.24.0.apk) and tell the owner. Not built: a one-tap place switch on Today.
 - **Owner to check on a phone (cloud can't)**: island swipe and tap from other apps, TalkBack Close, the arc at night and after Isya, the glow's heat and battery, 200% text; timetable share as PNG and PDF; the 1.22.0 dark accents (`docs/accent.md` has the way back); 1.16.0 to 1.20.0 items (history, "Shipped"); Qibla back overlap (#209).
 - **Island follow-ups (not done)**: close on fling velocity (a flick under 48 dp springs back); a first-use nudge only if feedback says people miss the swipe (the hint was removed on purpose); vibration needs the VIBRATE permission, not approved.
 - **Prayer-time accuracy**: nothing changed. Recommendation (roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
 - **LinkedIn post for 1.19**: waits for the owner's device screenshots (Build, Routine, Recall).
-- Stray branch `claude/handover-1-19-0`: the owner deletes it on GitHub.
+- Stray branches the owner deletes on GitHub: `claude/handover-1-19-0`, `claude/saved-places-dhikr-1-24-0`.
 - **Other follow-ups (not done)**: delete the unreachable `GuidedSession.kt`, `GuidedStep`, tests and screenshots 163-168 (keep `advancedDuas`); Undo for Remove needs an owner decision. Promo media is stale (history).
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. **1.24.0 merge** (owner's yes), then silence during prayer (1.25.0, needs the DND permission, approved), last third of the night, Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
+1. Silence during prayer (1.25.0, needs the DND permission, approved), last third of the night, Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 2. Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on calendars, "New" chip and Qibla "Aligned". Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
 
 ## Promo campaign (6 Nov)
