@@ -1,6 +1,14 @@
 package id.haho.muslimdaily.feature.settings
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.background
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,18 +66,57 @@ import kotlin.math.roundToInt
 private const val PREVIEW_CAMERA_DP = 28
 
 @Composable
-fun IslandSettingsRoute(onBack: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
+fun IslandSettingsRoute(onBack: () -> Unit, viewModel: RemindersViewModel = hiltViewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
-    AdwamScreen(title = stringResource(R.string.island_settings_title), onBack = onBack) {
-        settings?.let { IslandSettingsContent(it, viewModel::update) }
+    val context = LocalContext.current
+    var overlay by remember { mutableStateOf(Settings.canDrawOverlays(context)) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        overlay = Settings.canDrawOverlays(context)
+        viewModel.reschedule()
+    }
+    AdwamScreen(title = stringResource(R.string.reminders_island_title), onBack = onBack) {
+        settings?.let {
+            IslandSettingsContent(
+                settings = it,
+                update = viewModel::update,
+                overlayAllowed = overlay,
+                onAskOverlay = {
+                    context.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:${context.packageName}".toUri()))
+                },
+            )
+        }
     }
 }
 
 @Composable
-fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> Unit) -> Unit) {
+fun IslandSettingsContent(
+    settings: AppSettings,
+    update: (SettingsEditor.() -> Unit) -> Unit,
+    overlayAllowed: Boolean = true,
+    onAskOverlay: () -> Unit = {},
+) {
     val c = settings.island
     var previewMode by rememberSaveable { mutableStateOf(IslandMode.PILL) }
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
+        item(key = "show") {
+            SettingsGroup(stringResource(R.string.island_group_show)) {
+                SwitchRow(
+                    title = stringResource(R.string.reminders_island_title),
+                    summary = stringResource(R.string.reminders_island_summary),
+                    checked = settings.reminders.nextPrayerIsland,
+                    onCheckedChange = { v ->
+                        update { remIsland = v }
+                        if (v && !overlayAllowed) onAskOverlay()
+                    },
+                    icon = R.drawable.ic_notifications,
+                )
+            }
+        }
+        if (settings.reminders.nextPrayerIsland && !overlayAllowed) {
+            item(key = "perm-overlay") {
+                PermissionCard(stringResource(R.string.reminders_island_permission), stringResource(R.string.reminders_island_allow), onAskOverlay)
+            }
+        }
         item(key = "preview") {
             Column(Modifier.padding(HahoTheme.dimens.screenGutter), verticalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
                 IslandPreview(c, previewMode)
@@ -108,6 +155,13 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
         item(key = "look") {
             SettingsGroup(stringResource(R.string.island_group_look)) {
                 SliderRow(stringResource(R.string.island_opacity), c.opacityPercent, IslandSettings.OPACITY, "%") { v -> update { islandOpacity = v } }
+                SwitchRow(
+                    title = stringResource(R.string.island_glow_title),
+                    summary = stringResource(R.string.island_glow_summary),
+                    checked = c.glow,
+                    onCheckedChange = { v -> update { islandGlow = v } },
+                    icon = R.drawable.ic_notifications,
+                )
                 SegmentedRow(
                     title = stringResource(R.string.island_right),
                     options = IslandRight.entries,
@@ -140,7 +194,16 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                     SliderRow(stringResource(R.string.island_lead), c.bigCardLeadMinutes, IslandSettings.LEAD, " min") { v -> update { islandLead = v } }
                     SliderRow(stringResource(R.string.island_width), c.bigWidthDp, IslandSettings.BIG_WIDTH, "dp") { v -> update { islandBigWidth = v } }
                     SliderRow(stringResource(R.string.island_font), c.bigFontSp, IslandSettings.BIG_FONT, "sp") { v -> update { islandBigFont = v } }
-                    SliderRow(stringResource(R.string.island_seconds), c.bigSeconds, IslandSettings.BIG_SECONDS, " s") { v -> update { islandBigSeconds = v } }
+                    SwitchRow(
+                        title = stringResource(R.string.island_until_title),
+                        summary = stringResource(R.string.island_until_summary),
+                        checked = c.bigUntilPrayer,
+                        onCheckedChange = { v -> update { islandBigUntil = v } },
+                        icon = R.drawable.ic_schedule,
+                    )
+                    if (!c.bigUntilPrayer) {
+                        SliderRow(stringResource(R.string.island_seconds), c.bigSeconds, IslandSettings.BIG_SECONDS, " s") { v -> update { islandBigSeconds = v } }
+                    }
                 }
             }
         }
@@ -163,6 +226,7 @@ fun IslandSettingsContent(settings: AppSettings, update: (SettingsEditor.() -> U
                             islandBig = d.bigCard; islandLead = d.bigCardLeadMinutes; islandLandscape = d.hideInLandscape
                             islandCardWidth = d.cardWidthDp; islandCardFont = d.cardFontSp; islandCardSeconds = d.cardSeconds
                             islandBigWidth = d.bigWidthDp; islandBigFont = d.bigFontSp; islandBigSeconds = d.bigSeconds
+                            islandBigUntil = d.bigUntilPrayer; islandGlow = d.glow
                         }
                     },
                     modifier = Modifier.padding(horizontal = HahoTheme.spacing.sm),
@@ -182,7 +246,7 @@ private fun IslandPreview(c: IslandSettings, mode: IslandMode) {
     Box(
         Modifier
             .fillMaxWidth()
-            .height(if (mode == IslandMode.PILL) 72.dp else 240.dp)
+            .height(if (mode == IslandMode.PILL) 72.dp else 300.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFD8D6CC)),
         contentAlignment = Alignment.TopCenter,
@@ -213,9 +277,11 @@ private fun IslandPreview(c: IslandSettings, mode: IslandMode) {
 
 @Composable
 private fun previewTexts(c: IslandSettings): IslandTexts {
-    val name = stringResource(Prayer.ASR.labelRes())
-    val clock = "15:12"
-    val left = stringResource(R.string.island_hours_minutes, 1, 28)
+    val name = stringResource(Prayer.MAGHRIB.labelRes())
+    val clock = "18.04"
+    val left = stringResource(R.string.island_minutes, 7)
+    val names = FIVE_PRAYERS.map { stringResource(it.labelRes()) }
+    val minutes = listOf(245, 701, 903, 1084, 1147)
     return IslandTexts(
         prayerName = name,
         clock = clock,
@@ -226,6 +292,14 @@ private fun previewTexts(c: IslandSettings): IslandTexts {
         dismissLabel = stringResource(R.string.island_dismiss),
         description = "$name $clock $left",
         cardDescription = "$name $clock $left",
+        arcNames = names,
+        arcTimes = listOf("04.05", "11.41", "15.03", "18.04", "19.07"),
+        arcTicks = minutes.map { (it - minutes.first()) / (minutes.last() - minutes.first()).toFloat() },
+        arcNext = 3,
+        arcProgress = (1077 - minutes.first()) / (minutes.last() - minutes.first()).toFloat(),
+        tomorrow = null,
+        alertProgress = 0.3f,
+        alertStart = stringResource(R.string.island_alert_opened, "17.54"),
     )
 }
 

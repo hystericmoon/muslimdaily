@@ -158,6 +158,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onMySets = { navController.navigate(MySetsDataRoute) },
                         onAudio = { navController.navigate(AudioSettingsRoute) },
                         onReminders = { navController.navigate(RemindersRoute) },
+                        onIsland = { navController.navigate(IslandSettingsRoute) },
                         onDisplay = { navController.navigate(DisplaySettingsRoute) },
                         onMethodology = { navController.navigate(MethodologyRoute) },
                         onAbout = { navController.navigate(AboutRoute) },

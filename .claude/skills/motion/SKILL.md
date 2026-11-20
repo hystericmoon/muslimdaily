@@ -34,6 +34,10 @@ Spring.StiffnessMediumLow)`. Keep these as shared constants in one file under
    already the rule in `docs/accessibility.md`. State must still change when motion is off; never
    hide information behind an animation. No `Handler` timers or hand-rolled frame loops.
 3. No idle or looping animation, except a countdown tick. People read and recite here.
+   One owner-approved exception (20 Nov 2026): the island's travelling light (`travellingLight` in
+   `island/IslandOverlay.kt`). It is an overlay on top of other apps, not a screen where people read; it
+   runs only while a card is open, draws in the draw phase only, is still when animations are off, and
+   has a Glow switch. Don't copy it into app screens.
 4. Arabic text never moves, scales or fades while it is being read. Highlights may glide; text may not.
 5. Pair motion with a haptic only for confirmations (mark as read, Qibla aligned), and respect the
    existing `haptics` setting.

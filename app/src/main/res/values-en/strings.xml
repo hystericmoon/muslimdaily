@@ -728,11 +728,17 @@
     <string name="island_width">Width</string>
     <string name="island_seconds">Closes by itself after</string>
     <string name="island_card_gesture_note">Tap the card to open Adwam; swipe it to close it.</string>
+    <string name="island_tomorrow">tomorrow</string>
+    <string name="island_alert_opened">Opened %s</string>
+    <string name="island_glow_title">Light round the card</string>
+    <string name="island_glow_summary">A light travels round the card\'s edge while it is open. Still when the system\'s animations are off.</string>
+    <string name="island_until_title">Stay until the prayer time</string>
+    <string name="island_until_summary">The alert does not close by itself; it closes when the prayer time arrives.</string>
+    <string name="island_home_summary">Pill at the camera, card and prayer alert</string>
+    <string name="island_group_show">Display</string>
     <string name="island_open">Open Adwam</string>
     <string name="island_dismiss">Close</string>
     <string name="island_description">%1$s at %2$s, in %3$s. Tap for details.</string>
-    <string name="island_settings_title">Island settings</string>
-    <string name="island_settings_summary">Size, padding, position and camera gap</string>
     <string name="island_preview">Preview</string>
     <string name="island_preview_pill">Pill</string>
     <string name="island_preview_card">Card</string>
@@ -1046,7 +1052,10 @@
         <item>Monthly prayer timetable: the Timetable button on Today opens a full month of prayer times for your location, with the Hijri date. Move to the previous or next month.</item>
         <item>Ramadan timetable (Imsakiyah): the Ramadan tab shows every day of Ramadan, first to last. It is calculated on your phone with the same method as Today, with no extra data or permission.</item>
         <item>Share the timetable as an image or a PDF with the share button, ready to send or print.</item>
-        <item>Island: the card and the prayer alert no longer have buttons. Tap the card to open Adwam, swipe it to close it. Each card\'s width, text size and how long it stays can be set in Island settings.</item>
+        <item>The island has its own menu in Settings, no longer in Reminders: the switch, the permission and every setting in one place.</item>
+        <item>Tap the island pill for the arc card: the five prayers from Subuh to Isya, a marker for now and the next prayer underlined.</item>
+        <item>The prayer alert before each prayer is harder to ignore: a filled countdown, a line over the time since it opened, and a light that travels round the edge (can be turned off; still when the system\'s animations are off). It can stay until the prayer time.</item>
+        <item>The card and the alert have no buttons: tap to open Adwam, swipe to close. Width, text size and how long they stay can be set.</item>
     </string-array>
     <string-array name="whats_new_1_22_0">
         <item>A third accent colour on Today: the countdown on the Next card, the Now label on the current prayer and the countdown on the next prayer row now use one colour of their own in each palette. The text still meets WCAG AA contrast in light and dark mode.</item>

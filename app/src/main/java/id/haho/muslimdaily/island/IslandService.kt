@@ -36,6 +36,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import id.haho.muslimdaily.MainActivity
 import id.haho.muslimdaily.R
+import id.haho.muslimdaily.core.model.FIVE_PRAYERS
 import id.haho.muslimdaily.core.ui.TimeFormatter
 import id.haho.muslimdaily.core.ui.labelRes
 import id.haho.muslimdaily.data.settings.IslandRight
@@ -79,6 +80,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     private var expanded by mutableStateOf(false)
     private var big by mutableStateOf(false)
     private var alertedFor: Instant? = null
+    private var alertShownAt: Instant? = null
     private var firstRefresh = true
     private var baseGapDp = 0
     private var config by mutableStateOf(IslandSettings())
@@ -236,10 +238,12 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
 
     private fun showBig(time: Instant) {
         alertedFor = time
+        alertShownAt = Instant.now(clock)
         big = true
         expanded = false
         collapseJob?.cancel()
-        collapseJob = scope?.launch {
+        // "Stay until the prayer time": no timer, refresh() clears it when the time arrives.
+        collapseJob = if (config.bigUntilPrayer) null else scope?.launch {
             delay(config.bigSeconds * 1000L)
             big = false
         }
@@ -283,12 +287,18 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
 
     private fun texts(m: IslandModel): IslandTexts {
         val name = getString(m.prayer.labelRes())
-        val clockText = TimeFormatter(DateFormat.is24HourFormat(this)).format(m.time, m.zone)
+        val formatter = TimeFormatter(DateFormat.is24HourFormat(this))
+        val clockText = formatter.format(m.time, m.zone)
         val left = if (m.minutesLeft >= 60) {
             getString(R.string.island_hours_minutes, m.minutesLeft / 60, m.minutesLeft % 60)
         } else {
             getString(R.string.island_minutes, m.minutesLeft)
         }
+        val names = FIVE_PRAYERS.map { getString(it.labelRes()) }
+        val times = m.five.mapIndexed { i, t -> formatter.format(if (i == 0 && m.nextIsTomorrow) m.time else t, m.zone) }
+        val shownAt = alertShownAt ?: m.now
+        val description = getString(R.string.island_card_description, name, clockText, left) + " " +
+            names.indices.joinToString(", ") { names[it] + " " + times.getOrElse(it) { "" } }
         return IslandTexts(
             prayerName = name,
             clock = clockText,
@@ -298,7 +308,15 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             openLabel = getString(R.string.island_open),
             dismissLabel = getString(R.string.island_dismiss),
             description = getString(R.string.island_description, name, clockText, left),
-            cardDescription = getString(R.string.island_card_description, name, clockText, left),
+            cardDescription = description,
+            arcNames = names,
+            arcTimes = times,
+            arcTicks = IslandModel.arcTicks(m.five),
+            arcNext = m.nextIndex,
+            arcProgress = m.arcProgress,
+            tomorrow = if (m.nextIsTomorrow) getString(R.string.island_tomorrow) else null,
+            alertProgress = IslandModel.alertProgress(m.now, shownAt, m.time),
+            alertStart = getString(R.string.island_alert_opened, formatter.format(shownAt, m.zone)),
         )
     }
 

@@ -712,11 +712,17 @@
     <string name="island_width">Lebar</string>
     <string name="island_seconds">Tertutup sendiri setelah</string>
     <string name="island_card_gesture_note">Ketuk kartu untuk membuka Adwam; geser kartu untuk menutupnya.</string>
+    <string name="island_tomorrow">besok</string>
+    <string name="island_alert_opened">Terbuka %s</string>
+    <string name="island_glow_title">Cahaya di tepi kartu</string>
+    <string name="island_glow_summary">Cahaya bergerak mengelilingi tepi kartu selama kartu terbuka. Diam bila animasi sistem dimatikan.</string>
+    <string name="island_until_title">Tetap sampai waktu shalat</string>
+    <string name="island_until_summary">Peringatan tidak menutup sendiri; menutup saat waktu shalat tiba.</string>
+    <string name="island_home_summary">Pil di sekitar kamera, kartu, dan peringatan shalat</string>
+    <string name="island_group_show">Tampilkan</string>
     <string name="island_open">Buka Adwam</string>
     <string name="island_dismiss">Tutup</string>
     <string name="island_description">%1$s pukul %2$s, %3$s lagi. Ketuk untuk detail.</string>
-    <string name="island_settings_title">Pengaturan island</string>
-    <string name="island_settings_summary">Ukuran, jarak dalam, posisi, dan celah kamera</string>
     <string name="island_preview">Pratinjau</string>
     <string name="island_preview_pill">Pil</string>
     <string name="island_preview_card">Kartu</string>
@@ -1028,7 +1034,10 @@
         <item>Jadwal salat bulanan: tombol Jadwal di Hari ini membuka tabel waktu shalat satu bulan penuh untuk lokasi Anda, lengkap dengan tanggal Hijriah. Geser ke bulan sebelum atau sesudahnya.</item>
         <item>Imsakiyah Ramadan: tab Ramadan menampilkan jadwal seluruh Ramadan, dari hari pertama sampai terakhir. Jadwal dihitung di ponsel dengan metode yang sama seperti Hari ini, tanpa data atau izin tambahan.</item>
         <item>Bagikan jadwal sebagai gambar atau PDF lewat tombol bagikan, siap dikirim atau dicetak.</item>
-        <item>Island: kartu dan peringatan shalat kini tanpa tombol. Ketuk kartu untuk membuka Adwam, geser untuk menutupnya. Lebar, ukuran teks, dan lama tampil tiap kartu bisa diatur di Pengaturan island.</item>
+        <item>Island punya menu sendiri di Pengaturan, tidak lagi di Pengingat: saklar, izin, dan semua pengaturan ada di satu tempat.</item>
+        <item>Ketuk pil di island untuk melihat kartu busur: lima waktu shalat dari Subuh sampai Isya, dengan penanda waktu sekarang dan shalat berikutnya digarisbawahi.</item>
+        <item>Peringatan shalat sebelum tiap shalat dibuat sulit diabaikan: hitung mundur berlatar penuh, garis waktu sejak peringatan terbuka, dan cahaya yang bergerak di tepi (bisa dimatikan; diam bila animasi sistem dimatikan). Bisa dibuat tetap sampai waktu shalat.</item>
+        <item>Kartu dan peringatan tanpa tombol: ketuk untuk membuka Adwam, geser untuk menutup. Lebar, ukuran teks, dan lama tampil bisa diatur.</item>
     </string-array>
     <string-array name="whats_new_1_22_0">
         <item>Warna aksen ketiga di Hari ini: hitung mundur di kartu Berikutnya, label Sekarang pada shalat yang sedang berlangsung, dan hitung mundur di baris shalat berikutnya kini memakai satu warna tersendiri untuk tiap palet. Teksnya tetap memenuhi kontras WCAG AA di mode terang dan gelap.</item>
