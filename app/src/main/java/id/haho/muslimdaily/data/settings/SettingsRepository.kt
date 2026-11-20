@@ -126,8 +126,6 @@ class SettingsRepository @Inject constructor(
             fasting = this[K.remFasting] ?: r.fasting,
             fastingTime = this[K.remFastingTime]?.let { LocalTime.ofSecondOfDay(it.toLong()) } ?: r.fastingTime,
             fastingWeekly = this[K.remFastingWeekly] ?: r.fastingWeekly,
-            silence = this[K.remSilence] ?: r.silence,
-            silenceMinutes = (this[K.remSilenceMinutes] ?: r.silenceMinutes).coerceIn(5, 60),
         )
         val m = d.memorize
         val i = d.island
@@ -293,8 +291,6 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var islandGlow: Boolean by key(K.islandGlow, true)
     var remFasting: Boolean by key(K.remFasting, false)
     var remFastingWeekly: Boolean by key(K.remFastingWeekly, true)
-    var remSilence: Boolean by key(K.remSilence, false)
-    var remSilenceMinutes: Int by key(K.remSilenceMinutes, 15)
     fun setFastingTime(time: LocalTime) { p[K.remFastingTime] = time.toSecondOfDay() }
 
     fun setOffset(slot: String, minutes: Int) { p[K.offset(slot)] = minutes }
@@ -422,6 +418,4 @@ internal object K {
     val remFasting = booleanPreferencesKey("rem_fasting")
     val remFastingTime = intPreferencesKey("rem_fasting_time")
     val remFastingWeekly = booleanPreferencesKey("rem_fasting_weekly")
-    val remSilence = booleanPreferencesKey("rem_silence")
-    val remSilenceMinutes = intPreferencesKey("rem_silence_minutes")
 }

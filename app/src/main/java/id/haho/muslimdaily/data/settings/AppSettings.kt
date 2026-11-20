@@ -89,9 +89,6 @@ data class ReminderSettings(
     val fastingTime: LocalTime = LocalTime.of(20, 0),
     /** Whether Mondays and Thursdays count for the fasting reminder. */
     val fastingWeekly: Boolean = true,
-    /** Alarms-only Do Not Disturb from each prayer's time for [silenceMinutes], then back as it was. */
-    val silence: Boolean = false,
-    val silenceMinutes: Int = 15,
 )
 
 /** What the right side of the island pill shows. */

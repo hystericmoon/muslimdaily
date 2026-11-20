@@ -26,9 +26,6 @@ enum class ReminderType(val requestCode: Int) {
     /** The evening before a sunnah fast. */
     FASTING(22),
 
-    /** Not a notification: Do Not Disturb (alarms only) from a prayer's time, and back after N minutes. */
-    SILENCE_START(23), SILENCE_END(24),
-
     /** Not a notification: redraws widgets and the lock-screen countdown when the next prayer changes. */
     REFRESH(21),
     ;
@@ -95,13 +92,6 @@ object ReminderPlanner {
                     .filter { it.isAfter(now) }
                     .minOrNull()
                     ?.let { result += PlannedReminder(ReminderType.PRE_PRAYER, it) }
-            }
-            if (r.silence) {
-                val length = Duration.ofMinutes(r.silenceMinutes.toLong())
-                val times = schedules.flatMap { s -> FIVE_PRAYERS.map { s.time(it) } }
-                times.filter { it.isAfter(now) }.minOrNull()?.let { result += PlannedReminder(ReminderType.SILENCE_START, it) }
-                times.map { it.plus(length) }.filter { it.isAfter(now) }.minOrNull()
-                    ?.let { result += PlannedReminder(ReminderType.SILENCE_END, it) }
             }
             schedules.flatMap { s -> PrayerTimeSlot.entries.map { s.time(it) } + s.date.plusDays(1).atStartOfDay(zone).toInstant() }
                 .filter { it.isAfter(now) }
