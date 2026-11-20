@@ -7,7 +7,7 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 20 Nov 2026 (1.25.0 merged, PR #306; the Release workflow publishes v1.25.0, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.25.0/adwam-1.25.0.apk).
+Last updated: 20 Nov 2026 (1.25.0 released, PR #306, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.25.0/adwam-1.25.0.apk).
 
 ## In flight
 
@@ -17,12 +17,12 @@ Last updated: 20 Nov 2026 (1.25.0 merged, PR #306; the Release workflow publishe
 - **Island follow-ups (not done)**: close on fling velocity (a flick under 48 dp springs back); a first-use nudge only if feedback says people miss the swipe (the hint was removed on purpose).
 - **Prayer-time accuracy**: nothing changed. Recommendation (roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
 - **LinkedIn post for 1.19**: waits for the owner's device screenshots (Build, Routine, Recall).
-- Stray branches the owner deletes on GitHub: `claude/handover-1-19-0`, `claude/saved-places-dhikr-1-24-0`.
+- Stray branches the owner deletes on GitHub: `claude/handover-1-19-0`, `claude/saved-places-dhikr-1-24-0`, `claude/undo-remove-island-haptics-1-24-1` (1.25.0's work branch; the session branch is `claude/notion-promo-batch-1-o2p0c4`).
 - **Other follow-ups (not done)**: delete the unreachable `GuidedSession.kt`, `GuidedStep`, tests and screenshots 163-168 (keep `advancedDuas`); Promo media is stale (history).
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. Nothing queued by the owner. Small ones when convenient: one-tap place switch on Today, island close on flick, delete `GuidedSession.kt`. Zakat and the missed-prayers log are dropped (owner).
+1. Start with the owner's phone-check feedback on 1.25.0 (the "Owner to check" bullet); nothing else queued. Small ones when convenient: one-tap place switch on Today, island close on flick, delete `GuidedSession.kt`. Zakat and the missed-prayers log are dropped (owner).
 2. Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on calendars, "New" chip and Qibla "Aligned". Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
 
 ## Promo campaign (6 Nov)
@@ -55,7 +55,7 @@ Not to do: the Wear OS app (owner, 31 Oct). Deleting count notes inside duas (af
 - Clearing routine: the `session-clear` skill.
 - **No Opus budget (owner, 16 Nov)**: work CLAUDE.md routes to Opus is done on Sonnet while this holds. Ask the owner before assuming it has changed.
 - **Screenshots workflow**: start it right after pushing a UI change and push nothing while it runs (its commit fails). CI on the commit you pushed shows red until the bot's "Record screenshots on CI" commit; the workflow_dispatch Android run on that commit is the real one.
-- Last session: session_01W2ZFMsFLyhveJYKUstp4CY (5-20 Nov, Sonnet): 1.14.0 to 1.24.0. Older ids: history, "Sessions (archive)".
+- Last session: session_01W2ZFMsFLyhveJYKUstp4CY (5-20 Nov, Sonnet): 1.14.0 to 1.25.0. Older ids: history, "Sessions (archive)".
 
 ## Session setup (cloud)
 
