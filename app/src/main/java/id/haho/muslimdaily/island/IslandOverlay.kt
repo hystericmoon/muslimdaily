@@ -51,7 +51,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -76,8 +75,6 @@ data class IslandTexts(
     val description: String,
     /** What the card and big card say to TalkBack: tapping opens Adwam, swiping closes. */
     val cardDescription: String,
-    /** One line under the big card that says what a tap and a swipe do. */
-    val hint: String,
 )
 
 enum class IslandMode { PILL, CARD, BIG }
@@ -235,7 +232,6 @@ private fun BigCard(texts: IslandTexts, config: IslandSettings, ink: Color, onOp
         Text(texts.prayerName, color = IslandText, fontSize = config.bigFontSp.sp, fontWeight = FontWeight.Bold)
         Text(texts.clock, color = IslandText, fontSize = (24 * k).sp)
         Text(texts.place, color = IslandMuted, fontSize = (14 * k).coerceAtLeast(12f).sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        Text(texts.hint, color = IslandMuted, fontSize = 12.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 4.dp))
         SwipeHandle()
     }
 }

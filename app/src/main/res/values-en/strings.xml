@@ -728,7 +728,6 @@
     <string name="island_width">Width</string>
     <string name="island_seconds">Closes by itself after</string>
     <string name="island_card_gesture_note">Tap the card to open Adwam; swipe it to close it.</string>
-    <string name="island_hint">Tap to open · swipe to close</string>
     <string name="island_open">Open Adwam</string>
     <string name="island_dismiss">Close</string>
     <string name="island_description">%1$s at %2$s, in %3$s. Tap for details.</string>
@@ -737,7 +736,7 @@
     <string name="island_preview">Preview</string>
     <string name="island_preview_pill">Pill</string>
     <string name="island_preview_card">Card</string>
-    <string name="island_preview_big">Big card</string>
+    <string name="island_preview_big">Alert</string>
     <string name="island_group_size">Size</string>
     <string name="island_height">Height</string>
     <string name="island_padding">Inner padding</string>
@@ -752,8 +751,8 @@
     <string name="island_right">Right side shows</string>
     <string name="island_right_countdown">Countdown</string>
     <string name="island_right_time">Time</string>
-    <string name="island_group_big">Big card</string>
-    <string name="island_big_title">Open a big card before a prayer</string>
+    <string name="island_group_big">Prayer alert</string>
+    <string name="island_big_title">Show a prayer alert before each prayer</string>
     <string name="island_big_summary">Opens once for each prayer.</string>
     <string name="island_lead">Minutes before</string>
     <string name="island_group_other">Other</string>
@@ -762,7 +761,7 @@
     <string name="island_reset">Reset to default</string>
     <string name="island_sample_place">Your city</string>
     <string name="reminders_island_title">Island (beta)</string>
-    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. It opens a big card 10 minutes before each prayer. Needs \"Display over other apps\".</string>
+    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. It shows a prayer alert 10 minutes before each prayer. Needs \"Display over other apps\".</string>
     <string name="reminders_island_permission">The island cannot show until you allow \"Display over other apps\" for Adwam.</string>
     <string name="reminders_island_allow">Allow</string>
     <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Adwam.</string>
@@ -1047,7 +1046,7 @@
         <item>Monthly prayer timetable: the Timetable button on Today opens a full month of prayer times for your location, with the Hijri date. Move to the previous or next month.</item>
         <item>Ramadan timetable (Imsakiyah): the Ramadan tab shows every day of Ramadan, first to last. It is calculated on your phone with the same method as Today, with no extra data or permission.</item>
         <item>Share the timetable as an image or a PDF with the share button, ready to send or print.</item>
-        <item>Island: the card and big card no longer have buttons. Tap the card to open Adwam, swipe it to close it. Each card\'s width, text size and how long it stays can be set in Island settings.</item>
+        <item>Island: the card and the prayer alert no longer have buttons. Tap the card to open Adwam, swipe it to close it. Each card\'s width, text size and how long it stays can be set in Island settings.</item>
     </string-array>
     <string-array name="whats_new_1_22_0">
         <item>A third accent colour on Today: the countdown on the Next card, the Now label on the current prayer and the countdown on the next prayer row now use one colour of their own in each palette. The text still meets WCAG AA contrast in light and dark mode.</item>

@@ -712,7 +712,6 @@
     <string name="island_width">Lebar</string>
     <string name="island_seconds">Tertutup sendiri setelah</string>
     <string name="island_card_gesture_note">Ketuk kartu untuk membuka Adwam; geser kartu untuk menutupnya.</string>
-    <string name="island_hint">Ketuk untuk membuka · geser untuk menutup</string>
     <string name="island_open">Buka Adwam</string>
     <string name="island_dismiss">Tutup</string>
     <string name="island_description">%1$s pukul %2$s, %3$s lagi. Ketuk untuk detail.</string>
@@ -721,7 +720,7 @@
     <string name="island_preview">Pratinjau</string>
     <string name="island_preview_pill">Pil</string>
     <string name="island_preview_card">Kartu</string>
-    <string name="island_preview_big">Kartu besar</string>
+    <string name="island_preview_big">Peringatan</string>
     <string name="island_group_size">Ukuran</string>
     <string name="island_height">Tinggi</string>
     <string name="island_padding">Jarak dalam</string>
@@ -736,8 +735,8 @@
     <string name="island_right">Sisi kanan menampilkan</string>
     <string name="island_right_countdown">Hitung mundur</string>
     <string name="island_right_time">Waktu</string>
-    <string name="island_group_big">Kartu besar</string>
-    <string name="island_big_title">Buka kartu besar sebelum shalat</string>
+    <string name="island_group_big">Peringatan shalat</string>
+    <string name="island_big_title">Tampilkan peringatan sebelum shalat</string>
     <string name="island_big_summary">Terbuka sekali untuk tiap shalat.</string>
     <string name="island_lead">Menit sebelumnya</string>
     <string name="island_group_other">Lainnya</string>
@@ -746,7 +745,7 @@
     <string name="island_reset">Kembalikan ke bawaan</string>
     <string name="island_sample_place">Kota Anda</string>
     <string name="reminders_island_title">Island (beta)</string>
-    <string name="reminders_island_summary">Pil kecil di sekitar kamera berisi shalat berikutnya. Ketuk untuk memperluas. Kartu besar muncul 10 menit sebelum tiap shalat. Perlu izin \"Tampil di atas aplikasi lain\".</string>
+    <string name="reminders_island_summary">Pil kecil di sekitar kamera berisi shalat berikutnya. Ketuk untuk memperluas. Peringatan shalat muncul 10 menit sebelum tiap shalat. Perlu izin \"Tampil di atas aplikasi lain\".</string>
     <string name="reminders_island_permission">Island belum bisa tampil sampai Anda mengizinkan \"Tampil di atas aplikasi lain\" untuk Adwam.</string>
     <string name="reminders_island_allow">Izinkan</string>
     <string name="reminders_widget_note">Widget jadwal shalat: tekan lama layar utama, pilih Widget, lalu Adwam.</string>
@@ -1029,7 +1028,7 @@
         <item>Jadwal salat bulanan: tombol Jadwal di Hari ini membuka tabel waktu shalat satu bulan penuh untuk lokasi Anda, lengkap dengan tanggal Hijriah. Geser ke bulan sebelum atau sesudahnya.</item>
         <item>Imsakiyah Ramadan: tab Ramadan menampilkan jadwal seluruh Ramadan, dari hari pertama sampai terakhir. Jadwal dihitung di ponsel dengan metode yang sama seperti Hari ini, tanpa data atau izin tambahan.</item>
         <item>Bagikan jadwal sebagai gambar atau PDF lewat tombol bagikan, siap dikirim atau dicetak.</item>
-        <item>Island: kartu dan kartu besar kini tanpa tombol. Ketuk kartu untuk membuka Adwam, geser untuk menutupnya. Lebar, ukuran teks, dan lama tampil tiap kartu bisa diatur di Pengaturan island.</item>
+        <item>Island: kartu dan peringatan shalat kini tanpa tombol. Ketuk kartu untuk membuka Adwam, geser untuk menutupnya. Lebar, ukuran teks, dan lama tampil tiap kartu bisa diatur di Pengaturan island.</item>
     </string-array>
     <string-array name="whats_new_1_22_0">
         <item>Warna aksen ketiga di Hari ini: hitung mundur di kartu Berikutnya, label Sekarang pada shalat yang sedang berlangsung, dan hitung mundur di baris shalat berikutnya kini memakai satu warna tersendiri untuk tiap palet. Teksnya tetap memenuhi kontras WCAG AA di mode terang dan gelap.</item>

@@ -299,7 +299,6 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
             dismissLabel = getString(R.string.island_dismiss),
             description = getString(R.string.island_description, name, clockText, left),
             cardDescription = getString(R.string.island_card_description, name, clockText, left),
-            hint = getString(R.string.island_hint),
         )
     }
 

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** The island's card and big card as the overlay draws them: handle, hint and gesture cues. */
+/** The island's card and prayer alert (the big card) as the overlay draws them, with the swipe handle. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "id-w400dp-h300dp-xhdpi")
@@ -31,7 +31,6 @@ class IslandScreenshotTest {
         dismissLabel = "Tutup",
         description = "Maghrib pukul 18.04, 7 mnt lagi. Ketuk untuk detail.",
         cardDescription = "Maghrib pukul 18.04, 7 mnt lagi. Ketuk untuk membuka Adwam, geser untuk menutup.",
-        hint = "Ketuk untuk membuka · geser untuk menutup",
     )
 
     private fun shot(name: String, mode: IslandMode) = captureLight(name) {
@@ -42,5 +41,5 @@ class IslandScreenshotTest {
 
     @Test fun card() = shot("202-island-card", IslandMode.CARD)
 
-    @Test fun bigCard() = shot("203-island-big-card", IslandMode.BIG)
+    @Test fun alert() = shot("203-island-big-card", IslandMode.BIG)
 }
