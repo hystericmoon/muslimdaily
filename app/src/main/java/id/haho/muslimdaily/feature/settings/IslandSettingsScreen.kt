@@ -226,6 +226,7 @@ private fun previewTexts(c: IslandSettings): IslandTexts {
         dismissLabel = stringResource(R.string.island_dismiss),
         description = "$name $clock $left",
         cardDescription = "$name $clock $left",
+        hint = stringResource(R.string.island_hint),
     )
 }
 

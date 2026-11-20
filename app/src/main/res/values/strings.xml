@@ -712,6 +712,7 @@
     <string name="island_width">Lebar</string>
     <string name="island_seconds">Tertutup sendiri setelah</string>
     <string name="island_card_gesture_note">Ketuk kartu untuk membuka Adwam; geser kartu untuk menutupnya.</string>
+    <string name="island_hint">Ketuk untuk membuka · geser untuk menutup</string>
     <string name="island_open">Buka Adwam</string>
     <string name="island_dismiss">Tutup</string>
     <string name="island_description">%1$s pukul %2$s, %3$s lagi. Ketuk untuk detail.</string>

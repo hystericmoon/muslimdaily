@@ -728,6 +728,7 @@
     <string name="island_width">Width</string>
     <string name="island_seconds">Closes by itself after</string>
     <string name="island_card_gesture_note">Tap the card to open Adwam; swipe it to close it.</string>
+    <string name="island_hint">Tap to open · swipe to close</string>
     <string name="island_open">Open Adwam</string>
     <string name="island_dismiss">Close</string>
     <string name="island_description">%1$s at %2$s, in %3$s. Tap for details.</string>
