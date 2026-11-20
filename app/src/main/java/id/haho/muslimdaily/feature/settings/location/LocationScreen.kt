@@ -7,7 +7,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +21,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.IconButton
@@ -26,10 +31,14 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
@@ -49,7 +58,10 @@ import id.haho.design.component.SectionHeader
 import id.haho.design.theme.HahoTheme
 import id.haho.muslimdaily.data.location.City
 import id.haho.muslimdaily.data.location.CityRepository
+import id.haho.muslimdaily.data.db.SavedPlaceEntity
 import id.haho.muslimdaily.data.location.LocationRepository
+import id.haho.muslimdaily.data.place.PlaceKind
+import id.haho.muslimdaily.data.place.PlaceRepository
 import id.haho.muslimdaily.data.settings.LocationSource
 import id.haho.muslimdaily.data.settings.SavedLocation
 import id.haho.muslimdaily.data.settings.SettingsRepository
@@ -71,6 +83,7 @@ import id.haho.design.component.HahoTextField
 class LocationViewModel @Inject constructor(
     private val cities: CityRepository,
     private val locations: LocationRepository,
+    private val placeRepo: PlaceRepository,
     settings: SettingsRepository,
 ) : ViewModel() {
     private val _query = MutableStateFlow("")
@@ -90,6 +103,13 @@ class LocationViewModel @Inject constructor(
             emptyList()
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    val places: StateFlow<List<SavedPlaceEntity>> = placeRepo.places()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    fun savePlace(kind: PlaceKind, label: String) { viewModelScope.launch { placeRepo.saveCurrent(kind, label) } }
+    fun switchTo(place: SavedPlaceEntity, done: () -> Unit) { viewModelScope.launch { placeRepo.switchTo(place.id); done() } }
+    fun removePlace(place: SavedPlaceEntity) { viewModelScope.launch { placeRepo.remove(place.id) } }
 
     private val _busy = MutableStateFlow(false)
     val busy: StateFlow<Boolean> = _busy.asStateFlow()
@@ -118,6 +138,7 @@ fun LocationRoute(onBack: () -> Unit, viewModel: LocationViewModel = hiltViewMod
     val results by viewModel.results.collectAsStateWithLifecycle()
     val current by viewModel.current.collectAsStateWithLifecycle()
     val busy by viewModel.busy.collectAsStateWithLifecycle()
+    val places by viewModel.places.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -145,10 +166,15 @@ fun LocationRoute(onBack: () -> Unit, viewModel: LocationViewModel = hiltViewMod
             onQueryChange = viewModel::setQuery,
             onUseGps = { permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION) },
             onSelect = { viewModel.select(it, onBack) },
+            places = places,
+            onSwitchPlace = { viewModel.switchTo(it, onBack) },
+            onRemovePlace = viewModel::removePlace,
+            onSavePlace = viewModel::savePlace,
         )
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LocationContent(
     current: SavedLocation?,
@@ -158,7 +184,12 @@ fun LocationContent(
     onQueryChange: (String) -> Unit,
     onUseGps: () -> Unit,
     onSelect: (City) -> Unit,
+    places: List<SavedPlaceEntity> = emptyList(),
+    onSwitchPlace: (SavedPlaceEntity) -> Unit = {},
+    onRemovePlace: (SavedPlaceEntity) -> Unit = {},
+    onSavePlace: (PlaceKind, String) -> Unit = { _, _ -> },
 ) {
+    var naming by remember { mutableStateOf(false) }
     LazyColumn(Modifier.fillMaxSize().imePadding(), contentPadding = PaddingValues(bottom = HahoTheme.spacing.xxl)) {
         item {
             GlassCard(
@@ -185,6 +216,52 @@ fun LocationContent(
                         Text(stringResource(if (busy) R.string.location_locating else R.string.today_use_gps))
                     }
                     InfoNote(stringResource(R.string.location_privacy), Modifier.padding(top = HahoTheme.spacing.xs), icon = R.drawable.ic_lock)
+                }
+            }
+        }
+        item { SectionHeader(stringResource(R.string.places_title)) }
+        if (places.isEmpty()) {
+            item {
+                Text(
+                    stringResource(R.string.places_empty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = HahoTheme.dimens.screenGutter),
+                )
+            }
+        }
+        items(places, key = { "place-" + it.id }) { place ->
+            val name = placeName(place)
+            val active = PlaceRepository.isActive(place, current)
+            ListItem(
+                headlineContent = { Text(name) },
+                supportingContent = { Text(place.cityName) },
+                leadingContent = { Icon(painterResource(placeIcon(place)), null) },
+                trailingContent = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (active) Text(stringResource(R.string.place_active), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        IconButton(onClick = { onRemovePlace(place) }) {
+                            Icon(painterResource(R.drawable.ic_delete), stringResource(R.string.place_remove, name))
+                        }
+                    }
+                },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+                modifier = Modifier.clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.place_use, name),
+                    onClick = { onSwitchPlace(place) },
+                ),
+            )
+        }
+        if (current != null) {
+            item {
+                Column(Modifier.padding(horizontal = HahoTheme.dimens.screenGutter, vertical = HahoTheme.spacing.sm)) {
+                    Text(stringResource(R.string.place_save_here, current.name), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(HahoTheme.spacing.sm)) {
+                        AssistChip(onClick = { onSavePlace(PlaceKind.HOME, "") }, label = { Text(stringResource(R.string.place_home)) }, leadingIcon = { Icon(painterResource(R.drawable.ic_home), null) })
+                        AssistChip(onClick = { onSavePlace(PlaceKind.WORK, "") }, label = { Text(stringResource(R.string.place_work)) }, leadingIcon = { Icon(painterResource(R.drawable.ic_work), null) })
+                        AssistChip(onClick = { naming = true }, label = { Text(stringResource(R.string.place_other)) }, leadingIcon = { Icon(painterResource(R.drawable.ic_add), null) })
+                    }
                 }
             }
         }
@@ -253,4 +330,40 @@ fun LocationContent(
             )
         }
     }
+    if (naming) {
+        var label by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { naming = false },
+            title = { Text(stringResource(R.string.place_other_title)) },
+            text = {
+                HahoTextField(
+                    value = label,
+                    onValueChange = { label = it.take(PlaceRepository.MAX_LABEL) },
+                    label = { Text(stringResource(R.string.place_other_label)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = label.isNotBlank(),
+                    onClick = { onSavePlace(PlaceKind.OTHER, label); naming = false },
+                ) { Text(stringResource(R.string.action_save)) }
+            },
+            dismissButton = { TextButton(onClick = { naming = false }) { Text(stringResource(R.string.action_cancel)) } },
+        )
+    }
+}
+
+@Composable
+private fun placeName(place: SavedPlaceEntity): String = when (place.kind) {
+    PlaceKind.HOME.name -> stringResource(R.string.place_home)
+    PlaceKind.WORK.name -> stringResource(R.string.place_work)
+    else -> place.label
+}
+
+private fun placeIcon(place: SavedPlaceEntity): Int = when (place.kind) {
+    PlaceKind.HOME.name -> R.drawable.ic_home
+    PlaceKind.WORK.name -> R.drawable.ic_work
+    else -> R.drawable.ic_location_on
 }

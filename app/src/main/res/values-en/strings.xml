@@ -1048,6 +1048,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_24_0">
+        <item>Saved places: save home, work or another place under your own name, then switch with one tap in Location. Prayer times, Qibla and the timetable follow. \"Use my location\" still follows GPS. Saved places stay on your phone and are included in backups.</item>
+        <item>Counter: the Counter button on Today opens a plain tally. Tap to add one, with a light vibration, and set your own target. No built-in wording, no log or achievements.</item>
+    </string-array>
     <string-array name="whats_new_1_23_0">
         <item>Monthly prayer timetable: the Timetable button on Today opens a full month of prayer times for your location, with the Hijri date. Move to the previous or next month.</item>
         <item>Ramadan timetable (Imsakiyah): the Ramadan tab shows every day of Ramadan, first to last. It is calculated on your phone with the same method as Today, with no extra data or permission.</item>
@@ -1318,4 +1322,30 @@
     <string name="timetable_share_pdf">PDF</string>
     <string name="timetable_share_failed">The timetable could not be shared.</string>
     <string name="timetable_no_location">Set a location to show the monthly timetable.</string>
+
+    <!-- Saved places -->
+    <string name="places_title">Saved places</string>
+    <string name="places_empty">Save home or work to switch prayer times with one tap. \"Use my location\" still follows GPS.</string>
+    <string name="place_home">Home</string>
+    <string name="place_work">Work</string>
+    <string name="place_other">Other</string>
+    <string name="place_active">In use</string>
+    <string name="place_save_here">Save %1$s as:</string>
+    <string name="place_use">Use %1$s</string>
+    <string name="place_remove">Remove place %1$s</string>
+    <string name="place_other_title">Name this place</string>
+    <string name="place_other_label">Name</string>
+
+    <!-- Dhikr counter -->
+    <string name="dhikr_open">Counter</string>
+    <string name="dhikr_title">Counter</string>
+    <string name="dhikr_tap">Tap to add one</string>
+    <string name="dhikr_count_of">%1$d of %2$d</string>
+    <string name="dhikr_reached">Target reached</string>
+    <string name="dhikr_minus">Take one back</string>
+    <string name="dhikr_reset">Start from zero</string>
+    <string name="dhikr_target_set">Set a target</string>
+    <string name="dhikr_target_value">Target %1$d</string>
+    <string name="dhikr_target_title">Target</string>
+    <string name="dhikr_target_hint">Number (empty: no target)</string>
 </resources>

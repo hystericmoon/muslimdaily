@@ -1,6 +1,11 @@
 package id.haho.muslimdaily.screenshots
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import id.haho.muslimdaily.data.db.SavedPlaceEntity
+import id.haho.muslimdaily.data.location.City
+import id.haho.muslimdaily.feature.dhikr.DhikrContent
+import id.haho.muslimdaily.feature.dhikr.DhikrState
+import id.haho.muslimdaily.feature.settings.location.LocationContent
 import id.haho.muslimdaily.audio.PlaybackState
 import id.haho.muslimdaily.data.routine.Routine
 import id.haho.muslimdaily.data.run.RunItem
@@ -199,4 +204,26 @@ class RoutineScreenshotTest {
 
     @Test
     fun settingsIqamah() = captureVariants("191-settings-iqamah") { IqamahContent(TodayPreviewData.settings) {} }
+
+    /** Saved places: home in use, work and a named place, and the chips that save the current one. */
+    @Test
+    fun settingsLocationPlaces() = captureVariants("192-settings-location-places") {
+        val loc = TodayPreviewData.settings.location
+        LocationContent(
+            loc, "", listOf(City(1, "Jakarta", "DKI Jakarta", "ID", "Indonesia", -6.2, 106.8, "Asia/Jakarta")), false, {}, {}, {},
+            places = listOf(
+                SavedPlaceEntity("1", "HOME", "", loc?.name ?: "Bandung", loc?.latitude ?: -6.9, loc?.longitude ?: 107.6, "Asia/Jakarta", 0, 0, 0L),
+                SavedPlaceEntity("2", "WORK", "", "Jakarta", -6.2, 106.8, "Asia/Jakarta", 8, 1, 0L),
+                SavedPlaceEntity("3", "OTHER", "Rumah ibu", "Garut", -7.2, 107.9, "Asia/Jakarta", 700, 2, 0L),
+            ),
+        )
+    }
+
+    @Test
+    @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
+    fun dhikrCounter() = captureVariants("193-dhikr-counter") { DhikrContent(DhikrState(12, 33, true), {}, {}, {}, {}) }
+
+    @Test
+    @Config(qualifiers = "id-w400dp-h860dp-xhdpi")
+    fun dhikrTargetReached() = captureVariants("194-dhikr-target-reached") { DhikrContent(DhikrState(33, 33, true), {}, {}, {}, {}) }
 }

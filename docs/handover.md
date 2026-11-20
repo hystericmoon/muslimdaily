@@ -7,12 +7,12 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 20 Nov 2026 (1.23.0 is one release: PR #302, merged on the owner's "ship it in 1 release").
+Last updated: 20 Nov 2026 (1.23.0 released; 1.24.0 built, PR open for the owner's yes).
 
 ## In flight
 
-- **1.23.0 (versionCode 68), PR #302**: monthly timetable and Ramadan Imsakiyah (PNG or A4 PDF share, no Imsak column: owner, 19 Nov), plus the island rebuilt. Tap the pill: the prayer arc card (five prayers on an arc Subuh to Isya). Before each prayer: the **prayer alert** (the old big card: flank layout, filled countdown chip, a line over the time since it opened, optional "stay until the prayer time"). Both have a swipe handle, tap opens Adwam, swipe closes, no hint text (owner, 20 Nov), TalkBack Close action. **Glow G3** (a light travelling round the edge, Glow switch, still when animations are off): the one owner-approved exception to skill `motion` rule 3. The island has its own Settings entry (Settings, Island) and a link row in Reminders. Details, audit and hard-won facts: history, "Shipped" 1.23.0. Design page: https://claude.ai/artifact/84WuDUePTvQ6AxzoDuUjPq (private to the owner).
-- **After the merge**: check the release run built the APK (https://github.com/hystericmoon/muslimdaily/releases/download/v1.23.0/adwam-1.23.0.apk), tell the owner the link. If the Screenshots workflow commit or CI is red on main, fix first.
+- **1.23.0 is released** (run 86 green, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.23.0/adwam-1.23.0.apk, 40 MB, published 20 Nov 09:59 WIB). Details: history, "Shipped" 1.23.0.
+- **1.24.0 (versionCode 69), PR open, waits for the owner's yes** (changes `UserDatabase`, `BackupRepository`, `versionName`): saved places (Room v3 to v4 auto-migration, `app/schemas/.../4.json`, table `saved_places`; backup VERSION 4, a v3 file restores with no places, test `BackupRepositoryTest`) and the dhikr counter (DataStore `dhikr_count`/`dhikr_target`, so the existing settings backup carries them; Today chip "Penghitung"). Home and Work hold one place each, Other many with the user's name; the active place is the one whose coordinates match the current location (nothing stored); "Gunakan lokasi saya" is the follow-GPS path. Not built: a one-tap switch on Today itself (switch is on Settings, Location: open, tap). Screenshots 192-194 are new; run the Screenshots workflow after each push.
 - **Owner to check on a phone (cloud can't)**: island swipe and tap from other apps, TalkBack Close, the arc at night and after Isya, the glow's heat and battery, 200% text; timetable share as PNG and PDF; the 1.22.0 dark accents (`docs/accent.md` has the way back); 1.16.0 to 1.20.0 items (history, "Shipped"); Qibla back overlap (#209).
 - **Island follow-ups (not done)**: close on fling velocity (a flick under 48 dp springs back); a first-use nudge only if feedback says people miss the swipe (the hint was removed on purpose); vibration needs the VIBRATE permission, not approved.
 - **Prayer-time accuracy**: nothing changed. Recommendation (roadmap file): show "GPS, exact" on Today plus a dev-only eQuran comparison script.
@@ -22,7 +22,7 @@ Last updated: 20 Nov 2026 (1.23.0 is one release: PR #302, merged on the owner's
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. **Saved places and the dhikr counter (1.24.0)**, Sonnet. Then silence during prayer (1.25.0, needs the DND permission, approved), last third of the night, Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
+1. **1.24.0 merge** (owner's yes), then silence during prayer (1.25.0, needs the DND permission, approved), last third of the night, Islamic dates. Zakat (needs a source) and the missed-prayers log (database) wait for sourcing or a design; ask at merge.
 2. Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on calendars, "New" chip and Qibla "Aligned". Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
 
 ## Promo campaign (6 Nov)

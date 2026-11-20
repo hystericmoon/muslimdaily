@@ -191,6 +191,8 @@ class SettingsRepository @Inject constructor(
             widgetAlarmNoteDismissed = this[K.widgetAlarmNoteDismissed] ?: d.widgetAlarmNoteDismissed,
             duaToggleHintSeen = this[K.duaToggleHintSeen] ?: d.duaToggleHintSeen,
             runMarkHintSeen = this[K.runMarkHintSeen] ?: d.runMarkHintSeen,
+            dhikrCount = (this[K.dhikrCount] ?: 0).coerceIn(0, DHIKR_MAX),
+            dhikrTarget = (this[K.dhikrTarget] ?: 0).coerceIn(0, DHIKR_MAX),
             memorize = MemorizeSettings(
                 loopsPerChunk = this[K.memLoops] ?: m.loopsPerChunk,
                 pauseMode = enumOr(K.memPauseMode, m.pauseMode),
@@ -242,6 +244,8 @@ class SettingsEditor internal constructor(private val p: MutablePreferences) {
     var onboardingDone: Boolean by key(K.onboardingDone, false)
     var whatsNewSeen: String by key(K.whatsNewSeen, "")
     var elevationChecked: Boolean by key(K.elevationChecked, false)
+    var dhikrCount: Int by key(K.dhikrCount, 0)
+    var dhikrTarget: Int by key(K.dhikrTarget, 0)
     var hijriConfirmedFor: String by key(K.hijriConfirmedFor, "")
     var widgetAlarmNoteDismissed: Boolean by key(K.widgetAlarmNoteDismissed, false)
     var duaToggleHintSeen: Boolean by key(K.duaToggleHintSeen, false)
@@ -367,6 +371,8 @@ internal object K {
     val onboardingDone = booleanPreferencesKey("onboarding_done")
     val whatsNewSeen = stringPreferencesKey("whats_new_seen")
     val elevationChecked = booleanPreferencesKey("elevation_checked")
+    val dhikrCount = intPreferencesKey("dhikr_count")
+    val dhikrTarget = intPreferencesKey("dhikr_target")
     val hijriConfirmedFor = stringPreferencesKey("hijri_confirmed_for")
     val widgetAlarmNoteDismissed = booleanPreferencesKey("widget_alarm_note_dismissed")
     val duaToggleHintSeen = booleanPreferencesKey("dua_toggle_hint_seen")

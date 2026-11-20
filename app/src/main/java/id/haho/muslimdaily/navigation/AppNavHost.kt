@@ -47,6 +47,7 @@ import id.haho.muslimdaily.feature.today.TodayRoute
 import id.haho.muslimdaily.feature.mosque.NearbyMosqueRoute
 import id.haho.muslimdaily.feature.qibla.QiblaRoute
 import id.haho.muslimdaily.feature.fasting.FastingRoute
+import id.haho.muslimdaily.feature.dhikr.DhikrRoute
 import id.haho.muslimdaily.feature.timetable.TimetableRoute
 
 @Composable
@@ -80,10 +81,12 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenQibla = { navController.navigate(QiblaRoute) },
                     onOpenFasting = { navController.navigate(FastingRoute) },
                     onOpenTimetable = { navController.navigate(TimetableRoute) },
+                    onOpenDhikr = { navController.navigate(DhikrRoute) },
                     onStartRun = { navController.navigate(RunRoute(it)) },
                 )
             }
             composable<FastingRoute> { FastingRoute(onBack = back) }
+            composable<DhikrRoute> { DhikrRoute(onBack = back) }
             composable<TimetableRoute> { TimetableRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
             composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
             composable<TodayLocationRoute> { LocationRoute(onBack = back) }

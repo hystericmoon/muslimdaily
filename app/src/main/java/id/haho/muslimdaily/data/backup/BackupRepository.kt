@@ -5,6 +5,7 @@ import id.haho.muslimdaily.BuildConfig
 import id.haho.muslimdaily.data.db.ChecklistEntity
 import id.haho.muslimdaily.data.db.DuaNoteEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
+import id.haho.muslimdaily.data.db.SavedPlaceEntity
 import id.haho.muslimdaily.data.db.RoutineEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.myset.MySetRepository
@@ -21,8 +22,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * One file with everything the user has made: settings, personal sets, memorisation progress
- * and checklist ticks. Restoring replaces all of it. A sideloaded app gets no Play backup, so
+ * One file with everything the user has made: settings, personal sets, memorisation progress,
+ * checklist ticks, routines, notes and saved places. Restoring replaces all of it. A sideloaded app gets no Play backup, so
  * this is how data survives a new phone or a reinstall.
  */
 @Singleton
@@ -50,6 +51,13 @@ class BackupRepository @Inject constructor(
     data class RoutineJson(val id: String, val name: String, val position: Int, val updatedAt: Long, val duaIds: List<String>)
 
     @Serializable
+    data class PlaceJson(
+        val id: String, val kind: String, val label: String, val cityName: String,
+        val latitude: Double, val longitude: Double, val timeZoneId: String, val elevation: Int,
+        val position: Int, val updatedAt: Long,
+    )
+
+    @Serializable
     data class BackupFile(
         val format: String = FORMAT,
         val version: Int = VERSION,
@@ -64,6 +72,8 @@ class BackupRepository @Inject constructor(
         val routines: List<RoutineJson> = emptyList(),
         /** Since version 3. */
         val notes: List<NoteJson> = emptyList(),
+        /** Since version 4. */
+        val places: List<PlaceJson> = emptyList(),
     )
 
     /** What a restore brought back, for the confirmation message. */
@@ -84,6 +94,7 @@ class BackupRepository @Inject constructor(
                 dao.all().map { r -> RoutineJson(r.id, r.name, r.position, r.updatedAt, items[r.id].orEmpty().sortedBy { it.position }.map { it.duaId }) }
             },
             notes = db.noteDao().all().map { NoteJson(it.duaId, it.text, it.updatedAt) },
+            places = db.placeDao().all().map { PlaceJson(it.id, it.kind, it.label, it.cityName, it.latitude, it.longitude, it.timeZoneId, it.elevation, it.position, it.updatedAt) },
         )
         return json.encodeToString(BackupFile.serializer(), file)
     }
@@ -110,6 +121,8 @@ class BackupRepository @Inject constructor(
                 }
                 db.noteDao().deleteAll()
                 db.noteDao().insertAll(file.notes.map { DuaNoteEntity(it.duaId, it.text, it.updatedAt) })
+                db.placeDao().deleteAll()
+                db.placeDao().insertAll(file.places.map { SavedPlaceEntity(it.id, it.kind, it.label, it.cityName, it.latitude, it.longitude, it.timeZoneId, it.elevation, it.position, it.updatedAt) })
                 sets
             }.also {
                 // An older backup can hold morning and evening twins as two rows.
@@ -125,6 +138,6 @@ class BackupRepository @Inject constructor(
 
     companion object {
         const val FORMAT = "muslimdaily.backup"
-        const val VERSION = 3
+        const val VERSION = 4
     }
 }
