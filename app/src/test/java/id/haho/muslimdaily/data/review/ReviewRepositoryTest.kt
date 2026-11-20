@@ -92,4 +92,30 @@ class ReviewRepositoryTest {
         assertEquals(day - 30, db.reviewDao().item("morning_02")?.addedEpochDay)
         assertEquals(3, items.getValue("wake_01").state.box)
     }
+
+    @Test
+    fun `undo puts back the removed rows with their schedule`() = runTest {
+        repo.rate("wake_01", Rating.EASY, today)
+        repo.rate("morning_02", Rating.HARD, today)
+        val before = repo.items().first().associateBy { it.duaId }
+
+        val removed = repo.remove("wake_01")
+        assertEquals(setOf("morning_02"), repo.items().first().map { it.duaId }.toSet())
+        repo.restore(removed)
+
+        assertEquals(before, repo.items().first().associateBy { it.duaId })
+    }
+
+    @Test
+    fun `undo brings back twins too, and removing nothing restores nothing`() = runTest {
+        repo.rate("evening_02", Rating.EASY, today)
+        val before = repo.items().first()
+        val removed = repo.remove("morning_02")
+        assertTrue(repo.items().first().isEmpty())
+        repo.restore(removed)
+        assertEquals(before, repo.items().first())
+
+        repo.restore(repo.remove("never_saved"))
+        assertEquals(before, repo.items().first())
+    }
 }

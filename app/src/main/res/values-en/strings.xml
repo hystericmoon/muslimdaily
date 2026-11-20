@@ -518,6 +518,7 @@
     <string name="memorize_start_learning">Start learning</string>
     <string name="memorize_state_learning">Learning · next review %1$s</string>
     <string name="memorize_state_memorized">Memorized · next review %1$s</string>
+    <string name="memorize_removed">Removed from My memorization</string>
     <string name="memorize_remove_menu">Remove from My memorization</string>
     <string name="memorize_pick_title">Choose a dua to memorize</string>
     <string name="memorize_listen_done">Done</string>
@@ -1048,6 +1049,10 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_24_1">
+        <item>Removing from My memorization no longer asks first. The dua goes at once and an Undo button brings it back with its review schedule.</item>
+        <item>The island gives a light vibration when touched, when a swipe has gone far enough to close, and when it opens or closes. It follows the Haptics switch in Settings; no extra permission.</item>
+    </string-array>
     <string-array name="whats_new_1_24_0">
         <item>Saved places: save home, work or another place under your own name, then switch with one tap in Location. Prayer times, Qibla and the timetable follow. \"Use my location\" still follows GPS. Saved places stay on your phone and are included in backups.</item>
         <item>Counter: the Counter button on Today opens a plain tally. Tap to add one, with a light vibration, and set your own target. No built-in wording, no log or achievements.</item>

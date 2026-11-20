@@ -502,6 +502,7 @@
     <string name="memorize_start_learning">Mulai menghafal</string>
     <string name="memorize_state_learning">Sedang dihafal · diulang %1$s</string>
     <string name="memorize_state_memorized">Hafal · diulang %1$s</string>
+    <string name="memorize_removed">Dihapus dari Hafalan saya</string>
     <string name="memorize_remove_menu">Hapus dari Hafalan saya</string>
     <string name="memorize_pick_title">Pilih doa untuk dihafal</string>
     <string name="memorize_listen_done">Selesai</string>
@@ -1030,6 +1031,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_24_1">
+        <item>Hapus dari Hafalan saya kini tanpa pertanyaan. Doa langsung terhapus dan muncul \"Urungkan\" untuk mengembalikannya dengan jadwal ulangnya.</item>
+        <item>Island memberi getaran halus saat disentuh, saat geseran sudah cukup jauh untuk menutup, dan saat dibuka atau ditutup. Mengikuti saklar Getaran di Pengaturan; tanpa izin tambahan.</item>
+    </string-array>
     <string-array name="whats_new_1_24_0">
         <item>Tempat tersimpan: simpan rumah, tempat kerja, atau tempat lain dengan nama Anda, lalu pindah dengan satu ketukan di Lokasi. Waktu shalat, kiblat, dan jadwal ikut berpindah. \"Gunakan lokasi saya\" tetap mengikuti GPS. Tempat tersimpan hanya ada di ponsel dan ikut dalam cadangan.</item>
         <item>Penghitung: tombol Penghitung di Hari ini membuka hitungan sederhana. Ketuk untuk menambah satu, dengan getaran halus, dan atur target sendiri. Tanpa wording bawaan, tanpa catatan atau capaian.</item>

@@ -84,6 +84,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
     private var firstRefresh = true
     private var baseGapDp = 0
     private var config by mutableStateOf(IslandSettings())
+    private var haptics by mutableStateOf(true)
     private var params: WindowManager.LayoutParams? = null
 
     override val lifecycle: Lifecycle get() = registry
@@ -113,6 +114,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                 // Look and position follow the settings screen live; switching the island off stops the service.
                 settings.settings.collect { app ->
                     config = app.island
+                    haptics = app.haptics
                     applyLayout()
                     if (!app.reminders.nextPrayerIsland) stopSelf()
                 }
@@ -177,6 +179,7 @@ class IslandService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewMo
                         onToggle = ::toggle,
                         onOpen = ::openApp,
                         onDismiss = ::dismiss,
+                        haptics = haptics,
                     )
                 }
             }

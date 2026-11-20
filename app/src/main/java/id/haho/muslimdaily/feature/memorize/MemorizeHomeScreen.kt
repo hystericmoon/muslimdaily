@@ -3,7 +3,6 @@ package id.haho.muslimdaily.feature.memorize
 import androidx.compose.foundation.layout.Box
 import id.haho.design.glass.enterReveal
 import id.haho.design.glass.Glass
-import id.haho.design.glass.GlassAlertDialog
 import id.haho.design.glass.GlassBottomSheet
 import androidx.annotation.StringRes
 import id.haho.design.glass.GlassExtendedFab
@@ -29,11 +28,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,6 +60,7 @@ import id.haho.muslimdaily.core.designsystem.theme.AdwamTheme
 import id.haho.muslimdaily.core.model.Dua
 import id.haho.muslimdaily.data.content.ContentRepository
 import id.haho.muslimdaily.data.review.ReviewItem
+import id.haho.muslimdaily.data.review.RemovedReviews
 import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.domain.memorize.Leitner
 import kotlinx.coroutines.flow.SharingStarted
@@ -122,8 +126,11 @@ class MemorizeHomeViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     /** Takes a dua out of "My hifz", with its review schedule. The dua itself stays in the library. */
-    fun remove(duaId: String) {
-        viewModelScope.launch { reviews.remove(duaId) }
+    suspend fun remove(duaId: String): RemovedReviews = reviews.remove(duaId)
+
+    /** Undo for [remove]: the saved rows come back with their schedule. */
+    fun restore(removed: RemovedReviews) {
+        viewModelScope.launch { reviews.restore(removed) }
     }
 }
 
@@ -135,8 +142,12 @@ fun MemorizeHomeRoute(
     viewModel: MemorizeHomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackbar = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val resources = LocalContext.current.resources
     AdwamScreen(
         title = stringResource(R.string.nav_memorize),
+        snackbarHostState = snackbar,
         floatingActionButton = {
             GlassExtendedFab(
                 onClick = onPick,
@@ -148,7 +159,20 @@ fun MemorizeHomeRoute(
         state?.let {
             MemorizeHomeContent(
                 it,
-                onRemove = viewModel::remove,
+                // No dialog: remove at once, then offer Undo. A snackbar with an action stays for the
+                // system's accessibility timeout and is announced by TalkBack.
+                onRemove = { id ->
+                    scope.launch {
+                        val removed = viewModel.remove(id)
+                        snackbar.currentSnackbarData?.dismiss()
+                        val result = snackbar.showSnackbar(
+                            resources.getString(R.string.memorize_removed),
+                            actionLabel = resources.getString(R.string.memorize_undo),
+                            duration = SnackbarDuration.Long,
+                        )
+                        if (result == SnackbarResult.ActionPerformed) viewModel.restore(removed)
+                    }
+                },
                 onOpen = onOpen,
                 onStart = { id, review, mode ->
                     when (mode) {
@@ -170,24 +194,12 @@ fun MemorizeHomeContent(
 ) {
     // A row opens a sheet to pick how to start (and to remove); the top card opens the remembered mode.
     var sheetFor by remember { mutableStateOf<HifzEntry?>(null) }
-    var removing by remember { mutableStateOf<HifzEntry?>(null) }
     sheetFor?.let { entry ->
         StartSheet(
             entry,
             onChoose = { mode -> sheetFor = null; onStart(entry.dua.id, entry.due, mode) },
-            onRemove = { sheetFor = null; removing = entry },
+            onRemove = { sheetFor = null; onRemove(entry.dua.id) },
             onDismiss = { sheetFor = null },
-        )
-    }
-    removing?.let { entry ->
-        GlassAlertDialog(
-            onDismissRequest = { removing = null },
-            title = { Text(stringResource(R.string.memorize_remove_title)) },
-            text = { Text(stringResource(R.string.memorize_remove_body)) },
-            confirmButton = {
-                TextButton(onClick = { removing = null; onRemove(entry.dua.id) }) { Text(stringResource(R.string.memorize_remove)) }
-            },
-            dismissButton = { TextButton(onClick = { removing = null }) { Text(stringResource(R.string.action_cancel)) } },
         )
     }
     LazyColumn(
