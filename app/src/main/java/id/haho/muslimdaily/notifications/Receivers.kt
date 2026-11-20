@@ -46,6 +46,7 @@ class ReminderReceiver : BroadcastReceiver() {
     @Inject lateinit var calculator: PrayerCalculator
     @Inject lateinit var clock: Clock
     @Inject lateinit var glance: GlanceRefresher
+    @Inject lateinit var silencer: PrayerSilencer
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ReminderScheduler.ACTION_REMINDER) return
@@ -63,7 +64,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val pending = goAsync()
         receiverScope.launch {
             try {
-                deliver(context, type, silent)
+                deliver(context, type, silent, due)
                 scheduler.rescheduleAll()
             } finally {
                 pending.finish()
@@ -71,7 +72,7 @@ class ReminderReceiver : BroadcastReceiver() {
         }
     }
 
-    private suspend fun deliver(context: Context, type: ReminderType, silent: Boolean) {
+    private suspend fun deliver(context: Context, type: ReminderType, silent: Boolean, due: Long) {
         val s = settings.current()
         val location = s.location
         val zone = location?.timeZoneId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: ZoneId.systemDefault()
@@ -79,6 +80,16 @@ class ReminderReceiver : BroadcastReceiver() {
         val today = now.atZone(zone).toLocalDate()
         if (type == ReminderType.REFRESH) {
             glance.refresh()
+            return
+        }
+        if (type == ReminderType.SILENCE_START) {
+            // A late alarm (Doze, inexact fallback) that lands after the window has nothing to silence.
+            val late = due > 0 && Duration.between(Instant.ofEpochMilli(due), now).toMinutes() >= s.reminders.silenceMinutes
+            if (!late) silencer.start()
+            return
+        }
+        if (type == ReminderType.SILENCE_END) {
+            silencer.reconcile()
             return
         }
         if (type == ReminderType.PRE_PRAYER) {
