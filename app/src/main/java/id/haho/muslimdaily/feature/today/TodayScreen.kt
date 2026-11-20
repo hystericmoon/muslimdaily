@@ -119,6 +119,7 @@ data class TodayActions(
     val onOpenQibla: () -> Unit = {},
     val onOpenFasting: () -> Unit = {},
     val onOpenTimetable: () -> Unit = {},
+    val onOpenDhikr: () -> Unit = {},
     val onAnswerHijri: (HijriCheck, Boolean?) -> Unit = { _, _ -> },
     val onStartRoutine: (Routine) -> Unit = {},
     val onAllowExactAlarms: () -> Unit = {},
@@ -135,6 +136,7 @@ fun TodayRoute(
     onOpenQibla: () -> Unit,
     onOpenFasting: () -> Unit,
     onOpenTimetable: () -> Unit = {},
+    onOpenDhikr: () -> Unit = {},
     onStartRun: (String) -> Unit = {},
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
@@ -197,6 +199,7 @@ fun TodayRoute(
             onOpenQibla = onOpenQibla,
             onOpenFasting = onOpenFasting,
             onOpenTimetable = onOpenTimetable,
+            onOpenDhikr = onOpenDhikr,
             onAnswerHijri = viewModel::answerHijri,
             onStartRoutine = { onStartRun(it.runKey) },
             onAllowExactAlarms = {
@@ -509,6 +512,12 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                 border = assistChipBorder(),
                 label = { Text(stringResource(R.string.timetable_open)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_schedule), null, Modifier.size(textIconSize())) },
+            )
+            AssistChip(
+                onClick = actions.onOpenDhikr,
+                border = assistChipBorder(),
+                label = { Text(stringResource(R.string.dhikr_open)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_touch_app), null, Modifier.size(textIconSize())) },
             )
         }
     }

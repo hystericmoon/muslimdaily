@@ -205,9 +205,15 @@ data class AppSettings(
     val duaToggleHintSeen: Boolean = false,
     /** The reader dismissed the one-time hint on the Routine screen's mark-as-read check. */
     val runMarkHintSeen: Boolean = false,
+    /** The dhikr counter's tally and the target the reader set; 0 target means none. */
+    val dhikrCount: Int = 0,
+    val dhikrTarget: Int = 0,
     val memorize: MemorizeSettings = MemorizeSettings(),
     val reminders: ReminderSettings = ReminderSettings(),
 )
+
+/** The dhikr counter's ceiling, for the tally and the target. */
+const val DHIKR_MAX = 99_999
 
 const val WIDGET_OPACITY_DEFAULT = 0.85f
 

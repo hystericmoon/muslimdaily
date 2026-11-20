@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
     entities = [
         EventPrefEntity::class, EventItemEntity::class, VariantChoiceEntity::class,
         RunSessionEntity::class, ChecklistEntity::class, ReviewItemEntity::class,
-        RoutineEntity::class, RoutineItemEntity::class, DuaNoteEntity::class,
+        RoutineEntity::class, RoutineItemEntity::class, DuaNoteEntity::class, SavedPlaceEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
-    // Added tables only, so Room migrates without losing data. 2: routines. 3: notes on duas.
-    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)],
+    // Added tables only, so Room migrates without losing data. 2: routines. 3: notes on duas. 4: saved places.
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3), AutoMigration(from = 3, to = 4)],
 )
 abstract class UserDatabase : RoomDatabase() {
     abstract fun mySetDao(): MySetDao
@@ -36,6 +36,38 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun reviewDao(): ReviewDao
     abstract fun routineDao(): RoutineDao
     abstract fun noteDao(): NoteDao
+    abstract fun placeDao(): PlaceDao
+}
+
+/**
+ * A place the user saved (home, work or another): the coordinates and time zone prayer times are
+ * computed from, so one tap switches between them. [kind] is HOME, WORK or OTHER; [label] is the
+ * user's own name for an OTHER place and blank otherwise.
+ */
+@Entity(tableName = "saved_places")
+data class SavedPlaceEntity(
+    @PrimaryKey val id: String,
+    val kind: String,
+    val label: String,
+    val cityName: String,
+    val latitude: Double,
+    val longitude: Double,
+    val timeZoneId: String,
+    val elevation: Int,
+    val position: Int,
+    val updatedAt: Long,
+)
+
+@Dao
+interface PlaceDao {
+    @Query("SELECT * FROM saved_places ORDER BY position, updatedAt") fun observeAll(): Flow<List<SavedPlaceEntity>>
+    @Query("SELECT * FROM saved_places ORDER BY position, updatedAt") suspend fun all(): List<SavedPlaceEntity>
+    @Query("SELECT * FROM saved_places WHERE id = :id") suspend fun place(id: String): SavedPlaceEntity?
+    @Query("SELECT COALESCE(MAX(position), -1) + 1 FROM saved_places") suspend fun nextPosition(): Int
+    @Upsert suspend fun upsert(place: SavedPlaceEntity)
+    @Query("DELETE FROM saved_places WHERE id = :id") suspend fun delete(id: String)
+    @Query("DELETE FROM saved_places") suspend fun deleteAll()
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(places: List<SavedPlaceEntity>)
 }
 
 /** The reader's own note on a dua: a reminder of meaning, when they read it, who taught it. */

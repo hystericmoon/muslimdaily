@@ -1030,6 +1030,10 @@
     <string name="whats_new_ok">Oke</string>
     <string name="whats_new_settings">Apa yang baru</string>
     <string name="whats_new_settings_summary">Perubahan di versi ini</string>
+    <string-array name="whats_new_1_24_0">
+        <item>Tempat tersimpan: simpan rumah, tempat kerja, atau tempat lain dengan nama Anda, lalu pindah dengan satu ketukan di Lokasi. Waktu shalat, kiblat, dan jadwal ikut berpindah. \"Gunakan lokasi saya\" tetap mengikuti GPS. Tempat tersimpan hanya ada di ponsel dan ikut dalam cadangan.</item>
+        <item>Penghitung: tombol Penghitung di Hari ini membuka hitungan sederhana. Ketuk untuk menambah satu, dengan getaran halus, dan atur target sendiri. Tanpa wording bawaan, tanpa catatan atau capaian.</item>
+    </string-array>
     <string-array name="whats_new_1_23_0">
         <item>Jadwal salat bulanan: tombol Jadwal di Hari ini membuka tabel waktu shalat satu bulan penuh untuk lokasi Anda, lengkap dengan tanggal Hijriah. Geser ke bulan sebelum atau sesudahnya.</item>
         <item>Imsakiyah Ramadan: tab Ramadan menampilkan jadwal seluruh Ramadan, dari hari pertama sampai terakhir. Jadwal dihitung di ponsel dengan metode yang sama seperti Hari ini, tanpa data atau izin tambahan.</item>
@@ -1300,4 +1304,30 @@
     <string name="timetable_share_pdf">PDF</string>
     <string name="timetable_share_failed">Jadwal tidak bisa dibagikan.</string>
     <string name="timetable_no_location">Atur lokasi untuk menampilkan jadwal bulanan.</string>
+
+    <!-- Saved places -->
+    <string name="places_title">Tempat tersimpan</string>
+    <string name="places_empty">Simpan rumah atau tempat kerja agar jadwal shalat berpindah dengan satu ketukan. \"Gunakan lokasi saya\" tetap mengikuti GPS.</string>
+    <string name="place_home">Rumah</string>
+    <string name="place_work">Kerja</string>
+    <string name="place_other">Lainnya</string>
+    <string name="place_active">Dipakai</string>
+    <string name="place_save_here">Simpan %1$s sebagai:</string>
+    <string name="place_use">Pakai %1$s</string>
+    <string name="place_remove">Hapus tempat %1$s</string>
+    <string name="place_other_title">Nama tempat</string>
+    <string name="place_other_label">Nama</string>
+
+    <!-- Dhikr counter -->
+    <string name="dhikr_open">Penghitung</string>
+    <string name="dhikr_title">Penghitung</string>
+    <string name="dhikr_tap">Ketuk untuk menambah satu</string>
+    <string name="dhikr_count_of">%1$d dari %2$d</string>
+    <string name="dhikr_reached">Target tercapai</string>
+    <string name="dhikr_minus">Kurangi satu</string>
+    <string name="dhikr_reset">Mulai dari nol</string>
+    <string name="dhikr_target_set">Atur target</string>
+    <string name="dhikr_target_value">Target %1$d</string>
+    <string name="dhikr_target_title">Target</string>
+    <string name="dhikr_target_hint">Jumlah (kosong: tanpa target)</string>
 </resources>

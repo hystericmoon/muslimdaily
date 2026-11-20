@@ -9,6 +9,7 @@ import id.haho.muslimdaily.data.db.ChecklistEntity
 import id.haho.muslimdaily.data.db.EventItemEntity
 import id.haho.muslimdaily.data.db.EventPrefEntity
 import id.haho.muslimdaily.data.db.ReviewItemEntity
+import id.haho.muslimdaily.data.db.SavedPlaceEntity
 import id.haho.muslimdaily.data.db.UserDatabase
 import id.haho.muslimdaily.data.content.AssetContentSource
 import id.haho.muslimdaily.data.content.ContentImporter
@@ -21,6 +22,9 @@ import kotlinx.coroutines.flow.first
 import id.haho.muslimdaily.data.review.ReviewRepository
 import id.haho.muslimdaily.data.settings.SettingsRepository
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -86,6 +90,43 @@ class BackupRepositoryTest {
         assertEquals(3, db.reviewDao().item("wake_01")!!.box)
         assertEquals(listOf(ChecklistEntity(20_000, "fard:FAJR")), db.checklistDao().all())
         assertEquals(1, summary.reviews)
+    }
+
+    @Test
+    fun `saved places and the dhikr counter come back after a wipe`() = runTest {
+        val place = SavedPlaceEntity("p1", "HOME", "", "Bandung", -6.9175, 107.6191, "Asia/Jakarta", 768, 0, 5L)
+        db.placeDao().upsert(place)
+        db.placeDao().upsert(SavedPlaceEntity("p2", "OTHER", "Rumah ibu", "Garut", -7.2, 107.9, "Asia/Jakarta", 700, 1, 6L))
+        settings.update { dhikrCount = 17; dhikrTarget = 33 }
+
+        val text = repo.export()
+        settings.restore(emptyMap())
+        db.clearAllTables()
+        repo.restore(text)
+
+        assertEquals(listOf(place.id, "p2"), db.placeDao().all().map { it.id })
+        assertEquals(place, db.placeDao().place("p1"))
+        assertEquals(17, settings.current().dhikrCount)
+        assertEquals(33, settings.current().dhikrTarget)
+    }
+
+    @Test
+    fun `a version 3 backup, made before saved places, still restores`() = runTest {
+        db.placeDao().upsert(SavedPlaceEntity("p1", "WORK", "", "Jakarta", -6.2, 106.8, "Asia/Jakarta", 8, 0, 1L))
+        // A file as version 3 wrote it: no "places" key at all.
+        val v3 = buildJsonObject {
+            put("format", BackupRepository.FORMAT)
+            put("version", 3)
+            put("createdAt", "2026-11-19T00:00:00Z")
+            put("appVersion", "1.22.0")
+            put("settings", buildJsonObject {})
+            put("mySets", MySetRepository(db).exportJson())
+            put("reviews", JsonArray(emptyList()))
+            put("checklist", JsonArray(emptyList()))
+        }.toString()
+        repo.restore(v3)
+        // A backup from before places holds none, so a restore replaces them with none.
+        assertEquals(emptyList(), db.placeDao().all())
     }
 
     @Test
