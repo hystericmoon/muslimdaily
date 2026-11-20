@@ -39,5 +39,5 @@ class RemindersScreenshotTest {
     fun audio() = captureVariants("44-settings-audio") { AudioSettingsContent(TodayPreviewData.settings) {} }
 
     @Test
-    fun island() = captureVariants("198-settings-island") { IslandSettingsContent(TodayPreviewData.settings) {} }
+    fun island() = captureVariants("198-settings-island") { IslandSettingsContent(TodayPreviewData.settings, update = {}) }
 }

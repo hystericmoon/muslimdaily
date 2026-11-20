@@ -47,6 +47,7 @@ import id.haho.muslimdaily.feature.today.TodayRoute
 import id.haho.muslimdaily.feature.mosque.NearbyMosqueRoute
 import id.haho.muslimdaily.feature.qibla.QiblaRoute
 import id.haho.muslimdaily.feature.fasting.FastingRoute
+import id.haho.muslimdaily.feature.timetable.TimetableRoute
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -78,10 +79,12 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                     onOpenMosques = { navController.navigate(MosquesRoute) },
                     onOpenQibla = { navController.navigate(QiblaRoute) },
                     onOpenFasting = { navController.navigate(FastingRoute) },
+                    onOpenTimetable = { navController.navigate(TimetableRoute) },
                     onStartRun = { navController.navigate(RunRoute(it)) },
                 )
             }
             composable<FastingRoute> { FastingRoute(onBack = back) }
+            composable<TimetableRoute> { TimetableRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
             composable<QiblaRoute> { QiblaRoute(onBack = back, onOpenLocation = { navController.navigate(TodayLocationRoute) }) }
             composable<TodayLocationRoute> { LocationRoute(onBack = back) }
             composable<TodayPrayerSettingsRoute> {
@@ -155,6 +158,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                         onMySets = { navController.navigate(MySetsDataRoute) },
                         onAudio = { navController.navigate(AudioSettingsRoute) },
                         onReminders = { navController.navigate(RemindersRoute) },
+                        onIsland = { navController.navigate(IslandSettingsRoute) },
                         onDisplay = { navController.navigate(DisplaySettingsRoute) },
                         onMethodology = { navController.navigate(MethodologyRoute) },
                         onAbout = { navController.navigate(AboutRoute) },

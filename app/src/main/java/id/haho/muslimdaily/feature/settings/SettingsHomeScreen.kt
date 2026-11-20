@@ -29,6 +29,7 @@ data class SettingsDestinations(
     val onPrayer: () -> Unit = {},
     val onLocation: () -> Unit = {},
     val onReminders: () -> Unit = {},
+    val onIsland: () -> Unit = {},
     val onDisplay: () -> Unit = {},
     val onAudio: () -> Unit = {},
     val onMySets: () -> Unit = {},
@@ -74,6 +75,12 @@ fun SettingsHomeContent(settings: AppSettings, d: SettingsDestinations, update: 
                     summary = stringResource(R.string.settings_reminders_summary),
                     icon = R.drawable.ic_notifications,
                     onClick = d.onReminders,
+                )
+                NavigationRow(
+                    title = stringResource(R.string.reminders_island_title),
+                    summary = stringResource(R.string.island_home_summary),
+                    icon = R.drawable.ic_notifications,
+                    onClick = d.onIsland,
                 )
             }
         }

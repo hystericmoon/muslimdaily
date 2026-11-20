@@ -1,6 +1,7 @@
 package id.haho.muslimdaily.island
 
 import id.haho.muslimdaily.core.model.Prayer
+import id.haho.muslimdaily.core.model.PrayerTimeSlot
 import id.haho.muslimdaily.domain.prayer.PrayerSnapshot
 import java.time.Duration
 import java.time.Instant
@@ -13,15 +14,58 @@ data class IslandModel(
     val zone: ZoneId,
     val minutesLeft: Int,
     val place: String,
+    /** Today's five prayers in order: Subuh, Dzuhur, Ashar, Maghrib, Isya. */
+    val five: List<Instant> = emptyList(),
+    /** True when the next prayer is tomorrow's Subuh (after Isya). */
+    val nextIsTomorrow: Boolean = false,
+    val now: Instant = time,
 ) {
+    /** Index into [five] of the next prayer; Subuh (0) when it is tomorrow's. */
+    val nextIndex: Int get() = if (nextIsTomorrow) 0 else five.indexOf(time).coerceAtLeast(0)
+
+    /** Where now sits on the arc from Subuh to Isya, 0 before Subuh and 1 after Isya. */
+    val arcProgress: Float get() = arcProgress(now, five)
+
     companion object {
-        fun from(now: Instant, snapshot: PrayerSnapshot): IslandModel = IslandModel(
-            prayer = snapshot.next.prayer,
-            time = snapshot.next.time,
-            zone = snapshot.zone,
-            minutesLeft = minutesUntil(now, snapshot.next.time),
-            place = snapshot.locationName,
+        fun from(now: Instant, snapshot: PrayerSnapshot): IslandModel {
+            val five = snapshot.today.filter { it.slot in FIVE_SLOTS }.map { it.time }
+            return IslandModel(
+                prayer = snapshot.next.prayer,
+                time = snapshot.next.time,
+                zone = snapshot.zone,
+                minutesLeft = minutesUntil(now, snapshot.next.time),
+                place = snapshot.locationName,
+                five = five,
+                nextIsTomorrow = snapshot.nextSlot == null,
+                now = now,
+            )
+        }
+
+        private val FIVE_SLOTS = setOf(
+            PrayerTimeSlot.FAJR, PrayerTimeSlot.DHUHR, PrayerTimeSlot.ASR, PrayerTimeSlot.MAGHRIB, PrayerTimeSlot.ISHA,
         )
+
+        /** Where [now] is between the first and last of [five], clamped to 0..1; 0 when there are no times. */
+        fun arcProgress(now: Instant, five: List<Instant>): Float {
+            if (five.size < 2) return 0f
+            val span = Duration.between(five.first(), five.last()).toMillis()
+            if (span <= 0) return 0f
+            return (Duration.between(five.first(), now).toMillis().toFloat() / span).coerceIn(0f, 1f)
+        }
+
+        /** Each prayer's place on the arc, 0 for the first and 1 for the last. */
+        fun arcTicks(five: List<Instant>): List<Float> {
+            if (five.size < 2) return five.map { 0f }
+            val span = Duration.between(five.first(), five.last()).toMillis().toFloat()
+            return five.map { if (span <= 0f) 0f else (Duration.between(five.first(), it).toMillis() / span).coerceIn(0f, 1f) }
+        }
+
+        /** How far through the time the alert has been open [shownAt] to [time], 0..1. */
+        fun alertProgress(now: Instant, shownAt: Instant, time: Instant): Float {
+            val span = Duration.between(shownAt, time).toMillis()
+            if (span <= 0) return 1f
+            return (Duration.between(shownAt, now).toMillis().toFloat() / span).coerceIn(0f, 1f)
+        }
 
         /** Whole minutes left, rounded up so "1 min" shows until the time arrives; never negative. */
         fun minutesUntil(now: Instant, time: Instant): Int {

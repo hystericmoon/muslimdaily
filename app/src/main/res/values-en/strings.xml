@@ -723,15 +723,26 @@
     <string name="island_notification_text">Tap to open Adwam. Turn it off in Settings, Reminders.</string>
     <string name="island_minutes">%d min</string>
     <string name="island_hours_minutes">%1$dh %2$dm</string>
+    <string name="island_card_description">%1$s at %2$s, %3$s left. Tap to open Adwam, swipe to close.</string>
+    <string name="island_group_card">Card</string>
+    <string name="island_width">Width</string>
+    <string name="island_seconds">Closes by itself after</string>
+    <string name="island_card_gesture_note">Tap the card to open Adwam; swipe it to close it.</string>
+    <string name="island_tomorrow">tomorrow</string>
+    <string name="island_alert_opened">Opened %s</string>
+    <string name="island_glow_title">Light round the card</string>
+    <string name="island_glow_summary">A light travels round the card\'s edge while it is open. Still when the system\'s animations are off.</string>
+    <string name="island_until_title">Stay until the prayer time</string>
+    <string name="island_until_summary">The alert does not close by itself; it closes when the prayer time arrives.</string>
+    <string name="island_home_summary">Pill at the camera, card and prayer alert</string>
+    <string name="island_group_show">Display</string>
     <string name="island_open">Open Adwam</string>
     <string name="island_dismiss">Close</string>
     <string name="island_description">%1$s at %2$s, in %3$s. Tap for details.</string>
-    <string name="island_settings_title">Island settings</string>
-    <string name="island_settings_summary">Size, padding, position and camera gap</string>
     <string name="island_preview">Preview</string>
     <string name="island_preview_pill">Pill</string>
     <string name="island_preview_card">Card</string>
-    <string name="island_preview_big">Big card</string>
+    <string name="island_preview_big">Alert</string>
     <string name="island_group_size">Size</string>
     <string name="island_height">Height</string>
     <string name="island_padding">Inner padding</string>
@@ -746,8 +757,8 @@
     <string name="island_right">Right side shows</string>
     <string name="island_right_countdown">Countdown</string>
     <string name="island_right_time">Time</string>
-    <string name="island_group_big">Big card</string>
-    <string name="island_big_title">Open a big card before a prayer</string>
+    <string name="island_group_big">Prayer alert</string>
+    <string name="island_big_title">Show a prayer alert before each prayer</string>
     <string name="island_big_summary">Opens once for each prayer.</string>
     <string name="island_lead">Minutes before</string>
     <string name="island_group_other">Other</string>
@@ -756,7 +767,7 @@
     <string name="island_reset">Reset to default</string>
     <string name="island_sample_place">Your city</string>
     <string name="reminders_island_title">Island (beta)</string>
-    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. It opens a big card 10 minutes before each prayer. Needs \"Display over other apps\".</string>
+    <string name="reminders_island_summary">A small pill at the camera with the next prayer. Tap it to expand. It shows a prayer alert 10 minutes before each prayer. Needs \"Display over other apps\".</string>
     <string name="reminders_island_permission">The island cannot show until you allow \"Display over other apps\" for Adwam.</string>
     <string name="reminders_island_allow">Allow</string>
     <string name="reminders_widget_note">Prayer times widget: long-press the home screen, choose Widgets, then Adwam.</string>
@@ -1037,6 +1048,15 @@
     <string name="whats_new_ok">OK</string>
     <string name="whats_new_settings">What\'s new</string>
     <string name="whats_new_settings_summary">Changes in this version</string>
+    <string-array name="whats_new_1_23_0">
+        <item>Monthly prayer timetable: the Timetable button on Today opens a full month of prayer times for your location, with the Hijri date. Move to the previous or next month.</item>
+        <item>Ramadan timetable (Imsakiyah): the Ramadan tab shows every day of Ramadan, first to last. It is calculated on your phone with the same method as Today, with no extra data or permission.</item>
+        <item>Share the timetable as an image or a PDF with the share button, ready to send or print.</item>
+        <item>The island has its own menu in Settings, no longer in Reminders: the switch, the permission and every setting in one place.</item>
+        <item>Tap the island pill for the arc card: the five prayers from Subuh to Isya, a marker for now and the next prayer underlined.</item>
+        <item>The prayer alert before each prayer is harder to ignore: a filled countdown, a line over the time since it opened, and a light that travels round the edge (can be turned off; still when the system\'s animations are off). It can stay until the prayer time.</item>
+        <item>The card and the alert have no buttons: tap to open Adwam, swipe to close. Width, text size and how long they stay can be set.</item>
+    </string-array>
     <string-array name="whats_new_1_22_0">
         <item>A third accent colour on Today: the countdown on the Next card, the Now label on the current prayer and the countdown on the next prayer row now use one colour of their own in each palette. The text still meets WCAG AA contrast in light and dark mode.</item>
         <item>Gentler motion: the highlight on the current prayer in Today slides to the next row when the prayer changes, and the mark-as-read check in Routine draws itself with one small pulse. All motion stops when animations are turned off in the system settings.</item>
@@ -1278,4 +1298,24 @@
         <item>My routines: pick duas from anywhere, order them, and read them one after another like the morning adhkar.</item>
         <item>Theme colours now fill the width of the screen.</item>
     </string-array>
+    <!-- Timetable -->
+    <string name="timetable_title">Prayer timetable</string>
+    <string name="timetable_open">Timetable</string>
+    <string name="timetable_month">Month</string>
+    <string name="timetable_ramadan">Ramadan</string>
+    <string name="timetable_ramadan_title">Ramadan timetable %d AH</string>
+    <string name="timetable_date">Date</string>
+    <string name="timetable_hijri">Hijri</string>
+    <string name="timetable_hijri_short">%1$d %2$s</string>
+    <string name="timetable_hijri_single">%1$s %2$d AH</string>
+    <string name="timetable_hijri_range">%1$s – %2$s %3$d AH</string>
+    <string name="timetable_hijri_range_years">%1$s %2$d – %3$s %4$d AH</string>
+    <string name="timetable_today">today</string>
+    <string name="timetable_basis">%1$s · %2$s</string>
+    <string name="timetable_ramadan_note">%1$s: %2$s · %3$s: %4$s</string>
+    <string name="timetable_share">Share timetable</string>
+    <string name="timetable_share_image">Image (PNG)</string>
+    <string name="timetable_share_pdf">PDF</string>
+    <string name="timetable_share_failed">The timetable could not be shared.</string>
+    <string name="timetable_no_location">Set a location to show the monthly timetable.</string>
 </resources>

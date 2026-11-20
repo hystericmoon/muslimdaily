@@ -118,6 +118,7 @@ data class TodayActions(
     val onOpenMosques: () -> Unit = {},
     val onOpenQibla: () -> Unit = {},
     val onOpenFasting: () -> Unit = {},
+    val onOpenTimetable: () -> Unit = {},
     val onAnswerHijri: (HijriCheck, Boolean?) -> Unit = { _, _ -> },
     val onStartRoutine: (Routine) -> Unit = {},
     val onAllowExactAlarms: () -> Unit = {},
@@ -133,6 +134,7 @@ fun TodayRoute(
     onOpenMosques: () -> Unit,
     onOpenQibla: () -> Unit,
     onOpenFasting: () -> Unit,
+    onOpenTimetable: () -> Unit = {},
     onStartRun: (String) -> Unit = {},
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
@@ -194,6 +196,7 @@ fun TodayRoute(
             onOpenMosques = onOpenMosques,
             onOpenQibla = onOpenQibla,
             onOpenFasting = onOpenFasting,
+            onOpenTimetable = onOpenTimetable,
             onAnswerHijri = viewModel::answerHijri,
             onStartRoutine = { onStartRun(it.runKey) },
             onAllowExactAlarms = {
@@ -500,6 +503,12 @@ private fun Header(data: TodayData, actions: TodayActions, headerFocus: FocusReq
                 border = assistChipBorder(),
                 label = { Text(stringResource(R.string.fasting_open)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_calendar_month), null, Modifier.size(textIconSize())) },
+            )
+            AssistChip(
+                onClick = actions.onOpenTimetable,
+                border = assistChipBorder(),
+                label = { Text(stringResource(R.string.timetable_open)) },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_schedule), null, Modifier.size(textIconSize())) },
             )
         }
     }

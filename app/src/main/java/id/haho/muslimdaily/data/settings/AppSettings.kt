@@ -111,6 +111,18 @@ data class IslandSettings(
     val bigCard: Boolean = true,
     val bigCardLeadMinutes: Int = 10,
     val hideInLandscape: Boolean = true,
+    /** The card opened by a tap: width, size of the main line (the rest scales with it), seconds before it closes. */
+    val cardWidthDp: Int = 340,
+    val cardFontSp: Int = 26,
+    val cardSeconds: Int = 10,
+    /** The big card before a prayer, same three. */
+    val bigWidthDp: Int = 340,
+    val bigFontSp: Int = 30,
+    val bigSeconds: Int = 60,
+    /** The prayer alert stays until the prayer time instead of closing after [bigSeconds]. */
+    val bigUntilPrayer: Boolean = false,
+    /** A light that travels round the edge of an open card; a still edge when animations are off. */
+    val glow: Boolean = true,
 ) {
     companion object {
         val HEIGHT = 28..52
@@ -121,6 +133,12 @@ data class IslandSettings(
         val OFFSET_Y = -8..80
         val OPACITY = 50..100
         val LEAD = 5..30
+        val CARD_WIDTH = 300..400
+        val CARD_FONT = 18..32
+        val CARD_SECONDS = 3..30
+        val BIG_WIDTH = 280..400
+        val BIG_FONT = 24..44
+        val BIG_SECONDS = 15..120
     }
 }
 
