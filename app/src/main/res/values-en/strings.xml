@@ -1051,7 +1051,7 @@
     <string name="whats_new_settings_summary">Changes in this version</string>
     <string-array name="whats_new_1_24_1">
         <item>Removing from My memorization no longer asks first. The dua goes at once and an Undo button brings it back with its review schedule.</item>
-        <item>The island gives a light vibration when touched, when a swipe has gone far enough to close, and when it opens or closes. It follows the Haptics switch in Settings; no extra permission.</item>
+        <item>The island gives a light vibration when touched, when a swipe has gone far enough to close, and when it opens or closes. It follows the Vibration switch in Settings; no extra permission.</item>
     </string-array>
     <string-array name="whats_new_1_24_0">
         <item>Saved places: save home, work or another place under your own name, then switch with one tap in Location. Prayer times, Qibla and the timetable follow. \"Use my location\" still follows GPS. Saved places stay on your phone and are included in backups.</item>
