@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haho_action_back">Back</string>
+    <string name="haho_action_increase">Increase</string>
+    <string name="haho_action_decrease">Decrease</string>
+    <string name="haho_state_checked">Checked</string>
+    <string name="haho_state_not_checked">Not checked</string>
+    <string name="haho_notices_title">Open-source notices</string>
+    <string name="haho_notices_font">Plus Jakarta Sans font · SIL Open Font License 1.1</string>
+    <string name="haho_action_close">Close</string>
+</resources>

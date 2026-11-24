@@ -7,10 +7,11 @@ work, release details and hard-won facts go to `docs/history.md` (search it by r
 tool when a task touches them; don't read it end to end). Repeated procedures live in project
 skills (`.claude/skills/`): `content-import`, `audio-recut`, `release`, `session-clear`, `motion`.
 
-Last updated: 20 Nov 2026 (1.25.0 released, PR #306, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.25.0/adwam-1.25.0.apk).
+Last updated: 24 Nov 2026 (1.25.0 released, PR #306, APK https://github.com/hystericmoon/muslimdaily/releases/download/v1.25.0/adwam-1.25.0.apk; design revamp started, see below).
 
 ## In flight
 
+- **Design revamp (owner, 24 Nov): option B chosen.** Goal: a fresh, more intuitive whole-app redesign. Step 1 done on branch `claude/notion-promo-batch-1-o2p0c4`: haho-design v0.2.0 copied into the `:design` module (same package `id.haho.design`, no visual change; Maven dependency, deploy key and CI checkout removed; `design/README.md`). The screenshots must still match on CI: if any differ, the copy is not exact. Step 0 done: `docs/ux-audit-2026-11.md` (8 findings, test plan). Next: the owner's design ideas, then foundations (tokens, type, shell), then Today first, one screen per release. Decision page: https://claude.ai/artifact/NqQUUPugBmdymGfFmDEZJd. The copy no longer follows haho-design (Smol keeps using it). The owner's 1.25.0 phone-check notes are still not received.
 - **1.25.0 (versionCode 70) merged** (PR #306, 20 Nov): Undo for Remove, island haptics, silence during prayer, last third of the night, Islamic dates, Today header, Island screen rework; details in history, "Shipped" 1.25.0. 1.24.0 (saved places, counter) shipped earlier: owner to check on a phone that the 3 to 4 database update keeps data.
 - **Left out on purpose, ask the owner**: Maulid, Isra Mi'raj and Nisfu Sya'ban in Islamic dates (not sahih-only occasions); Travel mode stays a toggle chip on Today (the page showed a tag); no silencer unit test (needs the Android DND manager).
 - **Owner to check on a phone (cloud can't)**: 1.25.0: does the solid band cover the status bar on the phone (it may still draw above the overlay), the full-width card window blocks touches beside the card while open, haptics on the overlay, the adhan still sounds under alarms-only, the Today tiles at 200% text, Islamic date reminder once; island swipe and tap from other apps, TalkBack Close, the arc at night and after Isya, the glow's heat and battery, 200% text; timetable share as PNG and PDF; the 1.22.0 dark accents (`docs/accent.md` has the way back); 1.16.0 to 1.20.0 items (history, "Shipped"); Qibla back overlap (#209).
@@ -22,7 +23,7 @@ Last updated: 20 Nov 2026 (1.25.0 released, PR #306, APK https://github.com/hyst
 
 ## Next work, in order (details and models: `docs/roadmap-2026-11.md`)
 
-1. Start with the owner's phone-check feedback on 1.25.0 (the "Owner to check" bullet); nothing else queued. Small ones when convenient: one-tap place switch on Today, island close on flick, delete `GuidedSession.kt`. Zakat and the missed-prayers log are dropped (owner).
+1. The owner's design ideas for the revamp (see In flight); then the phone-check feedback on 1.25.0 (the "Owner to check" bullet). Small ones when convenient: one-tap place switch on Today, island close on flick, delete `GuidedSession.kt`. Zakat and the missed-prayers log are dropped (owner).
 2. Not built from the accent plan: the thin progress line under the Next card (drop it if the owner prefers colours only) and the accent on calendars, "New" chip and Qibla "Aligned". Next motion: Qibla needle, screen transitions, staggered empty states, Listen highlight glide (skill `motion`).
 
 ## Promo campaign (6 Nov)

@@ -24,8 +24,6 @@ jobs:
         run: echo "Run this on a feature branch; main only takes merged PRs." && exit 1
       - uses: actions/checkout@v4
       - uses: ./.github/actions/android-setup
-        with:
-          haho-design-key: ${{ secrets.HAHO_DESIGN_DEPLOY_KEY }}
       - name: Record
         run: ./gradlew :app:recordRoborazziDebug --stacktrace
       - name: Commit the shots
