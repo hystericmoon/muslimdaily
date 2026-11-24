@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="haho_action_back">Kembali</string>
+    <string name="haho_action_increase">Tambah</string>
+    <string name="haho_action_decrease">Kurangi</string>
+    <string name="haho_state_checked">Dicentang</string>
+    <string name="haho_state_not_checked">Belum dicentang</string>
+    <string name="haho_notices_title">Pemberitahuan sumber terbuka</string>
+    <string name="haho_notices_font">Font Plus Jakarta Sans · SIL Open Font License 1.1</string>
+    <string name="haho_action_close">Tutup</string>
+</resources>

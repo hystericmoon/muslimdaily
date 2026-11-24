@@ -19,7 +19,7 @@ TEXT_ON_SURFACE = 4.6  # needs 4.5
 TEXT_ON_CONTAINER = 7.0
 # The countdowns sit on the glass cards, which are lighter than the dark surface. The lightest
 # composite a dark card reaches (the Next card's tint plus sheen over the stacked backdrop glows),
-# per palette, from haho-design 0.2.0 via ExtendedColorsContrastTest. A dark accent is lighter than
+# per palette, from the design module via ExtendedColorsContrastTest. A dark accent is lighter than
 # its background, so the lightest one is the worst case. Light mode already passes on glass. If the
 # glass changes, that test fails: dump the new composites and update this table.
 DARK_GLASS_WORST = {

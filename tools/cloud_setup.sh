@@ -1,15 +1,10 @@
 #!/bin/bash
-# Adwam cloud setup: Android SDK 37, Maven Central mirror for Gradle, haho-design in mavenLocal.
-# Paste this whole file into the cloud environment's Setup script (the environment needs
-# hystericmoon/haho-design under Repositories, it is private), or run it by hand in a session
-# after attaching haho-design. Safe to run again: every step skips what is already there.
+# Adwam cloud setup: Android SDK 37 and the Maven Central mirror for Gradle.
+# Paste this whole file into the cloud environment's Setup script, or run it by hand in a
+# session. Safe to run again: every step skips what is already there.
 set -euo pipefail
 SDK=/opt/android-sdk
 MIRROR=https://maven-central.storage-download.googleapis.com/maven2/
-APP=/home/user/muslimdaily
-# Used only when the app repo is not cloned yet when this runs; otherwise the pin in
-# gradle/libs.versions.toml wins. Keep it at the current pin.
-HAHO_FALLBACK=0.2.0
 
 # 1. Android SDK
 if [ ! -x "$SDK/cmdline-tools/latest/bin/sdkmanager" ]; then
@@ -50,20 +45,3 @@ allprojects {
 }
 GRADLE
 grep -q ANDROID_HOME ~/.bashrc 2>/dev/null || echo "export ANDROID_HOME=$SDK" >> ~/.bashrc
-
-# 3. haho-design (shared design system) into mavenLocal, at the version the app pins.
-VERSION=$(sed -n 's/^hahoDesign = "\(.*\)"/\1/p' "$APP/gradle/libs.versions.toml" 2>/dev/null || true)
-VERSION=${VERSION:-$HAHO_FALLBACK}
-if [ -d ~/.m2/repository/id/haho/haho-design/"$VERSION" ]; then
-  echo "haho-design $VERSION already in ~/.m2"
-else
-  rm -rf /tmp/haho-design
-  if git clone -q --depth 1 --branch "v$VERSION" https://github.com/hystericmoon/haho-design.git /tmp/haho-design; then
-    (cd /tmp/haho-design && ANDROID_HOME=$SDK ./gradlew -q publishToMavenLocal)
-    rm -rf /tmp/haho-design
-    echo "haho-design $VERSION published to ~/.m2"
-  else
-    # Not fatal: the session attaches hystericmoon/haho-design (add_repo) and runs this again.
-    echo "haho-design not reachable from the setup script; publish it in-session" >&2
-  fi
-fi

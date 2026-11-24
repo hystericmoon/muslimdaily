@@ -18,7 +18,7 @@ import id.haho.design.theme.colorSchemeFor
 import id.haho.design.theme.isDark
 
 /**
- * Adwam's theme: the shared haho-design system ([HahoTheme]: palettes, glass, Plus Jakarta Sans,
+ * Adwam's theme: the `:design` module ([HahoTheme]: palettes, glass, Plus Jakarta Sans,
  * spacing, motion) plus what only Adwam needs, the Arabic type scale and the gold highlight and
  * count-complete colours.
  */

@@ -16,7 +16,7 @@ import kotlin.math.min
 /**
  * Adwam's gold roles (active-phrase highlight, count-complete disc) and the third accent in every
  * palette, light and dark: text at 4.5:1, the underline indicator at 3:1 (WCAG 2.2 AA). The
- * palettes' own roles and the glass are tested in haho-design.
+ * palettes' own roles and the glass are tested in `:design`.
  */
 class ExtendedColorsContrastTest {
 
@@ -120,7 +120,7 @@ class ExtendedColorsContrastTest {
         }
     }
 
-    /** The values the palette generator used to emit, before the move to haho-design. */
+    /** The values the palette generator used to emit, before the move to the design module. */
     @Test fun goldRolesKeepTheirValues() {
         for (palette in HahoPalette.entries) {
             val light = extendedColors(palette, dark = false)

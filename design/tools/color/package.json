@@ -1,0 +1,9 @@
+{
+  "name": "haho-design-color",
+  "private": true,
+  "type": "module",
+  "description": "Generates the Material 3 colour tokens for haho-design",
+  "dependencies": {
+    "@material/material-color-utilities": "0.3.0"
+  }
+}
