@@ -92,9 +92,11 @@ More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accent.md`, `docs/a
 ## Token guard
 
 - Be concise. Lead with the answer; no restating the question, no recap of what was just done.
-- Route mechanical work (renames, formatting, summarizing, scraping, bulk find-and-replace) to a sub-agent with `model: "haiku"`. Keep judgment and design work in the main session.
-- Route specified, lighter build work (UI polish from a written brief, copy and strings, screenshot re-records, docs) to a sub-agent with `model: "sonnet"` (owner, 27 Nov 2026). Same limits as below: nothing touching religious content or user data.
-- Exception: never hand a Haiku sub-agent anything that touches religious content or user data (see "Sessions" for which work needs Opus).
+- The main session is an orchestrator (owner, 27 Nov 2026): it plans, writes briefs, decides, reviews diffs and screenshots, merges and reports. Doing the work itself is the exception.
+- `model: "haiku"` gathers facts: reading code to write a brief, inspecting logs and CI output, searches, summaries, scraping, renames, formatting, bulk find-and-replace.
+- `model: "sonnet"` builds from a written brief: UI polish, copy and strings, tests, docs and the handover, screenshot re-records.
+- Religious content and user data never go to a sub-agent: imports, grades, translations, sources, audio cuts, `UserDatabase` and `BackupRepository` work stay in an Opus main session (see "Sessions").
+- Run independent sub-agents in parallel. Every brief states the goal, the files, the decided design, how to verify, and a short report format.
 - Never suggest `/compact` as a cost-saving measure. Suggest `/clear` between unrelated jobs instead.
 - Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache, so start each session on the model its task needs (see "Sessions").
 - Project skills hold the repeated procedures and load only when used: `content-import`, `audio-recut`, `release`, `session-clear`, `motion` (any animation work). Use them instead of re-reading the long docs; read a doc section only when the skill points to it.
