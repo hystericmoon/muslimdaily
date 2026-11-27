@@ -93,6 +93,7 @@ More: `docs/architecture.md`, `docs/design-tokens.md`, `docs/accent.md`, `docs/a
 
 - Be concise. Lead with the answer; no restating the question, no recap of what was just done.
 - Route mechanical work (renames, formatting, summarizing, scraping, bulk find-and-replace) to a sub-agent with `model: "haiku"`. Keep judgment and design work in the main session.
+- Route specified, lighter build work (UI polish from a written brief, copy and strings, screenshot re-records, docs) to a sub-agent with `model: "sonnet"` (owner, 27 Nov 2026). Same limits as below: nothing touching religious content or user data.
 - Exception: never hand a Haiku sub-agent anything that touches religious content or user data (see "Sessions" for which work needs Opus).
 - Never suggest `/compact` as a cost-saving measure. Suggest `/clear` between unrelated jobs instead.
 - Keep the model and effort fixed for the whole session. Switching mid-session invalidates the prompt cache, so start each session on the model its task needs (see "Sessions").
